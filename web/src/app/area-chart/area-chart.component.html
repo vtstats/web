@@ -1,4 +1,5 @@
 <ngx-charts-area-chart
+  class="chart"
   [autoScale]="true"
   [scheme]="youtube ? youtubeScheme : bilibiliScheme"
   [results]="results"
@@ -9,7 +10,8 @@
   [xAxisTickFormatting]="dateTickFormatting"
   [yAxisTickFormatting]="numTickFormatting"
   [legend]="false"
-  [showXAxisLabel]="false"
+  [xAxisLabel]="label"
+  [showXAxisLabel]="!!label"
   [showYAxisLabel]="false"
   [roundDomains]="true"
 >

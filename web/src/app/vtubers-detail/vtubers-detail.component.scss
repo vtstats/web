@@ -1,9 +1,48 @@
 @import "../../theme.scss";
 
-.profile {
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  cursor: pointer;
+$config: mat-typography-config();
+
+.content {
+  padding: 32px 0;
+}
+
+.info {
+  text-align: center;
+
+  .name {
+    font-size: mat-font-size($config, title);
+    font-weight: mat-font-weight($config, title);
+  }
+
+  .profile {
+    width: 192px;
+    height: 192px;
+    border-radius: 50%;
+  }
+}
+
+.number {
+  height: 192px;
+  text-align: center;
+
+  .value {
+    font-size: mat-font-size($config, display-1);
+    font-weight: mat-font-weight($config, display-1);
+  }
+
+  .caption {
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+  }
+}
+
+.chart {
+  height: 250px;
+
+  .caption {
+    text-align: center;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+    padding-bottom: 24px;
+  }
 }

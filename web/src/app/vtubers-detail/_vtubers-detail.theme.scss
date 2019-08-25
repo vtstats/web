@@ -12,5 +12,15 @@
     .gridline-path {
       stroke: mat-color($foreground, divider);
     }
+
+    .x.axis {
+      fill: mat-color($foreground, text);
+    }
+  }
+
+  .number {
+    .caption {
+      color: mat-color($foreground, secondary-text);
+    }
   }
 }

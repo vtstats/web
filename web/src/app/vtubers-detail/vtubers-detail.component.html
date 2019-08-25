@@ -1,28 +1,73 @@
 <hs-navbar></hs-navbar>
 
 <ng-container *ngIf="vtuber">
-  <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
-  <hs-area-chart
-    [youtube]="true"
-    [results]="youtubeSubs"
-    [xAxisTicks]="xAxisTicks"
-  ></hs-area-chart>
+  <div class="content" fxLayout="row wrap" fxLayoutAlign="space-between">
+    <div class="info" fxFlex="40" fxFlex.lt-sm="100">
+      <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
+      <div class="name">{{ vtuber.name }}</div>
+    </div>
+    <div
+      class="number"
+      fxFlex="60"
+      fxFlex.lt-sm="100"
+      fxLayout="column"
+      fxLayoutAlign="space-around"
+    >
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <div>
+          <div class="value">{{ vtuber.youtubeStats.subs | number }}</div>
+          <div class="caption">YouTube 訂閱數</div>
+        </div>
+        <div>
+          <div class="value">{{ vtuber.bilibiliStats.subs | number }}</div>
+          <div class="caption">Bilibili 訂閱數</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <div>
+          <div class="value">{{ vtuber.youtubeStats.views | number }}</div>
+          <div class="caption">YouTube 播放數</div>
+        </div>
+        <div>
+          <div class="value">{{ vtuber.bilibiliStats.views | number }}</div>
+          <div class="caption">Bilibili 播放數</div>
+        </div>
+      </div>
+    </div>
+    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+      <hs-area-chart
+        [youtube]="true"
+        [results]="youtubeSubs"
+        [xAxisTicks]="xAxisTicks"
+        [label]="'YouTube 訂閱'"
+      ></hs-area-chart>
+    </div>
 
-  <hs-area-chart
-    [youtube]="false"
-    [results]="bilibiliSubs"
-    [xAxisTicks]="xAxisTicks"
-  ></hs-area-chart>
+    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+      <hs-area-chart
+        [youtube]="false"
+        [results]="bilibiliSubs"
+        [xAxisTicks]="xAxisTicks"
+        [label]="'Bilibili 訂閱'"
+      ></hs-area-chart>
+    </div>
 
-  <hs-area-chart
-    [youtube]="true"
-    [results]="youtubeViews"
-    [xAxisTicks]="xAxisTicks"
-  ></hs-area-chart>
+    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+      <hs-area-chart
+        [youtube]="true"
+        [results]="youtubeViews"
+        [xAxisTicks]="xAxisTicks"
+        [label]="'YouTube 播放'"
+      ></hs-area-chart>
+    </div>
 
-  <hs-area-chart
-    [youtube]="false"
-    [results]="bilibiliViews"
-    [xAxisTicks]="xAxisTicks"
-  ></hs-area-chart>
+    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+      <hs-area-chart
+        [youtube]="false"
+        [results]="bilibiliViews"
+        [xAxisTicks]="xAxisTicks"
+        [label]="'Bilibili 播放'"
+      ></hs-area-chart>
+    </div>
+  </div>
 </ng-container>

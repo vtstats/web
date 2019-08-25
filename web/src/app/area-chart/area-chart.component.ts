@@ -10,6 +10,7 @@ export class AreaChartComponent {
   @Input() xAxisTicks: number[] = [];
   @Input() results: number[][] = [];
   @Input() youtube: boolean = true;
+  @Input() label: string | null = null;
 
   youtubeScheme = { domain: ["#e00404"] };
   bilibiliScheme = { domain: ["#00a1d6"] };
