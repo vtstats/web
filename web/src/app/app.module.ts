@@ -26,19 +26,19 @@ import { ColoredNumberDirective } from "./directives";
 import { ListDialogComponent } from "./list-dialog";
 import { NavbarComponent } from "./navbar";
 import { SettingsSheetComponent } from "./settings-sheet";
-import { StreamDetailComponent } from "./stream-detail";
 import { StreamsComponent } from "./streams";
-import { SubsComponent } from "./subs";
-import { SubsDetailComponent } from "./subs-detail";
+import { StreamsDetailComponent } from "./streams-detail";
+import { VTubersComponent } from "./vtubers";
+import { VTubersDetailComponent } from "./vtubers-detail";
 
 import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
-  { path: "", redirectTo: "/subs", pathMatch: "full" },
-  { path: "subs", component: SubsComponent },
-  { path: "subs/:id", component: SubsDetailComponent },
+  { path: "", redirectTo: "/vtuber", pathMatch: "full" },
   { path: "stream", component: StreamsComponent },
-  { path: "stream/:id", component: StreamDetailComponent }
+  { path: "stream/:id", component: StreamsDetailComponent },
+  { path: "vtuber", component: VTubersComponent },
+  { path: "vtuber/:id", component: VTubersDetailComponent }
 ];
 
 @NgModule({
@@ -49,10 +49,10 @@ const ROUTES: Routes = [
     ListDialogComponent,
     NavbarComponent,
     SettingsSheetComponent,
-    StreamDetailComponent,
     StreamsComponent,
-    SubsComponent,
-    SubsDetailComponent
+    StreamsDetailComponent,
+    VTubersComponent,
+    VTubersDetailComponent
   ],
   imports: [
     BrowserAnimationsModule,

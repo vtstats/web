@@ -1,0 +1,9 @@
+@import "../../theme.scss";
+
+.profile {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}

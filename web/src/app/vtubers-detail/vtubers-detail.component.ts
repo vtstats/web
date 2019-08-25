@@ -7,21 +7,19 @@ import {
   fromUnixTime,
   startOfToday
 } from "date-fns";
+import { VTuberStats } from "@holostats/libs/models";
 
 import { ApiService } from "../services";
 import { switchMap } from "rxjs/operators";
-import { VTuberStats } from "@holostats/libs/models";
 
 const today = startOfToday();
 
 @Component({
-  selector: "hs-subs-detail",
-  templateUrl: "./subs-detail.component.html",
-  styleUrls: ["./subs-detail.component.scss"]
+  selector: "hs-vtubers-detail",
+  templateUrl: "./vtubers-detail.component.html",
+  styleUrls: ["./vtubers-detail.component.scss"]
 })
-export class SubsDetailComponent {
-  view = [600, 200];
-
+export class VTubersDetailComponent {
   xAxisTicks = [
     getUnixTime(subDays(today, 4)),
     getUnixTime(subDays(today, 3)),
@@ -30,13 +28,12 @@ export class SubsDetailComponent {
     getUnixTime(today)
   ];
 
-  youtubeColorScheme = { domain: ["#e00404"] };
-  bilibiliColorScheme = { domain: ["#00a1d6"] };
+  bilibiliSubs = [];
+  bilibiliViews = [];
+  youtubeSubs = [];
+  youtubeViews = [];
 
-  bilibiliSubStats = [];
-  bilibiliViewStats = [];
-  youtubeSubStats = [];
-  youtubeViewStats = [];
+  vtuber: VTuberStats;
 
   constructor(private service: ApiService, private route: ActivatedRoute) {}
 
@@ -44,10 +41,11 @@ export class SubsDetailComponent {
     this.route.paramMap
       .pipe(switchMap(params => this.service.getVTuberStat(params.get("id"))))
       .subscribe(v => {
-        this.updateSeriesData("bilibiliSubStats", v);
-        this.updateSeriesData("youtubeSubStats", v);
-        this.updateSeriesData("bilibiliViewStats", v);
-        this.updateSeriesData("youtubeViewStats", v);
+        this.updateSeriesData("bilibiliSubs", v);
+        this.updateSeriesData("youtubeSubs", v);
+        this.updateSeriesData("bilibiliViews", v);
+        this.updateSeriesData("youtubeViews", v);
+        this.vtuber = v;
       });
   }
 
@@ -65,11 +63,7 @@ export class SubsDetailComponent {
     return format(fromUnixTime(val), "MM/dd");
   }
 
-  numTickFormatting(num: number): string | number {
-    return num > 999999
-      ? (num / 1000000).toString() + "M"
-      : num > 999
-      ? (num / 1000).toString() + "K"
-      : num;
+  numTickFormatting(num: number): string {
+    return num.toLocaleString();
   }
 }

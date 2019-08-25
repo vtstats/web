@@ -15,11 +15,11 @@ import { ApiService } from "../services";
 import { switchMap } from "rxjs/operators";
 
 @Component({
-  selector: "hs-stream-detail",
-  templateUrl: "./stream-detail.component.html",
-  styleUrls: ["./stream-detail.component.css"]
+  selector: "hs-streams-detail",
+  templateUrl: "./streams-detail.component.html",
+  styleUrls: ["./streams-detail.component.css"]
 })
-export class StreamDetailComponent implements OnInit {
+export class StreamsDetailComponent implements OnInit {
   constructor(private service: ApiService, private route: ActivatedRoute) {}
 
   view = [600, 200];

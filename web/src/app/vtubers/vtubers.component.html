@@ -16,7 +16,7 @@
   <ng-container matColumnDef="profile" sticky>
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
-      <div [routerLink]="['/subs', row.id]">
+      <div [routerLink]="['/vtuber', row.id]">
         <img class="profile" src="/assets/thumbnail/{{ row.id }}.jpg" />
       </div>
     </td>

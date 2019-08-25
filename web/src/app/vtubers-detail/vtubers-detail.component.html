@@ -1,0 +1,28 @@
+<hs-navbar></hs-navbar>
+
+<ng-container *ngIf="vtuber">
+  <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
+  <hs-area-chart
+    [youtube]="true"
+    [results]="youtubeSubs"
+    [xAxisTicks]="xAxisTicks"
+  ></hs-area-chart>
+
+  <hs-area-chart
+    [youtube]="false"
+    [results]="bilibiliSubs"
+    [xAxisTicks]="xAxisTicks"
+  ></hs-area-chart>
+
+  <hs-area-chart
+    [youtube]="true"
+    [results]="youtubeViews"
+    [xAxisTicks]="xAxisTicks"
+  ></hs-area-chart>
+
+  <hs-area-chart
+    [youtube]="false"
+    [results]="bilibiliViews"
+    [xAxisTicks]="xAxisTicks"
+  ></hs-area-chart>
+</ng-container>
