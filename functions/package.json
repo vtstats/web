@@ -1,0 +1,29 @@
+{
+  "name": "@holostats/functions",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^2.0.1",
+    "express": "^4.17.1",
+    "firebase-admin": "^8.3.0",
+    "firebase-functions": "^3.1.0",
+    "googleapis": "^42.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "typescript": "^3.2.2"
+  },
+  "private": true
+}
