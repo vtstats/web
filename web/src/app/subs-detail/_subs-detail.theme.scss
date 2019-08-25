@@ -1,0 +1,12 @@
+@import "~@angular/material/theming";
+
+@mixin subs-detail-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .ngx-charts {
+    .tick {
+      fill: mat-color($foreground, secondary-text);
+    }
+  }
+}

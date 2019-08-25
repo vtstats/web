@@ -1,0 +1,55 @@
+@import "~@angular/material/theming";
+
+@import "./theme";
+@import "./app/subs/subs.theme";
+@import "./app/subs-detail/subs-detail.theme";
+
+@include mat-core();
+
+@include mat-badge-theme($light-theme);
+@include mat-bottom-sheet-theme($light-theme);
+@include mat-button-theme($light-theme);
+@include mat-checkbox-theme($light-theme);
+@include mat-core-theme($light-theme);
+@include mat-dialog-theme($light-theme);
+@include mat-toolbar-theme($light-theme);
+@include mat-icon-theme($light-theme);
+@include mat-list-theme($light-theme);
+@include mat-progress-spinner-theme($light-theme);
+@include mat-table-theme($light-theme);
+@include mat-tree-theme($light-theme);
+@include subs-theme($light-theme);
+@include subs-detail-theme($light-theme);
+
+.dark {
+  @include mat-badge-theme($dark-theme);
+  @include mat-bottom-sheet-theme($dark-theme);
+  @include mat-button-theme($dark-theme);
+  @include mat-checkbox-theme($dark-theme);
+  @include mat-toolbar-theme($dark-theme);
+  @include mat-core-theme($dark-theme);
+  @include mat-dialog-theme($dark-theme);
+  @include mat-icon-theme($dark-theme);
+  @include mat-list-theme($dark-theme);
+  @include mat-progress-spinner-theme($dark-theme);
+  @include mat-table-theme($dark-theme);
+  @include mat-tree-theme($dark-theme);
+  @include subs-theme($dark-theme);
+  @include subs-detail-theme($dark-theme);
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: mat-color(map-get($light-theme, background), "card");
+
+  &.dark {
+    background-color: mat-color(map-get($dark-theme, background), "card");
+  }
+}
+
+html,
+body {
+  height: 100%;
+}

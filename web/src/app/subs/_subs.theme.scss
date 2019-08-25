@@ -1,0 +1,30 @@
+@import "~@angular/material/theming";
+
+@mixin subs-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .mat-column-profile {
+    box-shadow: 12px 0px 20px map-get($background, "card");
+  }
+
+  .updated-at {
+    color: mat-color($foreground, secondary-text);
+  }
+}
+
+.red.mat-cell {
+  color: #b00020;
+}
+
+.green.mat-cell {
+  color: #2e7d32;
+}
+
+.dark .red.mat-cell {
+  color: #ef9a9a;
+}
+
+.dark .green.mat-cell {
+  color: #81c784;
+}

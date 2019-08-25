@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>VTuber 列表 ({{ ids.length }}/{{ count }})</h1>
+
+<div mat-dialog-content>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <mat-checkbox
+        [checked]="itemSelected(node.id)"
+        (change)="toggleItem(node.id)"
+      >
+        {{ node.name }}
+      </mat-checkbox>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      matTreeNodePadding
+    >
+      <button mat-icon-button matTreeNodeToggle>
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        </mat-icon>
+      </button>
+      <mat-checkbox
+        [checked]="groupAllSelected(node.id)"
+        [indeterminate]="groupPartiallySelected(node.id)"
+        (change)="toggleGroup(node.id)"
+      >
+        {{ node.name }}
+      </mat-checkbox>
+    </mat-tree-node>
+  </mat-tree>
+</div>
+
+<div class="dialog-actions" mat-dialog-actions>
+  <button mat-button mat-dialog-close>關閉</button>
+  <button mat-button color="accent" (click)="applyChange()">確定</button>
+</div>

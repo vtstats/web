@@ -1,0 +1,10 @@
+<mat-toolbar class="navbar">
+  HoloStats
+  <button mat-button routerLink="/subs">訂閱</button>
+  <button mat-button routerLink="/stream">同接</button>
+  <span class="spacer"></span>
+  <ng-content></ng-content>
+  <button mat-icon-button (click)="openSettings()">
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

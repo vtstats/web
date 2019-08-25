@@ -1,0 +1,21 @@
+.spacer {
+  flex: 1 0;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.dark {
+  .navbar {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+.logo {
+  color: black;
+
+  svg {
+    fill: black;
+  }
+}

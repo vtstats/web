@@ -1,5 +1,14 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# compiled output
+/dist
+
 # dependencies
 /node_modules
 
+# misc
+yarn-error.log
+
+# System Files
+.DS_Store
+Thumbs.db
