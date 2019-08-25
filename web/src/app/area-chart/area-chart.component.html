@@ -1,0 +1,29 @@
+<ngx-charts-area-chart
+  [autoScale]="true"
+  [scheme]="youtube ? youtubeScheme : bilibiliScheme"
+  [results]="results"
+  [gradient]="true"
+  [xAxis]="true"
+  [yAxis]="true"
+  [xAxisTicks]="xAxisTicks"
+  [xAxisTickFormatting]="dateTickFormatting"
+  [yAxisTickFormatting]="numTickFormatting"
+  [legend]="false"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="false"
+  [roundDomains]="true"
+>
+  <ng-template #tooltipTemplate let-model="model">
+    <p class="tooltip-caption">
+      {{ model.name * 1000 | date: "MM/dd HH:mm" }}
+    </p>
+    <p class="tooltip-caption">{{ model.value | number }}</p>
+  </ng-template>
+
+  <ng-template #seriesTooltipTemplate let-model="model">
+    <p class="tooltip-caption">
+      {{ model[0].name * 1000 | date: "MM/dd HH:mm" }}
+    </p>
+    <p class="tooltip-caption">{{ model[0].value | number }}</p>
+  </ng-template>
+</ngx-charts-area-chart>

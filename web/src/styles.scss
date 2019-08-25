@@ -1,8 +1,9 @@
 @import "~@angular/material/theming";
 
 @import "./theme";
-@import "./app/subs/subs.theme";
+@import "./app/area-chart/area-chart.theme";
 @import "./app/subs-detail/subs-detail.theme";
+@import "./app/subs/subs.theme";
 
 @include mat-core();
 
@@ -20,6 +21,7 @@
 @include mat-tree-theme($light-theme);
 @include subs-theme($light-theme);
 @include subs-detail-theme($light-theme);
+@include area-chart-theme($light-theme);
 
 .dark {
   @include mat-badge-theme($dark-theme);
@@ -36,6 +38,7 @@
   @include mat-tree-theme($dark-theme);
   @include subs-theme($dark-theme);
   @include subs-detail-theme($dark-theme);
+  @include area-chart-theme($dark-theme);
 }
 
 body {
@@ -52,4 +55,13 @@ body {
 html,
 body {
   height: 100%;
+}
+
+$config: mat-typography-config();
+
+.ngx-charts {
+  .tick {
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+  }
 }

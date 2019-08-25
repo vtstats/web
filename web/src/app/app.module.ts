@@ -21,15 +21,17 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 import { AppComponent } from "./app.component";
+import { AreaChartComponent } from "./area-chart";
 import { ColoredNumberDirective } from "./directives";
-import { SubsDetailComponent } from "./subs-detail";
 import { ListDialogComponent } from "./list-dialog";
-import { SettingsSheetComponent } from "./settings-sheet";
-import { SubsComponent } from "./subs";
 import { NavbarComponent } from "./navbar";
-import { environment } from "../environments/environment";
+import { SettingsSheetComponent } from "./settings-sheet";
+import { StreamDetailComponent } from "./stream-detail";
 import { StreamsComponent } from "./streams";
-import { StreamDetailComponent } from "./stream-detail/stream-detail.component";
+import { SubsComponent } from "./subs";
+import { SubsDetailComponent } from "./subs-detail";
+
+import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/subs", pathMatch: "full" },
@@ -42,14 +44,15 @@ const ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AreaChartComponent,
     ColoredNumberDirective,
-    SubsDetailComponent,
     ListDialogComponent,
-    SettingsSheetComponent,
-    SubsComponent,
     NavbarComponent,
+    SettingsSheetComponent,
+    StreamDetailComponent,
     StreamsComponent,
-    StreamDetailComponent
+    SubsComponent,
+    SubsDetailComponent
   ],
   imports: [
     BrowserAnimationsModule,
