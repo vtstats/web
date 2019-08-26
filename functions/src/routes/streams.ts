@@ -22,17 +22,16 @@ router.get("/", cors({ origin: true }), async (req, res) => {
   const response: StreamsResponse = { updatedAt: new Date(), streams: [] };
   if (req.query.ids && typeof req.query.ids == "string") {
     const ids = req.query.ids.split(",");
-    const data = await streamsRef
-      .orderByChild("scheduledStartTime")
-      .once("value");
-    data.forEach(snap => {
-      const val = snap.val();
-      if (snap.key == "_updatedAt") {
-        response.updatedAt = val;
-      } else if (ids.includes(val.vtuberId)) {
-        response.streams.push(val);
+    (await streamsRef.orderByChild("actualStartTime").once("value")).forEach(
+      snap => {
+        const val = snap.val();
+        if (snap.key == "_updatedAt") {
+          response.updatedAt = val;
+        } else if (ids.includes(val.vtuberId)) {
+          response.streams.push(val);
+        }
       }
-    });
+    );
   }
   res.json(response);
 });
@@ -54,7 +53,7 @@ router.post("/", isAuthenticated, async (req, res) => {
   const body: StreamsUpdateRequest = req.body;
   const videos = await listVideos(body.map(v => v.id));
 
-  let fields = { _updatedAt: getUnixTime(new Date()) };
+  let fields = { _updatedAt: new Date() };
 
   for (const video of videos) {
     if (
