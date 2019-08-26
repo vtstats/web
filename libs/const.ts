@@ -1,6 +1,6 @@
-import { VTuberGroup, VTuber } from "./models";
+import { VTuberGroup, VTuberInfo } from "./models";
 
-export const VTUBERS_BY_GROUP: (VTuber | VTuberGroup)[] = [
+export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
   {
     name: "hololive",
     id: "hololive",
@@ -360,10 +360,10 @@ export const VTUBERS_BY_GROUP: (VTuber | VTuberGroup)[] = [
   }
 ];
 
-export const VTUBERS: VTuber[] = VTUBERS_BY_GROUP.reduce(
-  (acc: VTuber[], cur: VTuber | VTuberGroup) =>
+export const VTUBERS: VTuberInfo[] = VTUBERS_BY_GROUP.reduce(
+  (acc: VTuberInfo[], cur: VTuberInfo | VTuberGroup) =>
     "members" in cur ? [...acc, ...cur.members] : [...acc, cur],
-  [] as VTuber[]
+  [] as VTuberInfo[]
 );
 
 export const VTUBER_IDS = VTUBERS.map(v => v.id);
