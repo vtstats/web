@@ -78,7 +78,7 @@ async function _listVideos(id: string[], key: string): Promise<Video[]> {
 
 type Video = {
   id: string;
-  liveStreamingDetails: {
+  liveStreamingDetails?: {
     actualStartTime?: string;
     actualEndTime?: string;
     scheduledStartTime?: string;

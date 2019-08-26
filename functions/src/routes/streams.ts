@@ -59,6 +59,7 @@ router.post("/", isAuthenticated, async (req, res) => {
   for (const video of videos) {
     if (
       !liveStreams.includes(video.id) &&
+      video.liveStreamingDetails &&
       !video.liveStreamingDetails.actualEndTime &&
       video.liveStreamingDetails.scheduledStartTime &&
       differenceInMinutes(
@@ -98,7 +99,10 @@ router.post("/update", isAuthenticated, async (_, res) => {
 
     for (const video of videos) {
       const id = video.id;
-      if (video.liveStreamingDetails.actualEndTime) {
+      if (
+        video.liveStreamingDetails &&
+        video.liveStreamingDetails.actualEndTime
+      ) {
         // TODO:
         liveStreams = liveStreams.filter(id => id != video.id);
         fields = {
@@ -106,7 +110,10 @@ router.post("/update", isAuthenticated, async (_, res) => {
           [`streams/${id}/actualEndTime`]: video.liveStreamingDetails
             .actualEndTime
         };
-      } else if (video.liveStreamingDetails.concurrentViewers) {
+      } else if (
+        video.liveStreamingDetails &&
+        video.liveStreamingDetails.concurrentViewers
+      ) {
         if (video.liveStreamingDetails.actualStartTime) {
           fields = {
             ...fields,
