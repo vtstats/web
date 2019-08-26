@@ -2,117 +2,131 @@ import * as express from "express";
 import * as cors from "cors";
 import { differenceInMinutes, getUnixTime } from "date-fns";
 
-import { VTUBERS } from "../const";
-import { db, youtube } from "../api";
+import { db } from "../admin";
 import { isAuthenticated } from "../middlewares";
+import { listVideos } from "../youtube";
+import {
+  StreamsResponse,
+  StreamDetailResponse,
+  StreamsUpdateRequest
+} from "../models";
 
 const streamsRef = db.ref("streams");
-const viewerStatsRef = db.ref("stats/viewers");
+const rootRef = db.ref("/");
 
 let liveStreams: string[] = [];
 
 export const router = express.Router();
 
 router.get("/", cors({ origin: true }), async (req, res) => {
-  const result: any[] = [];
+  const response: StreamsResponse = { updatedAt: new Date(), streams: [] };
   if (req.query.ids && typeof req.query.ids == "string") {
     const ids = req.query.ids.split(",");
     const data = await streamsRef
       .orderByChild("scheduledStartTime")
       .once("value");
-    data.forEach(d => {
-      const val = d.val();
-      if (ids.includes(val.vtuberId)) {
-        result.push(val);
+    data.forEach(snap => {
+      const val = snap.val();
+      if (snap.key == "_updatedAt") {
+        response.updatedAt = val;
+      } else if (ids.includes(val.vtuberId)) {
+        response.streams.push(val);
       }
     });
   }
-  res.json(result);
+  res.json(response);
 });
 
 router.get("/:id", cors({ origin: true }), async (req, res) => {
   const id = req.params.id;
-  const data = await db.ref(`stats/viewers/${id}`).once("value");
-  res.json(data.val());
+  const [info, stats] = await Promise.all([
+    db.ref(`streams/${id}`).once("value"),
+    db.ref(`stats/viewers/${id}`).once("value")
+  ]);
+  const response: StreamDetailResponse = {
+    ...info.val(),
+    stats: stats.val()
+  };
+  res.json(response);
 });
 
 router.post("/", isAuthenticated, async (req, res) => {
-  if (req.body.videoIds) {
-    const videos: any = await youtube.videos.list({
-      part: "id,liveStreamingDetails,snippet",
-      id: req.body.videoIds.join(",")
-    });
+  const body: StreamsUpdateRequest = req.body;
+  const videos = await listVideos(body.map(v => v.id));
 
-    let fields = {};
+  let fields = { _updatedAt: getUnixTime(new Date()) };
 
-    for (const item of videos.data.items) {
-      if (
-        !liveStreams.includes(item.id) &&
-        "liveStreamingDetails" in item &&
-        !("actualEndTime" in item.liveStreamingDetails) &&
-        "scheduledStartTime" in item.liveStreamingDetails &&
-        differenceInMinutes(
-          new Date(item.liveStreamingDetails.scheduledStartTime),
-          new Date()
-        ) < 10
-      ) {
+  for (const video of videos) {
+    if (
+      !liveStreams.includes(video.id) &&
+      !video.liveStreamingDetails.actualEndTime &&
+      video.liveStreamingDetails.scheduledStartTime &&
+      differenceInMinutes(
+        new Date(video.liveStreamingDetails.scheduledStartTime),
+        new Date()
+      ) < 10
+    ) {
+      const item = body.find(v => v.id == video.id);
+      if (item) {
         liveStreams.push(item.id);
         fields = {
           ...fields,
           [item.id]: {
-            vtuberId: (VTUBERS.find(
-              v => v.youtube == item.snippet.channelId
-            ) as any).id,
+            vtuberId: item.vtuber,
             videoId: item.id,
-            channelId: item.snippet.channelId,
-            title: item.snippet.title
+            title: item.title
           }
         };
       }
     }
-
-    await streamsRef.update(fields);
   }
-  res.sendStatus(200);
+
+  await streamsRef.update(fields);
+
+  res.send(
+    `Live Streams queue updated, there are ${liveStreams.length} items in queue.`
+  );
 });
 
 router.post("/update", isAuthenticated, async (_, res) => {
   if (liveStreams.length > 0) {
-    const videos: any = await youtube.videos.list({
-      part: "id,liveStreamingDetails",
-      id: liveStreams.join(",")
-    });
+    const videos = await listVideos(liveStreams);
 
     const now = getUnixTime(new Date());
 
-    let viewersFields = {};
-    let streamsFields = {};
+    let fields = {};
 
-    for (const item of videos.data.items) {
-      const id = item.id;
-      if ("actualEndTime" in item.liveStreamingDetails) {
+    for (const video of videos) {
+      const id = video.id;
+      if (video.liveStreamingDetails.actualEndTime) {
         // TODO:
-        liveStreams = liveStreams.filter(id => id != item.id);
-        streamsFields = {
-          ...streamsFields,
-          [`${id}/actualStartTime`]: item.liveStreamingDetails.actualStartTime,
-          [`${id}/actualEndTime`]: item.liveStreamingDetails.actualEndTime
+        liveStreams = liveStreams.filter(id => id != video.id);
+        fields = {
+          ...fields,
+          [`streams/${id}/actualEndTime`]: video.liveStreamingDetails
+            .actualEndTime
         };
-      } else if ("concurrentViewers" in item.liveStreamingDetails) {
-        viewersFields = {
-          ...viewersFields,
-          [`${id}/${now}`]: item.liveStreamingDetails.concurrentViewers
+      } else if (video.liveStreamingDetails.concurrentViewers) {
+        if (video.liveStreamingDetails.actualStartTime) {
+          fields = {
+            ...fields,
+            [`streams/${id}/actualStartTime`]: video.liveStreamingDetails
+              .actualStartTime
+          };
+        }
+        fields = {
+          ...fields,
+          [`stats/viewers/${id}/${now}`]: parseInt(
+            video.liveStreamingDetails.concurrentViewers
+          )
         };
       }
     }
 
-    await Promise.all([
-      streamsRef.update(streamsFields),
-      viewerStatsRef.update(viewersFields)
-    ]);
+    await rootRef.update(fields);
 
-    res.sendStatus(200);
+    res.send(`Updated ${liveStreams.length} Live Streams.`);
   } else {
-    res.sendStatus(200);
+    res.send("Nothing to update.");
   }
 });

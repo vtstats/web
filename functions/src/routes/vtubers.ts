@@ -1,31 +1,36 @@
 import * as express from "express";
 import * as cors from "cors";
 import { getUnixTime, subDays } from "date-fns";
-import { VTUBERS } from "../const";
 
+import { VTUBERS } from "../const";
 import { isAuthenticated } from "../middlewares";
-import { db } from "../api";
+import { db } from "../admin";
+import { listChannels } from "../youtube";
+import {
+  VTubersResponse,
+  VTuberDetailResponse,
+  VTubersUpdateRequest
+} from "../models";
 
 const VTUBER_IDS = VTUBERS.map(v => v.id);
 
 export const router = express.Router();
 
+const statsRef = db.ref("stats");
 const vtubersRef = db.ref("vtubers");
 
 router.get("/", cors({ origin: true }), async (req, res) => {
   if (req.query.ids && typeof req.query.ids == "string") {
     const ids = req.query.ids.split(",");
-    const vtubers: any[] = [];
-    let updatedAt = new Date();
+    const response: VTubersResponse = { updatedAt: new Date(), vtubers: [] };
     (await vtubersRef.once("value")).forEach(snap => {
-      const val = snap.val();
-      if (snap.key == "updatedAt") {
-        updatedAt = val;
-      } else if (ids.includes(val.id)) {
-        vtubers.push(val);
+      if (snap.key == "_updatedAt") {
+        response.updatedAt = snap.val();
+      } else if (ids.includes(snap.key)) {
+        response.vtubers.push(snap.val());
       }
     });
-    res.json({ vtubers, updatedAt });
+    res.json(response);
   } else {
     res.json({ vtubers: [] });
   }
@@ -44,19 +49,49 @@ router.get("/:id", cors({ origin: true }), async (req, res) => {
       queryStats(`/stats/bilibiliViews/${id}`),
       queryStats(`/stats/bilibiliSubs/${id}`)
     ]);
-    res.json({
+    const response: VTuberDetailResponse = {
       ...data[0],
       youtubeViews: data[1],
       youtubeSubs: data[2],
       bilibiliViews: data[3],
       bilibiliSubs: data[4]
-    });
+    };
+    res.json(response);
   } else {
     res.json({});
   }
 });
 
-router.post("/update", isAuthenticated, async (_, res) => {
+router.post("/update", isAuthenticated, async (req, res) => {
+  const body: VTubersUpdateRequest = req.body;
+  const now = getUnixTime(new Date());
+
+  const channels = await listChannels(VTUBER_IDS);
+
+  let statsFields: { [path: string]: number } = {};
+
+  for (const channel of channels) {
+    const vtuber: any = VTUBERS.find(v => v.youtube == channel.id);
+    const youtubeViews = parseInt(channel.statistics.viewCount);
+    const youtubeSubs = parseInt(channel.statistics.subscriberCount);
+
+    statsFields = {
+      ...statsFields,
+      [`youtubeViews/${vtuber.id}/${now}`]: youtubeViews,
+      [`youtubeSubs/${vtuber.id}/${now}`]: youtubeSubs
+    };
+  }
+
+  for (const stat of body) {
+    statsFields = {
+      ...statsFields,
+      [`bilibiliViews/${stat.id}/${now}`]: stat.views,
+      [`bilibiliSubs/${stat.id}/${now}`]: stat.subs
+    };
+  }
+
+  await statsRef.update(statsFields);
+
   const promises: Promise<number>[] = [];
   for (const id of VTUBER_IDS) {
     promises.push(getNewest(`/stats/bilibiliSubs/${id}`));
@@ -69,10 +104,12 @@ router.post("/update", isAuthenticated, async (_, res) => {
     promises.push(getOneDayAgo(`/stats/youtubeViews/${id}`));
   }
   const result = await Promise.all(promises);
-  let fields = {};
+
+  let vtuberFields: { [path: string]: number } = { _updatedAt: now };
+
   VTUBER_IDS.forEach((id, i) => {
-    fields = {
-      ...fields,
+    vtuberFields = {
+      ...vtuberFields,
       [`${id}/bilibiliStats/dailySubs`]: result[i * 8] - result[i * 8 + 1],
       [`${id}/bilibiliStats/subs`]: result[i * 8],
       [`${id}/bilibiliStats/dailyViews`]: result[i * 8 + 2] - result[i * 8 + 3],
@@ -83,7 +120,9 @@ router.post("/update", isAuthenticated, async (_, res) => {
       [`${id}/youtubeStats/views`]: result[i * 8 + 6]
     };
   });
-  await vtubersRef.update(fields);
+
+  await vtubersRef.update(vtuberFields);
+
   res.send(`Updated ${VTUBER_IDS.length} VTubers status.`);
 });
 

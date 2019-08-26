@@ -1,15 +1,13 @@
 import * as functions from "firebase-functions";
 
-import { db } from "./api";
+import { db } from "./admin";
 
 const streamsRef = db.ref("/streams");
 
 export const updateStreamStatus = functions.database
   .ref("/stats/viewers/{id}")
   .onUpdate((snap, ctx) => {
-    const viewers = Object.values(snap.after.val()).map((val: any) =>
-      parseInt(val)
-    );
+    const viewers: number[] = Object.values(snap.after.val());
     return streamsRef.update({
       [`${ctx.params.id}/maxViewers`]: Math.max(...viewers),
       [`${ctx.params.id}/avgViewers`]: Math.floor(
