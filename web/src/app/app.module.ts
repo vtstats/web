@@ -6,15 +6,16 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import {
   MatBadgeModule,
   MatBottomSheetModule,
-  MatToolbarModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule,
   MatIconModule,
   MatListModule,
+  MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSortModule,
   MatTableModule,
+  MatToolbarModule,
   MatTreeModule
 } from "@angular/material";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -33,6 +34,7 @@ import { VTubersComponent } from "./vtubers";
 import { VTubersDetailComponent } from "./vtubers-detail";
 
 import { environment } from "../environments/environment";
+import { DurationPipe } from './pipes/duration.pipe';
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/vtuber", pathMatch: "full" },
@@ -53,7 +55,8 @@ const ROUTES: Routes = [
     StreamsComponent,
     StreamsDetailComponent,
     VTubersComponent,
-    VTubersDetailComponent
+    VTubersDetailComponent,
+    DurationPipe
   ],
   imports: [
     BrowserAnimationsModule,
@@ -68,6 +71,7 @@ const ROUTES: Routes = [
     MatDialogModule,
     MatIconModule,
     MatListModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
