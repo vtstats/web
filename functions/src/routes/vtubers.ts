@@ -1,155 +1,71 @@
 import * as express from "express";
-import * as cors from "cors";
-import { getUnixTime, subDays } from "date-fns";
+import { differenceInMinutes, parseISO } from "date-fns";
 
-import { VTUBERS } from "../const";
-import { isAuthenticated } from "../middlewares";
 import { db } from "../admin";
-import { listChannels } from "../youtube";
-import {
-  VTubersResponse,
-  VTuberDetailResponse,
-  VTubersUpdateRequest
-} from "../models";
-
-const VTUBER_IDS = VTUBERS.map(v => v.id);
+import { VTubersResponse, VTuberDetailResponse, VTuber } from "../models";
 
 export const router = express.Router();
 
-const statsRef = db.ref("stats");
 const vtubersRef = db.ref("vtubers");
 
-router.get("/", cors({ origin: true }), async (req, res) => {
+let cache = { updatedAt: new Date(0), vtubers: [] as VTuber[] };
+
+router.get("/", async (req, res) => {
+  let ids: string[] = [];
   if (req.query.ids && typeof req.query.ids == "string") {
-    const ids = req.query.ids.split(",");
-    const response: VTubersResponse = { updatedAt: new Date(), vtubers: [] };
-    (await vtubersRef.once("value")).forEach(snap => {
+    ids = req.query.ids.split(",");
+  }
+
+  if (differenceInMinutes(new Date(), cache.updatedAt) > 30) {
+    let query = await vtubersRef.once("value");
+    cache.vtubers = [];
+    query.forEach(snap => {
       if (snap.key == "_updatedAt") {
-        response.updatedAt = snap.val();
-      } else if (ids.includes(snap.key)) {
-        response.vtubers.push(snap.val());
+        cache.updatedAt = parseISO(snap.val());
+      } else {
+        cache.vtubers.push(snap.val());
       }
     });
-    res.json(response);
-  } else {
-    res.json({ vtubers: [] });
   }
+
+  const filtered = cache.vtubers.filter(v => ids.includes(v.id));
+
+  const response: VTubersResponse = {
+    total: filtered.length,
+    updatedAt: cache.updatedAt.toISOString(),
+    vtubers: filtered
+  };
+
+  res.json(response);
 });
 
-router.get("/:id", cors({ origin: true }), async (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  if (VTUBER_IDS.includes(id)) {
-    const data = await Promise.all([
-      db
-        .ref(`/vtubers/${id}`)
-        .once("value")
-        .then(snap => snap.val()),
-      queryStats(`/stats/youtubeViews/${id}`),
-      queryStats(`/stats/youtubeSubs/${id}`),
-      queryStats(`/stats/bilibiliViews/${id}`),
-      queryStats(`/stats/bilibiliSubs/${id}`)
-    ]);
-    const response: VTuberDetailResponse = {
-      ...data[0],
-      youtubeViews: data[1],
-      youtubeSubs: data[2],
-      bilibiliViews: data[3],
-      bilibiliSubs: data[4]
-    };
-    res.json(response);
-  } else {
-    res.json({});
-  }
-});
+  const [info, stats] = await Promise.all([
+    db.ref(`/vtubers/${id}`).once("value"),
+    db.ref(`/vtuberStats/${id}`).once("value")
+  ]);
 
-router.post("/update", isAuthenticated, async (req, res) => {
-  const body: VTubersUpdateRequest = req.body;
-  const now = getUnixTime(new Date());
+  let youtubeSubs: { [time: string]: number } = {};
+  let youtubeViews: { [time: string]: number } = {};
+  let bilibiliSubs: { [time: string]: number } = {};
+  let bilibiliViews: { [time: string]: number } = {};
 
-  const channels = await listChannels(VTUBER_IDS);
-
-  let statsFields: { [path: string]: number } = {};
-
-  for (const channel of channels) {
-    const vtuber: any = VTUBERS.find(v => v.youtube == channel.id);
-    const youtubeViews = parseInt(channel.statistics.viewCount);
-    const youtubeSubs = parseInt(channel.statistics.subscriberCount);
-
-    statsFields = {
-      ...statsFields,
-      [`youtubeViews/${vtuber.id}/${now}`]: youtubeViews,
-      [`youtubeSubs/${vtuber.id}/${now}`]: youtubeSubs
-    };
-  }
-
-  for (const stat of body) {
-    statsFields = {
-      ...statsFields,
-      [`bilibiliViews/${stat.id}/${now}`]: stat.views,
-      [`bilibiliSubs/${stat.id}/${now}`]: stat.subs
-    };
-  }
-
-  await statsRef.update(statsFields);
-
-  const promises: Promise<number>[] = [];
-  for (const id of VTUBER_IDS) {
-    promises.push(getNewest(`/stats/bilibiliSubs/${id}`));
-    promises.push(getOneDayAgo(`/stats/bilibiliSubs/${id}`));
-    promises.push(getNewest(`/stats/bilibiliViews/${id}`));
-    promises.push(getOneDayAgo(`/stats/bilibiliViews/${id}`));
-    promises.push(getNewest(`/stats/youtubeSubs/${id}`));
-    promises.push(getOneDayAgo(`/stats/youtubeSubs/${id}`));
-    promises.push(getNewest(`/stats/youtubeViews/${id}`));
-    promises.push(getOneDayAgo(`/stats/youtubeViews/${id}`));
-  }
-  const result = await Promise.all(promises);
-
-  let vtuberFields: { [path: string]: number } = { _updatedAt: now };
-
-  VTUBER_IDS.forEach((id, i) => {
-    vtuberFields = {
-      ...vtuberFields,
-      [`${id}/bilibiliStats/dailySubs`]: result[i * 8] - result[i * 8 + 1],
-      [`${id}/bilibiliStats/subs`]: result[i * 8],
-      [`${id}/bilibiliStats/dailyViews`]: result[i * 8 + 2] - result[i * 8 + 3],
-      [`${id}/bilibiliStats/views`]: result[i * 8 + 2],
-      [`${id}/youtubeStats/dailySubs`]: result[i * 8 + 4] - result[i * 8 + 5],
-      [`${id}/youtubeStats/subs`]: result[i * 8 + 4],
-      [`${id}/youtubeStats/dailyViews`]: result[i * 8 + 6] - result[i * 8 + 7],
-      [`${id}/youtubeStats/views`]: result[i * 8 + 6]
-    };
+  stats.forEach(snap => {
+    const val = snap.val();
+    let key = snap.key as string;
+    youtubeSubs = { ...youtubeSubs, [key]: val[0] };
+    youtubeViews = { ...youtubeViews, [key]: val[1] };
+    bilibiliSubs = { ...bilibiliSubs, [key]: val[2] };
+    bilibiliViews = { ...bilibiliViews, [key]: val[3] };
   });
 
-  await vtubersRef.update(vtuberFields);
-
-  res.send(`Updated ${VTUBER_IDS.length} VTubers status.`);
+  const response: VTuberDetailResponse = {
+    ...info.val(),
+    youtubeViews,
+    youtubeSubs,
+    bilibiliViews,
+    bilibiliSubs
+  };
+  res.json(response);
 });
-
-async function queryStats(path: string): Promise<{ [time: string]: number }> {
-  return db
-    .ref(path)
-    .once("value")
-    .then(snap => snap.val());
-}
-
-async function getOneDayAgo(path: string): Promise<number> {
-  return db
-    .ref(path)
-    .orderByKey()
-    .startAt(getUnixTime(subDays(new Date(), 1)).toString())
-    .limitToFirst(1)
-    .once("value")
-    .then(snap => snap.val())
-    .then(obj => obj[Object.keys(obj)[0]]);
-}
-
-async function getNewest(path: string): Promise<number> {
-  return db
-    .ref(path)
-    .orderByKey()
-    .limitToLast(1)
-    .once("value")
-    .then(snap => snap.val())
-    .then(obj => obj[Object.keys(obj)[0]]);
-}

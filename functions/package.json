@@ -1,6 +1,7 @@
 {
   "name": "@holostats/functions",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "serve": "npm run build && firebase serve --only functions",
@@ -14,7 +15,6 @@
     "node": "10"
   },
   "dependencies": {
-    "axios": "^0.19.0",
     "cors": "^2.8.5",
     "date-fns": "^2.0.1",
     "express": "^4.17.1",
@@ -24,6 +24,5 @@
   "devDependencies": {
     "@types/cors": "^2.8.6",
     "typescript": "^3.2.2"
-  },
-  "private": true
+  }
 }
