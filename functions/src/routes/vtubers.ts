@@ -2,13 +2,11 @@ import * as express from "express";
 import { differenceInMinutes, parseISO } from "date-fns";
 
 import { db } from "../admin";
-import { VTubersResponse, VTuberDetailResponse, VTuber } from "../models";
+import { VTubersListResponse, VTuberDetailResponse, VTuber } from "../models";
 
 export const router = express.Router();
 
-const vtubersRef = db.ref("vtubers");
-
-let cache = { updatedAt: new Date(0), vtubers: [] as VTuber[] };
+const cache = { updatedAt: new Date(0), vtubers: [] as VTuber[] };
 
 router.get("/", async (req, res) => {
   let ids: string[] = [];
@@ -17,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 
   if (differenceInMinutes(new Date(), cache.updatedAt) > 30) {
-    let query = await vtubersRef.once("value");
+    let query = await db.ref("/vtubers").once("value");
     cache.vtubers = [];
     query.forEach(snap => {
       if (snap.key == "_updatedAt") {
@@ -26,11 +24,12 @@ router.get("/", async (req, res) => {
         cache.vtubers.push(snap.val());
       }
     });
+    console.info("VTuber", "cache updated");
   }
 
   const filtered = cache.vtubers.filter(v => ids.includes(v.id));
 
-  const response: VTubersResponse = {
+  const response: VTubersListResponse = {
     total: filtered.length,
     updatedAt: cache.updatedAt.toISOString(),
     vtubers: filtered

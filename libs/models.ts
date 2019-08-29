@@ -30,27 +30,28 @@ export type VTuberGroup = {
 
 export type Stat = { [id: number]: number };
 
-export type LiveStream = {
-  actualEndTime?: Date;
-  actualStartTime?: Date;
+export type Stream = {
+  start: string;
+  end?: string;
 
-  avgViewers: number;
-  maxViewers: number;
-  channelId: string;
+  avgViewers?: number;
+  maxViewers?: number;
   title: string;
-  videoId: string;
+  id: string;
   vtuberId: string;
 };
 
-export type StreamsResponse = {
-  updatedAt: Date;
-  streams: Array<LiveStream>;
+export type StreamsListResponse = {
+  total: number;
+  updatedAt: string;
+  streams: Array<Stream>;
 };
 
-export type StreamDetailResponse = LiveStream & { stats: Stat };
+export type StreamDetailResponse = Stream & { stats: Stat };
 
-export type VTubersResponse = {
-  updatedAt: Date;
+export type VTubersListResponse = {
+  total: number;
+  updatedAt: string;
   vtubers: Array<VTuber>;
 };
 
@@ -60,15 +61,3 @@ export type VTuberDetailResponse = VTuber & {
   youtubeSubs: Stat;
   youtubeViews: Stat;
 };
-
-export type StreamsUpdateRequest = Array<{
-  id: string;
-  title: string;
-  vtuber: string;
-}>;
-
-export type VTubersUpdateRequest = Array<{
-  id: string;
-  views: number;
-  subs: number;
-}>;

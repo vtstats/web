@@ -2,13 +2,11 @@ import * as express from "express";
 import { differenceInMinutes, parseISO } from "date-fns";
 
 import { db } from "../admin";
-import { LiveStream, StreamsResponse, StreamDetailResponse } from "../models";
-
-const streamsRef = db.ref("streams");
+import { Stream, StreamsListResponse, StreamDetailResponse } from "../models";
 
 export const router = express.Router();
 
-let cache = { updatedAt: new Date(0), streams: [] as LiveStream[] };
+const cache = { updatedAt: new Date(0), streams: [] as Stream[] };
 
 router.get("/", async (req, res) => {
   let ids: string[] = [];
@@ -17,7 +15,10 @@ router.get("/", async (req, res) => {
   }
 
   if (differenceInMinutes(new Date(), cache.updatedAt) > 10) {
-    let query = await streamsRef.orderByChild("actualStartTime").once("value");
+    let query = await db
+      .ref("/streams")
+      .orderByChild("start")
+      .once("value");
     cache.streams = [];
     query.forEach(snap => {
       if (snap.key == "_updatedAt") {
@@ -26,15 +27,17 @@ router.get("/", async (req, res) => {
         cache.streams.push(snap.val());
       }
     });
+    console.info("Streams", "cache updated");
   }
 
   const filtered = cache.streams.filter(s => ids.includes(s.vtuberId));
 
-  const response: StreamsResponse = {
+  const response: StreamsListResponse = {
     updatedAt: cache.updatedAt.toISOString(),
     streams: filtered,
     total: filtered.length
   };
+
   res.json(response);
 });
 
