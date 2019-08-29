@@ -32,9 +32,9 @@ import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
 import { VTubersComponent } from "./vtubers";
 import { VTubersDetailComponent } from "./vtubers-detail";
+import { DurationPipe, SortByDatePipe, DistancePipe } from "./pipes";
 
 import { environment } from "../environments/environment";
-import { DurationPipe } from './pipes/duration.pipe';
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/vtuber", pathMatch: "full" },
@@ -56,7 +56,9 @@ const ROUTES: Routes = [
     StreamsDetailComponent,
     VTubersComponent,
     VTubersDetailComponent,
-    DurationPipe
+    DistancePipe,
+    DurationPipe,
+    SortByDatePipe
   ],
   imports: [
     BrowserAnimationsModule,
