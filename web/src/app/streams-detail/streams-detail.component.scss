@@ -7,17 +7,16 @@ $config: mat-typography-config();
   padding: 24px;
 }
 
-  .title {
-    font-size: mat-font-size($config, title);
-    font-weight: mat-font-weight($config, title);
-    padding-bottom: 12px;
-  }
-
+.title {
+  font-size: mat-font-size($config, title);
+  font-weight: mat-font-weight($config, title);
+  padding-bottom: 12px;
+}
 
 .info {
   text-align: center;
 
-  .cover{
+  .cover {
     width: 100%;
   }
 }

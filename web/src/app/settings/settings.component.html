@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar">
   <button mat-icon-button (click)="backClicked()">
-    <mat-icon>arrow_back</mat-icon>
+    <mat-icon svgIcon="arrow_back"></mat-icon>
   </button>
   设置
 </mat-toolbar>
@@ -35,8 +35,12 @@
       matTreeNodePadding
     >
       <button mat-icon-button matTreeNodeToggle>
-        <mat-icon class="mat-icon-rtl-mirror">
-          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        <mat-icon
+          class="mat-icon-rtl-mirror"
+          [svgIcon]="
+            treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'
+          "
+        >
         </mat-icon>
       </button>
       <mat-checkbox
