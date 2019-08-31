@@ -13,18 +13,20 @@
   }
 }
 
-.red.mat-cell {
+.red.mat-cell, .red.mat-footer-cell {
   color: #b00020;
 }
 
-.green.mat-cell {
+.green.mat-cell, .green.mat-footer-cell {
   color: #2e7d32;
 }
 
-.dark .red.mat-cell {
+.dark {
+.red.mat-cell, .red.mat-footer-cell {
   color: #ef9a9a;
 }
 
-.dark .green.mat-cell {
+.green.mat-cell, .green.mat-footer-cell {
   color: #81c784;
+}
 }

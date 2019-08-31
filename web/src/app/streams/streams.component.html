@@ -1,1 +1,55 @@
-<hs-navbar></hs-navbar>
+<hs-navbar>
+  <span class="updated-at">
+    更新于 <b>{{ updatedAt | date: "MM/dd HH:mm" }}</b>
+  </span>
+</hs-navbar>
+
+<div class="content" fxLayout="row wrap" fxLayoutAlign="start">
+  <div
+    class="stream"
+    *ngFor="let stream of streams | sortByDate"
+    fxLayout="row"
+    fxFlex="48"
+    fxFlex.lt-sm="100"
+  >
+    <a
+      fxFlex="35"
+      [routerLink]="['/stream', stream.id]"
+      fxLayout="column"
+      fxLayoutAlign="center"
+    >
+      <div class="thumbnail">
+        <img src="https://img.youtube.com/vi/{{ stream.id }}/mqdefault.jpg" />
+        <div class="duration">
+          {{ stream.start | duration: stream.end }}
+        </div>
+      </div>
+    </a>
+    <div class="info" fxFlex="65" fxLayout="column">
+      <div fxFlex>
+        <div class="title" title="{{ stream.title }}">
+          {{ stream.title }}
+        </div>
+      </div>
+      <div class="viewers" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="view-icon">remove_red_eye</mat-icon>
+        <span title="平均同接 / 最高同接">
+          {{ (stream.avgViewers | number) || " ---- " }} /
+          {{ (stream.maxViewers | number) || " ---- " }}
+        </span>
+      </div>
+      <div class="time" fxLayout="row" fxLayoutAlign="start center">
+        <ng-container *ngIf="findVTuber(stream.vtuberId); let vtuber">
+          <img
+            class="profile"
+            src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+          />
+          <span class="name">{{ vtuber.name }}</span>
+        </ng-container>
+        <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
+          {{ stream.start | distance }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

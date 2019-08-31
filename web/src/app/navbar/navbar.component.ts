@@ -12,9 +12,9 @@ export class NavbarComponent {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       "holo-stats",
-      sanitizer.bypassSecurityTrustResourceUrl("assets/logo.svg")
+      this.sanitizer.bypassSecurityTrustResourceUrl("assets/logo.svg")
     );
   }
 }

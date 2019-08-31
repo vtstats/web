@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-
 import { ActivatedRoute } from "@angular/router";
 import {
   format,
@@ -9,22 +8,23 @@ import {
   getUnixTime,
   subMinutes
 } from "date-fns";
+import { switchMap } from "rxjs/operators";
+import { Stream } from "@holostats/libs/models";
 
 import { ApiService } from "../services";
-
-import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "hs-streams-detail",
   templateUrl: "./streams-detail.component.html",
-  styleUrls: ["./streams-detail.component.css"]
+  styleUrls: ["./streams-detail.component.scss"]
 })
 export class StreamsDetailComponent implements OnInit {
   constructor(private service: ApiService, private route: ActivatedRoute) {}
 
   view = [600, 200];
 
-  viewerStats = [];
+  stream: Stream;
+  stats = [];
 
   youtubeColorScheme = { domain: ["#e00404"] };
 
@@ -33,8 +33,8 @@ export class StreamsDetailComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap
       .pipe(switchMap(params => this.service.getStreamStat(params.get("id"))))
-      .subscribe(stats => {
-        const series = Object.entries(stats).map(([name, value]) => ({
+      .subscribe(res => {
+        const series = Object.entries(res.stats).map(([name, value]) => ({
           value,
           name: parseInt(name)
         }));
@@ -53,7 +53,8 @@ export class StreamsDetailComponent implements OnInit {
           getUnixTime(end)
         ];
         console.log(this.xAxisTicks);
-        this.viewerStats.push({ name: "viewerStats", series });
+        this.stream = res;
+        this.stats.push({ name: "viewerStats", series });
       });
   }
 

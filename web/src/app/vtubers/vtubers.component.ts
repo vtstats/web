@@ -2,7 +2,7 @@ import { OnInit, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
 import { switchMap } from "rxjs/operators";
 
-import { VTuberDocument } from "@holostats/libs/models";
+import { VTuber } from "@holostats/libs/models";
 
 import { ConfigService, ApiService } from "../services";
 
@@ -19,7 +19,7 @@ export class VTubersComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  updatedAt: Date = new Date(0);
+  updatedAt = "";
 
   displayedColumns: string[] = [
     "profile",
@@ -34,7 +34,7 @@ export class VTubersComponent implements OnInit {
     "bilibiliDailyViews"
   ];
 
-  dataSource: MatTableDataSource<VTuberDocument> = new MatTableDataSource([]);
+  dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
 
   ngOnInit() {
     this.configService.subscribeIds$
@@ -69,7 +69,7 @@ export class VTubersComponent implements OnInit {
     };
   }
 
-  getTotal = (path: (_: VTuberDocument) => number) =>
+  getTotal = (path: (_: VTuber) => number) =>
     this.dataSource.data.map(path).reduce((acc, value) => acc + value, 0);
   totalYoutubeSubs = () => this.getTotal(v => v.youtubeStats.subs);
   totalYoutubeDailySubs = () => this.getTotal(v => v.youtubeStats.dailySubs);

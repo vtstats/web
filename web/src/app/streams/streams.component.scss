@@ -1,0 +1,92 @@
+@import "../../theme.scss";
+
+$config: mat-typography-config();
+
+.content {
+  padding: 0 20px;
+}
+
+.updated-at {
+  font-size: mat-font-size($config, body-1);
+  font-weight: mat-font-weight($config, body-2);
+}
+
+.thumbnail {
+  position: relative;
+
+  img {
+    width: 100%;
+  }
+
+  .duration {
+    position: absolute;
+    bottom: 8px;
+    right: 4px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+  }
+
+  .duration-text {
+    margin: 0px;
+    padding: 0px;
+    line-height: mat-font-size($config, caption) * 2;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+  }
+}
+
+.info {
+  padding: 8px;
+  min-height: 100%;
+
+  .title {
+    position: relative;
+    line-height: 1.2em;
+    height: 2.4em;
+    font-size: mat-font-size($config, body-1);
+    font-weight: mat-font-weight($config, body-1);
+    overflow: hidden;
+
+    &:after {
+      content: "";
+      text-align: right;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40%;
+      height: 1.2em;
+    }
+  }
+
+  .time,
+  .viewers {
+    vertical-align: middle;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-1);
+  }
+
+  .name {
+    &:after {
+      content: "•";
+      margin: 4px;
+    }
+  }
+
+  .profile {
+    padding-right: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  .view-icon {
+    font-size: 18px;
+    height: 18px;
+    line-height: 18px;
+    width: 18px;
+    padding: 4px;
+  }
+}

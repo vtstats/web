@@ -1,0 +1,51 @@
+@import "../../theme.scss";
+
+$config: mat-typography-config();
+
+.content {
+  padding: 32px 0;
+  padding: 24px;
+}
+
+  .title {
+    font-size: mat-font-size($config, title);
+    font-weight: mat-font-weight($config, title);
+    padding-bottom: 12px;
+  }
+
+
+.info {
+  text-align: center;
+
+  .cover{
+    width: 100%;
+  }
+}
+
+.number {
+  height: 192px;
+  text-align: center;
+
+  .value {
+    font-size: mat-font-size($config, display-1);
+    font-weight: mat-font-weight($config, display-1);
+  }
+
+  .caption {
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+  }
+}
+
+.chart {
+  height: 250px;
+  display: grid;
+  padding-top: 24px;
+
+  .caption {
+    text-align: center;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, body-2);
+    padding-bottom: 24px;
+  }
+}

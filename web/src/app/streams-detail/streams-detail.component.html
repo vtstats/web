@@ -1,28 +1,76 @@
 <hs-navbar></hs-navbar>
 
-<ng-container *ngIf="viewerStats.length != 0">
-  <ngx-charts-line-chart
-    [view]="view"
-    [scheme]="youtubeColorScheme"
-    [results]="viewerStats"
-    [gradient]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [xAxisTicks]="xAxisTicks"
-    [xAxisTickFormatting]="dateTickFormatting"
-    [legend]="false"
-    [showXAxisLabel]="false"
-    [showYAxisLabel]="false"
-    [roundDomains]="true"
-  >
-    <ng-template #tooltipTemplate let-model="model">
-      <p>{{ model.name * 1000 | date: "MM/dd HH:mm:ss" }}</p>
-      <p>{{ model.value | number }} 同接</p>
-    </ng-template>
+<ng-container *ngIf="stats.length != 0">
+  <div class="content" fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <div class="title" title="{{ stream.title }}">
+      {{ stream.title }}
+    </div>
+    <div class="info" fxFlex="55" fxFlex.lt-sm="100">
+      <img
+        class="cover"
+        src="https://img.youtube.com/vi/{{ stream.id }}/maxresdefault.jpg"
+      />
+    </div>
+    <div
+      class="number"
+      fxFlex="45"
+      fxFlex.lt-sm="100"
+      fxLayout="column"
+      fxLayoutAlign="space-around"
+    >
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <div flex="50">
+          <div class="value">
+            {{ stream.start | date: "HH:mm:ss" }}
+          </div>
+          <div class="caption">直播開始</div>
+        </div>
+        <div flex="50">
+          <div class="value">
+            {{ stream.start | duration: stream.end }}
+          </div>
+          <div class="caption">直播持續</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <div flex="50">
+          <div class="value">
+            {{ (stream.avgViewers | number) || " ----- " }}
+          </div>
+          <div class="caption">平均同接</div>
+        </div>
+        <div flex="50">
+          <div class="value">
+            {{ (stream.maxViewers | number) || " ----- " }}
+          </div>
+          <div class="caption">最高同接</div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" class="chart">
+      <ngx-charts-line-chart
+        [scheme]="youtubeColorScheme"
+        [results]="stats"
+        [gradient]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [xAxisTicks]="xAxisTicks"
+        [xAxisTickFormatting]="dateTickFormatting"
+        [legend]="false"
+        [showXAxisLabel]="false"
+        [showYAxisLabel]="false"
+        [roundDomains]="true"
+      >
+        <ng-template #tooltipTemplate let-model="model">
+          <p>{{ model.name * 1000 | date: "MM/dd HH:mm:ss" }}</p>
+          <p>{{ model.value | number }} 同接</p>
+        </ng-template>
 
-    <ng-template #seriesTooltipTemplate let-model="model">
-      <p>{{ model[0].name * 1000 | date: "MM/dd HH:mm:ss" }}</p>
-      <p>{{ model[0].value | number }} 同接</p>
-    </ng-template>
-  </ngx-charts-line-chart>
+        <ng-template #seriesTooltipTemplate let-model="model">
+          <p>{{ model[0].name * 1000 | date: "MM/dd HH:mm:ss" }}</p>
+          <p>{{ model[0].value | number }} 同接</p>
+        </ng-template>
+      </ngx-charts-line-chart>
+    </div>
+  </div>
 </ng-container>

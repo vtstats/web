@@ -63,3 +63,7 @@ $config: mat-typography-config();
     font-weight: mat-font-weight($config, body-2);
   }
 }
+
+.mat-sort-header-container {
+  justify-content: flex-end;
+}

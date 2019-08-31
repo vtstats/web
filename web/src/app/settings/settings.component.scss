@@ -11,3 +11,13 @@
   padding: 0 20px;
   margin: 0px;
 }
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.dark {
+  .navbar {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}

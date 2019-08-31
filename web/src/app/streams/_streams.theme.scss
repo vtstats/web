@@ -1,0 +1,18 @@
+@import "~@angular/material/theming";
+
+@mixin streams-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .title:after {
+    background: linear-gradient(
+      to right,
+      transparent,
+      mat-color($background, card) 100%
+    );
+  }
+
+  .updated-at {
+    color: mat-color($foreground, secondary-text);
+  }
+}
