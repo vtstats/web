@@ -17,7 +17,12 @@ export class ConfigService {
       .filter((id, i, ids) => ids.indexOf(id) === i)
   );
 
+  private enableDarkModeSource = new BehaviorSubject<boolean>(
+    localStorage.getItem("holostats:enableDarkMode") !== null
+  );
+
   subscribeIds$ = this.subscribeIdsSource.asObservable();
+  enableDarkMode$ = this.enableDarkModeSource.asObservable();
 
   setSubscribeIds(ids: string[]) {
     let filteredIds = ids
@@ -29,5 +34,17 @@ export class ConfigService {
 
   getSubscribeIds(): string[] {
     return this.subscribeIdsSource.value;
+  }
+
+  toggleDarkMode() {
+    if (this.enableDarkModeSource.value) {
+      this.enableDarkModeSource.next(false);
+      localStorage.removeItem("holostats:enableDarkMode");
+      document.body.classList.remove("dark");
+    } else {
+      this.enableDarkModeSource.next(true);
+      localStorage.setItem("holostats:enableDarkMode", "t");
+      document.body.classList.add("dark");
+    }
   }
 }

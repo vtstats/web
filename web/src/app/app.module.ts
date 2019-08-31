@@ -4,15 +4,12 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {
-  MatBadgeModule,
-  MatBottomSheetModule,
   MatButtonModule,
   MatCheckboxModule,
-  MatDialogModule,
   MatIconModule,
   MatListModule,
-  MatPaginatorModule,
   MatProgressSpinnerModule,
+  MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule,
@@ -25,9 +22,8 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
 import { ColoredNumberDirective } from "./directives";
-import { ListDialogComponent } from "./list-dialog";
 import { NavbarComponent } from "./navbar";
-import { SettingsSheetComponent } from "./settings-sheet";
+import { SettingsComponent } from "./settings";
 import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
 import { VTubersComponent } from "./vtubers";
@@ -41,7 +37,8 @@ const ROUTES: Routes = [
   { path: "stream", component: StreamsComponent },
   { path: "stream/:id", component: StreamsDetailComponent },
   { path: "vtuber", component: VTubersComponent },
-  { path: "vtuber/:id", component: VTubersDetailComponent }
+  { path: "vtuber/:id", component: VTubersDetailComponent },
+  { path: "settings", component: SettingsComponent }
 ];
 
 @NgModule({
@@ -49,9 +46,8 @@ const ROUTES: Routes = [
     AppComponent,
     AreaChartComponent,
     ColoredNumberDirective,
-    ListDialogComponent,
     NavbarComponent,
-    SettingsSheetComponent,
+    SettingsComponent,
     StreamsComponent,
     StreamsDetailComponent,
     VTubersComponent,
@@ -65,16 +61,13 @@ const ROUTES: Routes = [
     BrowserModule,
     FlexLayoutModule,
     HttpClientModule,
-    MatBadgeModule,
     MatToolbarModule,
-    MatBottomSheetModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDialogModule,
     MatIconModule,
     MatListModule,
-    MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
     MatTreeModule,
@@ -84,7 +77,6 @@ const ROUTES: Routes = [
       enabled: environment.production
     })
   ],
-  entryComponents: [ListDialogComponent, SettingsSheetComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

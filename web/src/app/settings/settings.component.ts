@@ -1,25 +1,31 @@
-import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { VERSION, Component } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener
 } from "@angular/material/tree";
+import { Location } from "@angular/common";
 
 import { VTUBERS, VTUBERS_BY_GROUP } from "@holostats/libs/const";
-import { VTuber, VTuberGroup } from "@holostats/libs/models";
+import { VTuberInfo, VTuberGroup } from "@holostats/libs/models";
 
 import { ConfigService } from "../services";
 
-type VTuberNode = VTuber | VTuberGroup;
+type VTuberNode = VTuberInfo | VTuberGroup;
 type VTuberFlatNode = VTuberNode & { level: number };
 
 @Component({
-  selector: "list-dialog",
-  templateUrl: "./list-dialog.component.html",
-  styles: [".dialog-actions { float: right; }"]
+  selector: "hs-settings",
+  templateUrl: "./settings.component.html",
+  styleUrls: ["./settings.component.scss"]
 })
-export class ListDialogComponent {
+export class SettingsComponent {
+  readonly ANGULAR_VERSION = VERSION.full;
+
+  toggleDarkTheme() {
+    this.configService.toggleDarkMode();
+  }
+
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     node => node.level,
     node => ("members" in node ? true : false)
@@ -42,11 +48,16 @@ export class ListDialogComponent {
 
   count = VTUBERS.length;
 
+  enableDarkMode = true;
+
   constructor(
-    public dialogRef: MatDialogRef<ListDialogComponent>,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private location: Location
   ) {
     this.dataSource.data = VTUBERS_BY_GROUP;
+    this.configService.enableDarkMode$.subscribe(
+      val => (this.enableDarkMode = val)
+    );
   }
 
   getMemberIds(groupId: string) {
@@ -61,6 +72,7 @@ export class ListDialogComponent {
     } else {
       this.ids.push(id);
     }
+    this.configService.setSubscribeIds(this.ids);
   }
 
   toggleGroup(id: string) {
@@ -70,6 +82,7 @@ export class ListDialogComponent {
     } else {
       memberIds.forEach(id => this.ids.push(id));
     }
+    this.configService.setSubscribeIds(this.ids);
   }
 
   itemSelected(id: string): boolean {
@@ -89,7 +102,10 @@ export class ListDialogComponent {
   }
 
   applyChange() {
-    this.dialogRef.close();
     this.configService.setSubscribeIds(this.ids);
+  }
+
+  backClicked() {
+    this.location.back();
   }
 }

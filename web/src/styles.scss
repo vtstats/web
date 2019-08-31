@@ -2,56 +2,45 @@
 
 @import "./theme";
 @import "./app/area-chart/area-chart.theme";
-@import "./app/vtubers/vtubers.theme";
+@import "./app/streams/streams.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
+@import "./app/vtubers/vtubers.theme";
 
 @include mat-core();
 
-@include mat-badge-theme($light-theme);
-@include mat-bottom-sheet-theme($light-theme);
-@include mat-button-theme($light-theme);
-@include mat-checkbox-theme($light-theme);
-@include mat-core-theme($light-theme);
-@include mat-dialog-theme($light-theme);
-@include mat-toolbar-theme($light-theme);
-@include mat-icon-theme($light-theme);
-@include mat-list-theme($light-theme);
-@include mat-progress-spinner-theme($light-theme);
-@include mat-table-theme($light-theme);
-@include mat-tree-theme($light-theme);
+@mixin material-theme($theme) {
+  @include mat-button-theme($theme);
+  @include mat-checkbox-theme($theme);
+  @include mat-core-theme($theme);
+  @include mat-icon-theme($theme);
+  @include mat-list-theme($theme);
+  @include mat-progress-spinner-theme($theme);
+  @include mat-table-theme($theme);
+  @include mat-toolbar-theme($theme);
+  @include mat-tree-theme($theme);
+  @include mat-slide-toggle-theme($theme);
 
-@include area-chart-theme($light-theme);
-@include vtubers-theme($light-theme);
-@include vtubers-detail-theme($light-theme);
+  @include area-chart-theme($theme);
+  @include streams-theme($theme);
+  @include vtubers-detail-theme($theme);
+  @include vtubers-theme($theme);
+}
+
+@include material-theme($light-theme);
 
 .dark {
-  @include mat-badge-theme($dark-theme);
-  @include mat-bottom-sheet-theme($dark-theme);
-  @include mat-button-theme($dark-theme);
-  @include mat-checkbox-theme($dark-theme);
-  @include mat-toolbar-theme($dark-theme);
-  @include mat-core-theme($dark-theme);
-  @include mat-dialog-theme($dark-theme);
-  @include mat-icon-theme($dark-theme);
-  @include mat-list-theme($dark-theme);
-  @include mat-progress-spinner-theme($dark-theme);
-  @include mat-table-theme($dark-theme);
-  @include mat-tree-theme($dark-theme);
-
-  @include area-chart-theme($dark-theme);
-  @include vtubers-theme($dark-theme);
-  @include vtubers-detail-theme($dark-theme);
+  @include material-theme($dark-theme);
 }
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   padding: 0;
   margin: 0;
-  background-color: mat-color(map-get($light-theme, background), "card");
+  background-color: mat-color(map-get($light-theme, background), card);
   color: mat-color(map-get($light-theme, foreground), text);
 
   &.dark {
-    background-color: mat-color(map-get($dark-theme, background), "card");
+    background-color: mat-color(map-get($dark-theme, background), card);
     color: mat-color(map-get($dark-theme, foreground), text);
   }
 }

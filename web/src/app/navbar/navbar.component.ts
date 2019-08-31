@@ -1,9 +1,6 @@
 import { Component } from "@angular/core";
-import { MatBottomSheet } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
-
-import { SettingsSheetComponent } from "../settings-sheet";
 
 @Component({
   selector: "hs-navbar",
@@ -12,7 +9,6 @@ import { SettingsSheetComponent } from "../settings-sheet";
 })
 export class NavbarComponent {
   constructor(
-    private bottomSheet: MatBottomSheet,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
@@ -20,9 +16,5 @@ export class NavbarComponent {
       "holo-stats",
       sanitizer.bypassSecurityTrustResourceUrl("assets/logo.svg")
     );
-  }
-
-  openSettings() {
-    this.bottomSheet.open(SettingsSheetComponent);
   }
 }
