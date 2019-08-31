@@ -8,7 +8,6 @@ import {
   MatCheckboxModule,
   MatIconModule,
   MatListModule,
-  MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
@@ -18,6 +17,7 @@ import {
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { RouterModule, Routes } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
@@ -66,12 +66,12 @@ const ROUTES: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatListModule,
-    MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
     MatTreeModule,
     NgxChartsModule,
+    NgxSpinnerModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production

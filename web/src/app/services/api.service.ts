@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { NgxSpinnerService } from "ngx-spinner";
 
 import {
   StreamDetailResponse,
@@ -12,41 +13,37 @@ import {
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(private http: HttpClient) {}
-
-  private isLoadingSource = new BehaviorSubject<boolean>(false);
-
-  isLoading$ = this.isLoadingSource.asObservable();
+  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {}
 
   getVTubers(ids: string[]): Observable<VTubersListResponse> {
-    this.isLoadingSource.next(true);
+    this.spinner.show();
     return this.http
       .get<VTubersListResponse>("https://holo.poi.cat/api/vtubers", {
         params: new HttpParams().set("ids", ids.join(","))
       })
-      .pipe(finalize(() => this.isLoadingSource.next(false)));
+      .pipe(finalize(() => this.spinner.hide()));
   }
 
   getVTuberStat(id: string): Observable<VTuberDetailResponse> {
-    this.isLoadingSource.next(true);
+    this.spinner.show();
     return this.http
       .get<VTuberDetailResponse>("https://holo.poi.cat/api/vtubers/" + id)
-      .pipe(finalize(() => this.isLoadingSource.next(false)));
+      .pipe(finalize(() => this.spinner.hide()));
   }
 
   getStreams(ids: string[]) {
-    this.isLoadingSource.next(true);
+    this.spinner.show();
     return this.http
       .get<StreamsListResponse>("https://holo.poi.cat/api/streams", {
         params: new HttpParams().set("ids", ids.join(","))
       })
-      .pipe(finalize(() => this.isLoadingSource.next(false)));
+      .pipe(finalize(() => this.spinner.hide()));
   }
 
   getStreamStat(id: string) {
-    this.isLoadingSource.next(true);
+    this.spinner.show();
     return this.http
       .get<StreamDetailResponse>("https://holo.poi.cat/api/streams/" + id)
-      .pipe(finalize(() => this.isLoadingSource.next(false)));
+      .pipe(finalize(() => this.spinner.hide()));
   }
 }

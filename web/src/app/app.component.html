@@ -1,7 +1,11 @@
-<!-- <div class="loading-shade" *ngIf="isLoading">
-     <mat-spinner></mat-spinner>
-     </div>
--->
+<ngx-spinner
+  bdOpacity="0.9"
+  size="medium"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p class="loading-text">少女祈祷中</p>
+</ngx-spinner>
 
 <div class="container">
   <router-outlet></router-outlet>

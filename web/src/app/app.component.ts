@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-
-import { ApiService } from "./services";
+import { DomSanitizer } from "@angular/platform-browser";
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "hs-root",
@@ -8,11 +8,22 @@ import { ApiService } from "./services";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  isLoading;
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    this.addIcon("arrow_back");
+    this.addIcon("chevron_right");
+    this.addIcon("expand_more");
+    this.addIcon("eye");
+    this.addIcon("logo");
+    this.addIcon("settings");
+  }
 
-  constructor(private apiService: ApiService) {
-    this.apiService.isLoading$.subscribe(
-      isLoading => (this.isLoading = isLoading)
+  addIcon(name: string) {
+    this.iconRegistry.addSvgIcon(
+      name,
+      this.sanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${name}.svg`)
     );
   }
 }

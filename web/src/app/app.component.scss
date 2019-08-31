@@ -1,18 +1,15 @@
-.loading-shade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@import "../theme.scss";
+
+$config: mat-typography-config();
 
 .container {
   overflow-y: scroll;
   max-width: 960px;
   margin: 0 auto;
+}
+
+.loading-text {
+  font-size: mat-font-size($config, subheading-1);
+  font-weight: mat-font-weight($config, body-2);
+  color: rgba(255, 255, 255, 0.9);
 }
