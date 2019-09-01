@@ -7,8 +7,8 @@ $config: mat-typography-config();
 }
 
 .updated-at {
-  font-size: mat-font-size($config, body-1);
-  font-weight: mat-font-weight($config, body-2);
+  font-size: mat-font-size($config, caption);
+  font-weight: mat-font-weight($config, caption);
 }
 
 .thumbnail {
@@ -57,7 +57,7 @@ $config: mat-typography-config();
       bottom: 0;
       right: 0;
       width: 40%;
-      height: 1.2em;
+      height: 1.3em;
     }
   }
 
@@ -68,11 +68,14 @@ $config: mat-typography-config();
     font-weight: mat-font-weight($config, body-1);
   }
 
-  .name {
-    &:after {
-      content: "•";
-      margin: 4px;
-    }
+  .avg-viewers:after {
+    content: "/";
+    margin: 4px;
+  }
+
+  .name:after {
+    content: "•";
+    margin: 4px;
   }
 
   .profile {

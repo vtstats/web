@@ -9,8 +9,8 @@ $config: mat-typography-config();
 }
 
 .updated-at {
-  font-size: mat-font-size($config, body-1);
-  font-weight: mat-font-weight($config, body-2);
+  font-size: mat-font-size($config, caption);
+  font-weight: mat-font-weight($config, caption);
 }
 
 table {

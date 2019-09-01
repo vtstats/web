@@ -67,3 +67,21 @@ $config: mat-typography-config();
 .mat-sort-header-container {
   justify-content: flex-end;
 }
+
+.red {
+  color: #b00020;
+}
+
+.green {
+  color: #2e7d32;
+}
+
+.dark {
+  .red {
+    color: #ef9a9a;
+  }
+
+  .green {
+    color: #81c784;
+  }
+}

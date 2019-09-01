@@ -8,7 +8,9 @@ import {
   getUnixTime,
   subMinutes
 } from "date-fns";
-import { switchMap } from "rxjs/operators";
+import { switchMap, map } from "rxjs/operators";
+import { timer } from "rxjs";
+
 import { Stream } from "@holostats/libs/models";
 
 import { ApiService } from "../services";
@@ -29,6 +31,8 @@ export class StreamsDetailComponent implements OnInit {
   youtubeColorScheme = { domain: ["#e00404"] };
 
   xAxisTicks = [];
+
+  now$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
     this.route.paramMap

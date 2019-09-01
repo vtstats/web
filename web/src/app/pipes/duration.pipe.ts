@@ -5,8 +5,8 @@ import { differenceInSeconds } from "date-fns";
 export class DurationPipe implements PipeTransform {
   transform(dateLeft: string, dateRight?: string): string {
     const seconds = differenceInSeconds(
-      dateRight ? new Date(dateRight) : new Date(),
-      new Date(dateLeft)
+      new Date(dateLeft),
+      dateRight ? new Date(dateRight) : new Date()
     );
     const hh = Math.floor(seconds / 3600);
     const mm = Math.floor((seconds - hh * 3600) / 60);

@@ -12,25 +12,3 @@
     color: mat-color($foreground, secondary-text);
   }
 }
-
-.red.mat-cell,
-.red.mat-footer-cell {
-  color: #b00020;
-}
-
-.green.mat-cell,
-.green.mat-footer-cell {
-  color: #2e7d32;
-}
-
-.dark {
-  .red.mat-cell,
-  .red.mat-footer-cell {
-    color: #ef9a9a;
-  }
-
-  .green.mat-cell,
-  .green.mat-footer-cell {
-    color: #81c784;
-  }
-}

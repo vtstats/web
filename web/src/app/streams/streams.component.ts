@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { switchMap } from "rxjs/operators";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import { zhTW } from "date-fns/locale";
+import { switchMap, map } from "rxjs/operators";
+import { timer } from "rxjs";
 
 import { Stream } from "@holostats/libs/models";
 import { VTUBERS } from "@holostats/libs/const";
@@ -22,6 +21,7 @@ export class StreamsComponent implements OnInit {
   vtubers = VTUBERS;
   streams: Stream[] = [];
   updatedAt = "";
+  now$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
     this.configService.subscribeIds$

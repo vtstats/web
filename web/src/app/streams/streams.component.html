@@ -1,15 +1,12 @@
 <hs-navbar>
-  <span class="updated-at">
-    更新于 <b>{{ updatedAt | date: "MM/dd HH:mm" }}</b>
-  </span>
+  <span class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</span>
 </hs-navbar>
 
 <div class="content" fxLayout="row wrap" fxLayoutAlign="start">
   <div
-    class="stream"
     *ngFor="let stream of streams | sortByDate"
     fxLayout="row"
-    fxFlex="48"
+    fxFlex="50"
     fxFlex.lt-sm="100"
   >
     <a
@@ -21,7 +18,12 @@
       <div class="thumbnail">
         <img src="https://img.youtube.com/vi/{{ stream.id }}/mqdefault.jpg" />
         <div class="duration">
-          {{ stream.start | duration: stream.end }}
+          <ng-container *ngIf="stream.end; else clock">
+            {{ stream.end | duration: stream.start }}
+          </ng-container>
+          <ng-template #clock>
+            {{ now$ | async | duration: stream.start }}
+          </ng-template>
         </div>
       </div>
     </a>
@@ -31,10 +33,20 @@
           {{ stream.title }}
         </div>
       </div>
-      <div class="viewers" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="view-icon" svgIcon="eye"></mat-icon>
-        <span title="平均同接 / 最高同接">
-          {{ (stream.avgViewers | number) || " ---- " }} /
+      <div
+        [ngClass]="{ viewers: true, red: !stream.end }"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <mat-icon
+          class="view-icon"
+          svgIcon="eye"
+          [title]="stream.end ? '直播結束' : '正在直播'"
+        ></mat-icon>
+        <span class="avg-viewers" title="平均同接">
+          {{ (stream.avgViewers | number) || " ---- " }}
+        </span>
+        <span title="最高同接">
           {{ (stream.maxViewers | number) || " ---- " }}
         </span>
       </div>

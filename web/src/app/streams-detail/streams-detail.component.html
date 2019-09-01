@@ -27,7 +27,12 @@
         </div>
         <div flex="50">
           <div class="value">
-            {{ stream.start | duration: stream.end }}
+            <ng-container *ngIf="stream.end; else clock">
+              {{ stream.end | duration: stream.start }}
+            </ng-container>
+            <ng-template #clock>
+              {{ now$ | async | duration: stream.start }}
+            </ng-template>
           </div>
           <div class="caption">直播持續</div>
         </div>
