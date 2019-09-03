@@ -1,15 +1,24 @@
+@import "../../theme.scss";
+
+$config: mat-typography-config();
+
+.link {
+  text-decoration: none;
+  font-size: mat-font-size($config, button);
+  font-weight: mat-font-weight($config, button);
+  padding: 0 8px;
+  user-select: none;
+}
+
 .spacer {
   flex: 1 0;
 }
 
 .navbar {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.dark {
-  .navbar {
-    background-color: rgba(0, 0, 0, 0);
-  }
+  height: 64px;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .logo {

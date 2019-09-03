@@ -1,0 +1,9 @@
+@import "~@angular/material/theming";
+
+@mixin navbar-theme($theme) {
+  $foreground: map-get($theme, foreground);
+
+  .navbar .link {
+    color: mat-color($foreground, text);
+  }
+}

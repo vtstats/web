@@ -35,4 +35,8 @@ export class StreamsComponent implements OnInit {
   findVTuber(id: string) {
     return this.vtubers.find(v => v.id == id);
   }
+
+  trackBy(_, stream: Stream): string {
+    return stream.id;
+  }
 }

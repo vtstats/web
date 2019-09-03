@@ -9,6 +9,8 @@ $config: mat-typography-config();
 .updated-at {
   font-size: mat-font-size($config, caption);
   font-weight: mat-font-weight($config, caption);
+  text-align: right;
+  padding: 8px 16px;
 }
 
 .thumbnail {

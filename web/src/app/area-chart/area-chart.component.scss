@@ -2,12 +2,12 @@
 
 $config: mat-typography-config();
 
+:host {
+  display: grid;
+  height: 100%;
+}
+
 .tooltip-caption {
   font-size: mat-font-size($config, caption);
   font-weight: mat-font-weight($config, body-2);
-}
-
-.chart {
-  display: grid;
-  height: 100%;
 }

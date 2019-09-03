@@ -1,17 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import {
-  format,
-  fromUnixTime,
-  differenceInMinutes,
-  startOfMinute,
-  getUnixTime,
-  subMinutes
-} from "date-fns";
+import { format, fromUnixTime } from "date-fns";
 import { switchMap, map } from "rxjs/operators";
 import { timer } from "rxjs";
 
 import { Stream } from "@holostats/libs/models";
+import { VTUBERS } from "@holostats/libs/const";
 
 import { ApiService } from "../services";
 
@@ -23,14 +17,13 @@ import { ApiService } from "../services";
 export class StreamsDetailComponent implements OnInit {
   constructor(private service: ApiService, private route: ActivatedRoute) {}
 
-  view = [600, 200];
-
+  vtubers = VTUBERS;
   stream: Stream;
   stats = [];
 
-  youtubeColorScheme = { domain: ["#e00404"] };
-
   xAxisTicks = [];
+  xScaleMax = 0;
+  xScaleMin = 0;
 
   now$ = timer(0, 1000).pipe(map(() => new Date()));
 
@@ -42,27 +35,32 @@ export class StreamsDetailComponent implements OnInit {
           value,
           name: parseInt(name)
         }));
-        const step = Math.ceil(
-          differenceInMinutes(
-            fromUnixTime(series[series.length - 1].name),
-            fromUnixTime(series[0].name)
-          ) / 6
+        this.xAxisTicks = this.createTicks(
+          series[0].name,
+          series[series.length - 1].name
         );
-        const end = startOfMinute(series[series.length - 1].name);
-        this.xAxisTicks = [
-          getUnixTime(subMinutes(end, 4 * step)),
-          getUnixTime(subMinutes(end, 3 * step)),
-          getUnixTime(subMinutes(end, 2 * step)),
-          getUnixTime(subMinutes(end, 1 * step)),
-          getUnixTime(end)
-        ];
-        console.log(this.xAxisTicks);
+        this.xScaleMin = series[0].name;
+        this.xScaleMax = series[series.length - 1].name;
         this.stream = res;
         this.stats.push({ name: "viewerStats", series });
       });
   }
 
   dateTickFormatting(val: number): string {
-    return format(fromUnixTime(val), "MM/dd");
+    return format(fromUnixTime(val), "HH:mm");
+  }
+
+  createTicks(start: number, end: number): number[] {
+    const seconds = end - start;
+    const step = seconds > 600 ? Math.ceil(seconds / 10) : 60;
+    const results = [start];
+    for (let i = end; i > start; i -= step) {
+      results.push(i);
+    }
+    return results;
+  }
+
+  findVTuber(id: string) {
+    return this.vtubers.find(v => v.id == id);
   }
 }

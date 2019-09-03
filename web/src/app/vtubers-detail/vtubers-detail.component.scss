@@ -10,6 +10,7 @@ $config: mat-typography-config();
   text-align: center;
 
   .name {
+    padding: 8px;
     font-size: mat-font-size($config, title);
     font-weight: mat-font-weight($config, title);
   }
@@ -26,7 +27,7 @@ $config: mat-typography-config();
   text-align: center;
 
   .value {
-    font-size: mat-font-size($config, display-1);
+    font-size: mat-font-size($config, headline);
     font-weight: mat-font-weight($config, display-1);
   }
 

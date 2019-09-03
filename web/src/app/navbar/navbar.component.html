@@ -1,10 +1,8 @@
-<mat-toolbar class="navbar">
-  <mat-icon class="logo" svgIcon="logo"></mat-icon>
-  <button mat-button routerLink="/vtuber">訂閱</button>
-  <button mat-button routerLink="/stream">同接</button>
-  <span class="spacer"></span>
-  <ng-content></ng-content>
-  <button mat-icon-button routerLink="/settings">
-    <mat-icon svgIcon="settings"></mat-icon>
-  </button>
-</mat-toolbar>
+<nav class="navbar" fxLayoutAlign="start center">
+  <mat-icon class="logo link" svgIcon="logo"></mat-icon>
+  <a class="link" routerLink="/vtuber">訂閱</a>
+  <span class="link">/</span>
+  <a class="link" routerLink="/stream">同接</a>
+  <span class="link">/</span>
+  <a class="link" routerLink="/settings">設置</a>
+</nav>

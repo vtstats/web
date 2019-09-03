@@ -1,10 +1,9 @@
-<hs-navbar>
-  <span class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</span>
-</hs-navbar>
-
 <div class="content" fxLayout="row wrap" fxLayoutAlign="start">
+  <span fxFlex="100" class="updated-at"
+    >更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</span
+  >
   <div
-    *ngFor="let stream of streams | sortByDate"
+    *ngFor="let stream of streams | sortByDate; trackBy: trackBy"
     fxLayout="row"
     fxFlex="50"
     fxFlex.lt-sm="100"
@@ -50,14 +49,17 @@
           {{ (stream.maxViewers | number) || " ---- " }}
         </span>
       </div>
-      <div class="time" fxLayout="row" fxLayoutAlign="start center">
-        <ng-container *ngIf="findVTuber(stream.vtuberId); let vtuber">
-          <img
-            class="profile"
-            src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
-          />
-          <span class="name">{{ vtuber.name }}</span>
-        </ng-container>
+      <div
+        class="time"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngIf="findVTuber(stream.vtuberId); let vtuber"
+      >
+        <img
+          class="profile"
+          src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+        />
+        <span class="name">{{ vtuber.name }}</span>
         <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
           {{ stream.start | distance }}
         </span>

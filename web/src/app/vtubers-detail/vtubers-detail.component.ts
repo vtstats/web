@@ -1,19 +1,13 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import {
-  subDays,
-  getUnixTime,
-  format,
-  fromUnixTime,
-  startOfToday
-} from "date-fns";
+import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
 import { switchMap } from "rxjs/operators";
 
 import { VTuber } from "@holostats/libs/models";
 
 import { ApiService } from "../services";
 
-const today = startOfToday();
+const today = getUnixTime(startOfToday());
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -21,13 +15,8 @@ const today = startOfToday();
   styleUrls: ["./vtubers-detail.component.scss"]
 })
 export class VTubersDetailComponent {
-  xAxisTicks = [
-    // getUnixTime(subDays(today, 4)),
-    // getUnixTime(subDays(today, 3)),
-    getUnixTime(subDays(today, 2)),
-    getUnixTime(subDays(today, 1)),
-    getUnixTime(today)
-  ];
+  xAxisTicks = [];
+  xScaleMin = 0;
 
   bilibiliSubs = [];
   bilibiliViews = [];
@@ -39,6 +28,8 @@ export class VTubersDetailComponent {
   constructor(private service: ApiService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.xAxisTicks = this.createTicks([0, 1, 2, 3, 4, 5, 6]);
+    this.xScaleMin = this.xAxisTicks[this.xAxisTicks.length - 1];
     this.route.paramMap
       .pipe(switchMap(params => this.service.getVTuberStat(params.get("id"))))
       .subscribe(vtuber => {
@@ -66,5 +57,9 @@ export class VTubersDetailComponent {
 
   numTickFormatting(num: number): string {
     return num.toLocaleString();
+  }
+
+  createTicks(days: number[]): number[] {
+    return days.map(d => today - d * 24 * 60 * 60);
   }
 }

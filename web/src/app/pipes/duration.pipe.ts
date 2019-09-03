@@ -3,9 +3,9 @@ import { differenceInSeconds } from "date-fns";
 
 @Pipe({ name: "duration" })
 export class DurationPipe implements PipeTransform {
-  transform(dateLeft: string, dateRight?: string): string {
+  transform(dateLeft: string | Date, dateRight?: string): string {
     const seconds = differenceInSeconds(
-      new Date(dateLeft),
+      typeof dateLeft == "string" ? new Date(dateLeft) : dateLeft,
       dateRight ? new Date(dateRight) : new Date()
     );
     const hh = Math.floor(seconds / 3600);

@@ -1,6 +1,6 @@
 <ngx-charts-area-chart
   class="chart"
-  [autoScale]="true"
+  [autoScale]="autoScale"
   [scheme]="youtube ? youtubeScheme : bilibiliScheme"
   [results]="results"
   [gradient]="true"
@@ -11,6 +11,8 @@
   [yAxisTickFormatting]="numTickFormatting"
   [legend]="false"
   [xAxisLabel]="label"
+  [xScaleMax]="xScaleMax"
+  [xScaleMin]="xScaleMin"
   [showXAxisLabel]="!!label"
   [showYAxisLabel]="false"
   [roundDomains]="true"

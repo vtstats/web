@@ -1,7 +1,5 @@
-<div class="sticky">
-  <hs-navbar>
-    <span class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</span>
-  </hs-navbar>
+<div class="sticky updated-at">
+  更新于 {{ updatedAt | date: "MM/dd HH:mm" }}
 </div>
 <table
   mat-table
@@ -14,9 +12,11 @@
   <ng-container matColumnDef="profile" sticky>
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
-      <div [routerLink]="['/vtuber', row.id]">
-        <img class="profile" src="/assets/thumbnail/{{ row.id }}.jpg" />
-      </div>
+      <img
+        class="profile"
+        src="/assets/thumbnail/{{ row.id }}.jpg"
+        [routerLink]="['/vtuber', row.id]"
+      />
     </td>
     <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>

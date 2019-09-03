@@ -2,6 +2,8 @@
 
 @import "./theme";
 @import "./app/area-chart/area-chart.theme";
+@import "./app/navbar/navbar.theme";
+@import "./app/streams-detail/streams-detail.theme";
 @import "./app/streams/streams.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
 @import "./app/vtubers/vtubers.theme";
@@ -21,6 +23,8 @@
   @include mat-slide-toggle-theme($theme);
 
   @include area-chart-theme($theme);
+  @include navbar-theme($theme);
+  @include streams-detail-theme($theme);
   @include streams-theme($theme);
   @include vtubers-detail-theme($theme);
   @include vtubers-theme($theme);

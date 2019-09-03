@@ -1,0 +1,9 @@
+@import "~@angular/material/theming";
+
+@mixin streams-detail-theme($theme) {
+  $foreground: map-get($theme, foreground);
+
+  .title {
+    color: mat-color($foreground, text);
+  }
+}
