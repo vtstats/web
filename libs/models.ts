@@ -42,7 +42,6 @@ export type Stream = {
 };
 
 export type StreamsListResponse = {
-  total: number;
   updatedAt: string;
   streams: Array<Stream>;
 };
@@ -50,7 +49,6 @@ export type StreamsListResponse = {
 export type StreamDetailResponse = Stream & { stats: Stat };
 
 export type VTubersListResponse = {
-  total: number;
   updatedAt: string;
   vtubers: Array<VTuber>;
 };

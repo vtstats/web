@@ -35,20 +35,30 @@ router.get("/", async (req, res) => {
   if (req.query.ids && typeof req.query.ids == "string") {
     ids = req.query.ids.split(",");
   }
+  let offset = req.query.offset ? parseInt(req.query.offset) : 0;
 
   await updateCache();
 
-  res.set('last-modified', cache.updatedAt.toUTCString());
+  res.set("Last-Modified", cache.updatedAt.toUTCString());
 
   if (req.fresh) {
     res.status(304).end();
   } else {
-    const filtered = cache.streams.filter(s => ids.includes(s.vtuberId));
+    const streams = [];
+
+    for (const stream of cache.streams.filter(s => ids.includes(s.vtuberId))) {
+      if (streams.length == 30) {
+        break;
+      } else if (offset == 0) {
+        streams.push(stream);
+      } else {
+        offset -= 1;
+      }
+    }
 
     const response: StreamsListResponse = {
       updatedAt: cache.updatedAt.toISOString(),
-      streams: filtered,
-      total: 0
+      streams,
     };
 
     res.json(response);

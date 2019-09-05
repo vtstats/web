@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 
   await updateCache();
 
-  res.set('last-modified', cache.updatedAt.toUTCString());
+  res.set("Last-Modified", cache.updatedAt.toUTCString());
 
   if (req.fresh) {
     res.status(304).end();
@@ -40,7 +40,6 @@ router.get("/", async (req, res) => {
     const filtered = cache.vtubers.filter(v => ids.includes(v.id));
 
     const response: VTubersListResponse = {
-      total: filtered.length,
       updatedAt: cache.updatedAt.toISOString(),
       vtubers: filtered
     };
