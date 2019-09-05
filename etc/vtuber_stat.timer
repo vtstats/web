@@ -1,0 +1,9 @@
+[Unit]
+Description=Execute vtuber_stat every 30 mins
+
+[Timer]
+OnCalendar=*:0/30
+Unit=vtuber_stat.service
+
+[Install]
+WantedBy=multi-user.target

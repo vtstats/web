@@ -1,0 +1,9 @@
+[Unit]
+Description=VTuber Stat
+
+[Service]
+Type=simple
+ExecStart=/path/to/holostats-scripts/target/release/vtuber_stat
+
+[Install]
+WantedBy=multi-user.target

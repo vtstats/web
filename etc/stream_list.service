@@ -1,0 +1,9 @@
+[Unit]
+Description=Stream List
+
+[Service]
+Type=simple
+ExecStart=/path/to/holostats-scripts/target/release/stream_list
+
+[Install]
+WantedBy=multi-user.target
