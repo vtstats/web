@@ -1,19 +1,33 @@
 {
+  "database": {
+    "rules": "database.rules.json"
+  },
   "functions": {
-    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build",
+    "predeploy": "yarn --ignore-engines --cwd \"$RESOURCE_DIR\" run build",
     "source": "functions"
   },
   "hosting": {
     "public": "web/dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
     "rewrites": [
       {
-        "source": "/api",
-        "function": "api"
+        "source": "!/api/**",
+        "destination": "/index.html"
       },
       {
         "source": "/api/**",
         "function": "api"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(gif|jpg|jpeg|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2)",
+        "headers": [{ "key": "Cache-Control", "value": "max-age=86400" }]
+      },
+      {
+        "source": "**/*.+([0-9a-f]).@(css|js)",
+        "headers": [{ "key": "Cache-Control", "value": "max-age=2592000" }]
       }
     ]
   }
