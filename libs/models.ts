@@ -56,8 +56,5 @@ export type VTubersListResponse = {
 };
 
 export type VTuberDetailResponse = VTuber & {
-  bilibiliSubs: Stat;
-  bilibiliViews: Stat;
-  youtubeSubs: Stat;
-  youtubeViews: Stat;
+  stats: { [time: string]: [number, number, number, number] };
 };
