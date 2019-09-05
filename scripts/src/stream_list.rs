@@ -2,28 +2,35 @@ mod consts;
 mod types;
 mod utils;
 
-use crate::types::{Error, Result, Values};
 use chrono::Utc;
-use consts::{VTuber, VTUBERS};
-use futures_util::try_future::try_join_all;
+use consts::VTUBERS;
+use futures::future::try_join_all;
 use isahc::{config::RedirectPolicy, prelude::*};
 use url::Url;
 
+use crate::types::{Error, Result, Values};
 use crate::utils::{youtube_videos_snippet, Database};
 
 fn main() -> Result<()> {
-    futures_executor::block_on(real_main())
+    futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {
     let mut db = Database::new().await?;
 
-    let video_ids = try_join_all(VTUBERS.iter().map(|v| fetch_video_from_feed(v))).await?;
+    let now = Utc::now();
+    let now_str = now.timestamp().to_string();
+
+    let video_ids = try_join_all(
+        VTUBERS
+            .iter()
+            .map(|v| fetch_video_from_feed(v.youtube, &now_str)),
+    )
+    .await?;
 
     let videos = youtube_videos_snippet(video_ids.join(",")).await?;
 
     let mut values = Values::default();
-    let now = Utc::now();
 
     for video in videos {
         if let Some(detail) = video.live_streaming_details {
@@ -75,20 +82,22 @@ async fn real_main() -> Result<()> {
     db.patch_values(values).await
 }
 
-async fn fetch_video_from_feed(vtuber: &'static VTuber) -> Result<String> {
+async fn fetch_video_from_feed(channel: &str, now_str: &str) -> Result<String> {
+    // try to fetch the lastest rss feed by disabling http cache and appending random query string
     let mut res = Request::get(
         Url::parse_with_params(
-            "https://youtube.com/feeds/videos.xml?channel_id={}",
-            &[("channel_id", vtuber.youtube)],
+            "https://youtube.com/feeds/videos.xml",
+            &[("channel_id", channel), ("_", now_str)],
         )?
         .as_str(),
     )
+    .header("Cache-Control", "no-cache")
     .redirect_policy(RedirectPolicy::Follow)
     .body(())?
     .send_async()
     .await?;
 
-    let text = res.text_async().await.map_err(|e| Error::Http(e.into()))?;
+    let text = res.text_async().await?;
 
     if let Some(line) = text.lines().nth(14) {
         let line = line.trim();

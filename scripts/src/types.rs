@@ -2,7 +2,6 @@
 
 use chrono::{DateTime, Utc};
 use serde::Serialize;
-
 use std::collections::HashMap;
 
 #[derive(Serialize, Debug)]

@@ -1,28 +1,21 @@
 #![allow(dead_code)]
 
 use chrono::{DateTime, Duration, Utc};
-use isahc::prelude::Request;
-use isahc::{self, RequestExt, ResponseExt};
+use futures::future::{try_join, try_join_all};
+use isahc::{prelude::Request, RequestExt, ResponseExt};
 use serde::{Deserialize, Serialize};
 use serde_json::to_vec;
+use std::collections::HashMap;
 use std::fs;
 use std::str::FromStr;
-
 use url::Url;
 
-use futures_util::try_future::{try_join, try_join_all};
-
-use crate::types::{Error, Result, Values};
-
-use std::collections::HashMap;
-
-use crate::types::bilibili::{StatResponse, UpstatResponse};
-use crate::types::youtube::{Channel, ChannelsResponse, Video, VideosResponse};
-
 use crate::consts::VTUBERS;
-
-const YOUTUBE_API_KEY0: &str = env!("YOUTUBE_API_KEY0");
-const YOUTUBE_API_KEY1: &str = env!("YOUTUBE_API_KEY1");
+use crate::types::{
+    bilibili::{StatResponse, UpstatResponse},
+    youtube::{Channel, ChannelsResponse, Video, VideosResponse},
+    Error, Result, Values,
+};
 
 pub async fn youtube_videos(id: String) -> Result<Vec<Video>> {
     isahc::get_async(

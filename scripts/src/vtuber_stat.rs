@@ -3,7 +3,7 @@ mod types;
 mod utils;
 
 use chrono::Utc;
-use futures_util::try_future::{try_join3, try_join_all};
+use futures::future::{try_join3, try_join_all};
 use std::str::FromStr;
 
 use crate::types::{Result, Values};
@@ -12,7 +12,7 @@ use crate::utils::{bilibili_stat, youtube_channels, Database};
 use consts::VTUBERS;
 
 fn main() -> Result<()> {
-    futures_executor::block_on(real_main())
+    futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {

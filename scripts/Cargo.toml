@@ -7,8 +7,7 @@ build = "build.rs"
 
 [dependencies]
 chrono = { version = "0.4.7", features = ["serde"] }
-futures-executor-preview = "0.3.0-alpha.18"
-futures-util-preview = "0.3.0-alpha.18"
+futures-preview = "0.3.0-alpha.18"
 isahc = { version = "0.7.1", default-features = false, features = ["json", "http2", "static-curl"] }
 serde = { version = "1.0.99", features = ["derive"] }
 serde_json = "1.0.40"

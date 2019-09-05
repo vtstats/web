@@ -9,7 +9,7 @@ use crate::types::{Error, Result, Values};
 use crate::utils::{youtube_videos, Database};
 
 fn main() -> Result<()> {
-    futures_executor::block_on(real_main())
+    futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {
