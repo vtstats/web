@@ -1,9 +1,7 @@
+<div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
 <div class="content" fxLayout="row wrap" fxLayoutAlign="start">
-  <span fxFlex="100" class="updated-at"
-    >更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</span
-  >
   <div
-    *ngFor="let stream of streams | sortByDate; trackBy: trackBy"
+    *ngFor="let stream of streams; trackBy: trackBy"
     fxLayout="row"
     fxFlex="50"
     fxFlex.lt-sm="100"

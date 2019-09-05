@@ -28,7 +28,7 @@ import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
 import { VTubersComponent } from "./vtubers";
 import { VTubersDetailComponent } from "./vtubers-detail";
-import { DurationPipe, SortByDatePipe, DistancePipe } from "./pipes";
+import { DurationPipe, DistancePipe } from "./pipes";
 
 import { environment } from "../environments/environment";
 
@@ -53,8 +53,7 @@ const ROUTES: Routes = [
     VTubersComponent,
     VTubersDetailComponent,
     DistancePipe,
-    DurationPipe,
-    SortByDatePipe
+    DurationPipe
   ],
   imports: [
     BrowserAnimationsModule,

@@ -3,14 +3,14 @@
 $config: mat-typography-config();
 
 .content {
-  padding: 32px 0;
+  padding: 32px;
 }
 
 .info {
   text-align: center;
 
   .name {
-    padding: 8px;
+    padding: 16px 0;
     font-size: mat-font-size($config, title);
     font-weight: mat-font-weight($config, title);
   }

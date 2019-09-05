@@ -65,16 +65,17 @@
         </div>
       </div>
     </div>
-    <div fxFlex="100" class="chart">
-      <hs-area-chart
-        [youtube]="true"
-        [results]="stats"
-        [xAxisTicks]="xAxisTicks"
-        [dateTickFormatting]="dateTickFormatting"
-        [autoScale]="false"
-        [xScaleMax]="xScaleMax"
-        [xScaleMin]="xScaleMin"
-      ></hs-area-chart>
-    </div>
+  </div>
+  <div class="chart">
+    <hs-area-chart
+      [youtube]="true"
+      [results]="stats"
+      [xAxisTicks]="xAxisTicks"
+      [dateTickFormatting]="dateTickFormatting"
+      [autoScale]="false"
+      [xScaleMax]="xScaleMax"
+      [xScaleMin]="xScaleMin"
+      [timeline]="true"
+    ></hs-area-chart>
   </div>
 </ng-container>

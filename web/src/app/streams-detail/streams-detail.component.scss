@@ -3,18 +3,17 @@
 $config: mat-typography-config();
 
 .content {
-  padding: 32px 0;
-  padding: 24px;
+  padding: 32px;
 }
 
 .profile {
-  padding-right: 8px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
 
 .name {
+  padding-left: 8px;
   font-size: mat-font-size($config, body-2);
   font-weight: mat-font-weight($config, body-2);
 }
@@ -52,7 +51,6 @@ $config: mat-typography-config();
 .chart {
   height: 250px;
   display: grid;
-  padding-top: 24px;
 
   .caption {
     text-align: center;

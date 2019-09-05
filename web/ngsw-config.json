@@ -5,6 +5,7 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": ["/index.html", "/manifest.webmanifest", "/*.css", "/*.js"]
       }
@@ -16,14 +17,13 @@
       "resources": {
         "files": ["/assets/**"]
       }
-    },
-    {
-      "name": "api",
-      "installMode": "lazy",
-      "updateMode": "lazy",
-      "resources": {
-        "files": ["/api/**"]
-      }
     }
+  ],
+  "navigationUrls": [
+    "/**",
+    "!/api/streams",
+    "!/api/streams/*",
+    "!/api/vtubers",
+    "!/api/vtubers/*"
   ]
 }
