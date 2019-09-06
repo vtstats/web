@@ -3,7 +3,7 @@
 $config: mat-typography-config();
 
 .content {
-  padding: 0 20px;
+  padding: 0 4px;
 }
 
 .updated-at {
@@ -15,14 +15,15 @@ $config: mat-typography-config();
 
 .thumbnail {
   position: relative;
-
-  img {
-    width: 100%;
-  }
+  padding-top: 56.25%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
 
   .duration {
     position: absolute;
-    bottom: 8px;
+    bottom: 4px;
     right: 4px;
     color: #ffffff;
     background-color: rgba(0, 0, 0, 0.8);
@@ -30,71 +31,66 @@ $config: mat-typography-config();
     font-size: mat-font-size($config, caption);
     font-weight: mat-font-weight($config, body-2);
   }
+}
 
-  .duration-text {
-    margin: 0px;
-    padding: 0px;
-    line-height: mat-font-size($config, caption) * 2;
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-2);
+.stream {
+  padding: 0 4px;
+}
+
+.title {
+  position: relative;
+  line-height: 1.2em;
+  height: 2.4em;
+  font-size: mat-font-size($config, body-1);
+  font-weight: mat-font-weight($config, body-1);
+  overflow: hidden;
+  padding-top: 12px;
+
+  &:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    height: 1.3em;
   }
 }
 
-.info {
-  padding: 8px;
-  min-height: 100%;
+.time,
+.viewers {
+  font-size: mat-font-size($config, caption);
+  font-weight: mat-font-weight($config, body-1);
+}
 
-  .title {
-    position: relative;
-    line-height: 1.2em;
-    height: 2.4em;
-    font-size: mat-font-size($config, body-1);
-    font-weight: mat-font-weight($config, body-1);
-    overflow: hidden;
+.time {
+  padding-bottom: 12px;
+}
 
-    &:after {
-      content: "";
-      text-align: right;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 40%;
-      height: 1.3em;
-    }
-  }
+.avg-viewers:after {
+  content: "/";
+  margin: 4px;
+}
 
-  .time,
-  .viewers {
-    vertical-align: middle;
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-1);
-  }
+.name {
+  padding-left: 4px;
+}
 
-  .avg-viewers:after {
-    content: "/";
-    margin: 4px;
-  }
+.name:after {
+  content: "•";
+  margin: 4px;
+}
 
-  .name {
-    padding-left: 4px;
-  }
+.profile {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
 
-  .name:after {
-    content: "•";
-    margin: 4px;
-  }
-
-  .profile {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
-
-  .view-icon {
-    font-size: 18px;
-    height: 18px;
-    line-height: 18px;
-    width: 18px;
-    padding: 4px;
-  }
+.view-icon {
+  font-size: 18px;
+  height: 18px;
+  line-height: 18px;
+  width: 18px;
+  padding: 4px;
 }

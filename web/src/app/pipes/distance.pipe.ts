@@ -1,13 +1,18 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { formatDistanceStrict } from "date-fns";
 import { zhTW } from "date-fns/locale";
 
 @Pipe({ name: "distance" })
 export class DistancePipe implements PipeTransform {
-  transform(date: string): string {
-    return formatDistanceToNow(parseISO(date), {
-      addSuffix: true,
-      locale: zhTW
-    });
+  transform(start: Date | null, end: Date): string {
+    if (end) {
+      return (
+        formatDistanceStrict(end, start, {
+          locale: zhTW
+        }) + "前"
+      );
+    } else {
+      return "";
+    }
   }
 }

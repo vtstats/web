@@ -1,8 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges } from "@angular/core";
 
-@Directive({
-  selector: "[coloredNumber]"
-})
+@Directive({ selector: "[coloredNumber]" })
 export class ColoredNumberDirective implements OnChanges {
   @Input("coloredNumber") inputNumber: number;
 

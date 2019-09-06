@@ -21,7 +21,9 @@ export class StreamsComponent implements OnInit {
   vtubers = VTUBERS;
   streams: Stream[] = [];
   updatedAt = "";
-  now$ = timer(0, 1000).pipe(map(() => new Date()));
+
+  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
+  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
     this.configService.subscribeIds$

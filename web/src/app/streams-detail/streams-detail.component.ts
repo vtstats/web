@@ -25,7 +25,7 @@ export class StreamsDetailComponent implements OnInit {
   xScaleMax = 0;
   xScaleMin = 0;
 
-  now$ = timer(0, 1000).pipe(map(() => new Date()));
+  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
     this.route.paramMap

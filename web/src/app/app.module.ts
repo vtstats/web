@@ -21,14 +21,14 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
-import { ColoredNumberDirective } from "./directives";
+import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
 import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
 import { VTubersComponent } from "./vtubers";
 import { VTubersDetailComponent } from "./vtubers-detail";
-import { DurationPipe, DistancePipe } from "./pipes";
+import { DurationPipe, DistancePipe, ParseISOPipe } from "./pipes";
 
 import { environment } from "../environments/environment";
 
@@ -45,15 +45,17 @@ const ROUTES: Routes = [
   declarations: [
     AppComponent,
     AreaChartComponent,
-    ColoredNumberDirective,
     NavbarComponent,
     SettingsComponent,
     StreamsComponent,
     StreamsDetailComponent,
     VTubersComponent,
     VTubersDetailComponent,
+    ColoredNumberDirective,
+    LazyLoadDirective,
     DistancePipe,
-    DurationPipe
+    DurationPipe,
+    ParseISOPipe
   ],
   imports: [
     BrowserAnimationsModule,
