@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
   if (req.query.ids && typeof req.query.ids == "string") {
     ids = req.query.ids.split(",");
   }
-  let offset = req.query.offset ? parseInt(req.query.offset) : 0;
 
   await updateCache();
 
@@ -46,19 +45,21 @@ router.get("/", async (req, res) => {
   } else {
     const streams = [];
 
-    for (const stream of cache.streams.filter(s => ids.includes(s.vtuberId))) {
-      if (streams.length == 30) {
+    const index = req.query.skip
+      ? cache.streams.findIndex(stream => stream.id == req.query.skip) + 1
+      : 0;
+
+    for (const stream of cache.streams.slice(index)) {
+      if (streams.length == 24) {
         break;
-      } else if (offset == 0) {
+      } else if (ids.includes(stream.vtuberId)) {
         streams.push(stream);
-      } else {
-        offset -= 1;
       }
     }
 
     const response: StreamsListResponse = {
       updatedAt: cache.updatedAt.toISOString(),
-      streams,
+      streams
     };
 
     res.json(response);
