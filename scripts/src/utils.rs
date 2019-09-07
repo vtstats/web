@@ -148,29 +148,17 @@ impl Default for Database {
 impl Database {
     pub async fn new() -> Result<Database> {
         if let Ok(json) = fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/.token.json")) {
-            serde_json::from_str(&json).map_err(Error::Json)
+            let mut db = serde_json::from_str::<Database>(&json)?;
+
+            if (db.expires_at - Utc::now()).num_seconds() < 5 {
+                db.refresh_token().await?;
+            }
+
+            Ok(db)
         } else {
-            let res = Request::post(
-                Url::parse_with_params(
-                    "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword",
-                    &[("key", env!("FIREBASE_WEB_API_KEY"))],
-                )?
-                .as_str(),
-            )
-            .header("content-type", "application/json")
-            .body(to_vec(&SignInRequest {
-                email: env!("FIREBASE_USER_EMAIL"),
-                password: env!("FIREBASE_USER_PASSWORD"),
-                return_secure_token: true,
-            })?)?
-            .send_async()
-            .await?
-            .json::<SignInResponse>()?;
-
-            println!("Signed in successfully.");
-
             let mut db = Database::default();
-            db.save_token(res.0)?;
+
+            db.sign_in().await?;
 
             Ok(db)
         }
@@ -184,19 +172,34 @@ impl Database {
         self.expires_at = now + Duration::seconds(i64::from_str(&token.expires_in)?);
 
         fs::write(
-            format!("{}/.token.json", env!("CARGO_MANIFEST_DIR")),
+            concat!(env!("CARGO_MANIFEST_DIR"), "/.token.json"),
             to_vec(&self)?,
         )?;
 
         Ok(())
     }
 
-    async fn validate_token(&mut self) -> Result<()> {
-        let now = Utc::now();
+    async fn sign_in(&mut self) -> Result<()> {
+        let res = Request::post(
+            Url::parse_with_params(
+                "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword",
+                &[("key", env!("FIREBASE_WEB_API_KEY"))],
+            )?
+            .as_str(),
+        )
+        .header("content-type", "application/json")
+        .body(to_vec(&SignInRequest {
+            email: env!("FIREBASE_USER_EMAIL"),
+            password: env!("FIREBASE_USER_PASSWORD"),
+            return_secure_token: true,
+        })?)?
+        .send_async()
+        .await?
+        .json::<SignInResponse>()?;
 
-        if (self.expires_at - now).num_seconds() < 5 {
-            self.refresh_token().await?;
-        }
+        println!("Signed in successfully.");
+
+        self.save_token(res.0)?;
 
         Ok(())
     }
@@ -220,12 +223,12 @@ impl Database {
 
         self.save_token(res.0)?;
 
+        println!("Token refreshed successfully.");
+
         Ok(())
     }
 
     pub async fn patch_values(&mut self, values: Values) -> Result<()> {
-        self.validate_token().await?;
-
         let res = Request::patch(
             Url::parse_with_params(
                 concat!(
@@ -249,8 +252,6 @@ impl Database {
     }
 
     pub async fn vtuber_stats_timestamps(&mut self) -> Result<Vec<i64>> {
-        self.validate_token().await?;
-
         let timestamps = isahc::get_async(
             Url::parse_with_params(
                 concat!(
@@ -263,12 +264,9 @@ impl Database {
             .as_str(),
         )
         .await?
-        .json::<HashMap<String, bool>>()?;
+        .json::<HashMap<i64, bool>>()?;
 
-        let mut timestamps: Vec<_> = timestamps
-            .keys()
-            .filter_map(|s| i64::from_str(s).ok())
-            .collect();
+        let mut timestamps: Vec<_> = timestamps.into_iter().map(|(k, _)| k).collect();
 
         timestamps.sort();
 
@@ -279,8 +277,6 @@ impl Database {
         &mut self,
         id: Vec<&'a str>,
     ) -> Result<Vec<(&'a str, usize, usize)>> {
-        self.validate_token().await?;
-
         let vec = try_join_all(id.iter().map(|id| {
             isahc::get_async(
                 Url::parse_with_params(
@@ -315,8 +311,6 @@ impl Database {
     }
 
     pub async fn current_streams(&mut self) -> Result<HashMap<String, bool>> {
-        self.validate_token().await?;
-
         isahc::get_async(
             Url::parse_with_params(
                 concat!(
@@ -334,8 +328,6 @@ impl Database {
     }
 
     pub async fn vtuber_stats_at(&mut self, timestamp: i64) -> Result<Vec<[i32; 4]>> {
-        self.validate_token().await?;
-
         let res = try_join_all(VTUBERS.iter().map(|v| {
             isahc::get_async(
                 Url::parse_with_params(
