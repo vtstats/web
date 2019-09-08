@@ -118,6 +118,41 @@ impl From<std::num::ParseIntError> for Error {
 
 pub type Result<T> = std::result::Result<T, Error>;
 
+pub mod auth {
+    use serde::{Deserialize, Serialize};
+
+    #[derive(Serialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct SignInRequest<'a> {
+        pub email: &'a str,
+        pub password: &'a str,
+        pub return_secure_token: bool,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct SignInResponse {
+        pub id_token: String,
+        pub refresh_token: String,
+        pub expires_in: String,
+    }
+
+    #[derive(Serialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct RefreshRequest<'a> {
+        pub grant_type: &'a str,
+        pub refresh_token: &'a str,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "snake_case")]
+    pub struct RefreshResponse {
+        pub id_token: String,
+        pub refresh_token: String,
+        pub expires_in: String,
+    }
+}
+
 pub mod bilibili {
     use serde::Deserialize;
 

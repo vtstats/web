@@ -5,18 +5,25 @@ mod utils;
 use chrono::Utc;
 use consts::VTUBERS;
 use futures::future::try_join_all;
-use isahc::{config::RedirectPolicy, prelude::*};
-use url::Url;
+use isahc::{config::RedirectPolicy, HttpClient};
+use std::time::Duration;
 
 use crate::types::{Error, Result, Values};
-use crate::utils::{youtube_videos_snippet, Database};
+use crate::utils::{
+    auth, current_streams, patch_values, stream_stats, youtube_first_video, youtube_videos_snippet,
+};
 
 fn main() -> Result<()> {
     futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {
-    let mut db = Database::new().await?;
+    let client = HttpClient::builder()
+        .redirect_policy(RedirectPolicy::Follow)
+        .tcp_keepalive(Duration::from_secs(5))
+        .build()?;
+
+    let auth = auth(&client).await?;
 
     let now = Utc::now();
     let now_str = now.timestamp().to_string();
@@ -24,11 +31,11 @@ async fn real_main() -> Result<()> {
     let video_ids = try_join_all(
         VTUBERS
             .iter()
-            .map(|v| fetch_video_from_feed(v.youtube, &now_str)),
+            .map(|v| youtube_first_video(&client, v.youtube, &now_str)),
     )
     .await?;
 
-    let videos = youtube_videos_snippet(video_ids.join(",")).await?;
+    let videos = youtube_videos_snippet(&client, video_ids.join(",")).await?;
 
     let mut values = Values::default();
 
@@ -54,9 +61,9 @@ async fn real_main() -> Result<()> {
 
     values.insert("/streams/_updatedAt", now);
 
-    db.patch_values(values).await?;
+    patch_values(&client, &auth.id_token, values).await?;
 
-    let current = match db.current_streams().await {
+    let current = match current_streams(&client, &auth.id_token).await {
         Ok(current) => current,
         Err(Error::Json(_)) => return Ok(()),
         Err(e) => return Err(e),
@@ -64,50 +71,29 @@ async fn real_main() -> Result<()> {
 
     let mut values = Values::default();
 
-    for (key, value) in &current {
-        if !value {
-            values.insert(format!("/streams/_current/{}", key), ());
-        }
+    for (key, _) in current.iter().filter(|&(_, v)| !v) {
+        values.insert(format!("/streams/_current/{}", key), ());
     }
 
-    let vec = db
-        .stream_stats(current.keys().map(|s| s.as_str()).collect::<Vec<_>>())
-        .await?;
-
-    for (id, avg, max) in vec {
-        values.insert(format!("/streams/{}/maxViewers", id), max);
-        values.insert(format!("/streams/{}/avgViewers", id), avg);
-    }
-
-    db.patch_values(values).await
-}
-
-async fn fetch_video_from_feed(channel: &str, now_str: &str) -> Result<String> {
-    // try to fetch the lastest rss feed by disabling http cache and appending random query string
-    let mut res = Request::get(
-        Url::parse_with_params(
-            "https://youtube.com/feeds/videos.xml",
-            &[("channel_id", channel), ("_", now_str)],
-        )?
-        .as_str(),
+    let stats = try_join_all(
+        current
+            .keys()
+            .map(|id| stream_stats(&client, &auth.id_token, id)),
     )
-    .header("Cache-Control", "no-cache")
-    .redirect_policy(RedirectPolicy::Follow)
-    .body(())?
-    .send_async()
     .await?;
 
-    let text = res.text_async().await?;
-
-    if let Some(line) = text.lines().nth(14) {
-        let line = line.trim();
-        // <yt:videoId>XXXXXXXXXXX</yt:videoId>
-        if line.len() == 36 {
-            Ok(String::from(&line[12..23]))
-        } else {
-            Ok(String::new())
+    for (id, stat) in current.keys().zip(stats.iter()) {
+        if !stat.is_empty() {
+            values.insert(
+                format!("/streams/{}/maxViewers", id),
+                *(stat.iter().max().unwrap()),
+            );
+            values.insert(
+                format!("/streams/{}/avgViewers", id),
+                stat.iter().sum::<usize>() / stat.len(),
+            );
         }
-    } else {
-        Ok(String::new())
     }
+
+    patch_values(&client, &auth.id_token, values).await
 }

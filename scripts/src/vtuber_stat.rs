@@ -4,30 +4,37 @@ mod utils;
 
 use chrono::Utc;
 use futures::future::{try_join3, try_join_all};
+use isahc::HttpClient;
 use std::str::FromStr;
+use std::time::Duration;
 
+use crate::consts::VTUBERS;
 use crate::types::{Result, Values};
-use crate::utils::{bilibili_stat, youtube_channels, Database};
-
-use consts::VTUBERS;
+use crate::utils::{
+    auth, bilibili_stat, patch_values, vtuber_stats_at, vtuber_stats_timestamps, youtube_channels,
+};
 
 fn main() -> Result<()> {
     futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {
-    let mut db = Database::new().await?;
+    let client = HttpClient::builder()
+        .tcp_keepalive(Duration::from_secs(5))
+        .build()?;
+
+    let auth = auth(&client).await?;
+
+    let channel_ids = VTUBERS
+        .iter()
+        .map(|v| v.youtube)
+        .collect::<Vec<_>>()
+        .join(",");
 
     let (youtube_stat, bilibili_stat, timestamps) = try_join3(
-        youtube_channels(
-            VTUBERS
-                .iter()
-                .map(|v| v.youtube)
-                .collect::<Vec<_>>()
-                .join(","),
-        ),
-        try_join_all(VTUBERS.iter().map(|v| bilibili_stat(v.bilibili))),
-        db.vtuber_stats_timestamps(),
+        youtube_channels(&client, channel_ids),
+        try_join_all(VTUBERS.iter().map(|v| bilibili_stat(&client, v.bilibili))),
+        vtuber_stats_timestamps(&client, &auth.id_token),
     )
     .await?;
 
@@ -51,7 +58,12 @@ async fn real_main() -> Result<()> {
         *timestamps.last().unwrap()
     })();
 
-    let one_day_ago_stats = db.vtuber_stats_at(one_day_ago).await?;
+    let one_day_ago_stats = try_join_all(
+        VTUBERS
+            .iter()
+            .map(|v| vtuber_stats_at(&client, &auth.id_token, v.name, one_day_ago)),
+    )
+    .await?;
 
     for ((vtuber, &(bilibili_subs, bilibili_views)), one_day_ago) in VTUBERS
         .iter()
@@ -118,5 +130,5 @@ async fn real_main() -> Result<()> {
         );
     }
 
-    db.patch_values(values).await
+    patch_values(&client, &auth.id_token, values).await
 }

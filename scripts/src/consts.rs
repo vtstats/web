@@ -1,4 +1,5 @@
 #![allow(clippy::unreadable_literal)]
+#![allow(dead_code)]
 
 #[derive(Debug)]
 pub struct VTuber {

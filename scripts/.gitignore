@@ -2,4 +2,4 @@
 **/*.rs.bk
 
 build.rs
-.token.json
+.auth.json

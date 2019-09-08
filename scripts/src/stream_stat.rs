@@ -3,19 +3,22 @@ mod types;
 mod utils;
 
 use chrono::Utc;
+use isahc::HttpClient;
 use std::str::FromStr;
 
 use crate::types::{Error, Result, Values};
-use crate::utils::{youtube_videos, Database};
+use crate::utils::{auth, current_streams, patch_values, youtube_videos};
 
 fn main() -> Result<()> {
     futures::executor::block_on(real_main())
 }
 
 async fn real_main() -> Result<()> {
-    let mut db = Database::new().await?;
+    let client = HttpClient::new()?;
 
-    let streams = match db.current_streams().await {
+    let auth = auth(&client).await?;
+
+    let streams = match current_streams(&client, &auth.id_token).await {
         Ok(streams) => streams,
         Err(Error::Json(_)) => return Ok(()),
         Err(e) => return Err(e),
@@ -30,7 +33,7 @@ async fn real_main() -> Result<()> {
         .map(|(k, _)| k.as_str())
         .collect::<Vec<_>>();
 
-    let videos = youtube_videos(ids.join(",")).await?;
+    let videos = youtube_videos(&client, ids.join(",")).await?;
 
     let mut values = Values::default();
 
@@ -52,5 +55,5 @@ async fn real_main() -> Result<()> {
         }
     }
 
-    db.patch_values(values).await
+    patch_values(&client, &auth.id_token, values).await
 }
