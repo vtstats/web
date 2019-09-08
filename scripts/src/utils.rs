@@ -107,19 +107,20 @@ struct SignInRequest {
 }
 
 #[derive(Deserialize, Debug)]
-struct Token {
+#[serde(rename_all = "camelCase")]
+struct SignInResponse {
     id_token: String,
     refresh_token: String,
     expires_in: String,
 }
 
 #[derive(Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-struct SignInResponse(Token);
-
-#[derive(Deserialize, Debug)]
 #[serde(rename_all = "snake_case")]
-struct RefreshResponse(Token);
+struct RefreshResponse {
+    id_token: String,
+    refresh_token: String,
+    expires_in: String,
+}
 
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -164,21 +165,6 @@ impl Database {
         }
     }
 
-    fn save_token(&mut self, token: Token) -> Result<()> {
-        let now = Utc::now();
-
-        self.id_token = token.id_token;
-        self.refresh_token = token.refresh_token;
-        self.expires_at = now + Duration::seconds(i64::from_str(&token.expires_in)?);
-
-        fs::write(
-            concat!(env!("CARGO_MANIFEST_DIR"), "/.token.json"),
-            to_vec(&self)?,
-        )?;
-
-        Ok(())
-    }
-
     async fn sign_in(&mut self) -> Result<()> {
         let res = Request::post(
             Url::parse_with_params(
@@ -199,7 +185,14 @@ impl Database {
 
         println!("Signed in successfully.");
 
-        self.save_token(res.0)?;
+        self.expires_at = Utc::now() + Duration::seconds(i64::from_str(&res.expires_in)?);
+        self.id_token = res.id_token;
+        self.refresh_token = res.refresh_token;
+
+        fs::write(
+            concat!(env!("CARGO_MANIFEST_DIR"), "/.token.json"),
+            to_vec(&self)?,
+        )?;
 
         Ok(())
     }
@@ -221,9 +214,16 @@ impl Database {
         .await?
         .json::<RefreshResponse>()?;
 
-        self.save_token(res.0)?;
+        self.expires_at = Utc::now() + Duration::seconds(i64::from_str(&res.expires_in)?);
+        self.id_token = res.id_token;
+        self.refresh_token = res.refresh_token;
 
         println!("Token refreshed successfully.");
+
+        fs::write(
+            concat!(env!("CARGO_MANIFEST_DIR"), "/.token.json"),
+            to_vec(&self)?,
+        )?;
 
         Ok(())
     }
