@@ -3,6 +3,7 @@ Description=Execute stream_stat every 15 secs
 
 [Timer]
 OnCalendar=*:*:0/15
+AccuracySec=1us
 Unit=stream_stat.service
 
 [Install]

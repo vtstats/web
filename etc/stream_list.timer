@@ -3,6 +3,7 @@ Description=Execute stream_list every 5 mins
 
 [Timer]
 OnCalendar=*:0/5
+AccuracySec=1us
 Unit=stream_list.service
 
 [Install]
