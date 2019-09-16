@@ -1,5 +1,11 @@
 import * as admin from "firebase-admin";
-import { differenceInMinutes, parseISO, compareDesc } from "date-fns";
+import {
+  differenceInMinutes,
+  parseISO,
+  compareDesc,
+  getUnixTime,
+  startOfToday
+} from "date-fns";
 
 import { Stream, VTuber } from "./models";
 
@@ -70,7 +76,13 @@ export class Database {
   }
 
   async vtuberStats(id: string) {
-    return (await db.ref(`/vtuberStats/${id}`).once("value")).val();
+    const today = getUnixTime(startOfToday());
+    const sevenDaysAgo = today - 6 * 24 * 60 * 60;
+    return (await db
+      .ref(`/vtuberStats/${id}`)
+      .orderByKey()
+      .startAt(sevenDaysAgo)
+      .once("value")).val();
   }
 
   async streamStats(id: string) {
