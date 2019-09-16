@@ -28,8 +28,6 @@ export type VTuberGroup = {
   members: VTuberInfo[];
 };
 
-export type Stat = { [id: number]: number };
-
 export type Stream = {
   start: string;
   end?: string;
@@ -46,7 +44,9 @@ export type StreamsListResponse = {
   streams: Array<Stream>;
 };
 
-export type StreamDetailResponse = Stream & { stats: Stat };
+export type StreamDetailResponse = Stream & {
+  stats: { [time: number]: number };
+};
 
 export type VTubersListResponse = {
   updatedAt: string;
