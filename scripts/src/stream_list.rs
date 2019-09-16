@@ -6,6 +6,7 @@ use chrono::Utc;
 use consts::VTUBERS;
 use futures::future::try_join_all;
 use isahc::{config::RedirectPolicy, HttpClient};
+use std::str::FromStr;
 use std::time::Duration;
 
 use crate::types::{Error, Result, Values};
@@ -13,11 +14,8 @@ use crate::utils::{
     auth, current_streams, patch_values, stream_stats, youtube_first_video, youtube_videos_snippet,
 };
 
-fn main() -> Result<()> {
-    futures::executor::block_on(real_main())
-}
-
-async fn real_main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = HttpClient::builder()
         .redirect_policy(RedirectPolicy::Follow)
         .tcp_keepalive(Duration::from_secs(5))
@@ -35,22 +33,30 @@ async fn real_main() -> Result<()> {
     )
     .await?;
 
+    let mut values = Values::default();
+    values.insert("/updatedAt/streamList", now);
+
     let videos = youtube_videos_snippet(&client, video_ids.join(",")).await?;
 
-    let mut values = Values::default();
-
     for video in videos {
-        if let Some(detail) = video.live_streaming_details {
-            if detail.actual_end_time.is_some() {
+        if let Some(details) = video.live_streaming_details {
+            if details.actual_end_time.is_some() {
                 continue;
-            } else if let Some(start) = detail.actual_start_time {
+            } else if let Some(start) = details.actual_start_time {
                 values.insert(format!("/streams/_current/{}", video.id), true);
 
                 if let Some(snippet) = video.snippet {
-                    if let Some(vtuber) = VTUBERS.iter().find(|v| v.youtube == snippet.channel_id) {
-                        values.insert(format!("/streams/{}/vtuberId", video.id), vtuber.name);
-                    }
+                    let vtuber = VTUBERS
+                        .iter()
+                        .find(|v| v.youtube == snippet.channel_id)
+                        .unwrap();
+                    values.insert(format!("/streams/{}/vtuberId", video.id), vtuber.name);
                     values.insert(format!("/streams/{}/title", video.id), snippet.title);
+                }
+
+                if let Some(current) = details.concurrent_viewers {
+                    let current = usize::from_str(&current)?;
+                    values.insert(format!("/streamStats/{}/{}", video.id, now_str), current);
                 }
 
                 values.insert(format!("/streams/{}/start", video.id), start);
@@ -58,8 +64,6 @@ async fn real_main() -> Result<()> {
             }
         }
     }
-
-    values.insert("/streams/_updatedAt", now);
 
     patch_values(&client, &auth.id_token, values).await?;
 
@@ -83,7 +87,7 @@ async fn real_main() -> Result<()> {
     .await?;
 
     for (id, stat) in current.keys().zip(stats.iter()) {
-        if !stat.is_empty() {
+        if let Some(stat) = stat {
             values.insert(
                 format!("/streams/{}/maxViewers", id),
                 *(stat.iter().max().unwrap()),

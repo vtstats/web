@@ -9,11 +9,8 @@ use std::str::FromStr;
 use crate::types::{Error, Result, Values};
 use crate::utils::{auth, current_streams, patch_values, youtube_videos};
 
-fn main() -> Result<()> {
-    futures::executor::block_on(real_main())
-}
-
-async fn real_main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = HttpClient::new()?;
 
     let auth = auth(&client).await?;
@@ -28,9 +25,9 @@ async fn real_main() -> Result<()> {
     let now_timestamp = now.timestamp();
 
     let ids = streams
-        .iter()
-        .filter(|&(_, v)| *v)
-        .map(|(k, _)| k.as_str())
+        .into_iter()
+        .filter(|&(_, v)| v)
+        .map(|(k, _)| k)
         .collect::<Vec<_>>();
 
     let videos = youtube_videos(&client, ids.join(",")).await?;
@@ -38,7 +35,7 @@ async fn real_main() -> Result<()> {
     let mut values = Values::default();
 
     for id in ids {
-        if let Some(video) = videos.iter().find(|v| v.id == *id) {
+        if let Some(video) = videos.iter().find(|v| v.id == id) {
             if let Some(details) = &video.live_streaming_details {
                 if let Some(end) = &details.actual_end_time {
                     values.insert(format!("/streams/_current/{}", id), false);
@@ -54,6 +51,8 @@ async fn real_main() -> Result<()> {
             values.insert(format!("/streams/{}/end", id), now);
         }
     }
+
+    values.insert("/updatedAt/streamStat", now);
 
     patch_values(&client, &auth.id_token, values).await
 }

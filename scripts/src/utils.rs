@@ -46,7 +46,7 @@ pub async fn youtube_videos_snippet(client: &HttpClient, id: String) -> Result<V
             &[
                 ("part", "id,liveStreamingDetails,snippet"),
                 ("maxResults", "50"),
-                ("key", env!("YOUTUBE_API_KEY0")),
+                ("key", env!("YOUTUBE_API_KEY1")),
                 ("id", &id),
             ],
         )?
@@ -197,7 +197,11 @@ pub async fn vtuber_stats_timestamps(client: &HttpClient, id_token: &str) -> Res
     Ok(timestamps)
 }
 
-pub async fn stream_stats(client: &HttpClient, id_token: &str, id: &str) -> Result<Vec<usize>> {
+pub async fn stream_stats(
+    client: &HttpClient,
+    id_token: &str,
+    id: &str,
+) -> Result<Option<Vec<usize>>> {
     let request = Request::get(
         Url::parse_with_params(
             &format!(
@@ -218,9 +222,9 @@ pub async fn stream_stats(client: &HttpClient, id_token: &str, id: &str) -> Resu
     {
         let array = map.values().copied().collect::<Vec<_>>();
 
-        Ok(array)
+        Ok(Some(array))
     } else {
-        Ok(Vec::new())
+        Ok(None)
     }
 }
 

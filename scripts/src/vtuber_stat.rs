@@ -14,11 +14,8 @@ use crate::utils::{
     auth, bilibili_stat, patch_values, vtuber_stats_at, vtuber_stats_timestamps, youtube_channels,
 };
 
-fn main() -> Result<()> {
-    futures::executor::block_on(real_main())
-}
-
-async fn real_main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = HttpClient::builder()
         .tcp_keepalive(Duration::from_secs(5))
         .build()?;
@@ -43,7 +40,6 @@ async fn real_main() -> Result<()> {
     let mut values = Values::default();
 
     values.insert(format!("/vtuberStats/_timestamps/{}", now_timestamp), true);
-    values.insert("/vtubers/_updatedAt", now);
 
     let one_day_ago = (|| {
         let one_day_ago = now_timestamp - 24 * 60 * 60;
@@ -129,6 +125,8 @@ async fn real_main() -> Result<()> {
             bilibili_views - one_day_ago[3],
         );
     }
+
+    values.insert("/updatedAt/vtuberStat", now);
 
     patch_values(&client, &auth.id_token, values).await
 }
