@@ -81,7 +81,7 @@ export class Database {
     return (await db
       .ref(`/vtuberStats/${id}`)
       .orderByKey()
-      .startAt(sevenDaysAgo)
+      .startAt(sevenDaysAgo.toString())
       .once("value")).val();
   }
 
