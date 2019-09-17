@@ -1,5 +1,6 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
+import { OnInit, OnDestroy, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
+import { Subscription } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
 import { VTuber } from "@holostats/libs/models";
@@ -11,7 +12,7 @@ import { ConfigService, ApiService } from "../services";
   templateUrl: "./vtubers.component.html",
   styleUrls: ["./vtubers.component.scss"]
 })
-export class VTubersComponent implements OnInit {
+export class VTubersComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiService,
     private configService: ConfigService
@@ -36,8 +37,10 @@ export class VTubersComponent implements OnInit {
 
   dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
 
+  private subscription: Subscription;
+
   ngOnInit() {
-    this.configService.subscribeIds$
+    this.subscription = this.configService.subscribeIds$
       .pipe(switchMap(ids => this.apiService.getVTubers(ids)))
       .subscribe(data => {
         this.dataSource.data = data.vtubers;
@@ -67,6 +70,10 @@ export class VTubersComponent implements OnInit {
           return item[property];
       }
     };
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getTotal = (path: (_: VTuber) => number) =>

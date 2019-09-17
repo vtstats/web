@@ -64,3 +64,11 @@ $columns: bilibiliSubs, bilibiliDailySubs, bilibiliDailyViews, bilibiliViews,
 .mat-column-name.mat-header-cell {
   text-align: center;
 }
+
+.mat-row .mat-cell:last-child {
+    padding-right: 42px;
+}
+
+.mat-footer-row .mat-footer-cell:last-child {
+    padding-right: 42px;
+}

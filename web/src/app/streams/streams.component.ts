@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Subscription, timer } from "rxjs";
 import { switchMap, map } from "rxjs/operators";
-import { timer } from "rxjs";
 
 import { Stream } from "@holostats/libs/models";
 import { VTUBERS } from "@holostats/libs/const";
@@ -12,7 +12,7 @@ import { ApiService, ConfigService } from "../services";
   templateUrl: "./streams.component.html",
   styleUrls: ["./streams.component.scss"]
 })
-export class StreamsComponent implements OnInit {
+export class StreamsComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiService,
     private configService: ConfigService
@@ -25,8 +25,10 @@ export class StreamsComponent implements OnInit {
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
   everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
 
+  private subscription: Subscription;
+
   ngOnInit() {
-    this.configService.subscribeIds$
+    this.subscription = this.configService.subscribeIds$
       .pipe(switchMap(ids => this.apiService.getStreams(ids)))
       .subscribe(data => {
         this.streams = data.streams;
@@ -34,11 +36,15 @@ export class StreamsComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   findVTuber(id: string) {
     return this.vtubers.find(v => v.id == id);
   }
 
-  trackBy(_, stream: Stream): string {
+  trackBy(_: number, stream: Stream): string {
     return stream.id;
   }
 }
