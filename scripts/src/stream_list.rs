@@ -11,7 +11,7 @@ use std::time::Duration;
 
 use crate::types::{Error, Result, Values};
 use crate::utils::{
-    auth, current_streams, patch_values, stream_stats, youtube_first_video, youtube_videos_snippet,
+    current_streams, patch_values, stream_stats, youtube_first_video, youtube_videos_snippet, Auth,
 };
 
 #[tokio::main]
@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
         .tcp_keepalive(Duration::from_secs(5))
         .build()?;
 
-    let auth = auth(&client).await?;
+    let auth = Auth::new(&client).await?;
 
     let now = Utc::now();
     let now_str = now.timestamp().to_string();

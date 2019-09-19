@@ -7,13 +7,13 @@ use isahc::HttpClient;
 use std::str::FromStr;
 
 use crate::types::{Error, Result, Values};
-use crate::utils::{auth, current_streams, patch_values, youtube_videos};
+use crate::utils::{current_streams, patch_values, youtube_videos, Auth};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let client = HttpClient::new()?;
 
-    let auth = auth(&client).await?;
+    let auth = Auth::new(&client).await?;
 
     let streams = match current_streams(&client, &auth.id_token).await {
         Ok(streams) => streams,
