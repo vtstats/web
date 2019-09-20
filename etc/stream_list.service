@@ -4,6 +4,7 @@ Description=Stream List
 [Service]
 Type=simple
 ExecStart=/path/to/holostats-scripts/target/release/stream_list
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

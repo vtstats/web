@@ -4,6 +4,7 @@ Description=Stream Stat
 [Service]
 Type=simple
 ExecStart=/path/to/holostats-scripts/target/release/stream_stat
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
