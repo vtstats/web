@@ -6,16 +6,12 @@
     "holostats": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "schematics": {
         "@schematics/angular:class": {
           "skipTests": true
         },
         "@schematics/angular:component": {
-          "skipTests": true
+          "skipTests": true,
+          "styleext": "scss"
         },
         "@schematics/angular:directive": {
           "skipTests": true
