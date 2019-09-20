@@ -1,4 +1,4 @@
-import { VERSION, Component } from "@angular/core";
+import { Component } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import {
   MatTreeFlatDataSource,
@@ -9,7 +9,7 @@ import { Location } from "@angular/common";
 import { VTUBERS, VTUBERS_BY_GROUP } from "@holostats/libs/const";
 import { VTuberInfo, VTuberGroup } from "@holostats/libs/models";
 
-import { ConfigService } from "../services";
+import { Config } from "../services";
 
 type VTuberNode = VTuberInfo | VTuberGroup;
 type VTuberFlatNode = VTuberNode & { level: number };
@@ -20,10 +20,8 @@ type VTuberFlatNode = VTuberNode & { level: number };
   styleUrls: ["./settings.component.scss"]
 })
 export class SettingsComponent {
-  readonly ANGULAR_VERSION = VERSION.full;
-
   toggleDarkTheme() {
-    this.configService.toggleDarkMode();
+    this.config.enableDarkMode = !this.config.enableDarkMode;
   }
 
   treeControl = new FlatTreeControl<VTuberFlatNode>(
@@ -43,68 +41,81 @@ export class SettingsComponent {
   hasChild = (_: number, node: VTuberFlatNode) =>
     "members" in node ? true : false;
 
-  // change to use Set
-  ids = this.configService.getSubscribeIds();
-
   count = VTUBERS.length;
 
-  enableDarkMode = true;
-
-  constructor(
-    private configService: ConfigService,
-    private location: Location
-  ) {
+  constructor(public config: Config, private location: Location) {
     this.dataSource.data = VTUBERS_BY_GROUP;
-    this.configService.enableDarkMode$.subscribe(
-      val => (this.enableDarkMode = val)
+  }
+
+  getMemberIds(groupId: string): string[] {
+    return (VTUBERS_BY_GROUP.find(
+      g => g.id == groupId
+    ) as VTuberGroup).members.map(m => m.id);
+  }
+
+  toggleVTuber(id: string) {
+    const index = this.config.selectedVTubers.indexOf(id);
+    let selectedVTubers = this.config.selectedVTubers;
+    if (index > -1) {
+      selectedVTubers.splice(index, 1);
+    } else {
+      selectedVTubers.push(id);
+    }
+    this.config.selectedVTubers = selectedVTubers;
+  }
+
+  toggleVTuberGroup(id: string) {
+    const memberIds = this.getMemberIds(id);
+    let selectedVTubers = this.config.selectedVTubers;
+    if (memberIds.every(id => selectedVTubers.includes(id))) {
+      selectedVTubers = selectedVTubers.filter(id => !memberIds.includes(id));
+    } else {
+      memberIds.forEach(id => selectedVTubers.push(id));
+    }
+    this.config.selectedVTubers = selectedVTubers;
+  }
+
+  vtuberSelected(id: string): boolean {
+    return this.config.selectedVTubers.includes(id);
+  }
+
+  vtuberGroupAllSelected(id: string): boolean {
+    return this.getMemberIds(id).every(id =>
+      this.config.selectedVTubers.includes(id)
     );
   }
 
-  getMemberIds(groupId: string) {
-    const group = VTUBERS_BY_GROUP.find(g => g.id == groupId) as VTuberGroup;
-    return group.members.map(m => m.id);
-  }
-
-  toggleItem(id: string) {
-    const index = this.ids.indexOf(id);
-    if (index > -1) {
-      this.ids.splice(index, 1);
-    } else {
-      this.ids.push(id);
-    }
-    this.configService.setSubscribeIds(this.ids);
-  }
-
-  toggleGroup(id: string) {
-    const memberIds = this.getMemberIds(id);
-    if (memberIds.every(id => this.ids.includes(id))) {
-      this.ids = this.ids.filter(id => !memberIds.includes(id));
-    } else {
-      memberIds.forEach(id => this.ids.push(id));
-    }
-    this.configService.setSubscribeIds(this.ids);
-  }
-
-  itemSelected(id: string): boolean {
-    return this.ids.includes(id);
-  }
-
-  groupAllSelected(id: string): boolean {
-    return this.getMemberIds(id).every(id => this.ids.includes(id));
-  }
-
-  groupPartiallySelected(id: string): boolean {
+  vtuberGroupPartiallySelected(id: string): boolean {
     const memberIds = this.getMemberIds(id);
     return (
-      memberIds.some(id => this.ids.includes(id)) &&
-      !memberIds.every(id => this.ids.includes(id))
+      memberIds.some(id => this.config.selectedVTubers.includes(id)) &&
+      !memberIds.every(id => this.config.selectedVTubers.includes(id))
     );
   }
 
-  applyChange() {
-    this.configService.setSubscribeIds(this.ids);
+  ///// Display Columns
+  readonly columns = [
+    { index: 2, value: "youtubeSubs", name: "YouTube 訂閱" },
+    { index: 3, value: "youtubeDailySubs", name: "(YouTube 訂閱) 日增" },
+    { index: 4, value: "youtubeViews", name: "YouTube 觀看" },
+    { index: 5, value: "youtubeDailyViews", name: "(YouTube 觀看) 日增" },
+    { index: 6, value: "bilibiliSubs", name: "Bilibili 訂閱" },
+    { index: 7, value: "bilibiliDailySubs", name: "(Bilibili 訂閱) 日增" },
+    { index: 8, value: "bilibiliViews", name: "Bilibili 觀看" },
+    { index: 9, value: "bilibiliDailyViews", name: "(Bilibili 觀看) 日增" }
+  ];
+
+  columnSelected(index: number): boolean {
+    return this.config.selectedColumns[index] !== "";
   }
 
+  toggleColumn(column: string, index: number) {
+    let selectedColumns = this.config.selectedColumns;
+    selectedColumns[index] = this.columnSelected(index) ? "" : column;
+    this.config.selectedColumns = selectedColumns;
+  }
+
+  ///// Misc
   backClicked() {
     this.location.back();
   }

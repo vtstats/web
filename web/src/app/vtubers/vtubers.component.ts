@@ -1,51 +1,29 @@
-import { OnInit, OnDestroy, Component, ViewChild } from "@angular/core";
+import { OnInit, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
-import { Subscription } from "rxjs";
-import { switchMap } from "rxjs/operators";
 
 import { VTuber } from "@holostats/libs/models";
 
-import { ConfigService, ApiService } from "../services";
+import { Config, ApiService } from "../services";
 
 @Component({
   selector: "hs-vtubers",
   templateUrl: "./vtubers.component.html",
   styleUrls: ["./vtubers.component.scss"]
 })
-export class VTubersComponent implements OnInit, OnDestroy {
-  constructor(
-    private apiService: ApiService,
-    private configService: ConfigService
-  ) {}
+export class VTubersComponent implements OnInit {
+  constructor(private apiService: ApiService, public config: Config) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   updatedAt = "";
 
-  displayedColumns: string[] = [
-    "profile",
-    "name",
-    "youtubeSubs",
-    "youtubeDailySubs",
-    "youtubeViews",
-    "youtubeDailyViews",
-    "bilibiliSubs",
-    "bilibiliDailySubs",
-    "bilibiliViews",
-    "bilibiliDailyViews"
-  ];
-
   dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
 
-  private subscription: Subscription;
-
   ngOnInit() {
-    this.subscription = this.configService.subscribeIds$
-      .pipe(switchMap(ids => this.apiService.getVTubers(ids)))
-      .subscribe(data => {
-        this.dataSource.data = data.vtubers;
-        this.updatedAt = data.updatedAt;
-      });
+    this.apiService.getVTubers(this.config.selectedVTubers).subscribe(data => {
+      this.dataSource.data = data.vtubers;
+      this.updatedAt = data.updatedAt;
+    });
 
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -72,8 +50,8 @@ export class VTubersComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  displayedColumns(): string[] {
+    return this.config.selectedColumns.filter(c => c.length != 0);
   }
 
   getTotal = (path: (_: VTuber) => number) =>

@@ -12,6 +12,13 @@
   margin: 0px;
 }
 
+.checkbox-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+    min-height: 48px;
+}
+
 .navbar {
   background-color: rgba(0, 0, 0, 0);
 }

@@ -2,13 +2,27 @@
   切換夜間模式
   <span class="spacer"></span>
   <mat-slide-toggle
-    [checked]="enableDarkMode"
+    [checked]="config.enableDarkMode"
     (toggleChange)="toggleDarkTheme()"
   ></mat-slide-toggle>
 </h4>
 
+<h4 class="settings-row mat-subheading-2">已選取的列：</h4>
+
+<div class="tree-row">
+  <div class="checkbox-row" *ngFor="let column of columns">
+    <button mat-icon-button disabled></button>
+    <mat-checkbox
+      [checked]="columnSelected(column.index)"
+      (change)="toggleColumn(column.value, column.index)"
+    >
+      {{ column.name }}
+    </mat-checkbox>
+  </div>
+</div>
+
 <h4 class="settings-row mat-subheading-2">
-  已選取的 VTuber <b>({{ ids.length }}/{{ count }})</b>
+  已選取的 VTuber <b>({{ config.selectedVTubers.length }}/{{ count }})</b>：
 </h4>
 
 <div class="tree-row">
@@ -16,8 +30,8 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <button mat-icon-button disabled></button>
       <mat-checkbox
-        [checked]="itemSelected(node.id)"
-        (change)="toggleItem(node.id)"
+        [checked]="vtuberSelected(node.id)"
+        (change)="toggleVTuber(node.id)"
       >
         {{ node.name }}
       </mat-checkbox>
@@ -37,9 +51,9 @@
         </mat-icon>
       </button>
       <mat-checkbox
-        [checked]="groupAllSelected(node.id)"
-        [indeterminate]="groupPartiallySelected(node.id)"
-        (change)="toggleGroup(node.id)"
+        [checked]="vtuberGroupAllSelected(node.id)"
+        [indeterminate]="vtuberGroupPartiallySelected(node.id)"
+        (change)="toggleVTuberGroup(node.id)"
       >
         {{ node.name }}
       </mat-checkbox>

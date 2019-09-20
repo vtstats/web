@@ -1,2 +1,2 @@
 export { ApiService } from "./api.service";
-export { ConfigService } from "./config.service";
+export { Config } from "./config";
