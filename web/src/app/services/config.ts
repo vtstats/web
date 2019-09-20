@@ -60,8 +60,9 @@ export class Config {
   }
 
   set selectedVTubers(vtubers: string[]) {
-    let filteredVTubers = vtubers
-      .filter((id, i, vtubers) => vtubers.indexOf(id) === i);
+    let filteredVTubers = vtubers.filter(
+      (id, i, vtubers) => vtubers.indexOf(id) === i
+    );
     localStorage.setItem(SELECTED_VTUBERS, filteredVTubers.join(","));
     this.selectedVTubers_ = filteredVTubers;
   }

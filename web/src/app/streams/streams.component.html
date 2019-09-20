@@ -21,12 +21,21 @@
           {{ stream.start | parseISO | duration: (everySecond$ | async) }}
         </ng-template>
       </div>
+      <a
+        class="icon"
+        href="https://youtu.be/{{ stream.id }}"
+        target="_blank"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon svgIcon="open_in_new"></mat-icon>
+      </a>
     </div>
     <div class="title" title="{{ stream.title }}">
       {{ stream.title }}
     </div>
     <div
-      [ngClass]="{ viewers: true, red: !stream.end }"
+      class="viewers"
+      [ngClass]="{ red: !stream.end }"
       fxLayout="row"
       fxLayoutAlign="start center"
     >
