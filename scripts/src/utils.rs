@@ -25,6 +25,7 @@ pub async fn youtube_videos(client: &HttpClient, id: String) -> Result<Vec<Video
                 "https://www.googleapis.com/youtube/v3/videos",
                 &[
                     ("part", "id,liveStreamingDetails"),
+                    ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
                     ("maxResults", "50"),
                     ("key", env!("YOUTUBE_API_KEY0")),
                     ("id", &id),
@@ -45,6 +46,7 @@ pub async fn youtube_videos_snippet(client: &HttpClient, id: String) -> Result<V
                 "https://www.googleapis.com/youtube/v3/videos",
                 &[
                     ("part", "id,liveStreamingDetails,snippet"),
+                    ("fields", "items(id,snippet(title,channelId),liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
                     ("maxResults", "50"),
                     ("key", env!("YOUTUBE_API_KEY1")),
                     ("id", &id),
@@ -65,6 +67,7 @@ pub async fn youtube_channels(client: &HttpClient, id: String) -> Result<Vec<Cha
                 "https://www.googleapis.com/youtube/v3/channels",
                 &[
                     ("part", "statistics"),
+                    ("fields", "items(id,statistics(viewCount,subscriberCount))"),
                     ("key", env!("YOUTUBE_API_KEY1")),
                     ("id", &id),
                 ],
