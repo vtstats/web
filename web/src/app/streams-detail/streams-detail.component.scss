@@ -6,16 +6,21 @@ $config: mat-typography-config();
   padding: 32px;
 }
 
-.profile {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
+.vtuber-row {
+  margin: 0 auto;
+  text-decoration: none;
 
-.name {
-  padding-left: 8px;
-  font-size: mat-font-size($config, body-2);
-  font-weight: mat-font-weight($config, body-2);
+  .profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  .name {
+    padding-left: 8px;
+    font-size: mat-font-size($config, body-2);
+    font-weight: mat-font-weight($config, body-2);
+  }
 }
 
 .title {

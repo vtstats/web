@@ -1,5 +1,6 @@
 import { OnInit, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { VTuber } from "@holostats/libs/models";
 
@@ -11,7 +12,12 @@ import { Config, ApiService } from "../services";
   styleUrls: ["./vtubers.component.scss"]
 })
 export class VTubersComponent implements OnInit {
-  constructor(private apiService: ApiService, public config: Config) {}
+  constructor(
+    private apiService: ApiService,
+    public config: Config,
+
+    private spinnerService: NgxSpinnerService
+  ) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -20,7 +26,9 @@ export class VTubersComponent implements OnInit {
   dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
 
   ngOnInit() {
+    this.spinnerService.show();
     this.apiService.getVTubers(this.config.selectedVTubers).subscribe(data => {
+      this.spinnerService.hide();
       this.dataSource.data = data.vtubers;
       this.updatedAt = data.updatedAt;
     });

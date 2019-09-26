@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { format, fromUnixTime } from "date-fns";
 import { switchMap, map } from "rxjs/operators";
 import { timer } from "rxjs";
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { Stream } from "@holostats/libs/models";
 import { VTUBERS } from "@holostats/libs/const";
@@ -15,7 +16,11 @@ import { ApiService } from "../services";
   styleUrls: ["./streams-detail.component.scss"]
 })
 export class StreamsDetailComponent implements OnInit {
-  constructor(private service: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private service: ApiService,
+    private route: ActivatedRoute,
+    private spinnerService: NgxSpinnerService
+  ) {}
 
   vtubers = VTUBERS;
   stream: Stream;
@@ -28,6 +33,7 @@ export class StreamsDetailComponent implements OnInit {
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
+    this.spinnerService.show();
     this.route.paramMap
       .pipe(switchMap(params => this.service.getStreamStat(params.get("id"))))
       .subscribe(res => {
@@ -42,7 +48,8 @@ export class StreamsDetailComponent implements OnInit {
         this.xScaleMin = series[0].name;
         this.xScaleMax = series[series.length - 1].name;
         this.stream = res;
-        this.stats.push({ name: "viewerStats", series });
+        this.stats = [{ name: "viewerStats", series }];
+        this.spinnerService.hide();
       });
   }
 

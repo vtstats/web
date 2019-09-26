@@ -3,7 +3,7 @@
 @mixin streams-detail-theme($theme) {
   $foreground: map-get($theme, foreground);
 
-  .title {
+  .title, .name {
     color: mat-color($foreground, text);
   }
 }

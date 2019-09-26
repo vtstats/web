@@ -5,14 +5,10 @@ import { zhTW } from "date-fns/locale";
 @Pipe({ name: "distance" })
 export class DistancePipe implements PipeTransform {
   transform(start: Date | null, end: Date): string {
-    if (end) {
-      return (
-        formatDistanceStrict(end, start, {
+    return end
+      ? formatDistanceStrict(end, start, {
           locale: zhTW
         }) + "前"
-      );
-    } else {
-      return "";
-    }
+      : "";
   }
 }

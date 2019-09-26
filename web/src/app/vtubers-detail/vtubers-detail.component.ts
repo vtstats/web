@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
 import { switchMap } from "rxjs/operators";
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { VTuber } from "@holostats/libs/models";
 
@@ -25,11 +26,16 @@ export class VTubersDetailComponent {
 
   vtuber: VTuber;
 
-  constructor(private service: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private service: ApiService,
+    private route: ActivatedRoute,
+    private spinnerService: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
     this.xAxisTicks = this.createTicks([0, 1, 2, 3, 4, 5, 6]);
     this.xScaleMin = this.xAxisTicks[this.xAxisTicks.length - 1];
+    this.spinnerService.show();
     this.route.paramMap
       .pipe(switchMap(params => this.service.getVTuberStat(params.get("id"))))
       .subscribe(vtuber => {
@@ -48,6 +54,7 @@ export class VTubersDetailComponent {
         this.bilibiliSubs.push({ name: "", series: bilibiliSubsSeries });
         this.bilibiliViews.push({ name: "", series: bilibiliViewsSeries });
         this.vtuber = vtuber;
+        this.spinnerService.hide();
       });
   }
 

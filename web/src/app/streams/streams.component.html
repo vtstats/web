@@ -44,11 +44,12 @@
         svgIcon="eye"
         [title]="stream.end ? '直播結束' : '正在直播'"
       ></mat-icon>
-      <span class="avg-viewers" title="平均同接">
-        {{ (stream.avgViewers | number) || " ---- " }}
+      <span title="平均同接">
+        {{ (stream.avgViewers | number) || "----" }}
       </span>
+      <span class="separator"> / </span>
       <span title="最高同接">
-        {{ (stream.maxViewers | number) || " ---- " }}
+        {{ (stream.maxViewers | number) || "----" }}
       </span>
     </div>
     <div
@@ -70,4 +71,7 @@
       </span>
     </div>
   </div>
+</div>
+<div [hidden]="!showSpinner" class="spinner">
+  <mat-spinner #spinner [diameter]="30"></mat-spinner>
 </div>

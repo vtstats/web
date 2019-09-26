@@ -89,8 +89,8 @@ $config: mat-typography-config();
   padding-bottom: 12px;
 }
 
-.avg-viewers:after {
-  content: "/";
+.separator {
+  user-select: none;
   margin: 4px;
 }
 
@@ -115,4 +115,13 @@ $config: mat-typography-config();
   line-height: 18px;
   width: 18px;
   padding: 4px;
+}
+
+.spinner {
+  text-align: center;
+  padding: 20px;
+
+  mat-spinner {
+    margin: 0 auto;
+  }
 }

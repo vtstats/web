@@ -21,8 +21,10 @@
       fxLayout="column"
       fxLayoutAlign="space-around"
     >
-      <div
-        fxLayoutAlign="center center"
+      <a
+        class="vtuber-row"
+        fxLayoutAlign="start center"
+        [routerLink]="['/vtuber', stream.vtuberId]"
         *ngIf="findVTuber(stream.vtuberId); let vtuber"
       >
         <img
@@ -30,7 +32,7 @@
           src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
         />
         <span class="name">{{ vtuber.name }}</span>
-      </div>
+      </a>
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div flex="50">
           <div class="value">

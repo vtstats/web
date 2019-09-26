@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
-import { NgxSpinnerService } from "ngx-spinner";
 
 import {
   StreamDetailResponse,
@@ -11,39 +9,35 @@ import {
   VTuberDetailResponse
 } from "@holostats/libs/models";
 
+const BASE_URL = "https://holo.poi.cat/api";
+
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {}
+  constructor(private http: HttpClient) {}
 
   getVTubers(ids: string[]): Observable<VTubersListResponse> {
-    this.spinner.show();
-    return this.http
-      .get<VTubersListResponse>("https://holo.poi.cat/api/vtubers", {
-        params: new HttpParams().set("ids", ids.join(","))
-      })
-      .pipe(finalize(() => this.spinner.hide()));
+    return this.http.get<VTubersListResponse>(`${BASE_URL}/vtubers`, {
+      params: new HttpParams().set("ids", ids.join(","))
+    });
   }
 
   getVTuberStat(id: string): Observable<VTuberDetailResponse> {
-    this.spinner.show();
-    return this.http
-      .get<VTuberDetailResponse>("https://holo.poi.cat/api/vtubers/" + id)
-      .pipe(finalize(() => this.spinner.hide()));
+    return this.http.get<VTuberDetailResponse>(`${BASE_URL}/vtubers/${id}`);
   }
 
   getStreams(ids: string[]) {
-    this.spinner.show();
-    return this.http
-      .get<StreamsListResponse>("https://holo.poi.cat/api/streams", {
-        params: new HttpParams().set("ids", ids.join(","))
-      })
-      .pipe(finalize(() => this.spinner.hide()));
+    return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
+      params: new HttpParams().set("ids", ids.join(","))
+    });
+  }
+
+  getStreamsWithSkip(ids: string[], skip: string) {
+    return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
+      params: new HttpParams().set("ids", ids.join(",")).set("skip", skip)
+    });
   }
 
   getStreamStat(id: string) {
-    this.spinner.show();
-    return this.http
-      .get<StreamDetailResponse>("https://holo.poi.cat/api/streams/" + id)
-      .pipe(finalize(() => this.spinner.hide()));
+    return this.http.get<StreamDetailResponse>(`${BASE_URL}/streams/${id}`);
   }
 }
