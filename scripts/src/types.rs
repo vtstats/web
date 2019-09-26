@@ -210,7 +210,7 @@ pub mod youtube {
     #[serde(rename_all = "camelCase")]
     pub struct Video {
         pub id: String,
-        pub snippet: Option<Snippet>,
+        pub snippet: Option<VideoSnippet>,
         pub live_streaming_details: Option<LiveStreamingDetails>,
     }
 
@@ -225,8 +225,37 @@ pub mod youtube {
 
     #[derive(Deserialize, Debug)]
     #[serde(rename_all = "camelCase")]
-    pub struct Snippet {
+    pub struct VideoSnippet {
         pub channel_id: String,
         pub title: String,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct LiveChatMessagesResponse {
+        pub items: Vec<LiveChatMessage>,
+        pub next_page_token: String,
+        pub polling_interval_millis: u64,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct LiveChatMessage {
+        pub snippet: LiveChatMessageSnippet,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct LiveChatMessageSnippet {
+        pub published_at: String,
+        pub super_chat_details: Option<SuperChatDetails>,
+    }
+
+    #[derive(Deserialize, Debug)]
+    #[serde(rename_all = "camelCase")]
+    pub struct SuperChatDetails {
+        pub amount_micros: String,
+        pub currency: String,
+        pub tier: usize,
     }
 }

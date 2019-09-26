@@ -2,7 +2,7 @@ mod consts;
 mod types;
 mod utils;
 
-use chrono::Utc;
+use chrono::{Timelike, Utc};
 use consts::VTUBERS;
 use futures::future::try_join_all;
 use isahc::{config::RedirectPolicy, HttpClient};
@@ -26,17 +26,22 @@ async fn main() -> Result<()> {
     let now = Utc::now();
     let now_str = now.timestamp().to_string();
 
-    let video_ids = try_join_all(
+    let videos_id = try_join_all(
         VTUBERS
             .iter()
             .map(|v| youtube_first_video(&client, v.youtube, &now_str)),
     )
-    .await?;
+    .await?
+    .join(",");
 
     let mut values = Values::default();
     values.insert("/updatedAt/streamList", now);
 
-    let videos = youtube_videos_snippet(&client, video_ids.join(",")).await?;
+    let videos = if now.hour() % 2 == 0 {
+        youtube_videos_snippet(&client, &videos_id, env!("YOUTUBE_API_KEY0")).await?
+    } else {
+        youtube_videos_snippet(&client, &videos_id, env!("YOUTUBE_API_KEY1")).await?
+    };
 
     for video in videos {
         if let Some(details) = video.live_streaming_details {
@@ -99,5 +104,7 @@ async fn main() -> Result<()> {
         }
     }
 
-    patch_values(&client, &auth.id_token, values).await
+    patch_values(&client, &auth.id_token, values).await?;
+
+    Ok(())
 }

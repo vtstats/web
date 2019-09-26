@@ -2,7 +2,7 @@ mod consts;
 mod types;
 mod utils;
 
-use chrono::Utc;
+use chrono::{Timelike, Utc};
 use futures::future::{try_join, try_join_all};
 use isahc::HttpClient;
 use std::str::FromStr;
@@ -19,7 +19,10 @@ async fn main() -> Result<()> {
 
     let auth = Auth::new(&client).await?;
 
-    let channel_ids = VTUBERS
+    let now = Utc::now();
+    let now_timestamp = now.timestamp();
+
+    let channels_id = VTUBERS
         .iter()
         .map(|v| v.youtube)
         .collect::<Vec<_>>()
@@ -29,13 +32,15 @@ async fn main() -> Result<()> {
         try_join_all(VTUBERS.iter().map(|v| bilibili_stat(&client, v.bilibili))).await?;
 
     let (youtube_stats, timestamps) = try_join(
-        youtube_channels(&client, channel_ids),
+        if now.hour() % 2 == 0 {
+            youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY0"))
+        } else {
+            youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY1"))
+        },
         vtuber_stats_timestamps(&client, &auth.id_token),
     )
     .await?;
 
-    let now = Utc::now();
-    let now_timestamp = now.timestamp();
     let mut values = Values::default();
 
     let one_day_ago = timestamps
@@ -117,5 +122,7 @@ async fn main() -> Result<()> {
 
     values.insert("/updatedAt/vtuberStat", now);
 
-    patch_values(&client, &auth.id_token, values).await
+    patch_values(&client, &auth.id_token, values).await?;
+
+    Ok(())
 }

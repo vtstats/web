@@ -2,7 +2,7 @@ mod consts;
 mod types;
 mod utils;
 
-use chrono::Utc;
+use chrono::{Timelike, Utc};
 use isahc::HttpClient;
 use std::str::FromStr;
 
@@ -30,7 +30,12 @@ async fn main() -> Result<()> {
         .map(|(k, _)| k)
         .collect::<Vec<_>>();
 
-    let videos = youtube_videos(&client, ids.join(",")).await?;
+    let videos_id = ids.join(",");
+    let videos = if now.hour() % 2 == 0 {
+        youtube_videos(&client, &videos_id, env!("YOUTUBE_API_KEY0")).await?
+    } else {
+        youtube_videos(&client, &videos_id, env!("YOUTUBE_API_KEY1")).await?
+    };
 
     let mut values = Values::default();
 
@@ -54,5 +59,7 @@ async fn main() -> Result<()> {
 
     values.insert("/updatedAt/streamStat", now);
 
-    patch_values(&client, &auth.id_token, values).await
+    patch_values(&client, &auth.id_token, values).await?;
+
+    Ok(())
 }

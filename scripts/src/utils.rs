@@ -12,13 +12,13 @@ use url::Url;
 use crate::types::{
     auth::{RefreshRequest, RefreshResponse, SignInRequest, SignInResponse},
     bilibili::{StatResponse, UpstatResponse},
-    youtube::{Channel, ChannelsResponse, Video, VideosResponse},
+    youtube::{Channel, ChannelsResponse, LiveChatMessagesResponse, Video, VideosResponse},
     Result, Values,
 };
 
 ///////// YouTube
 
-pub async fn youtube_videos(client: &HttpClient, id: String) -> Result<Vec<Video>> {
+pub async fn youtube_videos(client: &HttpClient, id: &str, key: &str) -> Result<Vec<Video>> {
     let response = client
         .get_async(
             Url::parse_with_params(
@@ -27,8 +27,8 @@ pub async fn youtube_videos(client: &HttpClient, id: String) -> Result<Vec<Video
                     ("part", "id,liveStreamingDetails"),
                     ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
                     ("maxResults", "50"),
-                    ("key", env!("YOUTUBE_API_KEY0")),
-                    ("id", &id),
+                    ("key", key),
+                    ("id", id),
                 ],
             )?
             .as_str(),
@@ -39,7 +39,11 @@ pub async fn youtube_videos(client: &HttpClient, id: String) -> Result<Vec<Video
     Ok(response.items)
 }
 
-pub async fn youtube_videos_snippet(client: &HttpClient, id: String) -> Result<Vec<Video>> {
+pub async fn youtube_videos_snippet(
+    client: &HttpClient,
+    id: &str,
+    key: &str,
+) -> Result<Vec<Video>> {
     let response = client
         .get_async(
             Url::parse_with_params(
@@ -48,8 +52,8 @@ pub async fn youtube_videos_snippet(client: &HttpClient, id: String) -> Result<V
                     ("part", "id,liveStreamingDetails,snippet"),
                     ("fields", "items(id,snippet(title,channelId),liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
                     ("maxResults", "50"),
-                    ("key", env!("YOUTUBE_API_KEY1")),
-                    ("id", &id),
+                    ("key", key),
+                    ("id", id),
                 ],
             )?
             .as_str(),
@@ -60,7 +64,7 @@ pub async fn youtube_videos_snippet(client: &HttpClient, id: String) -> Result<V
     Ok(response.items)
 }
 
-pub async fn youtube_channels(client: &HttpClient, id: String) -> Result<Vec<Channel>> {
+pub async fn youtube_channels(client: &HttpClient, id: &str, key: &str) -> Result<Vec<Channel>> {
     let response = client
         .get_async(
             Url::parse_with_params(
@@ -68,8 +72,8 @@ pub async fn youtube_channels(client: &HttpClient, id: String) -> Result<Vec<Cha
                 &[
                     ("part", "statistics"),
                     ("fields", "items(id,statistics(viewCount,subscriberCount))"),
-                    ("key", env!("YOUTUBE_API_KEY1")),
-                    ("id", &id),
+                    ("key", key),
+                    ("id", id),
                 ],
             )?
             .as_str(),
@@ -78,6 +82,32 @@ pub async fn youtube_channels(client: &HttpClient, id: String) -> Result<Vec<Cha
         .json::<ChannelsResponse>()?;
 
     Ok(response.items)
+}
+
+pub async fn youtube_stream_chat(
+    client: &HttpClient,
+    id: &str,
+    token: &str,
+    key: &str,
+) -> Result<LiveChatMessagesResponse> {
+    let response = client
+        .get_async(
+            Url::parse_with_params(
+                "https://www.googleapis.com/youtube/v3/liveChat/messages",
+                &[
+                    ("part", "snippet"),
+                    ("fields", "nextPageToken,pollingIntervalMillis,items(snippet(publishedAt,superChatDetails(amountMicros,currency,tier)))"),
+                    ("key", key),
+                    ("pageToken", token),
+                    ("liveChatId", id),
+                ],
+            )?
+            .as_str(),
+        )
+        .await?
+        .json::<LiveChatMessagesResponse>()?;
+
+    Ok(response)
 }
 
 pub async fn youtube_first_video(
@@ -165,7 +195,7 @@ pub async fn patch_values(client: &HttpClient, id_token: &str, values: Values) -
     Ok(())
 }
 
-pub async fn vtuber_stats_timestamps(client: &HttpClient, id_token: &str) -> Result<Vec<i64>> {
+pub async fn vtuber_stats_timestamps(client: &HttpClient, auth: &str) -> Result<Vec<i64>> {
     let response = client
         .get_async(
             Url::parse_with_params(
@@ -174,7 +204,7 @@ pub async fn vtuber_stats_timestamps(client: &HttpClient, id_token: &str) -> Res
                     env!("FIREBASE_PROJECT_ID"),
                     ".firebaseio.com/vtuberStats/ayame.json"
                 ),
-                &[("auth", id_token), ("shallow", "true")],
+                &[("auth", auth), ("shallow", "true")],
             )?
             .as_str(),
         )
@@ -188,20 +218,16 @@ pub async fn vtuber_stats_timestamps(client: &HttpClient, id_token: &str) -> Res
     Ok(timestamps)
 }
 
-pub async fn stream_stats(
-    client: &HttpClient,
-    id_token: &str,
-    stream_id: &str,
-) -> Result<Option<Vec<usize>>> {
+pub async fn stream_stats(client: &HttpClient, auth: &str, id: &str) -> Result<Option<Vec<usize>>> {
     let mut response = client
         .get_async(
             Url::parse_with_params(
                 &format!(
                     "https://{}.firebaseio.com/streamStats/{}.json",
                     env!("FIREBASE_PROJECT_ID"),
-                    stream_id
+                    id
                 ),
-                &[("auth", id_token)],
+                &[("auth", auth)],
             )?
             .as_str(),
         )
@@ -216,7 +242,7 @@ pub async fn stream_stats(
     }
 }
 
-pub async fn current_streams(client: &HttpClient, id_token: &str) -> Result<HashMap<String, bool>> {
+pub async fn current_streams(client: &HttpClient, auth: &str) -> Result<HashMap<String, bool>> {
     let response = client
         .get_async(
             Url::parse_with_params(
@@ -225,7 +251,7 @@ pub async fn current_streams(client: &HttpClient, id_token: &str) -> Result<Hash
                     env!("FIREBASE_PROJECT_ID"),
                     ".firebaseio.com/streams/_current.json",
                 ),
-                &[("auth", id_token)],
+                &[("auth", auth)],
             )?
             .as_str(),
         )
@@ -237,7 +263,7 @@ pub async fn current_streams(client: &HttpClient, id_token: &str) -> Result<Hash
 
 pub async fn vtuber_stats_at(
     client: &HttpClient,
-    id_token: &str,
+    auth: &str,
     name: &str,
     timestamp: i64,
 ) -> Result<[i32; 4]> {
@@ -250,7 +276,7 @@ pub async fn vtuber_stats_at(
                     name,
                     timestamp,
                 ),
-                &[("auth", id_token)],
+                &[("auth", auth)],
             )?
             .as_str(),
         )
