@@ -188,7 +188,7 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
       },
       {
         id: "pph",
-        name: "PinkyPopHepburn",
+        name: "Pinky Pop Hepburn",
         twitter: "PinkyPopHepburn",
         youtube: "UC1pR2ig6NhndhvicEgclNdA",
         bilibili: 393940396
