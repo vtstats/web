@@ -26,7 +26,8 @@ const defaultSelectedVTubers = [
   "sora",
   "subaru",
   "suisei",
-  "ui"
+  "ui",
+  "yogiri"
 ];
 
 const defaultSelectedColumns = [

@@ -267,7 +267,7 @@ pub async fn vtuber_stats_at(
     name: &str,
     timestamp: i64,
 ) -> Result<[i32; 4]> {
-    let response = client
+    client
         .get_async(
             Url::parse_with_params(
                 &format!(
@@ -281,9 +281,8 @@ pub async fn vtuber_stats_at(
             .as_str(),
         )
         .await?
-        .json::<[i32; 4]>()?;
-
-    Ok(response)
+        .json::<[i32; 4]>()
+        .or(Ok([0; 4]))
 }
 
 ///////// Auth

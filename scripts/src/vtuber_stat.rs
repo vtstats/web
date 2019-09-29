@@ -25,6 +25,7 @@ async fn main() -> Result<()> {
     let channels_id = VTUBERS
         .iter()
         .map(|v| v.youtube)
+        .filter(|id| !id.is_empty())
         .collect::<Vec<_>>()
         .join(",");
 
@@ -60,13 +61,15 @@ async fn main() -> Result<()> {
         .zip(bilibili_stats.iter())
         .zip(one_day_ago_stats.iter())
     {
-        let youtube = youtube_stats
-            .iter()
-            .find(|c| c.id == vtuber.youtube)
-            .unwrap();
-
-        let youtube_views = i32::from_str(&youtube.statistics.view_count)?;
-        let youtube_subs = i32::from_str(&youtube.statistics.subscriber_count)?;
+        let (youtube_views, youtube_subs) =
+            if let Some(stat) = youtube_stats.iter().find(|c| c.id == vtuber.youtube) {
+                (
+                    i32::from_str(&stat.statistics.view_count)?,
+                    i32::from_str(&stat.statistics.subscriber_count)?,
+                )
+            } else {
+                (0, 0)
+            };
 
         values.insert(
             format!("/vtuberStats/{}/{}/{}", vtuber.name, now_timestamp, 0),

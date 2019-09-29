@@ -29,6 +29,7 @@ async fn main() -> Result<()> {
     let videos_id = try_join_all(
         VTUBERS
             .iter()
+            .filter(|v| !v.youtube.is_empty())
             .map(|v| youtube_first_video(&client, v.youtube, &now_str)),
     )
     .await?

@@ -172,6 +172,13 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         twitter: "suisei_hosimati",
         youtube: "UC5CwaMl1eIgY8h02uZw7u8A",
         bilibili: 9034870
+      },
+      {
+        id: "yogiri",
+        name: "夜霧Yogiri",
+        twitter: "",
+        youtube: "",
+        bilibili: 427061218
       }
     ]
   },
