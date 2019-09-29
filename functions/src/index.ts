@@ -26,7 +26,7 @@ app.get("/api/vtubers", async (req, res) => {
     ids = req.query.ids.split(",");
   }
 
-  await db.updateCache();
+  await db.updateVTubersCache();
 
   res.set("Last-Modified", db.vtubers.updatedAt.toUTCString());
 
@@ -43,7 +43,7 @@ app.get("/api/vtubers", async (req, res) => {
 app.get("/api/vtubers/:id", async (req, res) => {
   const id = req.params.id;
 
-  await db.updateCache();
+  await db.updateVTubersCache();
 
   res.set("Last-Modified", db.vtubers.updatedAt.toUTCString());
 
@@ -63,7 +63,7 @@ app.get("/api/streams", async (req, res) => {
     ids = req.query.ids.split(",");
   }
 
-  await db.updateCache();
+  await db.updateStreamsCache();
 
   res.set("Last-Modified", db.streams.updatedAt.toUTCString());
 
@@ -94,7 +94,7 @@ app.get("/api/streams", async (req, res) => {
 app.get("/api/streams/:id", async (req, res) => {
   const id = req.params.id;
 
-  await db.updateCache();
+  await db.updateStreamsCache();
 
   res.json({
     ...db.findStream(id),

@@ -20,51 +20,58 @@ interface Cache<T> {
 
 export class Database {
   vtubers: Cache<VTuber> = { updatedAt: new Date(0), items: [] };
-
   streams: Cache<Stream> = { updatedAt: new Date(0), items: [] };
 
-  async updateCache() {
-    console.time("Update database cache");
+  async updateVTubersCache() {
+    if (differenceInMinutes(new Date(), this.vtubers.updatedAt) < 30) {
+      return;
+    }
 
-    let now = new Date();
-
-    let [updatedAt, vtubers, streams] = await Promise.all([
+    const [updatedAt, vtubers] = await Promise.all([
       db.ref("/updatedAt").once("value"),
-      differenceInMinutes(now, this.vtubers.updatedAt) >= 30
-        ? db.ref("/vtubers").once("value")
-        : Promise.resolve(null),
-      differenceInMinutes(now, this.streams.updatedAt) >= 5
-        ? db.ref("/streams").once("value")
-        : Promise.resolve(null)
+      db.ref("/vtubers").once("value")
     ]);
 
-    let updatedAtVal = updatedAt.val();
+    const updatedAtVal = updatedAt.val();
 
     this.streams.updatedAt = parseISO(updatedAtVal.streamList);
     this.vtubers.updatedAt = parseISO(updatedAtVal.vtuberStat);
+    this.vtubers.items = [];
 
-    if (streams != null) {
-      this.streams.items = [];
-      streams.forEach(snap => {
-        if (snap.key != "_current") {
-          this.streams.items.push(snap.val());
-        }
-      });
-      this.streams.items.sort((a, b) =>
-        compareDesc(parseISO(a.start), parseISO(b.start))
-      );
-      console.log("Streams Updated.");
+    vtubers.forEach(snap => {
+      this.vtubers.items.push(snap.val());
+    });
+
+    console.log("VTubers cache updated.");
+  }
+
+  async updateStreamsCache() {
+    if (differenceInMinutes(new Date(), this.streams.updatedAt) < 5) {
+      return;
     }
 
-    if (vtubers != null) {
-      this.vtubers.items = [];
-      vtubers.forEach(snap => {
-        this.vtubers.items.push(snap.val());
-      });
-      console.log("VTubers Updated.");
-    }
+    const [updatedAt, streams] = await Promise.all([
+      db.ref("/updatedAt").once("value"),
+      db.ref("/streams").once("value")
+    ]);
 
-    console.timeEnd("Update database cache");
+    const updatedAtVal = updatedAt.val();
+
+    this.streams.updatedAt = parseISO(updatedAtVal.streamList);
+    this.vtubers.updatedAt = parseISO(updatedAtVal.vtuberStat);
+    this.streams.items = [];
+
+    streams.forEach(snap => {
+      if (snap.key != "_current") {
+        this.streams.items.push(snap.val());
+      }
+    });
+
+    this.streams.items.sort((a, b) =>
+      compareDesc(parseISO(a.start), parseISO(b.start))
+    );
+
+    console.log("Streams cache updated.");
   }
 
   findVTuber(id: string): VTuber {
