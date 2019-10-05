@@ -176,9 +176,16 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
       {
         id: "yogiri",
         name: "夜霧Yogiri",
-        twitter: "",
+        twitter: "Yogiri_hololive",
         youtube: "",
         bilibili: 427061218
+      },
+      {
+        id: "civia",
+        name: "希薇娅Civia",
+        twitter: "Civia_Hololive",
+        youtube: "",
+        bilibili: 354411419
       }
     ]
   },
