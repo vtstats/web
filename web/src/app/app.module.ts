@@ -23,6 +23,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
 import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
+import { FooterComponent } from "./footer";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
 import { StreamsComponent } from "./streams";
@@ -46,6 +47,7 @@ const ROUTES: Routes = [
   declarations: [
     AppComponent,
     AreaChartComponent,
+    FooterComponent,
     NavbarComponent,
     SettingsComponent,
     StreamsComponent,

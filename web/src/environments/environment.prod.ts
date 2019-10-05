@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  commit_hash: "GIT_COMMIT_HASH"
 };

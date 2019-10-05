@@ -10,6 +10,7 @@ cache:
     - node_modules
 
 script:
+  - sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" web/src/environments/*
   - yarn --cwd web/ build --prod
 
 deploy:

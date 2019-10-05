@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin footer-theme($theme) {
+  $foreground: map-get($theme, foreground);
+
+  .footer .link {
+    color: mat-color($foreground, text);
+  }
+
+  .footer .commit {
+    color: mat-color($foreground, secondary-text);
+  }
+}
