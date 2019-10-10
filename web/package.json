@@ -21,7 +21,7 @@
     "@angular/material": "~8.2.0",
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
-    "@angular/router": "~8.2.0",
+    "@angular/router": "~8.2.10",
     "@angular/service-worker": "~8.2.0",
     "@holostats/libs": "*",
     "@swimlane/ngx-charts": "^12.0.1",
