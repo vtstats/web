@@ -209,10 +209,10 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-8.2.9.tgz#b20c938bad93c046a22bbe44dd4fecd1ff039ff0"
   integrity sha512-F6ReN0cToHIkCjEM2ECkBxCTsvFjVae8FpIr3Fz8IHZHOOYcS5mx/BWdEO7odI5/tQKl+cCWol7NjvJYV0zolg==
 
-"@angular/material@~8.2.0":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.2.2.tgz#c2a1773d604304f614f20bdb1c6eba1cce351f3f"
-  integrity sha512-mR2ppE+Z1S5As2SUFK8wUH76Fj7YgrefhrwVGaeCLcAen//RHPw043+KL2apPAUaltdIFlGFtUuA6yJN6av0nQ==
+"@angular/material@~8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.2.3.tgz#16543e4e06a3fde2651a25cfe126e88e714ae105"
+  integrity sha512-SOczkIaqes+r+9XF/UUiokidfFKBpHkOPIaFK857sFD0FBNPvPEpOr5oHKCG3feERRwAFqHS7Wo2ohVEWypb5A==
   dependencies:
     tslib "^1.7.1"
 
