@@ -35,12 +35,16 @@ const defaultSelectedColumns = [
   "name",
   "youtubeSubs",
   "youtubeDailySubs",
+  "youtubeWeeklySubs",
   "youtubeViews",
   "youtubeDailyViews",
+  "youtubeWeeklyViews",
   "bilibiliSubs",
   "bilibiliDailySubs",
+  "bilibiliWeeklySubs",
   "bilibiliViews",
-  "bilibiliDailyViews"
+  "bilibiliDailyViews",
+  "bilibiliWeeklyViews"
 ];
 
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
@@ -50,10 +54,7 @@ export const SELECTED_VTUBERS = "holostats:selectedVTubers";
 @Injectable({ providedIn: "root" })
 export class Config {
   private selectedVTubers_ = localStorage.getItem(SELECTED_VTUBERS)
-    ? localStorage
-        .getItem(SELECTED_VTUBERS)
-        .split(",")
-        .filter((id, i, ids) => ids.indexOf(id) === i)
+    ? localStorage.getItem(SELECTED_VTUBERS).split(",")
     : defaultSelectedVTubers;
 
   get selectedVTubers() {
@@ -76,9 +77,18 @@ export class Config {
     return this.selectedColumns_;
   }
 
-  set selectedColumns(columns: string[]) {
-    localStorage.setItem(SELECTED_COLUMNS, columns.join(","));
-    this.selectedColumns_ = columns;
+  removeColumns(column: string) {
+    this.selectedColumns_ = this.selectedColumns_.filter(col => col !== column);
+    localStorage.setItem(SELECTED_COLUMNS, this.selectedColumns_.join(","));
+  }
+
+  addColumns(column: string) {
+    this.selectedColumns_.push(column);
+    this.selectedColumns_.sort(
+      (a, b) =>
+        defaultSelectedColumns.indexOf(a) - defaultSelectedColumns.indexOf(b)
+    );
+    localStorage.setItem(SELECTED_COLUMNS, this.selectedColumns_.join(","));
   }
 
   private enableDarkMode_ = localStorage.getItem(ENABLE_DARK_MODE) !== null;

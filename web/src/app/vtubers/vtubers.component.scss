@@ -48,8 +48,9 @@ table {
   padding-left: 12px;
 }
 
-$columns: bilibiliSubs, bilibiliDailySubs, bilibiliDailyViews, bilibiliViews,
-  youtubeDailySubs, youtubeSubs, youtubeDailyViews, youtubeViews;
+$columns: bilibiliSubs, bilibiliDailySubs, bilibiliWeeklySubs, bilibiliViews,
+  bilibiliDailyViews, bilibiliWeeklyViews, youtubeSubs, youtubeDailySubs,
+  youtubeWeeklySubs, youtubeViews, youtubeDailyViews, youtubeWeeklyViews;
 
 @each $columns in $columns {
   .mat-footer-cell.mat-column-#{$columns},

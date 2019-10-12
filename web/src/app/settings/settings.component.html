@@ -13,8 +13,8 @@
   <div class="checkbox-row" *ngFor="let column of columns">
     <button mat-icon-button disabled></button>
     <mat-checkbox
-      [checked]="columnSelected(column.index)"
-      (change)="toggleColumn(column.value, column.index)"
+      [checked]="columnSelected(column.value)"
+      (change)="toggleColumn(column.value)"
     >
       {{ column.name }}
     </mat-checkbox>

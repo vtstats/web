@@ -9,16 +9,20 @@ export type VTuberInfo = {
 
 export type VTuber = VTuberInfo & {
   bilibiliStats: {
-    dailySubs: number;
-    dailyViews: number;
     subs: number;
     views: number;
+    dailySubs: number;
+    dailyViews: number;
+    weeklySubs: number;
+    weeklyViews: number;
   };
   youtubeStats: {
-    dailySubs: number;
-    dailyViews: number;
     subs: number;
     views: number;
+    dailySubs: number;
+    dailyViews: number;
+    weeklySubs: number;
+    weeklyViews: number;
   };
 };
 

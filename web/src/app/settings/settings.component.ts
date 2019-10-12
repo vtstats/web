@@ -4,7 +4,6 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener
 } from "@angular/material/tree";
-import { Location } from "@angular/common";
 
 import { VTUBERS, VTUBERS_BY_GROUP } from "@holostats/libs/const";
 import { VTuberInfo, VTuberGroup } from "@holostats/libs/models";
@@ -43,7 +42,7 @@ export class SettingsComponent {
 
   count = VTUBERS.length;
 
-  constructor(public config: Config, private location: Location) {
+  constructor(public config: Config) {
     this.dataSource.data = VTUBERS_BY_GROUP;
   }
 
@@ -95,28 +94,29 @@ export class SettingsComponent {
 
   ///// Display Columns
   readonly columns = [
-    { index: 2, value: "youtubeSubs", name: "YouTube 訂閱" },
-    { index: 3, value: "youtubeDailySubs", name: "(YouTube 訂閱) 日增" },
-    { index: 4, value: "youtubeViews", name: "YouTube 觀看" },
-    { index: 5, value: "youtubeDailyViews", name: "(YouTube 觀看) 日增" },
-    { index: 6, value: "bilibiliSubs", name: "Bilibili 訂閱" },
-    { index: 7, value: "bilibiliDailySubs", name: "(Bilibili 訂閱) 日增" },
-    { index: 8, value: "bilibiliViews", name: "Bilibili 觀看" },
-    { index: 9, value: "bilibiliDailyViews", name: "(Bilibili 觀看) 日增" }
+    { value: "youtubeSubs", name: "YouTube 訂閱" },
+    { value: "youtubeDailySubs", name: "(YouTube 訂閱) 日增" },
+    { value: "youtubeWeeklySubs", name: "(YouTube 訂閱) 周增" },
+    { value: "youtubeViews", name: "YouTube 觀看" },
+    { value: "youtubeDailyViews", name: "(YouTube 觀看) 日增" },
+    { value: "youtubeWeeklyViews", name: "(YouTube 觀看) 周增" },
+    { value: "bilibiliSubs", name: "Bilibili 訂閱" },
+    { value: "bilibiliDailySubs", name: "(Bilibili 訂閱) 日增" },
+    { value: "bilibiliWeeklySubs", name: "(Bilibili 訂閱) 周增" },
+    { value: "bilibiliViews", name: "Bilibili 觀看" },
+    { value: "bilibiliDailyViews", name: "(Bilibili 觀看) 日增" },
+    { value: "bilibiliWeeklyViews", name: "(Bilibili 觀看) 周增" }
   ];
 
-  columnSelected(index: number): boolean {
-    return this.config.selectedColumns[index] !== "";
+  columnSelected(column: string): boolean {
+    return this.config.selectedColumns.includes(column);
   }
 
-  toggleColumn(column: string, index: number) {
-    let selectedColumns = this.config.selectedColumns;
-    selectedColumns[index] = this.columnSelected(index) ? "" : column;
-    this.config.selectedColumns = selectedColumns;
-  }
-
-  ///// Misc
-  backClicked() {
-    this.location.back();
+  toggleColumn(column: string) {
+    if (this.columnSelected(column)) {
+      this.config.removeColumns(column);
+    } else {
+      this.config.addColumns(column);
+    }
   }
 }
