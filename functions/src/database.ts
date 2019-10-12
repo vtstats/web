@@ -23,7 +23,7 @@ export class Database {
   streams: Cache<Stream> = { updatedAt: new Date(0), items: [] };
 
   async updateVTubersCache() {
-    if (differenceInMinutes(new Date(), this.vtubers.updatedAt) < 30) {
+    if (differenceInMinutes(new Date(), this.vtubers.updatedAt) < 60) {
       return;
     }
 
@@ -32,17 +32,19 @@ export class Database {
       db.ref("/vtubers").once("value")
     ]);
 
-    const updatedAtVal = updatedAt.val();
+    if (vtubers.numChildren() > 0) {
+      this.vtubers.updatedAt = parseISO(updatedAt.val().vtuberStat);
 
-    this.streams.updatedAt = parseISO(updatedAtVal.streamList);
-    this.vtubers.updatedAt = parseISO(updatedAtVal.vtuberStat);
-    this.vtubers.items = [];
+      this.vtubers.items = [];
 
-    vtubers.forEach(snap => {
-      this.vtubers.items.push(snap.val());
-    });
+      vtubers.forEach(snap => {
+        this.vtubers.items.push(snap.val());
+      });
 
-    console.log("VTubers cache updated.");
+      console.log("VTubers cache updated.");
+    } else {
+      console.error("Fail to fetch VTubers data.");
+    }
   }
 
   async updateStreamsCache() {
@@ -55,23 +57,25 @@ export class Database {
       db.ref("/streams").once("value")
     ]);
 
-    const updatedAtVal = updatedAt.val();
+    if (streams.numChildren() > 0) {
+      this.streams.updatedAt = parseISO(updatedAt.val().streamList);
 
-    this.streams.updatedAt = parseISO(updatedAtVal.streamList);
-    this.vtubers.updatedAt = parseISO(updatedAtVal.vtuberStat);
-    this.streams.items = [];
+      this.streams.items = [];
 
-    streams.forEach(snap => {
-      if (snap.key != "_current") {
-        this.streams.items.push(snap.val());
-      }
-    });
+      streams.forEach(snap => {
+        if (snap.key != "_current") {
+          this.streams.items.push(snap.val());
+        }
+      });
 
-    this.streams.items.sort((a, b) =>
-      compareDesc(parseISO(a.start), parseISO(b.start))
-    );
+      this.streams.items.sort((a, b) =>
+        compareDesc(parseISO(a.start), parseISO(b.start))
+      );
 
-    console.log("Streams cache updated.");
+      console.log("Streams cache updated.");
+    } else {
+      console.log("Fail to fetch Streams data.");
+    }
   }
 
   findVTuber(id: string): VTuber {
