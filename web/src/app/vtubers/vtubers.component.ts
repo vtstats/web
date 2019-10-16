@@ -15,7 +15,6 @@ export class VTubersComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     public config: Config,
-
     private spinnerService: NgxSpinnerService
   ) {}
 
