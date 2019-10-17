@@ -1,14 +1,14 @@
 <div class="quotes-container">
   <div *ngFor="let quote of quotes">
-    <img src="/{{ quote }}.jpg" />
+    <img src="/assets/quotes/{{ quote }}.jpg" />
     <pre><code><span class="comment"># BBCode</span>
-[img]https://holo.poi.cat/{{ quote }}.jpg[/img]
+[img]https://holo.poi.cat/{{ encodeURI(quote) }}.jpg[/img]
 
 <span class="comment"># HTML</span>
-&lt;img src=&quot;https://holo.poi.cat/{{ quote }}.jpg&quot; alt=&quot;{{ quote }}.jpg&quot; /&gt;
+&lt;img src=&quot;https://holo.poi.cat/{{ encodeURI(quote) }}.jpg&quot; alt=&quot;{{ quote }}.jpg&quot; /&gt;
 
 <span class="comment"># Markdown</span>
-![{{ quote }}.jpg](https://holo.poi.cat/{{ quote }}.jpg)
+![{{ quote }}.jpg](https://holo.poi.cat/{{ encodeURI(quote) }}.jpg)
 </code></pre>
   </div>
 </div>
