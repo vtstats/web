@@ -33,6 +33,7 @@
   ],
   "navigationUrls": [
     "/**",
+    "!/*.jpg",
     "!/api/streams",
     "!/api/streams/*",
     "!/api/vtubers",
