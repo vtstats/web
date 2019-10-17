@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.0.1",
     "express": "^4.17.1",
-    "firebase-admin": "^8.3.0",
+    "firebase-admin": "^8.6.1",
     "firebase-functions": "^3.3.0"
   },
   "devDependencies": {
