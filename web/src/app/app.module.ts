@@ -22,25 +22,27 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
-import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
 import { FooterComponent } from "./footer";
 import { NavbarComponent } from "./navbar";
+import { QuotesComponent } from "./quotes";
 import { SettingsComponent } from "./settings";
 import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
 import { VTubersComponent } from "./vtubers";
 import { VTubersDetailComponent } from "./vtubers-detail";
+import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
 import { DurationPipe, DistancePipe, ParseISOPipe } from "./pipes";
 
 import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/vtuber", pathMatch: "full" },
+  { path: "quote", component: QuotesComponent },
+  { path: "settings", component: SettingsComponent },
   { path: "stream", component: StreamsComponent },
   { path: "stream/:id", component: StreamsDetailComponent },
   { path: "vtuber", component: VTubersComponent },
-  { path: "vtuber/:id", component: VTubersDetailComponent },
-  { path: "settings", component: SettingsComponent }
+  { path: "vtuber/:id", component: VTubersDetailComponent }
 ];
 
 @NgModule({
@@ -49,6 +51,7 @@ const ROUTES: Routes = [
     AreaChartComponent,
     FooterComponent,
     NavbarComponent,
+    QuotesComponent,
     SettingsComponent,
     StreamsComponent,
     StreamsDetailComponent,
