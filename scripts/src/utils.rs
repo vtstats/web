@@ -4,9 +4,7 @@ use chrono::{DateTime, Duration, Utc};
 use futures::future::try_join;
 use isahc::{prelude::Request, HttpClient, ResponseExt};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::fs;
-use std::str::FromStr;
+use std::{collections::HashMap, fs, str::FromStr};
 use url::Url;
 
 use crate::types::{

@@ -3,7 +3,7 @@ mod types;
 mod utils;
 
 use chrono::{Timelike, Utc};
-use futures::future::{try_join, try_join_all};
+use futures::future::{try_join, try_join3, try_join_all};
 use isahc::HttpClient;
 use std::str::FromStr;
 
@@ -22,94 +22,83 @@ async fn main() -> Result<()> {
 
     let auth = Auth::new(&client).await?;
 
-    let current_stats = current_stats(&client).await?;
-
-    let (a_day_ago_stats, a_week_ago_stats) =
-        a_day_ago_stats_and_a_week_ago_stats(&client, &auth.id_token).await?;
+    let curr = curr_stats(&client).await?;
+    let past = past_stats(&client, &auth.id_token).await?;
 
     let now = Utc::now().timestamp();
 
     let mut values = Values::default();
 
-    for (vtuber, current) in VTUBERS.iter().zip(current_stats.iter()) {
-        values.insert(
-            format!("/vtuberStats/{}/{}/0", vtuber.name, now),
-            current[0],
-        );
-        values.insert(
-            format!("/vtuberStats/{}/{}/1", vtuber.name, now),
-            current[1],
-        );
-        values.insert(
-            format!("/vtuberStats/{}/{}/2", vtuber.name, now),
-            current[2],
-        );
-        values.insert(
-            format!("/vtuberStats/{}/{}/3", vtuber.name, now),
-            current[3],
-        );
+    for (vtb, curr) in VTUBERS.iter().zip(&curr) {
+        let name = vtb.name;
+        values.insert(format!("/vtuberStats/{}/{}/0", name, now), curr[0]);
+        values.insert(format!("/vtuberStats/{}/{}/1", name, now), curr[1]);
+        values.insert(format!("/vtuberStats/{}/{}/2", name, now), curr[2]);
+        values.insert(format!("/vtuberStats/{}/{}/3", name, now), curr[3]);
 
+        values.insert(format!("/vtubers/{}/youtubeStats/subs", name), curr[0]);
+        values.insert(format!("/vtubers/{}/youtubeStats/views", name), curr[1]);
+        values.insert(format!("/vtubers/{}/bilibiliStats/subs", name), curr[2]);
+        values.insert(format!("/vtubers/{}/bilibiliStats/views", name), curr[3]);
+    }
+
+    for ((vtb, curr), a_day_ago) in VTUBERS.iter().zip(&curr).zip(&past[0]) {
+        let name = vtb.name;
         values.insert(
-            format!("/vtubers/{}/youtubeStats/subs", vtuber.name),
-            current[0],
+            format!("/vtubers/{}/youtubeStats/dailySubs", name),
+            curr[0] - a_day_ago[0],
         );
         values.insert(
-            format!("/vtubers/{}/youtubeStats/views", vtuber.name),
-            current[1],
+            format!("/vtubers/{}/youtubeStats/dailyViews", name),
+            curr[1] - a_day_ago[1],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/subs", vtuber.name),
-            current[2],
+            format!("/vtubers/{}/bilibiliStats/dailySubs", name),
+            curr[2] - a_day_ago[2],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/views", vtuber.name),
-            current[3],
+            format!("/vtubers/{}/bilibiliStats/dailyViews", name),
+            curr[3] - a_day_ago[3],
         );
     }
 
-    for ((vtuber, current), a_day_ago) in VTUBERS
-        .iter()
-        .zip(current_stats.iter())
-        .zip(a_day_ago_stats)
-    {
+    for ((vtb, curr), a_week_ago) in VTUBERS.iter().zip(&curr).zip(&past[1]) {
+        let name = vtb.name;
         values.insert(
-            format!("/vtubers/{}/youtubeStats/dailySubs", vtuber.name),
-            current[0] - a_day_ago[0],
+            format!("/vtubers/{}/youtubeStats/weeklySubs", name),
+            curr[0] - a_week_ago[0],
         );
         values.insert(
-            format!("/vtubers/{}/youtubeStats/dailyViews", vtuber.name),
-            current[1] - a_day_ago[1],
+            format!("/vtubers/{}/youtubeStats/weeklyViews", name),
+            curr[1] - a_week_ago[1],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/dailySubs", vtuber.name),
-            current[2] - a_day_ago[2],
+            format!("/vtubers/{}/bilibiliStats/weeklySubs", name),
+            curr[2] - a_week_ago[2],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/dailyViews", vtuber.name),
-            current[3] - a_day_ago[3],
+            format!("/vtubers/{}/bilibiliStats/weeklyViews", name),
+            curr[3] - a_week_ago[3],
         );
     }
 
-    for ((vtuber, current), a_week_ago) in VTUBERS
-        .iter()
-        .zip(current_stats.iter())
-        .zip(a_week_ago_stats)
-    {
+    for ((vtb, curr), a_month_ago) in VTUBERS.iter().zip(&curr).zip(&past[2]) {
+        let name = vtb.name;
         values.insert(
-            format!("/vtubers/{}/youtubeStats/weeklySubs", vtuber.name),
-            current[0] - a_week_ago[0],
+            format!("/vtubers/{}/youtubeStats/monthlySubs", name),
+            curr[0] - a_month_ago[0],
         );
         values.insert(
-            format!("/vtubers/{}/youtubeStats/weeklyViews", vtuber.name),
-            current[1] - a_week_ago[1],
+            format!("/vtubers/{}/youtubeStats/monthlyViews", name),
+            curr[1] - a_month_ago[1],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/weeklySubs", vtuber.name),
-            current[2] - a_week_ago[2],
+            format!("/vtubers/{}/bilibiliStats/monthlySubs", name),
+            curr[2] - a_month_ago[2],
         );
         values.insert(
-            format!("/vtubers/{}/bilibiliStats/weeklyViews", vtuber.name),
-            current[3] - a_week_ago[3],
+            format!("/vtubers/{}/bilibiliStats/monthlyViews", name),
+            curr[3] - a_month_ago[3],
         );
     }
 
@@ -120,7 +109,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn current_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
+async fn curr_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
     let channels_id = VTUBERS
         .iter()
         .map(|v| v.youtube)
@@ -152,7 +141,7 @@ async fn current_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
                 })
                 .unwrap_or_default()
         })
-        .zip(bilibili_stats.into_iter())
+        .zip(bilibili_stats)
         .map(
             |((youtube_subs, youtube_views), (bilibili_subs, bilibili_views))| {
                 [youtube_subs, youtube_views, bilibili_subs, bilibili_views]
@@ -161,10 +150,7 @@ async fn current_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
         .collect())
 }
 
-async fn a_day_ago_stats_and_a_week_ago_stats(
-    client: &HttpClient,
-    id_token: &str,
-) -> Result<(Vec<[i32; 4]>, Vec<[i32; 4]>)> {
+async fn past_stats(client: &HttpClient, id_token: &str) -> Result<[Vec<[i32; 4]>; 3]> {
     let timestamps = vtuber_stats_timestamps(&client, id_token).await?;
 
     let now = Utc::now().timestamp();
@@ -179,7 +165,12 @@ async fn a_day_ago_stats_and_a_week_ago_stats(
         .find(|t| **t >= now - 7 * 24 * 60 * 60)
         .unwrap();
 
-    let (a_day_ago_stats, a_week_ago_stats) = try_join(
+    let a_month_ago = timestamps
+        .iter()
+        .find(|t| **t >= now - 30 * 24 * 60 * 60)
+        .unwrap();
+
+    let (a_day_ago_stats, a_week_ago_stats, a_month_ago) = try_join3(
         try_join_all(
             VTUBERS
                 .iter()
@@ -190,8 +181,13 @@ async fn a_day_ago_stats_and_a_week_ago_stats(
                 .iter()
                 .map(|v| vtuber_stats_at(&client, &id_token, v.name, *a_week_ago)),
         ),
+        try_join_all(
+            VTUBERS
+                .iter()
+                .map(|v| vtuber_stats_at(&client, &id_token, v.name, *a_month_ago)),
+        ),
     )
     .await?;
 
-    Ok((a_day_ago_stats, a_week_ago_stats))
+    Ok([a_day_ago_stats, a_week_ago_stats, a_month_ago])
 }
