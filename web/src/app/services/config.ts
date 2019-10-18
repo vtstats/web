@@ -37,15 +37,19 @@ const defaultSelectedColumns = [
   "youtubeSubs",
   "youtubeDailySubs",
   "youtubeWeeklySubs",
+  "youtubeMonthlySubs",
   "youtubeViews",
   "youtubeDailyViews",
   "youtubeWeeklyViews",
+  "youtubeMonthlyViews",
   "bilibiliSubs",
   "bilibiliDailySubs",
   "bilibiliWeeklySubs",
+  "bilibiliMonthlySubs",
   "bilibiliViews",
   "bilibiliDailyViews",
-  "bilibiliWeeklyViews"
+  "bilibiliWeeklyViews",
+  "bilibiliMonthlyViews"
 ];
 
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";

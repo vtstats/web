@@ -41,24 +41,32 @@ export class VTubersComponent implements OnInit {
           return item.youtubeStats.dailySubs;
         case "youtubeWeeklySubs":
           return item.youtubeStats.weeklySubs;
+        case "youtubeMonthlySubs":
+          return item.youtubeStats.monthlySubs;
         case "youtubeViews":
           return item.youtubeStats.views;
         case "youtubeDailyViews":
           return item.youtubeStats.dailyViews;
         case "youtubeWeeklyViews":
           return item.youtubeStats.weeklyViews;
+        case "youtubeMonthlyViews":
+          return item.youtubeStats.monthlyViews;
         case "bilibiliSubs":
           return item.bilibiliStats.subs;
         case "bilibiliDailySubs":
           return item.bilibiliStats.dailySubs;
         case "bilibiliWeeklySubs":
           return item.bilibiliStats.weeklySubs;
+        case "bilibiliMonthlySubs":
+          return item.bilibiliStats.monthlySubs;
         case "bilibiliViews":
           return item.bilibiliStats.views;
         case "bilibiliDailyViews":
           return item.bilibiliStats.dailyViews;
         case "bilibiliWeeklyViews":
           return item.bilibiliStats.weeklyViews;
+        case "bilibiliMonthlyViews":
+          return item.bilibiliStats.monthlyViews;
         default:
           return item[property];
       }
@@ -87,6 +95,10 @@ export class VTubersComponent implements OnInit {
     return this.getTotal(v => v.youtubeStats.weeklySubs);
   }
 
+  get totalYoutubeMonthlySubs(): number {
+    return this.getTotal(v => v.youtubeStats.monthlySubs);
+  }
+
   get totalYoutubeViews(): number {
     return this.getTotal(v => v.youtubeStats.views);
   }
@@ -97,6 +109,10 @@ export class VTubersComponent implements OnInit {
 
   get totalYoutubeWeeklyViews(): number {
     return this.getTotal(v => v.youtubeStats.weeklyViews);
+  }
+
+  get totalYoutubeMonthlyViews(): number {
+    return this.getTotal(v => v.youtubeStats.monthlyViews);
   }
 
   get totalBilibiliSubs(): number {
@@ -111,6 +127,10 @@ export class VTubersComponent implements OnInit {
     return this.getTotal(v => v.bilibiliStats.weeklySubs);
   }
 
+  get totalBilibiliMonthlySubs(): number {
+    return this.getTotal(v => v.bilibiliStats.monthlySubs);
+  }
+
   get totalBilibiliViews(): number {
     return this.getTotal(v => v.bilibiliStats.views);
   }
@@ -121,5 +141,9 @@ export class VTubersComponent implements OnInit {
 
   get totalBilibiliWeeklyViews(): number {
     return this.getTotal(v => v.bilibiliStats.weeklyViews);
+  }
+
+  get totalBilibiliMonthlyViews(): number {
+    return this.getTotal(v => v.bilibiliStats.monthlyViews);
   }
 }

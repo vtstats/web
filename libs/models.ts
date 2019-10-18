@@ -15,6 +15,8 @@ export type VTuber = VTuberInfo & {
     dailyViews: number;
     weeklySubs: number;
     weeklyViews: number;
+    monthlySubs: number;
+    monthlyViews: number;
   };
   youtubeStats: {
     subs: number;
@@ -23,6 +25,8 @@ export type VTuber = VTuberInfo & {
     dailyViews: number;
     weeklySubs: number;
     weeklyViews: number;
+    monthlySubs: number;
+    monthlyViews: number;
   };
 };
 
