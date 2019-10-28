@@ -22,7 +22,7 @@
     "@angular/platform-browser": "~8.2.11",
     "@angular/platform-browser-dynamic": "~8.2.11",
     "@angular/router": "~8.2.11",
-    "@angular/service-worker": "~8.2.11",
+    "@angular/service-worker": "~8.2.12",
     "@holostats/libs": "*",
     "@swimlane/ngx-charts": "^12.0.1",
     "date-fns": "^2.5.1",
