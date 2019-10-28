@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@angular-devkit/architect@0.803.14":
+  version "0.803.14"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.803.14.tgz#548d0a2e4e0052162c53ab75c50171e6496d4c0c"
+  integrity sha512-CPDDNTpM/9XWCFxCRL1/mYB54ivZcmWaVSjUgN2zcHWBc0gW3lrJrmmb+cJ1KSlOI7hoZaMTV1gWoX2QXd4JrA==
+  dependencies:
+    "@angular-devkit/core" "8.3.14"
+    rxjs "6.4.0"
+
 "@angular-devkit/architect@0.803.8":
   version "0.803.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.803.8.tgz#5f068462ae7c1807564f45e302179887dd36042a"
@@ -10,18 +18,18 @@
     "@angular-devkit/core" "8.3.8"
     rxjs "6.4.0"
 
-"@angular-devkit/build-angular@~0.803.8":
-  version "0.803.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-0.803.8.tgz#55176f719d39d7371dbf59550278a09743f2776d"
-  integrity sha512-SKhUcTu2ZfjicUfyyef4SZwmLJoyRFPqA8wceJeqnrkGrkSoHHKgCeqL01fIBVOUaRoIsZQJPCG56YDTEjLKLQ==
+"@angular-devkit/build-angular@~0.803.14":
+  version "0.803.14"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-0.803.14.tgz#4c2cfc7266b711485b0f9f91abd61532aa0b71bc"
+  integrity sha512-AtrhLDcy5DHi5zWiahEmvbD6THkJkWv27TySTfpZlmMjpRJHNqK7uQiKR1iWSqo4VNpimFle3fwkfjQYHlEKqA==
   dependencies:
-    "@angular-devkit/architect" "0.803.8"
-    "@angular-devkit/build-optimizer" "0.803.8"
-    "@angular-devkit/build-webpack" "0.803.8"
-    "@angular-devkit/core" "8.3.8"
+    "@angular-devkit/architect" "0.803.14"
+    "@angular-devkit/build-optimizer" "0.803.14"
+    "@angular-devkit/build-webpack" "0.803.14"
+    "@angular-devkit/core" "8.3.14"
     "@babel/core" "7.5.5"
     "@babel/preset-env" "7.5.5"
-    "@ngtools/webpack" "8.3.8"
+    "@ngtools/webpack" "8.3.14"
     ajv "6.10.2"
     autoprefixer "9.6.1"
     browserslist "4.6.6"
@@ -61,7 +69,7 @@
     style-loader "1.0.0"
     stylus "0.54.5"
     stylus-loader "3.0.2"
-    terser "4.1.4"
+    terser "4.3.8"
     terser-webpack-plugin "1.4.1"
     tree-kill "1.2.1"
     webpack "4.39.2"
@@ -72,10 +80,10 @@
     webpack-subresource-integrity "1.1.0-rc.6"
     worker-plugin "3.2.0"
 
-"@angular-devkit/build-optimizer@0.803.8":
-  version "0.803.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.803.8.tgz#bb6cdc93d9080594837e14b9abf2eb13d10d7dd8"
-  integrity sha512-UiMxl1wI3acqIoRkC0WA0qpab+ni6SlCaB4UIwfD1H/FdzU80P04AIUuJS7StxjbwVkVtA05kcfgmqzP8yBMVg==
+"@angular-devkit/build-optimizer@0.803.14":
+  version "0.803.14"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.803.14.tgz#ca76c25e730c9181649fdde16a49062a4b2d1605"
+  integrity sha512-f1RYhO0swLfoLvCj/fUrDWm4vzVSnffcCc4C4PHnqoOGBRQpmIzG7G54Pm8YK677slioToYZQ68s3/zVtsQNWg==
   dependencies:
     loader-utils "1.2.3"
     source-map "0.7.3"
@@ -83,15 +91,25 @@
     typescript "3.5.3"
     webpack-sources "1.4.3"
 
-"@angular-devkit/build-webpack@0.803.8":
-  version "0.803.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.803.8.tgz#bbbfaccb4d26ea3427dd2fcac4f0d7fa20b2fd24"
-  integrity sha512-NFG2suQG4w6uUf1bbduLi/sQw94J1nB3D9heNh5o6ov0Ps1fTA4YEDg3T0RQ8ljmfaLb+wHsxajztzOG/RRnZw==
+"@angular-devkit/build-webpack@0.803.14":
+  version "0.803.14"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.803.14.tgz#8c9d443260e07ed2ea13bd3ac2c04c2c8cc47be5"
+  integrity sha512-hvxAyJzDCaIISATHcu0+rAAj7ZcmX7VREX6J3FUMYDxhdjKqe45Q5J6Oy/Df2ZSV3YxwySZVcIhrBstm+0LC7Q==
   dependencies:
-    "@angular-devkit/architect" "0.803.8"
-    "@angular-devkit/core" "8.3.8"
+    "@angular-devkit/architect" "0.803.14"
+    "@angular-devkit/core" "8.3.14"
     rxjs "6.4.0"
-    webpack-merge "4.2.1"
+
+"@angular-devkit/core@8.3.14":
+  version "8.3.14"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.3.14.tgz#b42716a0de44c8f2785a18ae5562ec2f76543c9b"
+  integrity sha512-+IYLbtCxwIpaieRj0wurEXBzZ/fDSdWbyrCfajzDerzsxqghNcafAXSazHXWwISqtbr/pAOuqUNR+mEk2XBz3Q==
+  dependencies:
+    ajv "6.10.2"
+    fast-json-stable-stringify "2.0.0"
+    magic-string "0.25.3"
+    rxjs "6.4.0"
+    source-map "0.7.3"
 
 "@angular-devkit/core@8.3.8":
   version "8.3.8"
@@ -1001,12 +1019,12 @@
     lodash.camelcase "^4.3.0"
     protobufjs "^6.8.6"
 
-"@ngtools/webpack@8.3.8":
-  version "8.3.8"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-8.3.8.tgz#4f6ce3b223d05d76db07e8fed405eca5ab561cca"
-  integrity sha512-jLN4/Abue+Ro/K2SF0TpHOXnFHGuaHQ4aL6QG++moZXavBxRdc2E+PDjtuaMaS1llLHs5C5GX+Ve9ueEFhWoeQ==
+"@ngtools/webpack@8.3.14":
+  version "8.3.14"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-8.3.14.tgz#ecac2651d2da7407f60acfb24ba03c460a79af1d"
+  integrity sha512-eIU3W3T4YxiExkS/c09FkqQpnKeIuUFFnxyfdG40zospt28B6V5ZaEVw2z5+2CjxJlDUTUYZlhPiV9Rwadp3jg==
   dependencies:
-    "@angular-devkit/core" "8.3.8"
+    "@angular-devkit/core" "8.3.14"
     enhanced-resolve "4.1.0"
     rxjs "6.4.0"
     tree-kill "1.2.1"
@@ -7432,19 +7450,10 @@ terser-webpack-plugin@1.4.1, terser-webpack-plugin@^1.4.1:
     webpack-sources "^1.4.0"
     worker-farm "^1.7.0"
 
-terser@4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.1.4.tgz#4478b6a08bb096a61e793fea1a4434408bab936c"
-  integrity sha512-+ZwXJvdSwbd60jG0Illav0F06GDJF0R4ydZ21Q3wGAFKoBGyJGo34F63vzJHgvYxc1ukOtIjvwEvl9MkjzM6Pg==
-  dependencies:
-    commander "^2.20.0"
-    source-map "~0.6.1"
-    source-map-support "~0.5.12"
-
-terser@^4.1.2:
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.3.6.tgz#3a36ae197d4470e11069557b4a4bd712f84f998d"
-  integrity sha512-QQXGTgXT7zET9IbGSdRvExcL+rFZGiOxMDbPg1W0tc5gqbX6m7J6Eu0W3fQ2bK5Dks1WSvC2xAKOH+mzAuMLcg==
+terser@4.3.8, terser@^4.1.2:
+  version "4.3.8"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.3.8.tgz#707f05f3f4c1c70c840e626addfdb1c158a17136"
+  integrity sha512-otmIRlRVmLChAWsnSFNO0Bfk6YySuBp6G9qrHiJwlLDd4mxe2ta4sjI7TzIR+W1nBMjilzrMcPOz9pSusgx3hQ==
   dependencies:
     commander "^2.20.0"
     source-map "~0.6.1"
