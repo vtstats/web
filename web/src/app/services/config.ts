@@ -28,7 +28,8 @@ const defaultSelectedVTubers = [
   "suisei",
   "ui",
   "yogiri",
-  "civia"
+  "civia",
+  "echo"
 ];
 
 const defaultSelectedColumns = [

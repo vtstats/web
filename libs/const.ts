@@ -186,6 +186,13 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         twitter: "Civia_Hololive",
         youtube: "",
         bilibili: 354411419
+      },
+      {
+        id: "echo",
+        name: "黑桃影",
+        twitter: "SpadeEcho",
+        youtube: "",
+        bilibili: 456368455
       }
     ]
   },
