@@ -6,7 +6,7 @@ edition = "2018"
 build = "build.rs"
 
 [dependencies]
-chrono = { version = "0.4.9", features = ["serde"] }
+chrono = { version = "0.4.10", features = ["serde"] }
 futures-preview = "0.3.0-alpha.18"
 isahc = { version = "0.7.6", default-features = false, features = ["json"] }
 serde = { version = "1.0.102", features = ["derive"] }
