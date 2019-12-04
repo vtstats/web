@@ -29,8 +29,8 @@ async fn main() -> Result<()> {
     let videos_id = try_join_all(
         VTUBERS
             .iter()
-            .filter(|v| !v.youtube.is_empty())
-            .map(|v| youtube_first_video(&client, v.youtube, &now_str)),
+            .filter_map(|v| v.youtube)
+            .map(|youtube| youtube_first_video(&client, youtube, &now_str)),
     )
     .await?
     .join(",");
@@ -54,7 +54,7 @@ async fn main() -> Result<()> {
                 if let Some(snippet) = video.snippet {
                     let vtuber = VTUBERS
                         .iter()
-                        .find(|v| v.youtube == snippet.channel_id)
+                        .find(|v| v.youtube == Some(&snippet.channel_id))
                         .unwrap();
                     values.insert(format!("/streams/{}/vtuberId", video.id), vtuber.name);
                     values.insert(format!("/streams/{}/title", video.id), snippet.title);

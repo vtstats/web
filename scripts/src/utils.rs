@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 
 use chrono::{DateTime, Duration, Utc};
-use futures::future::try_join;
 use isahc::{prelude::Request, HttpClient, ResponseExt};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs, str::FromStr};
@@ -142,23 +141,19 @@ pub async fn youtube_first_video(
 ///////// Bilibili
 
 pub async fn bilibili_stat(client: &HttpClient, id: usize) -> Result<(i32, i32)> {
-    let (mut stat, mut upstat) = try_join(
-        client.get_async(
-            Url::parse_with_params(
-                "https://api.bilibili.com/x/relation/stat",
-                &[("vmid", id.to_string())],
-            )?
-            .as_str(),
-        ),
-        client.get_async(
-            Url::parse_with_params(
-                "https://api.bilibili.com/x/space/upstat",
-                &[("mid", id.to_string())],
-            )?
-            .as_str(),
-        ),
-    )
-    .await?;
+    let a = Url::parse_with_params(
+        "https://api.bilibili.com/x/relation/stat",
+        &[("vmid", id.to_string())],
+    )?;
+
+    let b = Url::parse_with_params(
+        "https://api.bilibili.com/x/space/upstat",
+        &[("mid", id.to_string())],
+    )?;
+
+    let mut stat = client.get_async(a.as_str()).await?;
+
+    let mut upstat = client.get_async(b.as_str()).await?;
 
     Ok((
         stat.json::<StatResponse>()?.data.follower,

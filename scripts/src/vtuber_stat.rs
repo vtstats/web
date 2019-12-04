@@ -3,7 +3,7 @@ mod types;
 mod utils;
 
 use chrono::{Timelike, Utc};
-use futures::future::{try_join, try_join3, try_join_all};
+use futures::future::{try_join3, try_join_all};
 use isahc::HttpClient;
 use std::str::FromStr;
 
@@ -112,41 +112,42 @@ async fn main() -> Result<()> {
 async fn curr_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
     let channels_id = VTUBERS
         .iter()
-        .map(|v| v.youtube)
-        .filter(|id| !id.is_empty())
+        .filter_map(|v| v.youtube)
         .collect::<Vec<_>>()
         .join(",");
 
-    let (youtube_stats, bilibili_stats) = try_join(
-        if Utc::now().hour() % 2 == 0 {
-            youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY0"))
-        } else {
-            youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY1"))
-        },
-        try_join_all(VTUBERS.iter().map(|v| bilibili_stat(&client, v.bilibili))),
-    )
-    .await?;
+    let mut bilibili_stats = vec![];
+    let mut youtube_stats = vec![];
 
-    Ok(VTUBERS
-        .iter()
-        .map(|vtuber| {
-            youtube_stats
-                .iter()
-                .find(|c| c.id == vtuber.youtube)
-                .map(|stat| {
-                    (
-                        i32::from_str(&stat.statistics.subscriber_count).unwrap(),
-                        i32::from_str(&stat.statistics.view_count).unwrap(),
-                    )
-                })
-                .unwrap_or_default()
-        })
+    for vtb in VTUBERS.iter() {
+        if let Some(bilibili) = vtb.bilibili {
+            bilibili_stats.push(bilibili_stat(&client, bilibili).await?);
+        } else {
+            bilibili_stats.push((0, 0));
+        }
+    }
+
+    let youtube_channels = if Utc::now().hour() % 2 == 0 {
+        youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY0")).await?
+    } else {
+        youtube_channels(&client, &channels_id, env!("YOUTUBE_API_KEY1")).await?
+    };
+
+    for vtb in VTUBERS.iter() {
+        if let Some(stat) = youtube_channels.iter().find(|c| Some(c.id.as_str()) == vtb.youtube) {
+            youtube_stats.push((
+                i32::from_str(&stat.statistics.subscriber_count).unwrap(),
+                i32::from_str(&stat.statistics.view_count).unwrap(),
+            ));
+        } else {
+            youtube_stats.push((0, 0));
+        }
+    }
+
+    Ok(youtube_stats
+        .into_iter()
         .zip(bilibili_stats)
-        .map(
-            |((youtube_subs, youtube_views), (bilibili_subs, bilibili_views))| {
-                [youtube_subs, youtube_views, bilibili_subs, bilibili_views]
-            },
-        )
+        .map(|((a, b), (c, d))| [a, b, c, d])
         .collect())
 }
 
