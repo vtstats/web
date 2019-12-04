@@ -6,6 +6,7 @@ const defaultSelectedVTubers = [
   "ayame",
   "azki",
   "choco",
+  "choco_alt",
   "flare",
   "fubuki",
   "haato",

@@ -76,6 +76,13 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         bilibili: 389858754
       },
       {
+        id: "choco_alt",
+        name: "癒月ちょこ alt",
+        twitter: "yuzukichococh",
+        youtube: "UCp3tgHXw_HI0QMk1K8qh3gQ",
+        bilibili: 389858754
+      },
+      {
         id: "shion",
         name: "紫咲シオン",
         twitter: "murasakishionch",
