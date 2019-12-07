@@ -10,11 +10,11 @@ import { VTUBERS } from "@holostats/libs/const";
 import { ApiService, Config } from "../services";
 
 @Component({
-  selector: "hs-streams",
-  templateUrl: "./streams.component.html",
-  styleUrls: ["./streams.component.scss"]
+  selector: "hs-streams-list",
+  templateUrl: "./streams-list.component.html",
+  styleUrls: ["./streams-list.component.scss"]
 })
-export class StreamsComponent implements OnInit {
+export class StreamsListComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private config: Config,
@@ -45,9 +45,9 @@ export class StreamsComponent implements OnInit {
 
       this.apiService
         .getStreamsWithSkip(this.config.selectedVTubers, this.lastId)
-        .subscribe(data => {
-          this.addStreams(data.streams);
-        });
+        .subscribe(data =>
+          this.addStreams(data.streams)
+        );
     }
   });
 

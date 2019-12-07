@@ -17,14 +17,12 @@ export class LazyLoadDirective implements AfterViewInit {
   ngAfterViewInit() {
     if (window && "IntersectionObserver" in window) {
       const obs = new IntersectionObserver(entries => {
-        entries.forEach(({ isIntersecting }) => {
-          if (isIntersecting) {
-            this.background = this.sanitizer.bypassSecurityTrustStyle(
-              `url(https://img.youtube.com/vi/${this.video}/mqdefault.jpg)`
-            );
-            obs.unobserve(this.el.nativeElement);
-          }
-        });
+        if (entries.map(e => e.isIntersecting).some(e => e)) {
+          this.background = this.sanitizer.bypassSecurityTrustStyle(
+            `url(https://img.youtube.com/vi/${this.video}/mqdefault.jpg)`
+          );
+          obs.unobserve(this.el.nativeElement);
+        }
       });
       obs.observe(this.el.nativeElement);
     } else {

@@ -25,10 +25,10 @@ import { AreaChartComponent } from "./area-chart";
 import { FooterComponent } from "./footer";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
-import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
-import { VTubersComponent } from "./vtubers";
+import { StreamsListComponent } from "./streams-list";
 import { VTubersDetailComponent } from "./vtubers-detail";
+import { VTubersListComponent } from "./vtubers-list";
 import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
 import { DurationPipe, DistancePipe, ParseISOPipe } from "./pipes";
 
@@ -37,9 +37,9 @@ import { environment } from "../environments/environment";
 const ROUTES: Routes = [
   { path: "", redirectTo: "/vtuber", pathMatch: "full" },
   { path: "settings", component: SettingsComponent },
-  { path: "stream", component: StreamsComponent },
+  { path: "stream", component: StreamsListComponent },
   { path: "stream/:id", component: StreamsDetailComponent },
-  { path: "vtuber", component: VTubersComponent },
+  { path: "vtuber", component: VTubersListComponent },
   { path: "vtuber/:id", component: VTubersDetailComponent }
 ];
 
@@ -50,10 +50,10 @@ const ROUTES: Routes = [
     FooterComponent,
     NavbarComponent,
     SettingsComponent,
-    StreamsComponent,
     StreamsDetailComponent,
-    VTubersComponent,
+    StreamsListComponent,
     VTubersDetailComponent,
+    VTubersListComponent,
     ColoredNumberDirective,
     LazyLoadDirective,
     DistancePipe,

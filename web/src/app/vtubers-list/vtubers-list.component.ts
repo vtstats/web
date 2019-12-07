@@ -7,11 +7,11 @@ import { VTuber } from "@holostats/libs/models";
 import { Config, ApiService } from "../services";
 
 @Component({
-  selector: "hs-vtubers",
-  templateUrl: "./vtubers.component.html",
-  styleUrls: ["./vtubers.component.scss"]
+  selector: "hs-vtubers-list",
+  templateUrl: "./vtubers-list.component.html",
+  styleUrls: ["./vtubers-list.component.scss"]
 })
-export class VTubersComponent implements OnInit {
+export class VTubersListComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     public config: Config,

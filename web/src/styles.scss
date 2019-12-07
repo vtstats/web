@@ -5,21 +5,18 @@
 @import "./app/navbar/navbar.theme";
 @import "./app/footer/footer.theme";
 @import "./app/streams-detail/streams-detail.theme";
-@import "./app/streams/streams.theme";
+@import "./app/streams-list/streams-list.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
-@import "./app/vtubers/vtubers.theme";
+@import "./app/vtubers-list/vtubers-list.theme";
 
 @include mat-core();
 
 @mixin material-theme($theme) {
-  @include mat-button-theme($theme);
   @include mat-checkbox-theme($theme);
   @include mat-core-theme($theme);
   @include mat-icon-theme($theme);
-  @include mat-list-theme($theme);
   @include mat-progress-spinner-theme($theme);
   @include mat-table-theme($theme);
-  @include mat-toolbar-theme($theme);
   @include mat-tree-theme($theme);
   @include mat-slide-toggle-theme($theme);
 
@@ -27,9 +24,9 @@
   @include footer-theme($theme);
   @include navbar-theme($theme);
   @include streams-detail-theme($theme);
-  @include streams-theme($theme);
+  @include streams-list-theme($theme);
   @include vtubers-detail-theme($theme);
-  @include vtubers-theme($theme);
+  @include vtubers-list-theme($theme);
 }
 
 @include material-theme($light-theme);

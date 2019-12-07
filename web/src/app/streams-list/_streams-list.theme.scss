@@ -1,13 +1,18 @@
 @import "~@angular/material/theming";
 
-@mixin vtubers-theme($theme) {
+@mixin streams-list-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  .mat-column-profile {
-    box-shadow: 12px 0px 20px map-get($background, "card");
+  .title:after {
+    background: linear-gradient(
+      to right,
+      transparent,
+      mat-color($background, card) 100%
+    );
   }
 
+  .viewers,
   .updated-at {
     color: mat-color($foreground, secondary-text);
   }
