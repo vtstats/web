@@ -1,74 +1,80 @@
 <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
-<div class="content" fxLayout="row wrap">
-  <div
-    class="stream"
-    *ngFor="let stream of streams; trackBy: trackBy"
-    fxFlex.lt-sm="50"
-    fxFlex.sm="33.33"
-    fxFlex.gt-sm="25"
-  >
+<div class="content" *ngFor="let group of ended">
+  <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
+  <div fxLayout="row wrap">
     <div
-      class="thumbnail"
-      [routerLink]="['/stream', stream.id]"
-      lazyLoad
-      [video]="stream.id"
+      class="stream"
+      *ngFor="let stream of group.streams; trackBy: trackBy"
+      fxFlex.lt-sm="50"
+      fxFlex.sm="33.33"
+      fxFlex.gt-sm="25"
     >
-      <div class="duration">
-        <ng-container *ngIf="stream.end; else clock">
-          {{ stream.start | parseISO | duration: (stream.end | parseISO) }}
-        </ng-container>
-        <ng-template #clock>
-          {{ stream.start | parseISO | duration: (everySecond$ | async) }}
-        </ng-template>
-      </div>
-      <a
-        class="icon"
-        href="https://youtu.be/{{ stream.id }}"
-        target="_blank"
-        (click)="$event.stopPropagation()"
+      <div
+        class="thumbnail"
+        [routerLink]="['/stream', stream.id]"
+        lazyLoad
+        [video]="stream.id"
       >
-        <mat-icon svgIcon="open_in_new"></mat-icon>
-      </a>
-    </div>
-    <div class="title" title="{{ stream.title }}">
-      {{ stream.title }}
-    </div>
-    <div
-      class="viewers"
-      [ngClass]="{ red: !stream.end }"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-    >
-      <mat-icon
-        class="view-icon"
-        svgIcon="eye"
-        [title]="stream.end ? '直播結束' : '正在直播'"
-      ></mat-icon>
-      <span title="平均同接">
-        {{ (stream.avgViewers | number) || "----" }}
-      </span>
-      <span class="separator"> / </span>
-      <span title="最高同接">
-        {{ (stream.maxViewers | number) || "----" }}
-      </span>
-    </div>
-    <div
-      class="time"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      *ngIf="findVTuber(stream.vtuberId); let vtuber"
-    >
-      <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
-      <span class="name">
-        {{
-          vtuber.name.length > 6
-            ? (vtuber.name | slice: 0:6) + ".."
-            : vtuber.name
-        }}
-      </span>
-      <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
-        {{ stream.start | parseISO | distance: (everyMinute$ | async) }}
-      </span>
+        <div class="duration">
+          <ng-container *ngIf="stream.end; else clock">
+            {{ stream.start | parseISO | duration: (stream.end | parseISO) }}
+          </ng-container>
+          <ng-template #clock>
+            {{ stream.start | parseISO | duration: (everySecond$ | async) }}
+          </ng-template>
+        </div>
+        <a
+          class="icon"
+          href="https://youtu.be/{{ stream.id }}"
+          target="_blank"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-icon svgIcon="open_in_new"></mat-icon>
+        </a>
+      </div>
+      <div class="title" title="{{ stream.title }}">
+        {{ stream.title }}
+      </div>
+      <div
+        class="viewers"
+        [ngClass]="{ red: !stream.end }"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <mat-icon
+          class="view-icon"
+          svgIcon="eye"
+          [title]="stream.end ? '直播結束' : '正在直播'"
+        ></mat-icon>
+        <span title="平均同接">
+          {{ (stream.avgViewers | number) || "----" }}
+        </span>
+        <span class="separator"> / </span>
+        <span title="最高同接">
+          {{ (stream.maxViewers | number) || "----" }}
+        </span>
+      </div>
+      <div
+        class="time"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngIf="findVTuber(stream.vtuberId); let vtuber"
+      >
+        <img
+          class="profile"
+          src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+        />
+        <span class="name">
+          {{
+            vtuber.name.length > 6
+              ? (vtuber.name | slice: 0:6) + ".."
+              : vtuber.name
+          }}
+        </span>
+        <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
+          {{ stream.start | parseISO | distance: (everyMinute$ | async) }}
+        </span>
+      </div>
     </div>
   </div>
 </div>

@@ -25,19 +25,22 @@ export class ApiService {
     return this.http.get<VTuberDetailResponse>(`${BASE_URL}/vtubers/${id}`);
   }
 
-  getStreams(ids: string[]) {
+  getStreams(ids: string[]): Observable<StreamsListResponse> {
     return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
       params: new HttpParams().set("ids", ids.join(","))
     });
   }
 
-  getStreamsWithSkip(ids: string[], skip: string) {
+  getStreamsWithSkip(
+    ids: string[],
+    skip: string
+  ): Observable<StreamsListResponse> {
     return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
       params: new HttpParams().set("ids", ids.join(",")).set("skip", skip)
     });
   }
 
-  getStreamStat(id: string) {
+  getStreamStat(id: string): Observable<StreamDetailResponse> {
     return this.http.get<StreamDetailResponse>(`${BASE_URL}/streams/${id}`);
   }
 }

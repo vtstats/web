@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -21,7 +22,8 @@ export class StreamsComponent implements OnInit {
   ) {}
 
   vtubers = VTUBERS;
-  streams: Stream[] = [];
+  onAir: Stream[] = [];
+  ended: { day: Date; streams: Stream[] }[] = [];
   updatedAt = "";
   showSpinner = false;
 
@@ -31,22 +33,20 @@ export class StreamsComponent implements OnInit {
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 
+  get lastId(): string {
+    return this.ended[this.ended.length - 1].streams[
+      this.ended[this.ended.length - 1].streams.length - 1
+    ].id;
+  }
+
   obs = new IntersectionObserver(entries => {
     if (entries.map(e => e.isIntersecting).some(e => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.apiService
-        .getStreamsWithSkip(
-          this.config.selectedVTubers,
-          this.streams[this.streams.length - 1].id
-        )
+        .getStreamsWithSkip(this.config.selectedVTubers, this.lastId)
         .subscribe(data => {
-          this.streams = [...this.streams, ...data.streams];
-          if (data.streams.length < 24) {
-            this.showSpinner = false;
-          } else {
-            this.obs.observe(this.spinnerContainer.nativeElement);
-          }
+          this.addStreams(data.streams);
         });
     }
   });
@@ -54,11 +54,9 @@ export class StreamsComponent implements OnInit {
   ngOnInit() {
     this.spinnerService.show();
     this.apiService.getStreams(this.config.selectedVTubers).subscribe(data => {
-      this.streams = data.streams;
+      this.addStreams(data.streams);
       this.updatedAt = data.updatedAt;
       this.spinnerService.hide();
-      this.showSpinner = true;
-      this.obs.observe(this.spinnerContainer.nativeElement);
     });
   }
 
@@ -68,5 +66,26 @@ export class StreamsComponent implements OnInit {
 
   trackBy(_: number, stream: Stream): string {
     return stream.id;
+  }
+
+  addStreams(streams: Stream[]) {
+    for (let stream of streams) {
+      let start = parseISO(stream.start);
+      if (
+        this.ended.length > 0 &&
+        isSameDay(this.ended[this.ended.length - 1].day, start)
+      ) {
+        this.ended[this.ended.length - 1].streams.push(stream);
+      } else {
+        this.ended.push({ day: start, streams: [stream] });
+      }
+    }
+
+    if (streams.length < 24) {
+      this.showSpinner = false;
+    } else {
+      this.showSpinner = true;
+      this.obs.observe(this.spinnerContainer.nativeElement);
+    }
   }
 }
