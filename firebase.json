@@ -29,13 +29,6 @@
         "source": "**/*.+([0-9a-f]).@(css|js)",
         "headers": [{ "key": "Cache-Control", "value": "max-age=2592000" }]
       }
-    ],
-    "redirects": [
-      {
-        "source": "/:name.jpg",
-        "destination": "/assets/quotes/:name.jpg",
-        "type": 301
-      }
     ]
   }
 }

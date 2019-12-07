@@ -24,7 +24,6 @@ import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
 import { FooterComponent } from "./footer";
 import { NavbarComponent } from "./navbar";
-import { QuotesComponent } from "./quotes";
 import { SettingsComponent } from "./settings";
 import { StreamsComponent } from "./streams";
 import { StreamsDetailComponent } from "./streams-detail";
@@ -37,7 +36,6 @@ import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/vtuber", pathMatch: "full" },
-  { path: "quote", component: QuotesComponent },
   { path: "settings", component: SettingsComponent },
   { path: "stream", component: StreamsComponent },
   { path: "stream/:id", component: StreamsDetailComponent },
@@ -51,7 +49,6 @@ const ROUTES: Routes = [
     AreaChartComponent,
     FooterComponent,
     NavbarComponent,
-    QuotesComponent,
     SettingsComponent,
     StreamsComponent,
     StreamsDetailComponent,
