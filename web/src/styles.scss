@@ -14,6 +14,7 @@
 @mixin material-theme($theme) {
   @include mat-checkbox-theme($theme);
   @include mat-core-theme($theme);
+  @include mat-button-theme($theme);
   @include mat-icon-theme($theme);
   @include mat-progress-spinner-theme($theme);
   @include mat-table-theme($theme);

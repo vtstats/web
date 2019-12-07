@@ -7,20 +7,6 @@
   ></mat-slide-toggle>
 </h4>
 
-<h4 class="settings-row mat-subheading-2">已選取的列：</h4>
-
-<div class="tree-row">
-  <div class="checkbox-row" *ngFor="let column of columns">
-    <button mat-icon-button disabled></button>
-    <mat-checkbox
-      [checked]="columnSelected(column.value)"
-      (change)="toggleColumn(column.value)"
-    >
-      {{ column.name }}
-    </mat-checkbox>
-  </div>
-</div>
-
 <h4 class="settings-row mat-subheading-2">
   已選取的 VTuber <b>({{ config.selectedVTubers.length }}/{{ count }})</b>：
 </h4>

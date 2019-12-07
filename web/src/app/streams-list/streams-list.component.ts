@@ -45,9 +45,7 @@ export class StreamsListComponent implements OnInit {
 
       this.apiService
         .getStreamsWithSkip(this.config.selectedVTubers, this.lastId)
-        .subscribe(data =>
-          this.addStreams(data.streams)
-        );
+        .subscribe(data => this.addStreams(data.streams));
     }
   });
 

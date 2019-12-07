@@ -33,29 +33,7 @@ const defaultSelectedVTubers = [
   "echo"
 ];
 
-const defaultSelectedColumns = [
-  "profile",
-  "name",
-  "youtubeSubs",
-  "youtubeDailySubs",
-  "youtubeWeeklySubs",
-  "youtubeMonthlySubs",
-  "youtubeViews",
-  "youtubeDailyViews",
-  "youtubeWeeklyViews",
-  "youtubeMonthlyViews",
-  "bilibiliSubs",
-  "bilibiliDailySubs",
-  "bilibiliWeeklySubs",
-  "bilibiliMonthlySubs",
-  "bilibiliViews",
-  "bilibiliDailyViews",
-  "bilibiliWeeklyViews",
-  "bilibiliMonthlyViews"
-];
-
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
-export const SELECTED_COLUMNS = "holostats:selectedColumns";
 export const SELECTED_VTUBERS = "holostats:selectedVTubers";
 
 @Injectable({ providedIn: "root" })
@@ -74,28 +52,6 @@ export class Config {
     );
     localStorage.setItem(SELECTED_VTUBERS, filteredVTubers.join(","));
     this.selectedVTubers_ = filteredVTubers;
-  }
-
-  private selectedColumns_ = localStorage.getItem(SELECTED_COLUMNS)
-    ? localStorage.getItem(SELECTED_COLUMNS).split(",")
-    : defaultSelectedColumns;
-
-  get selectedColumns(): string[] {
-    return this.selectedColumns_;
-  }
-
-  removeColumns(column: string) {
-    this.selectedColumns_ = this.selectedColumns_.filter(col => col !== column);
-    localStorage.setItem(SELECTED_COLUMNS, this.selectedColumns_.join(","));
-  }
-
-  addColumns(column: string) {
-    this.selectedColumns_.push(column);
-    this.selectedColumns_.sort(
-      (a, b) =>
-        defaultSelectedColumns.indexOf(a) - defaultSelectedColumns.indexOf(b)
-    );
-    localStorage.setItem(SELECTED_COLUMNS, this.selectedColumns_.join(","));
   }
 
   private enableDarkMode_ = localStorage.getItem(ENABLE_DARK_MODE) !== null;

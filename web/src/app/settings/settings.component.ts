@@ -91,36 +91,4 @@ export class SettingsComponent {
       !memberIds.every(id => this.config.selectedVTubers.includes(id))
     );
   }
-
-  ///// Display Columns
-  readonly columns = [
-    { value: "youtubeSubs", name: "YouTube 訂閱" },
-    { value: "youtubeDailySubs", name: "(YouTube 訂閱) 日增" },
-    { value: "youtubeWeeklySubs", name: "(YouTube 訂閱) 周增" },
-    { value: "youtubeMonthlySubs", name: "(YouTube 訂閱) 月增" },
-    { value: "youtubeViews", name: "YouTube 觀看" },
-    { value: "youtubeDailyViews", name: "(YouTube 觀看) 日增" },
-    { value: "youtubeWeeklyViews", name: "(YouTube 觀看) 周增" },
-    { value: "youtubeMonthlyViews", name: "(YouTube 觀看) 月增" },
-    { value: "bilibiliSubs", name: "Bilibili 訂閱" },
-    { value: "bilibiliDailySubs", name: "(Bilibili 訂閱) 日增" },
-    { value: "bilibiliWeeklySubs", name: "(Bilibili 訂閱) 周增" },
-    { value: "bilibiliMonthlySubs", name: "(Bilibili 訂閱) 月增" },
-    { value: "bilibiliViews", name: "Bilibili 觀看" },
-    { value: "bilibiliDailyViews", name: "(Bilibili 觀看) 日增" },
-    { value: "bilibiliWeeklyViews", name: "(Bilibili 觀看) 周增" },
-    { value: "bilibiliMonthlyViews", name: "(Bilibili 觀看) 月增" }
-  ];
-
-  columnSelected(column: string): boolean {
-    return this.config.selectedColumns.includes(column);
-  }
-
-  toggleColumn(column: string) {
-    if (this.columnSelected(column)) {
-      this.config.removeColumns(column);
-    } else {
-      this.config.addColumns(column);
-    }
-  }
 }

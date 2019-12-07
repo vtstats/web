@@ -1,10 +1,16 @@
 import { OnInit, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
+import { ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 
 import { VTuber } from "@holostats/libs/models";
 
 import { Config, ApiService } from "../services";
+
+enum Tab {
+  youtube,
+  bilibili
+}
 
 @Component({
   selector: "hs-vtubers-list",
@@ -15,23 +21,27 @@ export class VTubersListComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     public config: Config,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private route: ActivatedRoute
   ) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   updatedAt = "";
 
+  selectedTab = Tab.youtube;
+
+  get bilibiliSelected() {
+    return this.selectedTab == Tab.bilibili;
+  }
+
+  get youtubeSelected() {
+    return this.selectedTab == Tab.youtube;
+  }
+
   dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
 
   ngOnInit() {
-    this.spinnerService.show();
-    this.apiService.getVTubers(this.config.selectedVTubers).subscribe(data => {
-      this.spinnerService.hide();
-      this.dataSource.data = data.vtubers;
-      this.updatedAt = data.updatedAt;
-    });
-
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -71,10 +81,69 @@ export class VTubersListComponent implements OnInit {
           return item[property];
       }
     };
+
+    this.route.queryParams.subscribe(queryParams => {
+      this.selectedTab =
+        queryParams["tab"] == "bilibili" ? Tab.bilibili : Tab.youtube;
+      this.filterContent();
+    });
+
+    this.spinnerService.show();
+    this.apiService.getVTubers(this.config.selectedVTubers).subscribe(data => {
+      this.spinnerService.hide();
+      this.dataSource.data = data.vtubers;
+      this.updatedAt = data.updatedAt;
+    });
   }
 
-  get displayedColumns(): string[] {
-    return this.config.selectedColumns.filter(c => c.length != 0);
+  hideRows: string[] = [];
+  displayedColumns: string[] = [];
+
+  filterContent() {
+    switch (this.selectedTab) {
+      case Tab.youtube:
+        this.displayedColumns = [
+          "profile",
+          "name",
+          "youtubeSubs",
+          "youtubeDailySubs",
+          "youtubeWeeklySubs",
+          "youtubeMonthlySubs",
+          "youtubeViews",
+          "youtubeDailyViews",
+          "youtubeWeeklyViews",
+          "youtubeMonthlyViews"
+        ];
+        this.hideRows = ["civia", "echo", "yogiri"];
+        this.sort.active = "youtubeSubs";
+        this.sort.direction = "desc";
+        this.sort.sortChange.emit({
+          active: "youtubeSubs",
+          direction: "desc"
+        });
+        break;
+      case Tab.bilibili:
+        this.displayedColumns = [
+          "profile",
+          "name",
+          "bilibiliSubs",
+          "bilibiliDailySubs",
+          "bilibiliWeeklySubs",
+          "bilibiliMonthlySubs",
+          "bilibiliViews",
+          "bilibiliDailyViews",
+          "bilibiliWeeklyViews",
+          "bilibiliMonthlyViews"
+        ];
+        this.sort.active = "bilibiliSubs";
+        this.sort.direction = "desc";
+        this.hideRows = ["choco_alt"];
+        this.sort.sortChange.emit({
+          active: "bilibiliSubs",
+          direction: "desc"
+        });
+        break;
+    }
   }
 
   private getTotal(path: (_: VTuber) => number) {

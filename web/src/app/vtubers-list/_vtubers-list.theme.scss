@@ -11,4 +11,14 @@
   .updated-at {
     color: mat-color($foreground, secondary-text);
   }
+
+  .toolbar {
+    .tab-button {
+      color: mat-color($foreground, text);
+    }
+
+    .tab-button.active:after {
+      border-bottom: 1px solid mat-color($foreground, text);
+    }
+  }
 }

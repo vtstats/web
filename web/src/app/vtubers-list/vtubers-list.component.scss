@@ -8,11 +8,41 @@ $config: mat-typography-config();
   position: sticky;
 }
 
-.updated-at {
-  font-size: mat-font-size($config, caption);
-  font-weight: mat-font-weight($config, caption);
-  text-align: right;
+.toolbar {
   padding: 8px 20px;
+}
+
+.tab-button {
+  padding: 8px;
+  text-decoration: none;
+  font-size: mat-font-size($config, subheading-1);
+  font-weight: mat-font-weight($config, button);
+  user-select: none;
+
+  &:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding-top: 6px;
+  }
+
+  &.active:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding-top: 5px;
+  }
+}
+
+.spacer {
+  flex: 1 0;
+}
+
+.updated-at {
+  font-size: mat-font-size($config, button);
+  font-weight: mat-font-weight($config, caption);
 }
 
 table {
