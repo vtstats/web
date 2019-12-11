@@ -62,6 +62,13 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         bilibili: 389857131
       },
       {
+        id: "aki_alt",
+        name: "アキ・ローゼンタール alt",
+        twitter: "akirosenthal",
+        youtube: "UCLbtM3JZfRTg8v2KGag-RMw",
+        bilibili: 389857131
+      },
+      {
         id: "mel",
         name: "夜空メル",
         twitter: "yozoramel",

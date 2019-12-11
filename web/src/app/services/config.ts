@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 
 const defaultSelectedVTubers = [
   "aki",
+  "aki_alt",
   "aqua",
   "ayame",
   "azki",
