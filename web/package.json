@@ -26,7 +26,7 @@
     "@holostats/libs": "*",
     "@swimlane/ngx-charts": "^12.1.0",
     "date-fns": "^2.8.1",
-    "ngx-spinner": "^8.0.3",
+    "ngx-spinner": "^8.1.0",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
