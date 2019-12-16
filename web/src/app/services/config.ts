@@ -11,6 +11,7 @@ const defaultSelectedVTubers = [
   "flare",
   "fubuki",
   "haato",
+  "haato_alt",
   "hololive",
   "korone",
   "marine",

@@ -22,7 +22,7 @@ impl VTuber {
     }
 }
 
-pub const VTUBERS: [VTuber; 35] = [
+pub const VTUBERS: [VTuber; 36] = [
     VTuber::new("aki", Some("UCFTLzh12_nrtzqBPsTCqenA"), Some(389857131)),
     VTuber::new("aki_alt", Some("UCLbtM3JZfRTg8v2KGag-RMw"), None),
     VTuber::new("aqua", Some("UC1opHUrw8rvnsadT-iGp7Cg"), Some(375504219)),
@@ -33,6 +33,7 @@ pub const VTUBERS: [VTuber; 35] = [
     VTuber::new("flare", Some("UCvInZx9h3jC2JzsIzoOebWg"), Some(454737600)),
     VTuber::new("fubuki", Some("UCdn5BQ06XqgXoAxIhbqw5Rg"), Some(332704117)),
     VTuber::new("haato", Some("UC1CfXB_kRs3C-zaeTG3oGyg"), Some(339567211)),
+    VTuber::new("haato_alt", Some("UCHj_mh57PVMXhAUDphUQDFA"), None),
     VTuber::new(
         "hololive",
         Some("UCJFZiqLMntJufDCHc6bQixg"),

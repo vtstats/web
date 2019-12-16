@@ -55,6 +55,13 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         bilibili: 339567211
       },
       {
+        id: "haato_alt",
+        name: "赤井はあと alt",
+        twitter: "akaihaato",
+        youtube: "UCHj_mh57PVMXhAUDphUQDFA",
+        bilibili: 339567211
+      },
+      {
         id: "aki",
         name: "アキ・ローゼンタール",
         twitter: "akirosenthal",
