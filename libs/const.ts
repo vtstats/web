@@ -160,6 +160,41 @@ export const VTUBERS_BY_GROUP: (VTuberInfo | VTuberGroup)[] = [
         bilibili: 454733056
       },
       {
+        id: "kanata",
+        name: "天音かなた",
+        twitter: "amanekanatach",
+        youtube: "UCZlDXzGoo7d44bwdNObFacg",
+        bilibili: -1
+      },
+      {
+        id: "coco",
+        name: "桐生ココ",
+        twitter: "kiryucoco",
+        youtube: "UCS9uQI-jC3DE0L4IpXyvr6w",
+        bilibili: -1
+      },
+      {
+        id: "watame",
+        name: "角巻わため",
+        twitter: "tsunomakiwatame",
+        youtube: "UCqm3BQLlJfvkTsX_hvm0UmA",
+        bilibili: -1
+      },
+      {
+        id: "towa",
+        name: "常闇トワ",
+        twitter: "tokoyamitowa",
+        youtube: "UC1uv2Oq6kNxgATlCiez59hw",
+        bilibili: -1
+      },
+      {
+        id: "himemoriluna",
+        name: "姫森ルーナ",
+        twitter: "himemoriluna",
+        youtube: "UCa9Y57gfeY0Zro_noHRVrnw",
+        bilibili: -1
+      },
+      {
         id: "mio",
         name: "大神ミオ",
         twitter: "ookamimio",
