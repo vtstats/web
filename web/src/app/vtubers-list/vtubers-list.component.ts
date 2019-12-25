@@ -137,7 +137,16 @@ export class VTubersListComponent implements OnInit {
         ];
         this.sort.active = "bilibiliSubs";
         this.sort.direction = "desc";
-        this.hideRows = ["aki_alt", "choco_alt", "haato_alt"];
+        this.hideRows = [
+          "aki_alt",
+          "choco_alt",
+          "haato_alt",
+          "kanata",
+          "coco",
+          "watame",
+          "towa",
+          "himemoriluna",
+        ];
         this.sort.sortChange.emit({
           active: "bilibiliSubs",
           direction: "desc"
