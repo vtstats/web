@@ -32,7 +32,12 @@ const defaultSelectedVTubers = [
   "ui",
   "yogiri",
   "civia",
-  "echo"
+  "echo",
+  "kanata",
+  "coco",
+  "watame",
+  "towa",
+  "himemoriluna",
 ];
 
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
