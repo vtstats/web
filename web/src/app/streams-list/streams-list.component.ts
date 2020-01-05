@@ -4,10 +4,10 @@ import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 
-import { Stream } from "@holostats/libs/models";
-import { VTUBERS } from "@holostats/libs/const";
+import * as vtubers from "vtubers";
 
-import { ApiService, Config } from "../services";
+import { Stream } from "../models";
+import { ApiService } from "../services";
 
 @Component({
   selector: "hs-streams-list",
@@ -17,11 +17,9 @@ import { ApiService, Config } from "../services";
 export class StreamsListComponent implements OnInit {
   constructor(
     private apiService: ApiService,
-    private config: Config,
     private spinnerService: NgxSpinnerService
   ) {}
 
-  vtubers = VTUBERS;
   onAir: Stream[] = [];
   ended: { day: Date; streams: Stream[] }[] = [];
   updatedAt = "";
@@ -44,14 +42,14 @@ export class StreamsListComponent implements OnInit {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.apiService
-        .getStreamsWithSkip(this.config.selectedVTubers, this.lastId)
+        .getStreamsWithSkip(this.lastId)
         .subscribe(data => this.addStreams(data.streams));
     }
   });
 
   ngOnInit() {
     this.spinnerService.show();
-    this.apiService.getStreams(this.config.selectedVTubers).subscribe(data => {
+    this.apiService.getStreams().subscribe(data => {
       this.addStreams(data.streams);
       this.updatedAt = data.updatedAt;
       this.spinnerService.hide();
@@ -59,7 +57,11 @@ export class StreamsListComponent implements OnInit {
   }
 
   findVTuber(id: string) {
-    return this.vtubers.find(v => v.id == id);
+    for (const item of vtubers.items) {
+      for (const member of item.members) {
+        if (member.id) return member;
+      }
+    }
   }
 
   trackBy(_: number, stream: Stream): string {

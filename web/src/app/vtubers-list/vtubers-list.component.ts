@@ -3,9 +3,8 @@ import { MatSort, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 
-import { VTuber } from "@holostats/libs/models";
-
-import { Config, ApiService } from "../services";
+import { ApiService } from "../services";
+import { VTuber } from "../models";
 
 enum Tab {
   youtube,
@@ -20,7 +19,6 @@ enum Tab {
 export class VTubersListComponent implements OnInit {
   constructor(
     private apiService: ApiService,
-    public config: Config,
     private spinnerService: NgxSpinnerService,
     private route: ActivatedRoute
   ) {}
@@ -89,7 +87,7 @@ export class VTubersListComponent implements OnInit {
     });
 
     this.spinnerService.show();
-    this.apiService.getVTubers(this.config.selectedVTubers).subscribe(data => {
+    this.apiService.getVTubers().subscribe(data => {
       this.spinnerService.hide();
       this.dataSource.data = data.vtubers;
       this.updatedAt = data.updatedAt;
@@ -145,7 +143,7 @@ export class VTubersListComponent implements OnInit {
           "coco",
           "watame",
           "towa",
-          "himemoriluna",
+          "himemoriluna"
         ];
         this.sort.sortChange.emit({
           active: "bilibiliSubs",

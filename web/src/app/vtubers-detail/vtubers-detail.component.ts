@@ -4,8 +4,7 @@ import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
 import { switchMap } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 
-import { VTuber } from "@holostats/libs/models";
-
+import { VTuber } from "../models";
 import { ApiService } from "../services";
 
 const today = getUnixTime(startOfToday());

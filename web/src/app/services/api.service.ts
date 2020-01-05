@@ -3,44 +3,44 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import {
-  StreamDetailResponse,
-  StreamsListResponse,
-  VTubersListResponse,
-  VTuberDetailResponse
-} from "@holostats/libs/models";
+  StreamDetail,
+  StreamsList,
+  VTubersList,
+  VTuberDetail
+} from "../models";
+import { Config } from "./config";
 
 const BASE_URL = "https://holo.poi.cat/api";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private config: Config) {}
 
-  getVTubers(ids: string[]): Observable<VTubersListResponse> {
-    return this.http.get<VTubersListResponse>(`${BASE_URL}/vtubers`, {
-      params: new HttpParams().set("ids", ids.join(","))
+  getVTubers(): Observable<VTubersList> {
+    return this.http.get<VTubersList>(`${BASE_URL}/vtubers`, {
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
     });
   }
 
-  getVTuberStat(id: string): Observable<VTuberDetailResponse> {
-    return this.http.get<VTuberDetailResponse>(`${BASE_URL}/vtubers/${id}`);
+  getVTuberStat(id: string): Observable<VTuberDetail> {
+    return this.http.get<VTuberDetail>(`${BASE_URL}/vtubers/${id}`);
   }
 
-  getStreams(ids: string[]): Observable<StreamsListResponse> {
-    return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
-      params: new HttpParams().set("ids", ids.join(","))
+  getStreams(): Observable<StreamsList> {
+    return this.http.get<StreamsList>(`${BASE_URL}/streams`, {
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
     });
   }
 
-  getStreamsWithSkip(
-    ids: string[],
-    skip: string
-  ): Observable<StreamsListResponse> {
-    return this.http.get<StreamsListResponse>(`${BASE_URL}/streams`, {
-      params: new HttpParams().set("ids", ids.join(",")).set("skip", skip)
+  getStreamsWithSkip(skip: string): Observable<StreamsList> {
+    return this.http.get<StreamsList>(`${BASE_URL}/streams`, {
+      params: new HttpParams()
+        .set("ids", this.config.joinedSelectedVTubers)
+        .set("skip", skip)
     });
   }
 
-  getStreamStat(id: string): Observable<StreamDetailResponse> {
-    return this.http.get<StreamDetailResponse>(`${BASE_URL}/streams/${id}`);
+  getStreamStat(id: string): Observable<StreamDetail> {
+    return this.http.get<StreamDetail>(`${BASE_URL}/streams/${id}`);
   }
 }

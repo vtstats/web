@@ -1,80 +1,49 @@
 import { Injectable } from "@angular/core";
 
-const defaultSelectedVTubers = [
-  "aki",
-  "aki_alt",
-  "aqua",
-  "ayame",
-  "azki",
-  "choco",
-  "choco_alt",
-  "flare",
-  "fubuki",
-  "haato",
-  "haato_alt",
-  "hololive",
-  "korone",
-  "marine",
-  "matsuri",
-  "mel",
-  "miko",
-  "mio",
-  "nana",
-  "noel",
-  "okayu",
-  "pekora",
-  "roboco",
-  "rushia",
-  "shion",
-  "sora",
-  "subaru",
-  "suisei",
-  "ui",
-  "yogiri",
-  "civia",
-  "echo",
-  "kanata",
-  "coco",
-  "watame",
-  "towa",
-  "himemoriluna",
-];
+import * as vtubers from "vtubers";
+
+const defaultSelectedVTubers = vtubers.items.reduce(
+  (acc, item) => [...acc, ...item.members.filter(m => m.default)],
+  []
+);
 
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
 export const SELECTED_VTUBERS = "holostats:selectedVTubers";
 
 @Injectable({ providedIn: "root" })
 export class Config {
-  private selectedVTubers_ = localStorage.getItem(SELECTED_VTUBERS)
-    ? localStorage.getItem(SELECTED_VTUBERS).split(",")
-    : defaultSelectedVTubers;
+  selectedVTubers: Set<String> = localStorage.getItem(SELECTED_VTUBERS)
+    ? new Set(localStorage.getItem(SELECTED_VTUBERS).split(","))
+    : new Set(defaultSelectedVTubers);
 
-  get selectedVTubers() {
-    return this.selectedVTubers_;
+  get joinedSelectedVTubers(): string {
+    return Array.from(this.selectedVTubers).join(",");
   }
 
-  set selectedVTubers(vtubers: string[]) {
-    let filteredVTubers = vtubers.filter(
-      (id, i, vtubers) => vtubers.indexOf(id) === i
-    );
-    localStorage.setItem(SELECTED_VTUBERS, filteredVTubers.join(","));
-    this.selectedVTubers_ = filteredVTubers;
+  selectVTubers(vtubers: string[]) {
+    for (const vtuber of vtubers) {
+      this.selectedVTubers.add(vtuber);
+    }
+    localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
   }
 
-  private enableDarkMode_ = localStorage.getItem(ENABLE_DARK_MODE) !== null;
-
-  get enableDarkMode(): boolean {
-    return this.enableDarkMode_;
+  unselectVTubers(vtubers: string[]) {
+    for (const vtuber of vtubers) {
+      this.selectedVTubers.delete(vtuber);
+    }
+    localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
   }
 
-  set enableDarkMode(value: boolean) {
-    if (value) {
+  enableDarkMode: boolean = !!localStorage.getItem(ENABLE_DARK_MODE);
+
+  toggleDarkMode() {
+    this.enableDarkMode = !this.enableDarkMode;
+    if (this.enableDarkMode) {
       localStorage.setItem(ENABLE_DARK_MODE, "t");
       document.body.classList.add("dark");
     } else {
       localStorage.removeItem(ENABLE_DARK_MODE);
       document.body.classList.remove("dark");
     }
-    this.enableDarkMode_ = value;
   }
 }

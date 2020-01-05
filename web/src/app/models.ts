@@ -1,13 +1,5 @@
-export type VTuberInfo = {
+export type VTuber = {
   id: string;
-  group?: string;
-  bilibili: number;
-  name: string;
-  twitter: string;
-  youtube: string;
-};
-
-export type VTuber = VTuberInfo & {
   bilibiliStats: {
     subs: number;
     views: number;
@@ -30,12 +22,6 @@ export type VTuber = VTuberInfo & {
   };
 };
 
-export type VTuberGroup = {
-  id: string;
-  name: string;
-  members: VTuberInfo[];
-};
-
 export type Stream = {
   start: string;
   end?: string;
@@ -47,20 +33,20 @@ export type Stream = {
   vtuberId: string;
 };
 
-export type StreamsListResponse = {
+export type StreamsList = {
   updatedAt: string;
   streams: Array<Stream>;
 };
 
-export type StreamDetailResponse = Stream & {
+export type StreamDetail = Stream & {
   stats: { [time: number]: number };
 };
 
-export type VTubersListResponse = {
+export type VTubersList = {
   updatedAt: string;
   vtubers: Array<VTuber>;
 };
 
-export type VTuberDetailResponse = VTuber & {
+export type VTuberDetail = VTuber & {
   stats: { [time: string]: [number, number, number, number] };
 };

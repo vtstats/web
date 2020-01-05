@@ -5,13 +5,22 @@ import {
   MatTreeFlattener
 } from "@angular/material/tree";
 
-import { VTUBERS, VTUBERS_BY_GROUP } from "@holostats/libs/const";
-import { VTuberInfo, VTuberGroup } from "@holostats/libs/models";
+import * as vtubers from "vtubers";
 
 import { Config } from "../services";
 
-type VTuberNode = VTuberInfo | VTuberGroup;
-type VTuberFlatNode = VTuberNode & { level: number };
+interface VTuberNode {
+  id: string;
+  name: string;
+  members?: VTuberNode[];
+}
+
+interface VTuberFlatNode {
+  id: string;
+  name: string;
+  expandable: boolean;
+  level: number;
+}
 
 @Component({
   selector: "hs-settings",
@@ -25,70 +34,71 @@ export class SettingsComponent {
 
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     node => node.level,
-    node => ("members" in node ? true : false)
+    node => node.expandable
   );
 
   treeFlattener = new MatTreeFlattener(
-    (node: VTuberNode, level) => ({ ...node, level }),
+    (node: VTuberNode, level) => ({
+      level: level,
+      id: node.id,
+      name: node.name,
+      expandable: !!node.members && node.members.length > 0
+    }),
     node => node.level,
-    node => ("members" in node ? true : false),
-    node => ("members" in node ? node.members : null)
+    node => node.expandable,
+    node => node.members
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  hasChild = (_: number, node: VTuberFlatNode) =>
-    "members" in node ? true : false;
+  hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
 
-  count = VTUBERS.length;
+  count = vtubers.items.reduce((acc, val) => acc + val.members.length, 0);
 
   constructor(public config: Config) {
-    this.dataSource.data = VTUBERS_BY_GROUP;
+    this.dataSource.data = vtubers.items;
   }
 
-  getMemberIds(groupId: string): string[] {
-    return (VTUBERS_BY_GROUP.find(
-      g => g.id == groupId
-    ) as VTuberGroup).members.map(m => m.id);
+  getMemberIds(id: string): string[] {
+    let ids = [];
+    for (const member of vtubers.items.find(i => i.id == id).members) {
+      ids.push(member.id);
+    }
+    return ids;
   }
 
   toggleVTuber(id: string) {
-    const index = this.config.selectedVTubers.indexOf(id);
-    let selectedVTubers = this.config.selectedVTubers;
-    if (index > -1) {
-      selectedVTubers.splice(index, 1);
+    if (this.config.selectedVTubers.has(id)) {
+      this.config.unselectVTubers([id]);
     } else {
-      selectedVTubers.push(id);
+      this.config.selectVTubers([id]);
     }
-    this.config.selectedVTubers = selectedVTubers;
   }
 
   toggleVTuberGroup(id: string) {
     const memberIds = this.getMemberIds(id);
-    let selectedVTubers = this.config.selectedVTubers;
-    if (memberIds.every(id => selectedVTubers.includes(id))) {
-      selectedVTubers = selectedVTubers.filter(id => !memberIds.includes(id));
+    if (memberIds.every(id => this.config.selectedVTubers.has(id))) {
+      this.config.unselectVTubers(memberIds);
     } else {
-      memberIds.forEach(id => selectedVTubers.push(id));
+      this.config.selectVTubers(memberIds);
     }
-    this.config.selectedVTubers = selectedVTubers;
   }
 
   vtuberSelected(id: string): boolean {
-    return this.config.selectedVTubers.includes(id);
+    return this.config.selectedVTubers.has(id);
   }
 
   vtuberGroupAllSelected(id: string): boolean {
     return this.getMemberIds(id).every(id =>
-      this.config.selectedVTubers.includes(id)
+      this.config.selectedVTubers.has(id)
     );
   }
 
   vtuberGroupPartiallySelected(id: string): boolean {
     const memberIds = this.getMemberIds(id);
     return (
-      memberIds.some(id => this.config.selectedVTubers.includes(id)) &&
-      !memberIds.every(id => this.config.selectedVTubers.includes(id))
+      memberIds.some(id => this.config.selectedVTubers.has(id)) &&
+      !memberIds.every(id => this.config.selectedVTubers.has(id))
     );
   }
 }
