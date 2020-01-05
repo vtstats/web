@@ -62,7 +62,7 @@ export class VTubersDetailComponent {
   findVTuber(id: string) {
     for (const item of vtubers.items) {
       for (const vtuber of item.members) {
-        if (vtuber.id) return vtuber;
+        if (vtuber.id == id) return vtuber;
       }
     }
   }

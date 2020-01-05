@@ -69,7 +69,7 @@ export class StreamsDetailComponent implements OnInit {
   findVTuber(id: string) {
     for (const item of vtubers.items) {
       for (const member of item.members) {
-        if (member.id) return member;
+        if (member.id == id) return member;
       }
     }
   }
