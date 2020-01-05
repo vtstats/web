@@ -3,6 +3,8 @@ import { MatSort, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 
+import * as vtubers from "vtubers";
+
 import { ApiService } from "../services";
 import { VTuber } from "../models";
 
@@ -96,6 +98,14 @@ export class VTubersListComponent implements OnInit {
 
   hideRows: string[] = [];
   displayedColumns: string[] = [];
+
+  findVTuber(id: string) {
+    for (const item of vtubers.items) {
+      for (const vtuber of item.members) {
+        if (vtuber.id) return vtuber;
+      }
+    }
+  }
 
   filterContent() {
     switch (this.selectedTab) {

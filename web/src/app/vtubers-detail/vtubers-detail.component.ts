@@ -4,6 +4,8 @@ import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
 import { switchMap } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 
+import * as vtubers from "vtubers";
+
 import { VTuber } from "../models";
 import { ApiService } from "../services";
 
@@ -55,6 +57,14 @@ export class VTubersDetailComponent {
         this.vtuber = vtuber;
         this.spinnerService.hide();
       });
+  }
+
+  findVTuber(id: string) {
+    for (const item of vtubers.items) {
+      for (const vtuber of item.members) {
+        if (vtuber.id) return vtuber;
+      }
+    }
   }
 
   dateTickFormatting(val: number): string {
