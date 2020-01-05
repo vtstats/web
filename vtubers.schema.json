@@ -61,7 +61,9 @@
                   "type": "string"
                 },
                 "youtube": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 24,
+                  "maxLength": 24
                 },
                 "bilibili": {
                   "type": "number"
