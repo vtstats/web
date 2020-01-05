@@ -1,0 +1,391 @@
+{
+  "$schema": "./vtubers.schema.json",
+  "last_modified": "2020-01-05T04:11:29.782Z",
+  "items": [
+    {
+      "name": "ホロライブ",
+      "id": "hololive_misc",
+      "members": [
+        {
+          "id": "hololive",
+          "name": "ホロライブ公式",
+          "twitter": "hololivetv",
+          "youtube": "UCJFZiqLMntJufDCHc6bQixg",
+          "bilibili": 286700005,
+          "default": true
+        },
+        {
+          "id": "sora",
+          "name": "ときのそら",
+          "twitter": "tokino_sora",
+          "youtube": "UCp6993wxpyDPHUpavwDFqgg",
+          "bilibili": 286179206,
+          "default": true
+        },
+        {
+          "id": "roboco",
+          "name": "ロボ子さん",
+          "twitter": "robocosan",
+          "youtube": "UCDqI2jOz0weumE8s7paEk6g",
+          "bilibili": 20813493,
+          "default": true
+        },
+        {
+          "id": "miko",
+          "name": "さくらみこ",
+          "twitter": "sakuramiko35",
+          "youtube": "UC-hM6YJuNYVAmUWxeIr9FeA",
+          "bilibili": 366690056,
+          "default": true
+        },
+        {
+          "id": "suisei",
+          "name": "星街すいせい",
+          "twitter": "suisei_hosimati",
+          "youtube": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "bilibili": 9034870,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ一期生",
+      "id": "hololive_1st",
+      "members": [
+        {
+          "id": "fubuki",
+          "name": "白上フブキ",
+          "twitter": "shirakamifubuki",
+          "youtube": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+          "bilibili": 332704117,
+          "default": true
+        },
+        {
+          "id": "matsuri",
+          "name": "夏色まつり",
+          "twitter": "natsuiromatsuri",
+          "youtube": "UCQ0UDLQCjY0rmuxCDE38FGg",
+          "bilibili": 336731767,
+          "default": true
+        },
+        {
+          "id": "haato",
+          "name": "赤井はあと",
+          "twitter": "akaihaato",
+          "youtube": "UC1CfXB_kRs3C-zaeTG3oGyg",
+          "bilibili": 339567211,
+          "default": true
+        },
+        {
+          "id": "haato_alt",
+          "name": "赤井はあと sub",
+          "twitter": "akaihaato",
+          "youtube": "UCHj_mh57PVMXhAUDphUQDFA",
+          "bilibili": 339567211,
+          "default": true
+        },
+        {
+          "id": "aki",
+          "name": "アキロゼ",
+          "twitter": "akirosenthal",
+          "youtube": "UCFTLzh12_nrtzqBPsTCqenA",
+          "bilibili": 389857131,
+          "default": true
+        },
+        {
+          "id": "aki_alt",
+          "name": "アキロゼ sub",
+          "twitter": "akirosenthal",
+          "youtube": "UCLbtM3JZfRTg8v2KGag-RMw",
+          "bilibili": 389857131,
+          "default": true
+        },
+        {
+          "id": "mel",
+          "name": "夜空メル",
+          "twitter": "yozoramel",
+          "youtube": "UCD8HOxPs4Xvsm8H0ZxXGiBw",
+          "bilibili": 389856447,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ二期生",
+      "id": "hololive_2nd",
+      "members": [
+        {
+          "id": "choco",
+          "name": "癒月ちょこ",
+          "twitter": "yuzukichococh",
+          "youtube": "UC1suqwovbL1kzsoaZgFZLKg",
+          "bilibili": 389858754,
+          "default": true
+        },
+        {
+          "id": "choco_alt",
+          "name": "癒月ちょこ sub",
+          "twitter": "yuzukichococh",
+          "youtube": "UCp3tgHXw_HI0QMk1K8qh3gQ",
+          "bilibili": 389858754,
+          "default": true
+        },
+        {
+          "id": "shion",
+          "name": "紫咲シオン",
+          "twitter": "murasakishionch",
+          "youtube": "UCXTpFs_3PqI41qX2d9tL2Rw",
+          "bilibili": 389857640,
+          "default": true
+        },
+        {
+          "id": "aqua",
+          "name": "湊あくあ",
+          "twitter": "minatoaqua",
+          "youtube": "UC1opHUrw8rvnsadT-iGp7Cg",
+          "bilibili": 375504219,
+          "default": true
+        },
+        {
+          "id": "subaru",
+          "name": "大空スバル",
+          "twitter": "oozorasubaru",
+          "youtube": "UCvzGlP9oQwU--Y0r9id_jnA",
+          "bilibili": 389859190,
+          "default": true
+        },
+        {
+          "id": "ayame",
+          "name": "百鬼あやめ",
+          "twitter": "nakiriayame",
+          "youtube": "UC7fk0CB07ly8oSl0aqKkqFg",
+          "bilibili": 389858027,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ三期生",
+      "id": "hololive_3rd",
+      "members": [
+        {
+          "id": "pekora",
+          "name": "兎田ぺこら",
+          "twitter": "usadapekora",
+          "youtube": "UC1DCedRgGHBdm81E1llLhOQ",
+          "bilibili": 443305053,
+          "default": true
+        },
+        {
+          "id": "rushia",
+          "name": "潤羽るしあ",
+          "twitter": "uruharushia",
+          "youtube": "UCl_gCybOJRIgOXw6Qb4qJzQ",
+          "bilibili": 443300418,
+          "default": true
+        },
+        {
+          "id": "flare",
+          "name": "不知火フレア",
+          "twitter": "shiranuiflare",
+          "youtube": "UCvInZx9h3jC2JzsIzoOebWg",
+          "bilibili": 454737600,
+          "default": true
+        },
+        {
+          "id": "marine",
+          "name": "宝鐘マリン",
+          "twitter": "houshoumarine",
+          "youtube": "UCCzUftO8KOVkV4wQG1vkUvg",
+          "bilibili": 454955503,
+          "default": true
+        },
+        {
+          "id": "noel",
+          "name": "白銀ノエル",
+          "twitter": "shiroganenoel",
+          "youtube": "UCdyqAaZDKHXg4Ahi7VENThQ",
+          "bilibili": 454733056,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ四期生",
+      "id": "hololive_4th",
+      "members": [
+        {
+          "id": "kanata",
+          "name": "天音かなた",
+          "twitter": "amanekanatach",
+          "youtube": "UCZlDXzGoo7d44bwdNObFacg",
+          "default": true
+        },
+        {
+          "id": "coco",
+          "name": "桐生ココ",
+          "twitter": "kiryucoco",
+          "youtube": "UCS9uQI-jC3DE0L4IpXyvr6w",
+          "default": true
+        },
+        {
+          "id": "watame",
+          "name": "角巻わため",
+          "twitter": "tsunomakiwatame",
+          "youtube": "UCqm3BQLlJfvkTsX_hvm0UmA",
+          "default": true
+        },
+        {
+          "id": "towa",
+          "name": "常闇トワ",
+          "twitter": "tokoyamitowa",
+          "youtube": "UC1uv2Oq6kNxgATlCiez59hw",
+          "default": true
+        },
+        {
+          "id": "himemoriluna",
+          "name": "姫森ルーナ",
+          "twitter": "himemoriluna",
+          "youtube": "UCa9Y57gfeY0Zro_noHRVrnw",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブゲーマーズ",
+      "id": "hololive_gamers",
+      "members": [
+        {
+          "id": "fubuki",
+          "name": "白上フブキ",
+          "twitter": "shirakamifubuki",
+          "youtube": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+          "bilibili": 332704117,
+          "default": true
+        },
+        {
+          "id": "mio",
+          "name": "大神ミオ",
+          "twitter": "ookamimio",
+          "youtube": "UCp-5t9SrOQwXMU7iIjQfARg",
+          "bilibili": 389862071,
+          "default": true
+        },
+        {
+          "id": "okayu",
+          "name": "猫又おかゆ",
+          "twitter": "nekomataokayu",
+          "youtube": "UCvaTdHTWBGv3MKj3KVqJVCw",
+          "bilibili": 412135222,
+          "default": true
+        },
+        {
+          "id": "korone",
+          "name": "戌神ころね",
+          "twitter": "inugamikorone",
+          "youtube": "UChAnqc_AY5_I3Px5dig3X1Q",
+          "bilibili": 412135619,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "イノナカミュージック",
+      "id": "innk_music",
+      "members": [
+        {
+          "id": "azki",
+          "name": "AZKi",
+          "twitter": "AZKi_VDiVA",
+          "youtube": "UC0TXe_LYZ4scaW2XMyi5_kw",
+          "bilibili": 389056211,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ中国",
+      "id": "hololive_cn",
+      "members": [
+        {
+          "id": "yogiri",
+          "name": "夜霧Yogiri",
+          "twitter": "Yogiri_hololive",
+          "youtube": "",
+          "bilibili": 427061218,
+          "default": true
+        },
+        {
+          "id": "civia",
+          "name": "希薇娅Civia",
+          "twitter": "Civia_Hololive",
+          "youtube": "",
+          "bilibili": 354411419,
+          "default": true
+        },
+        {
+          "id": "echo",
+          "name": "黑桃影",
+          "twitter": "SpadeEcho",
+          "youtube": "",
+          "bilibili": 456368455,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "その他",
+      "id": "others",
+      "members": [
+        {
+          "id": "luna",
+          "name": "輝夜月",
+          "twitter": "_KaguyaLuna",
+          "youtube": "UCQYADFw7xEJ9oZSM5ZbqyBw",
+          "bilibili": 265224956,
+          "default": false
+        },
+        {
+          "id": "nekomiya",
+          "name": "猫宮ひなた",
+          "twitter": "Nekomiya_Hinata",
+          "youtube": "UCevD0wKzJFpfIkvHOiQsfLQ",
+          "bilibili": 291296062,
+          "default": false
+        },
+        {
+          "id": "tamaki",
+          "name": "犬山たまき",
+          "twitter": "norioo_",
+          "youtube": "UC8NZiqKx6fsDT3AVcMiVFyA",
+          "bilibili": 12362451,
+          "default": false
+        },
+        {
+          "id": "pph",
+          "name": "Pinky Pop Hepburn",
+          "twitter": "PinkyPopHepburn",
+          "youtube": "UC1pR2ig6NhndhvicEgclNdA",
+          "bilibili": 393940396,
+          "default": false
+        },
+        {
+          "id": "nana",
+          "name": "カグラナナ",
+          "twitter": "nana_kaguraaa",
+          "youtube": "UCbfv8uuUXt3RSJGEwxny5Rw",
+          "bilibili": 386900246,
+          "default": true
+        },
+        {
+          "id": "ui",
+          "name": "しぐれうい",
+          "twitter": "ui_shig",
+          "youtube": "UCt30jJgChL8qeT9VPadidSw",
+          "bilibili": 2601367,
+          "default": true
+        }
+      ]
+    }
+  ]
+}
