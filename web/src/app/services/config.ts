@@ -2,8 +2,11 @@ import { Injectable } from "@angular/core";
 
 import * as vtubers from "vtubers";
 
-const defaultSelectedVTubers = vtubers.items.reduce(
-  (acc, item) => [...acc, ...item.members.filter(m => m.default)],
+const defaultSelectedVTubers: string[] = vtubers.items.reduce(
+  (acc, item) => [
+    ...acc,
+    ...item.members.filter(m => m.default).map(m => m.id)
+  ],
   []
 );
 
