@@ -36,19 +36,9 @@
               "required": [
                 "name",
                 "id",
-                "default"
-              ],
-              "anyOf": [
-                {
-                  "required": [
-                    "youtube"
-                  ]
-                },
-                {
-                  "required": [
-                    "bilibili"
-                  ]
-                }
+                "default",
+                "youtube",
+                "bilibili"
               ],
               "properties": {
                 "name": {
@@ -61,12 +51,26 @@
                   "type": "string"
                 },
                 "youtube": {
-                  "type": "string",
-                  "minLength": 24,
-                  "maxLength": 24
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 24,
+                      "maxLength": 24
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "bilibili": {
-                  "type": "number"
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "default": {
                   "type": "boolean"

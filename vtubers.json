@@ -81,7 +81,7 @@
           "name": "赤井はあと sub",
           "twitter": "akaihaato",
           "youtube": "UCHj_mh57PVMXhAUDphUQDFA",
-          "bilibili": 339567211,
+          "bilibili": null,
           "default": true
         },
         {
@@ -97,7 +97,7 @@
           "name": "アキロゼ sub",
           "twitter": "akirosenthal",
           "youtube": "UCLbtM3JZfRTg8v2KGag-RMw",
-          "bilibili": 389857131,
+          "bilibili": null,
           "default": true
         },
         {
@@ -127,7 +127,7 @@
           "name": "癒月ちょこ sub",
           "twitter": "yuzukichococh",
           "youtube": "UCp3tgHXw_HI0QMk1K8qh3gQ",
-          "bilibili": 389858754,
+          "bilibili": null,
           "default": true
         },
         {
@@ -219,6 +219,7 @@
           "name": "天音かなた",
           "twitter": "amanekanatach",
           "youtube": "UCZlDXzGoo7d44bwdNObFacg",
+          "bilibili": null,
           "default": true
         },
         {
@@ -226,6 +227,7 @@
           "name": "桐生ココ",
           "twitter": "kiryucoco",
           "youtube": "UCS9uQI-jC3DE0L4IpXyvr6w",
+          "bilibili": null,
           "default": true
         },
         {
@@ -233,6 +235,7 @@
           "name": "角巻わため",
           "twitter": "tsunomakiwatame",
           "youtube": "UCqm3BQLlJfvkTsX_hvm0UmA",
+          "bilibili": null,
           "default": true
         },
         {
@@ -240,6 +243,7 @@
           "name": "常闇トワ",
           "twitter": "tokoyamitowa",
           "youtube": "UC1uv2Oq6kNxgATlCiez59hw",
+          "bilibili": null,
           "default": true
         },
         {
@@ -247,6 +251,7 @@
           "name": "姫森ルーナ",
           "twitter": "himemoriluna",
           "youtube": "UCa9Y57gfeY0Zro_noHRVrnw",
+          "bilibili": null,
           "default": true
         }
       ]
@@ -311,6 +316,7 @@
           "id": "yogiri",
           "name": "夜霧Yogiri",
           "twitter": "Yogiri_hololive",
+          "youtube": null,
           "bilibili": 427061218,
           "default": true
         },
@@ -318,6 +324,7 @@
           "id": "civia",
           "name": "希薇娅Civia",
           "twitter": "Civia_Hololive",
+          "youtube": null,
           "bilibili": 354411419,
           "default": true
         },
@@ -325,6 +332,7 @@
           "id": "echo",
           "name": "黑桃影",
           "twitter": "SpadeEcho",
+          "youtube": null,
           "bilibili": 456368455,
           "default": true
         }
