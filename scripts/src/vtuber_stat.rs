@@ -134,7 +134,10 @@ async fn curr_stats(client: &HttpClient) -> Result<Vec<[i32; 4]>> {
     };
 
     for vtb in VTUBERS.iter() {
-        if let Some(stat) = youtube_channels.iter().find(|c| Some(c.id.as_str()) == vtb.youtube) {
+        if let Some(stat) = youtube_channels
+            .iter()
+            .find(|c| Some(c.id.as_str()) == vtb.youtube)
+        {
             youtube_stats.push((
                 i32::from_str(&stat.statistics.subscriber_count).unwrap(),
                 i32::from_str(&stat.statistics.view_count).unwrap(),
