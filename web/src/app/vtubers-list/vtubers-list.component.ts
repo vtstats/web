@@ -8,6 +8,22 @@ import * as vtubers from "vtubers";
 import { ApiService } from "../services";
 import { VTuber } from "../models";
 
+const bilibiliTabHideRow: string[] = vtubers.items.reduce(
+  (acc, item) => [
+    ...acc,
+    ...item.members.filter(m => m.bilibili == null).map(m => m.id)
+  ],
+  []
+);
+
+const youtubeTabHideRow: string[] = vtubers.items.reduce(
+  (acc, item) => [
+    ...acc,
+    ...item.members.filter(m => m.youtube == null).map(m => m.id)
+  ],
+  []
+);
+
 enum Tab {
   youtube,
   bilibili
@@ -122,7 +138,7 @@ export class VTubersListComponent implements OnInit {
           "youtubeWeeklyViews",
           "youtubeMonthlyViews"
         ];
-        this.hideRows = ["civia", "echo", "yogiri"];
+        this.hideRows = youtubeTabHideRow;
         this.sort.active = "youtubeSubs";
         this.sort.direction = "desc";
         this.sort.sortChange.emit({
@@ -145,16 +161,7 @@ export class VTubersListComponent implements OnInit {
         ];
         this.sort.active = "bilibiliSubs";
         this.sort.direction = "desc";
-        this.hideRows = [
-          "aki_alt",
-          "choco_alt",
-          "haato_alt",
-          "kanata",
-          "coco",
-          "watame",
-          "towa",
-          "himemoriluna"
-        ];
+        this.hideRows = bilibiliTabHideRow;
         this.sort.sortChange.emit({
           active: "bilibiliSubs",
           direction: "desc"
