@@ -2,10 +2,9 @@
 
 $config: mat-typography-config();
 
-.container {
-  overflow-y: scroll;
-  max-width: 960px;
-  margin: 0 auto;
+.drawer-content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
 }
 
 .loading-text {

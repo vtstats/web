@@ -4,6 +4,8 @@ $config: mat-typography-config();
 
 .content {
   padding: 0 4px;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .date-label {
@@ -17,6 +19,8 @@ $config: mat-typography-config();
   font-weight: mat-font-weight($config, caption);
   text-align: right;
   padding: 8px 16px;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .thumbnail {

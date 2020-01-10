@@ -9,10 +9,12 @@ import {
   MatIconModule,
   MatListModule,
   MatProgressSpinnerModule,
+  MatSidenavModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule,
+  MatTooltipModule,
   MatTreeModule
 } from "@angular/material";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -22,38 +24,44 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from "./app.component";
 import { AreaChartComponent } from "./area-chart";
-import { FooterComponent } from "./footer";
+import { BilibiliChannelComponent } from "./bilibili-channel";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
+import { SidenavComponent } from "./sidenav";
 import { StreamsDetailComponent } from "./streams-detail";
 import { StreamsListComponent } from "./streams-list";
 import { VTubersDetailComponent } from "./vtubers-detail";
-import { VTubersListComponent } from "./vtubers-list";
+import { YoutubeChannelComponent } from "./youtube-channel";
 import { ColoredNumberDirective, LazyLoadDirective } from "./directives";
 import { DurationPipe, DistancePipe, ParseISOPipe } from "./pipes";
 
 import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
-  { path: "", redirectTo: "/vtuber", pathMatch: "full" },
+  { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
+  { path: "youtube-channel", component: YoutubeChannelComponent },
+  { path: "bilibili-channel", component: BilibiliChannelComponent },
+  { path: "youtube-stream", component: StreamsListComponent },
   { path: "settings", component: SettingsComponent },
-  { path: "stream", component: StreamsListComponent },
   { path: "stream/:id", component: StreamsDetailComponent },
-  { path: "vtuber", component: VTubersListComponent },
-  { path: "vtuber/:id", component: VTubersDetailComponent }
+  { path: "vtuber/:id", component: VTubersDetailComponent },
+  // redirect old link
+  { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
+  { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     AreaChartComponent,
-    FooterComponent,
+    BilibiliChannelComponent,
     NavbarComponent,
     SettingsComponent,
+    SidenavComponent,
     StreamsDetailComponent,
     StreamsListComponent,
     VTubersDetailComponent,
-    VTubersListComponent,
+    YoutubeChannelComponent,
     ColoredNumberDirective,
     LazyLoadDirective,
     DistancePipe,
@@ -70,10 +78,12 @@ const ROUTES: Routes = [
     MatIconModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatTreeModule,
     NgxChartsModule,
     NgxSpinnerModule,

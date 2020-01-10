@@ -4,30 +4,8 @@ $config: mat-typography-config();
 
 .toolbar {
   padding: 8px 20px;
-}
-
-.tab-button {
-  padding: 8px;
-  text-decoration: none;
-  font-size: mat-font-size($config, subheading-1);
-  font-weight: mat-font-weight($config, button);
-  user-select: none;
-
-  &:after {
-    content: "";
-    display: block;
-    margin: 0 auto;
-    width: 50%;
-    padding-top: 6px;
-  }
-
-  &.active:after {
-    content: "";
-    display: block;
-    margin: 0 auto;
-    width: 50%;
-    padding-top: 5px;
-  }
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .spacer {

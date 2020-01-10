@@ -1,0 +1,40 @@
+@import "../../theme.scss";
+
+$config: mat-typography-config();
+
+.sidenav-container {
+  width: 250px;
+  min-height: 100%;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  .list {
+    flex: 1;
+  }
+
+  .info {
+    font-size: mat-font-size($config, button);
+    font-weight: mat-font-weight($config, button);
+    user-select: none;
+    padding: 16px 16px 8px 16px;
+  }
+
+  .link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .copyright {
+    padding: 8px 16px 16px 16px;
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, caption);
+  }
+}
+
+.dark {
+  .sidenav-container {
+    background-color: rgba(40, 40, 40, 0.98);
+  }
+}

@@ -1,0 +1,15 @@
+@import "~@angular/material/theming";
+
+@mixin sidenav-theme($theme) {
+  $foreground: map-get($theme, foreground);
+
+  .sidenav-container {
+    .copyright {
+      color: mat-color($foreground, hint-text);
+    }
+
+    .link {
+      color: mat-color($foreground, secondary-text);
+    }
+  }
+}

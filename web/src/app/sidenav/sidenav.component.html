@@ -1,0 +1,59 @@
+<div class="sidenav-container">
+  <mat-nav-list class="list">
+    <a
+      id="youtube-channel-button"
+      mat-list-item
+      routerLink="/youtube-channel"
+      (click)="buttonClick.emit()"
+    >
+      <mat-icon mat-list-icon svgIcon="youtube"></mat-icon>
+      <p mat-line>YouTube 頻道</p>
+    </a>
+    <a
+      id="bilibili-channel-button"
+      mat-list-item
+      routerLink="/bilibili-channel"
+      (click)="buttonClick.emit()"
+    >
+      <mat-icon mat-list-icon svgIcon="bilibili"></mat-icon>
+      <p mat-line>Bilibili 頻道</p>
+    </a>
+    <a
+      id="youtube-stream-button"
+      mat-list-item
+      routerLink="/youtube-stream"
+      (click)="buttonClick.emit()"
+    >
+      <mat-icon mat-list-icon svgIcon="stream"></mat-icon>
+      <p mat-line>YouTube 直播</p>
+    </a>
+    <a
+      id="settings-button"
+      mat-list-item
+      routerLink="/settings"
+      (click)="buttonClick.emit()"
+    >
+      <mat-icon mat-list-icon svgIcon="tune"></mat-icon>
+      <p mat-line>設置</p>
+    </a>
+    <!-- TODO: -->
+    <!-- <a mat-list-item routerLink="/stream-summary">
+      <mat-icon mat-list-icon svgIcon="timeline"></mat-icon>
+      <p mat-line>同接概要</p>
+    </a> -->
+  </mat-nav-list>
+  <mat-divider></mat-divider>
+  <div class="info">
+    <a class="link" href="https://angular.io/" target="_blank">
+      Angular: v{{ angularVer }}
+    </a>
+    <a
+      class="link"
+      href="https://github.com/PoiScript/HoloStats/commit/{{ commitHash }}"
+      target="_blank"
+    >
+      Commit: {{ commitHash }}
+    </a>
+  </div>
+  <div class="copyright">&copy; 2019-2020 PoiScript</div>
+</div>

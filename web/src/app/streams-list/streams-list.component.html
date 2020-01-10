@@ -64,13 +64,7 @@
           class="profile"
           src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
         />
-        <span class="name">
-          {{
-            vtuber.name.length > 6
-              ? (vtuber.name | slice: 0:6) + ".."
-              : vtuber.name
-          }}
-        </span>
+        <span class="name">{{ vtuber.name }}</span>
         <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
           {{ stream.start | parseISO | distance: (everyMinute$ | async) }}
         </span>

@@ -1,25 +1,16 @@
 <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
-  <a
-    class="tab-button"
-    [class.active]="youtubeSelected"
-    [routerLink]="['/vtuber']"
-    [queryParams]="{ tab: 'youtube' }"
-  >
-    YouTube
-  </a>
-  <a
-    class="tab-button"
-    [class.active]="bilibiliSelected"
-    [routerLink]="['/vtuber']"
-    [queryParams]="{ tab: 'bilibili' }"
-  >
-    Bilibili
-  </a>
   <span class="spacer"></span>
   <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
 </div>
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="bilibiliSubs"
+    matSortDirection="desc"
+    matSortDisableClear
+  >
     <ng-container matColumnDef="profile">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
@@ -36,134 +27,6 @@
       <th mat-header-cell *matHeaderCellDef>名稱</th>
       <td mat-cell *matCellDef="let row">{{ findVTuber(row.id).name }}</td>
       <td mat-footer-cell *matFooterCellDef>總計</td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeSubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>YouTube 訂閱</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.youtubeStats.subs | number }}
-      </td>
-      <td mat-footer-cell *matFooterCellDef>
-        {{ totalYoutubeSubs | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeDailySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.dailySubs"
-      >
-        {{ row.youtubeStats.dailySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeDailySubs"
-      >
-        {{ totalYoutubeDailySubs | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeWeeklySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.weeklySubs"
-      >
-        {{ row.youtubeStats.weeklySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeWeeklySubs"
-      >
-        {{ totalYoutubeWeeklySubs | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeMonthlySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.monthlySubs"
-      >
-        {{ row.youtubeStats.monthlySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeMonthlySubs"
-      >
-        {{ totalYoutubeMonthlySubs | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>YouTube 觀看</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.youtubeStats.views | number }}
-      </td>
-      <td mat-footer-cell *matFooterCellDef>
-        {{ totalYoutubeViews | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeDailyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.dailyViews"
-      >
-        {{ row.youtubeStats.dailyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeDailyViews"
-      >
-        {{ totalYoutubeDailyViews | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeWeeklyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.weeklyViews"
-      >
-        {{ row.youtubeStats.weeklyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeWeeklyViews"
-      >
-        {{ totalYoutubeWeeklyViews | number }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="youtubeMonthlyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.youtubeStats.monthlyViews"
-      >
-        {{ row.youtubeStats.monthlyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalYoutubeMonthlyViews"
-      >
-        {{ totalYoutubeMonthlyViews | number }}
-      </td>
     </ng-container>
 
     <ng-container matColumnDef="bilibiliSubs">

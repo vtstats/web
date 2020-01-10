@@ -1,9 +1,46 @@
 @import "~@angular/material/theming";
 
-$light-primary: mat-palette($mat-blue-gray);
-$light-accent: mat-palette($mat-blue-gray);
-$light-theme: mat-light-theme($light-primary, $light-accent);
+@import "./app/area-chart/area-chart.theme";
+@import "./app/navbar/navbar.theme";
+@import "./app/streams-detail/streams-detail.theme";
+@import "./app/streams-list/streams-list.theme";
+@import "./app/vtubers-detail/vtubers-detail.theme";
+@import "./app/sidenav/sidenav.theme";
 
-$dark-primary: mat-palette($mat-blue-gray, 300);
-$dark-accent: mat-palette($mat-blue-gray, 300);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent);
+@include mat-core();
+
+@mixin material-theme($theme) {
+  @include mat-button-theme($theme);
+  @include mat-checkbox-theme($theme);
+  @include mat-core-theme($theme);
+  @include mat-divider-theme($theme);
+  @include mat-icon-theme($theme);
+  @include mat-list-theme($theme);
+  @include mat-progress-spinner-theme($theme);
+  @include mat-sidenav-theme($theme);
+
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  @include mat-slide-toggle-theme($theme);
+  @include mat-table-theme($theme);
+
+  .mat-table {
+    background-color: inherit;
+  }
+
+  @include mat-tooltip-theme($theme);
+  @include mat-tree-theme($theme);
+
+  .mat-tree {
+    background-color: inherit;
+  }
+
+  @include area-chart-theme($theme);
+  @include navbar-theme($theme);
+  @include sidenav-theme($theme);
+  @include streams-detail-theme($theme);
+  @include streams-list-theme($theme);
+  @include vtubers-detail-theme($theme);
+}

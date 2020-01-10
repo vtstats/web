@@ -1,34 +1,35 @@
 @import "~@angular/material/theming";
 
 @import "./theme";
-@import "./app/area-chart/area-chart.theme";
-@import "./app/navbar/navbar.theme";
-@import "./app/footer/footer.theme";
-@import "./app/streams-detail/streams-detail.theme";
-@import "./app/streams-list/streams-list.theme";
-@import "./app/vtubers-detail/vtubers-detail.theme";
-@import "./app/vtubers-list/vtubers-list.theme";
+@import "./typography";
 
-@include mat-core();
+$config: mat-typography-config();
 
-@mixin material-theme($theme) {
-  @include mat-checkbox-theme($theme);
-  @include mat-core-theme($theme);
-  @include mat-button-theme($theme);
-  @include mat-icon-theme($theme);
-  @include mat-progress-spinner-theme($theme);
-  @include mat-table-theme($theme);
-  @include mat-tree-theme($theme);
-  @include mat-slide-toggle-theme($theme);
+@include material-typography($config);
 
-  @include area-chart-theme($theme);
-  @include footer-theme($theme);
-  @include navbar-theme($theme);
-  @include streams-detail-theme($theme);
-  @include streams-list-theme($theme);
-  @include vtubers-detail-theme($theme);
-  @include vtubers-list-theme($theme);
-}
+$mat-light-theme-background: map-merge(
+  $mat-light-theme-background,
+  (
+    card: white,
+    background: #f9f9f9
+  )
+);
+
+$mat-dark-theme-background: map-merge(
+  $mat-dark-theme-background,
+  (
+    card: #282828,
+    background: #1f1f1f
+  )
+);
+
+$light-primary: mat-palette($mat-blue-gray);
+$light-accent: mat-palette($mat-blue-gray);
+$light-theme: mat-light-theme($light-primary, $light-accent);
+
+$dark-primary: mat-palette($mat-blue-gray, 300);
+$dark-accent: mat-palette($mat-blue-gray, 300);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent);
 
 @include material-theme($light-theme);
 
@@ -40,6 +41,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   padding: 0;
   margin: 0;
+
   background-color: mat-color(map-get($light-theme, background), card);
   color: mat-color(map-get($light-theme, foreground), text);
 
@@ -53,8 +55,6 @@ html,
 body {
   height: 100%;
 }
-
-$config: mat-typography-config();
 
 .ngx-charts {
   .tick {

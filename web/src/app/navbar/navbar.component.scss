@@ -1,34 +1,23 @@
-@import "../../theme.scss";
-
-$config: mat-typography-config();
-
-.link {
-  text-decoration: none;
-  font-size: mat-font-size($config, button);
-  font-weight: mat-font-weight($config, button);
-  user-select: none;
-}
-
-.separator {
-  font-size: mat-font-size($config, button);
-  font-weight: mat-font-weight($config, button);
-  padding: 0 8px;
-  user-select: none;
-}
-
-.spacer {
-  flex: 1 0;
-}
-
 .navbar {
-  padding: 0 20px;
-  height: 64px;
-  position: sticky;
+  padding: 0 12px;
+  height: 56px;
+  position: fixed;
   top: 0;
+  right: 0;
   left: 0;
-}
+  z-index: 9999;
 
-.logo {
-  height: 40px;
-  width: 40px;
+  .logo {
+    height: 24px;
+    width: 90px;
+    padding-left: 12px;
+
+    path {
+      fill: currentColor;
+    }
+  }
+
+  .spacer {
+    flex: 1 0;
+  }
 }

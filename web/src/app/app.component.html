@@ -7,8 +7,20 @@
   <p class="loading-text">少女祈祷中</p>
 </ngx-spinner>
 
-<div class="container">
-  <hs-navbar></hs-navbar>
-  <router-outlet></router-outlet>
-  <hs-footer></hs-footer>
-</div>
+<hs-navbar (menuClick)="drawer.toggle()"></hs-navbar>
+<mat-sidenav-container>
+  <mat-sidenav
+    #drawer
+    [mode]="sidenavMode"
+    [opened]="sidenavShouldOpen"
+    [fixedInViewport]="true"
+    [fixedTopGap]="56"
+  >
+    <hs-sidenav
+      (buttonClick)="sidenavShouldOpen ? null : drawer.toggle()"
+    ></hs-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content class="drawer-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

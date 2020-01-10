@@ -28,10 +28,6 @@ interface VTuberFlatNode {
   styleUrls: ["./settings.component.scss"]
 })
 export class SettingsComponent {
-  toggleDarkTheme() {
-    this.config.enableDarkMode = !this.config.enableDarkMode;
-  }
-
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     node => node.level,
     node => node.expandable
