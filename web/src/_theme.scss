@@ -4,7 +4,7 @@
 @import "./app/navbar/navbar.theme";
 @import "./app/sidenav/sidenav.theme";
 @import "./app/streams-detail/streams-detail.theme";
-@import "./app/streams-list/streams-list.theme";
+@import "./app/youtube-stream/youtube-stream.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
 
 @include mat-core();
@@ -41,6 +41,6 @@
   @include navbar-theme($theme);
   @include sidenav-theme($theme);
   @include streams-detail-theme($theme);
-  @include streams-list-theme($theme);
   @include vtubers-detail-theme($theme);
+  @include youtube-stream-theme($theme);
 }

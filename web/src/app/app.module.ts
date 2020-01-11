@@ -26,7 +26,7 @@ import { BilibiliChannelComponent } from "./bilibili-channel";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
-import { StreamsListComponent } from "./streams-list";
+import { YoutubeStreamComponent } from "./youtube-stream";
 import { YoutubeChannelComponent } from "./youtube-channel";
 import { DirectivesModule } from "./directives";
 import { PipesModule } from "./pipes";
@@ -37,7 +37,7 @@ const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "youtube-channel", component: YoutubeChannelComponent },
   { path: "bilibili-channel", component: BilibiliChannelComponent },
-  { path: "youtube-stream", component: StreamsListComponent },
+  { path: "youtube-stream", component: YoutubeStreamComponent },
   { path: "settings", component: SettingsComponent },
   {
     path: "stream",
@@ -65,7 +65,7 @@ const ROUTES: Routes = [
     NavbarComponent,
     SettingsComponent,
     SidenavComponent,
-    StreamsListComponent,
+    YoutubeStreamComponent,
     YoutubeChannelComponent
   ],
   imports: [

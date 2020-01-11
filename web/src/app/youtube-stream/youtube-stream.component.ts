@@ -10,11 +10,11 @@ import { Stream } from "../models";
 import { ApiService } from "../services";
 
 @Component({
-  selector: "hs-streams-list",
-  templateUrl: "./streams-list.component.html",
-  styleUrls: ["./streams-list.component.scss"]
+  selector: "hs-youtube-stream",
+  templateUrl: "./youtube-stream.component.html",
+  styleUrls: ["./youtube-stream.component.scss"]
 })
-export class StreamsListComponent implements OnInit {
+export class YoutubeStreamComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private spinnerService: NgxSpinnerService

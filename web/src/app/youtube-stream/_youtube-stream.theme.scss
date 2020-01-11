@@ -1,6 +1,6 @@
 @import "~@angular/material/theming";
 
-@mixin streams-list-theme($theme) {
+@mixin youtube-stream-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
@@ -8,7 +8,7 @@
     background: linear-gradient(
       to right,
       transparent,
-      mat-color($background, card) 100%
+      mat-color($background, background) 100%
     );
   }
 
