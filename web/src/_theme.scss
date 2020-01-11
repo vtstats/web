@@ -1,11 +1,11 @@
 @import "~@angular/material/theming";
 
-@import "./app/area-chart/area-chart.theme";
+@import "./app/charts/area-chart.theme";
 @import "./app/navbar/navbar.theme";
+@import "./app/sidenav/sidenav.theme";
 @import "./app/streams-detail/streams-detail.theme";
 @import "./app/streams-list/streams-list.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
-@import "./app/sidenav/sidenav.theme";
 
 @include mat-core();
 
