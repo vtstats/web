@@ -2,14 +2,18 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 
-import { StreamsDetailComponent } from "./streams-detail.component";
 import { ChartsModule } from "../charts";
 import { PipesModule } from "../pipes";
+import { StreamsDetailComponent } from "./streams-detail.component";
+import { StreamsDetailResolver } from "./streams-detail.resolver";
 
 const ROUTES: Routes = [
   {
     path: ":id",
-    component: StreamsDetailComponent
+    component: StreamsDetailComponent,
+    resolve: {
+      data: StreamsDetailResolver
+    }
   }
 ];
 
@@ -20,6 +24,7 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     ChartsModule,
     PipesModule
-  ]
+  ],
+  providers: [StreamsDetailResolver]
 })
 export class StreamsDetailModule {}

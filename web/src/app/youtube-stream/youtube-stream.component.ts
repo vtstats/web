@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
-import { NgxSpinnerService } from "ngx-spinner";
 
 import * as vtubers from "vtubers";
 
@@ -15,10 +15,7 @@ import { ApiService } from "../services";
   styleUrls: ["./youtube-stream.component.scss"]
 })
 export class YoutubeStreamComponent implements OnInit {
-  constructor(
-    private apiService: ApiService,
-    private spinnerService: NgxSpinnerService
-  ) {}
+  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
 
   onAir: Stream[] = [];
   ended: { day: Date; streams: Stream[] }[] = [];
@@ -48,12 +45,8 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.spinnerService.show();
-    this.apiService.getStreams().subscribe(data => {
-      this.addStreams(data.streams);
-      this.updatedAt = data.updatedAt;
-      this.spinnerService.hide();
-    });
+    this.addStreams(this.route.snapshot.data.data.streams);
+    this.updatedAt = this.route.snapshot.data.data.updatedAt;
   }
 
   findVTuber(id: string) {

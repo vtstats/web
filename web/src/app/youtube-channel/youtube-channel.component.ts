@@ -1,10 +1,9 @@
 import { OnInit, Component, ViewChild } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
-import { NgxSpinnerService } from "ngx-spinner";
+import { ActivatedRoute } from "@angular/router";
 
 import * as vtubers from "vtubers";
 
-import { ApiService } from "../services";
 import { VTuber } from "../models";
 
 @Component({
@@ -13,10 +12,7 @@ import { VTuber } from "../models";
   styleUrls: ["./youtube-channel.component.scss"]
 })
 export class YoutubeChannelComponent implements OnInit {
-  constructor(
-    private apiService: ApiService,
-    private spinnerService: NgxSpinnerService
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -49,12 +45,8 @@ export class YoutubeChannelComponent implements OnInit {
       }
     };
 
-    this.spinnerService.show();
-    this.apiService.getVTubers().subscribe(data => {
-      this.spinnerService.hide();
-      this.dataSource.data = data.vtubers;
-      this.updatedAt = data.updatedAt;
-    });
+    this.dataSource.data = this.route.snapshot.data.data.vtubers;
+    this.updatedAt = this.route.snapshot.data.data.updatedAt;
   }
 
   readonly hideRows: string[] = vtubers.items.reduce(

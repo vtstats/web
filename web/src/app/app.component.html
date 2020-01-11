@@ -1,12 +1,3 @@
-<ngx-spinner
-  bdOpacity="0.9"
-  size="medium"
-  type="ball-scale-multiple"
-  [fullScreen]="true"
->
-  <p class="loading-text">少女祈祷中</p>
-</ngx-spinner>
-
 <hs-navbar (menuClick)="drawer.toggle()"></hs-navbar>
 <mat-sidenav-container>
   <mat-sidenav
@@ -21,6 +12,12 @@
     ></hs-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="drawer-content">
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="!(isRouting$ | async); else loading"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <mat-spinner [diameter]="64"></mat-spinner>
+  </div>
+</ng-template>

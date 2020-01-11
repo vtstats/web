@@ -7,8 +7,13 @@ $config: mat-typography-config();
   min-height: calc(100vh - 64px);
 }
 
-.loading-text {
-  font-size: mat-font-size($config, subheading-1);
-  font-weight: mat-font-weight($config, body-2);
-  color: rgba(255, 255, 255, 0.9);
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
 }

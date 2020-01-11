@@ -1,14 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { format, fromUnixTime } from "date-fns";
-import { switchMap, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { timer } from "rxjs";
-import { NgxSpinnerService } from "ngx-spinner";
 
 import * as vtubers from "vtubers";
 
 import { Stream } from "../models";
-import { ApiService } from "../services";
 
 @Component({
   selector: "hs-streams-detail",
@@ -16,11 +14,7 @@ import { ApiService } from "../services";
   styleUrls: ["./streams-detail.component.scss"]
 })
 export class StreamsDetailComponent implements OnInit {
-  constructor(
-    private service: ApiService,
-    private route: ActivatedRoute,
-    private spinnerService: NgxSpinnerService
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   stream: Stream;
   stats = [];
@@ -32,24 +26,20 @@ export class StreamsDetailComponent implements OnInit {
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
-    this.spinnerService.show();
-    this.route.paramMap
-      .pipe(switchMap(params => this.service.getStreamStat(params.get("id"))))
-      .subscribe(res => {
-        const series = Object.entries(res.stats).map(([name, value]) => ({
-          value,
-          name: parseInt(name)
-        }));
-        this.xAxisTicks = this.createTicks(
-          series[0].name,
-          series[series.length - 1].name
-        );
-        this.xScaleMin = series[0].name;
-        this.xScaleMax = series[series.length - 1].name;
-        this.stream = res;
-        this.stats = [{ name: "viewerStats", series }];
-        this.spinnerService.hide();
-      });
+    const series = Object.entries(this.route.snapshot.data.data.stats).map(
+      ([name, value]) => ({
+        value,
+        name: parseInt(name)
+      })
+    );
+    this.xAxisTicks = this.createTicks(
+      series[0].name,
+      series[series.length - 1].name
+    );
+    this.xScaleMin = series[0].name;
+    this.xScaleMax = series[series.length - 1].name;
+    this.stream = this.route.snapshot.data.data;
+    this.stats = [{ name: "viewerStats", series }];
   }
 
   dateTickFormatting(val: number): string {

@@ -13,31 +13,56 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
-  MatToolbarModule,
   MatTooltipModule,
   MatTreeModule
 } from "@angular/material";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { RouterModule, Routes } from "@angular/router";
-import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppComponent } from "./app.component";
-import { BilibiliChannelComponent } from "./bilibili-channel";
+import {
+  BilibiliChannelComponent,
+  BilibiliChannelResolver
+} from "./bilibili-channel";
 import { NavbarComponent } from "./navbar";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
-import { YoutubeStreamComponent } from "./youtube-stream";
-import { YoutubeChannelComponent } from "./youtube-channel";
+import {
+  YoutubeStreamComponent,
+  YoutubeStreamResolver
+} from "./youtube-stream";
+import {
+  YoutubeChannelComponent,
+  YoutubeChannelResolver
+} from "./youtube-channel";
 import { DirectivesModule } from "./directives";
 import { PipesModule } from "./pipes";
 
-import { environment } from "../environments/environment";
+import { environment } from "src/environments/environment";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
-  { path: "youtube-channel", component: YoutubeChannelComponent },
-  { path: "bilibili-channel", component: BilibiliChannelComponent },
-  { path: "youtube-stream", component: YoutubeStreamComponent },
+  {
+    path: "youtube-channel",
+    component: YoutubeChannelComponent,
+    resolve: {
+      data: YoutubeChannelResolver
+    }
+  },
+  {
+    path: "bilibili-channel",
+    component: BilibiliChannelComponent,
+    resolve: {
+      data: BilibiliChannelResolver
+    }
+  },
+  {
+    path: "youtube-stream",
+    component: YoutubeStreamComponent,
+    resolve: {
+      data: YoutubeStreamResolver
+    }
+  },
   { path: "settings", component: SettingsComponent },
   {
     path: "stream",
@@ -83,15 +108,18 @@ const ROUTES: Routes = [
     MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
-    MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    NgxSpinnerModule,
     PipesModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
     })
+  ],
+  providers: [
+    BilibiliChannelResolver,
+    YoutubeChannelResolver,
+    YoutubeStreamResolver
   ],
   bootstrap: [AppComponent]
 })

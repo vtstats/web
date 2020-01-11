@@ -2,14 +2,18 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 
-import { VTubersDetailComponent } from "./vtubers-detail.component";
 import { ChartsModule } from "../charts";
 import { PipesModule } from "../pipes";
+import { VTubersDetailComponent } from "./vtubers-detail.component";
+import { VtubersDetailResolver } from "./vtubers-detail.resolver";
 
 const ROUTES: Routes = [
   {
     path: ":id",
-    component: VTubersDetailComponent
+    component: VTubersDetailComponent,
+    resolve: {
+      data: VtubersDetailResolver
+    }
   }
 ];
 
@@ -20,6 +24,7 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     ChartsModule,
     PipesModule
-  ]
+  ],
+  providers: [VtubersDetailResolver]
 })
 export class VtubersDetailModule {}
