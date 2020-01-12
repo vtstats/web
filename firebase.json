@@ -20,6 +20,18 @@
         "function": "api"
       }
     ],
+    "redirects": [
+      {
+        "source": "/vtuber",
+        "destination": "/youtube-channel",
+        "type": 301
+      },
+      {
+        "source": "/stream",
+        "destination": "/youtube-stream",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "**/*.@(gif|jpg|jpeg|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2)",
