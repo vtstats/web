@@ -1,0 +1,10 @@
+@import "~@angular/material/theming";
+
+@mixin settings-typography($config) {
+  .settings {
+    .title {
+      font-size: mat-font-size($config, subheading-2);
+      font-weight: mat-font-weight($config, subheading-2);
+    }
+  }
+}

@@ -1,7 +1,3 @@
-@import "../../theme.scss";
-
-$config: mat-typography-config();
-
 .content {
   padding: 32px;
 }
@@ -11,8 +7,6 @@ $config: mat-typography-config();
 
   .name {
     padding: 16px 0;
-    font-size: mat-font-size($config, title);
-    font-weight: mat-font-weight($config, title);
   }
 
   .profile {
@@ -25,16 +19,6 @@ $config: mat-typography-config();
 .number {
   height: 192px;
   text-align: center;
-
-  .value {
-    font-size: mat-font-size($config, headline);
-    font-weight: mat-font-weight($config, display-1);
-  }
-
-  .caption {
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-2);
-  }
 }
 
 .chart {
@@ -42,8 +26,6 @@ $config: mat-typography-config();
 
   .caption {
     text-align: center;
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-2);
     padding-bottom: 24px;
   }
 }

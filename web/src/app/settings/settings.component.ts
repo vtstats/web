@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import {
   MatTreeFlatDataSource,
@@ -25,7 +25,8 @@ interface VTuberFlatNode {
 @Component({
   selector: "hs-settings",
   templateUrl: "./settings.component.html",
-  styleUrls: ["./settings.component.scss"]
+  styleUrls: ["./settings.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent {
   treeControl = new FlatTreeControl<VTuberFlatNode>(

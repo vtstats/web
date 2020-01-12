@@ -1,15 +1,21 @@
 @import "~@angular/material/theming";
 
-@import "./app/charts/area-chart.theme";
+@import "./app/bilibili-channel/bilibili-channel.theme";
+@import "./app/charts/charts.theme";
 @import "./app/header/header.theme";
+@import "./app/settings/settings.theme";
 @import "./app/sidenav/sidenav.theme";
 @import "./app/streams-detail/streams-detail.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
+@import "./app/youtube-channel/youtube-channel.theme";
 @import "./app/youtube-stream/youtube-stream.theme";
 
-@include mat-core();
+@include mat-ripple();
+@include cdk-a11y();
+@include cdk-overlay();
+@include cdk-text-field();
 
-@mixin material-theme($theme) {
+@mixin holostats-theme($theme) {
   @include mat-button-theme($theme);
   @include mat-checkbox-theme($theme);
   @include mat-core-theme($theme);
@@ -36,10 +42,32 @@
     background-color: inherit;
   }
 
-  @include area-chart-theme($theme);
+  @include charts-theme($theme);
   @include header-theme($theme);
   @include sidenav-theme($theme);
   @include streams-detail-theme($theme);
   @include vtubers-detail-theme($theme);
   @include youtube-stream-theme($theme);
+}
+
+@mixin holostats-typography($config) {
+  @include mat-button-typography($config);
+  @include mat-checkbox-typography($config);
+  @include mat-icon-typography($config);
+  @include mat-list-typography($config);
+  @include mat-progress-spinner-typography($config);
+  @include mat-sidenav-typography($config);
+  @include mat-slide-toggle-typography($config);
+  @include mat-table-typography($config);
+  @include mat-tooltip-typography($config);
+  @include mat-tree-typography($config);
+
+  @include bilibili-channel-typography($config);
+  @include charts-typography($config);
+  @include settings-typography($config);
+  @include sidenav-typography($config);
+  @include streams-detail-typography($config);
+  @include vtubers-detail-typography($config);
+  @include youtube-channel-typography($config);
+  @include youtube-stream-typography($config);
 }

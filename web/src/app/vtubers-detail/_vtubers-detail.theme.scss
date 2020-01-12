@@ -4,23 +4,37 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  .ngx-charts {
-    .tick {
-      fill: mat-color($foreground, secondary-text);
+  .number {
+    .caption {
+      color: mat-color($foreground, secondary-text);
     }
+  }
+}
 
-    .gridline-path {
-      stroke: mat-color($foreground, divider);
-    }
-
-    .x.axis {
-      fill: mat-color($foreground, text);
+@mixin vtubers-detail-typography($config) {
+  .info {
+    .name {
+      font-size: mat-font-size($config, title);
+      font-weight: mat-font-weight($config, title);
     }
   }
 
   .number {
+    .value {
+      font-size: mat-font-size($config, headline);
+      font-weight: mat-font-weight($config, display-1);
+    }
+
     .caption {
-      color: mat-color($foreground, secondary-text);
+      font-size: mat-font-size($config, caption);
+      font-weight: mat-font-weight($config, body-2);
+    }
+  }
+
+  .chart {
+    .caption {
+      font-size: mat-font-size($config, caption);
+      font-weight: mat-font-weight($config, body-2);
     }
   }
 }

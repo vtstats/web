@@ -1,11 +1,10 @@
 @import "~@angular/material/theming";
 
 @import "./theme";
-@import "./typography";
 
 $config: mat-typography-config();
 
-@include material-typography($config);
+@include holostats-typography($config);
 
 $mat-light-theme-background: map-merge(
   $mat-light-theme-background,
@@ -31,10 +30,10 @@ $dark-primary: mat-palette($mat-blue-gray, 300);
 $dark-accent: mat-palette($mat-blue-gray, 300);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent);
 
-@include material-theme($light-theme);
+@include holostats-theme($light-theme);
 
 .dark {
-  @include material-theme($dark-theme);
+  @include holostats-theme($dark-theme);
 }
 
 body {
@@ -54,18 +53,6 @@ body {
 html,
 body {
   height: 100%;
-}
-
-.ngx-charts {
-  .tick {
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-2);
-  }
-
-  .x.axis {
-    font-size: mat-font-size($config, body-1);
-    font-weight: mat-font-weight($config, body-2);
-  }
 }
 
 .mat-sort-header-container {

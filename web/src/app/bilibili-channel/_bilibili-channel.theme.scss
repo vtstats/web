@@ -1,0 +1,8 @@
+@import "~@angular/material/theming";
+
+@mixin bilibili-channel-typography($config) {
+  .updated-at {
+    font-size: mat-font-size($config, caption);
+    font-weight: mat-font-weight($config, caption);
+  }
+}

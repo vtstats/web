@@ -1,7 +1,3 @@
-@import "../../theme.scss";
-
-$config: mat-typography-config();
-
 .toolbar {
   padding: 8px 20px;
   max-width: 960px;
@@ -10,11 +6,6 @@ $config: mat-typography-config();
 
 .spacer {
   flex: 1 0;
-}
-
-.updated-at {
-  font-size: mat-font-size($config, caption);
-  font-weight: mat-font-weight($config, caption);
 }
 
 .table-container {
