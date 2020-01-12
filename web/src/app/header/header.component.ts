@@ -7,11 +7,11 @@ import {
 } from "@angular/core";
 
 @Component({
-  selector: "hs-navbar",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.scss"],
+  selector: "hs-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class NavbarComponent {
+export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
 }

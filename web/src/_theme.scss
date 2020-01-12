@@ -1,11 +1,11 @@
 @import "~@angular/material/theming";
 
 @import "./app/charts/area-chart.theme";
-@import "./app/navbar/navbar.theme";
+@import "./app/header/header.theme";
 @import "./app/sidenav/sidenav.theme";
 @import "./app/streams-detail/streams-detail.theme";
-@import "./app/youtube-stream/youtube-stream.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
+@import "./app/youtube-stream/youtube-stream.theme";
 
 @include mat-core();
 
@@ -38,7 +38,7 @@
   }
 
   @include area-chart-theme($theme);
-  @include navbar-theme($theme);
+  @include header-theme($theme);
   @include sidenav-theme($theme);
   @include streams-detail-theme($theme);
   @include vtubers-detail-theme($theme);

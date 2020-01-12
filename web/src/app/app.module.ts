@@ -24,7 +24,7 @@ import {
   BilibiliChannelComponent,
   BilibiliChannelResolver
 } from "./bilibili-channel";
-import { NavbarComponent } from "./navbar";
+import { HeaderComponent } from "./header";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
 import {
@@ -87,11 +87,11 @@ const ROUTES: Routes = [
   declarations: [
     AppComponent,
     BilibiliChannelComponent,
-    NavbarComponent,
+    HeaderComponent,
     SettingsComponent,
     SidenavComponent,
-    YoutubeStreamComponent,
-    YoutubeChannelComponent
+    YoutubeChannelComponent,
+    YoutubeStreamComponent
   ],
   imports: [
     BrowserAnimationsModule,
