@@ -4,37 +4,41 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  .number {
-    .caption {
-      color: mat-color($foreground, secondary-text);
+  .vtubers-detail {
+    .number {
+      .caption {
+        color: mat-color($foreground, secondary-text);
+      }
     }
   }
 }
 
 @mixin vtubers-detail-typography($config) {
-  .info {
-    .name {
-      font-size: mat-font-size($config, title);
-      font-weight: mat-font-weight($config, title);
-    }
-  }
-
-  .number {
-    .value {
-      font-size: mat-font-size($config, headline);
-      font-weight: mat-font-weight($config, display-1);
+  .vtubers-detail {
+    .info {
+      .name {
+        font-size: mat-font-size($config, title);
+        font-weight: mat-font-weight($config, title);
+      }
     }
 
-    .caption {
-      font-size: mat-font-size($config, caption);
-      font-weight: mat-font-weight($config, body-2);
-    }
-  }
+    .number {
+      .value {
+        font-size: mat-font-size($config, headline);
+        font-weight: mat-font-weight($config, display-1);
+      }
 
-  .chart {
-    .caption {
-      font-size: mat-font-size($config, caption);
-      font-weight: mat-font-weight($config, body-2);
+      .caption {
+        font-size: mat-font-size($config, caption);
+        font-weight: mat-font-weight($config, body-2);
+      }
+    }
+
+    .chart {
+      .caption {
+        font-size: mat-font-size($config, caption);
+        font-weight: mat-font-weight($config, body-2);
+      }
     }
   }
 }

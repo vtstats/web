@@ -1,4 +1,4 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
+import { OnInit, Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { MatSort, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 
@@ -9,7 +9,8 @@ import { VTuber } from "../models";
 @Component({
   selector: "hs-youtube-channel",
   templateUrl: "./youtube-channel.component.html",
-  styleUrls: ["./youtube-channel.component.scss"]
+  styleUrls: ["./youtube-channel.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class YoutubeChannelComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}

@@ -3,41 +3,45 @@
 @mixin streams-detail-theme($theme) {
   $foreground: map-get($theme, foreground);
 
-  .title,
-  .name {
-    color: mat-color($foreground, text);
+  .streams-detail {
+    .title,
+    .name {
+      color: mat-color($foreground, text);
+    }
   }
 }
 
 @mixin streams-detail-typography($config) {
-  .vtuber-row {
-    .name {
-      font-size: mat-font-size($config, body-2);
-      font-weight: mat-font-weight($config, body-2);
-    }
-  }
-
-  .title {
-    font-size: mat-font-size($config, title);
-    font-weight: mat-font-weight($config, title);
-  }
-
-  .number {
-    .value {
-      font-size: mat-font-size($config, headline);
-      font-weight: mat-font-weight($config, display-1);
+  .streams-detail {
+    .vtuber-row {
+      .name {
+        font-size: mat-font-size($config, body-2);
+        font-weight: mat-font-weight($config, body-2);
+      }
     }
 
-    .caption {
-      font-size: mat-font-size($config, caption);
-      font-weight: mat-font-weight($config, body-2);
+    .title {
+      font-size: mat-font-size($config, title);
+      font-weight: mat-font-weight($config, title);
     }
-  }
 
-  .chart {
-    .caption {
-      font-size: mat-font-size($config, caption);
-      font-weight: mat-font-weight($config, body-2);
+    .number {
+      .value {
+        font-size: mat-font-size($config, headline);
+        font-weight: mat-font-weight($config, display-1);
+      }
+
+      .caption {
+        font-size: mat-font-size($config, caption);
+        font-weight: mat-font-weight($config, body-2);
+      }
+    }
+
+    .chart {
+      .caption {
+        font-size: mat-font-size($config, caption);
+        font-weight: mat-font-weight($config, body-2);
+      }
     }
   }
 }

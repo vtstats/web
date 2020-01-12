@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ViewEncapsulation
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
@@ -12,7 +18,8 @@ import { ApiService } from "../services";
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
-  styleUrls: ["./youtube-stream.component.scss"]
+  styleUrls: ["./youtube-stream.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class YoutubeStreamComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {}

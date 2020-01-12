@@ -1,168 +1,170 @@
-<div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
-  <span class="spacer"></span>
-  <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
-</div>
-<div class="table-container">
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    matSortActive="bilibiliSubs"
-    matSortDirection="desc"
-    matSortDisableClear
-  >
-    <ng-container matColumnDef="profile">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let row">
-        <img
-          class="profile"
-          src="/assets/thumbnail/{{ row.id }}.jpg"
-          [routerLink]="['/vtuber', row.id]"
-        />
-      </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
+<div class="bilibili-channel">
+  <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+    <span class="spacer"></span>
+    <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
+  </div>
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="bilibiliSubs"
+      matSortDirection="desc"
+      matSortDisableClear
+    >
+      <ng-container matColumnDef="profile">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <img
+            class="profile"
+            src="/assets/thumbnail/{{ row.id }}.jpg"
+            [routerLink]="['/vtuber', row.id]"
+          />
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>名稱</th>
-      <td mat-cell *matCellDef="let row">{{ findVTuber(row.id).name }}</td>
-      <td mat-footer-cell *matFooterCellDef>總計</td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>名稱</th>
+        <td mat-cell *matCellDef="let row">{{ findVTuber(row.id).name }}</td>
+        <td mat-footer-cell *matFooterCellDef>總計</td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliSubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 訂閱</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.bilibiliStats.subs | number }}
-      </td>
-      <td mat-footer-cell *matFooterCellDef>
-        {{ totalBilibiliSubs | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliSubs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 訂閱</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.bilibiliStats.subs | number }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ totalBilibiliSubs | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliDailySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.dailySubs"
-      >
-        {{ row.bilibiliStats.dailySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliDailySubs"
-      >
-        {{ totalBilibiliDailySubs | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliDailySubs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.dailySubs"
+        >
+          {{ row.bilibiliStats.dailySubs | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliDailySubs"
+        >
+          {{ totalBilibiliDailySubs | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliWeeklySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.weeklySubs"
-      >
-        {{ row.bilibiliStats.weeklySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliWeeklySubs"
-      >
-        {{ totalBilibiliWeeklySubs | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliWeeklySubs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.weeklySubs"
+        >
+          {{ row.bilibiliStats.weeklySubs | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliWeeklySubs"
+        >
+          {{ totalBilibiliWeeklySubs | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliMonthlySubs">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.monthlySubs"
-      >
-        {{ row.bilibiliStats.monthlySubs | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliMonthlySubs"
-      >
-        {{ totalBilibiliMonthlySubs | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliMonthlySubs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.monthlySubs"
+        >
+          {{ row.bilibiliStats.monthlySubs | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliMonthlySubs"
+        >
+          {{ totalBilibiliMonthlySubs | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 觀看</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.bilibiliStats.views | number }}
-      </td>
-      <td mat-footer-cell *matFooterCellDef>
-        {{ totalBilibiliViews | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliViews">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 觀看</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.bilibiliStats.views | number }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ totalBilibiliViews | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliDailyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.dailyViews"
-      >
-        {{ row.bilibiliStats.dailyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliDailyViews"
-      >
-        {{ totalBilibiliDailyViews | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliDailyViews">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.dailyViews"
+        >
+          {{ row.bilibiliStats.dailyViews | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliDailyViews"
+        >
+          {{ totalBilibiliDailyViews | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliWeeklyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.weeklyViews"
-      >
-        {{ row.bilibiliStats.weeklyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliWeeklyViews"
-      >
-        {{ totalBilibiliWeeklyViews | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliWeeklyViews">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.weeklyViews"
+        >
+          {{ row.bilibiliStats.weeklyViews | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliWeeklyViews"
+        >
+          {{ totalBilibiliWeeklyViews | number }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="bilibiliMonthlyViews">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-      <td
-        mat-cell
-        *matCellDef="let row"
-        [coloredNumber]="row.bilibiliStats.monthlyViews"
-      >
-        {{ row.bilibiliStats.monthlyViews | number }}
-      </td>
-      <td
-        mat-footer-cell
-        *matFooterCellDef
-        [coloredNumber]="totalBilibiliMonthlyViews"
-      >
-        {{ totalBilibiliMonthlyViews | number }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="bilibiliMonthlyViews">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.bilibiliStats.monthlyViews"
+        >
+          {{ row.bilibiliStats.monthlyViews | number }}
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="totalBilibiliMonthlyViews"
+        >
+          {{ totalBilibiliMonthlyViews | number }}
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      [hidden]="hideRows.includes(row.id)"
-    ></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [hidden]="hideRows.includes(row.id)"
+      ></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+  </div>
 </div>

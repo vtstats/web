@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
 
@@ -11,7 +11,8 @@ const today = getUnixTime(startOfToday());
 @Component({
   selector: "hs-vtubers-detail",
   templateUrl: "./vtubers-detail.component.html",
-  styleUrls: ["./vtubers-detail.component.scss"]
+  styleUrls: ["./vtubers-detail.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}

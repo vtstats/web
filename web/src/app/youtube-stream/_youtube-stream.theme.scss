@@ -4,46 +4,50 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  .title:after {
-    background: linear-gradient(
-      to right,
-      transparent,
-      mat-color($background, background) 100%
-    );
-  }
+  .youtube-stream {
+    .title:after {
+      background: linear-gradient(
+        to right,
+        transparent,
+        mat-color($background, background) 100%
+      );
+    }
 
-  .viewers,
-  .updated-at {
-    color: mat-color($foreground, secondary-text);
+    .viewers,
+    .updated-at {
+      color: mat-color($foreground, secondary-text);
+    }
   }
 }
 
 @mixin youtube-stream-typography($config) {
-  .date-label {
-    font-size: mat-font-size($config, title);
-    font-weight: mat-font-weight($config, caption);
-  }
-
-  .updated-at {
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, caption);
-  }
-
-  .thumbnail {
-    .duration {
-      font-size: mat-font-size($config, caption);
-      font-weight: mat-font-weight($config, body-2);
+  .youtube-stream {
+    .date-label {
+      font-size: mat-font-size($config, title);
+      font-weight: mat-font-weight($config, caption);
     }
-  }
 
-  .title {
-    font-size: mat-font-size($config, body-1);
-    font-weight: mat-font-weight($config, body-1);
-  }
+    .updated-at {
+      font-size: mat-font-size($config, caption);
+      font-weight: mat-font-weight($config, caption);
+    }
 
-  .time,
-  .viewers {
-    font-size: mat-font-size($config, caption);
-    font-weight: mat-font-weight($config, body-1);
+    .thumbnail {
+      .duration {
+        font-size: mat-font-size($config, caption);
+        font-weight: mat-font-weight($config, body-2);
+      }
+    }
+
+    .title {
+      font-size: mat-font-size($config, body-1);
+      font-weight: mat-font-weight($config, body-1);
+    }
+
+    .time,
+    .viewers {
+      font-size: mat-font-size($config, caption);
+      font-weight: mat-font-weight($config, body-1);
+    }
   }
 }

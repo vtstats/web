@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { format, fromUnixTime } from "date-fns";
 import { map } from "rxjs/operators";
@@ -11,7 +11,8 @@ import { Stream } from "../models";
 @Component({
   selector: "hs-streams-detail",
   templateUrl: "./streams-detail.component.html",
-  styleUrls: ["./streams-detail.component.scss"]
+  styleUrls: ["./streams-detail.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class StreamsDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}

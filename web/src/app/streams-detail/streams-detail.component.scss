@@ -1,46 +1,48 @@
-.content {
-  padding: 32px;
-}
-
-.vtuber-row {
-  margin: 0 auto;
-  text-decoration: none;
-
-  .profile {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+.streams-detail {
+  .content {
+    padding: 32px;
   }
 
-  .name {
-    padding-left: 8px;
+  .vtuber-row {
+    margin: 0 auto;
+    text-decoration: none;
+
+    .profile {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .name {
+      padding-left: 8px;
+    }
   }
-}
 
-.title {
-  padding-bottom: 12px;
-  text-decoration: none;
-}
-
-.info {
-  text-align: center;
-
-  .cover {
-    width: 100%;
+  .title {
+    padding-bottom: 12px;
+    text-decoration: none;
   }
-}
 
-.number {
-  height: 192px;
-  text-align: center;
-}
-
-.chart {
-  height: 250px;
-  display: grid;
-
-  .caption {
+  .info {
     text-align: center;
-    padding-bottom: 24px;
+
+    .cover {
+      width: 100%;
+    }
+  }
+
+  .number {
+    height: 192px;
+    text-align: center;
+  }
+
+  .chart {
+    height: 250px;
+    display: grid;
+
+    .caption {
+      text-align: center;
+      padding-bottom: 24px;
+    }
   }
 }

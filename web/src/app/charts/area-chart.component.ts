@@ -1,9 +1,10 @@
-import { Input, Component } from "@angular/core";
+import { Input, Component, ViewEncapsulation } from "@angular/core";
 
 @Component({
   selector: "hs-area-chart",
   templateUrl: "./area-chart.component.html",
-  styleUrls: ["./area-chart.component.scss"]
+  styleUrls: ["./area-chart.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class AreaChartComponent {
   @Input() xAxisTicks: number[] = [];

@@ -1,4 +1,4 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
+import { OnInit, Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatSort, MatTableDataSource } from "@angular/material";
 
@@ -9,7 +9,8 @@ import { VTuber } from "../models";
 @Component({
   selector: "hs-bilibili-channel",
   templateUrl: "./bilibili-channel.component.html",
-  styleUrls: ["./bilibili-channel.component.scss"]
+  styleUrls: ["./bilibili-channel.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class BilibiliChannelComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
