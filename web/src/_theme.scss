@@ -23,7 +23,6 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 
-  @include mat-slide-toggle-theme($theme);
   @include mat-table-theme($theme);
 
   .mat-table {

@@ -2,9 +2,10 @@ import {
   Component,
   ViewEncapsulation,
   EventEmitter,
-  Output,
-  Input
+  Output
 } from "@angular/core";
+
+import { Config } from "../services";
 
 @Component({
   selector: "hs-header",
@@ -14,4 +15,6 @@ import {
 })
 export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
+
+  constructor(public config: Config) {}
 }

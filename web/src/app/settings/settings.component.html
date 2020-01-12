@@ -1,12 +1,3 @@
-<h4 class="settings-row mat-subheading-2" fxLayout="row">
-  切換夜間模式
-  <span class="spacer"></span>
-  <mat-slide-toggle
-    [checked]="config.enableDarkMode"
-    (toggleChange)="config.toggleDarkMode()"
-  ></mat-slide-toggle>
-</h4>
-
 <h4 class="settings-row mat-subheading-2">
   已選取的 VTuber <b>({{ config.selectedVTubers.size }}/{{ count }})</b>：
 </h4>

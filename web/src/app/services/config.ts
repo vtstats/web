@@ -37,11 +37,8 @@ export class Config {
     localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
   }
 
-  enableDarkMode: boolean = !!localStorage.getItem(ENABLE_DARK_MODE);
-
   toggleDarkMode() {
-    this.enableDarkMode = !this.enableDarkMode;
-    if (this.enableDarkMode) {
+    if (!localStorage.getItem(ENABLE_DARK_MODE)) {
       localStorage.setItem(ENABLE_DARK_MODE, "t");
       document.body.classList.add("dark");
     } else {
