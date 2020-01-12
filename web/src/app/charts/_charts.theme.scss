@@ -9,6 +9,10 @@
       fill: mat-color($foreground, secondary-text);
     }
 
+    .tooltip-anchor {
+      fill: mat-color($foreground, secondary-text);
+    }
+
     .gridline-path {
       stroke: mat-color($foreground, divider);
     }
