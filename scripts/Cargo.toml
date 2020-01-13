@@ -12,7 +12,7 @@ isahc = { version = "0.8.2", default-features = false, features = ["json"] }
 serde = { version = "1.0.104", features = ["derive"] }
 serde_json = "1.0.44"
 tokio = { version = "0.2.6", features = ["macros"] }
-url = "2.1.0"
+url = "2.1.1"
 
 [build-dependencies]
 serde_json = "1.0.44"
