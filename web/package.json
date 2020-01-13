@@ -24,7 +24,7 @@
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
     "@swimlane/ngx-charts": "^13.0.1",
-    "date-fns": "^2.8.1",
+    "date-fns": "^2.9.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
