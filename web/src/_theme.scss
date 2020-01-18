@@ -43,10 +43,12 @@
   }
 
   @include charts-theme($theme);
+  @include bilibili-channel-theme($theme);
   @include header-theme($theme);
   @include sidenav-theme($theme);
   @include streams-detail-theme($theme);
   @include vtubers-detail-theme($theme);
+  @include youtube-channel-theme($theme);
   @include youtube-stream-theme($theme);
 }
 

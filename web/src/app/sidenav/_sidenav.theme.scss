@@ -1,6 +1,7 @@
 @import "~@angular/material/theming";
 
 @mixin sidenav-theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
   $foreground: map-get($theme, foreground);
 
   .sidenav-container {
@@ -10,6 +11,22 @@
 
     .link {
       color: mat-color($foreground, secondary-text);
+    }
+
+    .list > a {
+      color: if(
+        $is-dark-theme,
+        map-get(mat-palette($mat-gray), 500),
+        map-get(mat-palette($mat-gray), 600)
+      );
+
+      &.active {
+        color: if(
+          $is-dark-theme,
+          map-get(mat-palette($mat-gray), 100),
+          map-get(mat-palette($mat-gray), 900)
+        );
+      }
     }
   }
 }

@@ -8,9 +8,9 @@ export class ColoredNumberDirective implements OnChanges {
 
   ngOnChanges() {
     if (this.inputNumber > 0) {
-      this.el.nativeElement.classList.add("green");
+      this.el.nativeElement.classList.add("positive");
     } else if (this.inputNumber < 0) {
-      this.el.nativeElement.classList.add("red");
+      this.el.nativeElement.classList.add("negative");
     }
   }
 }

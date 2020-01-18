@@ -1,6 +1,7 @@
 @import "~@angular/material/theming";
 
 @mixin youtube-stream-theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
@@ -16,6 +17,14 @@
     .viewers,
     .updated-at {
       color: mat-color($foreground, secondary-text);
+    }
+
+    .viewers.current {
+      color: if(
+        $is-dark-theme,
+        map-get(mat-palette($mat-red), 300),
+        map-get(mat-palette($mat-red), 800)
+      );
     }
   }
 }

@@ -8,3 +8,30 @@
     }
   }
 }
+
+@mixin youtube-channel-theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
+  $foreground: map-get($theme, foreground);
+
+  .youtube-channel {
+    .updated-at {
+      color: mat-color($foreground, secondary-text);
+    }
+
+    .negative {
+      color: if(
+        $is-dark-theme,
+        map-get(mat-palette($mat-red), 300),
+        map-get(mat-palette($mat-red), 800)
+      );
+    }
+
+    .positive {
+      color: if(
+        $is-dark-theme,
+        map-get(mat-palette($mat-green), 300),
+        map-get(mat-palette($mat-green), 800)
+      );
+    }
+  }
+}
