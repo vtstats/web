@@ -1,9 +1,12 @@
 name: Build and deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  build:
+  firebase-deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,12 +37,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Insert git hash
-        run: sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" web/src/environments/*
-
       - name: Build project
         run: |
           yarn
+          sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" web/src/environments/*
           yarn --cwd web/ build --prod
 
       - name: Deploy to firebase
