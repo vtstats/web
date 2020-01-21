@@ -12,12 +12,16 @@
     "cleanUrls": true,
     "rewrites": [
       {
-        "source": "!/api/**",
+        "source": "!/@(api|api_v2)/**",
         "destination": "/index.html"
       },
       {
         "source": "/api/**",
         "function": "api"
+      },
+      {
+        "source": "/api_v2/**",
+        "function": "api_v2"
       }
     ],
     "redirects": [
