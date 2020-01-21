@@ -4,7 +4,9 @@ import { ActivatedRoute } from "@angular/router";
 
 import * as vtubers from "vtubers";
 
-import { VTuber } from "../models";
+import { ChannelsResponse } from "../models";
+
+type Channel = ChannelsResponse["channels"][0];
 
 @Component({
   selector: "hs-youtube-channel",
@@ -19,35 +21,14 @@ export class YoutubeChannelComponent implements OnInit {
 
   updatedAt = "";
 
-  dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
+  dataSource: MatTableDataSource<Channel>;
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case "youtubeSubs":
-          return item.youtubeStats.subs;
-        case "youtubeDailySubs":
-          return item.youtubeStats.dailySubs;
-        case "youtubeWeeklySubs":
-          return item.youtubeStats.weeklySubs;
-        case "youtubeMonthlySubs":
-          return item.youtubeStats.monthlySubs;
-        case "youtubeViews":
-          return item.youtubeStats.views;
-        case "youtubeDailyViews":
-          return item.youtubeStats.dailyViews;
-        case "youtubeWeeklyViews":
-          return item.youtubeStats.weeklyViews;
-        case "youtubeMonthlyViews":
-          return item.youtubeStats.monthlyViews;
-        default:
-          return item[property];
-      }
-    };
+    const res: ChannelsResponse = this.route.snapshot.data.data;
 
-    this.dataSource.data = this.route.snapshot.data.data.vtubers;
-    this.updatedAt = this.route.snapshot.data.data.updatedAt;
+    this.dataSource = new MatTableDataSource(res.channels);
+    this.dataSource.sort = this.sort;
+    this.updatedAt = res.updatedAt;
   }
 
   readonly hideRows: string[] = vtubers.items.reduce(
@@ -61,14 +42,14 @@ export class YoutubeChannelComponent implements OnInit {
   readonly displayedColumns: string[] = [
     "profile",
     "name",
-    "youtubeSubs",
-    "youtubeDailySubs",
-    "youtubeWeeklySubs",
-    "youtubeMonthlySubs",
-    "youtubeViews",
-    "youtubeDailyViews",
-    "youtubeWeeklyViews",
-    "youtubeMonthlyViews"
+    "subs",
+    "dailySubs",
+    "weeklySubs",
+    "monthlySubs",
+    "views",
+    "dailyViews",
+    "weeklyViews",
+    "monthlyViews"
   ];
 
   findVTuber(id: string) {
@@ -79,41 +60,41 @@ export class YoutubeChannelComponent implements OnInit {
     }
   }
 
-  private getTotal(path: (_: VTuber) => number) {
+  private getTotal(path: (_: Channel) => number) {
     return this.dataSource.data
       .map(path)
       .reduce((acc, value) => acc + value, 0);
   }
 
-  get totalYoutubeSubs(): number {
-    return this.getTotal(v => v.youtubeStats.subs);
+  get totalSubs(): number {
+    return this.getTotal(v => v.subs);
   }
 
-  get totalYoutubeDailySubs(): number {
-    return this.getTotal(v => v.youtubeStats.dailySubs);
+  get totalDailySubs(): number {
+    return this.getTotal(v => v.dailySubs);
   }
 
-  get totalYoutubeWeeklySubs(): number {
-    return this.getTotal(v => v.youtubeStats.weeklySubs);
+  get totalWeeklySubs(): number {
+    return this.getTotal(v => v.weeklySubs);
   }
 
-  get totalYoutubeMonthlySubs(): number {
-    return this.getTotal(v => v.youtubeStats.monthlySubs);
+  get totalMonthlySubs(): number {
+    return this.getTotal(v => v.monthlySubs);
   }
 
-  get totalYoutubeViews(): number {
-    return this.getTotal(v => v.youtubeStats.views);
+  get totalViews(): number {
+    return this.getTotal(v => v.views);
   }
 
-  get totalYoutubeDailyViews(): number {
-    return this.getTotal(v => v.youtubeStats.dailyViews);
+  get totalDailyViews(): number {
+    return this.getTotal(v => v.dailyViews);
   }
 
-  get totalYoutubeWeeklyViews(): number {
-    return this.getTotal(v => v.youtubeStats.weeklyViews);
+  get totalWeeklyViews(): number {
+    return this.getTotal(v => v.weeklyViews);
   }
 
-  get totalYoutubeMonthlyViews(): number {
-    return this.getTotal(v => v.youtubeStats.monthlyViews);
+  get totalMonthlyViews(): number {
+    return this.getTotal(v => v.monthlyViews);
   }
 }

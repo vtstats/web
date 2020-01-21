@@ -2,7 +2,7 @@
   <div class="content" fxLayout="row wrap" fxLayoutAlign="space-between center">
     <div class="info" fxFlex="40" fxFlex.lt-sm="100">
       <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
-      <div class="name">{{ findVTuber(vtuber.id).name }}</div>
+      <div class="name">{{ vtuber.name }}</div>
     </div>
     <div
       class="number"
@@ -13,21 +13,21 @@
     >
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div>
-          <div class="value">{{ vtuber.youtubeStats.subs | number }}</div>
+          <div class="value">{{ youtubeStats.subs | number }}</div>
           <div class="caption">YouTube 訂閱數</div>
         </div>
         <div>
-          <div class="value">{{ vtuber.bilibiliStats.subs | number }}</div>
+          <div class="value">{{ bilibiliStats.subs | number }}</div>
           <div class="caption">Bilibili 訂閱數</div>
         </div>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div>
-          <div class="value">{{ vtuber.youtubeStats.views | number }}</div>
+          <div class="value">{{ youtubeStats.views | number }}</div>
           <div class="caption">YouTube 播放數</div>
         </div>
         <div>
-          <div class="value">{{ vtuber.bilibiliStats.views | number }}</div>
+          <div class="value">{{ bilibiliStats.views | number }}</div>
           <div class="caption">Bilibili 播放數</div>
         </div>
       </div>

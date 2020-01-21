@@ -4,7 +4,9 @@ import { MatSort, MatTableDataSource } from "@angular/material";
 
 import * as vtubers from "vtubers";
 
-import { VTuber } from "../models";
+import { ChannelsResponse } from "../models";
+
+type Channel = ChannelsResponse["channels"][0];
 
 @Component({
   selector: "hs-bilibili-channel",
@@ -19,35 +21,14 @@ export class BilibiliChannelComponent implements OnInit {
 
   updatedAt = "";
 
-  dataSource: MatTableDataSource<VTuber> = new MatTableDataSource([]);
+  dataSource: MatTableDataSource<Channel>;
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case "bilibiliSubs":
-          return item.bilibiliStats.subs;
-        case "bilibiliDailySubs":
-          return item.bilibiliStats.dailySubs;
-        case "bilibiliWeeklySubs":
-          return item.bilibiliStats.weeklySubs;
-        case "bilibiliMonthlySubs":
-          return item.bilibiliStats.monthlySubs;
-        case "bilibiliViews":
-          return item.bilibiliStats.views;
-        case "bilibiliDailyViews":
-          return item.bilibiliStats.dailyViews;
-        case "bilibiliWeeklyViews":
-          return item.bilibiliStats.weeklyViews;
-        case "bilibiliMonthlyViews":
-          return item.bilibiliStats.monthlyViews;
-        default:
-          return item[property];
-      }
-    };
+    const res: ChannelsResponse = this.route.snapshot.data.data;
 
-    this.dataSource.data = this.route.snapshot.data.data.vtubers;
-    this.updatedAt = this.route.snapshot.data.data.updatedAt;
+    this.dataSource = new MatTableDataSource(res.channels);
+    this.dataSource.sort = this.sort;
+    this.updatedAt = res.updatedAt;
   }
 
   readonly hideRows: string[] = vtubers.items.reduce(
@@ -61,14 +42,14 @@ export class BilibiliChannelComponent implements OnInit {
   readonly displayedColumns: string[] = [
     "profile",
     "name",
-    "bilibiliSubs",
-    "bilibiliDailySubs",
-    "bilibiliWeeklySubs",
-    "bilibiliMonthlySubs",
-    "bilibiliViews",
-    "bilibiliDailyViews",
-    "bilibiliWeeklyViews",
-    "bilibiliMonthlyViews"
+    "subs",
+    "dailySubs",
+    "weeklySubs",
+    "monthlySubs",
+    "views",
+    "dailyViews",
+    "weeklyViews",
+    "monthlyViews"
   ];
 
   findVTuber(id: string) {
@@ -79,41 +60,41 @@ export class BilibiliChannelComponent implements OnInit {
     }
   }
 
-  private getTotal(path: (_: VTuber) => number) {
+  private getTotal(path: (_: Channel) => number) {
     return this.dataSource.data
       .map(path)
       .reduce((acc, value) => acc + value, 0);
   }
 
-  get totalBilibiliSubs(): number {
-    return this.getTotal(v => v.bilibiliStats.subs);
+  get totalSubs(): number {
+    return this.getTotal(v => v.subs);
   }
 
-  get totalBilibiliDailySubs(): number {
-    return this.getTotal(v => v.bilibiliStats.dailySubs);
+  get totalDailySubs(): number {
+    return this.getTotal(v => v.dailySubs);
   }
 
-  get totalBilibiliWeeklySubs(): number {
-    return this.getTotal(v => v.bilibiliStats.weeklySubs);
+  get totalWeeklySubs(): number {
+    return this.getTotal(v => v.weeklySubs);
   }
 
-  get totalBilibiliMonthlySubs(): number {
-    return this.getTotal(v => v.bilibiliStats.monthlySubs);
+  get totalMonthlySubs(): number {
+    return this.getTotal(v => v.monthlySubs);
   }
 
-  get totalBilibiliViews(): number {
-    return this.getTotal(v => v.bilibiliStats.views);
+  get totalViews(): number {
+    return this.getTotal(v => v.views);
   }
 
-  get totalBilibiliDailyViews(): number {
-    return this.getTotal(v => v.bilibiliStats.dailyViews);
+  get totalDailyViews(): number {
+    return this.getTotal(v => v.dailyViews);
   }
 
-  get totalBilibiliWeeklyViews(): number {
-    return this.getTotal(v => v.bilibiliStats.weeklyViews);
+  get totalWeeklyViews(): number {
+    return this.getTotal(v => v.weeklyViews);
   }
 
-  get totalBilibiliMonthlyViews(): number {
-    return this.getTotal(v => v.bilibiliStats.monthlyViews);
+  get totalMonthlyViews(): number {
+    return this.getTotal(v => v.monthlyViews);
   }
 }

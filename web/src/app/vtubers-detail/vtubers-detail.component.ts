@@ -1,10 +1,12 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { getUnixTime, format, fromUnixTime, startOfToday } from "date-fns";
-
+import { format, fromUnixTime, getUnixTime, startOfToday } from "date-fns";
 import * as vtubers from "vtubers";
 
-import { VTuber } from "../models";
+import { VTuberResponse } from "../models";
+
+type YouTubeStats = VTuberResponse["vtuber"]["youtubeStats"];
+type BilibiliStats = VTuberResponse["vtuber"]["bilibiliStats"];
 
 const today = getUnixTime(startOfToday());
 
@@ -17,6 +19,7 @@ const today = getUnixTime(startOfToday());
 export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}
 
+  vtuber;
   xAxisTicks = [];
   xScaleMin = 0;
 
@@ -25,28 +28,35 @@ export class VTubersDetailComponent {
   youtubeSubs = [];
   youtubeViews = [];
 
-  vtuber: VTuber;
+  bilibiliStats: BilibiliStats;
+  youtubeStats: YouTubeStats;
 
   ngOnInit() {
+    this.vtuber = this.findVTuber(this.route.snapshot.paramMap.get("id"));
+
+    const res: VTuberResponse = this.route.snapshot.data.data;
+
     this.xAxisTicks = this.createTicks([0, 1, 2, 3, 4, 5, 6]);
     this.xScaleMin = this.xAxisTicks[this.xAxisTicks.length - 1];
     const youtubeSubsSeries = [];
     const youtubeViewsSeries = [];
     const bilibiliSubsSeries = [];
     const bilibiliViewsSeries = [];
-    for (const [name, values] of Object.entries(
-      this.route.snapshot.data.data.stats
-    )) {
+
+    for (const [name, values] of Object.entries(res.series)) {
       youtubeSubsSeries.push({ name: parseInt(name), value: values[0] });
       youtubeViewsSeries.push({ name: parseInt(name), value: values[1] });
       bilibiliSubsSeries.push({ name: parseInt(name), value: values[2] });
       bilibiliViewsSeries.push({ name: parseInt(name), value: values[3] });
     }
+
     this.youtubeSubs.push({ name: "", series: youtubeSubsSeries });
     this.youtubeViews.push({ name: "", series: youtubeViewsSeries });
     this.bilibiliSubs.push({ name: "", series: bilibiliSubsSeries });
     this.bilibiliViews.push({ name: "", series: bilibiliViewsSeries });
-    this.vtuber = this.route.snapshot.data.data;
+
+    this.youtubeStats = res.vtuber.youtubeStats;
+    this.bilibiliStats = res.vtuber.bilibiliStats;
   }
 
   findVTuber(id: string) {

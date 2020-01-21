@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { StreamsList } from "../models";
+import { StreamsResponse } from "../models";
 import { ApiService } from "../services";
 
 @Injectable({ providedIn: "root" })
-export class YoutubeStreamResolver implements Resolve<StreamsList> {
+export class YoutubeStreamResolver implements Resolve<StreamsResponse> {
   constructor(private apiService: ApiService) {}
 
-  resolve(): Observable<StreamsList> {
-    return this.apiService.getStreams();
+  resolve(): Observable<StreamsResponse> {
+    return this.apiService.getYouTubeStreams(new Date(0), new Date());
   }
 }

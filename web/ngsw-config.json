@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "$schema": "../node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
   "assetGroups": [
     {
@@ -31,12 +31,5 @@
       }
     }
   ],
-  "navigationUrls": [
-    "/**",
-    "!/*.jpg",
-    "!/api/streams",
-    "!/api/streams/*",
-    "!/api/vtubers",
-    "!/api/vtubers/*"
-  ]
+  "navigationUrls": ["/**", "!/api/**", "!/api_v2/**"]
 }

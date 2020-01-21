@@ -1,52 +1,68 @@
-export type VTuber = {
-  id: string;
-  bilibiliStats: {
-    subs: number;
-    views: number;
-    dailySubs: number;
-    dailyViews: number;
-    weeklySubs: number;
-    weeklyViews: number;
-    monthlySubs: number;
-    monthlyViews: number;
-  };
-  youtubeStats: {
-    subs: number;
-    views: number;
-    dailySubs: number;
-    dailyViews: number;
-    weeklySubs: number;
-    weeklyViews: number;
-    monthlySubs: number;
-    monthlyViews: number;
-  };
-};
-
-export type Stream = {
-  start: string;
-  end?: string;
-
-  avgViewers?: number;
-  maxViewers?: number;
-  title: string;
-  id: string;
-  vtuberId: string;
-};
-
-export type StreamsList = {
+export type ChannelsResponse = {
   updatedAt: string;
-  streams: Array<Stream>;
+  channels: Array<{
+    id: string;
+    subs: number;
+    dailySubs: number;
+    weeklySubs: number;
+    monthlySubs: number;
+    views: number;
+    dailyViews: number;
+    weeklyViews: number;
+    monthlyViews: number;
+  }>;
 };
 
-export type StreamDetail = Stream & {
-  stats: { [time: number]: number };
+export type VTuberResponse = {
+  id: string;
+  vtuber: {
+    bilibiliStats: {
+      subs: number;
+      views: number;
+      dailySubs: number;
+      dailyViews: number;
+      weeklySubs: number;
+      weeklyViews: number;
+      monthlySubs: number;
+      monthlyViews: number;
+    };
+    youtubeStats: {
+      subs: number;
+      views: number;
+      dailySubs: number;
+      dailyViews: number;
+      weeklySubs: number;
+      weeklyViews: number;
+      monthlySubs: number;
+      monthlyViews: number;
+    };
+  };
+  series: { [time: number]: [number, number, number, number] };
 };
 
-export type VTubersList = {
+export type StreamsResponse = {
   updatedAt: string;
-  vtubers: Array<VTuber>;
+  hasMore: boolean;
+  streams: Array<{
+    id: string;
+    title: string;
+    vtuberId: string;
+    start: string;
+    end?: string;
+    avgViewers?: number;
+    maxViewers?: number;
+  }>;
 };
 
-export type VTuberDetail = VTuber & {
-  stats: { [time: string]: [number, number, number, number] };
+export type StreamResponse = {
+  stream: {
+    id: string;
+    title: string;
+    avgViewers: number;
+    maxViewers: number;
+    end: string;
+    start: string;
+    vtuberId: string;
+  };
+  series: { [time: number]: number };
 };

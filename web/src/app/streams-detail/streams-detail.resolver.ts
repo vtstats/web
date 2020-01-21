@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { StreamDetail } from "../models";
+import { StreamResponse } from "../models";
 import { ApiService } from "../services";
 
 @Injectable({ providedIn: "root" })
-export class StreamsDetailResolver implements Resolve<StreamDetail> {
+export class StreamsDetailResolver implements Resolve<StreamResponse> {
   constructor(private apiService: ApiService) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<StreamDetail> {
-    return this.apiService.getStreamStat(route.paramMap.get("id"));
+  resolve(route: ActivatedRouteSnapshot): Observable<StreamResponse> {
+    return this.apiService.getStream(route.paramMap.get("id"));
   }
 }

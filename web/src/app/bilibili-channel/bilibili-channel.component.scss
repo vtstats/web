@@ -46,11 +46,8 @@
     padding-left: 12px;
   }
 
-  $columns: bilibiliSubs, bilibiliDailySubs, bilibiliWeeklySubs,
-    bilibiliMonthlySubs, bilibiliViews, bilibiliDailyViews, bilibiliWeeklyViews,
-    bilibiliMonthlyViews, youtubeSubs, youtubeDailySubs, youtubeWeeklySubs,
-    youtubeMonthlySubs, youtubeViews, youtubeDailyViews, youtubeWeeklyViews,
-    youtubeMonthlyViews;
+  $columns: subs, dailySubs, weeklySubs, monthlySubs, views, dailyViews,
+    weeklyViews, monthlyViews;
 
   @each $columns in $columns {
     .mat-footer-cell.mat-column-#{$columns},

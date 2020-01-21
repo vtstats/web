@@ -1,8 +1,8 @@
 import {
   Component,
+  ElementRef,
   OnInit,
   ViewChild,
-  ElementRef,
   ViewEncapsulation
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
@@ -12,8 +12,10 @@ import { map } from "rxjs/operators";
 
 import * as vtubers from "vtubers";
 
-import { Stream } from "../models";
+import { StreamsResponse } from "../models";
 import { ApiService } from "../services";
+
+type Stream = StreamsResponse["streams"][0];
 
 @Component({
   selector: "hs-youtube-stream",
@@ -24,8 +26,9 @@ import { ApiService } from "../services";
 export class YoutubeStreamComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {}
 
-  onAir: Stream[] = [];
-  ended: { day: Date; streams: Stream[] }[] = [];
+  streamGroup: { day: Date; streams: Stream[] }[] = [];
+  lastStreamStart: Date;
+
   updatedAt = "";
   showSpinner = false;
 
@@ -35,25 +38,19 @@ export class YoutubeStreamComponent implements OnInit {
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 
-  get lastId(): string {
-    return this.ended[this.ended.length - 1].streams[
-      this.ended[this.ended.length - 1].streams.length - 1
-    ].id;
-  }
-
   obs = new IntersectionObserver(entries => {
     if (entries.map(e => e.isIntersecting).some(e => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.apiService
-        .getStreamsWithSkip(this.lastId)
-        .subscribe(data => this.addStreams(data.streams));
+        .getYouTubeStreams(new Date(0), this.lastStreamStart)
+        .subscribe(res => this.addStreams(res));
     }
   });
 
   ngOnInit() {
-    this.addStreams(this.route.snapshot.data.data.streams);
-    this.updatedAt = this.route.snapshot.data.data.updatedAt;
+    const res: StreamsResponse = this.route.snapshot.data.data;
+    this.addStreams(res);
   }
 
   findVTuber(id: string) {
@@ -68,24 +65,24 @@ export class YoutubeStreamComponent implements OnInit {
     return stream.id;
   }
 
-  addStreams(streams: Stream[]) {
-    for (let stream of streams) {
-      let start = parseISO(stream.start);
-      if (
-        this.ended.length > 0 &&
-        isSameDay(this.ended[this.ended.length - 1].day, start)
-      ) {
-        this.ended[this.ended.length - 1].streams.push(stream);
+  addStreams(res: StreamsResponse) {
+    this.updatedAt = res.updatedAt;
+
+    for (const stream of res.streams) {
+      const start = parseISO(stream.start);
+      if (this.lastStreamStart && isSameDay(this.lastStreamStart, start)) {
+        this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
       } else {
-        this.ended.push({ day: start, streams: [stream] });
+        this.streamGroup.push({ day: start, streams: [stream] });
       }
+      this.lastStreamStart = start;
     }
 
-    if (streams.length < 24) {
-      this.showSpinner = false;
-    } else {
+    if (res.hasMore) {
       this.showSpinner = true;
       this.obs.observe(this.spinnerContainer.nativeElement);
+    } else {
+      this.showSpinner = false;
     }
   }
 }

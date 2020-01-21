@@ -1,6 +1,6 @@
 <div class="youtube-stream">
   <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
-  <div class="content" *ngFor="let group of ended">
+  <div class="content" *ngFor="let group of streamGroup">
     <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
     <div fxLayout="row wrap">
       <div
