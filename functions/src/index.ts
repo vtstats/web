@@ -1,105 +1,164 @@
-import * as cors from "cors";
+import {
+  compareDesc,
+  getUnixTime,
+  isAfter,
+  isBefore,
+  parseISO
+} from "date-fns";
 import * as express from "express";
 import * as functions from "firebase-functions";
+import * as cors from "cors";
 
 import { Database } from "./database";
-import {
-  StreamsListResponse,
-  StreamDetailResponse,
-  VTubersListResponse,
-  VTuberDetailResponse
-} from "./models";
+import { writeLog } from "./logging";
 
 const app = express();
 const db = new Database();
 
-app.use(
-  cors({
-    origin: ["http://localhost:4200"],
-    methods: "GET"
-  })
-);
+app.use(cors({ origin: "http://localhost:4200", methods: "GET" }));
 
-app.get("/api/vtubers", async (req, res) => {
-  let ids: string[] = [];
-  if (req.query.ids && typeof req.query.ids == "string") {
-    ids = req.query.ids.split(",");
-  }
+app.get("/api_v2/youtube_channel", async (req, res) => {
+  const ids: string[] =
+    req.query.ids && typeof req.query.ids == "string"
+      ? req.query.ids.split(",")
+      : [];
 
-  await db.updateVTubersCache();
+  const { updatedAt, vtubers } = await db.getVTubers();
 
-  res.set("Last-Modified", db.vtubers.updatedAt.toUTCString());
+  const filtered = ids.map(id => ({
+    id,
+    subs: vtubers[id].youtubeStats.subs,
+    dailySubs: vtubers[id].youtubeStats.dailySubs,
+    weeklySubs: vtubers[id].youtubeStats.weeklySubs,
+    monthlySubs: vtubers[id].youtubeStats.monthlySubs,
+    views: vtubers[id].youtubeStats.views,
+    dailyViews: vtubers[id].youtubeStats.dailyViews,
+    weeklyViews: vtubers[id].youtubeStats.weeklyViews,
+    monthlyViews: vtubers[id].youtubeStats.monthlyViews
+  }));
 
-  if (req.fresh) {
-    res.status(304).end();
-  } else {
-    res.json({
-      updatedAt: db.vtubers.updatedAt.toISOString(),
-      vtubers: db.vtubers.items.filter(v => ids.includes(v.id))
-    } as VTubersListResponse);
-  }
+  res.json({ updatedAt: updatedAt.toISOString(), channels: filtered });
+
+  writeLog({
+    event: "http",
+    value: "/api_v2/youtube_channel",
+    message: `ids: ${ids}`
+  });
 });
 
-app.get("/api/vtubers/:id", async (req, res) => {
-  const id = req.params.id;
+app.get("/api_v2/bilibili_channel", async (req, res) => {
+  const ids: string[] =
+    req.query.ids && typeof req.query.ids == "string"
+      ? req.query.ids.split(",")
+      : [];
 
-  await db.updateVTubersCache();
+  const { updatedAt, vtubers } = await db.getVTubers();
 
-  res.set("Last-Modified", db.vtubers.updatedAt.toUTCString());
+  const filtered = ids.map(id => ({
+    id,
+    subs: vtubers[id].bilibiliStats.subs,
+    dailySubs: vtubers[id].bilibiliStats.dailySubs,
+    weeklySubs: vtubers[id].bilibiliStats.weeklySubs,
+    monthlySubs: vtubers[id].bilibiliStats.monthlySubs,
+    views: vtubers[id].bilibiliStats.views,
+    dailyViews: vtubers[id].bilibiliStats.dailyViews,
+    weeklyViews: vtubers[id].bilibiliStats.weeklyViews,
+    monthlyViews: vtubers[id].bilibiliStats.monthlyViews
+  }));
 
-  if (req.fresh) {
-    res.status(304).end();
-  } else {
-    res.json({
-      ...db.findVTuber(id),
-      stats: await db.vtuberStats(id)
-    } as VTuberDetailResponse);
-  }
+  res.json({ updatedAt: updatedAt.toISOString(), channels: filtered });
+
+  writeLog({
+    event: "http",
+    value: "/api_v2/bilibili_channel",
+    message: `ids: ${ids}`
+  });
 });
 
-app.get("/api/streams", async (req, res) => {
-  let ids: string[] = [];
-  if (req.query.ids && typeof req.query.ids == "string") {
-    ids = req.query.ids.split(",");
-  }
+app.get("/api_v2/vtuber/:id", async (req, res) => {
+  const id: string = req.params.id;
 
-  await db.updateStreamsCache();
+  const startAt: Date =
+    req.query.startAt && typeof req.query.startAt == "string"
+      ? parseISO(req.query.startAt)
+      : new Date(0);
 
-  res.set("Last-Modified", db.streams.updatedAt.toUTCString());
+  const endAt: Date =
+    req.query.endAt && typeof req.query.endAt == "string"
+      ? parseISO(req.query.endAt)
+      : new Date();
 
-  if (req.fresh) {
-    res.status(304).end();
-  } else {
-    const streams = [];
+  const startTimestamp = getUnixTime(startAt).toString();
+  const endTimestamp = getUnixTime(endAt).toString();
 
-    const index = req.query.skip
-      ? db.streams.items.findIndex(s => s.id == req.query.skip) + 1
-      : 0;
+  const { vtubers } = await db.getVTubers();
+  const stats = await db.getVTuberStat(id);
 
-    for (const stream of db.streams.items.slice(index)) {
-      if (streams.length == 24) {
-        break;
-      } else if (ids.includes(stream.vtuberId)) {
-        streams.push(stream);
-      }
-    }
+  const filtered = Object.keys(stats)
+    .filter(key => startTimestamp <= key && key <= endTimestamp)
+    .reduce((obj, key) => ({ ...obj, [key]: stats[key] }), {});
 
-    res.json({
-      updatedAt: db.streams.updatedAt.toISOString(),
-      streams
-    } as StreamsListResponse);
-  }
+  res.json({ vtuber: vtubers[id], series: filtered });
+
+  writeLog({
+    event: "http",
+    value: `/api_v2/vtuber/${id}`,
+    message: `startAt: ${startAt.toISOString()}, endAt: ${endAt.toISOString()}`
+  });
 });
 
-app.get("/api/streams/:id", async (req, res) => {
-  const id = req.params.id;
+app.get("/api_v2/youtube_stream", async (req, res) => {
+  const ids: string[] =
+    req.query.ids && typeof req.query.ids == "string"
+      ? req.query.ids.split(",")
+      : [];
 
-  await db.updateStreamsCache();
+  const startAt: Date =
+    req.query.startAt && typeof req.query.startAt == "string"
+      ? parseISO(req.query.startAt)
+      : new Date(0);
+
+  const endAt: Date =
+    req.query.endAt && typeof req.query.endAt == "string"
+      ? parseISO(req.query.endAt)
+      : new Date();
+
+  const { streams, updatedAt } = await db.getStreams();
+
+  const filtered = Object.values(streams)
+    .filter(stream => ids.includes(stream.vtuberId))
+    .filter(
+      stream =>
+        isAfter(parseISO(stream.start), startAt) &&
+        isBefore(parseISO(stream.start), endAt)
+    )
+    .sort((a, b) => compareDesc(parseISO(a.start), parseISO(b.start)));
 
   res.json({
-    ...db.findStream(id),
-    stats: await db.streamStats(id)
-  } as StreamDetailResponse);
+    updatedAt: updatedAt.toISOString(),
+    streams: filtered.slice(0, 24),
+    hasMore: filtered.length > 24
+  });
+
+  writeLog({
+    event: "http",
+    value: "/api_v2/youtube_stream",
+    message: `ids: ${ids}, startAt: ${startAt.toISOString()}, endAt: ${endAt.toISOString()}`
+  });
 });
 
-export const api = functions.https.onRequest(app);
+app.get("/api_v2/stream/:id", async (req, res) => {
+  const id: string = req.params.id;
+
+  const { streams } = await db.getStreams();
+  const stats = await db.getStreamStat(id);
+
+  res.json({ stream: streams[id], series: stats });
+
+  writeLog({
+    event: "http",
+    value: `/api_v2/stream/${id}`
+  });
+});
+
+export const api_v2 = functions.https.onRequest(app);
