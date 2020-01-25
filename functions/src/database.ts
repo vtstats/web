@@ -142,16 +142,21 @@ export class Database {
   }
 
   private async fetchStreams(startAt: Date) {
-    const [updatedAt, streams] = await Promise.all([
+    const [updatedAt, ended, current] = await Promise.all([
       db.ref("/updatedAt/streamList").once("value"),
       db
         .ref("/streams")
-        .orderByChild("start")
+        .orderByChild("end")
         .startAt(startAt.toISOString())
+        .once("value"),
+      db
+        .ref("/streams")
+        .orderByChild("end")
+        .endAt(null)
         .once("value")
     ]);
     this.streamListUpdatedAt = parseISO(updatedAt.val());
-    this.streams = { ...this.streams, ...streams.val() };
+    this.streams = { ...this.streams, ...current.val(), ...ended.val() };
 
     writeLog({
       event: "database",
@@ -161,7 +166,13 @@ export class Database {
     writeLog({
       event: "database",
       value: "/streams",
-      message: `startAt: ${startAt.toISOString()} numChildren: ${streams.numChildren()}`
+      message:
+        "startAt: " +
+        startAt.toISOString() +
+        " ended.numChildren: " +
+        ended.numChildren() +
+        " current.numChildren: " +
+        current.numChildren()
     });
   }
 
