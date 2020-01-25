@@ -145,7 +145,7 @@ app.get(
   }
 );
 
-app.get("/api_v2/stream/:id", validate([validateIdParam]), async (req, res) => {
+app.get("/api_v2/stream/:id", async (req, res) => {
   const id: string = req.params.id;
 
   const { streams } = await db.getStreams();
