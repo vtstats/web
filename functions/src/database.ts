@@ -151,8 +151,8 @@ export class Database {
         .once("value"),
       db
         .ref("/streams")
-        .orderByChild("end")
-        .endAt(null)
+        .orderByChild("live")
+        .equalTo(true)
         .once("value")
     ]);
     this.streamListUpdatedAt = parseISO(updatedAt.val());

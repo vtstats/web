@@ -3,7 +3,7 @@
     ".read": "auth != null",
     ".write": "auth != null",
     "streams": {
-      ".indexOn": ["start", "end"]
+      ".indexOn": ["start", "end", "live"]
     }
   }
 }

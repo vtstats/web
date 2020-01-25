@@ -31,7 +31,7 @@ export const validate = (validations: ValidationChain[]) => {
 
 export const validateIdParam = param("id")
   .isString()
-  .custom((id: string) => vtuber_ids.includes(id));
+  .isIn(vtuber_ids);
 
 export const validateIdsQuery = query("ids")
   .isString()
