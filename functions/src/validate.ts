@@ -1,4 +1,3 @@
-import { parseISO } from "date-fns";
 import { NextFunction, Request, Response } from "express";
 import {
   param,
@@ -40,8 +39,13 @@ export const validateIdsQuery = query("ids")
 
 export const validateStartAtQuery = query("startAt")
   .isISO8601()
-  .customSanitizer((val: string) => parseISO(val));
+  .toDate();
 
 export const validateEndAtQuery = query("endAt")
   .isISO8601()
-  .customSanitizer((val: string) => parseISO(val));
+  .toDate();
+
+export const validateShallow = query("shallow")
+  .optional()
+  .isBoolean()
+  .toBoolean();
