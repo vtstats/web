@@ -10,24 +10,20 @@ chrono = { version = "0.4.10", features = ["serde"] }
 futures = "0.3.1"
 isahc = { version = "0.8.2", default-features = false, features = ["json"] }
 serde = { version = "1.0.104", features = ["derive"] }
-serde_json = "1.0.44"
-tokio = { version = "0.2.9", features = ["macros"] }
+serde_json = "1.0.45"
+tokio = { version = "0.2.10", features = ["macros"] }
 url = "2.1.1"
 
 [build-dependencies]
-serde_json = "1.0.44"
+serde_json = "1.0.45"
 
 [profile.release]
 lto = true
-
-[[bin]]
-name = "stream_list"
-path = "src/stream_list.rs"
 
 [[bin]]
 name = "stream_stat"
 path = "src/stream_stat.rs"
 
 [[bin]]
-name = "vtuber_stat"
-path = "src/vtuber_stat.rs"
+name = "channel_stat"
+path = "src/channel_stat.rs"

@@ -7,13 +7,10 @@ use futures::future::{try_join3, try_join_all};
 use isahc::HttpClient;
 use std::str::FromStr;
 
-use crate::{
-    consts::VTUBERS,
-    types::{Result, Values},
-    utils::{
-        bilibili_stat, patch_values, vtuber_stats_at, vtuber_stats_timestamps, youtube_channels,
-        Auth,
-    },
+use crate::consts::VTUBERS;
+use crate::types::{Result, Values};
+use crate::utils::{
+    bilibili_stat, patch_values, vtuber_stats_at, vtuber_stats_timestamps, youtube_channels, Auth,
 };
 
 #[tokio::main]
@@ -28,6 +25,8 @@ async fn main() -> Result<()> {
     let now = Utc::now().timestamp();
 
     let mut values = Values::default();
+
+    values.insert("/updatedAt/channels", Utc::now());
 
     for (vtb, curr) in VTUBERS.iter().zip(&curr) {
         let name = vtb.name;
@@ -101,8 +100,6 @@ async fn main() -> Result<()> {
             curr[3] - a_month_ago[3],
         );
     }
-
-    values.insert("/updatedAt/vtuberStat", Utc::now());
 
     patch_values(&client, &auth.id_token, values).await?;
 

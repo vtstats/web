@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+use crate::consts::VTUBERS;
 use chrono::{DateTime, Duration, Utc};
 use isahc::{prelude::Request, HttpClient, ResponseExt};
 use serde::{Deserialize, Serialize};
@@ -10,7 +11,7 @@ use crate::types::{
     auth::{RefreshRequest, RefreshResponse, SignInRequest, SignInResponse},
     bilibili::{StatResponse, UpstatResponse},
     youtube::{Channel, ChannelsResponse, LiveChatMessagesResponse, Video, VideosResponse},
-    Result, Values,
+    Result, ScheduleStream, Values,
 };
 
 ///////// YouTube
@@ -211,47 +212,28 @@ pub async fn vtuber_stats_timestamps(client: &HttpClient, auth: &str) -> Result<
     Ok(timestamps)
 }
 
-pub async fn stream_stats(client: &HttpClient, auth: &str, id: &str) -> Result<Option<Vec<usize>>> {
-    let mut response = client
-        .get_async(
-            Url::parse_with_params(
-                &format!(
-                    "https://{}.firebaseio.com/streamStats/{}.json",
-                    env!("FIREBASE_PROJECT_ID"),
-                    id
-                ),
-                &[("auth", auth)],
-            )?
-            .as_str(),
-        )
-        .await?;
+pub async fn schedule_streams(client: &HttpClient) -> Result<Vec<String>> {
+    let ids = VTUBERS.iter().map(|v| v.name).collect::<Vec<_>>();
+    let ids = ids.join(",");
 
-    if let Ok(map) = response.json::<HashMap<String, usize>>() {
-        let array = map.values().copied().collect::<Vec<_>>();
+    let now = Utc::now();
 
-        Ok(Some(array))
-    } else {
-        Ok(None)
-    }
-}
+    let url = Url::parse_with_params(
+        "https://holo.poi.cat/api_v2/youtube_schedule_stream",
+        &[
+            ("ids", ids.as_str()),
+            ("startAt", "2000-01-01T00:00:00.000Z"),
+            ("endAt", now.to_rfc3339().as_str()),
+            ("shallow", "true"),
+        ],
+    )?;
 
-pub async fn current_streams(client: &HttpClient, auth: &str) -> Result<HashMap<String, bool>> {
     let response = client
-        .get_async(
-            Url::parse_with_params(
-                concat!(
-                    "https://",
-                    env!("FIREBASE_PROJECT_ID"),
-                    ".firebaseio.com/streams/_current.json",
-                ),
-                &[("auth", auth)],
-            )?
-            .as_str(),
-        )
+        .get_async(url.as_str())
         .await?
-        .json::<HashMap<String, bool>>()?;
+        .json::<ScheduleStream>()?;
 
-    Ok(response)
+    Ok(response.streams)
 }
 
 pub async fn vtuber_stats_at(

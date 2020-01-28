@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use chrono::{DateTime, Utc};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Serialize, Debug)]
@@ -258,4 +258,9 @@ pub mod youtube {
         pub currency: String,
         pub tier: usize,
     }
+}
+
+#[derive(Deserialize, Debug)]
+pub struct ScheduleStream {
+    pub streams: Vec<String>,
 }
