@@ -18,10 +18,6 @@
       {
         "source": "/api/**",
         "function": "api"
-      },
-      {
-        "source": "/api_v2/**",
-        "function": "api_v2"
       }
     ],
     "redirects": [
@@ -34,6 +30,11 @@
         "source": "/stream",
         "destination": "/youtube-stream",
         "type": 301
+      },
+      {
+        "source": "/api_v2/:path",
+        "destination": "https://holostats-api.poi.cat/api_v2/:path",
+        "type": 302
       }
     ],
     "headers": [
