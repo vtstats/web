@@ -6733,13 +6733,6 @@ sass@1.22.9:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-saturn-datepicker@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/saturn-datepicker/-/saturn-datepicker-8.0.1.tgz#8842dfd10eec7fa6529f059246170c29fee14367"
-  integrity sha512-kUmf8xg5oeGAZtgwqfkNY8Dro6EzX0zGIWnAcQ9cfQ+w3xBq4TbjdBUWuEA19rJlvLLP/uH3PAoXG/SHVLYncQ==
-  dependencies:
-    tslib "^1.9.0"
-
 sax@0.5.x:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
@@ -7666,10 +7659,15 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.5.3, typescript@~3.5.3:
+typescript@3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+
+typescript@~3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
