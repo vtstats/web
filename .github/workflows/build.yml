@@ -37,9 +37,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build project
+      - name: Build web
         run: |
-          yarn
+          yarn --cwd web/
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" web/src/environments/*
           yarn --cwd web/ build --prod
 
