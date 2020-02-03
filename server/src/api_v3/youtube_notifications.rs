@@ -39,27 +39,22 @@ pub async fn publish_content(
 
         for stream in streams.items {
             if let Some(details) = stream.live_streaming_details {
-                let row = sqlx::query!(
-                    "SELECT COUNT(*) FROM youtube_streams WHERE stream_id = $1",
-                    stream.id
+                let _ = sqlx::query!(
+                    r#"
+INSERT INTO youtube_streams (stream_id, title, vtuber_id)
+VALUES ($1, $2, $3)
+ON CONFLICT (stream_id) DO UPDATE
+SET title = $4
+                    "#,
+                    stream.id,
+                    title,
+                    vtuber_id,
+                    title
                 )
-                .fetch_one(&mut pool)
+                .execute(&mut pool)
                 .await
                 .map_err(Error::Sql)
                 .map_err(warp::reject::custom)?;
-
-                if row.count == 0 {
-                    let _ = sqlx::query!(
-                        "INSERT INTO youtube_streams (stream_id, title, vtuber_id) VALUES ($1, $2, $3)",
-                        stream.id,
-                        title,
-                        vtuber_id
-                    )
-                    .execute(&mut pool)
-                    .await
-                    .map_err(Error::Sql)
-                    .map_err(warp::reject::custom)?;
-                }
 
                 // TODO(sqlx): for now sqlx doesn't spport Option, https://github.com/launchbadge/sqlx/pull/94
                 if let Some(schedule) = details.scheduled_start_time {
