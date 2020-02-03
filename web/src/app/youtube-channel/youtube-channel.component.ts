@@ -29,14 +29,6 @@ export class YoutubeChannelComponent implements OnInit {
     // this.updatedAt = res.updatedAt;
   }
 
-  readonly hideRows: string[] = vtubers.items.reduce(
-    (acc, item) => [
-      ...acc,
-      ...item.members.filter(m => m.youtube == null).map(m => m.id)
-    ],
-    []
-  );
-
   readonly displayedColumns: string[] = [
     "profile",
     "name",
