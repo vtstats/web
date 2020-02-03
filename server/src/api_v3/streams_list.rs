@@ -76,3 +76,53 @@ ORDER BY start_time DESC
 
     Ok(warp::reply::json(&StreamsListResponseBody { streams }))
 }
+
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ScheduleStreamsListRequestQuery {
+    ids: String,
+}
+
+#[derive(serde::Serialize)]
+pub struct ScheduleStreamsListResponseBody {
+    streams: Vec<ScheduleStream>,
+}
+
+#[derive(Debug, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ScheduleStream {
+    stream_id: String,
+    title: String,
+    vtuber_id: String,
+    schedule_time: DateTime<Utc>,
+}
+
+pub async fn youtube_schedule_streams_list(
+    query: ScheduleStreamsListRequestQuery,
+    mut pool: PgPool,
+) -> Result<Json, Rejection> {
+    let ids = query.ids.split(',').collect::<Vec<_>>();
+
+    let rows = sqlx::query_as!(
+        ScheduleStream,
+        r#"
+SELECT stream_id, title, vtuber_id, schedule_time
+FROM youtube_streams
+WHERE start_time IS NULL AND end_time IS NULL AND schedule_time IS NOT NULL
+ORDER BY schedule_time ASC
+        "#,
+    )
+    .fetch_all(&mut pool)
+    .await
+    .map_err(Error::Sql)
+    .map_err(warp::reject::custom)?;
+
+    let streams = rows
+        .into_iter()
+        .filter(|row| ids.contains(&&*row.vtuber_id))
+        .collect::<Vec<_>>();
+
+    Ok(warp::reply::json(&ScheduleStreamsListResponseBody {
+        streams,
+    }))
+}
