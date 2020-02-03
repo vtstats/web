@@ -1,0 +1,46 @@
+<div class="youtube-schedule-stream">
+  <div class="content" *ngFor="let group of streamGroup">
+    <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
+    <div fxLayout="row wrap">
+      <div
+        class="stream"
+        *ngFor="let stream of group.streams; trackBy: trackBy"
+        fxFlex.lt-sm="50"
+        fxFlex.sm="33.33"
+        fxFlex.gt-sm="25"
+      >
+        <div class="thumbnail" lazyLoad [video]="stream.streamId">
+          <div class="duration">
+            {{ stream.scheduleTime | date: "HH:mm" }}
+          </div>
+          <a
+            class="icon"
+            href="https://youtu.be/{{ stream.streamId }}"
+            target="_blank"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-icon svgIcon="open_in_new"></mat-icon>
+          </a>
+        </div>
+        <div class="title" title="{{ stream.title }}">
+          {{ stream.title }}
+        </div>
+        <div
+          class="time"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          *ngIf="findVTuber(stream.vtuberId); let vtuber"
+        >
+          <img
+            class="profile"
+            src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+          />
+          <span class="name">{{ vtuber.name }}</span>
+          <span title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}">
+            {{ stream.scheduleTime | parseISO | distance: (everyMinute$ | async) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@
 @import "./app/streams-detail/streams-detail.theme";
 @import "./app/vtubers-detail/vtubers-detail.theme";
 @import "./app/youtube-channel/youtube-channel.theme";
+@import "./app/youtube-schedule-stream/youtube-schedule-stream.theme";
 @import "./app/youtube-stream/youtube-stream.theme";
 
 @include mat-ripple();
@@ -49,6 +50,7 @@
   @include streams-detail-theme($theme);
   @include vtubers-detail-theme($theme);
   @include youtube-channel-theme($theme);
+  @include youtube-schedule-stream-theme($theme);
   @include youtube-stream-theme($theme);
 }
 
@@ -71,5 +73,6 @@
   @include streams-detail-typography($config);
   @include vtubers-detail-typography($config);
   @include youtube-channel-typography($config);
+  @include youtube-schedule-stream-typography($config);
   @include youtube-stream-typography($config);
 }

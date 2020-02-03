@@ -35,6 +35,10 @@ import {
   YoutubeChannelResolver
 } from "./youtube-channel";
 import {
+  YoutubeScheduleStreamComponent,
+  YoutubeSchduleStreamResolver
+} from "./youtube-schedule-stream";
+import {
   YoutubeStreamComponent,
   YoutubeStreamResolver
 } from "./youtube-stream";
@@ -53,6 +57,13 @@ const ROUTES: Routes = [
     component: BilibiliChannelComponent,
     resolve: {
       data: BilibiliChannelResolver
+    }
+  },
+  {
+    path: "youtube-schedule-stream",
+    component: YoutubeScheduleStreamComponent,
+    resolve: {
+      data: YoutubeSchduleStreamResolver
     }
   },
   {
@@ -90,6 +101,7 @@ const ROUTES: Routes = [
     SettingsComponent,
     SidenavComponent,
     YoutubeChannelComponent,
+    YoutubeScheduleStreamComponent,
     YoutubeStreamComponent
   ],
   imports: [

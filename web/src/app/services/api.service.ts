@@ -47,6 +47,19 @@ export class ApiService {
     });
   }
 
+  getYouTubeScheduleStream(): Observable<StreamListResponse> {
+    return this.http.get<StreamListResponse>(
+      `${BASE_URL}/youtube_schedule_streams`,
+      {
+        params: new HttpParams({
+          fromObject: {
+            ids: this.config.joinedSelectedVTubers
+          }
+        })
+      }
+    );
+  }
+
   getChannelReport(
     ids: string,
     metrics: string,
