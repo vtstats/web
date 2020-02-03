@@ -76,20 +76,26 @@ WHERE stream_id = $1
         "#,
             id.to_string()
         )
-        .fetch_one(&mut pool)
+        .fetch_optional(&mut pool)
         .await
         .map_err(Error::Sql)
         .map_err(warp::reject::custom)?;
 
-        streams.push(stream);
-
-        for metric in &metrics {
-            match *metric {
-                "youtube_stream_viewer" => reports.push(
-                    youtube_stream_viewer(id.to_string(), query.start_at, query.end_at, &mut pool)
+        if let Some(stream) = stream {
+            streams.push(stream);
+            for metric in &metrics {
+                match *metric {
+                    "youtube_stream_viewer" => reports.push(
+                        youtube_stream_viewer(
+                            id.to_string(),
+                            query.start_at,
+                            query.end_at,
+                            &mut pool,
+                        )
                         .await?,
-                ),
-                _ => (),
+                    ),
+                    _ => (),
+                }
             }
         }
     }

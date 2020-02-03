@@ -73,42 +73,54 @@ WHERE vtuber_id = $1
             "#,
             id.to_string()
         )
-        .fetch_one(&mut pool)
+        .fetch_optional(&mut pool)
         .await
         .map_err(Error::Sql)
         .map_err(warp::reject::custom)?;
 
-        channels.push(channel);
+        if let Some(channel) = channel {
+            channels.push(channel);
 
-        for metric in &metrics {
-            match *metric {
-                "youtube_channel_subscriber" => reports.push(
-                    youtube_channel_subscriber(
-                        id.to_string(),
-                        query.start_at,
-                        query.end_at,
-                        &mut pool,
-                    )
-                    .await?,
-                ),
-                "youtube_channel_view" => reports.push(
-                    youtube_channel_view(id.to_string(), query.start_at, query.end_at, &mut pool)
+            for metric in &metrics {
+                match *metric {
+                    "youtube_channel_subscriber" => reports.push(
+                        youtube_channel_subscriber(
+                            id.to_string(),
+                            query.start_at,
+                            query.end_at,
+                            &mut pool,
+                        )
                         .await?,
-                ),
-                "bilibili_channel_subscriber" => reports.push(
-                    bilibili_channel_subscriber(
-                        id.to_string(),
-                        query.start_at,
-                        query.end_at,
-                        &mut pool,
-                    )
-                    .await?,
-                ),
-                "bilibili_channel_view" => reports.push(
-                    bilibili_channel_view(id.to_string(), query.start_at, query.end_at, &mut pool)
+                    ),
+                    "youtube_channel_view" => reports.push(
+                        youtube_channel_view(
+                            id.to_string(),
+                            query.start_at,
+                            query.end_at,
+                            &mut pool,
+                        )
                         .await?,
-                ),
-                _ => (),
+                    ),
+                    "bilibili_channel_subscriber" => reports.push(
+                        bilibili_channel_subscriber(
+                            id.to_string(),
+                            query.start_at,
+                            query.end_at,
+                            &mut pool,
+                        )
+                        .await?,
+                    ),
+                    "bilibili_channel_view" => reports.push(
+                        bilibili_channel_view(
+                            id.to_string(),
+                            query.start_at,
+                            query.end_at,
+                            &mut pool,
+                        )
+                        .await?,
+                    ),
+                    _ => (),
+                }
             }
         }
     }
