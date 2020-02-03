@@ -4,7 +4,7 @@
       <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
       <div class="name">{{ vtuber.name }}</div>
     </div>
-    <div
+    <!-- <div
       class="number"
       fxFlex="60"
       fxFlex.lt-sm="100"
@@ -32,50 +32,55 @@
         </div>
       </div>
     </div>
-  </div>
-  <div fxLayout="row wrap" fxLayoutAlign="space-between">
-    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
-      <hs-area-chart
-        [youtube]="true"
-        [results]="youtubeSubs"
-        [xAxisTicks]="xAxisTicks"
-        [dateTickFormatting]="dateTickFormatting"
-        [label]="'YouTube 訂閱'"
-        [xScaleMin]="xScaleMin"
-      ></hs-area-chart>
-    </div>
+  </div> -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+        <hs-area-chart
+          [youtube]="true"
+          [results]="youtubeSubs"
+          [xAxisTicks]="xAxisTicks"
+          [dateTickFormatting]="dateTickFormatting"
+          [label]="'YouTube 訂閱'"
+          [xScaleMin]="xScaleMin"
+          [xScaleMax]="xScaleMax"
+        ></hs-area-chart>
+      </div>
 
-    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
-      <hs-area-chart
-        [youtube]="false"
-        [results]="bilibiliSubs"
-        [xAxisTicks]="xAxisTicks"
-        [dateTickFormatting]="dateTickFormatting"
-        [label]="'Bilibili 訂閱'"
-        [xScaleMin]="xScaleMin"
-      ></hs-area-chart>
-    </div>
+      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+        <hs-area-chart
+          [youtube]="false"
+          [results]="bilibiliSubs"
+          [xAxisTicks]="xAxisTicks"
+          [dateTickFormatting]="dateTickFormatting"
+          [label]="'Bilibili 訂閱'"
+          [xScaleMin]="xScaleMin"
+          [xScaleMax]="xScaleMax"
+        ></hs-area-chart>
+      </div>
 
-    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
-      <hs-area-chart
-        [youtube]="true"
-        [results]="youtubeViews"
-        [xAxisTicks]="xAxisTicks"
-        [dateTickFormatting]="dateTickFormatting"
-        [label]="'YouTube 播放'"
-        [xScaleMin]="xScaleMin"
-      ></hs-area-chart>
-    </div>
+      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+        <hs-area-chart
+          [youtube]="true"
+          [results]="youtubeViews"
+          [xAxisTicks]="xAxisTicks"
+          [dateTickFormatting]="dateTickFormatting"
+          [label]="'YouTube 播放'"
+          [xScaleMin]="xScaleMin"
+          [xScaleMax]="xScaleMax"
+        ></hs-area-chart>
+      </div>
 
-    <div class="chart" fxFlex="50" fxFlex.lt-md="100">
-      <hs-area-chart
-        [youtube]="false"
-        [results]="bilibiliViews"
-        [xAxisTicks]="xAxisTicks"
-        [dateTickFormatting]="dateTickFormatting"
-        [label]="'Bilibili 播放'"
-        [xScaleMin]="xScaleMin"
-      ></hs-area-chart>
+      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+        <hs-area-chart
+          [youtube]="false"
+          [results]="bilibiliViews"
+          [xAxisTicks]="xAxisTicks"
+          [dateTickFormatting]="dateTickFormatting"
+          [label]="'Bilibili 播放'"
+          [xScaleMin]="xScaleMin"
+          [xScaleMax]="xScaleMax"
+        ></hs-area-chart>
+      </div>
     </div>
   </div>
 </div>

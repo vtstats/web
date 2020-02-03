@@ -1,68 +1,61 @@
-export type ChannelsResponse = {
-  updatedAt: string;
-  channels: Array<{
-    id: string;
-    subs: number;
-    dailySubs: number;
-    weeklySubs: number;
-    monthlySubs: number;
-    views: number;
-    dailyViews: number;
-    weeklyViews: number;
-    monthlyViews: number;
-  }>;
+export type Channel = {
+  vtuberId: string;
+
+  subscriberCount: number;
+  dailySubscriberCount: number;
+  weeklySubscriberCount: number;
+  monthlySubscriberCount: number;
+
+  viewCount: number;
+  dailyViewCount: number;
+  weeklyViewCount: number;
+  monthlyViewCount: number;
 };
 
-export type VTuberResponse = {
+export type ChannelListResponse = {
+  channels: Array<Channel>;
+};
+
+export type Stream = {
+  streamId: string;
+  title: string;
+  vtuberId: string;
+
+  scheduleTime?: string;
+  startTime?: string;
+  endTime?: string;
+
+  averageViewerCount?: number;
+  maxViewerCount?: number;
+};
+
+export type StreamListResponse = {
+  streams: Array<Stream>;
+};
+
+export type Report<K> = {
   id: string;
-  vtuber: {
-    bilibiliStats: {
-      subs: number;
-      views: number;
-      dailySubs: number;
-      dailyViews: number;
-      weeklySubs: number;
-      weeklyViews: number;
-      monthlySubs: number;
-      monthlyViews: number;
-    };
-    youtubeStats: {
-      subs: number;
-      views: number;
-      dailySubs: number;
-      dailyViews: number;
-      weeklySubs: number;
-      weeklyViews: number;
-      monthlySubs: number;
-      monthlyViews: number;
-    };
-  };
-  series: { [time: number]: [number, number, number, number] };
+  kind: K;
+  rows: Array<[string, number]>;
 };
 
-export type StreamsResponse = {
-  updatedAt: string;
-  hasMore: boolean;
-  streams: Array<{
-    id: string;
-    title: string;
-    vtuberId: string;
-    start: string;
-    end?: string;
-    avgViewers?: number;
-    maxViewers?: number;
-  }>;
+export enum StreamReportKind {
+  youtube_stream_viewer = "youtube_stream_viewer"
+}
+
+export type StreamReportResponse = {
+  streams: Array<Stream>;
+  reports: Array<Report<StreamReportKind>>;
 };
 
-export type StreamResponse = {
-  stream: {
-    id: string;
-    title: string;
-    avgViewers: number;
-    maxViewers: number;
-    end: string;
-    start: string;
-    vtuberId: string;
-  };
-  series: { [time: number]: number };
+export enum ChannelReportKind {
+  youtube_channel_subscriber = "youtube_channel_subscriber",
+  youtube_channel_view = "youtube_channel_view",
+  bilibili_channel_subscriber = "bilibili_channel_subscriber",
+  bilibili_channel_view = "bilibili_channel_view"
+}
+
+export type ChannelReportResponse = {
+  channels: Array<Channel>;
+  reports: Array<Report<ChannelReportKind>>;
 };

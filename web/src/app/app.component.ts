@@ -1,20 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
+import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 import {
-  Router,
-  NavigationStart,
-  NavigationEnd,
   NavigationCancel,
-  NavigationError
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router
 } from "@angular/router";
 import { fromEvent, Observable } from "rxjs";
-import {
-  map,
-  distinctUntilChanged,
-  debounceTime,
-  filter
-} from "rxjs/operators";
+import { filter, map, throttleTime } from "rxjs/operators";
 
 const icons: Array<{ name: string; svg: string }> = [
   {
@@ -76,6 +71,16 @@ const icons: Array<{ name: string; svg: string }> = [
     name: "tune",
     svg:
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3M3 5v2h10V5H3m10 16v-2h8v-2h-8v-2h-2v6h2M7 9v2H3v2h4v2h2V9H7m14 4v-2H11v2h10m-6-4h2V7h4V5h-4V3h-2v6z"/></svg>'
+  },
+  {
+    name: "calendar",
+    svg:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"></path></svg>'
+  },
+  {
+    name: "refresh",
+    svg:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs/><path d="M17.6 6.3A8 8 0 0012 4a8 8 0 00-8 8 8 8 0 008 8 8 8 0 007.7-6h-2a6 6 0 01-5.7 4 6 6 0 01-6-6 6 6 0 016-6 6 6 0 014.2 1.8L13 11h7V4l-2.4 2.3z"/></svg>'
   }
 ];
 
@@ -116,9 +121,8 @@ export class AppComponent implements OnInit {
     this.updateSidenav(window.innerWidth);
     fromEvent(window, "resize")
       .pipe(
-        map(() => window.innerWidth),
-        distinctUntilChanged(),
-        debounceTime(500)
+        throttleTime(500),
+        map(() => window.innerWidth)
       )
       .subscribe(width => this.updateSidenav(width));
   }

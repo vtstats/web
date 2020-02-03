@@ -1,5 +1,4 @@
 <div class="youtube-stream">
-  <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
   <div class="content" *ngFor="let group of streamGroup">
     <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
     <div fxLayout="row wrap">
@@ -12,21 +11,21 @@
       >
         <div
           class="thumbnail"
-          [routerLink]="['/stream', stream.id]"
+          [routerLink]="['/stream', stream.streamId]"
           lazyLoad
-          [video]="stream.id"
+          [video]="stream.streamId"
         >
           <div class="duration">
-            <ng-container *ngIf="stream.end; else clock">
-              {{ stream.start | parseISO | duration: (stream.end | parseISO) }}
+            <ng-container *ngIf="stream.endTime; else clock">
+              {{ stream.startTime | parseISO | duration: (stream.endTime | parseISO) }}
             </ng-container>
             <ng-template #clock>
-              {{ stream.start | parseISO | duration: (everySecond$ | async) }}
+              {{ stream.startTime | parseISO | duration: (everySecond$ | async) }}
             </ng-template>
           </div>
           <a
             class="icon"
-            href="https://youtu.be/{{ stream.id }}"
+            href="https://youtu.be/{{ stream.streamId }}"
             target="_blank"
             (click)="$event.stopPropagation()"
           >
@@ -38,21 +37,21 @@
         </div>
         <div
           class="viewers"
-          [ngClass]="{ current: !stream.end }"
+          [ngClass]="{ current: !stream.endTime }"
           fxLayout="row"
           fxLayoutAlign="start center"
         >
           <mat-icon
             class="view-icon"
             svgIcon="eye"
-            [title]="stream.end ? '直播結束' : '正在直播'"
+            [title]="stream.endTime ? '直播結束' : '正在直播'"
           ></mat-icon>
           <span title="平均同接">
-            {{ (stream.avgViewers | number) || "----" }}
+            {{ (stream.averageViewerCount | number) || "----" }}
           </span>
           <span class="separator"> / </span>
           <span title="最高同接">
-            {{ (stream.maxViewers | number) || "----" }}
+            {{ (stream.maxViewerCount | number) || "----" }}
           </span>
         </div>
         <div
@@ -67,7 +66,7 @@
           />
           <span class="name">{{ vtuber.name }}</span>
           <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
-            {{ stream.start | parseISO | distance: (everyMinute$ | async) }}
+            {{ stream.startTime | parseISO | distance: (everyMinute$ | async) }}
           </span>
         </div>
       </div>

@@ -46,8 +46,9 @@
     padding-left: 12px;
   }
 
-  $columns: subs, dailySubs, weeklySubs, monthlySubs, views, dailyViews,
-    weeklyViews, monthlyViews;
+  $columns: subscriberCount, dailySubscriberCount, weeklySubscriberCount,
+    monthlySubscriberCount, viewCount, dailyViewCount, weeklyViewCount,
+    monthlyViewCount;
 
   @each $columns in $columns {
     .mat-footer-cell.mat-column-#{$columns},

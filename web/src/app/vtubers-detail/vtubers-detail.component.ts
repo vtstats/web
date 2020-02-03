@@ -1,14 +1,11 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { format, fromUnixTime, getUnixTime, startOfToday } from "date-fns";
+import { MultiSeries } from "@swimlane/ngx-charts";
+import { endOfToday, format, parseISO, subDays } from "date-fns";
+
 import * as vtubers from "vtubers";
 
-import { VTuberResponse } from "../models";
-
-type YouTubeStats = VTuberResponse["vtuber"]["youtubeStats"];
-type BilibiliStats = VTuberResponse["vtuber"]["bilibiliStats"];
-
-const today = getUnixTime(startOfToday());
+import { ChannelReportResponse } from "../models";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -20,43 +17,64 @@ export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}
 
   vtuber;
-  xAxisTicks = [];
-  xScaleMin = 0;
+  xAxisTicks: Date[] = [];
+  xScaleMax: Date;
+  xScaleMin: Date;
 
-  bilibiliSubs = [];
-  bilibiliViews = [];
-  youtubeSubs = [];
-  youtubeViews = [];
-
-  bilibiliStats: BilibiliStats;
-  youtubeStats: YouTubeStats;
+  bilibiliSubs: MultiSeries = [];
+  bilibiliViews: MultiSeries = [];
+  youtubeSubs: MultiSeries = [];
+  youtubeViews: MultiSeries = [];
 
   ngOnInit() {
     this.vtuber = this.findVTuber(this.route.snapshot.paramMap.get("id"));
 
-    const res: VTuberResponse = this.route.snapshot.data.data;
+    const res: ChannelReportResponse = this.route.snapshot.data.data;
 
-    this.xAxisTicks = this.createTicks([0, 1, 2, 3, 4, 5, 6]);
+    this.xAxisTicks = [0, 1, 2, 3, 4, 5, 6].map(n => subDays(endOfToday(), n));
     this.xScaleMin = this.xAxisTicks[this.xAxisTicks.length - 1];
-    const youtubeSubsSeries = [];
-    const youtubeViewsSeries = [];
-    const bilibiliSubsSeries = [];
-    const bilibiliViewsSeries = [];
+    this.xScaleMax = this.xAxisTicks[0];
 
-    for (const [name, values] of Object.entries(res.series)) {
-      youtubeSubsSeries.push({ name: parseInt(name), value: values[0] });
-      youtubeViewsSeries.push({ name: parseInt(name), value: values[1] });
-      bilibiliSubsSeries.push({ name: parseInt(name), value: values[2] });
-      bilibiliViewsSeries.push({ name: parseInt(name), value: values[3] });
+    for (const report of res.reports) {
+      switch (report.kind) {
+        case "youtube_channel_subscriber":
+          this.youtubeSubs.push({
+            name: "",
+            series: report.rows.map(([name, value]) => ({
+              name: parseISO(name),
+              value
+            }))
+          });
+          break;
+        case "youtube_channel_view":
+          this.youtubeViews.push({
+            name: "",
+            series: report.rows.map(([name, value]) => ({
+              name: parseISO(name),
+              value
+            }))
+          });
+          break;
+        case "bilibili_channel_subscriber":
+          this.bilibiliSubs.push({
+            name: "",
+            series: report.rows.map(([name, value]) => ({
+              name: parseISO(name),
+              value
+            }))
+          });
+          break;
+        case "bilibili_channel_view":
+          this.bilibiliViews.push({
+            name: "",
+            series: report.rows.map(([name, value]) => ({
+              name: parseISO(name),
+              value
+            }))
+          });
+          break;
+      }
     }
-
-    this.youtubeSubs.push({ name: "", series: youtubeSubsSeries });
-    this.youtubeViews.push({ name: "", series: youtubeViewsSeries });
-    this.bilibiliSubs.push({ name: "", series: bilibiliSubsSeries });
-    this.bilibiliViews.push({ name: "", series: bilibiliViewsSeries });
-
-    this.youtubeStats = res.vtuber.youtubeStats;
-    this.bilibiliStats = res.vtuber.bilibiliStats;
   }
 
   findVTuber(id: string) {
@@ -67,15 +85,11 @@ export class VTubersDetailComponent {
     }
   }
 
-  dateTickFormatting(val: number): string {
-    return format(fromUnixTime(val), "MM/dd");
+  dateTickFormatting(val: Date): string {
+    return format(val, "MM/dd");
   }
 
   numTickFormatting(num: number): string {
     return num.toLocaleString();
-  }
-
-  createTicks(days: number[]): number[] {
-    return days.map(d => today - d * 24 * 60 * 60);
   }
 }

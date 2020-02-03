@@ -12,10 +12,8 @@ import { map } from "rxjs/operators";
 
 import * as vtubers from "vtubers";
 
-import { StreamsResponse } from "../models";
+import { StreamListResponse, Stream } from "../models";
 import { ApiService } from "../services";
-
-type Stream = StreamsResponse["streams"][0];
 
 @Component({
   selector: "hs-youtube-stream",
@@ -29,7 +27,7 @@ export class YoutubeStreamComponent implements OnInit {
   streamGroup: { day: Date; streams: Stream[] }[] = [];
   lastStreamStart: Date;
 
-  updatedAt = "";
+  // updatedAt = "";
   showSpinner = false;
 
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
@@ -49,7 +47,7 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
-    const res: StreamsResponse = this.route.snapshot.data.data;
+    const res: StreamListResponse = this.route.snapshot.data.data;
     this.addStreams(res);
   }
 
@@ -62,14 +60,14 @@ export class YoutubeStreamComponent implements OnInit {
   }
 
   trackBy(_: number, stream: Stream): string {
-    return stream.id;
+    return stream.streamId;
   }
 
-  addStreams(res: StreamsResponse) {
-    this.updatedAt = res.updatedAt;
+  addStreams(res: StreamListResponse) {
+    // this.updatedAt = res.updatedAt;
 
     for (const stream of res.streams) {
-      const start = parseISO(stream.start);
+      const start = parseISO(stream.startTime);
       if (this.lastStreamStart && isSameDay(this.lastStreamStart, start)) {
         this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
       } else {
@@ -78,7 +76,7 @@ export class YoutubeStreamComponent implements OnInit {
       this.lastStreamStart = start;
     }
 
-    if (res.hasMore) {
+    if (res.streams.length == 24) {
       this.showSpinner = true;
       this.obs.observe(this.spinnerContainer.nativeElement);
     } else {

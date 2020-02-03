@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { ChannelsResponse } from "../models";
+import { ChannelListResponse } from "../models";
 import { ApiService } from "../services";
 
 @Injectable({ providedIn: "root" })
-export class BilibiliChannelResolver implements Resolve<ChannelsResponse> {
+export class BilibiliChannelResolver implements Resolve<ChannelListResponse> {
   constructor(private apiService: ApiService) {}
 
-  resolve(): Observable<ChannelsResponse> {
+  resolve(): Observable<ChannelListResponse> {
     return this.apiService.getBilibiliChannels();
   }
 }

@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { format, fromUnixTime } from "date-fns";
+import { MultiSeries } from "@swimlane/ngx-charts";
+import { differenceInSeconds, format, parseISO, subSeconds } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
 import * as vtubers from "vtubers";
 
-import { StreamResponse } from "../models";
-
-type Stream = StreamResponse["stream"];
+import { Stream, StreamReportResponse } from "../models";
 
 @Component({
   selector: "hs-streams-detail",
@@ -20,42 +19,50 @@ export class StreamsDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   stream: Stream;
-  stats = [];
+  stats: MultiSeries = [];
+  streamId: string;
 
-  xAxisTicks = [];
-  xScaleMax = 0;
-  xScaleMin = 0;
+  xAxisTicks: Date[] = [];
+  xScaleMax: Date;
+  xScaleMin: Date;
 
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
-    const res: StreamResponse = this.route.snapshot.data.data;
+    const res: StreamReportResponse = this.route.snapshot.data.data;
+    this.streamId = this.route.snapshot.paramMap.get("id");
 
-    const series = Object.entries(res.series).map(([name, value]) => ({
-      value,
-      name: parseInt(name)
-    }));
+    if (
+      res.reports.length > 0 &&
+      res.reports[0].kind == "youtube_stream_viewer"
+    ) {
+      const series = res.reports[0].rows.map(([name, value]) => ({
+        name: parseISO(name),
+        value
+      }));
+      this.xAxisTicks = this.createTicks(
+        series[0].name,
+        series[series.length - 1].name
+      );
+      this.xScaleMin = series[0].name;
+      this.xScaleMax = series[series.length - 1].name;
+      this.stats = [{ name: "", series }];
+    }
 
-    this.xAxisTicks = this.createTicks(
-      series[0].name,
-      series[series.length - 1].name
-    );
-    this.xScaleMin = series[0].name;
-    this.xScaleMax = series[series.length - 1].name;
-    this.stats = [{ name: "viewerStats", series }];
-
-    this.stream = res.stream;
+    if (res.streams.length > 0) {
+      this.stream = res.streams[0];
+    }
   }
 
-  dateTickFormatting(val: number): string {
-    return format(fromUnixTime(val), "HH:mm");
+  dateTickFormatting(val: Date): string {
+    return format(val, "HH:mm");
   }
 
-  createTicks(start: number, end: number): number[] {
-    const seconds = end - start;
+  createTicks(start: Date, end: Date): Date[] {
+    const seconds = differenceInSeconds(end, start);
     const step = seconds > 600 ? Math.ceil(seconds / 10) : 60;
     const results = [start];
-    for (let i = end; i > start; i -= step) {
+    for (let i = end; i > start; i = subSeconds(i, step)) {
       results.push(i);
     }
     return results;

@@ -14,6 +14,10 @@
       );
     }
 
+    .menu-label {
+      color: mat-color($foreground, secondary-text);
+    }
+
     .viewers,
     .updated-at {
       color: mat-color($foreground, secondary-text);
@@ -36,7 +40,7 @@
       font-weight: mat-font-weight($config, caption);
     }
 
-    .updated-at {
+    .menu-label {
       font-size: mat-font-size($config, caption);
       font-weight: mat-font-weight($config, caption);
     }

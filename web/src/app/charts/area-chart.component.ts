@@ -1,4 +1,5 @@
 import { Input, Component, ViewEncapsulation } from "@angular/core";
+import { MultiSeries } from "@swimlane/ngx-charts";
 
 @Component({
   selector: "hs-area-chart",
@@ -7,12 +8,12 @@ import { Input, Component, ViewEncapsulation } from "@angular/core";
   encapsulation: ViewEncapsulation.None
 })
 export class AreaChartComponent {
-  @Input() xAxisTicks: number[] = [];
-  @Input() results: number[][] = [];
+  @Input() xAxisTicks: Date[] = [];
+  @Input() results: MultiSeries = [];
   @Input() youtube: boolean = true;
   @Input() label: string | null = null;
-  @Input() xScaleMax: number | null = null;
-  @Input() xScaleMin: number | null = null;
+  @Input() xScaleMax: Date | null = null;
+  @Input() xScaleMin: Date | null = null;
   @Input() dateTickFormatting: (_: number) => string;
   @Input() autoScale: boolean = true;
   @Input() timeline: boolean = false;

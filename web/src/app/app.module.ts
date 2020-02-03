@@ -1,7 +1,5 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {
   MatButtonModule,
@@ -15,29 +13,31 @@ import {
   MatTooltipModule,
   MatTreeModule
 } from "@angular/material";
-import { ServiceWorkerModule } from "@angular/service-worker";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
+import { ServiceWorkerModule } from "@angular/service-worker";
+
+import { environment } from "src/environments/environment";
 
 import { AppComponent } from "./app.component";
 import {
   BilibiliChannelComponent,
   BilibiliChannelResolver
 } from "./bilibili-channel";
+import { DirectivesModule } from "./directives";
 import { HeaderComponent } from "./header";
+import { PipesModule } from "./pipes";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
-import {
-  YoutubeStreamComponent,
-  YoutubeStreamResolver
-} from "./youtube-stream";
 import {
   YoutubeChannelComponent,
   YoutubeChannelResolver
 } from "./youtube-channel";
-import { DirectivesModule } from "./directives";
-import { PipesModule } from "./pipes";
-
-import { environment } from "src/environments/environment";
+import {
+  YoutubeStreamComponent,
+  YoutubeStreamResolver
+} from "./youtube-stream";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },

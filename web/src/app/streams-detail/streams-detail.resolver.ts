@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { StreamResponse } from "../models";
+import { StreamReportResponse } from "../models";
 import { ApiService } from "../services";
 
 @Injectable({ providedIn: "root" })
-export class StreamsDetailResolver implements Resolve<StreamResponse> {
+export class StreamsDetailResolver implements Resolve<StreamReportResponse> {
   constructor(private apiService: ApiService) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<StreamResponse> {
-    return this.apiService.getStream(route.paramMap.get("id"));
+  resolve(route: ActivatedRouteSnapshot): Observable<StreamReportResponse> {
+    return this.apiService.getStreamReport(route.paramMap.get("id"));
   }
 }

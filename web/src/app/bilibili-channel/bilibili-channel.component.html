@@ -1,14 +1,14 @@
 <div class="bilibili-channel">
-  <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+  <!-- <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
     <span class="spacer"></span>
     <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
-  </div>
+  </div> -->
   <div class="table-container">
     <table
       mat-table
       [dataSource]="dataSource"
       matSort
-      matSortActive="subs"
+      matSortActive="subscriberCount"
       matSortDirection="desc"
       matSortDisableClear
     >
@@ -17,8 +17,8 @@
         <td mat-cell *matCellDef="let row">
           <img
             class="profile"
-            src="/assets/thumbnail/{{ row.id }}.jpg"
-            [routerLink]="['/vtuber', row.id]"
+            src="/assets/thumbnail/{{ row.vtuberId }}.jpg"
+            [routerLink]="['/vtuber', row.vtuberId]"
           />
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
@@ -27,45 +27,57 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>名稱</th>
         <td mat-cell *matCellDef="let row" lang="jp">
-          {{ findVTuber(row.id).name }}
+          {{ findVTuber(row.vtuberId).name }}
         </td>
         <td mat-footer-cell *matFooterCellDef>總計</td>
       </ng-container>
 
-      <ng-container matColumnDef="subs">
+      <ng-container matColumnDef="subscriberCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 訂閱</th>
         <td mat-cell *matCellDef="let row">
-          {{ row.subs | number }}
+          {{ row.subscriberCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef>
           {{ totalSubs | number }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="dailySubs">
+      <ng-container matColumnDef="dailySubscriberCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailySubs">
-          {{ row.dailySubs | number }}
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.dailySubscriberCount"
+        >
+          {{ row.dailySubscriberCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalDailySubs">
           {{ totalDailySubs | number }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="weeklySubs">
+      <ng-container matColumnDef="weeklySubscriberCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklySubs">
-          {{ row.weeklySubs | number }}
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.weeklySubscriberCount"
+        >
+          {{ row.weeklySubscriberCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalWeeklySubs">
           {{ totalWeeklySubs | number }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="monthlySubs">
+      <ng-container matColumnDef="monthlySubscriberCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.monthlySubs">
-          {{ row.monthlySubs | number }}
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.monthlySubscriberCount"
+        >
+          {{ row.monthlySubscriberCount | number }}
         </td>
         <td
           mat-footer-cell
@@ -76,30 +88,34 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="views">
+      <ng-container matColumnDef="viewCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bilibili 觀看</th>
         <td mat-cell *matCellDef="let row">
-          {{ row.views | number }}
+          {{ row.viewCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef>
           {{ totalViews | number }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="dailyViews">
+      <ng-container matColumnDef="dailyViewCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailyViews">
-          {{ row.dailyViews | number }}
+        <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailyViewCount">
+          {{ row.dailyViewCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalDailyViews">
           {{ totalDailyViews | number }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="weeklyViews">
+      <ng-container matColumnDef="weeklyViewCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklyViews">
-          {{ row.weeklyViews | number }}
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.weeklyViewCount"
+        >
+          {{ row.weeklyViewCount | number }}
         </td>
         <td
           mat-footer-cell
@@ -110,10 +126,14 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="monthlyViews">
+      <ng-container matColumnDef="monthlyViewCount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
-        <td mat-cell *matCellDef="let row" [coloredNumber]="row.monthlyViews">
-          {{ row.monthlyViews | number }}
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [coloredNumber]="row.monthlyViewCount"
+        >
+          {{ row.monthlyViewCount | number }}
         </td>
         <td
           mat-footer-cell

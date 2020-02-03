@@ -4,9 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import * as vtubers from "vtubers";
 
-import { ChannelsResponse } from "../models";
-
-type Channel = ChannelsResponse["channels"][0];
+import { ChannelListResponse, Channel } from "../models";
 
 @Component({
   selector: "hs-youtube-channel",
@@ -19,16 +17,16 @@ export class YoutubeChannelComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  updatedAt = "";
+  // updatedAt = "";
 
   dataSource: MatTableDataSource<Channel>;
 
   ngOnInit() {
-    const res: ChannelsResponse = this.route.snapshot.data.data;
+    const res: ChannelListResponse = this.route.snapshot.data.data;
 
     this.dataSource = new MatTableDataSource(res.channels);
     this.dataSource.sort = this.sort;
-    this.updatedAt = res.updatedAt;
+    // this.updatedAt = res.updatedAt;
   }
 
   readonly hideRows: string[] = vtubers.items.reduce(
@@ -42,14 +40,14 @@ export class YoutubeChannelComponent implements OnInit {
   readonly displayedColumns: string[] = [
     "profile",
     "name",
-    "subs",
-    "dailySubs",
-    "weeklySubs",
-    "monthlySubs",
-    "views",
-    "dailyViews",
-    "weeklyViews",
-    "monthlyViews"
+    "subscriberCount",
+    "dailySubscriberCount",
+    "weeklySubscriberCount",
+    "monthlySubscriberCount",
+    "viewCount",
+    "dailyViewCount",
+    "weeklyViewCount",
+    "monthlyViewCount"
   ];
 
   findVTuber(id: string) {
@@ -67,34 +65,34 @@ export class YoutubeChannelComponent implements OnInit {
   }
 
   get totalSubs(): number {
-    return this.getTotal(v => v.subs);
+    return this.getTotal(v => v.subscriberCount);
   }
 
   get totalDailySubs(): number {
-    return this.getTotal(v => v.dailySubs);
+    return this.getTotal(v => v.dailySubscriberCount);
   }
 
   get totalWeeklySubs(): number {
-    return this.getTotal(v => v.weeklySubs);
+    return this.getTotal(v => v.weeklySubscriberCount);
   }
 
   get totalMonthlySubs(): number {
-    return this.getTotal(v => v.monthlySubs);
+    return this.getTotal(v => v.monthlySubscriberCount);
   }
 
   get totalViews(): number {
-    return this.getTotal(v => v.views);
+    return this.getTotal(v => v.viewCount);
   }
 
   get totalDailyViews(): number {
-    return this.getTotal(v => v.dailyViews);
+    return this.getTotal(v => v.dailyViewCount);
   }
 
   get totalWeeklyViews(): number {
-    return this.getTotal(v => v.weeklyViews);
+    return this.getTotal(v => v.weeklyViewCount);
   }
 
   get totalMonthlyViews(): number {
-    return this.getTotal(v => v.monthlyViews);
+    return this.getTotal(v => v.monthlyViewCount);
   }
 }

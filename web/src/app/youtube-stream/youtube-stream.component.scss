@@ -9,11 +9,27 @@
     padding: 8px 16px;
   }
 
-  .updated-at {
-    text-align: right;
+  .sub-menu {
     padding: 8px 16px;
     max-width: 960px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    .menu-value {
+      display: flex;
+      align-items: center;
+    }
+
+    .calendar-icon {
+      height: 1em;
+      width: 1em;
+    }
   }
 
   .thumbnail {
