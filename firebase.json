@@ -1,23 +1,12 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
-  "functions": {
-    "predeploy": "yarn --ignore-engines --cwd \"$RESOURCE_DIR\" run build",
-    "source": "functions"
-  },
   "hosting": {
     "public": "web/dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "cleanUrls": true,
     "rewrites": [
       {
-        "source": "!/@(api|api_v2)/**",
+        "source": "!/api/**",
         "destination": "/index.html"
-      },
-      {
-        "source": "/api/**",
-        "function": "api"
       }
     ],
     "redirects": [
@@ -32,8 +21,8 @@
         "type": 301
       },
       {
-        "source": "/api_v2/:path",
-        "destination": "https://holostats-api.poi.cat/api_v2/:path",
+        "source": "/api/v3/:path*",
+        "destination": "https://holostats-api.poi.cat/api/v3/:path",
         "type": 302
       }
     ],

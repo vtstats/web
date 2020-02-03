@@ -1,9 +1,0 @@
-{
-  "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null",
-    "streams": {
-      ".indexOn": ["end", "status"]
-    }
-  }
-}

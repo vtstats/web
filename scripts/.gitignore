@@ -1,7 +1,0 @@
-/target
-**/*.rs.bk
-
-build.rs
-src/consts.rs
-.auth.json
-.youtube_stream.json
