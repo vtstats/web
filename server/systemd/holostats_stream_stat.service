@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - Stream Stat
+
+[Service]
+Type=simple
+ExecStart=/root/server/target/release/stream_stat
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - Server
+
+[Service]
+Type=simple
+ExecStart=/root/server/target/release/server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

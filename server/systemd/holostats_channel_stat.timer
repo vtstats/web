@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - Channel Stat Timer
+
+[Timer]
+OnCalendar=*:00
+AccuracySec=1us
+Unit=holostats_channel_stat.service
+
+[Install]
+WantedBy=multi-user.target

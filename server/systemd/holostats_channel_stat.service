@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - Channel Stat
+
+[Service]
+Type=simple
+ExecStart=/root/server/target/release/channel_stat
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

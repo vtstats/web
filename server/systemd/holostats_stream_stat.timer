@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - Stream Stat Timer
+
+[Timer]
+OnCalendar=*:*:0/15
+AccuracySec=1us
+Unit=holostats_stream_stat.service
+
+[Install]
+WantedBy=multi-user.target
