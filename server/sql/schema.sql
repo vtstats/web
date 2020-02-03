@@ -63,36 +63,36 @@ BEGIN
   IF NEW.type = 'youtube_channel_subscriber' THEN
     UPDATE youtube_channels
     SET
-      daily_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 day'::interval) ORDER BY time LIMIT 1), 0),
-      weekly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 week'::interval) ORDER BY time LIMIT 1), 0),
-      monthly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 month'::interval) ORDER BY time LIMIT 1), 0)
+      daily_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 day'::interval) ORDER BY time LIMIT 1), 0),
+      weekly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 week'::interval) ORDER BY time LIMIT 1), 0),
+      monthly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 month'::interval) ORDER BY time LIMIT 1), 0)
     WHERE subscriber_statistics_id = NEW.id;
   END IF;
 
   IF NEW.type = 'youtube_channel_view' AND OLD.data <> NEW.data THEN
     UPDATE youtube_channels
     SET
-      daily_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 day'::interval) ORDER BY time LIMIT 1), 0),
-      weekly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 week'::interval) ORDER BY time LIMIT 1), 0),
-      monthly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 month'::interval) ORDER BY time LIMIT 1), 0)
+      daily_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 day'::interval) ORDER BY time LIMIT 1), 0),
+      weekly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 week'::interval) ORDER BY time LIMIT 1), 0),
+      monthly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 month'::interval) ORDER BY time LIMIT 1), 0)
     WHERE view_statistics_id = NEW.id;
   END IF;
 
   IF NEW.type = 'bilibili_channel_subscriber' AND OLD.data <> NEW.data THEN
     UPDATE bilibili_channels
     SET
-      daily_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 day'::interval) ORDER BY time LIMIT 1), 0),
-      weekly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 week'::interval) ORDER BY time LIMIT 1), 0),
-      monthly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 month'::interval) ORDER BY time LIMIT 1), 0)
+      daily_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 day'::interval) ORDER BY time LIMIT 1), 0),
+      weekly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 week'::interval) ORDER BY time LIMIT 1), 0),
+      monthly_subscriber_count = subscriber_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 month'::interval) ORDER BY time LIMIT 1), 0)
     WHERE subscriber_statistics_id = NEW.id;
   END IF;
 
   IF NEW.type = 'bilibili_channel_view' AND OLD.data <> NEW.data THEN
     UPDATE bilibili_channels
     SET
-      daily_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 day'::interval) ORDER BY time LIMIT 1), 0),
-      weekly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 week'::interval) ORDER BY time LIMIT 1), 0),
-      monthly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > ('now'::date - '1 month'::interval) ORDER BY time LIMIT 1), 0)
+      daily_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 day'::interval) ORDER BY time LIMIT 1), 0),
+      weekly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 week'::interval) ORDER BY time LIMIT 1), 0),
+      monthly_view_count = view_count - COALESCE((SELECT value FROM UNNEST(NEW.data) WHERE time > (TIMESTAMPTZ 'now' - '1 month'::interval) ORDER BY time LIMIT 1), 0)
     WHERE view_statistics_id = NEW.id;
   END IF;
 
