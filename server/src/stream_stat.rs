@@ -57,10 +57,9 @@ WHERE end_time IS NULL AND (start_time IS NOT NULL OR schedule_time < 'now')
         .await?;
     }
 
-    for stream in streams.items {
-        if let Some(details) = stream.live_streaming_details {
+    for stream in &streams.items {
+        if let Some(details) = &stream.live_streaming_details {
             if let Some(schedule) = details.scheduled_start_time {
-                println!("{:?} {}", schedule, stream.id);
                 let _ = sqlx::query!(
                     "UPDATE youtube_streams SET schedule_time = $1 WHERE stream_id = $2",
                     schedule,
@@ -90,9 +89,7 @@ WHERE end_time IS NULL AND (start_time IS NOT NULL OR schedule_time < 'now')
                 .await?;
             }
 
-            if let Some(viewers) = details.concurrent_viewers {
-                println!("{:?},{:?},{:?}", now, &viewers, &stream.id);
-
+            if let Some(viewers) = &details.concurrent_viewers {
                 let _ = sqlx::query!(
                     r#"
 UPDATE statistics
@@ -112,6 +109,13 @@ WHERE id = (
             }
         }
     }
+
+    println!(
+        "Total: {} Skipped: {} Uppdated: {}",
+        ids.len(),
+        ids.len() - streams.items.len(),
+        streams.items.len()
+    );
 
     Ok(())
 }

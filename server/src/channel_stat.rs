@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
 
     let mut pool = PgPool::new(env!("DATABASE_URL")).await?;
 
-    for channel in bilibili_channels {
+    for channel in &bilibili_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(channel.id)) {
             let _ = sqlx::query!(
                 "UPDATE bilibili_channels SET subscriber_count = $1, view_count = $2 WHERE vtuber_id = $3",
@@ -79,7 +79,7 @@ WHERE id = (
     )
     .await?;
 
-    for channel in youtube_channels {
+    for channel in &youtube_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
             let _ = sqlx::query!(
                 "UPDATE youtube_channels SET subscriber_count = $1, view_count = $2 WHERE vtuber_id = $3",
@@ -125,6 +125,12 @@ WHERE id = (
             .await?;
         }
     }
+
+    println!(
+        "Bilibili Channels Uppdated: {} YouTube Channels Updated: {}",
+        bilibili_channels.len(),
+        youtube_channels.len()
+    );
 
     Ok(())
 }
