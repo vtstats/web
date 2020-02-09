@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 
-use futures::future::try_join;
-use futures::future::TryFutureExt;
+use futures::future::{try_join, TryFutureExt};
 use reqwest::{Client, Url};
 use std::str::FromStr;
 

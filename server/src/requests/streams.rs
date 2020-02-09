@@ -2,23 +2,22 @@
 
 use chrono::{DateTime, Utc};
 use reqwest::{Client, Url};
-use serde::Deserialize;
 
 use crate::error::Result;
 
-#[derive(Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug)]
 pub struct VideosListResponse {
     pub items: Vec<Video>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Video {
     pub id: String,
     pub live_streaming_details: Option<LiveStreamingDetails>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LiveStreamingDetails {
     pub actual_start_time: Option<DateTime<Utc>>,

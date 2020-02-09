@@ -12,21 +12,23 @@ use crate::error::Result;
 async fn main() -> Result<()> {
     let client = reqwest::Client::new();
 
+    let mut pool = PgPool::new(env!("DATABASE_URL")).await?;
+
     let now = Utc::now();
+
     let bilibili_channels = requests::bilibili_channels(
         &client,
         VTUBERS.iter().flat_map(|v| v.bilibili).collect::<Vec<_>>(),
     )
     .await?;
 
-    let mut pool = PgPool::new(env!("DATABASE_URL")).await?;
-
     for channel in &bilibili_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(channel.id)) {
             let _ = sqlx::query!(
-                "UPDATE bilibili_channels SET subscriber_count = $1, view_count = $2 WHERE vtuber_id = $3",
+                "UPDATE bilibili_channels SET subscriber_count = $1, view_count = $2, updated_at = $3 WHERE vtuber_id = $4",
                 channel.subscriber_count,
                 channel.view_count,
+                now,
                 vtb.name.to_string()
             )
             .execute(&mut pool)
@@ -82,9 +84,10 @@ WHERE id = (
     for channel in &youtube_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
             let _ = sqlx::query!(
-                "UPDATE youtube_channels SET subscriber_count = $1, view_count = $2 WHERE vtuber_id = $3",
+                "UPDATE youtube_channels SET subscriber_count = $1, view_count = $2, updated_at = $3 WHERE vtuber_id = $4",
                 channel.subscriber_count,
                 channel.view_count,
+                now,
                 vtb.name.to_string()
             )
             .execute(&mut pool)

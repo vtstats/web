@@ -16,20 +16,23 @@ async fn main() -> Result<()> {
         r#"
 SELECT stream_id
 FROM youtube_streams
-WHERE end_time IS NULL AND (start_time IS NOT NULL OR schedule_time < 'now')
+WHERE end_time IS NULL AND (
+    start_time IS NOT NULL OR
+    (TIMESTAMPTZ 'now' - INTERVAL '6 hours' < schedule_time AND schedule_time < TIMESTAMPTZ 'now' + INTERVAL '5 minutes')
+)
         "#
     )
     .fetch_all(&mut pool)
     .await?;
 
+    if rows.is_empty() {
+        return Ok(());
+    }
+
     let ids = rows
         .iter()
         .map(|row| row.stream_id.as_str())
         .collect::<Vec<_>>();
-
-    if ids.is_empty() {
-        return Ok(());
-    }
 
     let now = Utc::now();
 
@@ -59,6 +62,14 @@ WHERE end_time IS NULL AND (start_time IS NOT NULL OR schedule_time < 'now')
 
     for stream in &streams.items {
         if let Some(details) = &stream.live_streaming_details {
+            let _ = sqlx::query!(
+                "UPDATE youtube_streams SET updated_at = $1 WHERE stream_id = $2",
+                now,
+                stream.id
+            )
+            .execute(&mut pool)
+            .await?;
+
             if let Some(schedule) = details.scheduled_start_time {
                 let _ = sqlx::query!(
                     "UPDATE youtube_streams SET schedule_time = $1 WHERE stream_id = $2",
