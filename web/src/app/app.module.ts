@@ -1,24 +1,22 @@
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatIconModule,
-  MatListModule,
-  MatProgressSpinnerModule,
-  MatSidenavModule,
-  MatSortModule,
-  MatTableModule,
-  MatTooltipModule,
-  MatTreeModule
-} from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatTreeModule } from "@angular/material/tree";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 
-import { environment } from "src/environments/environment";
+import { environment } from "../environments/environment";
 
 import { AppComponent } from "./app.component";
 import {
@@ -35,8 +33,8 @@ import {
   YoutubeChannelResolver
 } from "./youtube-channel";
 import {
-  YoutubeScheduleStreamComponent,
-  YoutubeSchduleStreamResolver
+  YoutubeSchduleStreamResolver,
+  YoutubeScheduleStreamComponent
 } from "./youtube-schedule-stream";
 import {
   YoutubeStreamComponent,

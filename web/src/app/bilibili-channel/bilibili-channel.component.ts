@@ -1,10 +1,11 @@
-import { OnInit, Component, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute } from "@angular/router";
-import { MatSort, MatTableDataSource } from "@angular/material";
 
 import * as vtubers from "vtubers";
 
-import { ChannelListResponse, Channel } from "../models";
+import { Channel, ChannelListResponse } from "../models";
 
 @Component({
   selector: "hs-bilibili-channel",
