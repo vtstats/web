@@ -46,6 +46,7 @@ pub struct Stream {
     average_viewer_count: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     max_viewer_count: Option<i32>,
+    updated_at: DateTime<Utc>,
 }
 
 pub async fn streams_report(
@@ -70,7 +71,8 @@ SELECT
     start_time,
     end_time,
     average_viewer_count,
-    max_viewer_count
+    max_viewer_count,
+    updated_at
 FROM youtube_streams
 WHERE stream_id = $1
         "#,

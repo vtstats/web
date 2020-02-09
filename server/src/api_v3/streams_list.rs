@@ -15,7 +15,9 @@ pub struct StreamsListRequestQuery {
 }
 
 #[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct StreamsListResponseBody {
+    updated_at: Option<DateTime<Utc>>,
     streams: Vec<Stream>,
 }
 
@@ -35,6 +37,7 @@ pub struct Stream {
     average_viewer_count: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     max_viewer_count: Option<i32>,
+    updated_at: DateTime<Utc>,
 }
 
 pub async fn youtube_streams_list(
@@ -54,7 +57,8 @@ SELECT
     start_time,
     end_time,
     average_viewer_count,
-    max_viewer_count
+    max_viewer_count,
+    updated_at
 FROM youtube_streams
 WHERE start_time > $1
 AND start_time < $2
@@ -74,7 +78,12 @@ ORDER BY start_time DESC
         .take(24)
         .collect::<Vec<_>>();
 
-    Ok(warp::reply::json(&StreamsListResponseBody { streams }))
+    let updated_at = streams.iter().map(|stream| stream.updated_at).max();
+
+    Ok(warp::reply::json(&StreamsListResponseBody {
+        updated_at,
+        streams,
+    }))
 }
 
 #[derive(serde::Deserialize)]
@@ -84,8 +93,10 @@ pub struct ScheduleStreamsListRequestQuery {
 }
 
 #[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ScheduleStreamsListResponseBody {
     streams: Vec<ScheduleStream>,
+    updated_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, serde::Serialize)]
@@ -95,6 +106,7 @@ pub struct ScheduleStream {
     title: String,
     vtuber_id: String,
     schedule_time: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
 }
 
 pub async fn youtube_schedule_streams_list(
@@ -106,7 +118,7 @@ pub async fn youtube_schedule_streams_list(
     let rows = sqlx::query_as!(
         ScheduleStream,
         r#"
-SELECT stream_id, title, vtuber_id, schedule_time
+SELECT stream_id, title, vtuber_id, schedule_time, updated_at
 FROM youtube_streams
 WHERE start_time IS NULL AND end_time IS NULL AND schedule_time IS NOT NULL
 ORDER BY schedule_time ASC
@@ -122,7 +134,10 @@ ORDER BY schedule_time ASC
         .filter(|row| ids.contains(&&*row.vtuber_id))
         .collect::<Vec<_>>();
 
+    let updated_at = streams.iter().map(|stream| stream.updated_at).max();
+
     Ok(warp::reply::json(&ScheduleStreamsListResponseBody {
         streams,
+        updated_at,
     }))
 }

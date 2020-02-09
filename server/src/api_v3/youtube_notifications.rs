@@ -112,8 +112,7 @@ fn parse_xml(xml: &str) -> Option<(String, String, String)> {
     let title = doc
         .descendants()
         .filter(|n| n.tag_name().name() == "title")
-        .skip(1)
-        .next()
+        .nth(1)
         .and_then(|n| n.text())
         .map(String::from)?;
 

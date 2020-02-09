@@ -42,6 +42,7 @@ pub struct Channel {
     daily_view_count: i32,
     weekly_view_count: i32,
     monthly_view_count: i32,
+    updated_at: DateTime<Utc>,
 }
 
 pub async fn channels_report(
@@ -67,7 +68,8 @@ SELECT
     view_count,
     daily_view_count,
     weekly_view_count,
-    monthly_view_count
+    monthly_view_count,
+    updated_at
 FROM youtube_channels
 WHERE vtuber_id = $1
             "#,

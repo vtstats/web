@@ -21,7 +21,7 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
     } else if let Some(_) = err.find::<warp::reject::MethodNotAllowed>() {
         code = StatusCode::METHOD_NOT_ALLOWED;
         message = "METHOD_NOT_ALLOWED";
-    } else if let Some(_) = err.find::<warp::reject::InvalidQuery>() {
+    } else if err.find::<warp::reject::InvalidQuery>().is_some() {
         code = StatusCode::UNPROCESSABLE_ENTITY;
         message = "INVALID_QUERY";
     } else if let Some(err) = err.find::<Error>() {

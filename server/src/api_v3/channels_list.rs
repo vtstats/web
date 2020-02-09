@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
@@ -10,7 +11,9 @@ pub struct ChannelsListRequestQuery {
 }
 
 #[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ChannelsListResponseBody {
+    updated_at: Option<DateTime<Utc>>,
     channels: Vec<Channel>,
 }
 
@@ -26,6 +29,7 @@ pub struct Channel {
     daily_view_count: i32,
     weekly_view_count: i32,
     monthly_view_count: i32,
+    updated_at: DateTime<Utc>,
 }
 
 pub async fn youtube_channels_list(
@@ -50,7 +54,8 @@ SELECT
     view_count,
     daily_view_count,
     weekly_view_count,
-    monthly_view_count
+    monthly_view_count,
+    updated_at
 FROM youtube_channels
         "#
     )
@@ -64,7 +69,12 @@ FROM youtube_channels
         .filter(|row| ids.contains(&&*row.vtuber_id))
         .collect::<Vec<_>>();
 
-    Ok(warp::reply::json(&ChannelsListResponseBody { channels }))
+    let updated_at = channels.iter().map(|channel| channel.updated_at).max();
+
+    Ok(warp::reply::json(&ChannelsListResponseBody {
+        updated_at,
+        channels,
+    }))
 }
 
 pub async fn bilibili_channels_list(
@@ -85,7 +95,8 @@ SELECT
     view_count,
     daily_view_count,
     weekly_view_count,
-    monthly_view_count
+    monthly_view_count,
+    updated_at
 FROM bilibili_channels
         "#,
     )
@@ -99,5 +110,10 @@ FROM bilibili_channels
         .filter(|row| ids.contains(&&*row.vtuber_id))
         .collect::<Vec<_>>();
 
-    Ok(warp::reply::json(&ChannelsListResponseBody { channels }))
+    let updated_at = channels.iter().map(|channel| channel.updated_at).max();
+
+    Ok(warp::reply::json(&ChannelsListResponseBody {
+        updated_at,
+        channels,
+    }))
 }
