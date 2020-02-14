@@ -84,19 +84,16 @@ export class ApiService {
     startAt?: Date,
     endAt?: Date
   ): Observable<StreamReportResponse> {
-    const params = new HttpParams({
-      fromObject: {
-        ids,
-        metrics
-      }
-    });
+    let params = new HttpParams();
+    params = params.set("ids", ids);
+    params = params.set("metrics", metrics);
 
     if (startAt) {
-      params.set("startAt", startAt.toISOString());
+      params = params.set("startAt", startAt.toISOString());
     }
 
     if (endAt) {
-      params.set("endAt", endAt.toISOString());
+      params = params.set("endAt", endAt.toISOString());
     }
 
     return this.http.get<StreamReportResponse>(`${BASE_URL}/streams_report`, {
