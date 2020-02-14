@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MultiSeries } from "@swimlane/ngx-charts";
-import { endOfToday, format, parseISO, subDays } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 import * as vtubers from "vtubers";
 
-import { ChannelReportResponse } from "../models";
+import { ChannelReportResponse, VTuber } from "../models";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -16,10 +16,7 @@ import { ChannelReportResponse } from "../models";
 export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}
 
-  vtuber;
-  xAxisTicks: Date[] = [];
-  xScaleMax: Date;
-  xScaleMin: Date;
+  vtuber: VTuber;
 
   bilibiliSubs: MultiSeries = [];
   bilibiliViews: MultiSeries = [];
@@ -30,10 +27,6 @@ export class VTubersDetailComponent {
     this.vtuber = this.findVTuber(this.route.snapshot.paramMap.get("id"));
 
     const res: ChannelReportResponse = this.route.snapshot.data.data;
-
-    this.xAxisTicks = [0, 1, 2, 3, 4, 5, 6].map(n => subDays(endOfToday(), n));
-    this.xScaleMin = this.xAxisTicks[this.xAxisTicks.length - 1];
-    this.xScaleMax = this.xAxisTicks[0];
 
     for (const report of res.reports) {
       switch (report.kind) {

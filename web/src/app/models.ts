@@ -1,3 +1,12 @@
+export type VTuber = {
+  id: string;
+  name: string;
+  twitter: string;
+  youtube?: string;
+  bilibili?: number;
+  default: boolean;
+};
+
 export type Channel = {
   vtuberId: string;
 
@@ -13,6 +22,7 @@ export type Channel = {
 };
 
 export type ChannelListResponse = {
+  updatedAt: string;
   channels: Array<Channel>;
 };
 
@@ -30,6 +40,7 @@ export type Stream = {
 };
 
 export type StreamListResponse = {
+  updatedAt: string;
   streams: Array<Stream>;
 };
 

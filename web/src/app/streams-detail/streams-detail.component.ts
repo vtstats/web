@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MultiSeries } from "@swimlane/ngx-charts";
-import { differenceInSeconds, format, parseISO, subSeconds } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -22,10 +22,6 @@ export class StreamsDetailComponent implements OnInit {
   stats: MultiSeries = [];
   streamId: string;
 
-  xAxisTicks: Date[] = [];
-  xScaleMax: Date;
-  xScaleMin: Date;
-
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
@@ -36,17 +32,13 @@ export class StreamsDetailComponent implements OnInit {
       res.reports.length > 0 &&
       res.reports[0].kind == "youtube_stream_viewer"
     ) {
-      const series = res.reports[0].rows.map(([name, value]) => ({
-        name: parseISO(name),
-        value
-      }));
-      this.xAxisTicks = this.createTicks(
-        series[0].name,
-        series[series.length - 1].name
-      );
-      this.xScaleMin = series[0].name;
-      this.xScaleMax = series[series.length - 1].name;
-      this.stats = [{ name: "", series }];
+      this.stats.push({
+        name: "",
+        series: res.reports[0].rows.map(([name, value]) => ({
+          name: parseISO(name),
+          value
+        }))
+      });
     }
 
     if (res.streams.length > 0) {
@@ -56,16 +48,6 @@ export class StreamsDetailComponent implements OnInit {
 
   dateTickFormatting(val: Date): string {
     return format(val, "HH:mm");
-  }
-
-  createTicks(start: Date, end: Date): Date[] {
-    const seconds = differenceInSeconds(end, start);
-    const step = seconds > 600 ? Math.ceil(seconds / 10) : 60;
-    const results = [start];
-    for (let i = end; i > start; i = subSeconds(i, step)) {
-      results.push(i);
-    }
-    return results;
   }
 
   findVTuber(id: string) {

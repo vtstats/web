@@ -1,6 +1,7 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { RouterModule, Routes } from "@angular/router";
 
 import { ChartsModule } from "../charts";
 import { PipesModule } from "../pipes";
@@ -23,7 +24,8 @@ const ROUTES: Routes = [
     CommonModule,
     RouterModule.forChild(ROUTES),
     ChartsModule,
-    PipesModule
+    PipesModule,
+    FlexLayoutModule
   ],
   providers: [StreamsDetailResolver]
 })

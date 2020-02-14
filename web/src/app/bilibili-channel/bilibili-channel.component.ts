@@ -18,8 +18,7 @@ export class BilibiliChannelComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  // updatedAt = "";
-
+  updatedAt = "";
   dataSource: MatTableDataSource<Channel>;
 
   ngOnInit() {
@@ -27,7 +26,7 @@ export class BilibiliChannelComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(res.channels);
     this.dataSource.sort = this.sort;
-    // this.updatedAt = res.updatedAt;
+    this.updatedAt = res.updatedAt;
   }
 
   readonly displayedColumns: string[] = [

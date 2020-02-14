@@ -27,7 +27,7 @@ export class YoutubeStreamComponent implements OnInit {
   streamGroup: { day: Date; streams: Stream[] }[] = [];
   lastStreamStart: Date;
 
-  // updatedAt = "";
+  updatedAt = "";
   showSpinner = false;
 
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
@@ -64,7 +64,7 @@ export class YoutubeStreamComponent implements OnInit {
   }
 
   addStreams(res: StreamListResponse) {
-    // this.updatedAt = res.updatedAt;
+    this.updatedAt = res.updatedAt;
 
     for (const stream of res.streams) {
       const start = parseISO(stream.startTime);
