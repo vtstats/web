@@ -46,8 +46,8 @@ export class StreamsDetailComponent implements OnInit {
     }
   }
 
-  dateTickFormatting(val: Date): string {
-    return format(val, "HH:mm");
+  dateFormatting(date: Date): string {
+    return format(date, "HH:mm");
   }
 
   findVTuber(id: string) {

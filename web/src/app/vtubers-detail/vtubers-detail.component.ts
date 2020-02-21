@@ -78,11 +78,7 @@ export class VTubersDetailComponent {
     }
   }
 
-  dateTickFormatting(val: Date): string {
-    return format(val, "MM/dd");
-  }
-
-  numTickFormatting(num: number): string {
-    return num.toLocaleString();
+  dateFormatting(date: Date): string {
+    return format(date, "MM/dd");
   }
 }

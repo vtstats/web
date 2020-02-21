@@ -43,10 +43,16 @@
         <div flex="50">
           <div class="value">
             <ng-container *ngIf="stream.endTime; else clock">
-              {{ stream.startTime | parseISO | duration: (stream.endTime | parseISO) }}
+              {{
+                stream.startTime
+                  | parseISO
+                  | duration: (stream.endTime | parseISO)
+              }}
             </ng-container>
             <ng-template #clock>
-              {{ stream.startTime | parseISO | duration: (everySecond$ | async) }}
+              {{
+                stream.startTime | parseISO | duration: (everySecond$ | async)
+              }}
             </ng-template>
           </div>
           <div class="caption">直播持續</div>
@@ -72,11 +78,8 @@
     <hs-area-chart
       [youtube]="true"
       [results]="stats"
-      [xAxisTicks]="xAxisTicks"
-      [dateTickFormatting]="dateTickFormatting"
+      [dateFormatting]="dateFormatting"
       [autoScale]="false"
-      [xScaleMax]="xScaleMax"
-      [xScaleMin]="xScaleMin"
       [timeline]="true"
     ></hs-area-chart>
   </div>
