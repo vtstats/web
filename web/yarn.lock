@@ -2,20 +2,20 @@
 # yarn lockfile v1
 
 
-"@angular-devkit/architect@0.900.1":
-  version "0.900.1"
-  resolved "https://registry.npm.taobao.org/@angular-devkit/architect/download/@angular-devkit/architect-0.900.1.tgz?cache=0&sync_timestamp=1581039304365&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40angular-devkit%2Farchitect%2Fdownload%2F%40angular-devkit%2Farchitect-0.900.1.tgz#60a39a388d1af24b64f01c16d852777e955d76da"
-  integrity sha1-YKOaOI0a8ktk8BwW2FJ3fpVddto=
-  dependencies:
-    "@angular-devkit/core" "9.0.1"
-    rxjs "6.5.3"
-
 "@angular-devkit/architect@0.900.2":
   version "0.900.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.900.2.tgz#54fa9a8d8ec3765fa2efbf28243309d07d22b842"
   integrity sha512-uClqp4QEY/m6CB7SsNZGdVNTEgMzkI1Fkt0TOdE9huN1iCi/0+h3nQb+NZ1vBqD2afg9EqDwIPu2KCU0p1BR2A==
   dependencies:
     "@angular-devkit/core" "9.0.2"
+    rxjs "6.5.3"
+
+"@angular-devkit/architect@0.900.3":
+  version "0.900.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.900.3.tgz#9c396733abd12fbb1d5bbc4542b2ee52418adb02"
+  integrity sha512-4UHc58Dlc5XHY3eiYSX9gytLyPNYixGSRwLcc/LRwuPgrmUFKPzCN3nwgB+9kc03/HN89CsJ1rS1scid6N6vxQ==
+  dependencies:
+    "@angular-devkit/core" "9.0.3"
     rxjs "6.5.3"
 
 "@angular-devkit/build-angular@~0.900.2":
@@ -105,17 +105,6 @@
     "@angular-devkit/core" "9.0.2"
     rxjs "6.5.3"
 
-"@angular-devkit/core@9.0.1":
-  version "9.0.1"
-  resolved "https://registry.npm.taobao.org/@angular-devkit/core/download/@angular-devkit/core-9.0.1.tgz#ef107b0e9eee1a28924cdf92108cdd5ab8df9b69"
-  integrity sha1-7xB7Dp7uGiiSTN+SEIzdWrjfm2k=
-  dependencies:
-    ajv "6.10.2"
-    fast-json-stable-stringify "2.0.0"
-    magic-string "0.25.4"
-    rxjs "6.5.3"
-    source-map "0.7.3"
-
 "@angular-devkit/core@9.0.2":
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-9.0.2.tgz#5febb2810531834ebfe4b52ea0db7144d30ea9e3"
@@ -127,12 +116,23 @@
     rxjs "6.5.3"
     source-map "0.7.3"
 
-"@angular-devkit/schematics@9.0.1":
-  version "9.0.1"
-  resolved "https://registry.npm.taobao.org/@angular-devkit/schematics/download/@angular-devkit/schematics-9.0.1.tgz#a27a2ba2b5fec92b33564bc5078c5f13c969931a"
-  integrity sha1-onororX+ySszVkvFB4xfE8lpkxo=
+"@angular-devkit/core@9.0.3":
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-9.0.3.tgz#a027862d2edd981afcc6245176e9f27768c631c9"
+  integrity sha512-3+abmv9K9d+BVgUAolYgoOqlGAA2Jb1pWo2biapSDG6KjUZHUCJdnsKigLtLorCdv0SrjTp56FFplkcqKsFQgA==
   dependencies:
-    "@angular-devkit/core" "9.0.1"
+    ajv "6.10.2"
+    fast-json-stable-stringify "2.0.0"
+    magic-string "0.25.4"
+    rxjs "6.5.3"
+    source-map "0.7.3"
+
+"@angular-devkit/schematics@9.0.3":
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-9.0.3.tgz#e65fa1ce08a3d5ef0af594b623024439c1110a0d"
+  integrity sha512-BQnZtFQPLZZOijhuEndtzL6cOnhaE8nNxupkRHavWohOMStnLsRyvVJj6JVDkf37wvT5koqTNjHhbdMxcCRc6A==
+  dependencies:
+    "@angular-devkit/core" "9.0.3"
     ora "4.0.2"
     rxjs "6.5.3"
 
@@ -148,16 +148,16 @@
   optionalDependencies:
     parse5 "^5.0.0"
 
-"@angular/cli@~9.0.1":
-  version "9.0.1"
-  resolved "https://registry.npm.taobao.org/@angular/cli/download/@angular/cli-9.0.1.tgz?cache=0&sync_timestamp=1581039304039&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40angular%2Fcli%2Fdownload%2F%40angular%2Fcli-9.0.1.tgz#399cdc4f85256074b808738ba3a4dec4167df53a"
-  integrity sha1-OZzcT4UlYHS4CHOLo6TexBZ99To=
+"@angular/cli@~9.0.3":
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-9.0.3.tgz#114bf16fd00685d814840f6fece286e0f8f6f1e3"
+  integrity sha512-DYa2k6ihYmvfKgv2SE/OqP76D8EEHkIFcJ3ZgVdnxEyCmUXUD4zqOVDzDIK794BdditLF88g4Mezz142bn6XUA==
   dependencies:
-    "@angular-devkit/architect" "0.900.1"
-    "@angular-devkit/core" "9.0.1"
-    "@angular-devkit/schematics" "9.0.1"
-    "@schematics/angular" "9.0.1"
-    "@schematics/update" "0.900.1"
+    "@angular-devkit/architect" "0.900.3"
+    "@angular-devkit/core" "9.0.3"
+    "@angular-devkit/schematics" "9.0.3"
+    "@schematics/angular" "9.0.3"
+    "@schematics/update" "0.900.3"
     "@yarnpkg/lockfile" "1.1.0"
     ansi-colors "4.1.1"
     debug "^4.1.1"
@@ -941,21 +941,21 @@
     rxjs "6.5.3"
     webpack-sources "1.4.3"
 
-"@schematics/angular@9.0.1":
-  version "9.0.1"
-  resolved "https://registry.npm.taobao.org/@schematics/angular/download/@schematics/angular-9.0.1.tgz#1b08c938da4dcee2472b4641f3cbc906d6eb88af"
-  integrity sha1-GwjJONpNzuJHK0ZB88vJBtbriK8=
+"@schematics/angular@9.0.3":
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-9.0.3.tgz#8b0fb91fa18dd909001ac0d888479a96810aa640"
+  integrity sha512-6XSnPW4G7aoKXccg0FTpZ02y/yi9y/bj7swnSL9Z4RRPIvPVapDjB7uJPg8sm8+PTIpcMhEFQrchIqM3LXW4zA==
   dependencies:
-    "@angular-devkit/core" "9.0.1"
-    "@angular-devkit/schematics" "9.0.1"
+    "@angular-devkit/core" "9.0.3"
+    "@angular-devkit/schematics" "9.0.3"
 
-"@schematics/update@0.900.1":
-  version "0.900.1"
-  resolved "https://registry.npm.taobao.org/@schematics/update/download/@schematics/update-0.900.1.tgz#4923be88b94b5db0b04cd2c7f3e75e67a4a13688"
-  integrity sha1-SSO+iLlLXbCwTNLH8+deZ6ShNog=
+"@schematics/update@0.900.3":
+  version "0.900.3"
+  resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.900.3.tgz#9141ee2e1b6356e66f6269b92c284c86e4faf065"
+  integrity sha512-mlRsm3/HM1f/10Wdz4xMYA+mpW3EDCB+whlV5cJ7PGMhjUMaxA9DuWvoP06h05le6XmgnjIEoxL6NJ7CgesHcA==
   dependencies:
-    "@angular-devkit/core" "9.0.1"
-    "@angular-devkit/schematics" "9.0.1"
+    "@angular-devkit/core" "9.0.3"
+    "@angular-devkit/schematics" "9.0.3"
     "@yarnpkg/lockfile" "1.1.0"
     ini "1.3.5"
     npm-package-arg "^7.0.0"
