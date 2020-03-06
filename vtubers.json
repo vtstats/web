@@ -309,8 +309,8 @@
       ]
     },
     {
-      "name": "ホロライブ中国",
-      "id": "hololive_cn",
+      "name": "ホロライブ中国一期生",
+      "id": "hololive_cn_1st",
       "members": [
         {
           "id": "yogiri",
@@ -334,6 +334,36 @@
           "twitter": "SpadeEcho",
           "youtube": null,
           "bilibili": 456368455,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "ホロライブ中国二期生",
+      "id": "hololive_cn_2nd",
+      "members": [
+        {
+          "id": "doris",
+          "name": "朵莉丝Doris",
+          "twitter": "",
+          "youtube": null,
+          "bilibili": 511613156,
+          "default": true
+        },
+        {
+          "id": "artia",
+          "name": "阿媂娅Artia",
+          "twitter": "",
+          "youtube": null,
+          "bilibili": 511613155,
+          "default": true
+        },
+        {
+          "id": "rosalyn",
+          "name": "罗莎琳Rosalyn",
+          "twitter": "",
+          "youtube": null,
+          "bilibili": 511613157,
           "default": true
         }
       ]
