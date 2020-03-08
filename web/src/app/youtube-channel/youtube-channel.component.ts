@@ -3,9 +3,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute } from "@angular/router";
 
-import * as vtubers from "vtubers";
-
-import { ChannelListResponse, Channel } from "../models";
+import { Channel, ChannelListResponse } from "src/app/models";
 
 @Component({
   selector: "hs-youtube-channel",
@@ -43,12 +41,8 @@ export class YoutubeChannelComponent implements OnInit {
     "monthlyViewCount"
   ];
 
-  findVTuber(id: string) {
-    for (const item of vtubers.items) {
-      for (const vtuber of item.members) {
-        if (vtuber.id == id) return vtuber;
-      }
-    }
+  trackBy(_: number, channel: Channel): string {
+    return channel.vtuberId;
   }
 
   private getTotal(path: (_: Channel) => number) {

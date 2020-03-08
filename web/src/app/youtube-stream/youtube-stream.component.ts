@@ -10,10 +10,8 @@ import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
-import * as vtubers from "vtubers";
-
-import { StreamListResponse, Stream } from "../models";
-import { ApiService } from "../services";
+import { Stream, StreamListResponse } from "src/app/models";
+import { ApiService } from "src/app/services";
 
 @Component({
   selector: "hs-youtube-stream",
@@ -51,18 +49,6 @@ export class YoutubeStreamComponent implements OnInit {
     this.addStreams(res);
   }
 
-  findVTuber(id: string) {
-    for (const item of vtubers.items) {
-      for (const member of item.members) {
-        if (member.id == id) return member;
-      }
-    }
-  }
-
-  trackBy(_: number, stream: Stream): string {
-    return stream.streamId;
-  }
-
   addStreams(res: StreamListResponse) {
     this.updatedAt = res.updatedAt;
 
@@ -82,5 +68,9 @@ export class YoutubeStreamComponent implements OnInit {
     } else {
       this.showSpinner = false;
     }
+  }
+
+  trackBy(_: number, stream: Stream): string {
+    return stream.streamId;
   }
 }

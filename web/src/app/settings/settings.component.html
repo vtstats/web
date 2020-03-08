@@ -27,9 +27,9 @@
         </mat-icon>
       </button>
       <mat-checkbox
-        [checked]="vtuberGroupAllSelected(node.id)"
-        [indeterminate]="vtuberGroupPartiallySelected(node.id)"
-        (change)="toggleVTuberGroup(node.id)"
+        [checked]="batchAllSelected(node.id)"
+        [indeterminate]="batchPartiallySelected(node.id)"
+        (change)="toggleBatch(node.id)"
       >
         {{ node.name }}
       </mat-checkbox>

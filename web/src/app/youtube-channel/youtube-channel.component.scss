@@ -11,6 +11,8 @@
 
   table {
     margin: 0 auto;
+    word-break: keep-all;
+    white-space: nowrap;
   }
 
   .profile {

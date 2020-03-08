@@ -25,13 +25,12 @@
         class="vtuber-row"
         fxLayoutAlign="start center"
         [routerLink]="['/vtuber', stream.vtuberId]"
-        *ngIf="findVTuber(stream.vtuberId); let vtuber"
       >
         <img
           class="profile"
           src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
         />
-        <span class="name">{{ vtuber.name }}</span>
+        <span class="name">{{ (stream.vtuberId | vtubers).name }}</span>
       </a>
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div flex="50">

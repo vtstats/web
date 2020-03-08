@@ -5,9 +5,9 @@ import {
   MatTreeFlattener
 } from "@angular/material/tree";
 
-import * as vtubers from "vtubers";
+import { vtubers, batches } from "vtubers";
 
-import { Config } from "../services";
+import { Config } from "src/app/services";
 
 interface VTuberNode {
   id: string;
@@ -50,18 +50,18 @@ export class SettingsComponent {
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
 
-  count = vtubers.items.reduce((acc, val) => acc + val.members.length, 0);
+  count = Object.keys(vtubers).length;
 
   constructor(public config: Config) {
-    this.dataSource.data = vtubers.items;
+    this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
+      id,
+      name: batch.name,
+      members: batch.vtubers.map(id => vtubers[id])
+    }));
   }
 
   getMemberIds(id: string): string[] {
-    let ids = [];
-    for (const member of vtubers.items.find(i => i.id == id).members) {
-      ids.push(member.id);
-    }
-    return ids;
+    return batches[id].vtubers;
   }
 
   toggleVTuber(id: string) {
@@ -72,12 +72,12 @@ export class SettingsComponent {
     }
   }
 
-  toggleVTuberGroup(id: string) {
-    const memberIds = this.getMemberIds(id);
-    if (memberIds.every(id => this.config.selectedVTubers.has(id))) {
-      this.config.unselectVTubers(memberIds);
+  toggleBatch(id: string) {
+    const vtuberIds = this.getMemberIds(id);
+    if (vtuberIds.every(id => this.config.selectedVTubers.has(id))) {
+      this.config.unselectVTubers(vtuberIds);
     } else {
-      this.config.selectVTubers(memberIds);
+      this.config.selectVTubers(vtuberIds);
     }
   }
 
@@ -85,13 +85,13 @@ export class SettingsComponent {
     return this.config.selectedVTubers.has(id);
   }
 
-  vtuberGroupAllSelected(id: string): boolean {
+  batchAllSelected(id: string): boolean {
     return this.getMemberIds(id).every(id =>
       this.config.selectedVTubers.has(id)
     );
   }
 
-  vtuberGroupPartiallySelected(id: string): boolean {
+  batchPartiallySelected(id: string): boolean {
     const memberIds = this.getMemberIds(id);
     return (
       memberIds.some(id => this.config.selectedVTubers.has(id)) &&

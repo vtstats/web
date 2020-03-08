@@ -7,7 +7,7 @@ import {
   ChannelReportResponse,
   StreamReportResponse,
   StreamListResponse
-} from "../models";
+} from "src/app/models";
 import { Config } from "./config";
 
 const BASE_URL = "/api/v3";
@@ -18,17 +18,13 @@ export class ApiService {
 
   getYouTubeChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
-      params: new HttpParams({
-        fromObject: { ids: this.config.joinedSelectedVTubers }
-      })
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
     });
   }
 
   getBilibiliChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/bilibili_channels`, {
-      params: new HttpParams({
-        fromObject: { ids: this.config.joinedSelectedVTubers }
-      })
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
     });
   }
 
@@ -37,13 +33,10 @@ export class ApiService {
     endAt: Date
   ): Observable<StreamListResponse> {
     return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
-      params: new HttpParams({
-        fromObject: {
-          ids: this.config.joinedSelectedVTubers,
-          startAt: startAt.toISOString(),
-          endAt: endAt.toISOString()
-        }
-      })
+      params: new HttpParams()
+        .set("ids", this.config.joinedSelectedVTubers)
+        .set("startAt", startAt.toISOString())
+        .set("endAt", endAt.toISOString())
     });
   }
 
@@ -51,11 +44,7 @@ export class ApiService {
     return this.http.get<StreamListResponse>(
       `${BASE_URL}/youtube_schedule_streams`,
       {
-        params: new HttpParams({
-          fromObject: {
-            ids: this.config.joinedSelectedVTubers
-          }
-        })
+        params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
       }
     );
   }
@@ -67,14 +56,11 @@ export class ApiService {
     endAt: Date
   ): Observable<ChannelReportResponse> {
     return this.http.get<ChannelReportResponse>(`${BASE_URL}/channels_report`, {
-      params: new HttpParams({
-        fromObject: {
-          ids,
-          metrics,
-          startAt: startAt.toISOString(),
-          endAt: endAt.toISOString()
-        }
-      })
+      params: new HttpParams()
+        .set("ids", ids)
+        .set("metrics", metrics)
+        .set("startAt", startAt.toISOString())
+        .set("endAt", endAt.toISOString())
     });
   }
 
@@ -84,9 +70,7 @@ export class ApiService {
     startAt?: Date,
     endAt?: Date
   ): Observable<StreamReportResponse> {
-    let params = new HttpParams();
-    params = params.set("ids", ids);
-    params = params.set("metrics", metrics);
+    let params = new HttpParams().set("ids", ids).set("metrics", metrics);
 
     if (startAt) {
       params = params.set("startAt", startAt.toISOString());

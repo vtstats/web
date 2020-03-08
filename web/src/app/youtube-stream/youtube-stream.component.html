@@ -64,17 +64,12 @@
             {{ (stream.maxViewerCount | number) || "----" }}
           </span>
         </div>
-        <div
-          class="time"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          *ngIf="findVTuber(stream.vtuberId); let vtuber"
-        >
+        <div class="time" fxLayout="row" fxLayoutAlign="start center">
           <img
             class="profile"
             src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
           />
-          <span class="name">{{ vtuber.name }}</span>
+          <span class="name">{{ (stream.vtuberId | vtubers).name }}</span>
           <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
             {{ stream.startTime | parseISO | distance: (everyMinute$ | async) }}
           </span>

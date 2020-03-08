@@ -7,6 +7,7 @@
     <table
       mat-table
       [dataSource]="dataSource"
+      [trackBy]="trackBy"
       matSort
       matSortActive="subscriberCount"
       matSortDirection="desc"
@@ -27,7 +28,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>名稱</th>
         <td mat-cell *matCellDef="let row" lang="jp">
-          {{ findVTuber(row.vtuberId).name }}
+          {{ (row.vtuberId | vtubers).name }}
         </td>
         <td mat-footer-cell *matFooterCellDef>總計</td>
       </ng-container>

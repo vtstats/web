@@ -5,9 +5,7 @@ import { format, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
-import * as vtubers from "vtubers";
-
-import { Stream, StreamReportResponse } from "../models";
+import { Stream, StreamReportResponse } from "src/app/models";
 
 @Component({
   selector: "hs-streams-detail",
@@ -48,13 +46,5 @@ export class StreamsDetailComponent implements OnInit {
 
   dateFormatting(date: Date): string {
     return format(date, "HH:mm");
-  }
-
-  findVTuber(id: string) {
-    for (const item of vtubers.items) {
-      for (const member of item.members) {
-        if (member.id == id) return member;
-      }
-    }
   }
 }

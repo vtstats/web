@@ -1,17 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
-import * as vtubers from "vtubers";
-
-import { Stream, StreamListResponse } from "../models";
+import { Stream, StreamListResponse } from "src/app/models";
 
 @Component({
   selector: "hs-youtube-schedule-stream",
   templateUrl: "./youtube-schedule-stream.component.html",
-  styleUrls: ["./youtube-schedule-stream.component.scss"]
+  styleUrls: ["./youtube-schedule-stream.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class YoutubeScheduleStreamComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
@@ -33,14 +32,6 @@ export class YoutubeScheduleStreamComponent implements OnInit {
         this.streamGroup.push({ day: schedule, streams: [stream] });
       }
       lastStreamSchedule = schedule;
-    }
-  }
-
-  findVTuber(id: string) {
-    for (const item of vtubers.items) {
-      for (const member of item.members) {
-        if (member.id == id) return member;
-      }
     }
   }
 

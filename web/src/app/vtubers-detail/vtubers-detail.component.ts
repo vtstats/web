@@ -3,9 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { MultiSeries } from "@swimlane/ngx-charts";
 import { format, parseISO } from "date-fns";
 
-import * as vtubers from "vtubers";
-
-import { ChannelReportResponse, VTuber } from "../models";
+import { ChannelReportResponse, VTuber } from "src/app/models";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -17,6 +15,7 @@ export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}
 
   vtuber: VTuber;
+  vtuberId: string;
 
   bilibiliSubs: MultiSeries = [];
   bilibiliViews: MultiSeries = [];
@@ -24,7 +23,7 @@ export class VTubersDetailComponent {
   youtubeViews: MultiSeries = [];
 
   ngOnInit() {
-    this.vtuber = this.findVTuber(this.route.snapshot.paramMap.get("id"));
+    this.vtuberId = this.route.snapshot.paramMap.get("id");
 
     const res: ChannelReportResponse = this.route.snapshot.data.data;
 
@@ -66,14 +65,6 @@ export class VTubersDetailComponent {
             }))
           });
           break;
-      }
-    }
-  }
-
-  findVTuber(id: string) {
-    for (const item of vtubers.items) {
-      for (const vtuber of item.members) {
-        if (vtuber.id == id) return vtuber;
       }
     }
   }
