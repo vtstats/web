@@ -32,3 +32,7 @@ path = "src/stream_stat.rs"
 [[bin]]
 name = "channel_stat"
 path = "src/channel_stat.rs"
+
+[[bin]]
+name = "subscribe"
+path = "src/subscribe.rs"
