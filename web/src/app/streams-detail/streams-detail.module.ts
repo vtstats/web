@@ -3,8 +3,9 @@ import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes } from "@angular/router";
 
-import { ChartsModule } from "../charts";
-import { PipesModule } from "../pipes";
+import { ChartsModule } from "src/app/charts";
+import { SharedModule } from "src/app/shared";
+
 import { StreamsDetailComponent } from "./streams-detail.component";
 import { StreamsDetailResolver } from "./streams-detail.resolver";
 
@@ -24,7 +25,7 @@ const ROUTES: Routes = [
     CommonModule,
     RouterModule.forChild(ROUTES),
     ChartsModule,
-    PipesModule,
+    SharedModule,
     FlexLayoutModule
   ],
   providers: [StreamsDetailResolver]

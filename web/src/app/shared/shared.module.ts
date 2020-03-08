@@ -11,4 +11,4 @@ import { VTubersPipe } from "./vtubers.pipe";
   imports: [CommonModule],
   exports: [DistancePipe, DurationPipe, ParseISOPipe, VTubersPipe]
 })
-export class PipesModule {}
+export class SharedModule {}

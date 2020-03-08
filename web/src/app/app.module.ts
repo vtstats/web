@@ -25,7 +25,7 @@ import {
 } from "./bilibili-channel";
 import { DirectivesModule } from "./directives";
 import { HeaderComponent } from "./header";
-import { PipesModule } from "./pipes";
+import { SharedModule } from "./shared";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
 import {
@@ -118,7 +118,7 @@ const ROUTES: Routes = [
     MatTableModule,
     MatTooltipModule,
     MatTreeModule,
-    PipesModule,
+    SharedModule,
     RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
