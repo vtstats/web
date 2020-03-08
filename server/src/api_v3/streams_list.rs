@@ -52,7 +52,7 @@ pub async fn youtube_streams_list(
     let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_streams")
         .fetch_one(&mut pool)
         .await
-        .map_err(Error::Sql)
+        .map_err(Error::Database)
         .map_err(warp::reject::custom)?;
 
     let updated_at = rec.max;
@@ -82,7 +82,7 @@ ORDER BY start_time DESC
     )
     .fetch_all(&mut pool)
     .await
-    .map_err(Error::Sql)
+    .map_err(Error::Database)
     .map_err(warp::reject::custom)?;
 
     Ok(warp::reply::json(&StreamsListResponseBody {
@@ -125,7 +125,7 @@ pub async fn youtube_schedule_streams_list(
     let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_streams")
         .fetch_one(&mut pool)
         .await
-        .map_err(Error::Sql)
+        .map_err(Error::Database)
         .map_err(warp::reject::custom)?;
 
     let updated_at = rec.max;
@@ -145,7 +145,7 @@ ORDER BY schedule_time ASC
     )
     .fetch_all(&mut pool)
     .await
-    .map_err(Error::Sql)
+    .map_err(Error::Database)
     .map_err(warp::reject::custom)?;
 
     Ok(warp::reply::json(&ScheduleStreamsListResponseBody {

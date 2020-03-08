@@ -29,9 +29,9 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
                 eprintln!("Json Error: {:?}", err);
                 message = "JSON_ERROR";
             }
-            Error::Sql(err) => {
-                eprintln!("Sql Error: {:?}", err);
-                message = "SQL_ERROR";
+            Error::Database(err) => {
+                eprintln!("Database Error: {:?}", err);
+                message = "DATABASE_ERROR";
             }
             Error::Url(err) => {
                 eprintln!("Url Error: {:?}", err);

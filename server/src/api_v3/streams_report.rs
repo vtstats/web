@@ -77,7 +77,7 @@ WHERE stream_id = $1
         )
         .fetch_optional(&mut pool)
         .await
-        .map_err(Error::Sql)
+        .map_err(Error::Database)
         .map_err(warp::reject::custom)?;
 
         if let Some(stream) = stream {
@@ -129,7 +129,7 @@ AS stat WHERE time > $2 AND time < $3
     )
     .fetch_all(pool)
     .await
-    .map_err(Error::Sql)
+    .map_err(Error::Database)
     .map_err(warp::reject::custom)?;
 
     Ok(StreamsReport {

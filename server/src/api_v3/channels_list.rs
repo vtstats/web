@@ -43,7 +43,7 @@ pub async fn youtube_channels_list(
     let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_channels")
         .fetch_one(&mut pool)
         .await
-        .map_err(Error::Sql)
+        .map_err(Error::Database)
         .map_err(warp::reject::custom)?;
 
     let updated_at = rec.max;
@@ -69,7 +69,7 @@ WHERE vtuber_id = ANY(string_to_array($1, ','))
     )
     .fetch_all(&mut pool)
     .await
-    .map_err(Error::Sql)
+    .map_err(Error::Database)
     .map_err(warp::reject::custom)?;
 
     Ok(warp::reply::json(&ChannelsListResponseBody {
@@ -89,7 +89,7 @@ pub async fn bilibili_channels_list(
     let rec = sqlx::query!("SELECT MAX(updated_at) FROM bilibili_channels")
         .fetch_one(&mut pool)
         .await
-        .map_err(Error::Sql)
+        .map_err(Error::Database)
         .map_err(warp::reject::custom)?;
 
     let updated_at = rec.max;
@@ -115,7 +115,7 @@ WHERE vtuber_id = ANY(string_to_array($1, ','))
     )
     .fetch_all(&mut pool)
     .await
-    .map_err(Error::Sql)
+    .map_err(Error::Database)
     .map_err(warp::reject::custom)?;
 
     Ok(warp::reply::json(&ChannelsListResponseBody {

@@ -53,7 +53,7 @@ SET title = $4
                 )
                 .execute(&mut pool)
                 .await
-                .map_err(Error::Sql)
+                .map_err(Error::Database)
                 .map_err(warp::reject::custom)?;
 
                 // TODO(sqlx): for now sqlx doesn't spport Option, https://github.com/launchbadge/sqlx/pull/94
@@ -65,7 +65,7 @@ SET title = $4
                     )
                     .execute(&mut pool)
                     .await
-                    .map_err(Error::Sql)
+                    .map_err(Error::Database)
                     .map_err(warp::reject::custom)?;
                 }
 
@@ -77,7 +77,7 @@ SET title = $4
                     )
                     .execute(&mut pool)
                     .await
-                    .map_err(Error::Sql)
+                    .map_err(Error::Database)
                     .map_err(warp::reject::custom)?;
                 }
 
@@ -89,7 +89,7 @@ SET title = $4
                     )
                     .execute(&mut pool)
                     .await
-                    .map_err(Error::Sql)
+                    .map_err(Error::Database)
                     .map_err(warp::reject::custom)?;
                 }
             }
