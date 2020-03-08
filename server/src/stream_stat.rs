@@ -1,6 +1,6 @@
-mod consts;
 mod error;
 mod requests;
+mod vtubers;
 
 use chrono::{Timelike, Utc};
 use sqlx::PgPool;

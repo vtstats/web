@@ -3,6 +3,7 @@ use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
 use crate::error::Error;
+use crate::vtubers::VTUBER_IDS;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]

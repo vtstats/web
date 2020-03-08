@@ -2,8 +2,8 @@ use chrono::{DateTime, Utc};
 use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
-use crate::consts::VTUBER_IDS;
 use crate::error::Error;
+use crate::vtubers::VTUBER_IDS;
 
 #[derive(serde::Deserialize)]
 pub struct ChannelsListRequestQuery {

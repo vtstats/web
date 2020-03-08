@@ -1,9 +1,9 @@
 mod api_v3;
-mod consts;
 mod error;
 mod reject;
 mod requests;
 mod utils;
+mod vtubers;
 
 use reqwest::Client;
 use sqlx::PgPool;

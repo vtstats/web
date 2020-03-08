@@ -1,12 +1,12 @@
-mod consts;
 mod error;
 mod requests;
+mod vtubers;
 
 use chrono::{Timelike, Utc};
 use sqlx::PgPool;
 
-use crate::consts::VTUBERS;
 use crate::error::Result;
+use crate::vtubers::VTUBERS;
 
 #[tokio::main]
 async fn main() -> Result<()> {
