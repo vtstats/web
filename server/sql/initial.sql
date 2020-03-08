@@ -216,3 +216,27 @@ INSERT INTO bilibili_channels (vtuber_id) VALUES ('ui');
 
 --- 夜霧Yogiri
 INSERT INTO bilibili_channels (vtuber_id) VALUES ('yogiri');
+
+--- 天音かなた
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('kanata');
+
+--- 桐生ココ
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('coco');
+
+--- 角巻わため
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('watame');
+
+--- 常闇トワ
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('towa');
+
+--- 姫森ルーナ
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('himemoriluna');
+
+--- 朵莉丝Doris
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('doris');
+
+--- 阿媂娅Artia
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('artia');
+
+--- 罗莎琳Rosalyn
+INSERT INTO bilibili_channels (vtuber_id) VALUES ('rosalyn');
