@@ -1,7 +1,7 @@
 use chrono::{Timelike, Utc};
 use reqwest::Client;
 use sqlx::PgPool;
-use warp::Rejection;
+use warp::{http::StatusCode, Rejection};
 
 use crate::error::Error;
 use crate::requests::youtube_streams;
@@ -13,7 +13,7 @@ pub struct VerifyIntentRequestQuery {
     challenge: String,
 }
 
-pub fn verify_intent(query: VerifyIntentRequestQuery) -> impl warp::reply::Reply {
+pub fn verify_intent(query: VerifyIntentRequestQuery) -> String {
     query.challenge
 }
 
@@ -21,7 +21,7 @@ pub async fn publish_content(
     body: String,
     mut pool: PgPool,
     client: Client,
-) -> Result<impl warp::reply::Reply, Rejection> {
+) -> Result<StatusCode, Rejection> {
     let now = Utc::now();
 
     if let Some((vtuber_id, video_id, title)) = parse_xml(&body) {
@@ -94,9 +94,11 @@ SET title = $4
                 }
             }
         }
+    } else {
+        eprintln!("Invalid XML: {}", body);
     }
 
-    Ok(warp::reply())
+    Ok(StatusCode::OK)
 }
 
 fn parse_xml(xml: &str) -> Option<(String, String, String)> {

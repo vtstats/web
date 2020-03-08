@@ -49,13 +49,10 @@ pub async fn channels_report(
     query: ChannelsReportRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
-    let metrics = query.metrics.split(',').collect::<Vec<_>>();
-
     let mut channels = vec![];
     let mut reports = vec![];
 
-    for id in ids {
+    for id in query.ids.split(',') {
         let channel = sqlx::query_as!(
             Channel,
             r#"
@@ -83,8 +80,8 @@ WHERE vtuber_id = $1
         if let Some(channel) = channel {
             channels.push(channel);
 
-            for metric in &metrics {
-                match *metric {
+            for metric in query.metrics.split(',') {
+                match metric {
                     "youtube_channel_subscriber" => reports.push(
                         youtube_channel_subscriber(
                             id.to_string(),

@@ -13,7 +13,7 @@ pub struct ChannelsListRequestQuery {
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelsListResponseBody {
-    updated_at: Option<DateTime<Utc>>,
+    updated_at: DateTime<Utc>,
     channels: Vec<Channel>,
 }
 
@@ -36,11 +36,17 @@ pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
-
-    if ids.iter().any(|id| !VTUBER_IDS.contains(id)) {
+    if query.ids.split(',').any(|id| !VTUBER_IDS.contains(&id)) {
         // TODO: return invalid request string
     }
+
+    let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_channels")
+        .fetch_one(&mut pool)
+        .await
+        .map_err(Error::Sql)
+        .map_err(warp::reject::custom)?;
+
+    let updated_at = rec.max;
 
     let channels = sqlx::query_as!(
         Channel,
@@ -57,19 +63,14 @@ SELECT
     monthly_view_count,
     updated_at
 FROM youtube_channels
-        "#
+WHERE vtuber_id = ANY(string_to_array($1, ','))
+        "#,
+        query.ids
     )
     .fetch_all(&mut pool)
     .await
     .map_err(Error::Sql)
     .map_err(warp::reject::custom)?;
-
-    let channels = channels
-        .into_iter()
-        .filter(|row| ids.contains(&&*row.vtuber_id))
-        .collect::<Vec<_>>();
-
-    let updated_at = channels.iter().map(|channel| channel.updated_at).max();
 
     Ok(warp::reply::json(&ChannelsListResponseBody {
         updated_at,
@@ -81,7 +82,17 @@ pub async fn bilibili_channels_list(
     query: ChannelsListRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
+    if query.ids.split(',').any(|id| !VTUBER_IDS.contains(&id)) {
+        // TODO: return invalid request string
+    }
+
+    let rec = sqlx::query!("SELECT MAX(updated_at) FROM bilibili_channels")
+        .fetch_one(&mut pool)
+        .await
+        .map_err(Error::Sql)
+        .map_err(warp::reject::custom)?;
+
+    let updated_at = rec.max;
 
     let channels = sqlx::query_as!(
         Channel,
@@ -98,19 +109,14 @@ SELECT
     monthly_view_count,
     updated_at
 FROM bilibili_channels
+WHERE vtuber_id = ANY(string_to_array($1, ','))
         "#,
+        query.ids
     )
     .fetch_all(&mut pool)
     .await
     .map_err(Error::Sql)
     .map_err(warp::reject::custom)?;
-
-    let channels = channels
-        .into_iter()
-        .filter(|row| ids.contains(&&*row.vtuber_id))
-        .collect::<Vec<_>>();
-
-    let updated_at = channels.iter().map(|channel| channel.updated_at).max();
 
     Ok(warp::reply::json(&ChannelsListResponseBody {
         updated_at,

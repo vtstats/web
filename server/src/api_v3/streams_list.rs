@@ -18,7 +18,7 @@ pub struct StreamsListRequestQuery {
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamsListResponseBody {
-    updated_at: Option<DateTime<Utc>>,
+    updated_at: DateTime<Utc>,
     streams: Vec<Stream>,
 }
 
@@ -45,9 +45,19 @@ pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
+    if query.ids.split(',').any(|id| !VTUBER_IDS.contains(&id)) {
+        // TODO: return invalid request string
+    }
 
-    let rows = sqlx::query_as!(
+    let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_streams")
+        .fetch_one(&mut pool)
+        .await
+        .map_err(Error::Sql)
+        .map_err(warp::reject::custom)?;
+
+    let updated_at = rec.max;
+
+    let streams = sqlx::query_as!(
         Stream,
         r#"
 SELECT
@@ -61,10 +71,12 @@ SELECT
     max_viewer_count,
     updated_at
 FROM youtube_streams
-WHERE start_time > $1
-AND start_time < $2
+WHERE vtuber_id = ANY(string_to_array($1, ','))
+AND start_time > $2
+AND start_time < $3
 ORDER BY start_time DESC
         "#,
+        query.ids,
         query.start_at,
         query.end_at
     )
@@ -72,14 +84,6 @@ ORDER BY start_time DESC
     .await
     .map_err(Error::Sql)
     .map_err(warp::reject::custom)?;
-
-    let streams = rows
-        .into_iter()
-        .filter(|row| ids.contains(&&*row.vtuber_id))
-        .take(24)
-        .collect::<Vec<_>>();
-
-    let updated_at = streams.iter().map(|stream| stream.updated_at).max();
 
     Ok(warp::reply::json(&StreamsListResponseBody {
         updated_at,
@@ -96,8 +100,8 @@ pub struct ScheduleStreamsListRequestQuery {
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScheduleStreamsListResponseBody {
+    updated_at: DateTime<Utc>,
     streams: Vec<ScheduleStream>,
-    updated_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, serde::Serialize)]
@@ -114,28 +118,35 @@ pub async fn youtube_schedule_streams_list(
     query: ScheduleStreamsListRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
+    if query.ids.split(',').any(|id| !VTUBER_IDS.contains(&id)) {
+        // TODO: return invalid request string
+    }
 
-    let rows = sqlx::query_as!(
+    let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_streams")
+        .fetch_one(&mut pool)
+        .await
+        .map_err(Error::Sql)
+        .map_err(warp::reject::custom)?;
+
+    let updated_at = rec.max;
+
+    let streams = sqlx::query_as!(
         ScheduleStream,
         r#"
 SELECT stream_id, title, vtuber_id, schedule_time, updated_at
 FROM youtube_streams
-WHERE start_time IS NULL AND end_time IS NULL AND schedule_time IS NOT NULL
+WHERE vtuber_id = ANY(string_to_array($1, ','))
+AND start_time IS NULL
+AND end_time IS NULL
+AND schedule_time IS NOT NULL
 ORDER BY schedule_time ASC
         "#,
+        query.ids
     )
     .fetch_all(&mut pool)
     .await
     .map_err(Error::Sql)
     .map_err(warp::reject::custom)?;
-
-    let streams = rows
-        .into_iter()
-        .filter(|row| ids.contains(&&*row.vtuber_id))
-        .collect::<Vec<_>>();
-
-    let updated_at = streams.iter().map(|stream| stream.updated_at).max();
 
     Ok(warp::reply::json(&ScheduleStreamsListResponseBody {
         streams,

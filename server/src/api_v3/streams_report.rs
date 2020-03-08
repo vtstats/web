@@ -53,13 +53,10 @@ pub async fn streams_report(
     query: StreamsReportRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let ids = query.ids.split(',').collect::<Vec<_>>();
-    let metrics = query.metrics.split(',').collect::<Vec<_>>();
-
     let mut streams = vec![];
     let mut reports = vec![];
 
-    for id in &ids {
+    for id in query.ids.split(',') {
         let stream = sqlx::query_as!(
             Stream,
             r#"
@@ -85,8 +82,8 @@ WHERE stream_id = $1
 
         if let Some(stream) = stream {
             streams.push(stream);
-            for metric in &metrics {
-                match *metric {
+            for metric in query.metrics.split(',') {
+                match metric {
                     "youtube_stream_viewer" => reports.push(
                         youtube_stream_viewer(
                             id.to_string(),
