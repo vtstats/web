@@ -3,7 +3,7 @@ name = "holostats-server"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
-build = "build.rs"
+# build = "build.rs"
 
 [dependencies]
 bytes = "0.5.4"

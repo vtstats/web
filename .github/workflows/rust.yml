@@ -62,4 +62,7 @@ jobs:
     - name: Run Test
       run: cargo test --manifest-path server/Cargo.toml
       env:
+        YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
+        YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
         DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
+        PUBSUBHUBBUB_URL: PUBSUBHUBBUB_URL
