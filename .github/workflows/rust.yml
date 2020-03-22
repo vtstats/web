@@ -12,9 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - run: cargo fmt --all -- --check
+    - run: cargo fmt --manifest-path server/Cargo.toml -- --check
 
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -59,7 +59,7 @@ jobs:
         path: target
         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Build Project
-      run: cargo build --relase
+    - name: Run Test
+      run: cargo test --manifest-path server/Cargo.toml
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
