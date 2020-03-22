@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        postgres: 12
+        postgres: [12]
 
     services:
       postgres:
