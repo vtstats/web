@@ -1,6 +1,7 @@
 name: Rust
 
 on:
+  pull_request:
   push:
     branches:
       - master
@@ -66,3 +67,58 @@ jobs:
         YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
         DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
         PUBSUBHUBBUB_URL: PUBSUBHUBBUB_URL
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+
+    strategy:
+      matrix:
+        postgres: [12]
+
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+        # will assign a random free host port
+        - 5432/tcp
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Initialize database
+      run: psql -f server/sql/schema.sql
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        PGDATABASE: postgres
+        PGPORT: ${{ job.services.postgres.ports[5432] }}
+
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+
+    - name: Cache target/
+      uses: actions/cache@v1
+      with:
+        path: target
+        key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+    - name: Build project
+      run: cargo build --release --manifest-path server/Cargo.toml
+      env:
+        DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
+        YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
+        YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
+        PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
