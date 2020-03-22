@@ -1,12 +1,28 @@
-name: Build and deploy
+name: Angular
 
 on:
+  pull_request:
   push:
     branches:
       - master
 
 jobs:
-  firebase-deploy:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Add yarn global bin to path
+      run: echo "::add-path::$(yarn global bin)"
+
+    - name: Run Prettier
+      working-directory: web
+      run: |
+        yarn global add prettier
+        prettier --check --ignore-path .gitignore 'src/**/*.{js,json.html,scss}'
+
+  deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,10 +54,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build web
+        working-directory: web
         run: |
-          yarn --cwd web/
-          sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" web/src/environments/*
-          yarn --cwd web/ build --prod
+          yarn install
+          sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
+          yarn build --prod
 
       - name: Deploy to firebase
         env:
