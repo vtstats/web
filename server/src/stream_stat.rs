@@ -14,12 +14,15 @@ async fn main() -> Result<()> {
 
     let rows = sqlx::query!(
         r#"
-SELECT stream_id
-FROM youtube_streams
-WHERE end_time IS NULL AND (
-    start_time IS NOT NULL OR
-    (TIMESTAMPTZ 'now' - INTERVAL '6 hours' < schedule_time AND schedule_time < TIMESTAMPTZ 'now' + INTERVAL '5 minutes')
-)
+select stream_id
+  from youtube_streams
+ where end_time IS NULL
+   and (
+         start_time is not null or (
+           schedule_time > now() - interval '6 hours'
+           and schedule_time < now() + interval '5 minutes'
+         )
+       )
         "#
     )
     .fetch_all(&mut pool)
@@ -103,17 +106,12 @@ WHERE end_time IS NULL AND (
             if let Some(viewers) = &details.concurrent_viewers {
                 let _ = sqlx::query!(
                     r#"
-UPDATE statistics
-SET data = array_append(data, ($1, $2)::statistic)
-WHERE id = (
-    SELECT viewer_statistics_id
-    FROM youtube_streams
-    WHERE stream_id = $3
-)
+insert into youtube_stream_viewer_statistic (stream_id, time, value)
+     values ($1, $2, $3)
                     "#,
+                    stream.id,
                     now,
-                    i32::from_str(&viewers).unwrap(),
-                    stream.id
+                    i32::from_str(&viewers).unwrap()
                 )
                 .execute(&mut pool)
                 .await?;

@@ -56,19 +56,18 @@ pub async fn channels_report(
         let channel = sqlx::query_as!(
             Channel,
             r#"
-SELECT
-    vtuber_id,
-    subscriber_count,
-    daily_subscriber_count,
-    weekly_subscriber_count,
-    monthly_subscriber_count,
-    view_count,
-    daily_view_count,
-    weekly_view_count,
-    monthly_view_count,
-    updated_at
-FROM youtube_channels
-WHERE vtuber_id = $1
+select vtuber_id,
+       subscriber_count,
+       daily_subscriber_count,
+       weekly_subscriber_count,
+       monthly_subscriber_count,
+       view_count,
+       daily_view_count,
+       weekly_view_count,
+       monthly_view_count,
+       updated_at
+  from youtube_channels
+ where vtuber_id = $1
             "#,
             id.to_string()
         )
@@ -138,15 +137,11 @@ async fn youtube_channel_subscriber(
 ) -> Result<ChannelsReport, Rejection> {
     let rows = sqlx::query!(
         r#"
-SELECT * FROM (
-    SELECT (unnest(data)).* FROM statistics
-    WHERE id = (
-        SELECT subscriber_statistics_id
-        FROM youtube_channels
-        WHERE vtuber_id = $1
-    )
-)
-AS stat WHERE time > $2 AND time < $3
+select time, value
+  from youtube_channel_subscriber_statistic
+ where vtuber_id = $1
+   and time > $2
+   and time < $3
         "#,
         id,
         start_at,
@@ -175,15 +170,11 @@ async fn youtube_channel_view(
 ) -> Result<ChannelsReport, Rejection> {
     let rows = sqlx::query!(
         r#"
-SELECT * FROM (
-    SELECT (unnest(data)).* FROM statistics
-    WHERE id = (
-        SELECT view_statistics_id
-        FROM youtube_channels
-        WHERE vtuber_id = $1
-    )
-)
-AS stat WHERE time > $2 AND time < $3
+select time, value
+  from youtube_channel_view_statistic
+ where vtuber_id = $1
+   and time > $2
+   and time < $3
         "#,
         id,
         start_at,
@@ -212,15 +203,11 @@ async fn bilibili_channel_subscriber(
 ) -> Result<ChannelsReport, Rejection> {
     let rows = sqlx::query!(
         r#"
-SELECT * FROM (
-    SELECT (unnest(data)).* FROM statistics
-    WHERE id = (
-        SELECT subscriber_statistics_id
-        FROM bilibili_channels
-        WHERE vtuber_id = $1
-    )
-)
-AS stat WHERE time > $2 AND time < $3
+select time, value
+  from bilibili_channel_subscriber_statistic
+ where vtuber_id = $1
+   and time > $2
+   and time < $3
         "#,
         id,
         start_at,
@@ -249,15 +236,11 @@ async fn bilibili_channel_view(
 ) -> Result<ChannelsReport, Rejection> {
     let rows = sqlx::query!(
         r#"
-SELECT * FROM (
-    SELECT (unnest(data)).* FROM statistics
-    WHERE id = (
-        SELECT view_statistics_id
-        FROM bilibili_channels
-        WHERE vtuber_id = $1
-    )
-)
-AS stat WHERE time > $2 AND time < $3
+select time, value
+  from bilibili_channel_view_statistic
+ where vtuber_id = $1
+   and time > $2
+   and time < $3
         "#,
         id,
         start_at,

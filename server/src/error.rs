@@ -13,6 +13,8 @@ pub enum Error {
     Database(DatabaseError),
     Url(UrlError),
     Utf8(Utf8Error),
+
+    InvalidQuery,
 }
 
 impl Reject for Error {}

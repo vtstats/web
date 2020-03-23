@@ -60,18 +60,17 @@ pub async fn streams_report(
         let stream = sqlx::query_as!(
             Stream,
             r#"
-SELECT
-    stream_id,
-    title,
-    vtuber_id,
-    schedule_time,
-    start_time,
-    end_time,
-    average_viewer_count,
-    max_viewer_count,
-    updated_at
-FROM youtube_streams
-WHERE stream_id = $1
+select stream_id,
+       title,
+       vtuber_id,
+       schedule_time,
+       start_time,
+       end_time,
+       average_viewer_count,
+       max_viewer_count,
+       updated_at
+  from youtube_streams
+ where stream_id = $1
         "#,
             id.to_string()
         )
@@ -113,15 +112,11 @@ async fn youtube_stream_viewer(
 ) -> Result<StreamsReport, Rejection> {
     let rows = sqlx::query!(
         r#"
-SELECT * FROM (
-    SELECT (unnest(data)).* FROM statistics
-    WHERE id = (
-        SELECT viewer_statistics_id
-        FROM youtube_streams
-        WHERE stream_id = $1
-    )
-)
-AS stat WHERE time > $2 AND time < $3
+select time, value
+  from youtube_stream_viewer_statistic
+ where stream_id = $1
+   and time > $2
+   and time < $3
         "#,
         id,
         start_at,

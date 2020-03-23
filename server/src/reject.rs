@@ -6,9 +6,9 @@ use warp::Reply;
 use crate::error::Error;
 
 #[derive(serde::Serialize)]
-struct ErrorMessage {
-    code: u16,
-    message: String,
+pub struct ErrorMessage {
+    pub code: u16,
+    pub message: String,
 }
 
 pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
@@ -19,27 +19,35 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
         code = StatusCode::NOT_FOUND;
         message = "NOT_FOUND";
     } else if let Some(err) = err.find::<Error>() {
-        code = StatusCode::INTERNAL_SERVER_ERROR;
         match err {
             Error::Http(err) => {
                 eprintln!("Http Error: {:?}", err);
+                code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "HTTP_ERROR";
             }
             Error::Json(err) => {
                 eprintln!("Json Error: {:?}", err);
+                code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "JSON_ERROR";
             }
             Error::Database(err) => {
                 eprintln!("Database Error: {:?}", err);
+                code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "DATABASE_ERROR";
             }
             Error::Url(err) => {
                 eprintln!("Url Error: {:?}", err);
+                code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "URL_ERROR";
             }
             Error::Utf8(err) => {
                 eprintln!("Utf8 Error: {:?}", err);
+                code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "UTF8_ERROR";
+            }
+            Error::InvalidQuery => {
+                code = StatusCode::UNPROCESSABLE_ENTITY;
+                message = "INVALID_QUERY";
             }
         }
     } else if err.find::<warp::reject::InvalidQuery>().is_some() {

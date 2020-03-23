@@ -60,21 +60,21 @@ pub async fn youtube_streams_list(
     let streams = sqlx::query_as!(
         Stream,
         r#"
-SELECT
-    stream_id,
-    title,
-    vtuber_id,
-    schedule_time,
-    start_time,
-    end_time,
-    average_viewer_count,
-    max_viewer_count,
-    updated_at
-FROM youtube_streams
-WHERE vtuber_id = ANY(string_to_array($1, ','))
-AND start_time > $2
-AND start_time < $3
-ORDER BY start_time DESC
+  select stream_id,
+         title,
+         vtuber_id,
+         schedule_time,
+         start_time,
+         end_time,
+         average_viewer_count,
+         max_viewer_count,
+         updated_at
+    from youtube_streams
+   where vtuber_id = any(string_to_array($1, ','))
+     and start_time > $2
+     and start_time < $3
+order by start_time desc
+   limit 24
         "#,
         query.ids,
         query.start_at,
@@ -133,13 +133,13 @@ pub async fn youtube_schedule_streams_list(
     let streams = sqlx::query_as!(
         ScheduleStream,
         r#"
-SELECT stream_id, title, vtuber_id, schedule_time, updated_at
-FROM youtube_streams
-WHERE vtuber_id = ANY(string_to_array($1, ','))
-AND start_time IS NULL
-AND end_time IS NULL
-AND schedule_time IS NOT NULL
-ORDER BY schedule_time ASC
+  select stream_id, title, vtuber_id, schedule_time, updated_at
+    from youtube_streams
+   where vtuber_id = any(string_to_array($1, ','))
+     and start_time is null
+     and end_time is null
+     and schedule_time is not null
+order by schedule_time asc
         "#,
         query.ids
     )

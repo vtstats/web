@@ -41,10 +41,10 @@ pub async fn publish_content(
             if let Some(details) = stream.live_streaming_details {
                 let _ = sqlx::query!(
                     r#"
-INSERT INTO youtube_streams (stream_id, title, vtuber_id)
-VALUES ($1, $2, $3)
-ON CONFLICT (stream_id) DO UPDATE
-SET title = $4
+insert into youtube_streams (stream_id, title, vtuber_id)
+     values ($1, $2, $3)
+on conflict (stream_id) do update
+        set title = $4
                     "#,
                     stream.id,
                     title,
@@ -59,7 +59,11 @@ SET title = $4
                 // TODO(sqlx): for now sqlx doesn't spport Option, https://github.com/launchbadge/sqlx/pull/94
                 if let Some(schedule) = details.scheduled_start_time {
                     let _ = sqlx::query!(
-                        "UPDATE youtube_streams SET schedule_time = $1 WHERE stream_id = $2",
+                        r#"
+update youtube_streams
+   set schedule_time = $1
+ where stream_id = $2
+                        "#,
                         schedule,
                         stream.id
                     )
@@ -71,7 +75,11 @@ SET title = $4
 
                 if let Some(start) = details.actual_start_time {
                     let _ = sqlx::query!(
-                        "UPDATE youtube_streams SET start_time = $1 WHERE stream_id = $2",
+                        r#"
+update youtube_streams
+   set start_time = $1
+ where stream_id = $2
+                        "#,
                         start,
                         stream.id
                     )
@@ -83,7 +91,11 @@ SET title = $4
 
                 if let Some(end) = details.actual_end_time {
                     let _ = sqlx::query!(
-                        "UPDATE youtube_streams SET end_time = $1 WHERE stream_id = $2",
+                        r#"
+update youtube_streams
+   set end_time = $1
+ where stream_id = $2
+                        "#,
                         end,
                         stream.id
                     )

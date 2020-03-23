@@ -13,34 +13,36 @@ pub struct ChannelsListRequestQuery {
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelsListResponseBody {
-    updated_at: DateTime<Utc>,
-    channels: Vec<Channel>,
+    pub updated_at: DateTime<Utc>,
+    pub channels: Vec<Channel>,
 }
 
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
-    vtuber_id: String,
-    subscriber_count: i32,
-    daily_subscriber_count: i32,
-    weekly_subscriber_count: i32,
-    monthly_subscriber_count: i32,
-    view_count: i32,
-    daily_view_count: i32,
-    weekly_view_count: i32,
-    monthly_view_count: i32,
-    updated_at: DateTime<Utc>,
+    pub vtuber_id: String,
+    pub subscriber_count: i32,
+    pub daily_subscriber_count: i32,
+    pub weekly_subscriber_count: i32,
+    pub monthly_subscriber_count: i32,
+    pub view_count: i32,
+    pub daily_view_count: i32,
+    pub weekly_view_count: i32,
+    pub monthly_view_count: i32,
+    pub updated_at: DateTime<Utc>,
 }
 
 pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     mut pool: PgPool,
 ) -> Result<Json, Rejection> {
-    if query.ids.split(',').any(|id| !VTUBER_IDS.contains(&id)) {
-        // TODO: return invalid request string
+    let mut ids = query.ids.split(',');
+
+    if ids.any(|id| !VTUBER_IDS.contains(&id)) {
+        return Err(warp::reject::custom(Error::InvalidQuery));
     }
 
-    let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_channels")
+    let rec = sqlx::query!("select max(updated_at) from youtube_channels")
         .fetch_one(&mut pool)
         .await
         .map_err(Error::Database)
@@ -51,19 +53,18 @@ pub async fn youtube_channels_list(
     let channels = sqlx::query_as!(
         Channel,
         r#"
-SELECT
-    vtuber_id,
-    subscriber_count,
-    daily_subscriber_count,
-    weekly_subscriber_count,
-    monthly_subscriber_count,
-    view_count,
-    daily_view_count,
-    weekly_view_count,
-    monthly_view_count,
-    updated_at
-FROM youtube_channels
-WHERE vtuber_id = ANY(string_to_array($1, ','))
+select vtuber_id,
+       subscriber_count,
+       daily_subscriber_count,
+       weekly_subscriber_count,
+       monthly_subscriber_count,
+       view_count,
+       daily_view_count,
+       weekly_view_count,
+       monthly_view_count,
+       updated_at
+  from youtube_channels
+ where vtuber_id = any(string_to_array($1, ','))
         "#,
         query.ids
     )
@@ -97,19 +98,18 @@ pub async fn bilibili_channels_list(
     let channels = sqlx::query_as!(
         Channel,
         r#"
-SELECT
-    vtuber_id,
-    subscriber_count,
-    daily_subscriber_count,
-    weekly_subscriber_count,
-    monthly_subscriber_count,
-    view_count,
-    daily_view_count,
-    weekly_view_count,
-    monthly_view_count,
-    updated_at
-FROM bilibili_channels
-WHERE vtuber_id = ANY(string_to_array($1, ','))
+select vtuber_id,
+       subscriber_count,
+       daily_subscriber_count,
+       weekly_subscriber_count,
+       monthly_subscriber_count,
+       view_count,
+       daily_view_count,
+       weekly_view_count,
+       monthly_view_count,
+       updated_at
+  from bilibili_channels
+ where vtuber_id = any(string_to_array($1, ','))
         "#,
         query.ids
     )

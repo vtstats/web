@@ -25,7 +25,12 @@ async fn main() -> Result<()> {
     for channel in &bilibili_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(channel.id)) {
             let _ = sqlx::query!(
-                "UPDATE bilibili_channels SET subscriber_count = $1, view_count = $2, updated_at = $3 WHERE vtuber_id = $4",
+                r#"
+update bilibili_channels
+   set (subscriber_count, view_count, updated_at)
+     = ($1, $2, $3)
+ where vtuber_id = $4
+                "#,
                 channel.subscriber_count,
                 channel.view_count,
                 now,
@@ -36,34 +41,24 @@ async fn main() -> Result<()> {
 
             let _ = sqlx::query!(
                 r#"
-UPDATE statistics
-SET data = array_append(data, ($1, $2)::statistic)
-WHERE id = (
-    SELECT subscriber_statistics_id
-    FROM bilibili_channels
-    WHERE vtuber_id = $3
-)
+insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
+     values ($1, $2, $3)
                 "#,
+                vtb.name.to_string(),
                 now,
-                channel.subscriber_count,
-                vtb.name.to_string()
+                channel.subscriber_count
             )
             .execute(&mut pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-UPDATE statistics
-SET data = array_append(data, ($1, $2)::statistic)
-WHERE id = (
-    SELECT view_statistics_id
-    FROM bilibili_channels
-    WHERE vtuber_id = $3
-)
+insert into bilibili_channel_view_statistic (vtuber_id, time, value)
+     values ($1, $2, $3)
                 "#,
+                vtb.name.to_string(),
                 now,
-                channel.view_count,
-                vtb.name.to_string()
+                channel.view_count
             )
             .execute(&mut pool)
             .await?;
@@ -84,7 +79,12 @@ WHERE id = (
     for channel in &youtube_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
             let _ = sqlx::query!(
-                "UPDATE youtube_channels SET subscriber_count = $1, view_count = $2, updated_at = $3 WHERE vtuber_id = $4",
+                r#"
+update youtube_channels
+   set (subscriber_count, view_count, updated_at)
+     = ($1, $2, $3)
+ where vtuber_id = $4
+                "#,
                 channel.subscriber_count,
                 channel.view_count,
                 now,
@@ -95,34 +95,24 @@ WHERE id = (
 
             let _ = sqlx::query!(
                 r#"
-UPDATE statistics
-SET data = array_append(data, ($1, $2)::statistic)
-WHERE id = (
-    SELECT subscriber_statistics_id
-    FROM youtube_channels
-    WHERE vtuber_id = $3
-)
+insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
+     values ($1, $2, $3)
                 "#,
+                vtb.name.to_string(),
                 now,
-                channel.subscriber_count,
-                vtb.name.to_string()
+                channel.subscriber_count
             )
             .execute(&mut pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-UPDATE statistics
-SET data = array_append(data, ($1, $2)::statistic)
-WHERE id = (
-    SELECT view_statistics_id
-    FROM youtube_channels
-    WHERE vtuber_id = $3
-)
+insert into youtube_channel_view_statistic (vtuber_id, time, value)
+     values ($1, $2, $3)
                 "#,
+                vtb.name.to_string(),
                 now,
-                channel.view_count,
-                vtb.name.to_string()
+                channel.view_count
             )
             .execute(&mut pool)
             .await?;

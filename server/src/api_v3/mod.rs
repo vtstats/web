@@ -1,8 +1,8 @@
-mod channels_list;
-mod channels_report;
-mod streams_list;
-mod streams_report;
-mod youtube_notifications;
+pub mod channels_list;
+pub mod channels_report;
+pub mod streams_list;
+pub mod streams_report;
+pub mod youtube_notifications;
 
 pub use channels_list::{bilibili_channels_list, youtube_channels_list};
 pub use channels_report::channels_report;
