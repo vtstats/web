@@ -1,9 +1,13 @@
 mod api_v3;
 mod error;
+mod filters;
 mod reject;
 mod requests;
 mod utils;
 mod vtubers;
+
+#[cfg(test)]
+mod tests;
 
 use reqwest::Client;
 use sqlx::PgPool;
