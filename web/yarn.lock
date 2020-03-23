@@ -7184,10 +7184,10 @@ tree-kill@1.2.2:
   resolved "https://registry.npm.taobao.org/tree-kill/download/tree-kill-1.2.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftree-kill%2Fdownload%2Ftree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
   integrity sha1-TKCakJLIi3OnzcXooBtQeweQoMw=
 
-ts-node@~8.6.1:
-  version "8.6.2"
-  resolved "https://registry.npm.taobao.org/ts-node/download/ts-node-8.6.2.tgz?cache=0&sync_timestamp=1578945998006&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fts-node%2Fdownload%2Fts-node-8.6.2.tgz#7419a01391a818fbafa6f826a33c1a13e9464e35"
-  integrity sha1-dBmgE5GoGPuvpvgmozwaE+lGTjU=
+ts-node@~8.8.1:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.8.1.tgz#7c4d3e9ed33aa703b64b28d7f9d194768be5064d"
+  integrity sha512-10DE9ONho06QORKAaCBpPiFCdW+tZJuY/84tyypGtl6r+/C7Asq0dhqbRZURuUlLQtZxxDvT8eoj8cGW0ha6Bg==
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
