@@ -39,7 +39,8 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Initialize database
-      run: psql -f server/sql/schema.sql
+      working-directory: server
+      run: psql -f sql/schema.sql
       env:
         PGHOST: localhost
         PGUSER: postgres
@@ -61,7 +62,8 @@ jobs:
         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Run Test
-      run: cargo test --manifest-path server/Cargo.toml
+      working-directory: server
+      run: cargo test
       env:
         YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
         YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
@@ -94,7 +96,8 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Initialize database
-      run: psql -f server/sql/schema.sql
+      working-directory: server
+      run: psql -f sql/schema.sql
       env:
         PGHOST: localhost
         PGUSER: postgres
@@ -116,9 +119,12 @@ jobs:
         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Build project
-      run: cargo build --release --manifest-path server/Cargo.toml
+      working-directory: server
+      run: cargo build --release --features prod
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
         YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
         YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
         PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
+        HOLO_POI_CAT_CERTIFICATE: ${{ secrets.HOLO_POI_CAT_CERTIFICATE }}
+        HOLO_POI_CAT_PRIVATE_KEY: ${{ secrets.HOLO_POI_CAT_PRIVATE_KEY }}

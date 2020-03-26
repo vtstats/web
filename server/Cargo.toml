@@ -17,9 +17,14 @@ sqlx = { version = "0.2.5", default-features = false, features = ["runtime-tokio
 tokio = { version = "0.2.13", features = ["macros"] }
 url = "2.1.1"
 warp = { version = "0.2.1", default-features = false }
+cfg-if = "0.1.10"
 
 [profile.release]
 lto = true
+
+[features]
+default = []
+prod = ["warp/tls"]
 
 [[bin]]
 name = "server"
