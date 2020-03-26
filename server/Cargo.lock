@@ -1271,9 +1271,9 @@ checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
 name = "sqlx"
-version = "0.2.5"
+version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44761d4fc244b2b5a432d2177aca055581d656a207654d70f1fcc36437276461"
+checksum = "6cf8ffc87c5eb00ab9bbb4f464372a26ff3320ed38c9745f28e42680c08758fd"
 dependencies = [
  "sqlx-core",
  "sqlx-macros",
@@ -1281,9 +1281,9 @@ dependencies = [
 
 [[package]]
 name = "sqlx-core"
-version = "0.2.5"
+version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "630cc9e051b4e57a986b51076dd9238748847eb8c35cfe85104305b3db902b43"
+checksum = "065f0681d5f1dfc2f7cca898c611a9f6abd2e89f60409fcd2c3ce5e7b91623c8"
 dependencies = [
  "async-native-tls",
  "async-stream",
@@ -1310,9 +1310,9 @@ dependencies = [
 
 [[package]]
 name = "sqlx-macros"
-version = "0.2.4"
+version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e9b9e760044397e58e74a71c5b10608ce9db40ed40e3ab93c11eaed88128353"
+checksum = "133ca6bf38b83c6c82196c12acb7b30a428f55fcdea7f1daba0e38b621294ea3"
 dependencies = [
  "dotenv",
  "futures",
