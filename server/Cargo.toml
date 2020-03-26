@@ -36,3 +36,6 @@ path = "src/channel_stat.rs"
 [[bin]]
 name = "subscribe"
 path = "src/subscribe.rs"
+
+[dev-dependencies]
+pretty_assertions = "0.6.1"
