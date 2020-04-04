@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
 
     let api_routes = filters::api(pool, client);
 
-    let static_routes = warp::any().and(warp::fs::dir("/var/www/holostats/"));
+    let static_routes = warp::any().and(warp::fs::dir("/root/web/"));
 
     let routes = api_routes
         .or(static_routes)
