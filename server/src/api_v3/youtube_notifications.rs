@@ -19,91 +19,41 @@ pub fn verify_intent(query: VerifyIntentRequestQuery) -> String {
 
 pub async fn publish_content(
     body: String,
-    mut pool: PgPool,
+    pool: PgPool,
     client: Client,
 ) -> Result<StatusCode, Rejection> {
-    let now = Utc::now();
-
     if let Some((vtuber_id, video_id, title)) = parse_xml(&body) {
         let streams = youtube_streams(
             &client,
             &[&video_id],
-            if now.hour() % 2 == 0 {
+            if Utc::now().hour() % 2 == 0 {
                 env!("YOUTUBE_API_KEY0")
             } else {
                 env!("YOUTUBE_API_KEY1")
             },
         )
-        .await
-        .map_err(warp::reject::custom)?;
+        .await?;
 
         for stream in streams.items {
             if let Some(details) = stream.live_streaming_details {
                 let _ = sqlx::query!(
                     r#"
-insert into youtube_streams (stream_id, title, vtuber_id)
-     values ($1, $2, $3)
-on conflict (stream_id) do update
-        set title = $4
+                        insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
+                             values ($1, $2, $3, $4, $5, $6)
+                        on conflict (stream_id) do update
+                                set (title, schedule_time, start_time, end_time)
+                                  = ($3, $4, $5, $6)
                     "#,
                     stream.id,
-                    title,
                     vtuber_id,
-                    title
+                    title,
+                    details.scheduled_start_time,
+                    details.actual_start_time,
+                    details.actual_end_time,
                 )
-                .execute(&mut pool)
+                .execute(&pool)
                 .await
-                .map_err(Error::Database)
-                .map_err(warp::reject::custom)?;
-
-                // TODO(sqlx): for now sqlx doesn't spport Option, https://github.com/launchbadge/sqlx/pull/94
-                if let Some(schedule) = details.scheduled_start_time {
-                    let _ = sqlx::query!(
-                        r#"
-update youtube_streams
-   set schedule_time = $1
- where stream_id = $2
-                        "#,
-                        schedule,
-                        stream.id
-                    )
-                    .execute(&mut pool)
-                    .await
-                    .map_err(Error::Database)
-                    .map_err(warp::reject::custom)?;
-                }
-
-                if let Some(start) = details.actual_start_time {
-                    let _ = sqlx::query!(
-                        r#"
-update youtube_streams
-   set start_time = $1
- where stream_id = $2
-                        "#,
-                        start,
-                        stream.id
-                    )
-                    .execute(&mut pool)
-                    .await
-                    .map_err(Error::Database)
-                    .map_err(warp::reject::custom)?;
-                }
-
-                if let Some(end) = details.actual_end_time {
-                    let _ = sqlx::query!(
-                        r#"
-update youtube_streams
-   set end_time = $1
- where stream_id = $2
-                        "#,
-                        end,
-                        stream.id
-                    )
-                    .execute(&mut pool)
-                    .await
-                    .map_err(Error::Database)
-                    .map_err(warp::reject::custom)?;
-                }
+                .map_err(Error::Database)?;
             }
         }
     } else {

@@ -10,22 +10,22 @@ use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let mut pool = PgPool::new(env!("DATABASE_URL")).await?;
+    let pool = PgPool::new(env!("DATABASE_URL")).await?;
 
     let rows = sqlx::query!(
         r#"
-select stream_id
-  from youtube_streams
- where end_time IS NULL
-   and (
-         start_time is not null or (
-           schedule_time > now() - interval '6 hours'
-           and schedule_time < now() + interval '5 minutes'
-         )
-       )
+            select stream_id
+              from youtube_streams
+             where end_time IS NULL
+               and (
+                     start_time is not null or (
+                       schedule_time > now() - interval '6 hours'
+                       and schedule_time < now() + interval '5 minutes'
+                     )
+                   )
         "#
     )
-    .fetch_all(&mut pool)
+    .fetch_all(&pool)
     .await?;
 
     if rows.is_empty() {
@@ -55,65 +55,47 @@ select stream_id
         .filter(|&id| !streams.items.iter().any(|stream| &stream.id == id))
     {
         let _ = sqlx::query!(
-            "UPDATE youtube_streams SET end_time = $1 WHERE stream_id = $2",
+            r#"
+                update youtube_streams
+                   set end_time = $1
+                 where stream_id = $2
+            "#,
             now,
-            id.to_string()
+            id,
         )
-        .execute(&mut pool)
+        .execute(&pool)
         .await?;
     }
 
     for stream in &streams.items {
         if let Some(details) = &stream.live_streaming_details {
             let _ = sqlx::query!(
-                "UPDATE youtube_streams SET updated_at = $1 WHERE stream_id = $2",
+                r#"
+                    update youtube_streams
+                       set (updated_at, schedule_time, start_time, end_time)
+                         = ($1, $2, $3, $4)
+                     where stream_id = $5
+                "#,
                 now,
-                stream.id
+                details.scheduled_start_time,
+                details.actual_start_time,
+                details.actual_end_time,
+                stream.id,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
-
-            if let Some(schedule) = details.scheduled_start_time {
-                let _ = sqlx::query!(
-                    "UPDATE youtube_streams SET schedule_time = $1 WHERE stream_id = $2",
-                    schedule,
-                    stream.id
-                )
-                .execute(&mut pool)
-                .await?;
-            }
-
-            if let Some(start) = details.actual_start_time {
-                let _ = sqlx::query!(
-                    "UPDATE youtube_streams SET start_time = $1 WHERE stream_id = $2",
-                    start,
-                    stream.id
-                )
-                .execute(&mut pool)
-                .await?;
-            }
-
-            if let Some(end) = details.actual_end_time {
-                let _ = sqlx::query!(
-                    "UPDATE youtube_streams SET end_time = $1 WHERE stream_id = $2",
-                    end,
-                    stream.id
-                )
-                .execute(&mut pool)
-                .await?;
-            }
 
             if let Some(viewers) = &details.concurrent_viewers {
                 let _ = sqlx::query!(
                     r#"
-insert into youtube_stream_viewer_statistic (stream_id, time, value)
-     values ($1, $2, $3)
+                        insert into youtube_stream_viewer_statistic (stream_id, time, value)
+                             values ($1, $2, $3)
                     "#,
                     stream.id,
                     now,
-                    i32::from_str(&viewers).unwrap()
+                    i32::from_str(&viewers).unwrap(),
                 )
-                .execute(&mut pool)
+                .execute(&pool)
                 .await?;
             }
         }

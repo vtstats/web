@@ -3,7 +3,6 @@ mod error;
 mod filters;
 mod reject;
 mod requests;
-mod utils;
 mod vtubers;
 
 #[cfg(test)]

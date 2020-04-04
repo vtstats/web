@@ -12,7 +12,7 @@ use crate::vtubers::VTUBERS;
 async fn main() -> Result<()> {
     let client = reqwest::Client::new();
 
-    let mut pool = PgPool::new(env!("DATABASE_URL")).await?;
+    let pool = PgPool::new(env!("DATABASE_URL")).await?;
 
     let now = Utc::now();
 
@@ -26,41 +26,41 @@ async fn main() -> Result<()> {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(channel.id)) {
             let _ = sqlx::query!(
                 r#"
-update bilibili_channels
-   set (subscriber_count, view_count, updated_at)
-     = ($1, $2, $3)
- where vtuber_id = $4
+                    update bilibili_channels
+                       set (subscriber_count, view_count, updated_at)
+                         = ($1, $2, $3)
+                     where vtuber_id = $4
                 "#,
                 channel.subscriber_count,
                 channel.view_count,
                 now,
-                vtb.name.to_string()
+                vtb.name,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
-     values ($1, $2, $3)
+                    insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
+                         values ($1, $2, $3)
                 "#,
-                vtb.name.to_string(),
+                vtb.name,
                 now,
-                channel.subscriber_count
+                channel.subscriber_count,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-insert into bilibili_channel_view_statistic (vtuber_id, time, value)
-     values ($1, $2, $3)
+                    insert into bilibili_channel_view_statistic (vtuber_id, time, value)
+                         values ($1, $2, $3)
                 "#,
-                vtb.name.to_string(),
+                vtb.name,
                 now,
-                channel.view_count
+                channel.view_count,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
         }
     }
@@ -80,41 +80,41 @@ insert into bilibili_channel_view_statistic (vtuber_id, time, value)
         if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
             let _ = sqlx::query!(
                 r#"
-update youtube_channels
-   set (subscriber_count, view_count, updated_at)
-     = ($1, $2, $3)
- where vtuber_id = $4
+                    update youtube_channels
+                       set (subscriber_count, view_count, updated_at)
+                         = ($1, $2, $3)
+                     where vtuber_id = $4
                 "#,
                 channel.subscriber_count,
                 channel.view_count,
                 now,
-                vtb.name.to_string()
+                vtb.name,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
-     values ($1, $2, $3)
+                    insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
+                         values ($1, $2, $3)
                 "#,
-                vtb.name.to_string(),
+                vtb.name,
                 now,
-                channel.subscriber_count
+                channel.subscriber_count,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
 
             let _ = sqlx::query!(
                 r#"
-insert into youtube_channel_view_statistic (vtuber_id, time, value)
-     values ($1, $2, $3)
+                    insert into youtube_channel_view_statistic (vtuber_id, time, value)
+                         values ($1, $2, $3)
                 "#,
-                vtb.name.to_string(),
+                vtb.name,
                 now,
-                channel.view_count
+                channel.view_count,
             )
-            .execute(&mut pool)
+            .execute(&pool)
             .await?;
         }
     }

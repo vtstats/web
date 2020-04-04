@@ -45,10 +45,6 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
                 code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "UTF8_ERROR";
             }
-            Error::InvalidQuery => {
-                code = StatusCode::UNPROCESSABLE_ENTITY;
-                message = "INVALID_QUERY";
-            }
         }
     } else if err.find::<warp::reject::InvalidQuery>().is_some() {
         code = StatusCode::UNPROCESSABLE_ENTITY;

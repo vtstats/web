@@ -4,7 +4,7 @@ use sqlx::Error as DatabaseError;
 use std::convert::From;
 use std::str::Utf8Error;
 use url::ParseError as UrlError;
-use warp::reject::Reject;
+use warp::{reject::Reject, Rejection};
 
 #[derive(Debug)]
 pub enum Error {
@@ -13,11 +13,15 @@ pub enum Error {
     Database(DatabaseError),
     Url(UrlError),
     Utf8(Utf8Error),
-
-    InvalidQuery,
 }
 
 impl Reject for Error {}
+
+impl From<Error> for Rejection {
+    fn from(err: Error) -> Rejection {
+        warp::reject::custom(err)
+    }
+}
 
 impl From<DatabaseError> for Error {
     fn from(err: DatabaseError) -> Error {
