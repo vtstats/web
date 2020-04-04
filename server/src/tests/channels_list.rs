@@ -5,6 +5,7 @@ use warp::test::request;
 use warp::Filter;
 
 use crate::api_v3::channels_list::{Channel, ChannelsListResponseBody};
+use crate::error::Result;
 use crate::filters::api;
 use crate::reject::handle_rejection;
 
@@ -18,34 +19,26 @@ async fn invalid_query() {
 
     let api = api(pool, client).recover(handle_rejection);
 
-    let res = request()
-        .method("GET")
-        .path("/api/v3/youtube_channels")
-        .reply(&api)
-        .await;
+    is_invalid_query(
+        request()
+            .method("GET")
+            .path("/api/v3/youtube_channels")
+            .reply(&api)
+            .await,
+    );
 
-    is_invalid_query(res);
-
-    let res = request()
-        .method("GET")
-        .path("/api/v3/youtube_channels?foo=bar")
-        .reply(&api)
-        .await;
-
-    is_invalid_query(res);
-
-    let res = request()
-        .method("GET")
-        .path("/api/v3/youtube_channels?ids=yuudachi")
-        .reply(&api)
-        .await;
-
-    is_invalid_query(res);
+    is_invalid_query(
+        request()
+            .method("GET")
+            .path("/api/v3/youtube_channels?foo=bar")
+            .reply(&api)
+            .await,
+    );
 }
 
 #[tokio::test]
-async fn ok() {
-    let mut pool = PgPool::new(env!("DATABASE_URL")).await.unwrap();
+async fn ok() -> Result<()> {
+    let pool = PgPool::new(env!("DATABASE_URL")).await?;
 
     let client = Client::new();
 
@@ -55,46 +48,47 @@ async fn ok() {
 
     let _ = sqlx::query!(
         r#"
-insert into youtube_channels (vtuber_id, view_count, updated_at)
-     values ('ayame', 1000, $1),
-            ('aqua' , 1000, $2)
+            insert into youtube_channels (vtuber_id, view_count, updated_at)
+                 values ('foo', 1000, $1),
+                        ('bar', 1000, $2)
         "#,
         today,
         today - Duration::days(30)
     )
-    .execute(&mut pool)
-    .await
-    .unwrap();
+    .execute(&pool)
+    .await?;
 
     let _ = sqlx::query!(
         r#"
-insert into youtube_channel_view_statistic (vtuber_id, time, value)
-     values ('aqua', $1, 100)
+            insert into youtube_channel_view_statistic (vtuber_id, time, value)
+                 values ('foo', $1, 100),
+                        ('foo', $2, 400),
+                        ('foo', $3, 800),
+                        ('bar', $3, 100)
         "#,
+        today - Duration::days(32),
+        today - Duration::days(8),
         today - Duration::days(2)
     )
-    .execute(&mut pool)
-    .await
-    .unwrap();
-
-    let res = request()
-        .method("GET")
-        .path("/api/v3/youtube_channels?ids=aqua")
-        .reply(&api)
-        .await;
+    .execute(&pool)
+    .await?;
 
     is_ok(
-        res,
+        request()
+            .method("GET")
+            .path("/api/v3/youtube_channels?ids=bar")
+            .reply(&api)
+            .await,
         &ChannelsListResponseBody {
-            updated_at: today,
+            updated_at: Some(today),
             channels: vec![Channel {
-                vtuber_id: "aqua".into(),
+                vtuber_id: "bar".into(),
                 subscriber_count: 0,
                 daily_subscriber_count: 0,
                 weekly_subscriber_count: 0,
                 monthly_subscriber_count: 0,
                 view_count: 1000,
-                daily_view_count: 900,
+                daily_view_count: 1000 - 100,
                 weekly_view_count: 1000,
                 monthly_view_count: 1000,
                 updated_at: today - Duration::days(30),
@@ -102,43 +96,83 @@ insert into youtube_channel_view_statistic (vtuber_id, time, value)
         },
     );
 
-    let _ = sqlx::query!(
-        r#"
-insert into youtube_channel_view_statistic (vtuber_id, time, value)
-     values ('ayame', $1, 100),
-            ('ayame', $2, 400),
-            ('ayame', $3, 800)
-        "#,
-        today - Duration::days(32),
-        today - Duration::days(8),
-        today - Duration::days(2)
-    )
-    .execute(&mut pool)
-    .await
-    .unwrap();
-
-    let res = request()
-        .method("GET")
-        .path("/api/v3/youtube_channels?ids=ayame")
-        .reply(&api)
-        .await;
-
     is_ok(
-        res,
+        request()
+            .method("GET")
+            .path("/api/v3/youtube_channels?ids=foo")
+            .reply(&api)
+            .await,
         &ChannelsListResponseBody {
-            updated_at: today,
+            updated_at: Some(today),
             channels: vec![Channel {
-                vtuber_id: "ayame".into(),
+                vtuber_id: "foo".into(),
                 subscriber_count: 0,
                 daily_subscriber_count: 0,
                 weekly_subscriber_count: 0,
                 monthly_subscriber_count: 0,
                 view_count: 1000,
-                daily_view_count: 200,
-                weekly_view_count: 600,
-                monthly_view_count: 900,
+                daily_view_count: 1000 - 800,
+                weekly_view_count: 1000 - 400,
+                monthly_view_count: 1000 - 100,
                 updated_at: today,
             }],
         },
     );
+
+    is_ok(
+        request()
+            .method("GET")
+            .path("/api/v3/youtube_channels?ids=foo,bar")
+            .reply(&api)
+            .await,
+        &ChannelsListResponseBody {
+            updated_at: Some(today),
+            channels: vec![
+                Channel {
+                    vtuber_id: "foo".into(),
+                    subscriber_count: 0,
+                    daily_subscriber_count: 0,
+                    weekly_subscriber_count: 0,
+                    monthly_subscriber_count: 0,
+                    view_count: 1000,
+                    daily_view_count: 1000 - 800,
+                    weekly_view_count: 1000 - 400,
+                    monthly_view_count: 1000 - 100,
+                    updated_at: today,
+                },
+                Channel {
+                    vtuber_id: "bar".into(),
+                    subscriber_count: 0,
+                    daily_subscriber_count: 0,
+                    weekly_subscriber_count: 0,
+                    monthly_subscriber_count: 0,
+                    view_count: 1000,
+                    daily_view_count: 1000 - 100,
+                    weekly_view_count: 1000,
+                    monthly_view_count: 1000,
+                    updated_at: today - Duration::days(30),
+                },
+            ],
+        },
+    );
+
+    sqlx::query!(
+        r#"
+            delete from youtube_channel_view_statistic
+                  where vtuber_id = any(array['foo', 'bar'])
+        "#,
+    )
+    .execute(&pool)
+    .await?;
+
+    sqlx::query!(
+        r#"
+            delete from youtube_channels
+                  where vtuber_id = any(array['foo', 'bar'])
+        "#
+    )
+    .execute(&pool)
+    .await?;
+
+    Ok(())
 }

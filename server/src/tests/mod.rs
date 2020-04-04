@@ -1,4 +1,5 @@
 mod channels_list;
+mod streams_report;
 mod utils;
 
 use reqwest::Client;
