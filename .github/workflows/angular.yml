@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Add yarn global bin to path
-      run: echo "::add-path::$(yarn global bin)"
+      - name: Add yarn global bin to path
+        run: echo "::add-path::$(yarn global bin)"
 
-    - name: Run Prettier
-      working-directory: web
-      run: |
-        yarn global add prettier
-        prettier --check --ignore-path .gitignore 'src/**/*.{js,json.html,scss}'
+      - name: Run Prettier
+        working-directory: web
+        run: |
+          yarn global add prettier
+          prettier --check --ignore-path .gitignore 'src/**/*.{js,json.html,scss}'
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,9 +61,8 @@ jobs:
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
           yarn build --prod
 
-      - name: Deploy to firebase
+      - name: Deploy
+        working-directory: web
+        run: rsync -avzzP dist rsync://${{ secrets.RSYNC_USERNAME }}@${{ secrets.RSYNC_HOST }}:${{ secrets.RSYNC_PORT }}/web
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          yarn global add firebase-tools
-          firebase deploy --token $FIREBASE_TOKEN
+          RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
