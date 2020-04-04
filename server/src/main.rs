@@ -10,13 +10,14 @@ mod tests;
 
 use reqwest::Client;
 use sqlx::PgPool;
+use std::env;
 use warp::Filter;
 
 use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let pool = PgPool::new(env!("DATABASE_URL")).await?;
+    let pool = PgPool::new(env::var("DATABASE_URL").unwrap("`DATABASE_URL` not set")).await?;
 
     let client = Client::new();
 

@@ -4,6 +4,7 @@ mod vtubers;
 
 use chrono::{Timelike, Utc};
 use sqlx::PgPool;
+use std::env;
 
 use crate::error::Result;
 use crate::vtubers::VTUBERS;
@@ -12,7 +13,7 @@ use crate::vtubers::VTUBERS;
 async fn main() -> Result<()> {
     let client = reqwest::Client::new();
 
-    let pool = PgPool::new(env!("DATABASE_URL")).await?;
+    let pool = PgPool::new(env::var("DATABASE_URL").unwrap("`DATABASE_URL` not set")).await?;
 
     let now = Utc::now();
 

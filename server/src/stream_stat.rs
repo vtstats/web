@@ -4,13 +4,14 @@ mod vtubers;
 
 use chrono::{Timelike, Utc};
 use sqlx::PgPool;
+use std::env;
 use std::str::FromStr;
 
 use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let pool = PgPool::new(env!("DATABASE_URL")).await?;
+    let pool = PgPool::new(env::var("DATABASE_URL").unwrap("`DATABASE_URL` not set")).await?;
 
     let rows = sqlx::query!(
         r#"
