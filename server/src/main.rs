@@ -17,7 +17,7 @@ use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let pool = PgPool::new(env::var("DATABASE_URL").unwrap("`DATABASE_URL` not set")).await?;
+    let pool = PgPool::new(&env::var("DATABASE_URL").unwrap()).await?;
 
     let client = Client::new();
 

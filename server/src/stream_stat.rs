@@ -3,6 +3,7 @@ mod requests;
 mod vtubers;
 
 use chrono::{Timelike, Utc};
+use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
 use std::str::FromStr;
@@ -11,7 +12,9 @@ use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let pool = PgPool::new(env::var("DATABASE_URL").unwrap("`DATABASE_URL` not set")).await?;
+    let client = Client::new();
+
+    let pool = PgPool::new(&env::var("DATABASE_URL").unwrap()).await?;
 
     let rows = sqlx::query!(
         r#"
@@ -41,7 +44,7 @@ async fn main() -> Result<()> {
     let now = Utc::now();
 
     let streams = crate::requests::youtube_streams(
-        &reqwest::Client::new(),
+        &client,
         &ids,
         if now.hour() % 2 == 0 {
             env!("YOUTUBE_API_KEY0")
