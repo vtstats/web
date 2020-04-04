@@ -10,7 +10,7 @@ $mat-light-theme-background: map-merge(
   $mat-light-theme-background,
   (
     card: white,
-    background: #f9f9f9
+    background: #f9f9f9,
   )
 );
 
@@ -18,7 +18,7 @@ $mat-dark-theme-background: map-merge(
   $mat-dark-theme-background,
   (
     card: #282828,
-    background: #1f1f1f
+    background: #1f1f1f,
   )
 );
 
