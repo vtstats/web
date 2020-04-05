@@ -120,7 +120,7 @@ jobs:
 
       - name: Build project
         working-directory: server
-        run: cargo build --release --features prod
+        run: cargo build --release
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
