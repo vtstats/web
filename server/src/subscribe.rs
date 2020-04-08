@@ -8,10 +8,7 @@ use reqwest::Client;
 use crate::error::Result;
 use crate::vtubers::VTUBERS;
 
-const CALLBACK_URL: &str = concat!(
-    "https://holo.poi.cat/api/v3/",
-    env!("PUBSUBHUBBUB_URL")
-);
+const CALLBACK_URL: &str = concat!("https://holo.poi.cat/api/v3/", env!("PUBSUBHUBBUB_URL"));
 
 const TOPIC_BASE_URL: &str = "https://www.youtube.com/xml/feeds/videos.xml?channel_id=";
 
