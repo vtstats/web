@@ -19,7 +19,10 @@ async fn main() -> Result<()> {
 
     let bilibili_channels = requests::bilibili_channels(
         &client,
-        VTUBERS.iter().flat_map(|v| v.bilibili).collect::<Vec<_>>(),
+        VTUBERS
+            .iter()
+            .filter_map(|v| v.bilibili)
+            .collect::<Vec<_>>(),
     )
     .await?;
 
@@ -68,7 +71,7 @@ async fn main() -> Result<()> {
 
     let youtube_channels = requests::youtube_channels(
         &client,
-        VTUBERS.iter().flat_map(|v| v.youtube).collect::<Vec<_>>(),
+        VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>(),
         if now.hour() % 2 == 0 {
             env!("YOUTUBE_API_KEY0")
         } else {

@@ -9,7 +9,7 @@ use crate::error::Result;
 use crate::vtubers::VTUBERS;
 
 const CALLBACK_URL: &str = concat!(
-    "https://holostats-api.poi.cat/api/v3/",
+    "https://holo.poi.cat/api/v3/",
     env!("PUBSUBHUBBUB_URL")
 );
 
@@ -19,7 +19,7 @@ const TOPIC_BASE_URL: &str = "https://www.youtube.com/xml/feeds/videos.xml?chann
 async fn main() -> Result<()> {
     let client = Client::new();
 
-    stream::iter(VTUBERS.iter().flat_map(|v| v.youtube).map(|channel_id| {
+    stream::iter(VTUBERS.iter().filter_map(|v| v.youtube).map(|channel_id| {
         client
             .post("https://pubsubhubbub.appspot.com/subscribe")
             .header("Content-Type", "application/x-www-form-urlencoded")
