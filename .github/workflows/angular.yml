@@ -63,6 +63,6 @@ jobs:
 
       - name: Deploy
         working-directory: web
-        run: rsync -avzzP dist rsync://${{ secrets.RSYNC_USERNAME }}@${{ secrets.RSYNC_HOST }}:${{ secrets.RSYNC_PORT }}/web
+        run: rsync -avzzP dist/* rsync://${{ secrets.RSYNC_USERNAME }}@${{ secrets.RSYNC_HOST }}:${{ secrets.RSYNC_PORT }}/web
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
