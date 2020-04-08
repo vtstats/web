@@ -305,6 +305,30 @@
       "bilibili": 511613157,
       "default": true
     },
+    "risu": {
+      "id": "risu",
+      "name": "Ayunda Risu",
+      "twitter": "ayunda_risu",
+      "youtube": "UCOyYb1c43VlX9rc_lT6NKQw",
+      "bilibili": null,
+      "default": true
+    },
+    "moona": {
+      "id": "moona",
+      "name": "Moona Hoshinova",
+      "twitter": "moonahoshinova",
+      "youtube": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "bilibili": null,
+      "default": true
+    },
+    "iofi": {
+      "id": "iofi",
+      "name": "Airani Iofifteen",
+      "twitter": "airaniiofifteen",
+      "youtube": "UCAoy6rzhSf4ydcYjJw3WoVg",
+      "bilibili": null,
+      "default": true
+    },
     "luna": {
       "id": "luna",
       "name": "輝夜月",
@@ -407,6 +431,11 @@
       "id": "hololive_cn_2nd",
       "name": "ホロライブ中国二期生",
       "vtubers": ["doris", "artia", "rosalyn"]
+    },
+    "hololive_id": {
+      "id": "hololive_id",
+      "name": "ホロライブインドネシア",
+      "vtubers": ["risu", "moona", "iofi"]
     },
     "others": {
       "id": "others",

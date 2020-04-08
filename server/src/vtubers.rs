@@ -19,10 +19,6 @@ macro_rules! vtubers {
                 }
             ),*
         ];
-
-        pub const VTUBER_IDS: &[&str] = &[
-            $( $name ),*
-        ];
     };
 }
 
@@ -54,7 +50,6 @@ vtubers! {
     "watame",       Some("UCqm3BQLlJfvkTsX_hvm0UmA"), Some(491474050),
     "towa",         Some("UC1uv2Oq6kNxgATlCiez59hw"), Some(491474051),
     "himemoriluna", Some("UCa9Y57gfeY0Zro_noHRVrnw"), Some(491474052),
-    "fubuki",       Some("UCdn5BQ06XqgXoAxIhbqw5Rg"), Some(332704117),
     "mio",          Some("UCp-5t9SrOQwXMU7iIjQfARg"), Some(389862071),
     "okayu",        Some("UCvaTdHTWBGv3MKj3KVqJVCw"), Some(412135222),
     "korone",       Some("UChAnqc_AY5_I3Px5dig3X1Q"), Some(412135619),
@@ -65,6 +60,9 @@ vtubers! {
     "doris",        None,                             Some(511613156),
     "artia",        None,                             Some(511613155),
     "rosalyn",      None,                             Some(511613157),
+    "risu"          Some("UCOyYb1c43VlX9rc_lT6NKQw"), None,
+    "moona"         Some("UCP0BspO_AMEe3aQqqpo89Dg"), None,
+    "iofi"          Some("UCAoy6rzhSf4ydcYjJw3WoVg"), None,
     "luna",         Some("UCQYADFw7xEJ9oZSM5ZbqyBw"), Some(265224956),
     "nekomiya",     Some("UCevD0wKzJFpfIkvHOiQsfLQ"), Some(291296062),
     "tamaki",       Some("UC8NZiqKx6fsDT3AVcMiVFyA"), Some(12362451),
