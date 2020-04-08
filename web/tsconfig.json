@@ -16,7 +16,7 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "vtubers": ["../vtubers.json"]
+      "vtubers": ["./vtubers.json"]
     }
   },
   "angularCompilerOptions": {

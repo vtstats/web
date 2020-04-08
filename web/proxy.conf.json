@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://holostats-api.poi.cat",
+    "target": "https://holo.poi.cat",
     "secure": false,
     "changeOrigin": true
   }
