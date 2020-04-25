@@ -5,6 +5,8 @@ import { AppModule } from "./app/app.module";
 import { ENABLE_DARK_MODE } from "./app/services/config";
 import { environment } from "./environments/environment";
 
+import "./i18n";
+
 if (localStorage.getItem(ENABLE_DARK_MODE) !== null) {
   document.body.classList.add("dark");
 }
@@ -15,4 +17,4 @@ if (environment.production) {
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
