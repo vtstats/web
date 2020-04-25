@@ -35,23 +35,17 @@
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div flex="50">
           <div class="value">
-            {{ stream.startTime | date: "HH:mm:ss" }}
+            {{ stream.startTime | format: "HH:mm:ss" }}
           </div>
           <div class="caption">直播開始</div>
         </div>
         <div flex="50">
           <div class="value">
             <ng-container *ngIf="stream.endTime; else clock">
-              {{
-                stream.startTime
-                  | parseISO
-                  | duration: (stream.endTime | parseISO)
-              }}
+              {{ stream.startTime | duration: stream.endTime }}
             </ng-container>
             <ng-template #clock>
-              {{
-                stream.startTime | parseISO | duration: (everySecond$ | async)
-              }}
+              {{ stream.startTime | duration: (everySecond$ | async) }}
             </ng-template>
           </div>
           <div class="caption">直播持續</div>

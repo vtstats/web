@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MultiSeries } from "@swimlane/ngx-charts";
-import { format, parseISO } from "date-fns";
+import dayjs from "dayjs";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -11,7 +11,7 @@ import { Stream, StreamReportResponse } from "src/app/models";
   selector: "hs-streams-detail",
   templateUrl: "./streams-detail.component.html",
   styleUrls: ["./streams-detail.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class StreamsDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
@@ -33,9 +33,9 @@ export class StreamsDetailComponent implements OnInit {
       this.stats.push({
         name: "",
         series: res.reports[0].rows.map(([name, value]) => ({
-          name: parseISO(name),
-          value
-        }))
+          name: dayjs(name).toDate(),
+          value,
+        })),
       });
     }
 
@@ -45,6 +45,6 @@ export class StreamsDetailComponent implements OnInit {
   }
 
   dateFormatting(date: Date): string {
-    return format(date, "HH:mm");
+    return dayjs(date).format("HH:mm");
   }
 }

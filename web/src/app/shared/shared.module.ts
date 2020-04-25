@@ -3,12 +3,12 @@ import { NgModule } from "@angular/core";
 
 import { DistancePipe } from "./distance.pipe";
 import { DurationPipe } from "./duration.pipe";
-import { ParseISOPipe } from "./parse-iso.pipe";
+import { FormatPipe } from "./format.pipe";
 import { VTubersPipe } from "./vtubers.pipe";
 
 @NgModule({
-  declarations: [DistancePipe, DurationPipe, ParseISOPipe, VTubersPipe],
+  declarations: [DistancePipe, DurationPipe, FormatPipe, VTubersPipe],
   imports: [CommonModule],
-  exports: [DistancePipe, DurationPipe, ParseISOPipe, VTubersPipe]
+  exports: [DistancePipe, DurationPipe, FormatPipe, VTubersPipe],
 })
 export class SharedModule {}

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MultiSeries } from "@swimlane/ngx-charts";
-import { format, parseISO } from "date-fns";
+import dayjs from "dayjs";
 
 import { ChannelReportResponse, VTuber } from "src/app/models";
 
@@ -9,7 +9,7 @@ import { ChannelReportResponse, VTuber } from "src/app/models";
   selector: "hs-vtubers-detail",
   templateUrl: "./vtubers-detail.component.html",
   styleUrls: ["./vtubers-detail.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class VTubersDetailComponent {
   constructor(private route: ActivatedRoute) {}
@@ -33,36 +33,36 @@ export class VTubersDetailComponent {
           this.youtubeSubs.push({
             name: "",
             series: report.rows.map(([name, value]) => ({
-              name: parseISO(name),
-              value
-            }))
+              name: dayjs(name).toDate(),
+              value,
+            })),
           });
           break;
         case "youtube_channel_view":
           this.youtubeViews.push({
             name: "",
             series: report.rows.map(([name, value]) => ({
-              name: parseISO(name),
-              value
-            }))
+              name: dayjs(name).toDate(),
+              value,
+            })),
           });
           break;
         case "bilibili_channel_subscriber":
           this.bilibiliSubs.push({
             name: "",
             series: report.rows.map(([name, value]) => ({
-              name: parseISO(name),
-              value
-            }))
+              name: dayjs(name).toDate(),
+              value,
+            })),
           });
           break;
         case "bilibili_channel_view":
           this.bilibiliViews.push({
             name: "",
             series: report.rows.map(([name, value]) => ({
-              name: parseISO(name),
-              value
-            }))
+              name: dayjs(name).toDate(),
+              value,
+            })),
           });
           break;
       }
@@ -70,6 +70,6 @@ export class VTubersDetailComponent {
   }
 
   dateFormatting(date: Date): string {
-    return format(date, "MM/dd");
+    return dayjs(date).format("MM/DD");
   }
 }

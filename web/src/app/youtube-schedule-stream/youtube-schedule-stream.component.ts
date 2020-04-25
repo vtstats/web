@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { isSameDay, parseISO } from "date-fns";
+import dayjs, { Dayjs } from "dayjs";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -10,23 +10,23 @@ import { Stream, StreamListResponse } from "src/app/models";
   selector: "hs-youtube-schedule-stream",
   templateUrl: "./youtube-schedule-stream.component.html",
   styleUrls: ["./youtube-schedule-stream.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeScheduleStreamComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
-  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
+  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => dayjs()));
 
-  streamGroup: { day: Date; streams: Stream[] }[] = [];
+  streamGroup: Array<{ day: Dayjs; streams: Array<Stream> }> = [];
 
   ngOnInit() {
     const res: StreamListResponse = this.route.snapshot.data.data;
 
-    let lastStreamSchedule: Date;
+    let lastStreamSchedule: Dayjs;
 
     for (const stream of res.streams) {
-      const schedule = parseISO(stream.scheduleTime);
-      if (lastStreamSchedule && isSameDay(lastStreamSchedule, schedule)) {
+      const schedule = dayjs(stream.scheduleTime);
+      if (lastStreamSchedule && lastStreamSchedule.isSame(schedule, "day")) {
         this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
       } else {
         this.streamGroup.push({ day: schedule, streams: [stream] });

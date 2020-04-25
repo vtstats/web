@@ -3,12 +3,12 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
+import dayjs, { Dayjs } from "dayjs";
 
 import { Stream, StreamListResponse } from "src/app/models";
 import { ApiService } from "src/app/services";
@@ -17,30 +17,30 @@ import { ApiService } from "src/app/services";
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
   styleUrls: ["./youtube-stream.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeStreamComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {}
 
-  streamGroup: { day: Date; streams: Stream[] }[] = [];
-  lastStreamStart: Date;
+  streamGroup: { day: Dayjs; streams: Stream[] }[] = [];
+  lastStreamStart: Dayjs;
 
   updatedAt = "";
   showSpinner = false;
 
-  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
-  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
+  everySecond$ = timer(0, 1000).pipe(map(() => dayjs()));
+  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => dayjs()));
 
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 
-  obs = new IntersectionObserver(entries => {
-    if (entries.map(e => e.isIntersecting).some(e => e)) {
+  obs = new IntersectionObserver((entries) => {
+    if (entries.map((e) => e.isIntersecting).some((e) => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.apiService
-        .getYouTubeStreams(new Date(0), this.lastStreamStart)
-        .subscribe(res => this.addStreams(res));
+        .getYouTubeStreams(dayjs(0), this.lastStreamStart)
+        .subscribe((res) => this.addStreams(res));
     }
   });
 
@@ -53,13 +53,13 @@ export class YoutubeStreamComponent implements OnInit {
     this.updatedAt = res.updatedAt;
 
     for (const stream of res.streams) {
-      const start = parseISO(stream.startTime);
-      if (this.lastStreamStart && isSameDay(this.lastStreamStart, start)) {
+      const start = dayjs(stream.startTime);
+      if (this.lastStreamStart && this.lastStreamStart.isSame(start, "day")) {
         this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
       } else {
         this.streamGroup.push({ day: start, streams: [stream] });
       }
-      this.lastStreamStart = start;
+      this.lastStreamStart = dayjs(start);
     }
 
     if (res.streams.length == 24) {

@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { Dayjs } from "dayjs";
 
 import {
   ChannelListResponse,
   ChannelReportResponse,
   StreamReportResponse,
-  StreamListResponse
+  StreamListResponse,
 } from "src/app/models";
 import { Config } from "./config";
 
@@ -18,25 +19,25 @@ export class ApiService {
 
   getYouTubeChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
-      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
     });
   }
 
   getBilibiliChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/bilibili_channels`, {
-      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
+      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
     });
   }
 
   getYouTubeStreams(
-    startAt: Date,
-    endAt: Date
+    startAt: Dayjs,
+    endAt: Dayjs
   ): Observable<StreamListResponse> {
     return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
       params: new HttpParams()
         .set("ids", this.config.joinedSelectedVTubers)
         .set("startAt", startAt.toISOString())
-        .set("endAt", endAt.toISOString())
+        .set("endAt", endAt.toISOString()),
     });
   }
 
@@ -44,7 +45,7 @@ export class ApiService {
     return this.http.get<StreamListResponse>(
       `${BASE_URL}/youtube_schedule_streams`,
       {
-        params: new HttpParams().set("ids", this.config.joinedSelectedVTubers)
+        params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
       }
     );
   }
@@ -52,23 +53,23 @@ export class ApiService {
   getChannelReport(
     ids: string,
     metrics: string,
-    startAt: Date,
-    endAt: Date
+    startAt: Dayjs,
+    endAt: Dayjs
   ): Observable<ChannelReportResponse> {
     return this.http.get<ChannelReportResponse>(`${BASE_URL}/channels_report`, {
       params: new HttpParams()
         .set("ids", ids)
         .set("metrics", metrics)
         .set("startAt", startAt.toISOString())
-        .set("endAt", endAt.toISOString())
+        .set("endAt", endAt.toISOString()),
     });
   }
 
   getStreamReport(
     ids: string,
     metrics: string = "youtube_stream_viewer",
-    startAt?: Date,
-    endAt?: Date
+    startAt?: Dayjs,
+    endAt?: Dayjs
   ): Observable<StreamReportResponse> {
     let params = new HttpParams().set("ids", ids).set("metrics", metrics);
 
@@ -81,7 +82,7 @@ export class ApiService {
     }
 
     return this.http.get<StreamReportResponse>(`${BASE_URL}/streams_report`, {
-      params
+      params,
     });
   }
 }

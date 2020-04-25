@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { formatDistanceStrict, isAfter } from "date-fns";
-import { zhTW } from "date-fns/locale";
+import dayjs, { ConfigType } from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 @Pipe({ name: "distance" })
 export class DistancePipe implements PipeTransform {
-  transform(start: Date | null, end: Date): string {
-    return end
-      ? formatDistanceStrict(end, start, { locale: zhTW }) +
-          (isAfter(end, start) ? "前" : "後")
-      : "";
+  transform(start: ConfigType, end: ConfigType): string {
+    return dayjs(start).from(end);
   }
 }

@@ -17,14 +17,14 @@
 >
   <ng-template #tooltipTemplate let-model="model">
     <p class="tooltip-caption">
-      {{ model.name | date: "MM/dd HH:mm" }}
+      {{ model.name | format: "MM/DD HH:mm" }}
     </p>
     <p class="tooltip-caption">{{ model.value | number }}</p>
   </ng-template>
 
   <ng-template #seriesTooltipTemplate let-model="model">
     <p class="tooltip-caption">
-      {{ model[0].name | date: "MM/dd HH:mm" }}
+      {{ model[0].name | format: "MM/DD HH:mm" }}
     </p>
     <p class="tooltip-caption">{{ model[0].value | number }}</p>
   </ng-template>

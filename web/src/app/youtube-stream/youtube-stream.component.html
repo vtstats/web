@@ -1,10 +1,10 @@
 <div class="youtube-stream">
   <div class="submenu" fxLayout="row" fxLayoutAlign="space-between center">
     <div></div>
-    <div class="updated-at">更新于 {{ updatedAt | date: "MM/dd HH:mm" }}</div>
+    <div class="updated-at">更新于 {{ updatedAt | format: "MM/DD HH:mm" }}</div>
   </div>
   <div class="content" *ngFor="let group of streamGroup">
-    <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
+    <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
     <div fxLayout="row wrap">
       <div
         class="stream"
@@ -21,16 +21,10 @@
         >
           <div class="duration">
             <ng-container *ngIf="stream.endTime; else clock">
-              {{
-                stream.startTime
-                  | parseISO
-                  | duration: (stream.endTime | parseISO)
-              }}
+              {{ stream.startTime | duration: stream.endTime }}
             </ng-container>
             <ng-template #clock>
-              {{
-                stream.startTime | parseISO | duration: (everySecond$ | async)
-              }}
+              {{ stream.startTime | duration: (everySecond$ | async) }}
             </ng-template>
           </div>
           <a
@@ -71,7 +65,7 @@
           />
           <span class="name">{{ (stream.vtuberId | vtubers).name }}</span>
           <span title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}">
-            {{ stream.startTime | parseISO | distance: (everyMinute$ | async) }}
+            {{ stream.startTime | distance: (everyMinute$ | async) }}
           </span>
         </div>
       </div>

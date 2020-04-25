@@ -1,6 +1,6 @@
 <div class="youtube-schedule-stream">
   <div class="content" *ngFor="let group of streamGroup">
-    <div class="date-label">{{ group.day | date: "MM / dd" }}</div>
+    <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
     <div fxLayout="row wrap">
       <div
         class="stream"
@@ -11,7 +11,7 @@
       >
         <div class="thumbnail" lazyLoad [video]="stream.streamId">
           <div class="duration">
-            {{ stream.scheduleTime | date: "HH:mm" }}
+            {{ stream.scheduleTime | format: "HH:mm" }}
           </div>
           <a
             class="icon"
@@ -32,9 +32,7 @@
           />
           <span class="name">{{ (stream.vtuberId | vtubers).name }}</span>
           <span title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}">
-            {{
-              stream.scheduleTime | parseISO | distance: (everyMinute$ | async)
-            }}
+            {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
           </span>
         </div>
       </div>
