@@ -5,6 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MatMenuModule } from "@angular/material/menu";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSortModule } from "@angular/material/sort";
@@ -21,7 +22,7 @@ import { environment } from "../environments/environment";
 import { AppComponent } from "./app.component";
 import {
   BilibiliChannelComponent,
-  BilibiliChannelResolver
+  BilibiliChannelResolver,
 } from "./bilibili-channel";
 import { DirectivesModule } from "./directives";
 import { HeaderComponent } from "./header";
@@ -30,15 +31,15 @@ import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
 import {
   YoutubeChannelComponent,
-  YoutubeChannelResolver
+  YoutubeChannelResolver,
 } from "./youtube-channel";
 import {
   YoutubeSchduleStreamResolver,
-  YoutubeScheduleStreamComponent
+  YoutubeScheduleStreamComponent,
 } from "./youtube-schedule-stream";
 import {
   YoutubeStreamComponent,
-  YoutubeStreamResolver
+  YoutubeStreamResolver,
 } from "./youtube-stream";
 
 const ROUTES: Routes = [
@@ -47,48 +48,48 @@ const ROUTES: Routes = [
     path: "youtube-channel",
     component: YoutubeChannelComponent,
     resolve: {
-      data: YoutubeChannelResolver
-    }
+      data: YoutubeChannelResolver,
+    },
   },
   {
     path: "bilibili-channel",
     component: BilibiliChannelComponent,
     resolve: {
-      data: BilibiliChannelResolver
-    }
+      data: BilibiliChannelResolver,
+    },
   },
   {
     path: "youtube-schedule-stream",
     component: YoutubeScheduleStreamComponent,
     resolve: {
-      data: YoutubeSchduleStreamResolver
-    }
+      data: YoutubeSchduleStreamResolver,
+    },
   },
   {
     path: "youtube-stream",
     component: YoutubeStreamComponent,
     resolve: {
-      data: YoutubeStreamResolver
-    }
+      data: YoutubeStreamResolver,
+    },
   },
   { path: "settings", component: SettingsComponent },
   {
     path: "stream",
     loadChildren: () =>
       import("./streams-detail/streams-detail.module").then(
-        mod => mod.StreamsDetailModule
-      )
+        (mod) => mod.StreamsDetailModule
+      ),
   },
   {
     path: "vtuber",
     loadChildren: () =>
       import("./vtubers-detail/vtubers-detail.module").then(
-        mod => mod.VtubersDetailModule
-      )
+        (mod) => mod.VtubersDetailModule
+      ),
   },
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
-  { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" }
+  { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
 ];
 
 @NgModule({
@@ -100,7 +101,7 @@ const ROUTES: Routes = [
     SidenavComponent,
     YoutubeChannelComponent,
     YoutubeScheduleStreamComponent,
-    YoutubeStreamComponent
+    YoutubeStreamComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -112,6 +113,7 @@ const ROUTES: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatSortModule,
@@ -121,14 +123,14 @@ const ROUTES: Routes = [
     SharedModule,
     RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: environment.production
-    })
+      enabled: environment.production,
+    }),
   ],
   providers: [
     BilibiliChannelResolver,
     YoutubeChannelResolver,
-    YoutubeStreamResolver
+    YoutubeStreamResolver,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

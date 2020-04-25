@@ -26,4 +26,5 @@ export const translations: Translations = {
   youtubeViews: "YouTube Views",
   bilibiliViews: "Bilibili Views",
   vtuberSelected: "VTuber Selected",
+  selectLanguage: "Select Language",
 };

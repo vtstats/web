@@ -26,4 +26,5 @@ export const translations: Translations = {
   youtubeViews: "YouTube 播放",
   bilibiliViews: "Bilibili 播放",
   vtuberSelected: "已選取的 VTuber",
+  selectLanguage: "選擇語言",
 };

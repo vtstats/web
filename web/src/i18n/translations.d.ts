@@ -23,6 +23,7 @@ export type MessageIds =
   | "bilibiliSubscribers"
   | "youtubeViews"
   | "bilibiliViews"
-  | "vtuberSelected";
+  | "vtuberSelected"
+  | "selectLanguage";
 
 export type Translations = Record<MessageIds, string>;

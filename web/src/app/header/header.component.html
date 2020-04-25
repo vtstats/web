@@ -10,6 +10,18 @@
   <span class="spacer"></span>
   <button
     mat-icon-button
+    matTooltip="Select Language"
+    i18n-matTooltip="@@selectLanguage"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon svgIcon="translate"></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="selectLanguage('en')">English</button>
+    <button mat-menu-item (click)="selectLanguage('zh')">中文</button>
+  </mat-menu>
+  <button
+    mat-icon-button
     matTooltip="Toggle Dark Mode"
     i18n-matTooltip="@@toggleDarkMode"
     (click)="config.toggleDarkMode()"

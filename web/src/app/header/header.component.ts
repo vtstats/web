@@ -2,7 +2,7 @@ import {
   Component,
   ViewEncapsulation,
   EventEmitter,
-  Output
+  Output,
 } from "@angular/core";
 
 import { Config } from "../services";
@@ -11,10 +11,15 @@ import { Config } from "../services";
   selector: "hs-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
 
   constructor(public config: Config) {}
+
+  selectLanguage(locale: string) {
+    localStorage.setItem("holostats:locale", locale);
+    location.reload();
+  }
 }
