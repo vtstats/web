@@ -37,7 +37,7 @@
           <div class="value">
             {{ stream.startTime | format: "HH:mm:ss" }}
           </div>
-          <div class="caption">直播開始</div>
+          <div class="caption" i18n="@@streamStartTime">Start Time</div>
         </div>
         <div flex="50">
           <div class="value">
@@ -48,7 +48,7 @@
               {{ stream.startTime | duration: (everySecond$ | async) }}
             </ng-template>
           </div>
-          <div class="caption">直播持續</div>
+          <div class="caption" i18n="@@streamDuration">Duration</div>
         </div>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-around">
@@ -56,13 +56,13 @@
           <div class="value">
             {{ (stream.averageViewerCount | number) || " ----- " }}
           </div>
-          <div class="caption">平均同接</div>
+          <div class="caption" i18n="@@averageViewers">Average Viewers</div>
         </div>
         <div flex="50">
           <div class="value">
             {{ (stream.maxViewerCount | number) || " ----- " }}
           </div>
-          <div class="caption">最高同接</div>
+          <div class="caption" i18n="@@maximumViewers">Maximum Viewers</div>
         </div>
       </div>
     </div>

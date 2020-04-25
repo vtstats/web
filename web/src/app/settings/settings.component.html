@@ -1,6 +1,7 @@
 <div class="settings">
   <h4 class="title">
-    已選取的 VTuber <b>({{ config.selectedVTubers.size }}/{{ count }})</b>：
+    <ng-container i18n="@@vtuberSelected">VTuber Selected</ng-container>
+    <b> ({{ config.selectedVTubers.size }}/{{ count }})</b>:
   </h4>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>

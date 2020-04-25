@@ -1,7 +1,9 @@
 <div class="youtube-stream">
   <div class="submenu" fxLayout="row" fxLayoutAlign="space-between center">
     <div></div>
-    <div class="updated-at">更新于 {{ updatedAt | format: "MM/DD HH:mm" }}</div>
+    <div class="updated-at" i18n="@@updatedAt">
+      Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
+    </div>
   </div>
   <div class="content" *ngFor="let group of streamGroup">
     <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
@@ -45,16 +47,27 @@
           fxLayout="row"
           fxLayoutAlign="start center"
         >
-          <mat-icon
-            class="view-icon"
-            svgIcon="eye"
-            [title]="stream.endTime ? '直播結束' : '正在直播'"
-          ></mat-icon>
-          <span title="平均同接">
+          <ng-container *ngIf="stream.endTime; else live">
+            <mat-icon
+              class="view-icon"
+              svgIcon="eye"
+              i18n-title="@@streamHasEnded"
+              title="Stream has ended"
+            ></mat-icon>
+          </ng-container>
+          <ng-template #live>
+            <mat-icon
+              class="view-icon"
+              svgIcon="eye"
+              i18n-title="@@streaming"
+              title="Streaming"
+            ></mat-icon>
+          </ng-template>
+          <span i18n-title="@@averageViewers" title="Average Viewers">
             {{ (stream.averageViewerCount | number) || "----" }}
           </span>
           <span class="separator"> / </span>
-          <span title="最高同接">
+          <span i18n-title="@@maximumViewers" title="Maximum Viewers">
             {{ (stream.maxViewerCount | number) || "----" }}
           </span>
         </div>

@@ -1,7 +1,9 @@
 <div class="youtube-channel">
   <div class="submenu" fxLayout="row" fxLayoutAlign="space-between center">
     <div></div>
-    <div class="updated-at">更新于 {{ updatedAt | format: "MM/DD HH:mm" }}</div>
+    <div class="updated-at" i18n="@@updatedAt">
+      Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
+    </div>
   </div>
   <div class="table-container">
     <table
@@ -26,15 +28,22 @@
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>名稱</th>
+        <th mat-header-cell *matHeaderCellDef i18n="@@name">Name</th>
         <td mat-cell *matCellDef="let row" lang="jp">
           {{ (row.vtuberId | vtubers).name }}
         </td>
-        <td mat-footer-cell *matFooterCellDef>總計</td>
+        <td mat-footer-cell *matFooterCellDef i18n="@@total">Total</td>
       </ng-container>
 
       <ng-container matColumnDef="subscriberCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>YouTube 訂閱</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@subscribers"
+        >
+          Subscribers
+        </th>
         <td mat-cell *matCellDef="let row">
           {{ row.subscriberCount | number }}
         </td>
@@ -44,7 +53,9 @@
       </ng-container>
 
       <ng-container matColumnDef="dailySubscriberCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@lastDay">
+          Last Day
+        </th>
         <td
           mat-cell
           *matCellDef="let row"
@@ -58,7 +69,14 @@
       </ng-container>
 
       <ng-container matColumnDef="weeklySubscriberCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@last7Days"
+        >
+          Last 7 Days
+        </th>
         <td
           mat-cell
           *matCellDef="let row"
@@ -72,7 +90,14 @@
       </ng-container>
 
       <ng-container matColumnDef="monthlySubscriberCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@last30Days"
+        >
+          Last 30 Days
+        </th>
         <td
           mat-cell
           *matCellDef="let row"
@@ -90,7 +115,9 @@
       </ng-container>
 
       <ng-container matColumnDef="viewCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>YouTube 觀看</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@views">
+          Views
+        </th>
         <td mat-cell *matCellDef="let row">
           {{ row.viewCount | number }}
         </td>
@@ -100,7 +127,9 @@
       </ng-container>
 
       <ng-container matColumnDef="dailyViewCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>日增</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@lastDay">
+          Last Day
+        </th>
         <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailyViewCount">
           {{ row.dailyViewCount | number }}
         </td>
@@ -110,7 +139,14 @@
       </ng-container>
 
       <ng-container matColumnDef="weeklyViewCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>週增</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@last7Days"
+        >
+          Last 7 Days
+        </th>
         <td
           mat-cell
           *matCellDef="let row"
@@ -128,7 +164,14 @@
       </ng-container>
 
       <ng-container matColumnDef="monthlyViewCount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>月增</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@last30Days"
+        >
+          Last 30 Days
+        </th>
         <td
           mat-cell
           *matCellDef="let row"
