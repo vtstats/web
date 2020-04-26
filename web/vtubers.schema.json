@@ -21,9 +21,8 @@
   "definitions": {
     "vtuber": {
       "type": "object",
-      "required": ["name", "id", "default", "youtube", "bilibili"],
+      "required": ["id", "default", "youtube", "bilibili"],
       "properties": {
-        "name": { "type": "string" },
         "id": { "type": "string" },
         "twitter": { "type": "string" },
         "youtube": {
@@ -47,10 +46,9 @@
     },
     "batch": {
       "type": "object",
-      "required": ["id", "name", "vtubers"],
+      "required": ["id", "vtubers"],
       "properties": {
         "id": { "type": "string" },
-        "name": { "type": "string" },
         "vtubers": {
           "type": "array",
           "minItems": 1,

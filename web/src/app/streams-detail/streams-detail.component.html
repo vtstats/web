@@ -30,7 +30,7 @@
           class="profile"
           src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
         />
-        <span class="name">{{ (stream.vtuberId | vtubers).name }}</span>
+        <span class="name">{{ stream.vtuberId | name }}</span>
       </a>
       <div fxLayout="row" fxLayoutAlign="space-around">
         <div flex="50">

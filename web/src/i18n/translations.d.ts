@@ -1,3 +1,5 @@
+import { vtubers, batches } from "vtubers";
+
 export type MessageIds =
   | "updatedAt"
   | "name"
@@ -24,6 +26,8 @@ export type MessageIds =
   | "youtubeViews"
   | "bilibiliViews"
   | "vtuberSelected"
-  | "selectLanguage";
+  | "selectLanguage"
+  | keyof typeof vtubers
+  | keyof typeof batches;
 
 export type Translations = Record<MessageIds, string>;

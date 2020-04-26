@@ -10,7 +10,7 @@
         [checked]="vtuberSelected(node.id)"
         (change)="toggleVTuber(node.id)"
       >
-        {{ node.name }}
+        {{ node.id | name }}
       </mat-checkbox>
     </mat-tree-node>
 
@@ -32,7 +32,7 @@
         [indeterminate]="batchPartiallySelected(node.id)"
         (change)="toggleBatch(node.id)"
       >
-        {{ node.name }}
+        {{ node.id | name }}
       </mat-checkbox>
     </mat-tree-node>
   </mat-tree>

@@ -3,7 +3,6 @@
   "vtubers": {
     "hololive": {
       "id": "hololive",
-      "name": "ホロライブ公式",
       "twitter": "hololivetv",
       "youtube": "UCJFZiqLMntJufDCHc6bQixg",
       "bilibili": 286700005,
@@ -11,7 +10,6 @@
     },
     "sora": {
       "id": "sora",
-      "name": "ときのそら",
       "twitter": "tokino_sora",
       "youtube": "UCp6993wxpyDPHUpavwDFqgg",
       "bilibili": 286179206,
@@ -19,7 +17,6 @@
     },
     "roboco": {
       "id": "roboco",
-      "name": "ロボ子さん",
       "twitter": "robocosan",
       "youtube": "UCDqI2jOz0weumE8s7paEk6g",
       "bilibili": 20813493,
@@ -27,7 +24,6 @@
     },
     "miko": {
       "id": "miko",
-      "name": "さくらみこ",
       "twitter": "sakuramiko35",
       "youtube": "UC-hM6YJuNYVAmUWxeIr9FeA",
       "bilibili": 366690056,
@@ -35,7 +31,6 @@
     },
     "suisei": {
       "id": "suisei",
-      "name": "星街すいせい",
       "twitter": "suisei_hosimati",
       "youtube": "UC5CwaMl1eIgY8h02uZw7u8A",
       "bilibili": 9034870,
@@ -43,7 +38,6 @@
     },
     "fubuki": {
       "id": "fubuki",
-      "name": "白上フブキ",
       "twitter": "shirakamifubuki",
       "youtube": "UCdn5BQ06XqgXoAxIhbqw5Rg",
       "bilibili": 332704117,
@@ -51,7 +45,6 @@
     },
     "matsuri": {
       "id": "matsuri",
-      "name": "夏色まつり",
       "twitter": "natsuiromatsuri",
       "youtube": "UCQ0UDLQCjY0rmuxCDE38FGg",
       "bilibili": 336731767,
@@ -59,7 +52,6 @@
     },
     "haato": {
       "id": "haato",
-      "name": "赤井はあと",
       "twitter": "akaihaato",
       "youtube": "UC1CfXB_kRs3C-zaeTG3oGyg",
       "bilibili": 339567211,
@@ -67,7 +59,6 @@
     },
     "haato_alt": {
       "id": "haato_alt",
-      "name": "赤井はあと sub",
       "twitter": "akaihaato",
       "youtube": "UCHj_mh57PVMXhAUDphUQDFA",
       "bilibili": null,
@@ -75,7 +66,6 @@
     },
     "aki": {
       "id": "aki",
-      "name": "アキロゼ",
       "twitter": "akirosenthal",
       "youtube": "UCFTLzh12_nrtzqBPsTCqenA",
       "bilibili": 389857131,
@@ -83,7 +73,6 @@
     },
     "aki_alt": {
       "id": "aki_alt",
-      "name": "アキロゼ sub",
       "twitter": "akirosenthal",
       "youtube": "UCLbtM3JZfRTg8v2KGag-RMw",
       "bilibili": null,
@@ -91,7 +80,6 @@
     },
     "mel": {
       "id": "mel",
-      "name": "夜空メル",
       "twitter": "yozoramel",
       "youtube": "UCD8HOxPs4Xvsm8H0ZxXGiBw",
       "bilibili": 389856447,
@@ -99,7 +87,6 @@
     },
     "choco": {
       "id": "choco",
-      "name": "癒月ちょこ",
       "twitter": "yuzukichococh",
       "youtube": "UC1suqwovbL1kzsoaZgFZLKg",
       "bilibili": 389858754,
@@ -107,7 +94,6 @@
     },
     "choco_alt": {
       "id": "choco_alt",
-      "name": "癒月ちょこ sub",
       "twitter": "yuzukichococh",
       "youtube": "UCp3tgHXw_HI0QMk1K8qh3gQ",
       "bilibili": null,
@@ -115,7 +101,6 @@
     },
     "shion": {
       "id": "shion",
-      "name": "紫咲シオン",
       "twitter": "murasakishionch",
       "youtube": "UCXTpFs_3PqI41qX2d9tL2Rw",
       "bilibili": 389857640,
@@ -123,7 +108,6 @@
     },
     "aqua": {
       "id": "aqua",
-      "name": "湊あくあ",
       "twitter": "minatoaqua",
       "youtube": "UC1opHUrw8rvnsadT-iGp7Cg",
       "bilibili": 375504219,
@@ -131,7 +115,6 @@
     },
     "subaru": {
       "id": "subaru",
-      "name": "大空スバル",
       "twitter": "oozorasubaru",
       "youtube": "UCvzGlP9oQwU--Y0r9id_jnA",
       "bilibili": 389859190,
@@ -139,7 +122,6 @@
     },
     "ayame": {
       "id": "ayame",
-      "name": "百鬼あやめ",
       "twitter": "nakiriayame",
       "youtube": "UC7fk0CB07ly8oSl0aqKkqFg",
       "bilibili": 389858027,
@@ -147,7 +129,6 @@
     },
     "pekora": {
       "id": "pekora",
-      "name": "兎田ぺこら",
       "twitter": "usadapekora",
       "youtube": "UC1DCedRgGHBdm81E1llLhOQ",
       "bilibili": 443305053,
@@ -155,7 +136,6 @@
     },
     "rushia": {
       "id": "rushia",
-      "name": "潤羽るしあ",
       "twitter": "uruharushia",
       "youtube": "UCl_gCybOJRIgOXw6Qb4qJzQ",
       "bilibili": 443300418,
@@ -163,7 +143,6 @@
     },
     "flare": {
       "id": "flare",
-      "name": "不知火フレア",
       "twitter": "shiranuiflare",
       "youtube": "UCvInZx9h3jC2JzsIzoOebWg",
       "bilibili": 454737600,
@@ -171,7 +150,6 @@
     },
     "marine": {
       "id": "marine",
-      "name": "宝鐘マリン",
       "twitter": "houshoumarine",
       "youtube": "UCCzUftO8KOVkV4wQG1vkUvg",
       "bilibili": 454955503,
@@ -179,7 +157,6 @@
     },
     "noel": {
       "id": "noel",
-      "name": "白銀ノエル",
       "twitter": "shiroganenoel",
       "youtube": "UCdyqAaZDKHXg4Ahi7VENThQ",
       "bilibili": 454733056,
@@ -187,7 +164,6 @@
     },
     "kanata": {
       "id": "kanata",
-      "name": "天音かなた",
       "twitter": "amanekanatach",
       "youtube": "UCZlDXzGoo7d44bwdNObFacg",
       "bilibili": 491474048,
@@ -195,7 +171,6 @@
     },
     "coco": {
       "id": "coco",
-      "name": "桐生ココ",
       "twitter": "kiryucoco",
       "youtube": "UCS9uQI-jC3DE0L4IpXyvr6w",
       "bilibili": 491474049,
@@ -203,7 +178,6 @@
     },
     "watame": {
       "id": "watame",
-      "name": "角巻わため",
       "twitter": "tsunomakiwatame",
       "youtube": "UCqm3BQLlJfvkTsX_hvm0UmA",
       "bilibili": 491474050,
@@ -211,7 +185,6 @@
     },
     "towa": {
       "id": "towa",
-      "name": "常闇トワ",
       "twitter": "tokoyamitowa",
       "youtube": "UC1uv2Oq6kNxgATlCiez59hw",
       "bilibili": 491474051,
@@ -219,7 +192,6 @@
     },
     "himemoriluna": {
       "id": "himemoriluna",
-      "name": "姫森ルーナ",
       "twitter": "himemoriluna",
       "youtube": "UCa9Y57gfeY0Zro_noHRVrnw",
       "bilibili": 491474052,
@@ -227,7 +199,6 @@
     },
     "mio": {
       "id": "mio",
-      "name": "大神ミオ",
       "twitter": "ookamimio",
       "youtube": "UCp-5t9SrOQwXMU7iIjQfARg",
       "bilibili": 389862071,
@@ -235,7 +206,6 @@
     },
     "okayu": {
       "id": "okayu",
-      "name": "猫又おかゆ",
       "twitter": "nekomataokayu",
       "youtube": "UCvaTdHTWBGv3MKj3KVqJVCw",
       "bilibili": 412135222,
@@ -243,7 +213,6 @@
     },
     "korone": {
       "id": "korone",
-      "name": "戌神ころね",
       "twitter": "inugamikorone",
       "youtube": "UChAnqc_AY5_I3Px5dig3X1Q",
       "bilibili": 412135619,
@@ -251,7 +220,6 @@
     },
     "azki": {
       "id": "azki",
-      "name": "AZKi",
       "twitter": "AZKi_VDiVA",
       "youtube": "UC0TXe_LYZ4scaW2XMyi5_kw",
       "bilibili": 389056211,
@@ -259,7 +227,6 @@
     },
     "yogiri": {
       "id": "yogiri",
-      "name": "夜霧Yogiri",
       "twitter": "Yogiri_hololive",
       "youtube": null,
       "bilibili": 427061218,
@@ -267,7 +234,6 @@
     },
     "civia": {
       "id": "civia",
-      "name": "希薇娅Civia",
       "twitter": "Civia_Hololive",
       "youtube": null,
       "bilibili": 354411419,
@@ -275,7 +241,6 @@
     },
     "echo": {
       "id": "echo",
-      "name": "黑桃影",
       "twitter": "SpadeEcho",
       "youtube": null,
       "bilibili": 456368455,
@@ -283,7 +248,6 @@
     },
     "doris": {
       "id": "doris",
-      "name": "朵莉丝Doris",
       "twitter": "",
       "youtube": null,
       "bilibili": 511613156,
@@ -291,7 +255,6 @@
     },
     "artia": {
       "id": "artia",
-      "name": "阿媂娅Artia",
       "twitter": "",
       "youtube": null,
       "bilibili": 511613155,
@@ -299,7 +262,6 @@
     },
     "rosalyn": {
       "id": "rosalyn",
-      "name": "罗莎琳Rosalyn",
       "twitter": "",
       "youtube": null,
       "bilibili": 511613157,
@@ -307,7 +269,6 @@
     },
     "risu": {
       "id": "risu",
-      "name": "Ayunda Risu",
       "twitter": "ayunda_risu",
       "youtube": "UCOyYb1c43VlX9rc_lT6NKQw",
       "bilibili": null,
@@ -315,7 +276,6 @@
     },
     "moona": {
       "id": "moona",
-      "name": "Moona Hoshinova",
       "twitter": "moonahoshinova",
       "youtube": "UCP0BspO_AMEe3aQqqpo89Dg",
       "bilibili": null,
@@ -323,7 +283,6 @@
     },
     "iofi": {
       "id": "iofi",
-      "name": "Airani Iofifteen",
       "twitter": "airaniiofifteen",
       "youtube": "UCAoy6rzhSf4ydcYjJw3WoVg",
       "bilibili": null,
@@ -331,7 +290,6 @@
     },
     "luna": {
       "id": "luna",
-      "name": "輝夜月",
       "twitter": "_KaguyaLuna",
       "youtube": "UCQYADFw7xEJ9oZSM5ZbqyBw",
       "bilibili": 265224956,
@@ -339,7 +297,6 @@
     },
     "nekomiya": {
       "id": "nekomiya",
-      "name": "猫宮ひなた",
       "twitter": "Nekomiya_Hinata",
       "youtube": "UCevD0wKzJFpfIkvHOiQsfLQ",
       "bilibili": 291296062,
@@ -347,7 +304,6 @@
     },
     "tamaki": {
       "id": "tamaki",
-      "name": "犬山たまき",
       "twitter": "norioo_",
       "youtube": "UC8NZiqKx6fsDT3AVcMiVFyA",
       "bilibili": 12362451,
@@ -355,7 +311,6 @@
     },
     "pph": {
       "id": "pph",
-      "name": "Pinky Pop Hepburn",
       "twitter": "PinkyPopHepburn",
       "youtube": "UC1pR2ig6NhndhvicEgclNdA",
       "bilibili": 393940396,
@@ -363,7 +318,6 @@
     },
     "nana": {
       "id": "nana",
-      "name": "カグラナナ",
       "twitter": "nana_kaguraaa",
       "youtube": "UCbfv8uuUXt3RSJGEwxny5Rw",
       "bilibili": 386900246,
@@ -371,7 +325,6 @@
     },
     "ui": {
       "id": "ui",
-      "name": "しぐれうい",
       "twitter": "ui_shig",
       "youtube": "UCt30jJgChL8qeT9VPadidSw",
       "bilibili": 2601367,
@@ -381,12 +334,10 @@
   "batches": {
     "hololive_og": {
       "id": "hololive_og",
-      "name": "ホロライブ",
       "vtubers": ["hololive", "sora", "roboco", "miko", "suisei"]
     },
     "hololive_1st": {
       "id": "hololive_1st",
-      "name": "ホロライブ一期生",
       "vtubers": [
         "fubuki",
         "matsuri",
@@ -399,47 +350,38 @@
     },
     "hololive_2nd": {
       "id": "hololive_2nd",
-      "name": "ホロライブ二期生",
       "vtubers": ["choco", "choco_alt", "shion", "aqua", "subaru", "ayame"]
     },
     "hololive_3rd": {
       "id": "hololive_3rd",
-      "name": "ホロライブ三期生",
       "vtubers": ["pekora", "rushia", "flare", "marine", "noel"]
     },
     "hololive_4th": {
       "id": "hololive_4th",
-      "name": "ホロライブ四期生",
       "vtubers": ["kanata", "coco", "watame", "towa", "himemoriluna"]
     },
     "hololive_gamers": {
       "id": "hololive_gamers",
-      "name": "ホロライブゲーマーズ",
       "vtubers": ["fubuki", "mio", "okayu", "korone"]
     },
     "innk_music": {
       "id": "innk_music",
-      "name": "イノナカミュージック",
       "vtubers": ["azki"]
     },
     "hololive_cn_1st": {
       "id": "hololive_cn_1st",
-      "name": "ホロライブ中国一期生",
       "vtubers": ["yogiri", "civia", "echo"]
     },
     "hololive_cn_2nd": {
       "id": "hololive_cn_2nd",
-      "name": "ホロライブ中国二期生",
       "vtubers": ["doris", "artia", "rosalyn"]
     },
     "hololive_id": {
       "id": "hololive_id",
-      "name": "ホロライブインドネシア",
       "vtubers": ["risu", "moona", "iofi"]
     },
     "others": {
       "id": "others",
-      "name": "その他",
       "vtubers": ["luna", "nekomiya", "tamaki", "pph", "nana", "ui"]
     }
   }

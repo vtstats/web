@@ -30,7 +30,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef i18n="@@name">Name</th>
         <td mat-cell *matCellDef="let row" lang="jp">
-          {{ (row.vtuberId | vtubers).name }}
+          {{ row.vtuberId | name }}
         </td>
         <td mat-footer-cell *matFooterCellDef i18n="@@total">Total</td>
       </ng-container>
