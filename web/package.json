@@ -26,6 +26,7 @@
     "@angular/service-worker": "~9.1.1",
     "@swimlane/ngx-charts": "^14.0.0",
     "dayjs": "^1.8.26",
+    "ngx-ellipsis": "^2.2.2",
     "rxjs": "~6.5.5",
     "tslib": "^1.11.1",
     "zone.js": "~0.10.3"

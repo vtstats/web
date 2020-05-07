@@ -6,14 +6,6 @@
   $foreground: map-get($theme, foreground);
 
   .youtube-schedule-stream {
-    .title:after {
-      background: linear-gradient(
-        to right,
-        transparent,
-        mat-color($background, background) 100%
-      );
-    }
-
     .menu-label {
       color: mat-color($foreground, secondary-text);
     }

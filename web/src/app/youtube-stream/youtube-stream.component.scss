@@ -60,21 +60,9 @@
   }
 
   .title {
-    position: relative;
     line-height: 1.2em;
     height: 2.4em;
-    overflow: hidden;
     padding-top: 12px;
-
-    &:after {
-      content: "";
-      text-align: right;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 40%;
-      height: 1.3em;
-    }
   }
 
   .time {
