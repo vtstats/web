@@ -329,6 +329,13 @@
       "youtube": "UCt30jJgChL8qeT9VPadidSw",
       "bilibili": 2601367,
       "default": true
+    },
+    "rurudo": {
+      "id": "rurudo",
+      "twitter": "rurudo_",
+      "youtube": "UC0qt9BfrpQo-drjuPKl_vdA",
+      "bilibili": null,
+      "default": true
     }
   },
   "batches": {
@@ -382,7 +389,7 @@
     },
     "others": {
       "id": "others",
-      "vtubers": ["luna", "nekomiya", "tamaki", "pph", "nana", "ui"]
+      "vtubers": ["luna", "nekomiya", "tamaki", "pph", "nana", "ui", "rurudo"]
     }
   }
 }
