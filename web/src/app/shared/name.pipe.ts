@@ -52,6 +52,7 @@ const nameMap: Record<NameKeys, string> = {
   pph: $localize`:@@pph:Pinky Pop Hepburn`,
   nana: $localize`:@@nana:Kagura Nana`,
   ui: $localize`:@@ui:Shigure Ui`,
+  rurudo: $localize`:@@rurudo:rurudo`,
   hololive_og: $localize`:@@hololive_og:Hololive Talents`,
   hololive_1st: $localize`:@@hololive_1st:Hololive 1st Gen`,
   hololive_2nd: $localize`:@@hololive_2nd:Hololive 2nd Gen`,

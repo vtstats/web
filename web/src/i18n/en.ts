@@ -77,6 +77,7 @@ export const translations: Translations = {
   pph: "Pinky Pop Hepburn",
   nana: "Kagura Nana",
   ui: "Shigure Ui",
+  rurudo: "rurudo",
   hololive_og: "Hololive Talents",
   hololive_1st: "Hololive 1st Gen",
   hololive_2nd: "Hololive 2nd Gen",
