@@ -4,7 +4,7 @@ use sqlx::PgPool;
 use warp::test::request;
 use warp::Filter;
 
-use crate::api_v3::streams_report::{Stream, StreamsReport, StreamsReportResponseBody};
+use crate::api_v3::streams_report::{Row, Stream, StreamsReport, StreamsReportResponseBody};
 use crate::error::Result;
 use crate::filters::api;
 use crate::reject::handle_rejection;
@@ -120,10 +120,22 @@ async fn ok() -> Result<()> {
                 id: "foo".into(),
                 kind: "youtube_stream_viewer".into(),
                 rows: vec![
-                    (today, 100),
-                    (today + Duration::seconds(15), 200),
-                    (today + Duration::seconds(30), 300),
-                    (today + Duration::seconds(45), 400),
+                    Row {
+                        time: today,
+                        value: 100,
+                    },
+                    Row {
+                        time: today + Duration::seconds(15),
+                        value: 200,
+                    },
+                    Row {
+                        time: today + Duration::seconds(30),
+                        value: 300,
+                    },
+                    Row {
+                        time: today + Duration::seconds(45),
+                        value: 400,
+                    },
                 ],
             }],
         },
@@ -155,9 +167,18 @@ async fn ok() -> Result<()> {
                 id: "foo".into(),
                 kind: "youtube_stream_viewer".into(),
                 rows: vec![
-                    (today + Duration::seconds(15), 200),
-                    (today + Duration::seconds(30), 300),
-                    (today + Duration::seconds(45), 400),
+                    Row {
+                        time: today + Duration::seconds(15),
+                        value: 200,
+                    },
+                    Row {
+                        time: today + Duration::seconds(30),
+                        value: 300,
+                    },
+                    Row {
+                        time: today + Duration::seconds(45),
+                        value: 400,
+                    },
                 ],
             }],
         },
@@ -189,9 +210,18 @@ async fn ok() -> Result<()> {
                 id: "foo".into(),
                 kind: "youtube_stream_viewer".into(),
                 rows: vec![
-                    (today, 100),
-                    (today + Duration::seconds(15), 200),
-                    (today + Duration::seconds(30), 300),
+                    Row {
+                        time: today,
+                        value: 100,
+                    },
+                    Row {
+                        time: today + Duration::seconds(15),
+                        value: 200,
+                    },
+                    Row {
+                        time: today + Duration::seconds(30),
+                        value: 300,
+                    },
                 ],
             }],
         },
@@ -223,8 +253,8 @@ async fn ok() -> Result<()> {
                 id: "foo".into(),
                 kind: "youtube_stream_viewer".into(),
                 rows: vec![
-                    (today + Duration::seconds(15), 200),
-                    (today + Duration::seconds(30), 300),
+                    Row { time: today + Duration::seconds(15), value: 200},
+                    Row { time: today + Duration::seconds(30), value: 300},
                 ],
             }],
         },

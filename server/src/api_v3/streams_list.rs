@@ -25,6 +25,7 @@ pub struct Stream {
     stream_id: String,
     title: String,
     vtuber_id: String,
+    status: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     schedule_time: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -38,22 +39,35 @@ pub struct Stream {
     updated_at: DateTime<Utc>,
 }
 
+// TODO: sqlx doesn't yet support user-defined types in query_as!
+// https://github.com/launchbadge/sqlx/issues/148
+//
+// #[derive(PartialEq, Debug, sqlx::Type, serde::Serialize)]
+// #[sqlx(rename = "youtube_stream_status")]
+// #[sqlx(rename_all = "lowercase")]
+// #[serde(rename_all = "lowercase")]
+// enum YouTubeStreamStatus {
+//     Schedule,
+//     Live,
+//     End,
+// }
+
 pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let rec = sqlx::query!("select max(updated_at) from youtube_streams")
+    let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
         .fetch_one(&pool)
         .await
+        .map(|row| row.max)
         .map_err(Error::Database)?;
-
-    let updated_at = rec.max;
 
     let streams = sqlx::query_as!(
         Stream,
         r#"
               select stream_id,
                      title,
+                     status::text,
                      vtuber_id,
                      schedule_time,
                      start_time,
@@ -109,12 +123,11 @@ pub async fn youtube_schedule_streams_list(
     query: ScheduleStreamsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let rec = sqlx::query!("SELECT MAX(updated_at) FROM youtube_streams")
+    let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
         .fetch_one(&pool)
         .await
+        .map(|row| row.max)
         .map_err(Error::Database)?;
-
-    let updated_at = rec.max;
 
     let streams = sqlx::query_as!(
         ScheduleStream,

@@ -1,4 +1,8 @@
 use chrono::{DateTime, Utc};
+use serde::{
+    ser::{SerializeTuple, Serializer},
+    Serialize,
+};
 use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
@@ -25,7 +29,25 @@ pub struct StreamsReportResponseBody {
 pub struct StreamsReport {
     pub id: String,
     pub kind: String,
-    pub rows: Vec<(DateTime<Utc>, i32)>,
+    pub rows: Vec<Row>,
+}
+
+pub struct Row {
+    pub time: DateTime<Utc>,
+    pub value: i32,
+}
+
+// serializing row as a tuple, it helps reducing response size
+impl Serialize for Row {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut tuple = serializer.serialize_tuple(2)?;
+        tuple.serialize_element(&self.time)?;
+        tuple.serialize_element(&self.value)?;
+        tuple.end()
+    }
 }
 
 #[derive(Debug, serde::Serialize)]
@@ -101,7 +123,8 @@ async fn youtube_stream_viewer(
     end_at: Option<DateTime<Utc>>,
     pool: &PgPool,
 ) -> Result<StreamsReport, Rejection> {
-    let rows = sqlx::query!(
+    let rows = sqlx::query_as!(
+        Row,
         r#"
             select time, value
               from youtube_stream_viewer_statistic
@@ -120,9 +143,6 @@ async fn youtube_stream_viewer(
     Ok(StreamsReport {
         id: id.to_string(),
         kind: String::from("youtube_stream_viewer"),
-        rows: rows
-            .into_iter()
-            .map(|r| (r.time, r.value))
-            .collect::<Vec<_>>(),
+        rows,
     })
 }

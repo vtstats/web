@@ -35,12 +35,11 @@ pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let rec = sqlx::query!("select max(updated_at) from youtube_channels")
+    let updated_at = sqlx::query!("select max(updated_at) from youtube_channels")
         .fetch_one(&pool)
         .await
+        .map(|row| row.max)
         .map_err(Error::Database)?;
-
-    let updated_at = rec.max;
 
     let channels = sqlx::query_as!(
         Channel,
@@ -74,12 +73,11 @@ pub async fn bilibili_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let rec = sqlx::query!("select max(updated_at) from bilibili_channels")
+    let updated_at = sqlx::query!("select max(updated_at) from bilibili_channels")
         .fetch_one(&pool)
         .await
+        .map(|row| row.max)
         .map_err(Error::Database)?;
-
-    let updated_at = rec.max;
 
     let channels = sqlx::query_as!(
         Channel,
