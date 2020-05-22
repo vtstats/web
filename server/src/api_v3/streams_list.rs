@@ -25,7 +25,6 @@ pub struct Stream {
     stream_id: String,
     title: String,
     vtuber_id: String,
-    status: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     schedule_time: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -67,7 +66,6 @@ pub async fn youtube_streams_list(
         r#"
               select stream_id,
                      title,
-                     status::text,
                      vtuber_id,
                      schedule_time,
                      start_time,
