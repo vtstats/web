@@ -1,34 +1,10 @@
 name: Angular
 
-on:
-  pull_request:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
-  format:
+  ci:
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Add yarn global bin to path
-        run: echo "::add-path::$(yarn global bin)"
-
-      - name: Run Prettier
-        working-directory: web
-        run: |
-          yarn global add prettier
-          prettier --check --ignore-path .gitignore 'src/**/*.{js,json.html,scss}'
-
-  deploy:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-
-    strategy:
-      matrix:
-        node-version: [10.x]
 
     steps:
       - name: Checkout code
@@ -49,12 +25,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Use Node ${{ matrix.node-version }}
+      - name: Use Node 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 10.x
+
+      - name: Run Prettier
+        working-directory: web
+        run: |
+          yarn global add prettier
+          prettier --check --ignore-path .gitignore 'src/**/*.{ts,js,json.html,scss}'
 
       - name: Build web
+        if: github.ref == 'refs/heads/master'
         working-directory: web
         run: |
           yarn install
@@ -62,7 +45,8 @@ jobs:
           yarn build --prod
 
       - name: Deploy
+        if: github.ref == 'refs/heads/master'
         working-directory: web
-        run: rsync -avzzP dist/* rsync://${{ secrets.RSYNC_USERNAME }}@${{ secrets.RSYNC_HOST }}:${{ secrets.RSYNC_PORT }}/web
+        run: rsync -avzzP dist/* rsync://ci@${{ secrets.RSYNC_HOST }}/web
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
