@@ -57,25 +57,11 @@
       "bilibili": 339567211,
       "default": true
     },
-    "haato_alt": {
-      "id": "haato_alt",
-      "twitter": "akaihaato",
-      "youtube": "UCHj_mh57PVMXhAUDphUQDFA",
-      "bilibili": null,
-      "default": true
-    },
     "aki": {
       "id": "aki",
       "twitter": "akirosenthal",
       "youtube": "UCFTLzh12_nrtzqBPsTCqenA",
       "bilibili": 389857131,
-      "default": true
-    },
-    "aki_alt": {
-      "id": "aki_alt",
-      "twitter": "akirosenthal",
-      "youtube": "UCLbtM3JZfRTg8v2KGag-RMw",
-      "bilibili": null,
       "default": true
     },
     "mel": {
@@ -345,15 +331,7 @@
     },
     "hololive_1st": {
       "id": "hololive_1st",
-      "vtubers": [
-        "fubuki",
-        "matsuri",
-        "haato",
-        "haato_alt",
-        "aki",
-        "aki_alt",
-        "mel"
-      ]
+      "vtubers": ["fubuki", "matsuri", "haato", "aki", "mel"]
     },
     "hololive_2nd": {
       "id": "hololive_2nd",

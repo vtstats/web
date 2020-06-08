@@ -32,7 +32,6 @@ vtubers! {
     "matsuri",      Some("UCQ0UDLQCjY0rmuxCDE38FGg"), Some(336731767),
     "haato",        Some("UC1CfXB_kRs3C-zaeTG3oGyg"), Some(339567211),
     "aki",          Some("UCFTLzh12_nrtzqBPsTCqenA"), Some(389857131),
-    "aki_alt",      Some("UCLbtM3JZfRTg8v2KGag-RMw"), None,
     "mel",          Some("UCD8HOxPs4Xvsm8H0ZxXGiBw"), Some(389856447),
     "choco",        Some("UC1suqwovbL1kzsoaZgFZLKg"), Some(389858754),
     "choco_alt",    Some("UCp3tgHXw_HI0QMk1K8qh3gQ"), None,

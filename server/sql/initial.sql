@@ -1,9 +1,6 @@
 --- アキ・ローゼンタール
 INSERT INTO youtube_channels (vtuber_id) VALUES ('aki');
 
---- アキ・ローゼンタール alt
-INSERT INTO youtube_channels (vtuber_id) VALUES ('aki_alt');
-
 --- 湊あくあ
 INSERT INTO youtube_channels (vtuber_id) VALUES ('aqua');
 
@@ -30,9 +27,6 @@ INSERT INTO youtube_channels (vtuber_id) VALUES ('fubuki');
 
 --- 赤井はあと
 INSERT INTO youtube_channels (vtuber_id) VALUES ('haato');
-
---- 赤井はあと alt
-INSERT INTO youtube_channels (vtuber_id) VALUES ('haato_alt');
 
 --- 姫森ルーナ
 INSERT INTO youtube_channels (vtuber_id) VALUES ('himemoriluna');
@@ -240,3 +234,9 @@ INSERT INTO bilibili_channels (vtuber_id) VALUES ('artia');
 
 --- 罗莎琳Rosalyn
 INSERT INTO bilibili_channels (vtuber_id) VALUES ('rosalyn');
+
+
+INSERT INTO youtube_channels (vtuber_id) VALUES ('risu');
+INSERT INTO youtube_channels (vtuber_id) VALUES ('moona');
+INSERT INTO youtube_channels (vtuber_id) VALUES ('iofi');
+INSERT INTO youtube_channels (vtuber_id) VALUES ('rurudo');
