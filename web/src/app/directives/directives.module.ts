@@ -7,6 +7,6 @@ import { LazyLoadDirective } from "./lazy-load.directive";
 @NgModule({
   declarations: [ColoredNumberDirective, LazyLoadDirective],
   imports: [CommonModule],
-  exports: [ColoredNumberDirective, LazyLoadDirective]
+  exports: [ColoredNumberDirective, LazyLoadDirective],
 })
 export class DirectivesModule {}

@@ -14,9 +14,9 @@ const ROUTES: Routes = [
     path: ":id",
     component: StreamsDetailComponent,
     resolve: {
-      data: StreamsDetailResolver
-    }
-  }
+      data: StreamsDetailResolver,
+    },
+  },
 ];
 
 @NgModule({
@@ -26,8 +26,8 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     ChartsModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
-  providers: [StreamsDetailResolver]
+  providers: [StreamsDetailResolver],
 })
 export class StreamsDetailModule {}

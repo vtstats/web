@@ -3,7 +3,7 @@ import {
   ViewEncapsulation,
   Output,
   EventEmitter,
-  VERSION
+  VERSION,
 } from "@angular/core";
 
 import { environment } from "src/environments/environment";
@@ -12,7 +12,7 @@ import { environment } from "src/environments/environment";
   selector: "hs-sidenav",
   templateUrl: "./sidenav.component.html",
   styleUrls: ["./sidenav.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class SidenavComponent {
   @Output() buttonClick = new EventEmitter();

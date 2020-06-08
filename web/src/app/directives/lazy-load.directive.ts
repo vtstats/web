@@ -3,7 +3,7 @@ import {
   Directive,
   ElementRef,
   HostBinding,
-  Input
+  Input,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -16,8 +16,8 @@ export class LazyLoadDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     if (window && "IntersectionObserver" in window) {
-      const obs = new IntersectionObserver(entries => {
-        if (entries.map(e => e.isIntersecting).some(e => e)) {
+      const obs = new IntersectionObserver((entries) => {
+        if (entries.map((e) => e.isIntersecting).some((e) => e)) {
           this.background = this.sanitizer.bypassSecurityTrustStyle(
             `url(https://img.youtube.com/vi/${this.video}/mqdefault.jpg)`
           );

@@ -14,9 +14,9 @@ const ROUTES: Routes = [
     path: ":id",
     component: VTubersDetailComponent,
     resolve: {
-      data: VtubersDetailResolver
-    }
-  }
+      data: VtubersDetailResolver,
+    },
+  },
 ];
 
 @NgModule({
@@ -26,8 +26,8 @@ const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     ChartsModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
-  providers: [VtubersDetailResolver]
+  providers: [VtubersDetailResolver],
 })
 export class VtubersDetailModule {}

@@ -5,7 +5,7 @@ import { MultiSeries } from "@swimlane/ngx-charts";
   selector: "hs-area-chart",
   templateUrl: "./area-chart.component.html",
   styleUrls: ["./area-chart.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AreaChartComponent {
   @Input() results: MultiSeries = [];

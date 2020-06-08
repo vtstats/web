@@ -51,7 +51,7 @@ export type Report<K> = {
 };
 
 export enum StreamReportKind {
-  youtube_stream_viewer = "youtube_stream_viewer"
+  youtube_stream_viewer = "youtube_stream_viewer",
 }
 
 export type StreamReportResponse = {
@@ -63,7 +63,7 @@ export enum ChannelReportKind {
   youtube_channel_subscriber = "youtube_channel_subscriber",
   youtube_channel_view = "youtube_channel_view",
   bilibili_channel_subscriber = "bilibili_channel_subscriber",
-  bilibili_channel_view = "bilibili_channel_view"
+  bilibili_channel_view = "bilibili_channel_view",
 }
 
 export type ChannelReportResponse = {

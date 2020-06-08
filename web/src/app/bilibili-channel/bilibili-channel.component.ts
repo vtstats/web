@@ -9,7 +9,7 @@ import { Channel, ChannelListResponse } from "src/app/models";
   selector: "hs-bilibili-channel",
   templateUrl: "./bilibili-channel.component.html",
   styleUrls: ["./bilibili-channel.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class BilibiliChannelComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
@@ -37,7 +37,7 @@ export class BilibiliChannelComponent implements OnInit {
     "viewCount",
     "dailyViewCount",
     "weeklyViewCount",
-    "monthlyViewCount"
+    "monthlyViewCount",
   ];
 
   trackBy(_: number, channel: Channel): string {
@@ -51,34 +51,34 @@ export class BilibiliChannelComponent implements OnInit {
   }
 
   get totalSubs(): number {
-    return this.getTotal(v => v.subscriberCount);
+    return this.getTotal((v) => v.subscriberCount);
   }
 
   get totalDailySubs(): number {
-    return this.getTotal(v => v.dailySubscriberCount);
+    return this.getTotal((v) => v.dailySubscriberCount);
   }
 
   get totalWeeklySubs(): number {
-    return this.getTotal(v => v.weeklySubscriberCount);
+    return this.getTotal((v) => v.weeklySubscriberCount);
   }
 
   get totalMonthlySubs(): number {
-    return this.getTotal(v => v.monthlySubscriberCount);
+    return this.getTotal((v) => v.monthlySubscriberCount);
   }
 
   get totalViews(): number {
-    return this.getTotal(v => v.viewCount);
+    return this.getTotal((v) => v.viewCount);
   }
 
   get totalDailyViews(): number {
-    return this.getTotal(v => v.dailyViewCount);
+    return this.getTotal((v) => v.dailyViewCount);
   }
 
   get totalWeeklyViews(): number {
-    return this.getTotal(v => v.weeklyViewCount);
+    return this.getTotal((v) => v.weeklyViewCount);
   }
 
   get totalMonthlyViews(): number {
-    return this.getTotal(v => v.monthlyViewCount);
+    return this.getTotal((v) => v.monthlyViewCount);
   }
 }
