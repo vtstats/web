@@ -10,12 +10,9 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        ports:
-          # will assign a random free host port
-          - 5432/tcp
+          POSTGRES_USER: holostats
+          POSTGRES_PASSWORD: holostats
+          POSTGRES_DB: holostats
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
@@ -25,13 +22,7 @@ jobs:
 
       - name: Initialize database
         working-directory: server
-        run: psql -f sql/schema.sql
-        env:
-          PGHOST: localhost
-          PGUSER: postgres
-          PGPASSWORD: postgres
-          PGDATABASE: postgres
-          PGPORT: ${{ job.services.postgres.ports[5432] }}
+        run: psql postgres://holostats:holostats@localhost/holostats -f sql/schema.sql
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -55,7 +46,7 @@ jobs:
         env:
           YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
           YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
-          DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
+          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           PUBSUBHUBBUB_URL: PUBSUBHUBBUB_URL
 
       - name: Build
@@ -65,7 +56,7 @@ jobs:
           cargo build --release
           strip target/release/{server,subscribe,stream_stat,channel_stat}
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
+          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
           YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
           PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
