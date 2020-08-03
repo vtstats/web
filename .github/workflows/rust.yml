@@ -62,6 +62,7 @@ jobs:
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
           YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
           PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
+          COOKIE: ${{ secrets.COOKIE }}
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'

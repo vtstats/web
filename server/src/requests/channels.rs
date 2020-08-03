@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use futures::future::{try_join, TryFutureExt};
-use reqwest::{Client, Url};
+use reqwest::{header::COOKIE, Client, Url};
 use std::str::FromStr;
 
 use crate::error::Result;
@@ -113,6 +113,7 @@ pub async fn bilibili_channels(client: &Client, ids: Vec<usize>) -> Result<Vec<C
                 .and_then(|res| res.json::<BilibiliStatResponse>()),
             client
                 .get(upstat_url)
+                .header(COOKIE, option_env!("COOKIE").unwrap_or_default())
                 .send()
                 .and_then(|res| res.json::<BilibiliUpstatResponse>()),
         )
