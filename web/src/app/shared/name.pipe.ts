@@ -5,6 +5,7 @@ import { vtubers, batches } from "vtubers";
 type NameKeys = keyof typeof vtubers | keyof typeof batches;
 
 const nameMap: Record<NameKeys, string> = {
+  // vtubers
   hololive: $localize`:@@hololive:Hololive`,
   sora: $localize`:@@sora:Tokino Sora`,
   roboco: $localize`:@@roboco:Roboco`,
@@ -31,6 +32,11 @@ const nameMap: Record<NameKeys, string> = {
   watame: $localize`:@@watame:Tsunomaki Watame`,
   towa: $localize`:@@towa:Tokoyami Towa`,
   himemoriluna: $localize`:@@himemoriluna:Himemori Luna`,
+  lamy: $localize`:@@lamy:Yukihana Lamy`,
+  nene: $localize`:@@nene:Momosuzu Nene`,
+  botan: $localize`:@@botan:Shishiro Botan`,
+  aloe: $localize`:@@aloe:Mano Aloe`,
+  polka: $localize`:@@polka:Omaru Polka`,
   mio: $localize`:@@mio:Ookami Mio`,
   okayu: $localize`:@@okayu:Nekomata Okayu`,
   korone: $localize`:@@korone:Inugami Korone`,
@@ -51,11 +57,13 @@ const nameMap: Record<NameKeys, string> = {
   nana: $localize`:@@nana:Kagura Nana`,
   ui: $localize`:@@ui:Shigure Ui`,
   rurudo: $localize`:@@rurudo:rurudo`,
+  // batches
   hololive_og: $localize`:@@hololive_og:Hololive Talents`,
   hololive_1st: $localize`:@@hololive_1st:Hololive 1st Gen`,
   hololive_2nd: $localize`:@@hololive_2nd:Hololive 2nd Gen`,
   hololive_3rd: $localize`:@@hololive_3rd:Hololive 3rd Gen`,
   hololive_4th: $localize`:@@hololive_4th:Hololive 4th Gen`,
+  hololive_5th: $localize`:@@hololive_5th:Hololive 5th Gen`,
   hololive_gamers: $localize`:@@hololive_gamers:Hololive Gamers`,
   innk_music: $localize`:@@innk_music:Innk Music`,
   hololive_cn_1st: $localize`:@@hololive_cn_1st:Hololive China 1st Gen`,
