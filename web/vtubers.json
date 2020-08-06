@@ -183,6 +183,41 @@
       "bilibili": 491474052,
       "default": true
     },
+    "lamy": {
+      "id": "lamy",
+      "twitter": "yukihanalamy",
+      "youtube": "UCFKOVgVbGmX65RxO3EtH3iw",
+      "bilibili": null,
+      "default": true
+    },
+    "nene": {
+      "id": "nene",
+      "twitter": "momosuzunene",
+      "youtube": "UCAWSyEs_Io8MtpY3m-zqILA",
+      "bilibili": null,
+      "default": true
+    },
+    "botan": {
+      "id": "botan",
+      "twitter": "shishirobotan",
+      "youtube": "UCUKD-uaobj9jiqB-VXt71mA",
+      "bilibili": null,
+      "default": true
+    },
+    "aloe": {
+      "id": "aloe",
+      "twitter": "manoaloe",
+      "youtube": "UCgZuwn-O7Szh9cAgHqJ6vjw",
+      "bilibili": null,
+      "default": true
+    },
+    "polka": {
+      "id": "polka",
+      "twitter": "omarupolka",
+      "youtube": "UCK9V2B22uJYu3N7eR_BT9QA",
+      "bilibili": null,
+      "default": true
+    },
     "mio": {
       "id": "mio",
       "twitter": "ookamimio",
@@ -344,6 +379,10 @@
     "hololive_4th": {
       "id": "hololive_4th",
       "vtubers": ["kanata", "coco", "watame", "towa", "himemoriluna"]
+    },
+    "hololive_5th": {
+      "id": "hololive_5th",
+      "vtubers": ["lamy", "nene", "botan", "aloe", "polka"]
     },
     "hololive_gamers": {
       "id": "hololive_gamers",
