@@ -60,41 +60,50 @@
   }
 
   .title {
-    line-height: 1.2em;
-    height: 2.4em;
-    padding-top: 12px;
+    line-height: 16px;
+    height: 36px;
+    padding: 8px 0;
   }
 
-  .time {
-    padding-bottom: 12px;
-  }
+  .viewers {
+    padding-bottom: 4px;
 
-  .separator {
-    user-select: none;
-    margin: 4px;
+    span {
+      vertical-align: middle;
+    }
   }
 
   .name {
     padding-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
-  .name:after {
-    content: "•";
-    margin: 4px;
+  .dot {
+    margin: 0 4px;
+  }
+
+  .time {
+    white-space: nowrap;
   }
 
   .profile {
     width: 24px;
     height: 24px;
     border-radius: 50%;
+    vertical-align: middle;
   }
 
   .view-icon {
-    font-size: 18px;
     height: 18px;
-    line-height: 18px;
     width: 18px;
-    padding: 4px;
+    vertical-align: middle;
+    padding: 0 3px;
+  }
+
+  .meta {
+    padding-bottom: 12px;
   }
 
   .spinner {

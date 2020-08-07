@@ -22,16 +22,23 @@
             <mat-icon svgIcon="open_in_new"></mat-icon>
           </a>
         </div>
-        <div class="title" title="{{ stream.title }}" ellipsis>
-          {{ stream.title }}
-        </div>
-        <div class="time" fxLayout="row" fxLayoutAlign="start center">
+        <div
+          class="title"
+          title="{{ stream.title }}"
+          ellipsis
+          [ellipsis-content]="stream.title"
+        ></div>
+        <div class="meta" fxLayout="row" fxLayoutAlign="start center">
           <img
             class="profile"
             src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
           />
           <span class="name">{{ stream.vtuberId | name }}</span>
-          <span title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}">
+          <span class="dot">•</span>
+          <span
+            class="time"
+            title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+          >
             {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
           </span>
         </div>

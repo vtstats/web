@@ -77,12 +77,12 @@
   }
 
   .title {
-    line-height: 1.2em;
-    height: 2.4em;
-    padding-top: 12px;
+    line-height: 16px;
+    height: 36px;
+    padding: 8px 0;
   }
 
-  .time {
+  .meta {
     padding-bottom: 12px;
   }
 
@@ -93,11 +93,17 @@
 
   .name {
     padding-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
-  .name:after {
-    content: "•";
-    margin: 4px;
+  .dot {
+    margin: 0 4px;
+  }
+
+  .time {
+    white-space: nowrap;
   }
 
   .profile {
