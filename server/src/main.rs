@@ -21,7 +21,11 @@ async fn main() -> Result<()> {
 
     let client = Client::new();
 
-    let routes = filters::api(pool, client).recover(reject::handle_rejection);
+    let cors = warp::cors().allow_any_origin();
+
+    let routes = filters::api(pool, client)
+        .with(cors)
+        .recover(reject::handle_rejection);
 
     println!("Server listening at 127.0.0.1:4300");
 
