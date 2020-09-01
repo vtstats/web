@@ -204,13 +204,6 @@
       "bilibili": 624252710,
       "default": true
     },
-    "aloe": {
-      "id": "aloe",
-      "twitter": "manoaloe",
-      "youtube": "UCgZuwn-O7Szh9cAgHqJ6vjw",
-      "bilibili": 624252711,
-      "default": true
-    },
     "polka": {
       "id": "polka",
       "twitter": "omarupolka",
@@ -382,7 +375,7 @@
     },
     "hololive_5th": {
       "id": "hololive_5th",
-      "vtubers": ["lamy", "nene", "botan", "aloe", "polka"]
+      "vtubers": ["lamy", "nene", "botan", "polka"]
     },
     "hololive_gamers": {
       "id": "hololive_gamers",

@@ -35,7 +35,6 @@ const nameMap: Record<NameKeys, string> = {
   lamy: $localize`:@@lamy:Yukihana Lamy`,
   nene: $localize`:@@nene:Momosuzu Nene`,
   botan: $localize`:@@botan:Shishiro Botan`,
-  aloe: $localize`:@@aloe:Mano Aloe`,
   polka: $localize`:@@polka:Omaru Polka`,
   mio: $localize`:@@mio:Ookami Mio`,
   okayu: $localize`:@@okayu:Nekomata Okayu`,

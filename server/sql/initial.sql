@@ -28,7 +28,6 @@ insert into youtube_channels (vtuber_id)
             ('lamy'),            -- 雪花ラミィ
             ('nene'),            -- 桃鈴ねね
             ('botan'),           -- 獅白ぼたん
-            ('aloe'),            -- 魔乃アロエ
             ('polka'),           -- 尾丸ポルカ
             ('mio'),             -- 大神ミオ
             ('okayu'),           -- 猫又おかゆ
@@ -74,7 +73,6 @@ insert into bilibili_channels (vtuber_id)
             ('lamy'),            -- 雪花ラミィ
             ('nene'),            -- 桃鈴ねね
             ('botan'),           -- 獅白ぼたん
-            ('aloe'),            -- 魔乃アロエ
             ('polka'),           -- 尾丸ポルカ
             ('mio'),             -- 大神ミオ
             ('okayu'),           -- 猫又おかゆ

@@ -59,7 +59,6 @@ export const translations: Translations = {
   lamy: "Yukihana Lamy",
   nene: "Momosuzu Nene",
   botan: "Shishiro Botan",
-  aloe: "Mano Aloe",
   polka: "Omaru Polka",
   mio: "Ookami Mio",
   okayu: "Nekomata Okayu",

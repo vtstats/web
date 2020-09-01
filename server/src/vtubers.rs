@@ -52,7 +52,6 @@ vtubers! {
     "lamy",         Some("UCFKOVgVbGmX65RxO3EtH3iw"), Some(624252706),
     "nene",         Some("UCAWSyEs_Io8MtpY3m-zqILA"), Some(624252709),
     "botan",        Some("UCUKD-uaobj9jiqB-VXt71mA"), Some(624252710),
-    "aloe",         Some("UCgZuwn-O7Szh9cAgHqJ6vjw"), Some(624252711),
     "polka",        Some("UCK9V2B22uJYu3N7eR_BT9QA"), Some(624252712),
     "mio",          Some("UCp-5t9SrOQwXMU7iIjQfARg"), Some(389862071),
     "okayu",        Some("UCvaTdHTWBGv3MKj3KVqJVCw"), Some(412135222),
