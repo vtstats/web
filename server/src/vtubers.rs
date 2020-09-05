@@ -58,7 +58,7 @@ vtubers! {
     "korone",       Some("UChAnqc_AY5_I3Px5dig3X1Q"), Some(412135619),
     "azki",         Some("UC0TXe_LYZ4scaW2XMyi5_kw"), Some(389056211),
     "yogiri",       None,                             Some(427061218),
-    "civia",        None,                             Some(354411419),
+    "civia",        Some("UCgNVXGlZIFK96XdEY20sVjg"), Some(354411419),
     "echo",         None,                             Some(456368455),
     "doris",        None,                             Some(511613156),
     "artia",        None,                             Some(511613155),
