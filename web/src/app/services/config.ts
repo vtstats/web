@@ -1,19 +1,23 @@
 import { Injectable } from "@angular/core";
 
-import * as vtubers from "vtubers";
+import { vtubers } from "vtubers";
 
-const defaultSelectedVTubers: string[] = Object.entries(vtubers.vtubers)
-  .filter(([_, vtb]) => vtb.default)
-  .map(([id, _]) => id);
+const defaultSelectedVTubers: string[] = Object.values(vtubers)
+  .filter((v) => v.default)
+  .map((v) => v.id);
 
 export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
 export const SELECTED_VTUBERS = "holostats:selectedVTubers";
 
 @Injectable({ providedIn: "root" })
 export class Config {
-  selectedVTubers: Set<String> = localStorage.getItem(SELECTED_VTUBERS)
-    ? new Set(localStorage.getItem(SELECTED_VTUBERS).split(","))
-    : new Set(defaultSelectedVTubers);
+  selectedVTubers: Set<String> = new Set(
+    localStorage
+      .getItem(SELECTED_VTUBERS)
+      ?.split(",")
+      .filter((id) => Object.keys(vtubers).includes(id)) ??
+      defaultSelectedVTubers
+  );
 
   get joinedSelectedVTubers(): string {
     return Array.from(this.selectedVTubers).join(",");
