@@ -1,0 +1,27 @@
+@import "~@angular/material/theming";
+
+$hs-typography-config: mat-typography-config();
+
+$mat-light-theme-background: map-merge(
+  $mat-light-theme-background,
+  (
+    "card": white,
+    "background": #f9f9f9,
+  )
+);
+
+$mat-dark-theme-background: map-merge(
+  $mat-dark-theme-background,
+  (
+    "card": #282828,
+    "background": #1f1f1f,
+  )
+);
+
+$hs-light-primary: mat-palette($mat-blue-gray);
+$hs-light-accent: mat-palette($mat-blue-gray);
+$hs-light-theme: mat-light-theme($hs-light-primary, $hs-light-accent);
+
+$hs-dark-primary: mat-palette($mat-blue-gray, 300);
+$hs-dark-accent: mat-palette($mat-blue-gray, 300);
+$hs-dark-theme: mat-dark-theme($hs-dark-primary, $hs-dark-accent);

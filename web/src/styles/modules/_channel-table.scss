@@ -1,0 +1,72 @@
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  margin: 0 auto;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+.mat-column-profile {
+  padding-left: 8px;
+  max-width: 64px;
+  text-align: center;
+
+  .profile {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    vertical-align: middle;
+    outline: none;
+  }
+}
+
+.mat-column-name.mat-cell,
+.mat-column-name.mat-header-cell,
+.mat-column-name.mat-footer-cell {
+  padding: 0 12px;
+  word-break: keep-all;
+  text-align: center;
+}
+
+$columns: subscriberCount, dailySubscriberCount, weeklySubscriberCount,
+  monthlySubscriberCount, viewCount, dailyViewCount, weeklyViewCount,
+  monthlyViewCount;
+
+@each $columns in $columns {
+  .mat-footer-cell.mat-column-#{$columns},
+  .mat-cell.mat-column-#{$columns} {
+    font-family: "Fira Code", monospace;
+    text-align: right;
+    padding-right: 18px;
+  }
+}
+
+.mat-row .mat-cell:last-child {
+  padding-right: 42px;
+}
+
+.mat-footer-row .mat-footer-cell:last-child {
+  padding-right: 42px;
+}
+
+.mat-sort-header-container {
+  justify-content: flex-end;
+}
+
+.table-container.shimmering {
+  overflow: hidden;
+
+  .text {
+    margin: 0 12px;
+    width: 80px;
+  }
+
+  .profile {
+    border: 0;
+    cursor: initial;
+  }
+}

@@ -7,6 +7,10 @@
   left: 0;
   z-index: 10;
 
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+
   .logo {
     height: 24px;
     width: 90px;

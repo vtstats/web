@@ -1,0 +1,11 @@
+.ngx-chart {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+
+.lazy-chart-placeholder {
+  @extend .ngx-chart;
+  line-height: 300px;
+  text-align: center;
+}

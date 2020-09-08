@@ -1,0 +1,39 @@
+@import "~@angular/material/theming";
+
+@include mat-ripple();
+@include cdk-a11y();
+@include cdk-overlay();
+@include cdk-text-field();
+
+@mixin hs-theme($theme) {
+  @include global-theme($theme);
+  @include material-theme($theme);
+  @include stream-list-theme($theme);
+  @include streams-pages-theme($theme);
+  @include vtuber-pages-theme($theme);
+  @include channel-table-theme($theme);
+  @include submenu-theme($theme);
+  @include sidenav-theme($theme);
+  @include header-theme($theme);
+  @include chart-theme($theme);
+}
+
+@mixin hs-typography($config) {
+  @include material-typography($config);
+  @include stream-list-typography($config);
+  @include streams-pages-typography($config);
+  @include vtuber-pages-typography($config);
+  @include channel-table-typography($config);
+  @include submenu-typography($config);
+  @include sidenav-typography($config);
+  @include settings-typography($config);
+  @include chart-typography($config);
+}
+
+@include hs-typography($hs-typography-config);
+
+@include hs-theme($hs-light-theme);
+
+.dark {
+  @include hs-theme($hs-dark-theme);
+}

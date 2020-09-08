@@ -1,0 +1,147 @@
+.streams-pages {
+  max-width: 936px;
+  margin: 0 auto;
+  padding: 32px;
+
+  .hero {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .cover-wrapper {
+    width: 100%;
+    position: relative;
+
+    @media (min-width: 900px) {
+      width: 50%;
+    }
+
+    &:before {
+      @extend .shimmer;
+      content: "";
+      width: 100%;
+      display: block;
+      padding-bottom: 56.25%;
+    }
+  }
+
+  .cover-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+  }
+
+  .cover {
+    display: block;
+    max-width: 100%;
+    max-height: none;
+
+    object-position: center;
+    object-fit: cover;
+  }
+
+  .meta {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 1.5rem;
+
+    @media (min-width: 900px) {
+      width: 50%;
+
+      margin-top: 0;
+      padding-left: 2.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  .content {
+    padding: 32px;
+  }
+
+  .liver {
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 1rem 0;
+
+    .profile {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .name {
+      margin-left: 8px;
+
+      &.shimmer {
+        width: 100px;
+      }
+    }
+  }
+
+  .title {
+    padding-bottom: 12px;
+    text-decoration: none;
+  }
+
+  .statistic-container {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .statistic {
+    width: 50%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .info {
+    text-align: center;
+
+    .cover {
+      width: 100%;
+    }
+  }
+
+  .number {
+    height: 192px;
+    text-align: center;
+  }
+}
+
+.streams-pages.shimmering {
+  .title {
+    height: 32px;
+  }
+
+  .value {
+    margin: 0 auto;
+    width: 100px;
+    margin-bottom: 8px;
+  }
+
+  .caption {
+    margin: 0 auto;
+    width: 60px;
+  }
+
+  .name {
+    width: 100px;
+  }
+
+  .chart-container {
+    margin-top: 16px;
+  }
+}

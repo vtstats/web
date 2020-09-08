@@ -1,0 +1,56 @@
+@import "~@angular/material/theming";
+
+@mixin streams-pages-theme($theme) {
+  $foreground: map-get($theme, "foreground");
+  $is-dark-theme: map-get($theme, "is-dark-theme");
+
+  $background-shadow: if(
+    $is-dark-theme,
+    rgba(255, 255, 255, 0.1),
+    rgba(0, 0, 0, 0.1)
+  );
+
+  .streams-pages {
+    .title,
+    .name {
+      color: mat-color($foreground, "text");
+    }
+
+    .profile {
+      background-color: $background-shadow;
+    }
+  }
+}
+
+@mixin streams-pages-typography($config) {
+  .streams-pages {
+    .vtuber-row {
+      .name {
+        font-size: mat-font-size($config, "body-2");
+        font-weight: mat-font-weight($config, "body-2");
+      }
+    }
+
+    .title {
+      font-size: mat-font-size($config, "title");
+      font-weight: mat-font-weight($config, "title");
+    }
+
+    .statistic {
+      .value {
+        font-size: mat-font-size($config, "headline");
+        font-weight: mat-font-weight($config, "display-1");
+      }
+
+      .caption {
+        font-size: mat-font-size($config, "caption");
+        font-weight: mat-font-weight($config, "body-2");
+      }
+    }
+
+    .chart-title {
+      font-size: mat-font-size($config, "subheading-2");
+      font-weight: mat-font-weight($config, "subheading-2");
+    }
+  }
+}

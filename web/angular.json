@@ -47,8 +47,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles.scss"],
-            "scripts": [],
+            "styles": ["src/styles/main.scss"],
             "i18nMissingTranslation": "error"
           },
           "configurations": {

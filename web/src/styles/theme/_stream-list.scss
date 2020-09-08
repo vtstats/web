@@ -1,0 +1,74 @@
+@import "~@angular/material/theming";
+
+@mixin stream-list-theme($theme) {
+  $is-dark-theme: map-get($theme, "is-dark");
+  $background: map-get($theme, "background");
+  $foreground: map-get($theme, "foreground");
+
+  $background-shadow: if(
+    $is-dark-theme,
+    rgba(255, 255, 255, 0.1),
+    rgba(0, 0, 0, 0.1)
+  );
+
+  .stream-list-container {
+    .menu-label,
+    .viewers,
+    .updated-at {
+      color: mat-color($foreground, "secondary-text");
+    }
+
+    .viewers.current {
+      color: if(
+        $is-dark-theme,
+        map-get(mat-palette($mat-red), 300),
+        map-get(mat-palette($mat-red), 800)
+      );
+    }
+
+    .profile {
+      background-color: $background-shadow;
+    }
+
+    .thumbnail:before {
+      background-color: $background-shadow;
+    }
+  }
+}
+
+@mixin stream-list-typography($config) {
+  .stream-list-container {
+    .updated-at {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "caption");
+    }
+
+    .date-label {
+      font-size: mat-font-size($config, "title");
+      font-weight: mat-font-weight($config, "caption");
+    }
+
+    .menu-label {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "caption");
+    }
+
+    .thumbnail {
+      .duration {
+        font-size: mat-font-size($config, "caption");
+        font-weight: mat-font-weight($config, "body-2");
+      }
+    }
+
+    .title {
+      font-size: mat-font-size($config, "body-1");
+      font-weight: mat-font-weight($config, "body-1");
+    }
+
+    .meta,
+    .viewers {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "body-1");
+    }
+  }
+}
