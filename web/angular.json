@@ -11,7 +11,7 @@
         },
         "@schematics/angular:component": {
           "skipTests": true,
-          "styleext": "scss"
+          "style": "scss"
         },
         "@schematics/angular:directive": {
           "skipTests": true

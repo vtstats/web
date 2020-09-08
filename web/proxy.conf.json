@@ -1,7 +1,0 @@
-{
-  "/api": {
-    "target": "https://holo.poi.cat",
-    "secure": false,
-    "changeOrigin": true
-  }
-}
