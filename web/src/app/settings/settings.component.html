@@ -1,7 +1,7 @@
 <div class="settings">
   <h4 class="title">
     <ng-container i18n="@@vtuberSelected">VTuber Selected</ng-container>
-    <b> ({{ config.selectedVTubers.size }}/{{ count }})</b>:
+    <span> ({{ config.selectedVTubers.size }}/{{ count }})</span>:
   </h4>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>

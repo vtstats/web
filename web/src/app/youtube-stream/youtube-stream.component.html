@@ -1,26 +1,29 @@
-<div class="youtube-stream">
-  <div class="submenu" fxLayout="row" fxLayoutAlign="space-between center">
-    <div></div>
-    <div class="updated-at" i18n="@@updatedAt">
-      Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
-    </div>
+<div class="submenu" *ngIf="!loading; else shimmerSubmenu">
+  <div class="spacer"></div>
+  <div class="updated-at" i18n="@@updatedAt">
+    Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
   </div>
-  <div class="content" *ngFor="let group of streamGroup">
+</div>
+
+<div class="stream-list-container" *ngIf="!loading; else shimmerList">
+  <ng-container *ngFor="let group of streamGroup">
     <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
-    <div fxLayout="row wrap">
+
+    <div class="stream-list">
       <div
         class="stream"
         *ngFor="let stream of group.streams; trackBy: trackBy"
-        fxFlex.lt-sm="50"
-        fxFlex.sm="33.33"
-        fxFlex.gt-sm="25"
       >
-        <div
-          class="thumbnail"
-          [routerLink]="['/stream', stream.streamId]"
-          lazyLoad
-          [video]="stream.streamId"
-        >
+        <div class="thumbnail link" [routerLink]="['/stream', stream.streamId]">
+          <div class="cover-wrapper">
+            <img
+              class="cover"
+              src="https://img.youtube.com/vi/{{
+                stream.streamId
+              }}/maxresdefault.jpg"
+            />
+          </div>
+
           <div class="duration">
             <ng-container *ngIf="stream.endTime; else clock">
               {{ stream.startTime | duration: stream.endTime }}
@@ -29,6 +32,7 @@
               {{ stream.startTime | duration: (everySecond$ | async) }}
             </ng-template>
           </div>
+
           <a
             class="icon"
             href="https://youtu.be/{{ stream.streamId }}"
@@ -38,12 +42,14 @@
             <mat-icon svgIcon="open_in_new"></mat-icon>
           </a>
         </div>
+
         <div
           class="title"
           title="{{ stream.title }}"
           ellipsis
           [ellipsis-content]="stream.title"
         ></div>
+
         <div class="viewers" [ngClass]="{ current: !stream.endTime }">
           <ng-container *ngIf="stream.endTime; else live">
             <mat-icon
@@ -53,6 +59,7 @@
               title="Stream has ended"
             ></mat-icon>
           </ng-container>
+
           <ng-template #live>
             <mat-icon
               class="view-icon"
@@ -69,7 +76,8 @@
             {{ (stream.maxViewerCount | number) || "----" }}
           </span>
         </div>
-        <div class="meta" fxLayout="row" fxLayoutAlign="start center">
+
+        <div class="meta">
           <img
             class="profile"
             src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
@@ -78,15 +86,28 @@
           <span class="dot">•</span>
           <span
             class="time"
-            title="{{ stream.start | date: 'yyyy/MM/dd HH:mm:ss' }}"
+            title="{{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
           >
             {{ stream.startTime | distance: (everyMinute$ | async) }}
           </span>
         </div>
       </div>
     </div>
-  </div>
-  <div [hidden]="!showSpinner" class="spinner">
+  </ng-container>
+</div>
+
+<div class="stream-list-container">
+  <div [hidden]="loading || !showSpinner" class="spinner">
     <mat-spinner #spinner [diameter]="30"></mat-spinner>
   </div>
 </div>
+
+<ng-template #shimmerSubmenu>
+  <hs-shimmer-submenu></hs-shimmer-submenu>
+</ng-template>
+
+<ng-template #shimmerList>
+  <hs-shimmer-stream-list></hs-shimmer-stream-list>
+
+  <hs-shimmer-stream-list></hs-shimmer-stream-list>
+</ng-template>

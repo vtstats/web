@@ -1,10 +1,11 @@
-<div class="youtube-channel">
-  <div class="submenu" fxLayout="row" fxLayoutAlign="space-between center">
-    <div></div>
+<ng-container *ngIf="!loading; else shimmerTable">
+  <div class="submenu">
+    <div class="spacer"></div>
     <div class="updated-at" i18n="@@updatedAt">
       Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
     </div>
   </div>
+
   <div class="table-container">
     <table
       mat-table
@@ -48,7 +49,7 @@
           {{ row.subscriberCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef>
-          {{ totalSubs | number }}
+          {{ getTotal("subscriberCount") | number }}
         </td>
       </ng-container>
 
@@ -63,8 +64,12 @@
         >
           {{ row.dailySubscriberCount | number }}
         </td>
-        <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalDailySubs">
-          {{ totalDailySubs | number }}
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="getTotal('dailySubscriberCount')"
+        >
+          {{ getTotal("dailySubscriberCount") | number }}
         </td>
       </ng-container>
 
@@ -84,8 +89,12 @@
         >
           {{ row.weeklySubscriberCount | number }}
         </td>
-        <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalWeeklySubs">
-          {{ totalWeeklySubs | number }}
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="getTotal('weeklySubscriberCount')"
+        >
+          {{ getTotal("weeklySubscriberCount") | number }}
         </td>
       </ng-container>
 
@@ -108,9 +117,9 @@
         <td
           mat-footer-cell
           *matFooterCellDef
-          [coloredNumber]="totalMonthlySubs"
+          [coloredNumber]="getTotal('monthlySubscriberCount')"
         >
-          {{ totalMonthlySubs | number }}
+          {{ getTotal("monthlySubscriberCount") | number }}
         </td>
       </ng-container>
 
@@ -122,7 +131,7 @@
           {{ row.viewCount | number }}
         </td>
         <td mat-footer-cell *matFooterCellDef>
-          {{ totalViews | number }}
+          {{ getTotal("viewCount") | number }}
         </td>
       </ng-container>
 
@@ -133,8 +142,12 @@
         <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailyViewCount">
           {{ row.dailyViewCount | number }}
         </td>
-        <td mat-footer-cell *matFooterCellDef [coloredNumber]="totalDailyViews">
-          {{ totalDailyViews | number }}
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [coloredNumber]="getTotal('dailyViewCount')"
+        >
+          {{ getTotal("dailyViewCount") | number }}
         </td>
       </ng-container>
 
@@ -157,9 +170,9 @@
         <td
           mat-footer-cell
           *matFooterCellDef
-          [coloredNumber]="totalWeeklyViews"
+          [coloredNumber]="getTotal('weeklyViewCount')"
         >
-          {{ totalWeeklyViews | number }}
+          {{ getTotal("weeklyViewCount") | number }}
         </td>
       </ng-container>
 
@@ -182,9 +195,9 @@
         <td
           mat-footer-cell
           *matFooterCellDef
-          [coloredNumber]="totalMonthlyViews"
+          [coloredNumber]="getTotal('monthlyViewCount')"
         >
-          {{ totalMonthlyViews | number }}
+          {{ getTotal("monthlyViewCount") | number }}
         </td>
       </ng-container>
 
@@ -193,4 +206,9 @@
       <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
   </div>
-</div>
+</ng-container>
+
+<ng-template #shimmerTable>
+  <hs-shimmer-submenu></hs-shimmer-submenu>
+  <hs-shimmer-table></hs-shimmer-table>
+</ng-template>

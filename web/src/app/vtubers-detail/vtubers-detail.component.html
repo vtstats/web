@@ -1,10 +1,9 @@
-<div class="vtubers-detail">
-  <div class="content">
-    <div class="info">
-      <img class="profile" src="/assets/profiles/{{ vtuberId }}.jpg" />
-      <div class="name">{{ vtuberId | name }}</div>
-    </div>
-    <!-- <div
+<div class="vtuber-pages">
+  <div class="info">
+    <img class="profile" src="/assets/profiles/{{ vtuberId }}.jpg" />
+    <div class="name">{{ vtuberId | name }}</div>
+  </div>
+  <!-- <div
       class="number"
       fxFlex="60"
       fxFlex.lt-sm="100"
@@ -33,46 +32,62 @@
       </div>
     </div>
   </div> -->
-    <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+  <div class="chart-container">
+    <div class="chart">
+      <h4 class="chart-title" i18n="@@youtubeSubscribers">
+        YouTube Subscribers
+      </h4>
+
+      <ng-container *ngIf="!loading; else shimmerChart">
         <hs-area-chart
-          [youtube]="true"
           [results]="youtubeSubs"
-          [dateFormatting]="dateFormatting"
-          i18n-label="@@youtubeSubscribers"
-          label="YouTube Subscribers"
+          schemeKey="youtube"
+          timeUnit="day"
         ></hs-area-chart>
-      </div>
+      </ng-container>
+    </div>
 
-      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+    <div class="chart">
+      <h4 class="chart-title" i18n="@@bilibiliSubscribers">
+        Bilibili Subscribers
+      </h4>
+
+      <ng-container *ngIf="!loading; else shimmerChart">
         <hs-area-chart
-          [youtube]="false"
           [results]="bilibiliSubs"
-          [dateFormatting]="dateFormatting"
-          i18n-label="@@bilibiliSubscribers"
-          label="Bilibili Subscribers"
+          schemeKey="bilibili"
+          timeUnit="day"
         ></hs-area-chart>
-      </div>
+      </ng-container>
+    </div>
 
-      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+    <div class="chart">
+      <h4 class="chart-title" i18n="@@youtubeViews">YouTube Views</h4>
+
+      <ng-container *ngIf="!loading; else shimmerChart">
         <hs-area-chart
-          [youtube]="true"
           [results]="youtubeViews"
-          [dateFormatting]="dateFormatting"
-          i18n-label="@@youtubeViews"
-          label="YouTube Views"
+          schemeKey="youtube"
+          timeUnit="day"
         ></hs-area-chart>
-      </div>
+      </ng-container>
+    </div>
 
-      <div class="chart" fxFlex="50" fxFlex.lt-md="100">
+    <div class="chart">
+      <h4 class="chart-title" i18n="@@bilibiliViews">Bilibili Views</h4>
+
+      <ng-container *ngIf="!loading; else shimmerChart">
         <hs-area-chart
-          [youtube]="false"
           [results]="bilibiliViews"
-          [dateFormatting]="dateFormatting"
-          i18n-label="@@bilibiliViews"
-          label="Bilibili Views"
+          schemeKey="bilibili"
+          timeUnit="day"
         ></hs-area-chart>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>
+
+<!-- chart -->
+<ng-template #shimmerChart>
+  <div class="ngx-chart shimmer"></div>
+</ng-template>

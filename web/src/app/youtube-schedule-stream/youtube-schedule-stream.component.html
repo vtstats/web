@@ -1,48 +1,71 @@
-<div class="youtube-schedule-stream">
-  <div class="content" *ngFor="let group of streamGroup">
-    <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
-    <div fxLayout="row wrap">
-      <div
-        class="stream"
-        *ngFor="let stream of group.streams; trackBy: trackBy"
-        fxFlex.lt-sm="50"
-        fxFlex.sm="33.33"
-        fxFlex.gt-sm="25"
-      >
-        <div class="thumbnail" lazyLoad [video]="stream.streamId">
-          <div class="duration">
-            {{ stream.scheduleTime | format: "HH:mm" }}
-          </div>
-          <a
-            class="icon"
-            href="https://youtu.be/{{ stream.streamId }}"
-            target="_blank"
-            (click)="$event.stopPropagation()"
-          >
-            <mat-icon svgIcon="open_in_new"></mat-icon>
-          </a>
-        </div>
-        <div
-          class="title"
-          title="{{ stream.title }}"
-          ellipsis
-          [ellipsis-content]="stream.title"
-        ></div>
-        <div class="meta" fxLayout="row" fxLayoutAlign="start center">
-          <img
-            class="profile"
-            src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
-          />
-          <span class="name">{{ stream.vtuberId | name }}</span>
-          <span class="dot">•</span>
-          <span
-            class="time"
-            title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
-          >
-            {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
-          </span>
-        </div>
-      </div>
+<ng-container *ngIf="!loading; else shimmerList">
+  <div class="submenu">
+    <div class="spacer"></div>
+    <div class="updated-at" i18n="@@updatedAt">
+      Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
     </div>
   </div>
-</div>
+
+  <div class="stream-list-container">
+    <ng-container *ngFor="let group of streamGroup">
+      <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
+
+      <div class="stream-list">
+        <div
+          class="stream"
+          *ngFor="let stream of group.streams; trackBy: trackBy"
+        >
+          <div class="thumbnail">
+            <div class="cover-wrapper">
+              <img
+                class="cover"
+                src="https://img.youtube.com/vi/{{
+                  stream.streamId
+                }}/maxresdefault.jpg"
+              />
+            </div>
+
+            <div class="duration">
+              {{ stream.scheduleTime | format: "HH:mm" }}
+            </div>
+
+            <a
+              class="icon"
+              href="https://youtu.be/{{ stream.streamId }}"
+              target="_blank"
+            >
+              <mat-icon svgIcon="open_in_new"></mat-icon>
+            </a>
+          </div>
+
+          <div
+            class="title"
+            title="{{ stream.title }}"
+            ellipsis
+            [ellipsis-content]="stream.title"
+          ></div>
+
+          <div class="meta">
+            <img
+              class="profile"
+              src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+            />
+            <span class="name">{{ stream.vtuberId | name }}</span>
+            <span class="dot">•</span>
+            <span
+              class="time"
+              title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+            >
+              {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #shimmerList>
+  <hs-shimmer-submenu></hs-shimmer-submenu>
+  <hs-shimmer-stream-list></hs-shimmer-stream-list>
+</ng-template>
