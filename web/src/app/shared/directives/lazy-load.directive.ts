@@ -17,7 +17,7 @@ export class LazyLoadDirective implements AfterViewInit {
   ngAfterViewInit() {
     if (window && "IntersectionObserver" in window) {
       const obs = new IntersectionObserver((entries) => {
-        if (entries.map((e) => e.isIntersecting).some((e) => e)) {
+        if (entries.some((e) => e.isIntersecting)) {
           this.background = this.sanitizer.bypassSecurityTrustStyle(
             `url(https://img.youtube.com/vi/${this.video}/mqdefault.jpg)`
           );

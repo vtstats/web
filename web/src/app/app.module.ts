@@ -107,7 +107,6 @@ const ROUTES: Routes = [
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    DirectivesModule,
     FlexLayoutModule,
     HttpClientModule,
     MatButtonModule,
