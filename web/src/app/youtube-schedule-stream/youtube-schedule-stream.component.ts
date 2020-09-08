@@ -1,38 +1,42 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 import dayjs, { Dayjs } from "dayjs";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
-import { Stream, StreamListResponse } from "src/app/models";
+import { Stream } from "src/app/models";
+import { ApiService } from "src/app/services";
 
 @Component({
   selector: "hs-youtube-schedule-stream",
   templateUrl: "./youtube-schedule-stream.component.html",
-  styleUrls: ["./youtube-schedule-stream.component.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeScheduleStreamComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private apiService: ApiService) {}
 
   everyMinute$ = timer(0, 60 * 1000).pipe(map(() => dayjs()));
 
+  loading = false;
   streamGroup: Array<{ day: Dayjs; streams: Array<Stream> }> = [];
+  updatedAt = "";
 
   ngOnInit() {
-    const res: StreamListResponse = this.route.snapshot.data.data;
+    this.loading = true;
+    this.apiService.getYouTubeScheduleStream().subscribe((res) => {
+      this.loading = false;
+      this.updatedAt = res.updatedAt;
 
-    let lastStreamSchedule: Dayjs;
+      let lastStreamSchedule: Dayjs;
 
-    for (const stream of res.streams) {
-      const schedule = dayjs(stream.scheduleTime);
-      if (lastStreamSchedule && lastStreamSchedule.isSame(schedule, "day")) {
-        this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
-      } else {
-        this.streamGroup.push({ day: schedule, streams: [stream] });
+      for (const stream of res.streams) {
+        const schedule = dayjs(stream.scheduleTime);
+        if (lastStreamSchedule && lastStreamSchedule.isSame(schedule, "day")) {
+          this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
+        } else {
+          this.streamGroup.push({ day: schedule, streams: [stream] });
+        }
+        lastStreamSchedule = schedule;
       }
-      lastStreamSchedule = schedule;
-    }
+    });
   }
 
   trackBy(_: number, stream: Stream): string {

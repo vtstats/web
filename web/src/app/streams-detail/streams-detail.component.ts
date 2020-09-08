@@ -1,50 +1,49 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { MultiSeries } from "@swimlane/ngx-charts";
 import dayjs from "dayjs";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
+import type { MultiSeries } from "@swimlane/ngx-charts";
 
-import { Stream, StreamReportResponse } from "src/app/models";
+import { Stream } from "../models";
+import { ApiService } from "../services";
 
 @Component({
   selector: "hs-streams-detail",
   templateUrl: "./streams-detail.component.html",
-  styleUrls: ["./streams-detail.component.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class StreamsDetailComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private apiService: ApiService) {}
 
+  streamId = this.route.snapshot.paramMap.get("id");
+
+  loading = false;
   stream: Stream;
   stats: MultiSeries = [];
-  streamId: string;
 
   everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
-    const res: StreamReportResponse = this.route.snapshot.data.data;
-    this.streamId = this.route.snapshot.paramMap.get("id");
+    this.loading = true;
 
-    if (
-      res.reports.length > 0 &&
-      res.reports[0].kind == "youtube_stream_viewer"
-    ) {
-      this.stats.push({
-        name: "",
-        series: res.reports[0].rows.map(([name, value]) => ({
-          name: dayjs(name).toDate(),
-          value,
-        })),
-      });
-    }
+    this.apiService.getStreamReport(this.streamId).subscribe((res) => {
+      this.loading = false;
+      if (
+        res.reports.length > 0 &&
+        res.reports[0].kind == "youtube_stream_viewer"
+      ) {
+        this.stats.push({
+          name: "",
+          series: res.reports[0].rows.map(([name, value]) => ({
+            name: dayjs(name).toDate(),
+            value,
+          })),
+        });
+      }
 
-    if (res.streams.length > 0) {
-      this.stream = res.streams[0];
-    }
-  }
-
-  dateFormatting(date: Date): string {
-    return dayjs(date).format("HH:mm");
+      if (res.streams.length > 0) {
+        this.stream = res.streams[0];
+      }
+    });
   }
 }

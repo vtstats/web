@@ -1,4 +1,5 @@
 <hs-header (menuClick)="drawer.toggle()"></hs-header>
+
 <mat-sidenav-container>
   <mat-sidenav
     #drawer
@@ -12,12 +13,6 @@
     ></hs-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="drawer-content">
-    <router-outlet *ngIf="!(isRouting$ | async); else loading"></router-outlet>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<ng-template #loading>
-  <div class="spinner-container">
-    <mat-spinner [diameter]="64"></mat-spinner>
-  </div>
-</ng-template>

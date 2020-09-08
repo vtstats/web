@@ -1,6 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
@@ -14,80 +13,36 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterModule, Routes, PreloadAllModules } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { environment } from "../environments/environment";
 
 import { AppComponent } from "./app.component";
-import {
-  BilibiliChannelComponent,
-  BilibiliChannelResolver,
-} from "./bilibili-channel";
-import { DirectivesModule } from "./directives";
+import { BilibiliChannelComponent } from "./bilibili-channel";
 import { HeaderComponent } from "./header";
 import { SharedModule } from "./shared";
 import { SettingsComponent } from "./settings";
 import { SidenavComponent } from "./sidenav";
-import {
-  YoutubeChannelComponent,
-  YoutubeChannelResolver,
-} from "./youtube-channel";
-import {
-  YoutubeSchduleStreamResolver,
-  YoutubeScheduleStreamComponent,
-} from "./youtube-schedule-stream";
-import {
-  YoutubeStreamComponent,
-  YoutubeStreamResolver,
-} from "./youtube-stream";
+import { YoutubeChannelComponent } from "./youtube-channel";
+import { YoutubeScheduleStreamComponent } from "./youtube-schedule-stream";
+import { YoutubeStreamComponent } from "./youtube-stream";
+import { VTubersDetailComponent } from "./vtubers-detail";
+import { StreamsDetailComponent } from "./streams-detail";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
-  {
-    path: "youtube-channel",
-    component: YoutubeChannelComponent,
-    resolve: {
-      data: YoutubeChannelResolver,
-    },
-  },
-  {
-    path: "bilibili-channel",
-    component: BilibiliChannelComponent,
-    resolve: {
-      data: BilibiliChannelResolver,
-    },
-  },
+  { path: "youtube-channel", component: YoutubeChannelComponent },
+  { path: "bilibili-channel", component: BilibiliChannelComponent },
   {
     path: "youtube-schedule-stream",
     component: YoutubeScheduleStreamComponent,
-    resolve: {
-      data: YoutubeSchduleStreamResolver,
-    },
   },
-  {
-    path: "youtube-stream",
-    component: YoutubeStreamComponent,
-    resolve: {
-      data: YoutubeStreamResolver,
-    },
-  },
+  { path: "youtube-stream", component: YoutubeStreamComponent },
   { path: "settings", component: SettingsComponent },
-  {
-    path: "stream",
-    loadChildren: () =>
-      import("./streams-detail/streams-detail.module").then(
-        (mod) => mod.StreamsDetailModule
-      ),
-  },
-  {
-    path: "vtuber",
-    loadChildren: () =>
-      import("./vtubers-detail/vtubers-detail.module").then(
-        (mod) => mod.VtubersDetailModule
-      ),
-  },
+  { path: "stream/:id", component: StreamsDetailComponent },
+  { path: "vtuber/:id", component: VTubersDetailComponent },
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
@@ -103,11 +58,12 @@ const ROUTES: Routes = [
     YoutubeChannelComponent,
     YoutubeScheduleStreamComponent,
     YoutubeStreamComponent,
+    StreamsDetailComponent,
+    VTubersDetailComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    FlexLayoutModule,
     HttpClientModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -122,15 +78,10 @@ const ROUTES: Routes = [
     MatTreeModule,
     SharedModule,
     EllipsisModule,
-    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
-  ],
-  providers: [
-    BilibiliChannelResolver,
-    YoutubeChannelResolver,
-    YoutubeStreamResolver,
   ],
   bootstrap: [AppComponent],
 })

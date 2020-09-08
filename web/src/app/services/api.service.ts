@@ -11,7 +11,7 @@ import {
 } from "src/app/models";
 import { Config } from "./config";
 
-const BASE_URL = "/api/v3";
+const BASE_URL = "https://holo.poi.cat/api/v3";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -33,11 +33,16 @@ export class ApiService {
     startAt: Dayjs,
     endAt: Dayjs
   ): Observable<StreamListResponse> {
+    const params = new HttpParams({
+      fromObject: {
+        ids: this.config.joinedSelectedVTubers,
+        startAt: startAt.toISOString(),
+        endAt: endAt.toISOString(),
+      },
+    });
+
     return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
-      params: new HttpParams()
-        .set("ids", this.config.joinedSelectedVTubers)
-        .set("startAt", startAt.toISOString())
-        .set("endAt", endAt.toISOString()),
+      params,
     });
   }
 
@@ -56,12 +61,17 @@ export class ApiService {
     startAt: Dayjs,
     endAt: Dayjs
   ): Observable<ChannelReportResponse> {
+    const params = new HttpParams({
+      fromObject: {
+        ids,
+        metrics,
+        startAt: startAt.toISOString(),
+        endAt: endAt.toISOString(),
+      },
+    });
+
     return this.http.get<ChannelReportResponse>(`${BASE_URL}/channels_report`, {
-      params: new HttpParams()
-        .set("ids", ids)
-        .set("metrics", metrics)
-        .set("startAt", startAt.toISOString())
-        .set("endAt", endAt.toISOString()),
+      params,
     });
   }
 

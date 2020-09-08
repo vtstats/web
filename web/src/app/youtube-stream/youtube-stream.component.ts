@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
@@ -16,8 +10,6 @@ import { ApiService } from "src/app/services";
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
-  styleUrls: ["./youtube-stream.component.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeStreamComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {}
@@ -25,6 +17,7 @@ export class YoutubeStreamComponent implements OnInit {
   streamGroup: { day: Dayjs; streams: Stream[] }[] = [];
   lastStreamStart: Dayjs;
 
+  loading = true;
   updatedAt = "";
   showSpinner = false;
 
@@ -34,6 +27,7 @@ export class YoutubeStreamComponent implements OnInit {
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 
+  // FIXME
   obs = new IntersectionObserver((entries) => {
     if (entries.map((e) => e.isIntersecting).some((e) => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
@@ -45,8 +39,11 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
-    const res: StreamListResponse = this.route.snapshot.data.data;
-    this.addStreams(res);
+    this.loading = true;
+    this.apiService.getYouTubeStreams(dayjs(0), dayjs()).subscribe((res) => {
+      this.loading = false;
+      this.addStreams(res);
+    });
   }
 
   addStreams(res: StreamListResponse) {

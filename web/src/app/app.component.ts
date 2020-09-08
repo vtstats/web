@@ -1,15 +1,8 @@
-import { Component, ViewEncapsulation, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import {
-  NavigationCancel,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  Router,
-} from "@angular/router";
-import { fromEvent, Observable } from "rxjs";
-import { filter, map, throttleTime } from "rxjs/operators";
+import { fromEvent } from "rxjs";
+import { map, throttleTime } from "rxjs/operators";
 
 const icons: Array<{ name: string; svg: string }> = [
   {
@@ -92,27 +85,14 @@ const icons: Array<{ name: string; svg: string }> = [
 @Component({
   selector: "hs-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   sidenavShouldOpen: boolean = true;
   sidenavMode: string = "side";
-  isRouting$: Observable<boolean> = this.router.events.pipe(
-    filter(
-      (event) =>
-        event instanceof NavigationStart ||
-        event instanceof NavigationEnd ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationError
-    ),
-    map((event) => event instanceof NavigationStart)
-  );
 
   constructor(
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
-    private router: Router
+    private sanitizer: DomSanitizer
   ) {
     for (const icon of icons) {
       this.iconRegistry.addSvgIconLiteral(
