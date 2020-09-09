@@ -49,6 +49,11 @@ const nameMap: Record<NameKeys, string> = {
   risu: $localize`:@@risu:Ayunda Risu`,
   moona: $localize`:@@moona:Moona Hoshinova`,
   iofi: $localize`:@@iofi:Airani Iofifteen`,
+  amelia: $localize`:@@amelia:amelia`,
+  calliope: $localize`:@@calliope:calliope`,
+  gura: $localize`:@@gura:gura`,
+  inanis: $localize`:@@inanis:inanis`,
+  kiara: $localize`:@@kiara:kiara`,
   luna: $localize`:@@luna:Kaguya Luna`,
   nekomiya: $localize`:@@nekomiya:Nekomiya Hinata`,
   tamaki: $localize`:@@tamaki:Inuyama Tamaki`,
@@ -68,6 +73,7 @@ const nameMap: Record<NameKeys, string> = {
   hololive_cn_1st: $localize`:@@hololive_cn_1st:Hololive China 1st Gen`,
   hololive_cn_2nd: $localize`:@@hololive_cn_2nd:Hololive China 2nd Gen`,
   hololive_id: $localize`:@@hololive_id:Hololive Indonesia`,
+  hololive_en: $localize`:@@hololive_en:Hololive English`,
   others: $localize`:@@others:Others`,
 };
 

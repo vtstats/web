@@ -73,6 +73,11 @@ export const translations: Translations = {
   risu: "Ayunda Risu",
   moona: "Moona Hoshinova",
   iofi: "Airani Iofifteen",
+  amelia: "Watson Amelia",
+  calliope: "Mori Calliope",
+  gura: "Gawr Gura",
+  inanis: "Ninomae Ina'nis",
+  kiara: "Takanashi Kiara",
   luna: "輝夜月",
   nekomiya: "猫宮ひなた",
   tamaki: "犬山たまき",
@@ -93,5 +98,6 @@ export const translations: Translations = {
   hololive_cn_1st: "ホロライブ中国一期生",
   hololive_cn_2nd: "ホロライブ中国二期生",
   hololive_id: "ホロライブインドネシア",
+  hololive_en: "ホロライブ English",
   others: "その他",
 };

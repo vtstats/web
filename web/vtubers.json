@@ -302,6 +302,41 @@
       "bilibili": null,
       "default": true
     },
+    "amelia": {
+      "id": "amelia",
+      "twitter": "watsonameliaEN",
+      "youtube": "UCyl1z3jo3XHR1riLFKG5UAg",
+      "bilibili": 674600649,
+      "default": true
+    },
+    "calliope": {
+      "id": "calliope",
+      "twitter": "moricalliope",
+      "youtube": "UCL_qhgtOy0dy1Agp8vkySQg",
+      "bilibili": 674600645,
+      "default": true
+    },
+    "gura": {
+      "id": "gura",
+      "twitter": "gawrgura",
+      "youtube": "UCoSrY_IQQVpmIRZ9Xf-y93g",
+      "bilibili": 674600648,
+      "default": true
+    },
+    "inanis": {
+      "id": "inanis",
+      "twitter": "ninomaeinanis",
+      "youtube": "UCMwGHR0BTZuLsmjY_NT5Pwg",
+      "bilibili": 674600647,
+      "default": true
+    },
+    "kiara": {
+      "id": "kiara",
+      "twitter": "takanashikiara",
+      "youtube": "UCHsx4Hqa-1ORjQTh9TYDhww",
+      "bilibili": 674600646,
+      "default": true
+    },
     "luna": {
       "id": "luna",
       "twitter": "_KaguyaLuna",
@@ -396,6 +431,10 @@
     "hololive_id": {
       "id": "hololive_id",
       "vtubers": ["risu", "moona", "iofi"]
+    },
+    "hololive_en": {
+      "id": "hololive_id",
+      "vtubers": ["amelia", "calliope", "gura", "inanis", "kiara"]
     },
     "others": {
       "id": "others",
