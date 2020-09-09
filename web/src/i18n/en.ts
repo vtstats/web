@@ -84,7 +84,6 @@ export const translations: Translations = {
   pph: "Pinky Pop Hepburn",
   nana: "Kagura Nana",
   ui: "Shigure Ui",
-  rurudo: "rurudo",
 
   // Batches
   hololive_og: "Hololive Talents",

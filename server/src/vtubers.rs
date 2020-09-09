@@ -77,5 +77,4 @@ vtubers! {
     "pph",          Some("UC1pR2ig6NhndhvicEgclNdA"), Some(393940396),
     "nana",         Some("UCbfv8uuUXt3RSJGEwxny5Rw"), Some(386900246),
     "ui",           Some("UCt30jJgChL8qeT9VPadidSw"), Some(2601367),
-    "rurudo",       Some("UC0qt9BfrpQo-drjuPKl_vdA"), None,
 }
