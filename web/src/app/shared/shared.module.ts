@@ -5,7 +5,6 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 import { DistancePipe } from "./pipe/distance.pipe";
 import { DurationPipe } from "./pipe/duration.pipe";
-import { FormatPipe } from "./pipe/format.pipe";
 import { NamePipe } from "./pipe/name.pipe";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
@@ -21,7 +20,6 @@ import { AreaChartComponent } from "./area-chart/area-chart.component";
   declarations: [
     DistancePipe,
     DurationPipe,
-    FormatPipe,
     NamePipe,
     AreaChartComponent,
     ShimmerTableComponent,
@@ -34,7 +32,6 @@ import { AreaChartComponent } from "./area-chart/area-chart.component";
   exports: [
     DistancePipe,
     DurationPipe,
-    FormatPipe,
     NamePipe,
     AreaChartComponent,
     ShimmerTableComponent,

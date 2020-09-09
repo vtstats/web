@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
-import dayjs, { Dayjs } from "dayjs";
+import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
 import { ApiService } from "src/app/services";
@@ -14,15 +14,15 @@ import { ApiService } from "src/app/services";
 export class YoutubeStreamComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {}
 
-  streamGroup: { day: Dayjs; streams: Stream[] }[] = [];
-  lastStreamStart: Dayjs;
+  streamGroup: { day: Date; streams: Stream[] }[] = [];
+  lastStreamStart: Date;
 
   loading = true;
   updatedAt = "";
   showSpinner = false;
 
-  everySecond$ = timer(0, 1000).pipe(map(() => dayjs()));
-  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => dayjs()));
+  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
+  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
 
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
@@ -33,30 +33,32 @@ export class YoutubeStreamComponent implements OnInit {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.apiService
-        .getYouTubeStreams(dayjs(0), this.lastStreamStart)
+        .getYouTubeStreams(new Date(0), this.lastStreamStart)
         .subscribe((res) => this.addStreams(res));
     }
   });
 
   ngOnInit() {
     this.loading = true;
-    this.apiService.getYouTubeStreams(dayjs(0), dayjs()).subscribe((res) => {
-      this.loading = false;
-      this.addStreams(res);
-    });
+    this.apiService
+      .getYouTubeStreams(new Date(0), new Date())
+      .subscribe((res) => {
+        this.loading = false;
+        this.addStreams(res);
+      });
   }
 
   addStreams(res: StreamListResponse) {
     this.updatedAt = res.updatedAt;
 
     for (const stream of res.streams) {
-      const start = dayjs(stream.startTime);
-      if (this.lastStreamStart && this.lastStreamStart.isSame(start, "day")) {
+      const start = parseISO(stream.startTime);
+      if (this.lastStreamStart && isSameDay(this.lastStreamStart, start)) {
         this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
       } else {
         this.streamGroup.push({ day: start, streams: [stream] });
       }
-      this.lastStreamStart = dayjs(start);
+      this.lastStreamStart = start;
     }
 
     if (res.streams.length == 24) {

@@ -29,7 +29,7 @@
         <div class="statistic">
           <ng-container *ngIf="!loading; else shimmerStatistic">
             <div class="value">
-              {{ stream.startTime | format: "HH:mm:ss" }}
+              {{ stream.startTime | date: "hh:mm:ss" }}
             </div>
           </ng-container>
 

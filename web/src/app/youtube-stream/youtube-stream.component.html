@@ -1,13 +1,13 @@
 <div class="submenu" *ngIf="!loading; else shimmerSubmenu">
   <div class="spacer"></div>
   <div class="updated-at" i18n="@@updatedAt">
-    Updated at {{ updatedAt | format: "MM/DD HH:mm" }}
+    Updated at {{ updatedAt | date: "MM/dd hh:mm" }}
   </div>
 </div>
 
 <div class="stream-list-container" *ngIf="!loading; else shimmerList">
   <ng-container *ngFor="let group of streamGroup">
-    <div class="date-label">{{ group.day | format: "MM/DD" }}</div>
+    <div class="date-label">{{ group.day | date: "MM/dd" }}</div>
 
     <div class="stream-list">
       <div

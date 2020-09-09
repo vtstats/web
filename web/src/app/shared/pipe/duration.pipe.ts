@@ -1,10 +1,13 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import dayjs, { ConfigType } from "dayjs";
+import { differenceInSeconds, parseISO } from "date-fns";
 
 @Pipe({ name: "duration" })
 export class DurationPipe implements PipeTransform {
-  transform(start: ConfigType, end: ConfigType): string {
-    const seconds = dayjs(end).diff(start, "second");
+  transform(start: string, end: Date | string): string {
+    const seconds = differenceInSeconds(
+      typeof end === "string" ? parseISO(end) : end,
+      parseISO(start)
+    );
 
     const hh = Math.floor(seconds / 3600);
     const mm = Math.floor((seconds - hh * 3600) / 60);

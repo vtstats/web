@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import dayjs, { Dayjs } from "dayjs";
+import { isSameDay, parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -13,10 +13,10 @@ import { ApiService } from "src/app/services";
 export class YoutubeScheduleStreamComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
-  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => dayjs()));
+  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
 
   loading = false;
-  streamGroup: Array<{ day: Dayjs; streams: Array<Stream> }> = [];
+  streamGroup: Array<{ day: Date; streams: Array<Stream> }> = [];
   updatedAt = "";
 
   ngOnInit() {
@@ -25,11 +25,11 @@ export class YoutubeScheduleStreamComponent implements OnInit {
       this.loading = false;
       this.updatedAt = res.updatedAt;
 
-      let lastStreamSchedule: Dayjs;
+      let lastStreamSchedule: Date;
 
       for (const stream of res.streams) {
-        const schedule = dayjs(stream.scheduleTime);
-        if (lastStreamSchedule && lastStreamSchedule.isSame(schedule, "day")) {
+        const schedule = parseISO(stream.scheduleTime);
+        if (lastStreamSchedule && isSameDay(lastStreamSchedule, schedule)) {
           this.streamGroup[this.streamGroup.length - 1].streams.push(stream);
         } else {
           this.streamGroup.push({ day: schedule, streams: [stream] });

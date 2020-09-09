@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import dayjs from "dayjs";
+import { parseISO } from "date-fns";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 import type { MultiSeries } from "@swimlane/ngx-charts";
@@ -35,7 +35,7 @@ export class StreamsDetailComponent implements OnInit {
         this.stats.push({
           name: "",
           series: res.reports[0].rows.map(([name, value]) => ({
-            name: dayjs(name).toDate(),
+            name: parseISO(name),
             value,
           })),
         });

@@ -25,7 +25,7 @@
     "@angular/router": "~10.0.14",
     "@angular/service-worker": "~10.0.14",
     "@swimlane/ngx-charts": "^16.0.0",
-    "dayjs": "^1.8.26",
+    "date-fns": "^2.16.1",
     "ngx-ellipsis": "^2.2.2",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",

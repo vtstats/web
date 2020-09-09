@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Dayjs } from "dayjs";
 
 import {
   ChannelListResponse,
@@ -30,8 +29,8 @@ export class ApiService {
   }
 
   getYouTubeStreams(
-    startAt: Dayjs,
-    endAt: Dayjs
+    startAt: Date,
+    endAt: Date
   ): Observable<StreamListResponse> {
     const params = new HttpParams({
       fromObject: {
@@ -58,8 +57,8 @@ export class ApiService {
   getChannelReport(
     ids: string,
     metrics: string,
-    startAt: Dayjs,
-    endAt: Dayjs
+    startAt: Date,
+    endAt: Date
   ): Observable<ChannelReportResponse> {
     const params = new HttpParams({
       fromObject: {
@@ -78,8 +77,8 @@ export class ApiService {
   getStreamReport(
     ids: string,
     metrics: string = "youtube_stream_viewer",
-    startAt?: Dayjs,
-    endAt?: Dayjs
+    startAt?: Date,
+    endAt?: Date
   ): Observable<StreamReportResponse> {
     let params = new HttpParams().set("ids", ids).set("metrics", metrics);
 

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import dayjs from "dayjs";
+import { endOfToday, subDays, parseISO } from "date-fns";
 import type { MultiSeries, DataItem } from "@swimlane/ngx-charts";
 
 import { VTuber } from "src/app/models";
@@ -28,13 +28,13 @@ export class VTubersDetailComponent {
 
     this.vtuberId = this.route.snapshot.paramMap.get("id");
 
-    const end = dayjs().endOf("day");
+    const end = endOfToday();
 
     this.apiService
       .getChannelReport(
         this.vtuberId,
         "youtube_channel_subscriber,youtube_channel_view,bilibili_channel_subscriber,bilibili_channel_view",
-        end.subtract(7, "day"),
+        subDays(end, 7),
         end
       )
       .subscribe((res) => {
@@ -67,7 +67,7 @@ export class VTubersDetailComponent {
 
     for (const [name, value] of rows) {
       if (prev === undefined || prev !== value) {
-        res.push({ name: dayjs(name).toDate(), value });
+        res.push({ name: parseISO(name), value });
         prev = value;
       }
     }
