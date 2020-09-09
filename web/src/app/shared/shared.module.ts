@@ -16,6 +16,8 @@ import { ShimmerSubmenuComponent } from "./shimmer/shimmer-submenu.component";
 
 import { AreaChartComponent } from "./area-chart/area-chart.component";
 
+import { TickService } from "./tick.service";
+
 @NgModule({
   declarations: [
     DistancePipe,
@@ -40,5 +42,6 @@ import { AreaChartComponent } from "./area-chart/area-chart.component";
     ColoredNumberDirective,
     LazyLoadDirective,
   ],
+  providers: [TickService],
 })
 export class SharedModule {}

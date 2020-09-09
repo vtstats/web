@@ -1,27 +1,29 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { parseISO } from "date-fns";
-import { timer } from "rxjs";
-import { map } from "rxjs/operators";
 import type { MultiSeries } from "@swimlane/ngx-charts";
 
 import { Stream } from "../models";
 import { ApiService } from "../services";
+import { TickService } from "../shared/tick.service";
 
 @Component({
   selector: "hs-streams-detail",
   templateUrl: "./streams-detail.component.html",
 })
 export class StreamsDetailComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private tickService: TickService
+  ) {}
 
   streamId = this.route.snapshot.paramMap.get("id");
+  everySecond$ = this.tickService.everySecond$;
 
   loading = false;
   stream: Stream;
   stats: MultiSeries = [];
-
-  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
 
   ngOnInit() {
     this.loading = true;

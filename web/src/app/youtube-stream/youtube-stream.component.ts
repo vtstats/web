@@ -1,18 +1,19 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { timer } from "rxjs";
-import { map } from "rxjs/operators";
 import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
 import { ApiService } from "src/app/services";
+import { TickService } from "../shared/tick.service";
 
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
 })
 export class YoutubeStreamComponent implements OnInit {
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
+  constructor(
+    private apiService: ApiService,
+    private tickService: TickService
+  ) {}
 
   streamGroup: { day: Date; streams: Stream[] }[] = [];
   lastStreamStart: Date;
@@ -21,8 +22,8 @@ export class YoutubeStreamComponent implements OnInit {
   updatedAt = "";
   showSpinner = false;
 
-  everySecond$ = timer(0, 1000).pipe(map(() => new Date()));
-  everyMinute$ = timer(0, 60 * 1000).pipe(map(() => new Date()));
+  everySecond$ = this.tickService.everySecond$;
+  everyMinute$ = this.tickService.everyMinute$;
 
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
