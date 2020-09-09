@@ -36,6 +36,11 @@ insert into youtube_channels (vtuber_id)
             ('risu'),            -- Ayunda Risu
             ('moona'),           -- Moona Hoshinova
             ('iofi'),            -- Airani Iofifteen
+            ('amelia'),          -- Watson Amelia
+            ('calliope'),        -- Mori Calliope
+            ('gura'),            -- Gawr Gura
+            ('inanis'),          -- Ninomae Ina'nis
+            ('kiara'),           -- Takanashi Kiara
             ('luna'),            -- 輝夜月
             ('nekomiya'),        -- 猫宮ひなた
             ('tamaki'),          -- 犬山たまき
@@ -84,6 +89,11 @@ insert into bilibili_channels (vtuber_id)
             ('doris'),           -- 朵莉丝 Doris
             ('artia'),           -- 阿媂娅 Artia
             ('rosalyn'),         -- 罗莎琳 Rosalyn
+            ('amelia'),          -- Watson Amelia
+            ('calliope'),        -- Mori Calliope
+            ('gura'),            -- Gawr Gura
+            ('inanis'),          -- Ninomae Ina'nis
+            ('kiara'),           -- Takanashi Kiara
             ('luna'),            -- 輝夜月
             ('nekomiya'),        -- 猫宮ひなた
             ('tamaki'),          -- 犬山たまき
