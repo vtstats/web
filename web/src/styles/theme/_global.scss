@@ -3,9 +3,15 @@
 @mixin global-theme($theme) {
   $background: map-get($theme, "background");
   $foreground: map-get($theme, "foreground");
+  $is-dark-theme: map-get($theme, "is-dark");
 
-  hs-root {
+  @if $is-dark-theme {
     background-color: mat-color($background, "card");
     color: mat-color($foreground, "text");
+  } @else {
+    body {
+      background-color: mat-color($background, "card");
+      color: mat-color($foreground, "text");
+    }
   }
 }
