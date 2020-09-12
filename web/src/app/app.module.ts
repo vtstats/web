@@ -15,6 +15,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
+import { TransferHttpCacheModule } from "@nguniversal/common";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { environment } from "../environments/environment";
@@ -65,7 +66,8 @@ const ROUTES: Routes = [
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: "holostats" }),
+    TransferHttpCacheModule,
     HttpClientModule,
     MatButtonModule,
     MatCheckboxModule,

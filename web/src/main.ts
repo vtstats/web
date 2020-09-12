@@ -8,7 +8,7 @@ import { getBrowserLocale, getLocaleProviders } from "src/i18n";
 
 import { AppModule } from "./app/app.module";
 
-if (localStorage.getItem(ENABLE_DARK_MODE) !== null) {
+if (window.localStorage.getItem(ENABLE_DARK_MODE) !== null) {
   document.body.classList.add("dark");
 }
 
@@ -16,6 +16,8 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic(getLocaleProviders(getBrowserLocale()))
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+document.addEventListener("DOMContentLoaded", () => {
+  platformBrowserDynamic(getLocaleProviders(getBrowserLocale()))
+    .bootstrapModule(AppModule)
+    .catch((err) => console.error(err));
+});

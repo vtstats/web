@@ -47,6 +47,6 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         working-directory: web
-        run: rsync -avzzP dist/* rsync://ci@${{ secrets.RSYNC_HOST }}/web
+        run: rsync -avzzP dist/browser/* rsync://ci@${{ secrets.RSYNC_HOST }}/web
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}

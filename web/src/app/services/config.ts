@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 
 import { vtubers } from "vtubers";
 
@@ -11,11 +12,14 @@ export const SELECTED_VTUBERS = "holostats:selectedVTubers";
 
 @Injectable({ providedIn: "root" })
 export class Config {
+  constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+
   selectedVTubers: Set<String> = new Set(
-    localStorage
-      .getItem(SELECTED_VTUBERS)
-      ?.split(",")
-      .filter((id) => Object.keys(vtubers).includes(id)) ??
+    (isPlatformBrowser(this.platformId) &&
+      window.localStorage
+        .getItem(SELECTED_VTUBERS)
+        ?.split(",")
+        .filter((id) => Object.keys(vtubers).includes(id))) ||
       defaultSelectedVTubers
   );
 
@@ -27,22 +31,22 @@ export class Config {
     for (const vtuber of vtubers) {
       this.selectedVTubers.add(vtuber);
     }
-    localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
+    window.localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
   }
 
   unselectVTubers(vtubers: string[]) {
     for (const vtuber of vtubers) {
       this.selectedVTubers.delete(vtuber);
     }
-    localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
+    window.localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
   }
 
   toggleDarkMode() {
-    if (!localStorage.getItem(ENABLE_DARK_MODE)) {
-      localStorage.setItem(ENABLE_DARK_MODE, "t");
+    if (!window.localStorage.getItem(ENABLE_DARK_MODE)) {
+      window.localStorage.setItem(ENABLE_DARK_MODE, "t");
       document.body.classList.add("dark");
     } else {
-      localStorage.removeItem(ENABLE_DARK_MODE);
+      window.localStorage.removeItem(ENABLE_DARK_MODE);
       document.body.classList.remove("dark");
     }
   }

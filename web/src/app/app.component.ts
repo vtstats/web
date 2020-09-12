@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { fromEvent } from "rxjs";
-import { map, throttleTime } from "rxjs/operators";
+import { map, throttleTime, startWith } from "rxjs/operators";
 
 const icons: Array<{ name: string; svg: string }> = [
   {
@@ -87,12 +88,13 @@ const icons: Array<{ name: string; svg: string }> = [
   templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit {
-  sidenavShouldOpen: boolean = true;
+  sidenavShouldOpen = false;
   sidenavMode: string = "side";
 
   constructor(
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {
     for (const icon of icons) {
       this.iconRegistry.addSvgIconLiteral(
@@ -103,13 +105,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateSidenav(window.innerWidth);
-    fromEvent(window, "resize")
-      .pipe(
-        throttleTime(500),
-        map(() => window.innerWidth)
-      )
-      .subscribe((width) => this.updateSidenav(width));
+    if (isPlatformBrowser(this.platformId)) {
+      fromEvent(window, "resize")
+        .pipe(
+          throttleTime(500),
+          startWith(window.innerWidth),
+          map(() => window.innerWidth)
+        )
+        .subscribe((width) => this.updateSidenav(width));
+    }
   }
 
   updateSidenav(width: number) {
