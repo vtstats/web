@@ -1,0 +1,12 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: calc(100vh - 128px);
+  flex-direction: column;
+
+  .title {
+    margin-bottom: 32px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { parseISO } from "date-fns";
 import type { MultiSeries } from "@swimlane/ngx-charts";
 
@@ -14,6 +14,7 @@ import { TickService } from "../shared/tick.service";
 export class StreamsDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private apiService: ApiService,
     private tickService: TickService
   ) {}
@@ -30,6 +31,12 @@ export class StreamsDetailComponent implements OnInit {
 
     this.apiService.getStreamReport(this.streamId).subscribe((res) => {
       this.loading = false;
+      if (res.streams.length > 0) {
+        this.stream = res.streams[0];
+      } else {
+        this.router.navigateByUrl("/404");
+      }
+
       if (
         res.reports.length > 0 &&
         res.reports[0].kind == "youtube_stream_viewer"
@@ -41,10 +48,6 @@ export class StreamsDetailComponent implements OnInit {
             value,
           })),
         });
-      }
-
-      if (res.streams.length > 0) {
-        this.stream = res.streams[0];
       }
     });
   }

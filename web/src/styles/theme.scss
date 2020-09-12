@@ -16,10 +16,12 @@
   @include sidenav-theme($theme);
   @include header-theme($theme);
   @include chart-theme($theme);
+  @include not-found-theme($theme);
 }
 
 @mixin hs-typography($config) {
   @include material-typography($config);
+  @include not-found-typography($config);
   @include stream-list-typography($config);
   @include streams-pages-typography($config);
   @include vtuber-pages-typography($config);

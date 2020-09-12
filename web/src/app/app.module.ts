@@ -33,6 +33,7 @@ import { YoutubeScheduleStreamComponent } from "./youtube-schedule-stream";
 import { YoutubeStreamComponent } from "./youtube-stream";
 import { VTubersDetailComponent } from "./vtubers-detail";
 import { StreamsDetailComponent } from "./streams-detail";
+import { NotFoundComponent } from "./not-found";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
@@ -49,6 +50,7 @@ const ROUTES: Routes = [
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
+  { path: "**", component: NotFoundComponent },
 ];
 
 @NgModule({
@@ -63,6 +65,7 @@ const ROUTES: Routes = [
     YoutubeStreamComponent,
     StreamsDetailComponent,
     VTubersDetailComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserAnimationsModule,
