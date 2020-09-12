@@ -19,6 +19,8 @@ import { EllipsisModule } from "ngx-ellipsis";
 
 import { environment } from "../environments/environment";
 
+import { localNamesFactory, LOCAL_NAMES } from "src/i18n/names";
+
 import { AppComponent } from "./app.component";
 import { BilibiliChannelComponent } from "./bilibili-channel";
 import { HeaderComponent } from "./header";
@@ -83,6 +85,7 @@ const ROUTES: Routes = [
       enabled: environment.production,
     }),
   ],
+  providers: [{ provide: LOCAL_NAMES, useFactory: localNamesFactory }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
