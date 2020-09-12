@@ -1,6 +1,6 @@
-import { Translations } from "./translations";
+import { Translations } from "./data";
 
-export const translations: Translations = {
+const translations: Translations = {
   // UI
   updatedAt: "更新于 {$INTERPOLATION}",
   name: "名稱",
@@ -100,3 +100,5 @@ export const translations: Translations = {
   hololive_en: "ホロライブ English",
   others: "その他",
 };
+
+export default translations;

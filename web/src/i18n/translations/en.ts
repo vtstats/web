@@ -1,6 +1,6 @@
-import { Translations } from "./translations";
+import { Translations } from "./data";
 
-export const translations: Translations = {
+const translations: Translations = {
   // UI
   updatedAt: "Updated at {$INTERPOLATION}",
   name: "Name",
@@ -100,3 +100,5 @@ export const translations: Translations = {
   hololive_en: "Hololive English",
   others: "Others",
 };
+
+export default translations;
