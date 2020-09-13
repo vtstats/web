@@ -42,8 +42,7 @@ jobs:
         run: |
           yarn install
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
-          yarn ng run holostats:build:production
-          yarn ng run holostats:server:production
+          yarn ng run holostats:app-shell:production
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'

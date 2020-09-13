@@ -35,9 +35,11 @@ import { YoutubeStreamComponent } from "./youtube-stream";
 import { VTubersDetailComponent } from "./vtubers-detail";
 import { StreamsDetailComponent } from "./streams-detail";
 import { NotFoundComponent } from "./not-found";
+import { AppShellComponent } from "./app-shell";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
+  { path: "shell", component: AppShellComponent },
   { path: "youtube-channel", component: YoutubeChannelComponent },
   { path: "bilibili-channel", component: BilibiliChannelComponent },
   {
@@ -67,6 +69,7 @@ const ROUTES: Routes = [
     StreamsDetailComponent,
     VTubersDetailComponent,
     NotFoundComponent,
+    AppShellComponent,
   ],
   imports: [
     BrowserAnimationsModule,

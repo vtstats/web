@@ -121,6 +121,21 @@
               "optimization": true
             }
           }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "outputIndexPath": "dist/browser/shell.html",
+            "browserTarget": "holostats:build",
+            "serverTarget": "holostats:server",
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "holostats:build:production",
+              "serverTarget": "holostats:server:production"
+            }
+          }
         }
       }
     }

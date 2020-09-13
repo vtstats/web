@@ -42,3 +42,5 @@ app.get("**", (req, res) => {
 });
 
 app.listen(7000);
+
+export * from "./src/main.server";
