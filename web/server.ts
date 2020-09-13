@@ -2,70 +2,43 @@ import "zone.js/dist/zone-node";
 import "@angular/localize/init";
 
 import { join } from "path";
-import { existsSync, readFileSync } from "fs";
-import { createServer } from "http";
+import { readFileSync } from "fs";
+import * as express from "express";
 
-import { ɵCommonEngine as CommonEngine } from "@nguniversal/common/engine";
+import { ngExpressEngine } from "@nguniversal/express-engine";
 
 import { AppServerModule } from "./src/main.server";
+import { environment } from "./src/environments/environment";
 
-const engine = new CommonEngine(AppServerModule);
+const DIST_DIR = process.env.DIST_DIR || join(__dirname, "../browser");
 
-const distFolder = join(__dirname, "../browser");
+const DOCUMENT_PATH = process.env.DOCUMENT_PATH || join(DIST_DIR, "index.html");
 
-const document = readFileSync(join(distFolder, "index.html"), {
-  encoding: "utf8",
-});
+const document = readFileSync(DOCUMENT_PATH, { encoding: "utf8" });
 
-const server = createServer((req, res) => {
-  const url = req.url;
+const app = express();
 
-  if (
-    url.endsWith(".js") ||
-    url.endsWith(".css") ||
-    url.endsWith(".png") ||
-    url.endsWith(".jpg") ||
-    url.endsWith(".map") ||
-    url.endsWith(".ico") ||
-    url.endsWith(".json") ||
-    url.endsWith(".webmanifest")
-  ) {
-    const filePath = join(distFolder, url);
+const render = ngExpressEngine({ bootstrap: AppServerModule });
 
-    if (!existsSync(filePath)) {
-      res.writeHead(404);
-      return res.end();
-    }
+// only serve static files for testing
+if (!environment.production) {
+  app.get("*.*", express.static(DIST_DIR));
+}
 
-    const data = readFileSync(filePath);
-
-    if (url.endsWith(".js")) {
-      res.writeHead(200, { "content-type": "application/javascript" });
-    } else if (url.endsWith(".css")) {
-      res.writeHead(200, { "content-type": "text/css" });
-    } else {
-      res.writeHead(200);
-    }
-
-    return res.end(data);
-  }
-
-  console.log("URL: ", url);
-
-  engine
-    .render({ url, bootstrap: AppServerModule, document })
-    .then((html) => {
-      res.writeHead(200, { "content-type": "text/html" });
-      res.write(html);
-      res.end();
-    })
-    .catch((err) => {
+app.get("**", (req, res) => {
+  render(DOCUMENT_PATH, { req, res, document }, (err, html) => {
+    if (err) {
       console.error(err);
 
       res.writeHead(200, { "content-type": "text/html" });
       res.write(document);
       res.end();
-    });
+    } else {
+      res.writeHead(200, { "content-type": "text/html" });
+      res.write(html);
+      res.end();
+    }
+  });
 });
 
-server.listen(7000);
+app.listen(7000);

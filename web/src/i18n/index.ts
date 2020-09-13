@@ -1,44 +1,72 @@
-import { LOCALE_ID, InjectionToken, StaticProvider } from "@angular/core";
-import { registerLocaleData } from "@angular/common";
+import {
+  LOCALE_ID,
+  InjectionToken,
+  StaticProvider,
+  PLATFORM_ID,
+} from "@angular/core";
+import { registerLocaleData, isPlatformBrowser } from "@angular/common";
 import { loadTranslations } from "@angular/localize";
 import localeEn from "@angular/common/locales/en";
 import localeZh from "@angular/common/locales/zh-Hant";
 import { Locale } from "date-fns";
 import dateFnsLocaleEn from "date-fns/locale/en-US";
 import dateFnsLocaleZh from "date-fns/locale/zh-TW";
+import { CookieService } from "ngx-cookie";
 
 import translationsEn from "./translations/en";
 import translationsZh from "./translations/zh";
+import { LOCAL_NAMES, localNamesFactory } from "./names";
 
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("date-fns.locale");
 
-export const getBrowserLocale = (): string => {
-  const userLocale = localStorage.getItem("holostats:locale");
-  const autoLocale = window.navigator.language.slice(0, 2);
-  return userLocale || autoLocale;
-};
+const localeIdFactory = (
+  cookieService: CookieService,
+  platform: Object
+): string => {
+  const userLocale = cookieService.get("l");
+  const autoLocale = isPlatformBrowser(platform)
+    ? window.navigator.language.slice(0, 2)
+    : undefined;
 
-export const getLocaleProviders = (locale: string): StaticProvider[] => {
-  let dateFnsLocale: Locale;
-
-  switch (locale) {
+  switch (userLocale || autoLocale) {
     case "zh": {
       loadTranslations(translationsZh);
       registerLocaleData(localeZh, "zh");
-      dateFnsLocale = dateFnsLocaleZh;
-      break;
+      return "zh";
     }
     case "en":
     default: {
       loadTranslations(translationsEn);
       registerLocaleData(localeEn, "en");
-      dateFnsLocale = dateFnsLocaleEn;
-      break;
+      return "en";
     }
   }
-
-  return [
-    { provide: LOCALE_ID, useValue: locale },
-    { provide: DATE_FNS_LOCALE, useValue: dateFnsLocale },
-  ];
 };
+
+const dateFnsLocaleFactory = (localeId: string): Locale => {
+  switch (localeId) {
+    case "zh": {
+      return dateFnsLocaleZh;
+    }
+    case "en":
+    default: {
+      return dateFnsLocaleEn;
+    }
+  }
+};
+
+const providers: StaticProvider[] = [
+  {
+    provide: LOCALE_ID,
+    useFactory: localeIdFactory,
+    deps: [CookieService, PLATFORM_ID],
+  },
+  {
+    provide: DATE_FNS_LOCALE,
+    useFactory: dateFnsLocaleFactory,
+    deps: [LOCALE_ID],
+  },
+  { provide: LOCAL_NAMES, useFactory: localNamesFactory, deps: [LOCALE_ID] },
+];
+
+export default providers;

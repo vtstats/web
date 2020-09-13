@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Inject,
+  LOCALE_ID,
+} from "@angular/core";
+import { CookieService } from "ngx-cookie";
 
 import { Config } from "../services";
 
@@ -9,10 +16,16 @@ import { Config } from "../services";
 export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
 
-  constructor(public config: Config) {}
+  constructor(
+    public config: Config,
+    @Inject(LOCALE_ID) private locale: string,
+    private cookieService: CookieService
+  ) {}
 
   selectLanguage(locale: string) {
-    localStorage.setItem("holostats:locale", locale);
-    location.reload();
+    if (this.locale !== locale) {
+      this.cookieService.put("l", locale);
+      location.reload();
+    }
   }
 }

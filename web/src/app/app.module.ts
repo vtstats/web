@@ -16,11 +16,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { TransferHttpCacheModule } from "@nguniversal/common";
+import { CookieModule } from "ngx-cookie";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { environment } from "../environments/environment";
 
-import { localNamesFactory, LOCAL_NAMES } from "src/i18n/names";
+import providers from "src/i18n";
 
 import { AppComponent } from "./app.component";
 import { BilibiliChannelComponent } from "./bilibili-channel";
@@ -72,6 +73,7 @@ const ROUTES: Routes = [
     BrowserModule.withServerTransition({ appId: "holostats" }),
     TransferHttpCacheModule,
     HttpClientModule,
+    CookieModule.forRoot(),
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
@@ -90,7 +92,7 @@ const ROUTES: Routes = [
       enabled: environment.production,
     }),
   ],
-  providers: [{ provide: LOCAL_NAMES, useFactory: localNamesFactory }],
+  providers,
   bootstrap: [AppComponent],
 })
 export class AppModule {}

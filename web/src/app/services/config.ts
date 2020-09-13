@@ -1,53 +1,82 @@
-import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
+import { Injectable, Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { CookieService } from "ngx-cookie";
 
 import { vtubers } from "vtubers";
 
-const defaultSelectedVTubers: string[] = Object.values(vtubers)
+import { binToHash, hashToBin } from "./hash";
+
+const defaultVTubers: string[] = Object.values(vtubers)
   .filter((v) => v.default)
   .map((v) => v.id);
 
-export const ENABLE_DARK_MODE = "holostats:enableDarkMode";
-export const SELECTED_VTUBERS = "holostats:selectedVTubers";
+const keys = Object.keys(vtubers);
 
 @Injectable({ providedIn: "root" })
 export class Config {
-  constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+  selectedVTubers: Set<String> = new Set();
 
-  selectedVTubers: Set<String> = new Set(
-    (isPlatformBrowser(this.platformId) &&
-      window.localStorage
-        .getItem(SELECTED_VTUBERS)
-        ?.split(",")
-        .filter((id) => Object.keys(vtubers).includes(id))) ||
-      defaultSelectedVTubers
-  );
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private cookieService: CookieService
+  ) {
+    if (this.cookieService.get("t") === "d") {
+      this.document.body.classList.add("dark");
+    }
+
+    const ids = this.cookieService.get("v");
+
+    if (!ids) {
+      this.selectedVTubers = new Set(defaultVTubers);
+      return;
+    }
+
+    const bin = hashToBin(ids);
+
+    const v = bin.split("").reduce((acc, cur, idx) => {
+      if (cur === "1") {
+        acc.push(keys[idx]);
+      }
+
+      return acc;
+    }, [] as string[]);
+
+    this.selectedVTubers = new Set(v);
+  }
 
   get joinedSelectedVTubers(): string {
     return Array.from(this.selectedVTubers).join(",");
   }
 
-  selectVTubers(vtubers: string[]) {
-    for (const vtuber of vtubers) {
-      this.selectedVTubers.add(vtuber);
+  selectVTubers(ids: string[]) {
+    for (const id of ids) {
+      this.selectedVTubers.add(id);
     }
-    window.localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
+
+    this.cookieService.put(
+      "v",
+      binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
+    );
   }
 
-  unselectVTubers(vtubers: string[]) {
-    for (const vtuber of vtubers) {
-      this.selectedVTubers.delete(vtuber);
+  unselectVTubers(ids: string[]) {
+    for (const id of ids) {
+      this.selectedVTubers.delete(id);
     }
-    window.localStorage.setItem(SELECTED_VTUBERS, this.joinedSelectedVTubers);
+
+    this.cookieService.put(
+      "v",
+      binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
+    );
   }
 
   toggleDarkMode() {
-    if (!window.localStorage.getItem(ENABLE_DARK_MODE)) {
-      window.localStorage.setItem(ENABLE_DARK_MODE, "t");
-      document.body.classList.add("dark");
+    if (this.cookieService.get("t") === "d") {
+      this.cookieService.remove("t");
+      this.document.body.classList.remove("dark");
     } else {
-      window.localStorage.removeItem(ENABLE_DARK_MODE);
-      document.body.classList.remove("dark");
+      this.cookieService.put("t", "d");
+      this.document.body.classList.add("dark");
     }
   }
 }
