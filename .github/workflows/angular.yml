@@ -42,11 +42,15 @@ jobs:
         run: |
           yarn install
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
-          yarn build --prod
+          yarn ng run holostats:build:production
+          yarn ng run holostats:server:production
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         working-directory: web
-        run: rsync -avzzP dist/browser/* rsync://ci@${{ secrets.RSYNC_HOST }}/web
+        run: |
+          rsync -avzzP dist/server/main.js dist/browser/index.html rsync://ci@${{ secrets.RSYNC_HOST }}/ssr
+          rm dist/browser/index.html
+          rsync -avzzP dist/browser/* rsync://ci@${{ secrets.RSYNC_HOST }}/web
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
