@@ -5718,10 +5718,10 @@ ngx-cookie@^5.0.0:
   dependencies:
     tslib "^2.0.0"
 
-ngx-ellipsis@^2.2.2:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-2.3.1.tgz#6446ca137825e2a1e0ee4a59adc8291db8a0d8f6"
-  integrity sha512-qhxiOwjdaOqOTYi6dn73opfwMULur+YcwzTmIJyjYk2oPvsD/yeMSmeEM4Nc8/dIFqalN91DdDC7eqz5mrnxfA==
+ngx-ellipsis@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-2.3.2.tgz#6752a842a94dca1e6e4cf7b88088b7569496a4cc"
+  integrity sha512-RwIglmjHUnXDqm16nbFX262D+h0MeTXmlSqmKOK+gXVrxODkDMWBFWYZnijxQDk+6irw8Vivl1Ea87MkeEvLxQ==
   dependencies:
     element-resize-detector "^1.2.1"
 
