@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
+import { Title } from "@angular/platform-browser";
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -24,7 +25,7 @@ interface VTuberFlatNode {
   selector: "hs-settings",
   templateUrl: "./settings.component.html",
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     (node) => node.level,
     (node) => node.expandable
@@ -43,23 +44,27 @@ export class SettingsComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
-
   count = Object.keys(vtubers).length;
 
-  constructor(public config: Config) {
+  constructor(public config: Config, private title: Title) {
     this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
       id,
       members: batch.vtubers.map((id) => vtubers[id]),
     }));
   }
 
-  getMemberIds(id: string): string[] {
-    return batches[id].vtubers;
+  ngOnInit() {
+    this.title.setTitle("Settings | HoloStats");
   }
 
+  hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
+
+  isSelected = (id: string): boolean => this.config.selectedVTubers.has(id);
+
+  getMemberIds = (id: string): string[] => batches[id].vtubers;
+
   toggleVTuber(id: string) {
-    if (this.config.selectedVTubers.has(id)) {
+    if (this.isSelected(id)) {
       this.config.unselectVTubers([id]);
     } else {
       this.config.selectVTubers([id]);
@@ -67,29 +72,25 @@ export class SettingsComponent {
   }
 
   toggleBatch(id: string) {
-    const vtuberIds = this.getMemberIds(id);
-    if (vtuberIds.every((id) => this.config.selectedVTubers.has(id))) {
-      this.config.unselectVTubers(vtuberIds);
+    const ids = this.getMemberIds(id);
+
+    if (ids.every((id) => this.isSelected(id))) {
+      this.config.unselectVTubers(ids);
     } else {
-      this.config.selectVTubers(vtuberIds);
+      this.config.selectVTubers(ids);
     }
   }
 
-  vtuberSelected(id: string): boolean {
-    return this.config.selectedVTubers.has(id);
-  }
-
   batchAllSelected(id: string): boolean {
-    return this.getMemberIds(id).every((id) =>
-      this.config.selectedVTubers.has(id)
-    );
+    return this.getMemberIds(id).every((id) => this.isSelected(id));
   }
 
   batchPartiallySelected(id: string): boolean {
-    const memberIds = this.getMemberIds(id);
+    const ids = this.getMemberIds(id);
+
     return (
-      memberIds.some((id) => this.config.selectedVTubers.has(id)) &&
-      !memberIds.every((id) => this.config.selectedVTubers.has(id))
+      ids.some((id) => this.isSelected(id)) &&
+      !ids.every((id) => this.isSelected(id))
     );
   }
 }

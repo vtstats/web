@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 
@@ -10,7 +11,7 @@ import { ApiService } from "src/app/services";
   templateUrl: "./bilibili-channel.component.html",
 })
 export class BilibiliChannelComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private title: Title) {}
 
   @ViewChild(MatSort) set sort(sort: MatSort) {
     if (sort) {
@@ -23,6 +24,8 @@ export class BilibiliChannelComponent implements OnInit {
   dataSource = new MatTableDataSource<Channel>([]);
 
   ngOnInit() {
+    this.title.setTitle("Bilibili Channels | HoloStats");
+
     this.loading = true;
     this.apiService.getBilibiliChannels().subscribe((res) => {
       this.loading = false;

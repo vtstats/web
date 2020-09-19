@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { isSameDay, parseISO } from "date-fns";
 
 import { Stream } from "src/app/models";
@@ -12,7 +13,8 @@ import { TickService } from "../shared/tick.service";
 export class YoutubeScheduleStreamComponent implements OnInit {
   constructor(
     private apiService: ApiService,
-    private tickService: TickService
+    private tickService: TickService,
+    private title: Title
   ) {}
 
   everyMinute$ = this.tickService.everyMinute$;
@@ -22,6 +24,8 @@ export class YoutubeScheduleStreamComponent implements OnInit {
   updatedAt = "";
 
   ngOnInit() {
+    this.title.setTitle("YouTube Schedule Stream | HoloStats");
+
     this.loading = true;
     this.apiService.getYouTubeScheduleStream().subscribe((res) => {
       this.loading = false;

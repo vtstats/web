@@ -7,7 +7,7 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <button mat-icon-button disabled></button>
       <mat-checkbox
-        [checked]="vtuberSelected(node.id)"
+        [checked]="isSelected(node.id)"
         (change)="toggleVTuber(node.id)"
       >
         {{ node.id | name }}

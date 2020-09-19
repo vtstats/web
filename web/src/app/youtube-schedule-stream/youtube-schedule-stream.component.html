@@ -1,9 +1,9 @@
 <ng-container *ngIf="!loading; else shimmerList">
   <div class="submenu">
     <div class="spacer"></div>
-    <div class="updated-at" i18n="@@updatedAt">
-      Updated at {{ updatedAt | date: "MM/dd hh:mm" }}
-    </div>
+    <time class="updated-at" i18n="@@updatedAt" [attr.datetime]="updatedAt">
+      Updated at {{ updatedAt | date: "MM/dd HH:mm" }}
+    </time>
   </div>
 
   <div class="stream-list-container">

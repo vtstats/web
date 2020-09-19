@@ -6,6 +6,7 @@ import type { MultiSeries } from "@swimlane/ngx-charts";
 import { Stream } from "../models";
 import { ApiService } from "../services";
 import { TickService } from "../shared/tick.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "hs-streams-detail",
@@ -16,7 +17,8 @@ export class StreamsDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
-    private tickService: TickService
+    private tickService: TickService,
+    private title: Title
   ) {}
 
   streamId = this.route.snapshot.paramMap.get("id");
@@ -31,11 +33,14 @@ export class StreamsDetailComponent implements OnInit {
 
     this.apiService.getStreamReport(this.streamId).subscribe((res) => {
       this.loading = false;
+
       if (res.streams.length > 0) {
         this.stream = res.streams[0];
       } else {
         this.router.navigateByUrl("/404");
       }
+
+      this.title.setTitle(`${this.stream.title} | HoloStats`);
 
       if (
         res.reports.length > 0 &&

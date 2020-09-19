@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
@@ -12,7 +13,8 @@ import { TickService } from "../shared/tick.service";
 export class YoutubeStreamComponent implements OnInit {
   constructor(
     private apiService: ApiService,
-    private tickService: TickService
+    private tickService: TickService,
+    private title: Title
   ) {}
 
   streamGroup: { day: Date; streams: Stream[] }[] = [];
@@ -28,7 +30,6 @@ export class YoutubeStreamComponent implements OnInit {
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 
-  // FIXME
   obs = new IntersectionObserver((entries) => {
     if (entries.map((e) => e.isIntersecting).some((e) => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
@@ -40,6 +41,8 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.title.setTitle("YouTube Streams | HoloStats");
+
     this.loading = true;
     this.apiService
       .getYouTubeStreams(new Date(0), new Date())

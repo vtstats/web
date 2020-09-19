@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Title } from "@angular/platform-browser";
 import { endOfToday, subDays, parseISO } from "date-fns";
 import type { MultiSeries, DataItem } from "@swimlane/ngx-charts";
 
@@ -7,6 +8,7 @@ import { vtubers } from "vtubers";
 
 import { VTuber } from "src/app/models";
 import { ApiService } from "src/app/services";
+import { LOCAL_NAMES, LocalNames } from "src/i18n/names";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -16,12 +18,14 @@ export class VTubersDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private title: Title,
+    @Inject(LOCAL_NAMES) private names: LocalNames
   ) {}
 
   loading = false;
 
-  vtuber = vtubers[this.route.snapshot.paramMap.get("id")];
+  vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
 
   bilibiliSubs: MultiSeries = [];
   bilibiliViews: MultiSeries = [];
@@ -32,6 +36,8 @@ export class VTubersDetailComponent {
     if (!this.vtuber) {
       this.router.navigateByUrl("/404");
     }
+
+    this.title.setTitle(`${this.names[this.vtuber.id]} | HoloStats`);
 
     this.loading = true;
 
