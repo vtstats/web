@@ -3,8 +3,7 @@ import { Title } from "@angular/platform-browser";
 import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
-import { ApiService } from "src/app/services";
-import { TickService } from "../shared/tick.service";
+import { ApiService, TickService } from "src/app/shared";
 
 @Component({
   selector: "hs-youtube-stream",
@@ -12,8 +11,8 @@ import { TickService } from "../shared/tick.service";
 })
 export class YoutubeStreamComponent implements OnInit {
   constructor(
-    private apiService: ApiService,
-    private tickService: TickService,
+    private api: ApiService,
+    private tick: TickService,
     private title: Title
   ) {}
 
@@ -24,8 +23,8 @@ export class YoutubeStreamComponent implements OnInit {
   updatedAt = "";
   showSpinner = false;
 
-  everySecond$ = this.tickService.everySecond$;
-  everyMinute$ = this.tickService.everyMinute$;
+  everySecond$ = this.tick.everySecond$;
+  everyMinute$ = this.tick.everyMinute$;
 
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
@@ -34,7 +33,7 @@ export class YoutubeStreamComponent implements OnInit {
     if (entries.map((e) => e.isIntersecting).some((e) => e)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
-      this.apiService
+      this.api
         .getYouTubeStreams(new Date(0), this.lastStreamStart)
         .subscribe((res) => this.addStreams(res));
     }
@@ -44,12 +43,10 @@ export class YoutubeStreamComponent implements OnInit {
     this.title.setTitle("YouTube Streams | HoloStats");
 
     this.loading = true;
-    this.apiService
-      .getYouTubeStreams(new Date(0), new Date())
-      .subscribe((res) => {
-        this.loading = false;
-        this.addStreams(res);
-      });
+    this.api.getYouTubeStreams(new Date(0), new Date()).subscribe((res) => {
+      this.loading = false;
+      this.addStreams(res);
+    });
   }
 
   addStreams(res: StreamListResponse) {

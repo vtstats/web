@@ -8,7 +8,7 @@ import {
 
 import { vtubers, batches } from "vtubers";
 
-import { Config } from "src/app/services";
+import { ConfigService } from "src/app/shared";
 
 interface VTuberNode {
   id: string;
@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
 
   count = Object.keys(vtubers).length;
 
-  constructor(public config: Config, private title: Title) {
+  constructor(public config: ConfigService, private title: Title) {
     this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
       id,
       members: batch.vtubers.map((id) => vtubers[id]),

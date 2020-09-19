@@ -13,7 +13,7 @@ const defaultVTubers: string[] = Object.values(vtubers)
 const keys = Object.keys(vtubers);
 
 @Injectable({ providedIn: "root" })
-export class Config {
+export class ConfigService {
   selectedVTubers: Set<String> = new Set();
 
   constructor(

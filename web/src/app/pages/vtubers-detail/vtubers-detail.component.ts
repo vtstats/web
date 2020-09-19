@@ -7,7 +7,7 @@ import type { MultiSeries, DataItem } from "@swimlane/ngx-charts";
 import { vtubers } from "vtubers";
 
 import { VTuber } from "src/app/models";
-import { ApiService } from "src/app/services";
+import { ApiService } from "src/app/shared";
 import { LOCAL_NAMES, LocalNames } from "src/i18n/names";
 
 @Component({
@@ -18,7 +18,7 @@ export class VTubersDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService,
+    private api: ApiService,
     private title: Title,
     @Inject(LOCAL_NAMES) private names: LocalNames
   ) {}
@@ -43,7 +43,7 @@ export class VTubersDetailComponent {
 
     const end = endOfToday();
 
-    this.apiService
+    this.api
       .getChannelReport(
         this.vtuber.id,
         "youtube_channel_subscriber,youtube_channel_view,bilibili_channel_subscriber,bilibili_channel_view",

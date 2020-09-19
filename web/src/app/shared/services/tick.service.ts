@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { interval, Observable } from "rxjs";
-import { map, shareReplay, tap, startWith } from "rxjs/operators";
+import { map, shareReplay, startWith } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class TickService {

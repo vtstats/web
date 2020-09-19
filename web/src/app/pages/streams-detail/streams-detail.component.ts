@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Title } from "@angular/platform-browser";
 import { parseISO } from "date-fns";
 import type { MultiSeries } from "@swimlane/ngx-charts";
 
-import { Stream } from "../models";
-import { ApiService } from "../services";
-import { TickService } from "../shared/tick.service";
-import { Title } from "@angular/platform-browser";
+import { Stream } from "src/app/models";
+import { ApiService, TickService } from "src/app/shared";
 
 @Component({
   selector: "hs-streams-detail",
@@ -16,13 +15,13 @@ export class StreamsDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService,
-    private tickService: TickService,
+    private api: ApiService,
+    private tick: TickService,
     private title: Title
   ) {}
 
   streamId = this.route.snapshot.paramMap.get("id");
-  everySecond$ = this.tickService.everySecond$;
+  everySecond$ = this.tick.everySecond$;
 
   loading = false;
   stream: Stream;
@@ -31,7 +30,7 @@ export class StreamsDetailComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    this.apiService.getStreamReport(this.streamId).subscribe((res) => {
+    this.api.getStreamReport(this.streamId).subscribe((res) => {
       this.loading = false;
 
       if (res.streams.length > 0) {

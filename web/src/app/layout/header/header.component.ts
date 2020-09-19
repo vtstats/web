@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { CookieService } from "ngx-cookie";
 
-import { Config } from "../services";
+import { ConfigService } from "src/app/shared";
 
 @Component({
   selector: "hs-header",
@@ -17,7 +17,7 @@ export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
 
   constructor(
-    public config: Config,
+    public config: ConfigService,
     @Inject(LOCALE_ID) private locale: string,
     private cookieService: CookieService
   ) {}

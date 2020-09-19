@@ -8,13 +8,14 @@ import {
   StreamReportResponse,
   StreamListResponse,
 } from "src/app/models";
-import { Config } from "./config";
+
+import { ConfigService } from "./config.service";
 
 const BASE_URL = "https://holo.poi.cat/api/v3";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(private http: HttpClient, private config: Config) {}
+  constructor(private http: HttpClient, private config: ConfigService) {}
 
   getYouTubeChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {

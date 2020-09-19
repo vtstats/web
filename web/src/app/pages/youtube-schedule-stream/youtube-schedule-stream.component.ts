@@ -3,8 +3,7 @@ import { Title } from "@angular/platform-browser";
 import { isSameDay, parseISO } from "date-fns";
 
 import { Stream } from "src/app/models";
-import { ApiService } from "src/app/services";
-import { TickService } from "../shared/tick.service";
+import { ApiService, TickService } from "src/app/shared";
 
 @Component({
   selector: "hs-youtube-schedule-stream",
@@ -12,12 +11,12 @@ import { TickService } from "../shared/tick.service";
 })
 export class YoutubeScheduleStreamComponent implements OnInit {
   constructor(
-    private apiService: ApiService,
-    private tickService: TickService,
+    private api: ApiService,
+    private tick: TickService,
     private title: Title
   ) {}
 
-  everyMinute$ = this.tickService.everyMinute$;
+  everyMinute$ = this.tick.everyMinute$;
 
   loading = false;
   streamGroup: Array<{ day: Date; streams: Array<Stream> }> = [];
@@ -27,7 +26,7 @@ export class YoutubeScheduleStreamComponent implements OnInit {
     this.title.setTitle("YouTube Schedule Stream | HoloStats");
 
     this.loading = true;
-    this.apiService.getYouTubeScheduleStream().subscribe((res) => {
+    this.api.getYouTubeScheduleStream().subscribe((res) => {
       this.loading = false;
       this.updatedAt = res.updatedAt;
 
