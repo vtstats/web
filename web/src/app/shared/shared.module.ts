@@ -1,12 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { EllipsisModule } from "ngx-ellipsis";
 
 import { AreaChartComponent } from "./components/area-chart.component";
 import { ShimmerStreamListComponent } from "./components/shimmer.stream-list.component";
 import { ShimmerSubmenuComponent } from "./components/shimmer-submenu.component";
 import { ShimmerTableComponent } from "./components/shimmer-table.component";
+import { StreamItemComponent } from "./components/stream-item.component";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
 
@@ -28,8 +32,16 @@ import { TickService } from "./services/tick.service";
     ShimmerStreamListComponent,
     ShimmerSubmenuComponent,
     ColoredNumberDirective,
+    StreamItemComponent,
   ],
-  imports: [CommonModule, MatTableModule, NgxChartsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    EllipsisModule,
+    MatTableModule,
+    MatIconModule,
+    NgxChartsModule,
+  ],
   exports: [
     DistancePipe,
     DurationPipe,
@@ -39,6 +51,7 @@ import { TickService } from "./services/tick.service";
     ShimmerStreamListComponent,
     ShimmerSubmenuComponent,
     ColoredNumberDirective,
+    StreamItemComponent,
   ],
   providers: [ApiService, ConfigService, TickService],
 })

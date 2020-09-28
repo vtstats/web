@@ -3,20 +3,14 @@ import { Title } from "@angular/platform-browser";
 import { isSameDay, parseISO } from "date-fns";
 
 import { Stream } from "src/app/models";
-import { ApiService, TickService } from "src/app/shared";
+import { ApiService } from "src/app/shared";
 
 @Component({
   selector: "hs-youtube-schedule-stream",
   templateUrl: "./youtube-schedule-stream.component.html",
 })
 export class YoutubeScheduleStreamComponent implements OnInit {
-  constructor(
-    private api: ApiService,
-    private tick: TickService,
-    private title: Title
-  ) {}
-
-  everyMinute$ = this.tick.everyMinute$;
+  constructor(private api: ApiService, private title: Title) {}
 
   loading = false;
   streamGroup: Array<{ day: Date; streams: Array<Stream> }> = [];

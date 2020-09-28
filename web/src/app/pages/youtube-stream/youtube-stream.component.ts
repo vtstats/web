@@ -3,18 +3,14 @@ import { Title } from "@angular/platform-browser";
 import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
-import { ApiService, TickService } from "src/app/shared";
+import { ApiService } from "src/app/shared";
 
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
 })
 export class YoutubeStreamComponent implements OnInit {
-  constructor(
-    private api: ApiService,
-    private tick: TickService,
-    private title: Title
-  ) {}
+  constructor(private api: ApiService, private title: Title) {}
 
   streamGroup: { day: Date; streams: Stream[] }[] = [];
   lastStreamStart: Date;
@@ -22,9 +18,6 @@ export class YoutubeStreamComponent implements OnInit {
   loading = true;
   updatedAt = "";
   showSpinner = false;
-
-  everySecond$ = this.tick.everySecond$;
-  everyMinute$ = this.tick.everyMinute$;
 
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
