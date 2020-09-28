@@ -27,6 +27,7 @@ export type MessageIds =
   | "bilibiliViews"
   | "vtuberSelected"
   | "selectLanguage"
+  | "recentStreams"
   | keyof typeof vtubers
   | keyof typeof batches;
 

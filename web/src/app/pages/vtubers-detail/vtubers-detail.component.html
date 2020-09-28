@@ -38,7 +38,7 @@
         YouTube Subscribers
       </h4>
 
-      <ng-container *ngIf="!loading; else shimmerChart">
+      <ng-container *ngIf="!chartLoading; else shimmerChart">
         <hs-area-chart
           [results]="youtubeSubs"
           schemeKey="youtube"
@@ -52,7 +52,7 @@
         Bilibili Subscribers
       </h4>
 
-      <ng-container *ngIf="!loading; else shimmerChart">
+      <ng-container *ngIf="!chartLoading; else shimmerChart">
         <hs-area-chart
           [results]="bilibiliSubs"
           schemeKey="bilibili"
@@ -64,7 +64,7 @@
     <div class="chart">
       <h4 class="chart-title" i18n="@@youtubeViews">YouTube Views</h4>
 
-      <ng-container *ngIf="!loading; else shimmerChart">
+      <ng-container *ngIf="!chartLoading; else shimmerChart">
         <hs-area-chart
           [results]="youtubeViews"
           schemeKey="youtube"
@@ -76,13 +76,36 @@
     <div class="chart">
       <h4 class="chart-title" i18n="@@bilibiliViews">Bilibili Views</h4>
 
-      <ng-container *ngIf="!loading; else shimmerChart">
+      <ng-container *ngIf="!chartLoading; else shimmerChart">
         <hs-area-chart
           [results]="bilibiliViews"
           schemeKey="bilibili"
           timeUnit="day"
         ></hs-area-chart>
       </ng-container>
+    </div>
+  </div>
+
+  <div
+    class="stream-list-container"
+    *ngIf="!streamLoading; else shimmerStreamList"
+  >
+    <h4 class="chart-title" i18n="@@recentStreams">Recent Streams</h4>
+
+    <div class="stream-list">
+      <div class="stream" *ngFor="let stream of streams; trackBy: trackBy">
+        <hs-stream-item [stream]="stream"></hs-stream-item>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #shimmerStreamList>
+    <hs-shimmer-stream-list></hs-shimmer-stream-list>
+  </ng-template>
+
+  <div class="stream-list-container">
+    <div [hidden]="!showSpinner" class="spinner">
+      <mat-spinner #spinner [diameter]="30"></mat-spinner>
     </div>
   </div>
 </div>

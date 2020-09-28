@@ -37,6 +37,7 @@ export class StreamsDetailComponent implements OnInit {
         this.stream = res.streams[0];
       } else {
         this.router.navigateByUrl("/404");
+        return;
       }
 
       this.title.setTitle(`${this.stream.title} | HoloStats`);

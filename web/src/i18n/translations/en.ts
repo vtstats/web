@@ -28,6 +28,7 @@ const translations: Translations = {
   bilibiliViews: "Bilibili Views",
   vtuberSelected: "VTuber Selected",
   selectLanguage: "Select Language",
+  recentStreams: "Recent Streams",
 
   // VTubers
   hololive: "Hololive Official",

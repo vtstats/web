@@ -30,16 +30,18 @@ export class ApiService {
   }
 
   getYouTubeStreams(
-    startAt: Date,
-    endAt: Date
+    ids: string[],
+    options: { startAt?: Date; endAt?: Date } = {}
   ): Observable<StreamListResponse> {
-    const params = new HttpParams({
-      fromObject: {
-        ids: this.config.joinedSelectedVTubers,
-        startAt: startAt.toISOString(),
-        endAt: endAt.toISOString(),
-      },
-    });
+    let params = new HttpParams().set("ids", ids.join(","));
+
+    if (options.startAt) {
+      params = params.set("startAt", options.startAt.toISOString());
+    }
+
+    if (options.endAt) {
+      params = params.set("endAt", options.endAt.toISOString());
+    }
 
     return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
       params,

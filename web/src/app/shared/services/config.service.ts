@@ -14,7 +14,7 @@ const keys = Object.keys(vtubers);
 
 @Injectable({ providedIn: "root" })
 export class ConfigService {
-  selectedVTubers: Set<String> = new Set();
+  selectedVTubers: Set<string> = new Set();
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

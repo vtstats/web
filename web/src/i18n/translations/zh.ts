@@ -28,6 +28,7 @@ const translations: Translations = {
   bilibiliViews: "Bilibili 播放",
   vtuberSelected: "已選取的 VTuber",
   selectLanguage: "選擇語言",
+  recentStreams: "最近直播",
 
   // VTubers
   hololive: "ホロライブ公式",

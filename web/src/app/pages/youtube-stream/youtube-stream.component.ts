@@ -3,14 +3,18 @@ import { Title } from "@angular/platform-browser";
 import { parseISO, isSameDay } from "date-fns";
 
 import { Stream, StreamListResponse } from "src/app/models";
-import { ApiService } from "src/app/shared";
+import { ApiService, ConfigService } from "src/app/shared";
 
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "./youtube-stream.component.html",
 })
 export class YoutubeStreamComponent implements OnInit {
-  constructor(private api: ApiService, private title: Title) {}
+  constructor(
+    private api: ApiService,
+    private title: Title,
+    private config: ConfigService
+  ) {}
 
   streamGroup: { day: Date; streams: Stream[] }[] = [];
   lastStreamStart: Date;
@@ -23,11 +27,13 @@ export class YoutubeStreamComponent implements OnInit {
   spinnerContainer: ElementRef;
 
   obs = new IntersectionObserver((entries) => {
-    if (entries.map((e) => e.isIntersecting).some((e) => e)) {
+    if (entries.some((e) => e.isIntersecting)) {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.api
-        .getYouTubeStreams(new Date(0), this.lastStreamStart)
+        .getYouTubeStreams([...this.config.selectedVTubers], {
+          endAt: this.lastStreamStart,
+        })
         .subscribe((res) => this.addStreams(res));
     }
   });
@@ -36,10 +42,14 @@ export class YoutubeStreamComponent implements OnInit {
     this.title.setTitle("YouTube Streams | HoloStats");
 
     this.loading = true;
-    this.api.getYouTubeStreams(new Date(0), new Date()).subscribe((res) => {
-      this.loading = false;
-      this.addStreams(res);
-    });
+    this.api
+      .getYouTubeStreams([...this.config.selectedVTubers], {
+        endAt: new Date(),
+      })
+      .subscribe((res) => {
+        this.loading = false;
+        this.addStreams(res);
+      });
   }
 
   addStreams(res: StreamListResponse) {
