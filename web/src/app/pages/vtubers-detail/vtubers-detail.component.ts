@@ -134,4 +134,8 @@ export class VTubersDetailComponent {
 
     return res;
   }
+
+  trackBy(_: number, stream: Stream): string {
+    return stream.streamId;
+  }
 }
