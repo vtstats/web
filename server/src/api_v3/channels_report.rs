@@ -7,6 +7,7 @@ use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
 use crate::error::Error;
+use crate::vtubers::VTUBERS;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -53,6 +54,7 @@ impl Serialize for Row {
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
+    platform: String,
     vtuber_id: String,
     subscriber_count: i32,
     daily_subscriber_count: i32,
@@ -73,61 +75,61 @@ pub async fn channels_report(
     let mut reports = vec![];
 
     for id in query.ids.split(',') {
-        let channel = sqlx::query_as!(
-            Channel,
-            r#"
-                select vtuber_id,
-                       subscriber_count,
-                       daily_subscriber_count,
-                       weekly_subscriber_count,
-                       monthly_subscriber_count,
-                       view_count,
-                       daily_view_count,
-                       weekly_view_count,
-                       monthly_view_count,
-                       updated_at
-                  from youtube_channels
-                 where vtuber_id = $1
-            "#,
-            id.to_string()
-        )
-        .fetch_optional(&pool)
-        .await
-        .map_err(Error::Database)?;
+        let vtb = match VTUBERS.iter().find(|v| v.name == id) {
+            Some(vtb) => vtb,
+            _ => continue,
+        };
 
-        if let Some(channel) = channel {
+        if vtb.youtube.is_some() {
+            let channel = sqlx::query_as!(
+                Channel,
+                r#"select *, 'youtube' as platform from youtube_channels where vtuber_id = $1"#,
+                id
+            )
+            .fetch_one(&pool)
+            .await
+            .map_err(Error::Database)?;
+
             channels.push(channel);
+        }
 
-            for metric in query.metrics.split(',') {
-                match metric {
-                    "youtube_channel_subscriber" => reports.push(
-                        youtube_channel_subscriber(
-                            id.to_string(),
-                            query.start_at,
-                            query.end_at,
-                            &pool,
-                        )
+        if vtb.bilibili.is_some() {
+            let channel = sqlx::query_as!(
+                Channel,
+                r#"select *, 'bilibili' as platform from bilibili_channels where vtuber_id = $1"#,
+                id
+            )
+            .fetch_one(&pool)
+            .await
+            .map_err(Error::Database)?;
+
+            channels.push(channel);
+        }
+
+        for metric in query.metrics.split(',') {
+            match metric {
+                "youtube_channel_subscriber" => reports.push(
+                    youtube_channel_subscriber(id.to_string(), query.start_at, query.end_at, &pool)
                         .await?,
-                    ),
-                    "youtube_channel_view" => reports.push(
-                        youtube_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
-                            .await?,
-                    ),
-                    "bilibili_channel_subscriber" => reports.push(
-                        bilibili_channel_subscriber(
-                            id.to_string(),
-                            query.start_at,
-                            query.end_at,
-                            &pool,
-                        )
+                ),
+                "youtube_channel_view" => reports.push(
+                    youtube_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
                         .await?,
-                    ),
-                    "bilibili_channel_view" => reports.push(
-                        bilibili_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
-                            .await?,
-                    ),
-                    _ => (),
-                }
+                ),
+                "bilibili_channel_subscriber" => reports.push(
+                    bilibili_channel_subscriber(
+                        id.to_string(),
+                        query.start_at,
+                        query.end_at,
+                        &pool,
+                    )
+                    .await?,
+                ),
+                "bilibili_channel_view" => reports.push(
+                    bilibili_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
+                        .await?,
+                ),
+                _ => (),
             }
         }
     }
