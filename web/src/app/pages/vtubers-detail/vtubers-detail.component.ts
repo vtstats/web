@@ -33,6 +33,14 @@ export class VTubersDetailComponent {
 
   vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
 
+  get hasYouTubeChannel(): boolean {
+    return !!this.vtuber.youtube;
+  }
+
+  get hasBilibiliChannel(): boolean {
+    return !!this.vtuber.bilibili;
+  }
+
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinnerContainer: ElementRef;
 

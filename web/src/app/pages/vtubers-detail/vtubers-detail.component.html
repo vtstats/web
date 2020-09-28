@@ -33,7 +33,7 @@
     </div>
   </div> -->
   <div class="chart-container">
-    <div class="chart">
+    <div class="chart" *ngIf="hasYouTubeChannel">
       <h4 class="chart-title" i18n="@@youtubeSubscribers">
         YouTube Subscribers
       </h4>
@@ -47,7 +47,7 @@
       </ng-container>
     </div>
 
-    <div class="chart">
+    <div class="chart" *ngIf="hasBilibiliChannel">
       <h4 class="chart-title" i18n="@@bilibiliSubscribers">
         Bilibili Subscribers
       </h4>
@@ -61,7 +61,7 @@
       </ng-container>
     </div>
 
-    <div class="chart">
+    <div class="chart" *ngIf="hasYouTubeChannel">
       <h4 class="chart-title" i18n="@@youtubeViews">YouTube Views</h4>
 
       <ng-container *ngIf="!chartLoading; else shimmerChart">
@@ -73,7 +73,7 @@
       </ng-container>
     </div>
 
-    <div class="chart">
+    <div class="chart" *ngIf="hasBilibiliChannel">
       <h4 class="chart-title" i18n="@@bilibiliViews">Bilibili Views</h4>
 
       <ng-container *ngIf="!chartLoading; else shimmerChart">
@@ -86,22 +86,24 @@
     </div>
   </div>
 
-  <div
-    class="stream-list-container"
-    *ngIf="!streamLoading; else shimmerStreamList"
-  >
-    <h4 class="chart-title" i18n="@@recentStreams">Recent Streams</h4>
+  <ng-container *ngIf="hasYouTubeChannel">
+    <div
+      class="stream-list-container"
+      *ngIf="!streamLoading; else shimmerStreamList"
+    >
+      <h4 class="chart-title" i18n="@@recentStreams">Recent Streams</h4>
 
-    <div class="stream-list">
-      <div class="stream" *ngFor="let stream of streams; trackBy: trackBy">
-        <hs-stream-item [stream]="stream"></hs-stream-item>
+      <div class="stream-list">
+        <div class="stream" *ngFor="let stream of streams; trackBy: trackBy">
+          <hs-stream-item [stream]="stream"></hs-stream-item>
+        </div>
       </div>
     </div>
-  </div>
 
-  <ng-template #shimmerStreamList>
-    <hs-shimmer-stream-list></hs-shimmer-stream-list>
-  </ng-template>
+    <ng-template #shimmerStreamList>
+      <hs-shimmer-stream-list></hs-shimmer-stream-list>
+    </ng-template>
+  </ng-container>
 
   <div class="stream-list-container">
     <div [hidden]="!showSpinner" class="spinner">
