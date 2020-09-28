@@ -29,6 +29,7 @@ const translations: Translations = {
   vtuberSelected: "已選取的 VTuber",
   selectLanguage: "選擇語言",
   recentStreams: "最近直播",
+  streamViewers: "直播同接",
 
   // VTubers
   hololive: "ホロライブ公式",

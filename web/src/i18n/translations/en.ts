@@ -29,6 +29,7 @@ const translations: Translations = {
   vtuberSelected: "VTuber Selected",
   selectLanguage: "Select Language",
   recentStreams: "Recent Streams",
+  streamViewers: "Stream Viewers",
 
   // VTubers
   hololive: "Hololive Official",

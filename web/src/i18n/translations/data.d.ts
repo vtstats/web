@@ -28,6 +28,7 @@ export type MessageIds =
   | "vtuberSelected"
   | "selectLanguage"
   | "recentStreams"
+  | "streamViewers"
   | keyof typeof vtubers
   | keyof typeof batches;
 
