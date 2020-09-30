@@ -47,7 +47,17 @@ insert into youtube_channels (vtuber_id)
             ('pph'),             -- Pinky Pop Hepburn
             ('nana'),            -- カグラナナ
             ('ui'),              -- しぐれうい
-            ('rurudo');          -- rurudo
+            ('rurudo'),          -- rurudo
+            ('miyabi'),          -- 花咲みやび
+            ('kira'),            -- 鏡見キラ
+            ('izuru'),           -- 奏手イヅル
+            ('aruran'),          -- アルランディス
+            ('rikka'),           -- 律可
+            ('astel'),           -- アステル・レダ
+            ('temma'),           -- 岸堂天真
+            ('roberu'),          -- 夕刻ロベル
+            ('shien'),           -- 影山シエン
+            ('oga');             -- 荒咬オウガ
 
 insert into bilibili_channels (vtuber_id)
      values ('hololive'),        -- ホロライブ公式
