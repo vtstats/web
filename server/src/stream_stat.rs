@@ -56,7 +56,7 @@ async fn main() -> Result<()> {
 
     for id in ids
         .iter()
-        .filter(|&id| !streams.items.iter().any(|stream| &stream.id == id))
+        .filter(|&id| !streams.iter().any(|stream| &stream.id == id))
     {
         let _ = sqlx::query!(
             r#"
@@ -71,7 +71,7 @@ async fn main() -> Result<()> {
         .await?;
     }
 
-    for stream in &streams.items {
+    for stream in &streams {
         if let Some(details) = &stream.live_streaming_details {
             let _ = sqlx::query!(
                 r#"
@@ -108,8 +108,8 @@ async fn main() -> Result<()> {
     println!(
         "Total: {} Skipped: {} Uppdated: {}",
         ids.len(),
-        ids.len() - streams.items.len(),
-        streams.items.len()
+        ids.len() - streams.len(),
+        streams.len()
     );
 
     Ok(())

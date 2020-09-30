@@ -37,32 +37,36 @@ pub async fn youtube_channels(
     ids: Vec<&str>,
     key: &str,
 ) -> Result<Vec<Channel<String>>> {
-    let url = Url::parse_with_params(
-        "https://www.googleapis.com/youtube/v3/channels",
-        &[
-            ("part", "statistics"),
-            ("fields", "items(id,statistics(viewCount,subscriberCount))"),
-            ("key", key),
-            ("id", ids.join(",").as_str()),
-        ],
-    )?;
+    let mut channels = vec![];
 
-    let response = client
-        .get(url)
-        .send()
-        .await?
-        .json::<YouTubeChannelsListResponse>()
-        .await?;
+    // youtube limits 50 channels per request
+    for chunk in ids.chunks(50) {
+        let url = Url::parse_with_params(
+            "https://www.googleapis.com/youtube/v3/channels",
+            &[
+                ("part", "statistics"),
+                ("fields", "items(id,statistics(viewCount,subscriberCount))"),
+                ("maxResults", "50"),
+                ("key", key),
+                ("id", chunk.join(",").as_str()),
+            ],
+        )?;
 
-    Ok(response
-        .items
-        .into_iter()
-        .map(|channel| Channel {
+        let res = client
+            .get(url)
+            .send()
+            .await?
+            .json::<YouTubeChannelsListResponse>()
+            .await?;
+
+        channels.extend(res.items.into_iter().map(|channel| Channel {
             id: channel.id,
             view_count: i32::from_str(&channel.statistics.view_count).unwrap(),
             subscriber_count: i32::from_str(&channel.statistics.subscriber_count).unwrap(),
-        })
-        .collect())
+        }));
+    }
+
+    Ok(channels)
 }
 
 /// ===== Bilibili =====

@@ -26,23 +26,31 @@ pub struct LiveStreamingDetails {
     pub concurrent_viewers: Option<String>,
 }
 
-pub async fn youtube_streams(
-    client: &Client,
-    ids: &[&str],
-    key: &str,
-) -> Result<VideosListResponse> {
-    let url = Url::parse_with_params(
-        "https://www.googleapis.com/youtube/v3/videos",
-        &[
-            ("part", "id,liveStreamingDetails"),
-            ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
-            ("maxResults", "50"),
-            ("key", key),
-            ("id", ids.join(",").as_str()),
-        ],
-    )?;
+pub async fn youtube_streams(client: &Client, ids: &[&str], key: &str) -> Result<Vec<Video>> {
+    let mut streams = vec![];
 
-    let res = client.get(url.as_str()).send().await?.json().await?;
+    // youtube limits 50 streams per request
+    for chunk in ids.chunks(50) {
+        let url = Url::parse_with_params(
+            "https://www.googleapis.com/youtube/v3/videos",
+            &[
+                ("part", "id,liveStreamingDetails"),
+                ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
+                ("maxResults", "50"),
+                ("key", key),
+                ("id", chunk.join(",").as_str()),
+            ],
+        )?;
 
-    Ok(res)
+        let mut res = client
+            .get(url)
+            .send()
+            .await?
+            .json::<VideosListResponse>()
+            .await?;
+
+        streams.append(&mut res.items);
+    }
+
+    Ok(streams)
 }

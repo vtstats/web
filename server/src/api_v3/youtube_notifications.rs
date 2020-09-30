@@ -34,7 +34,7 @@ pub async fn publish_content(
         )
         .await?;
 
-        for stream in streams.items {
+        for stream in streams {
             if let Some(details) = stream.live_streaming_details {
                 let _ = sqlx::query!(
                     r#"
