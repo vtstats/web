@@ -24,7 +24,7 @@ export class BilibiliChannelComponent implements OnInit {
   dataSource = new MatTableDataSource<Channel>([]);
 
   ngOnInit() {
-    this.title.setTitle("Bilibili Channels | HoloStats");
+    this.title.setTitle(`${$localize`:@@bilibiliChannel:`} | HoloStats`);
 
     this.loading = true;
     this.api.getBilibiliChannels().subscribe((res) => {

@@ -39,7 +39,7 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.title.setTitle("YouTube Streams | HoloStats");
+    this.title.setTitle(`${$localize`:@@youtubeStream:`} | HoloStats`);
 
     this.loading = true;
     this.api

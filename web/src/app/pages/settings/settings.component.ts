@@ -54,7 +54,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle("Settings | HoloStats");
+    this.title.setTitle(`${$localize`:@@settings:`} | HoloStats`);
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;

@@ -24,7 +24,7 @@ export class YoutubeChannelComponent implements OnInit {
   dataSource = new MatTableDataSource<Channel>([]);
 
   ngOnInit() {
-    this.title.setTitle("YouTube Channels | HoloStats");
+    this.title.setTitle(`${$localize`:@@youtubeChannel:`} | HoloStats`);
 
     this.loading = true;
     this.api.getYouTubeChannels().subscribe((res) => {

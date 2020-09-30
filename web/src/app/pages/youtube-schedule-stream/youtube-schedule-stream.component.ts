@@ -17,7 +17,7 @@ export class YoutubeScheduleStreamComponent implements OnInit {
   updatedAt = "";
 
   ngOnInit() {
-    this.title.setTitle("YouTube Schedule Stream | HoloStats");
+    this.title.setTitle(`${$localize`:@@youtubeSchedule:`} | HoloStats`);
 
     this.loading = true;
     this.api.getYouTubeScheduleStream().subscribe((res) => {
