@@ -1,8 +1,11 @@
-mod api_v3;
+#[path = "../error.rs"]
 mod error;
 mod filters;
 mod reject;
+#[path = "../requests/mod.rs"]
 mod requests;
+mod v3;
+#[path = "../vtubers.rs"]
 mod vtubers;
 
 #[cfg(test)]
@@ -23,7 +26,7 @@ async fn main() -> Result<()> {
 
     let cors = warp::cors().allow_any_origin();
 
-    let routes = filters::api(pool, client)
+    let routes = v3::api(pool, client)
         .with(cors)
         .recover(reject::handle_rejection);
 

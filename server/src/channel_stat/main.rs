@@ -1,5 +1,8 @@
+#[path = "../error.rs"]
 mod error;
+#[path = "../requests/mod.rs"]
 mod requests;
+#[path = "../vtubers.rs"]
 mod vtubers;
 
 use chrono::{Timelike, Utc};
@@ -27,7 +30,7 @@ async fn main() -> Result<()> {
     .await?;
 
     for channel in &bilibili_channels {
-        if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(channel.id)) {
+        if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(&channel.id)) {
             let _ = sqlx::query!(
                 r#"
                     update bilibili_channels

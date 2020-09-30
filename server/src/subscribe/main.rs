@@ -1,5 +1,8 @@
+#[path = "../error.rs"]
 mod error;
+#[path = "../requests/mod.rs"]
 mod requests;
+#[path = "../vtubers.rs"]
 mod vtubers;
 
 use futures::{stream, FutureExt, StreamExt};

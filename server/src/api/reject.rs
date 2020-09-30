@@ -1,9 +1,17 @@
 use std::convert::Infallible;
 use warp::http::StatusCode;
-use warp::Rejection;
-use warp::Reply;
+use warp::reject::Reject;
+use warp::{Rejection, Reply};
 
 use crate::error::Error;
+
+impl Reject for Error {}
+
+impl From<Error> for Rejection {
+    fn from(err: Error) -> Rejection {
+        warp::reject::custom(err)
+    }
+}
 
 #[derive(serde::Serialize)]
 pub struct ErrorMessage {

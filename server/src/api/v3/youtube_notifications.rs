@@ -35,26 +35,24 @@ pub async fn publish_content(
         .await?;
 
         for stream in streams {
-            if let Some(details) = stream.live_streaming_details {
-                let _ = sqlx::query!(
-                    r#"
-                        insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
-                             values ($1, $2, $3, $4, $5, $6)
-                        on conflict (stream_id) do update
-                                set (title, schedule_time, start_time, end_time)
-                                  = ($3, $4, $5, $6)
-                    "#,
-                    stream.id,
-                    vtuber_id,
-                    title,
-                    details.scheduled_start_time,
-                    details.actual_start_time,
-                    details.actual_end_time,
-                )
-                .execute(&pool)
-                .await
-                .map_err(Error::Database)?;
-            }
+            let _ = sqlx::query!(
+                r#"
+                    insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
+                         values ($1, $2, $3, $4, $5, $6)
+                    on conflict (stream_id) do update
+                            set (title, schedule_time, start_time, end_time)
+                              = ($3, $4, $5, $6)
+                "#,
+                stream.id,
+                vtuber_id,
+                title,
+                stream.schedule_time,
+                stream.start_time,
+                stream.end_time,
+            )
+            .execute(&pool)
+            .await
+            .map_err(Error::Database)?;
         }
     } else {
         eprintln!("Invalid XML: {}", body);

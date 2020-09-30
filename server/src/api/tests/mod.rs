@@ -7,8 +7,8 @@ use sqlx::PgPool;
 use warp::test::request;
 use warp::Filter;
 
-use crate::filters::api;
 use crate::reject::handle_rejection;
+use crate::v3::api;
 
 use utils::is_not_found;
 

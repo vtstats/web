@@ -6,6 +6,14 @@ use reqwest::{Client, Url};
 
 use crate::error::Result;
 
+pub struct Stream {
+    pub id: String,
+    pub start_time: Option<DateTime<Utc>>,
+    pub end_time: Option<DateTime<Utc>>,
+    pub schedule_time: Option<DateTime<Utc>>,
+    pub viewers: Option<String>,
+}
+
 #[derive(serde::Deserialize, Debug)]
 pub struct VideosListResponse {
     pub items: Vec<Video>,
@@ -27,7 +35,7 @@ pub struct LiveStreamingDetails {
     pub concurrent_viewers: Option<String>,
 }
 
-pub async fn youtube_streams(client: &Client, ids: &[&str], key: &str) -> Result<Vec<Video>> {
+pub async fn youtube_streams(client: &Client, ids: &[&str], key: &str) -> Result<Vec<Stream>> {
     let mut streams = vec![];
 
     // youtube limits 50 streams per request
@@ -43,14 +51,26 @@ pub async fn youtube_streams(client: &Client, ids: &[&str], key: &str) -> Result
             ],
         )?;
 
-        let mut res = client
+        let res = client
             .get(url.clone())
             .send()
             .and_then(|res| res.json::<VideosListResponse>())
             .map_err(|err| (url, err))
             .await?;
 
-        streams.append(&mut res.items);
+        streams.extend(res.items.into_iter().filter_map(|stream| {
+            if let Some(detail) = stream.live_streaming_details {
+                Some(Stream {
+                    id: stream.id,
+                    start_time: detail.actual_start_time,
+                    end_time: detail.actual_end_time,
+                    schedule_time: detail.scheduled_start_time,
+                    viewers: detail.concurrent_viewers,
+                })
+            } else {
+                None
+            }
+        }));
     }
 
     Ok(streams)

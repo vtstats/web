@@ -6,13 +6,11 @@ use std::str::FromStr;
 
 use crate::error::Result;
 
-pub struct Channel<T> {
-    pub id: T,
+pub struct Channel {
+    pub id: String,
     pub view_count: i32,
     pub subscriber_count: i32,
 }
-
-/// ===== YouTube =====
 
 #[derive(serde::Deserialize, Debug)]
 struct YouTubeChannelsListResponse {
@@ -32,11 +30,32 @@ struct YouTubeChannelStatistics {
     subscriber_count: String,
 }
 
-pub async fn youtube_channels(
-    client: &Client,
-    ids: Vec<&str>,
-    key: &str,
-) -> Result<Vec<Channel<String>>> {
+#[derive(serde::Deserialize)]
+struct BilibiliUpstatResponse {
+    data: BilibiliUpstatData,
+}
+
+#[derive(serde::Deserialize)]
+struct BilibiliUpstatData {
+    archive: BilibiliUpstatDataArchive,
+}
+
+#[derive(serde::Deserialize)]
+struct BilibiliUpstatDataArchive {
+    view: i32,
+}
+
+#[derive(serde::Deserialize)]
+struct BilibiliStatResponse {
+    data: BilibiliStatData,
+}
+
+#[derive(serde::Deserialize)]
+struct BilibiliStatData {
+    follower: i32,
+}
+
+pub async fn youtube_channels(client: &Client, ids: Vec<&str>, key: &str) -> Result<Vec<Channel>> {
     let mut channels = vec![];
 
     // youtube limits 50 channels per request
@@ -69,46 +88,15 @@ pub async fn youtube_channels(
     Ok(channels)
 }
 
-/// ===== Bilibili =====
-
-#[derive(serde::Deserialize)]
-struct BilibiliUpstatResponse {
-    data: BilibiliUpstatData,
-}
-
-#[derive(serde::Deserialize)]
-struct BilibiliUpstatData {
-    archive: BilibiliUpstatDataArchive,
-}
-
-#[derive(serde::Deserialize)]
-struct BilibiliUpstatDataArchive {
-    view: i32,
-}
-
-#[derive(serde::Deserialize)]
-struct BilibiliStatResponse {
-    data: BilibiliStatData,
-}
-
-#[derive(serde::Deserialize)]
-struct BilibiliStatData {
-    follower: i32,
-}
-
-pub async fn bilibili_channels(client: &Client, ids: Vec<usize>) -> Result<Vec<Channel<usize>>> {
+pub async fn bilibili_channels(client: &Client, ids: Vec<&str>) -> Result<Vec<Channel>> {
     let mut channels = vec![];
 
     for id in ids {
-        let stat_url = Url::parse_with_params(
-            "http://api.bilibili.com/x/relation/stat",
-            &[("vmid", id.to_string())],
-        )?;
+        let stat_url =
+            Url::parse_with_params("http://api.bilibili.com/x/relation/stat", &[("vmid", id)])?;
 
-        let upstat_url = Url::parse_with_params(
-            "http://api.bilibili.com/x/space/upstat",
-            &[("mid", id.to_string())],
-        )?;
+        let upstat_url =
+            Url::parse_with_params("http://api.bilibili.com/x/space/upstat", &[("mid", id)])?;
 
         let (stat, upstat) = try_join(
             client
@@ -126,7 +114,7 @@ pub async fn bilibili_channels(client: &Client, ids: Vec<usize>) -> Result<Vec<C
         .await?;
 
         channels.push(Channel {
-            id,
+            id: id.to_string(),
             view_count: upstat.data.archive.view,
             subscriber_count: stat.data.follower,
         });

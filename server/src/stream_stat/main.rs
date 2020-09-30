@@ -1,5 +1,8 @@
+#[path = "../error.rs"]
 mod error;
+#[path = "../requests/mod.rs"]
 mod requests;
+#[path = "../vtubers.rs"]
 mod vtubers;
 
 use chrono::{Timelike, Utc};
@@ -72,36 +75,34 @@ async fn main() -> Result<()> {
     }
 
     for stream in &streams {
-        if let Some(details) = &stream.live_streaming_details {
+        let _ = sqlx::query!(
+            r#"
+                update youtube_streams
+                   set (updated_at, schedule_time, start_time, end_time)
+                     = ($1, $2, $3, $4)
+                 where stream_id = $5
+            "#,
+            now,
+            stream.schedule_time,
+            stream.start_time,
+            stream.end_time,
+            stream.id,
+        )
+        .execute(&pool)
+        .await?;
+
+        if let Some(viewers) = &stream.viewers {
             let _ = sqlx::query!(
                 r#"
-                    update youtube_streams
-                       set (updated_at, schedule_time, start_time, end_time)
-                         = ($1, $2, $3, $4)
-                     where stream_id = $5
+                    insert into youtube_stream_viewer_statistic (stream_id, time, value)
+                         values ($1, $2, $3)
                 "#,
-                now,
-                details.scheduled_start_time,
-                details.actual_start_time,
-                details.actual_end_time,
                 stream.id,
+                now,
+                i32::from_str(&viewers).unwrap(),
             )
             .execute(&pool)
             .await?;
-
-            if let Some(viewers) = &details.concurrent_viewers {
-                let _ = sqlx::query!(
-                    r#"
-                        insert into youtube_stream_viewer_statistic (stream_id, time, value)
-                             values ($1, $2, $3)
-                    "#,
-                    stream.id,
-                    now,
-                    i32::from_str(&viewers).unwrap(),
-                )
-                .execute(&pool)
-                .await?;
-            }
         }
     }
 

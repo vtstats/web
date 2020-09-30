@@ -23,20 +23,20 @@ cfg-if = "0.1.10"
 lto = true
 
 [[bin]]
-name = "server"
-path = "src/main.rs"
+name = "api"
+path = "src/api/main.rs"
 
 [[bin]]
 name = "stream_stat"
-path = "src/stream_stat.rs"
+path = "src/stream_stat/main.rs"
 
 [[bin]]
 name = "channel_stat"
-path = "src/channel_stat.rs"
+path = "src/channel_stat/main.rs"
 
 [[bin]]
 name = "subscribe"
-path = "src/subscribe.rs"
+path = "src/subscribe/main.rs"
 
 [dev-dependencies]
 pretty_assertions = "0.6.1"

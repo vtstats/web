@@ -4,10 +4,10 @@ use sqlx::PgPool;
 use warp::test::request;
 use warp::Filter;
 
-use crate::api_v3::streams_report::{Row, Stream, StreamsReport, StreamsReportResponseBody};
 use crate::error::Result;
-use crate::filters::api;
 use crate::reject::handle_rejection;
+use crate::v3::api;
+use crate::v3::streams_report::{Row, Stream, StreamsReport, StreamsReportResponseBody};
 
 use super::utils::{is_invalid_query, is_ok};
 
