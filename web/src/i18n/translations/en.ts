@@ -86,6 +86,16 @@ const translations: Translations = {
   pph: "Pinky Pop Hepburn",
   nana: "Kagura Nana",
   ui: "Shigure Ui",
+  miyabi: "Hanasaki Miyabi",
+  kira: "Kagami Kira",
+  izuru: "Kanade Izuru",
+  aruran: "Arurandeisu",
+  rikka: "Rikka",
+  astel: "Astel Leda",
+  temma: "Kishido Temma",
+  roberu: "Yukoku Roberu",
+  shien: "Kageyama Shien",
+  oga: "Aragami Oga",
 
   // Batches
   hololive_og: "Hololive Talents",
@@ -100,6 +110,9 @@ const translations: Translations = {
   hololive_cn_2nd: "Hololive China 2nd Gen",
   hololive_id: "Hololive Indonesia",
   hololive_en: "Hololive English",
+  holostars_1st: "Holostars 1st Gen",
+  holostars_2nd: "Holostars 2nd Gen",
+  holostars_3rd: "Holostars 3rd Gen",
   others: "Others",
 };
 

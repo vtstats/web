@@ -378,6 +378,76 @@
       "youtube": "UCt30jJgChL8qeT9VPadidSw",
       "bilibili": 2601367,
       "default": true
+    },
+    "miyabi": {
+      "id": "miyabi",
+      "twitter": "miyabihanasaki",
+      "youtube": "UC6t3-_N8A6ME1JShZHHqOMw",
+      "bilibili": null,
+      "default": false
+    },
+    "kira": {
+      "id": "kira",
+      "twitter": "kagamikirach",
+      "youtube": "UCEzsociuFqVwgZuMaZqaCsg",
+      "bilibili": null,
+      "default": false
+    },
+    "izuru": {
+      "id": "izuru",
+      "twitter": "kanadeizuru",
+      "youtube": "UCZgOv3YDEs-ZnZWDYVwJdmA",
+      "bilibili": null,
+      "default": false
+    },
+    "aruran": {
+      "id": "aruran",
+      "twitter": "arurandeisu",
+      "youtube": "UCKeAhJvy8zgXWbh9duVjIaQ",
+      "bilibili": null,
+      "default": false
+    },
+    "rikka": {
+      "id": "rikka",
+      "twitter": "rikkaroid",
+      "youtube": "UC9mf_ZVpouoILRY9NUIaK-w",
+      "bilibili": null,
+      "default": false
+    },
+    "astel": {
+      "id": "astel",
+      "twitter": "astelleda",
+      "youtube": "UCNVEsYbiZjH5QLmGeSgTSzg",
+      "bilibili": null,
+      "default": false
+    },
+    "temma": {
+      "id": "temma",
+      "twitter": "kishidotemma",
+      "youtube": "UCGNI4MENvnsymYjKiZwv9eg",
+      "bilibili": null,
+      "default": false
+    },
+    "roberu": {
+      "id": "roberu",
+      "twitter": "yukokuroberu",
+      "youtube": "UCANDOlYTJT7N5jlRC3zfzVA",
+      "bilibili": null,
+      "default": false
+    },
+    "shien": {
+      "id": "shien",
+      "twitter": "kageyamashien",
+      "youtube": "UChSvpZYRPh0FvG4SJGSga3g",
+      "bilibili": null,
+      "default": false
+    },
+    "oga": {
+      "id": "oga",
+      "twitter": "aragamioga",
+      "youtube": "UCwL7dgTxKo8Y4RFIKWaf8gA",
+      "bilibili": null,
+      "default": false
     }
   },
   "batches": {
@@ -426,8 +496,20 @@
       "vtubers": ["risu", "moona", "iofi"]
     },
     "hololive_en": {
-      "id": "hololive_id",
+      "id": "hololive_en",
       "vtubers": ["amelia", "calliope", "gura", "inanis", "kiara"]
+    },
+    "holostars_1st": {
+      "id": "holostars_1st",
+      "vtubers": ["miyabi", "kira", "izuru", "aruran", "rikka"]
+    },
+    "holostars_2nd": {
+      "id": "holostars_2nd",
+      "vtubers": ["astel", "temma", "roberu"]
+    },
+    "holostars_3rd": {
+      "id": "holostars_3rd",
+      "vtubers": ["shien", "oga"]
     },
     "others": {
       "id": "others",

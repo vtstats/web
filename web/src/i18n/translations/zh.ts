@@ -86,6 +86,16 @@ const translations: Translations = {
   pph: "Pinky Pop Hepburn",
   nana: "カグラナナ",
   ui: "しぐれうい",
+  miyabi: "花咲みやび",
+  kira: "鏡見キラ",
+  izuru: "奏手イヅル",
+  aruran: "アルランディス",
+  rikka: "律可",
+  astel: "アステル・レダ",
+  temma: "岸堂天真",
+  roberu: "夕刻ロベル",
+  shien: "影山シエン",
+  oga: "荒咬オウガ",
 
   // Batches
   hololive_og: "ホロライブ無印",
@@ -100,6 +110,9 @@ const translations: Translations = {
   hololive_cn_2nd: "ホロライブ中国二期生",
   hololive_id: "ホロライブインドネシア",
   hololive_en: "ホロライブ English",
+  holostars_1st: "ホロスターズ1期生",
+  holostars_2nd: "ホロスターズ2期生",
+  holostars_3rd: "ホロスターズ3期生",
   others: "その他",
 };
 
