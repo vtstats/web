@@ -1,4 +1,4 @@
-use reqwest::Error as HttpError;
+use reqwest::{Error as HttpError, Url};
 use serde_json::Error as JsonError;
 use sqlx::Error as DatabaseError;
 use std::convert::From;
@@ -8,7 +8,7 @@ use warp::{reject::Reject, Rejection};
 
 #[derive(Debug)]
 pub enum Error {
-    Http(HttpError),
+    Http(Url, HttpError),
     Json(JsonError),
     Database(DatabaseError),
     Url(UrlError),
@@ -29,9 +29,9 @@ impl From<DatabaseError> for Error {
     }
 }
 
-impl From<HttpError> for Error {
-    fn from(err: HttpError) -> Error {
-        Error::Http(err)
+impl From<(Url, HttpError)> for Error {
+    fn from((url, err): (Url, HttpError)) -> Error {
+        Error::Http(url, err)
     }
 }
 

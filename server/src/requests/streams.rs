@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 use chrono::{DateTime, Utc};
+use futures::future::TryFutureExt;
 use reqwest::{Client, Url};
 
 use crate::error::Result;
@@ -43,10 +44,10 @@ pub async fn youtube_streams(client: &Client, ids: &[&str], key: &str) -> Result
         )?;
 
         let mut res = client
-            .get(url)
+            .get(url.clone())
             .send()
-            .await?
-            .json::<VideosListResponse>()
+            .and_then(|res| res.json::<VideosListResponse>())
+            .map_err(|err| (url, err))
             .await?;
 
         streams.append(&mut res.items);

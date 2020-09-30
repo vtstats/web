@@ -53,10 +53,10 @@ pub async fn youtube_channels(
         )?;
 
         let res = client
-            .get(url)
+            .get(url.clone())
             .send()
-            .await?
-            .json::<YouTubeChannelsListResponse>()
+            .and_then(|res| res.json::<YouTubeChannelsListResponse>())
+            .map_err(|err| (url, err))
             .await?;
 
         channels.extend(res.items.into_iter().map(|channel| Channel {
@@ -112,14 +112,16 @@ pub async fn bilibili_channels(client: &Client, ids: Vec<usize>) -> Result<Vec<C
 
         let (stat, upstat) = try_join(
             client
-                .get(stat_url)
+                .get(stat_url.clone())
                 .send()
-                .and_then(|res| res.json::<BilibiliStatResponse>()),
+                .and_then(|res| res.json::<BilibiliStatResponse>())
+                .map_err(|err| (stat_url, err)),
             client
-                .get(upstat_url)
+                .get(upstat_url.clone())
                 .header(COOKIE, option_env!("COOKIE").unwrap_or_default())
                 .send()
-                .and_then(|res| res.json::<BilibiliUpstatResponse>()),
+                .and_then(|res| res.json::<BilibiliUpstatResponse>())
+                .map_err(|err| (upstat_url, err)),
         )
         .await?;
 

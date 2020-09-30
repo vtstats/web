@@ -20,8 +20,8 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
         message = "NOT_FOUND";
     } else if let Some(err) = err.find::<Error>() {
         match err {
-            Error::Http(err) => {
-                eprintln!("Http Error: {:?}", err);
+            Error::Http(url, err) => {
+                eprintln!("Http Error: {} {:?}", url, err);
                 code = StatusCode::INTERNAL_SERVER_ERROR;
                 message = "HTTP_ERROR";
             }
