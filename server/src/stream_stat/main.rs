@@ -5,11 +5,10 @@ mod requests;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
-use chrono::{Timelike, Utc};
+use chrono::Utc;
 use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
-use std::str::FromStr;
 
 use crate::error::Result;
 
@@ -44,18 +43,9 @@ async fn main() -> Result<()> {
         .map(|row| row.stream_id.as_str())
         .collect::<Vec<_>>();
 
-    let now = Utc::now();
+    let streams = requests::youtube_streams(&client, &ids).await?;
 
-    let streams = crate::requests::youtube_streams(
-        &client,
-        &ids,
-        if now.hour() % 2 == 0 {
-            env!("YOUTUBE_API_KEY0")
-        } else {
-            env!("YOUTUBE_API_KEY1")
-        },
-    )
-    .await?;
+    let now = Utc::now();
 
     for id in ids
         .iter()
@@ -78,11 +68,12 @@ async fn main() -> Result<()> {
         let _ = sqlx::query!(
             r#"
                 update youtube_streams
-                   set (updated_at, schedule_time, start_time, end_time)
-                     = ($1, $2, $3, $4)
-                 where stream_id = $5
+                   set (updated_at, status, schedule_time, start_time, end_time)
+                     = ($1, $2::text::stream_status, $3, $4, $5)
+                 where stream_id = $6
             "#,
             now,
+            stream.status.as_str(),
             stream.schedule_time,
             stream.start_time,
             stream.end_time,
@@ -91,7 +82,7 @@ async fn main() -> Result<()> {
         .execute(&pool)
         .await?;
 
-        if let Some(viewers) = &stream.viewers {
+        if let Some(viewers) = stream.viewers {
             let _ = sqlx::query!(
                 r#"
                     insert into youtube_stream_viewer_statistic (stream_id, time, value)
@@ -99,7 +90,7 @@ async fn main() -> Result<()> {
                 "#,
                 stream.id,
                 now,
-                i32::from_str(&viewers).unwrap(),
+                viewers,
             )
             .execute(&pool)
             .await?;

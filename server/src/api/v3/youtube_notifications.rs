@@ -1,4 +1,3 @@
-use chrono::{Timelike, Utc};
 use reqwest::Client;
 use sqlx::PgPool;
 use warp::{http::StatusCode, Rejection};
@@ -23,16 +22,7 @@ pub async fn publish_content(
     client: Client,
 ) -> Result<StatusCode, Rejection> {
     if let Some((vtuber_id, video_id, title)) = parse_xml(&body) {
-        let streams = youtube_streams(
-            &client,
-            &[&video_id],
-            if Utc::now().hour() % 2 == 0 {
-                env!("YOUTUBE_API_KEY0")
-            } else {
-                env!("YOUTUBE_API_KEY1")
-            },
-        )
-        .await?;
+        let streams = youtube_streams(&client, &[&video_id]).await?;
 
         for stream in streams {
             let _ = sqlx::query!(

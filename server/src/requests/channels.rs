@@ -4,6 +4,7 @@ use futures::future::{try_join, TryFutureExt};
 use reqwest::{header::COOKIE, Client, Url};
 use std::str::FromStr;
 
+use super::youtube::youtube_api_key;
 use crate::error::Result;
 
 pub struct Channel {
@@ -55,8 +56,8 @@ struct BilibiliStatData {
     follower: i32,
 }
 
-pub async fn youtube_channels(client: &Client, ids: Vec<&str>, key: &str) -> Result<Vec<Channel>> {
-    let mut channels = vec![];
+pub async fn youtube_channels(client: &Client, ids: Vec<&str>) -> Result<Vec<Channel>> {
+    let mut channels = Vec::with_capacity(ids.len());
 
     // youtube limits 50 channels per request
     for chunk in ids.chunks(50) {
@@ -66,7 +67,7 @@ pub async fn youtube_channels(client: &Client, ids: Vec<&str>, key: &str) -> Res
                 ("part", "statistics"),
                 ("fields", "items(id,statistics(viewCount,subscriberCount))"),
                 ("maxResults", "50"),
-                ("key", key),
+                ("key", youtube_api_key()),
                 ("id", chunk.join(",").as_str()),
             ],
         )?;
@@ -89,7 +90,7 @@ pub async fn youtube_channels(client: &Client, ids: Vec<&str>, key: &str) -> Res
 }
 
 pub async fn bilibili_channels(client: &Client, ids: Vec<&str>) -> Result<Vec<Channel>> {
-    let mut channels = vec![];
+    let mut channels = Vec::with_capacity(ids.len());
 
     for id in ids {
         let stat_url =

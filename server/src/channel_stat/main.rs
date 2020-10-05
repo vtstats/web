@@ -5,7 +5,7 @@ mod requests;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
-use chrono::{Timelike, Utc};
+use chrono::Utc;
 use sqlx::PgPool;
 use std::env;
 
@@ -20,14 +20,12 @@ async fn main() -> Result<()> {
 
     let now = Utc::now();
 
-    let bilibili_channels = requests::bilibili_channels(
-        &client,
-        VTUBERS
-            .iter()
-            .filter_map(|v| v.bilibili)
-            .collect::<Vec<_>>(),
-    )
-    .await?;
+    let ids = VTUBERS
+        .iter()
+        .filter_map(|v| v.bilibili)
+        .collect::<Vec<_>>();
+
+    let bilibili_channels = requests::bilibili_channels(&client, ids).await?;
 
     for channel in &bilibili_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(&channel.id)) {
@@ -72,16 +70,9 @@ async fn main() -> Result<()> {
         }
     }
 
-    let youtube_channels = requests::youtube_channels(
-        &client,
-        VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>(),
-        if now.hour() % 2 == 0 {
-            env!("YOUTUBE_API_KEY0")
-        } else {
-            env!("YOUTUBE_API_KEY1")
-        },
-    )
-    .await?;
+    let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
+
+    let youtube_channels = requests::youtube_channels(&client, ids).await?;
 
     for channel in &youtube_channels {
         if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
