@@ -56,7 +56,7 @@ jobs:
         working-directory: server
         run: |
           cargo build --release
-          strip target/release/{server,subscribe,stream_stat,channel_stat}
+          strip target/release/{api,subscribe,stream_stat,channel_stat}
         env:
           DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
@@ -67,6 +67,6 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         working-directory: server
-        run: rsync -avzzP target/release/{server,subscribe,stream_stat,channel_stat} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
+        run: rsync -avzzP target/release/{api,subscribe,stream_stat,channel_stat} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
