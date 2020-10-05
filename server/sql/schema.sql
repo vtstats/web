@@ -26,7 +26,7 @@ CREATE TABLE bilibili_channels (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TYPE youtube_stream_status AS ENUM ('schedule', 'live', 'end');
+CREATE TYPE stream_status AS ENUM ('scheduled', 'live', 'ended');
 
 CREATE TABLE youtube_streams (
   stream_id TEXT PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE youtube_streams (
   schedule_time TIMESTAMPTZ,
   start_time TIMESTAMPTZ,
   end_time TIMESTAMPTZ,
-  status youtube_stream_status,
+  status stream_status,
   average_viewer_count INTEGER,
   max_viewer_count INTEGER,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
