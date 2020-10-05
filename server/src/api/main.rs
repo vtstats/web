@@ -5,6 +5,7 @@ mod reject;
 #[path = "../requests/mod.rs"]
 mod requests;
 mod v3;
+mod v4;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
@@ -26,7 +27,8 @@ async fn main() -> Result<()> {
 
     let cors = warp::cors().allow_any_origin();
 
-    let routes = v3::api(pool, client)
+    let routes = v3::api(pool.clone(), client.clone())
+        .or(v4::api(pool, client))
         .with(cors)
         .recover(reject::handle_rejection);
 
