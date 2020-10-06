@@ -4,6 +4,7 @@ use chrono::{
 };
 use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use sqlx::PgPool;
+use std::default::Default;
 use warp::{reply::Json, Rejection};
 
 use crate::error::Error;
@@ -15,7 +16,8 @@ pub struct StreamsListRequestQuery {
     pub ids: Vec<String>,
     #[serde(with = "StringWithSeparator::<CommaSeparator>")]
     pub status: Vec<String>,
-    pub order_by: Option<OrderBy>,
+    #[serde(default)]
+    pub order_by: OrderBy,
     #[serde(default, with = "ts_milliseconds_option")]
     pub start_at: Option<DateTime<Utc>>,
     #[serde(default, with = "ts_milliseconds_option")]
@@ -23,20 +25,37 @@ pub struct StreamsListRequestQuery {
 }
 
 #[derive(serde::Deserialize)]
-#[serde(rename_all = "snake_case")]
 pub enum OrderBy {
-    StartTime,
-    EndTime,
-    ScheduleTime,
+    #[serde(rename = "start_time:asc")]
+    StartTimeAsc,
+    #[serde(rename = "end_time:asc")]
+    EndTimeAsc,
+    #[serde(rename = "schedule_time:asc")]
+    ScheduleTimeAsc,
+    #[serde(rename = "start_time:desc")]
+    StartTimeDesc,
+    #[serde(rename = "end_time:desc")]
+    EndTimeDesc,
+    #[serde(rename = "schedule_time:desc")]
+    ScheduleTimeDesc,
 }
 
 impl OrderBy {
     fn as_str(&self) -> &'static str {
         match self {
-            OrderBy::StartTime => "start_time",
-            OrderBy::EndTime => "end_time",
-            OrderBy::ScheduleTime => "schedule_time",
+            OrderBy::StartTimeAsc => "start_time:asc",
+            OrderBy::EndTimeAsc => "end_time:asc",
+            OrderBy::ScheduleTimeAsc => "schedule_time:asc",
+            OrderBy::StartTimeDesc => "start_time:desc",
+            OrderBy::EndTimeDesc => "end_time:desc",
+            OrderBy::ScheduleTimeDesc => "schedule_time:desc",
         }
+    }
+}
+
+impl Default for OrderBy {
+    fn default() -> Self {
+        OrderBy::StartTimeDesc
     }
 }
 
@@ -108,33 +127,47 @@ pub async fn youtube_streams_list(
                where vtuber_id = any($1)
                  and status::text = any($5)
                  and (
+                       -- start_at
                        case $4
-                         when 'schedule_time' then schedule_time < $2
-                         when 'end_time' then end_time < $2
-                         else start_time < $2
+                         when 'schedule_time:asc'  then schedule_time > $2
+                         when 'schedule_time:desc' then schedule_time > $2
+                         when 'end_time:asc'       then end_time      > $2
+                         when 'end_time:desc'      then end_time      > $2
+                         when 'start_time:asc'     then start_time    > $2
+                         when 'start_time:desc'    then start_time    > $2
                        end
                        or $2 is null
                      )
                  and (
+                       -- end_at
                        case $4
-                         when 'schedule_time' then schedule_time > $3
-                         when 'end_time' then end_time > $3
-                         else start_time > $3
+                         when 'schedule_time:asc'  then schedule_time < $3
+                         when 'schedule_time:desc' then schedule_time < $3
+                         when 'end_time:asc'       then end_time      < $3
+                         when 'end_time:desc'      then end_time      < $3
+                         when 'start_time:asc'     then start_time    < $3
+                         when 'start_time:desc'    then start_time    < $3
                        end
                        or $3 is null
                      )
             order by case $4
-                       when 'schedule_time' then schedule_time
-                       when 'end_time' then end_time
-                       else start_time
-                     end
-                     desc
+                       when 'start_time:asc'     then start_time
+                       when 'end_time:asc'       then end_time
+                       when 'schedule_time:asc'  then schedule_time
+                       else null
+                     end asc,
+                     case $4
+                       when 'start_time:desc'    then start_time
+                       when 'end_time:desc'      then end_time
+                       when 'schedule_time:desc' then schedule_time
+                       else null
+                     end desc
                limit 24
         "#,
         &query.ids,
         query.start_at,
         query.end_at,
-        query.order_by.map(|o| o.as_str()),
+        query.order_by.as_str(),
         &query.status,
     )
     .fetch_all(&pool)
