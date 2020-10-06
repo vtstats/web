@@ -106,7 +106,7 @@ pub async fn channels_report(
     let mut reports = Vec::with_capacity(query.ids.len() * query.metrics.len());
 
     for id in query.ids {
-        let vtb = match VTUBERS.iter().find(|v| v.name == id) {
+        let vtb = match VTUBERS.iter().find(|v| v.id == id) {
             Some(vtb) => vtb,
             _ => continue,
         };

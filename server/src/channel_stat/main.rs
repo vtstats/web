@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
                 channel.subscriber_count,
                 channel.view_count,
                 now,
-                vtb.name,
+                vtb.id,
             )
             .execute(&pool)
             .await?;
@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
                     insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
                          values ($1, $2, $3)
                 "#,
-                vtb.name,
+                vtb.id,
                 now,
                 channel.subscriber_count,
             )
@@ -61,7 +61,7 @@ async fn main() -> Result<()> {
                     insert into bilibili_channel_view_statistic (vtuber_id, time, value)
                          values ($1, $2, $3)
                 "#,
-                vtb.name,
+                vtb.id,
                 now,
                 channel.view_count,
             )
@@ -86,7 +86,7 @@ async fn main() -> Result<()> {
                 channel.subscriber_count,
                 channel.view_count,
                 now,
-                vtb.name,
+                vtb.id,
             )
             .execute(&pool)
             .await?;
@@ -96,7 +96,7 @@ async fn main() -> Result<()> {
                     insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
                          values ($1, $2, $3)
                 "#,
-                vtb.name,
+                vtb.id,
                 now,
                 channel.subscriber_count,
             )
@@ -108,7 +108,7 @@ async fn main() -> Result<()> {
                     insert into youtube_channel_view_statistic (vtuber_id, time, value)
                          values ($1, $2, $3)
                 "#,
-                vtb.name,
+                vtb.id,
                 now,
                 channel.view_count,
             )

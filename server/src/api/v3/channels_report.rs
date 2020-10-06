@@ -75,7 +75,7 @@ pub async fn channels_report(
     let mut reports = vec![];
 
     for id in query.ids.split(',') {
-        let vtb = match VTUBERS.iter().find(|v| v.name == id) {
+        let vtb = match VTUBERS.iter().find(|v| v.id == id) {
             Some(vtb) => vtb,
             _ => continue,
         };

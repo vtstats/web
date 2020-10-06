@@ -81,7 +81,7 @@ fn parse_xml(xml: &str) -> Option<(String, String, String)> {
     let vtuber_id = VTUBERS
         .iter()
         .find(|v| v.youtube == Some(channel_id))
-        .map(|v| v.name)
+        .map(|v| v.id)
         .map(String::from)?;
 
     Some((vtuber_id, video_id, title))
