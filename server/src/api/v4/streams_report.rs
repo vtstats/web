@@ -2,10 +2,7 @@ use chrono::{
     serde::{ts_milliseconds, ts_milliseconds_option},
     DateTime, Utc,
 };
-use serde::{
-    ser::{SerializeTuple, Serializer},
-    Serialize,
-};
+use serde::{ser::Serializer, Serialize};
 use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use sqlx::PgPool;
 use std::str::FromStr;
@@ -67,10 +64,10 @@ impl Serialize for Row {
     where
         S: Serializer,
     {
-        let mut tuple = serializer.serialize_tuple(2)?;
-        tuple.serialize_element(&self.time)?;
-        tuple.serialize_element(&self.value)?;
-        tuple.end()
+        #[derive(serde::Serialize)]
+        struct RowHelper(#[serde(with = "ts_milliseconds")] DateTime<Utc>, i32);
+
+        RowHelper(self.time, self.value).serialize(serializer)
     }
 }
 
