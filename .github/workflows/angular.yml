@@ -7,8 +7,8 @@ defaults:
     working-directory: web
 
 jobs:
-  test:
-    name: Test
+  build_and_test:
+    name: Build & Test
     runs-on: ubuntu-latest
 
     steps:
