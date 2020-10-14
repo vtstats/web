@@ -1,6 +1,17 @@
 name: Rust
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - server
+      - .github/workflows/rust.yml
+  pull_request:
+    paths:
+      - server
+
+defaults:
+  run:
+    working-directory: server
 
 jobs:
   ci:
@@ -23,7 +34,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Initialize database
-        working-directory: server
         run: psql postgres://holostats:holostats@localhost/holostats -f sql/schema.sql
 
       - name: Install Rust toolchain
@@ -40,10 +50,9 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Format
-        run: cargo fmt --manifest-path server/Cargo.toml -- --check
+        run: cargo fmt -- --check
 
       - name: Run Test
-        working-directory: server
         run: cargo test
         env:
           YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
@@ -53,7 +62,6 @@ jobs:
 
       - name: Build
         if: github.ref == 'refs/heads/master'
-        working-directory: server
         run: |
           cargo build --release
           strip target/release/{api,subscribe,stream_stat,channel_stat}
@@ -66,7 +74,6 @@ jobs:
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        working-directory: server
         run: rsync -avzzP target/release/{api,subscribe,stream_stat,channel_stat} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
