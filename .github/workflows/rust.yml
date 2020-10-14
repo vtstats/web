@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Format
-        run: cargo fmt --manifest-path server/Cargo.toml -- --check
+        run: cargo fmt -- --check
 
       - name: Run Test
         run: cargo test
