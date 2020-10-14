@@ -9,14 +9,13 @@ on:
     paths:
       - web
 
-defaults:
-  run:
-    working-directory: web
-
 jobs:
   build_and_test:
     name: Build & Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
 
     steps:
       - name: Checkout code
