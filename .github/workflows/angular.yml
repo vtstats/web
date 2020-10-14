@@ -51,8 +51,16 @@ jobs:
         run: |
           yarn install
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
-          yarn ng run holostats:app-shell
-          yarn ng run holostats:workers
+          yarn ng run holostats:app-shell:production
+          yarn ng run holostats:workers:production
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            dist
+            workers/dist
 
   deploy:
     name: Deploy
@@ -61,10 +69,10 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
-      - name: Production build
-        run: |
-          yarn ng run holostats:app-shell:production
-          yarn ng run holostats:workers:production
+      - name: Download dist
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
 
       - name: Deploy
         uses: cloudflare/wrangler-action@1.3.0
