@@ -53,6 +53,7 @@ jobs:
     needs: build_and_test
     if: github.ref == 'refs/heads/master'
 
+    steps:
       - name: Production build
         run: |
           yarn ng run holostats:app-shell:production
