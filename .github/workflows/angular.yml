@@ -69,6 +69,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
       - name: Download dist
         uses: actions/download-artifact@v2
         with:
