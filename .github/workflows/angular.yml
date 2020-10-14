@@ -77,6 +77,10 @@ jobs:
         with:
           name: dist
 
+      - name: Run Tree
+        run: |
+          tree
+
       - name: Deploy
         uses: cloudflare/wrangler-action@1.3.0
         with:
