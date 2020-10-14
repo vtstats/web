@@ -2,6 +2,8 @@
 
 # compiled output
 /dist
+/workers/dist
+/workers/worker
 
 # dependencies
 /node_modules

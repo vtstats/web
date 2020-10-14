@@ -122,6 +122,21 @@
             }
           }
         },
+        "workers": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "workers/dist",
+            "main": "workers/main.ts",
+            "tsConfig": "workers/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
         "app-shell": {
           "builder": "@angular-devkit/build-angular:app-shell",
           "options": {
