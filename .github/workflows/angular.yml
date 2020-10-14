@@ -59,8 +59,9 @@ jobs:
         with:
           name: dist
           path: |
-            dist
-            workers/dist
+            web/dist
+            web/workers/dist
+          if-no-files-found: error
 
   deploy:
     name: Deploy
