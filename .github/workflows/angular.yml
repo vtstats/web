@@ -1,6 +1,13 @@
 name: Angular
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - web
+      - .github/workflows/angular.yml
+  pull_request:
+    paths:
+      - web
 
 defaults:
   run:
@@ -45,7 +52,7 @@ jobs:
           yarn install
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
           yarn ng run holostats:app-shell
-          yarn ng run holostat:workers
+          yarn ng run holostats:workers
 
   deploy:
     name: Deploy
