@@ -1,5 +1,4 @@
 use chrono::{Duration, Utc};
-use reqwest::Client;
 use sqlx::PgPool;
 use warp::test::request;
 use warp::Filter;
@@ -15,9 +14,7 @@ use super::utils::{is_invalid_query, is_ok};
 async fn invalid_query() {
     let pool = PgPool::new(env!("DATABASE_URL")).await.unwrap();
 
-    let client = Client::new();
-
-    let api = api(pool, client).recover(handle_rejection);
+    let api = api(pool).recover(handle_rejection);
 
     is_invalid_query(
         request()
@@ -40,9 +37,7 @@ async fn invalid_query() {
 async fn ok() -> Result<()> {
     let pool = PgPool::new(env!("DATABASE_URL")).await?;
 
-    let client = Client::new();
-
-    let api = api(pool.clone(), client).recover(handle_rejection);
+    let api = api(pool.clone()).recover(handle_rejection);
 
     let today = Utc::today().and_hms(0, 0, 0);
 
