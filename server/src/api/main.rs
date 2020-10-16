@@ -1,6 +1,7 @@
 #[path = "../error.rs"]
 mod error;
 mod filters;
+mod pubsub;
 mod reject;
 #[path = "../requests/mod.rs"]
 mod requests;
@@ -27,8 +28,12 @@ async fn main() -> Result<()> {
 
     let cors = warp::cors().allow_any_origin();
 
-    let routes = v3::api(pool.clone(), client.clone())
-        .or(v4::api(pool, client))
+    let routes = warp::path("api")
+        .and(
+            v3::api(pool.clone())
+                .or(v4::api(pool.clone()))
+                .or(pubsub::pubsub(pool, client)),
+        )
         .with(cors)
         .recover(reject::handle_rejection);
 
