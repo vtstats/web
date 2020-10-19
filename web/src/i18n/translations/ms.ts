@@ -32,7 +32,7 @@ const translations: Translations = {
   streamViewers: "Tontonan Siaran",
 
   // VTubers
-  hololive: "Hololive Rasmi",
+  hololive: "hololive Rasmi",
   sora: "Tokino Sora",
   roboco: "Roboco",
   miko: "Sakura Miko",
