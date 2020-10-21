@@ -34,7 +34,8 @@ jobs:
         uses: actions/checkout@master
 
       - name: Initialize database
-        run: psql postgres://holostats:holostats@localhost/holostats -f sql/schema.sql
+        run: |
+          psql postgres://holostats:holostats@localhost/holostats -f sql/schema.sql -f sql/initial.sql
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -53,7 +54,9 @@ jobs:
         run: cargo fmt -- --check
 
       - name: Run Test
-        run: cargo test
+        run: |
+          psql postgres://holostats:holostats@localhost/holostats -f sql/test.sql
+          cargo test
         env:
           YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
           YOUTUBE_API_KEY1: YOUTUBE_API_KEY1

@@ -30,10 +30,6 @@ pub fn is_invalid_query(res: Response<Bytes>) {
     );
 }
 
-pub fn is_ok<T: Serialize>(res: Response<Bytes>, body: &T) {
-    is_json(res, StatusCode::OK, body);
-}
-
 fn is_json<T: Serialize>(res: Response<Bytes>, status: StatusCode, body: &T) {
     assert_eq!(res.status(), status);
     assert_eq!(res.headers()[CONTENT_TYPE], "application/json");
