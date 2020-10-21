@@ -3,11 +3,11 @@ name: Angular
 on:
   push:
     paths:
-      - web
+      - web/**
       - .github/workflows/angular.yml
   pull_request:
     paths:
-      - web
+      - web/**
 
 defaults:
   run:

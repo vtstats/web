@@ -3,11 +3,11 @@ name: Rust
 on:
   push:
     paths:
-      - server
+      - server/**
       - .github/workflows/rust.yml
   pull_request:
     paths:
-      - server
+      - server/**
 
 defaults:
   run:
