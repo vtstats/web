@@ -14,7 +14,10 @@ pub fn pubsub(
     pool: PgPool,
     client: Client,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    warp::path!("pubsub").and(pubsub_verify().or(pubsub_publish(pool, client)))
+    warp::path::path("pubsub")
+        .and(warp::path::path(env!("PUBSUBHUBBUB_URL")))
+        .and(warp::path::end())
+        .and(pubsub_verify().or(pubsub_publish(pool, client)))
 }
 
 pub fn pubsub_verify() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {

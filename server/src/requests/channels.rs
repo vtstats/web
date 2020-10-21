@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use futures::future::{try_join, TryFutureExt};
 use reqwest::{header::COOKIE, Client, Url};
 use std::str::FromStr;
