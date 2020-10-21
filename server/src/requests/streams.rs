@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use chrono::{DateTime, Utc};
 use futures::future::TryFutureExt;
 use reqwest::{Client, Url};
