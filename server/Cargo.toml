@@ -18,7 +18,7 @@ tokio = { version = "0.2.22", features = ["macros"] }
 url = "2.1.1"
 warp = { version = "0.2.5", default-features = false }
 cfg-if = "0.1.10"
-serde_with = "1.4.0"
+serde_with = "1.5.1"
 hmac = "0.9.0"
 sha2 = "0.9.1"
 hex = "0.4.2"
