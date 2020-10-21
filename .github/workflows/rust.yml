@@ -59,6 +59,9 @@ jobs:
           YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
           DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           PUBSUBHUBBUB_URL: PUBSUBHUBBUB_URL
+          S3_KEY_ID: S3_KEY_ID
+          S3_ACCESS_KEY: S3_ACCESS_KEY
+          S3_HOST: S3_HOST
 
       - name: Build
         if: github.ref == 'refs/heads/master'
@@ -71,6 +74,9 @@ jobs:
           YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
           PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
           COOKIE: ${{ secrets.COOKIE }}
+          S3_KEY_ID: ${{ secrets.S3_KEY_ID }}
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_HOST: ${{ secrets.S3_HOST }}
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
