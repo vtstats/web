@@ -4,7 +4,7 @@ mod error;
 mod vtubers;
 
 use futures::{stream, FutureExt, StreamExt};
-use reqwest::{Client, header::CONTENT_TYPE};
+use reqwest::{header::CONTENT_TYPE, Client};
 
 use crate::error::Result;
 use crate::vtubers::VTUBERS;
