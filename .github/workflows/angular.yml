@@ -54,6 +54,16 @@ jobs:
           yarn ng run holostats:app-shell:production
           yarn ng run holostats:workers:production
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            web/wrangler.toml
+            web/dist
+            web/workers
+          if-no-files-found: error
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -61,30 +71,10 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Add yarn global bin to path
-        run: echo "::add-path::$(yarn global bin)"
-
-      - name: Cache
-        uses: actions/cache@v1
+      - name: Download artifact
+        uses: actions/download-artifact@v2
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Build
-        run: |
-          yarn install
-          sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
-          yarn ng run holostats:app-shell:production
-          yarn ng run holostats:workers:production
+          name: dist
 
       - name: Deploy
         uses: cloudflare/wrangler-action@1.3.0
