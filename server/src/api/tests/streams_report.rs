@@ -16,7 +16,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/streams_report")
+            .path("/v3/streams_report")
             .reply(&api)
             .await,
     );
@@ -24,7 +24,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/streams_report?foo=bar")
+            .path("/v3/streams_report?foo=bar")
             .reply(&api)
             .await,
     );
@@ -32,7 +32,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/streams_report?ids=yuudachi")
+            .path("/v3/streams_report?ids=yuudachi")
             .reply(&api)
             .await,
     );
@@ -40,7 +40,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/streams_report?metrics=yuudachi")
+            .path("/v3/streams_report?metrics=yuudachi")
             .reply(&api)
             .await,
     );

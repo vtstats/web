@@ -19,7 +19,7 @@ async fn not_found() {
 
     let res = request()
         .method("GET")
-        .path("/api/v3/not_found")
+        .path("/v3/not_found")
         .reply(&api)
         .await;
 

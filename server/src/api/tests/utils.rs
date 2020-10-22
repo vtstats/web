@@ -2,9 +2,7 @@ use bytes::Bytes;
 use pretty_assertions::assert_eq;
 use serde::Serialize;
 use serde_json::to_string;
-use warp::http::header::CONTENT_TYPE;
-use warp::http::Response;
-use warp::http::StatusCode;
+use warp::http::{header::CONTENT_TYPE, Response, StatusCode};
 
 use crate::reject::ErrorMessage;
 

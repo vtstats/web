@@ -16,7 +16,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/youtube_channels")
+            .path("/v3/youtube_channels")
             .reply(&api)
             .await,
     );
@@ -24,7 +24,7 @@ async fn invalid_query() {
     is_invalid_query(
         request()
             .method("GET")
-            .path("/api/v3/youtube_channels?foo=bar")
+            .path("/v3/youtube_channels?foo=bar")
             .reply(&api)
             .await,
     );
