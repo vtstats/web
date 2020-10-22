@@ -68,7 +68,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     needs: build_and_test
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
 
     steps:
       - name: Download artifact
@@ -76,8 +76,16 @@ jobs:
         with:
           name: dist
 
-      - name: Deploy
+      - name: Deploy to prod
+        if: github.ref == 'refs/heads/master'
         uses: cloudflare/wrangler-action@1.3.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           environment: prod
+
+      - name: Deploy to dev
+        if: github.ref == 'refs/heads/dev'
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: dev
