@@ -95,7 +95,7 @@ async fn upload_thumbnail(stream_id: &str, client: &Client) {
     }
 }
 
-fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a str)> {
+pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a str)> {
     let video_id = doc
         .descendants()
         .find(|n| n.tag_name().name() == "videoId")
@@ -121,10 +121,10 @@ fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a st
     Some((vtuber_id, video_id, title))
 }
 
-fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
+pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
     let stream_id = doc
         .descendants()
-        .find(|n| n.tag_name().name() == "at:deleted-entry")
+        .find(|n| n.tag_name().name() == "deleted-entry")
         .and_then(|n| n.attribute("ref"))
         .and_then(|r| r.get("yt:video:".len()..))?;
 
