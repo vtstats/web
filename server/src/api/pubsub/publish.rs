@@ -1,5 +1,6 @@
 use futures::future::TryFutureExt;
 use reqwest::Client;
+use roxmltree::Document;
 use sqlx::PgPool;
 use warp::{http::StatusCode, Rejection};
 
@@ -12,43 +13,69 @@ pub async fn publish_content(
     pool: PgPool,
     client: Client,
 ) -> Result<StatusCode, Rejection> {
-    let (vtuber_id, video_id, title) = match parse_xml(&body) {
-        Some(xml) => xml,
-        None => {
+    let doc = match Document::parse(&body) {
+        Ok(doc) => doc,
+        Err(_) => {
             eprintln!("Invalid XML: {}", body);
             return Ok(StatusCode::OK);
         }
     };
 
-    let streams = youtube_streams(&client, &[&video_id]).await?;
+    if let Some((vtuber_id, video_id, title)) = parse_modification(&doc) {
+        let streams = youtube_streams(&client, &[&video_id]).await?;
 
-    if streams.len() == 0 {
-        eprintln!("{}: stream not found", vtuber_id);
+        if streams.len() == 0 {
+            eprintln!("{}: stream not found", vtuber_id);
+            return Ok(StatusCode::OK);
+        }
+
+        upload_thumbnail(&streams[0].id, &client).await;
+
+        let _ = sqlx::query!(
+            r#"
+                insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
+                     values ($1, $2, $3, $4, $5, $6)
+                on conflict (stream_id) do update
+                        set (title, schedule_time, start_time, end_time)
+                          = ($3, $4, $5, $6)
+            "#,
+            streams[0].id,
+            vtuber_id,
+            title,
+            streams[0].schedule_time,
+            streams[0].start_time,
+            streams[0].end_time,
+        )
+        .execute(&pool)
+        .await
+        .map_err(Error::Database)?;
+
         return Ok(StatusCode::OK);
     }
 
-    upload_thumbnail(&streams[0].id, &client).await;
+    if let Some((stream_id, vtuber_id)) = parse_deletion(&doc) {
+        println!("try to delete stream {}", stream_id);
 
-    let _ = sqlx::query!(
-        r#"
-            insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
-                 values ($1, $2, $3, $4, $5, $6)
-            on conflict (stream_id) do update
-                    set (title, schedule_time, start_time, end_time)
-                      = ($3, $4, $5, $6)
-        "#,
-        streams[0].id,
-        vtuber_id,
-        title,
-        streams[0].schedule_time,
-        streams[0].start_time,
-        streams[0].end_time,
-    )
-    .execute(&pool)
-    .await
-    .map_err(Error::Database)?;
+        let _ = sqlx::query!(
+            r#"
+                delete from youtube_streams
+                      where stream_id = $1
+                        and vtuber_id = $2
+                        and status = 'scheduled'::stream_status
+            "#,
+            stream_id,
+            vtuber_id,
+        )
+        .execute(&pool)
+        .await
+        .map_err(Error::Database)?;
 
-    Ok(StatusCode::OK)
+        return Ok(StatusCode::OK);
+    }
+
+    eprintln!("Invalid XML: {}", body);
+
+    return Ok(StatusCode::OK);
 }
 
 async fn upload_thumbnail(stream_id: &str, client: &Client) {
@@ -68,22 +95,18 @@ async fn upload_thumbnail(stream_id: &str, client: &Client) {
     }
 }
 
-fn parse_xml(xml: &str) -> Option<(String, String, String)> {
-    let doc = roxmltree::Document::parse(xml).ok()?;
-
+fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a str)> {
     let video_id = doc
         .descendants()
         .find(|n| n.tag_name().name() == "videoId")
-        .and_then(|n| n.text())
-        .map(String::from)?;
+        .and_then(|n| n.text())?;
 
     // skip the frist title element
     let title = doc
         .descendants()
         .filter(|n| n.tag_name().name() == "title")
         .nth(1)
-        .and_then(|n| n.text())
-        .map(String::from)?;
+        .and_then(|n| n.text())?;
 
     let channel_id = doc
         .descendants()
@@ -93,8 +116,28 @@ fn parse_xml(xml: &str) -> Option<(String, String, String)> {
     let vtuber_id = VTUBERS
         .iter()
         .find(|v| v.youtube == Some(channel_id))
-        .map(|v| v.id)
-        .map(String::from)?;
+        .map(|v| v.id)?;
 
     Some((vtuber_id, video_id, title))
+}
+
+fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
+    let stream_id = doc
+        .descendants()
+        .find(|n| n.tag_name().name() == "at:deleted-entry")
+        .and_then(|n| n.attribute("ref"))
+        .and_then(|r| r.get("yt:video:".len()..))?;
+
+    let channel_id = doc
+        .descendants()
+        .find(|n| n.tag_name().name() == "uri")
+        .and_then(|n| n.text())
+        .and_then(|n| n.get("https://www.youtube.com/channel/".len()..))?;
+
+    let vtuber_id = VTUBERS
+        .iter()
+        .find(|v| v.youtube == Some(channel_id))
+        .map(|v| v.id)?;
+
+    Some((stream_id, vtuber_id))
 }
