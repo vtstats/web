@@ -5,7 +5,7 @@ use chrono::{
 use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use sqlx::PgPool;
 use std::default::Default;
-use warp::{reply::Json, Rejection};
+use warp::Rejection;
 
 use crate::error::Error;
 
@@ -103,7 +103,7 @@ pub struct Stream {
 pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     pool: PgPool,
-) -> Result<Json, Rejection> {
+) -> Result<impl warp::Reply, Rejection> {
     let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
         .fetch_one(&pool)
         .await
@@ -174,8 +174,17 @@ pub async fn youtube_streams_list(
     .await
     .map_err(Error::Database)?;
 
-    Ok(warp::reply::json(&StreamsListResponseBody {
-        updated_at,
-        streams,
-    }))
+    let etag = updated_at
+        .map(|t| t.timestamp())
+        .unwrap_or_default()
+        .to_string();
+
+    Ok(warp::reply::with_header(
+        warp::reply::json(&StreamsListResponseBody {
+            updated_at,
+            streams,
+        }),
+        "etag",
+        etag,
+    ))
 }

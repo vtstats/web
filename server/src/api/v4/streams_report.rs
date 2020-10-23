@@ -6,7 +6,7 @@ use serde::{ser::Serializer, Serialize};
 use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use sqlx::PgPool;
 use std::str::FromStr;
-use warp::{reply::Json, Rejection};
+use warp::Rejection;
 
 use crate::error::Error;
 
@@ -94,7 +94,7 @@ pub struct Stream {
 pub async fn streams_report(
     query: StreamsReportRequestQuery,
     pool: PgPool,
-) -> Result<Json, Rejection> {
+) -> Result<impl warp::Reply, Rejection> {
     let mut streams = Vec::with_capacity(query.ids.len());
     let mut reports = Vec::with_capacity(query.ids.len());
 
@@ -134,10 +134,19 @@ pub async fn streams_report(
         }
     }
 
-    Ok(warp::reply::json(&StreamsReportResponseBody {
-        streams,
-        reports,
-    }))
+    let etag = streams
+        .iter()
+        .map(|s| s.updated_at)
+        .max()
+        .map(|t| t.timestamp())
+        .unwrap_or_default()
+        .to_string();
+
+    Ok(warp::reply::with_header(
+        warp::reply::json(&StreamsReportResponseBody { streams, reports }),
+        "etag",
+        etag,
+    ))
 }
 
 async fn youtube_stream_viewer(

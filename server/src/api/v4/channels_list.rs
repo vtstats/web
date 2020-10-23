@@ -4,7 +4,7 @@ use chrono::{
 };
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use sqlx::PgPool;
-use warp::{reply::Json, Rejection};
+use warp::Rejection;
 
 use crate::error::Error;
 
@@ -41,7 +41,7 @@ pub struct Channel {
 pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
-) -> Result<Json, Rejection> {
+) -> Result<impl warp::Reply, Rejection> {
     let updated_at = sqlx::query!("select max(updated_at) from youtube_channels")
         .fetch_one(&pool)
         .await
@@ -70,16 +70,25 @@ pub async fn youtube_channels_list(
     .await
     .map_err(Error::Database)?;
 
-    Ok(warp::reply::json(&ChannelsListResponseBody {
-        updated_at,
-        channels,
-    }))
+    let etag = updated_at
+        .map(|t| t.timestamp())
+        .unwrap_or_default()
+        .to_string();
+
+    Ok(warp::reply::with_header(
+        warp::reply::json(&ChannelsListResponseBody {
+            updated_at,
+            channels,
+        }),
+        "etag",
+        etag,
+    ))
 }
 
 pub async fn bilibili_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
-) -> Result<Json, Rejection> {
+) -> Result<impl warp::Reply, Rejection> {
     let updated_at = sqlx::query!("select max(updated_at) from bilibili_channels")
         .fetch_one(&pool)
         .await
@@ -108,8 +117,17 @@ pub async fn bilibili_channels_list(
     .await
     .map_err(Error::Database)?;
 
-    Ok(warp::reply::json(&ChannelsListResponseBody {
-        updated_at,
-        channels,
-    }))
+    let etag = updated_at
+        .map(|t| t.timestamp())
+        .unwrap_or_default()
+        .to_string();
+
+    Ok(warp::reply::with_header(
+        warp::reply::json(&ChannelsListResponseBody {
+            updated_at,
+            channels,
+        }),
+        "etag",
+        etag,
+    ))
 }
