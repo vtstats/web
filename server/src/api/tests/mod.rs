@@ -1,6 +1,7 @@
 mod channels_list;
 mod streams_report;
 mod utils;
+mod xml;
 
 use sqlx::PgPool;
 use warp::test::request;

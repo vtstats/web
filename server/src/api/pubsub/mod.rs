@@ -2,8 +2,8 @@ use reqwest::Client;
 use sqlx::PgPool;
 use warp::Filter;
 
-mod publish;
-mod verify;
+pub mod publish;
+pub mod verify;
 
 use publish::publish_content;
 use verify::verify_intent;
