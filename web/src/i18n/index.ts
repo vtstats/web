@@ -11,7 +11,8 @@ import localeZh from "@angular/common/locales/zh-Hant";
 import { Locale } from "date-fns";
 import dateFnsLocaleEn from "date-fns/locale/en-US";
 import dateFnsLocaleZh from "date-fns/locale/zh-TW";
-import { CookieService } from "ngx-cookie";
+
+import { ConfigService } from "../app/shared/services/config.service";
 
 import translationsEn from "./translations/en";
 import translationsZh from "./translations/zh";
@@ -19,11 +20,8 @@ import { LOCAL_NAMES, localNamesFactory } from "./names";
 
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("date-fns.locale");
 
-const localeIdFactory = (
-  cookieService: CookieService,
-  platform: Object
-): string => {
-  const userLocale = cookieService.get("l");
+const localeIdFactory = (config: ConfigService, platform: Object): string => {
+  const userLocale = config.getLocale();
   const autoLocale = isPlatformBrowser(platform)
     ? window.navigator.language.slice(0, 2)
     : undefined;
@@ -59,7 +57,7 @@ const providers: StaticProvider[] = [
   {
     provide: LOCALE_ID,
     useFactory: localeIdFactory,
-    deps: [CookieService, PLATFORM_ID],
+    deps: [ConfigService, PLATFORM_ID],
   },
   {
     provide: DATE_FNS_LOCALE,

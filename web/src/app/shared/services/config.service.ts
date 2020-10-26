@@ -1,33 +1,34 @@
-import { Injectable, Inject } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { DOCUMENT, isPlatformBrowser } from "@angular/common";
 import { CookieService } from "ngx-cookie";
 
 import { vtubers } from "vtubers";
 
 import { binToHash, hashToBin } from "./hash";
 
-const defaultVTubers: string[] = Object.values(vtubers)
-  .filter((v) => v.default)
-  .map((v) => v.id);
-
 const keys = Object.keys(vtubers);
 
 @Injectable({ providedIn: "root" })
 export class ConfigService {
-  selectedVTubers: Set<string> = new Set();
+  selectedVTubers: Set<string>;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    if (this.cookieService.get("t") === "d") {
+    if (this.getItem("t") === "d") {
       this.document.body.classList.add("dark");
     }
 
-    const ids = this.cookieService.get("v");
+    const ids = this.getItem("v");
 
     if (!ids) {
-      this.selectedVTubers = new Set(defaultVTubers);
+      this.selectedVTubers = new Set(
+        Object.values(vtubers)
+          .filter((v) => v.default)
+          .map((v) => v.id)
+      );
       return;
     }
 
@@ -48,12 +49,33 @@ export class ConfigService {
     return Array.from(this.selectedVTubers).join(",");
   }
 
+  private getItem(key: string): string | false {
+    return (
+      this.cookieService.get(key) ||
+      (isPlatformBrowser(this.platformId) && window.localStorage.getItem(key))
+    );
+  }
+
+  private setItem(key: string, value: string) {
+    this.cookieService.put(key, value);
+    if (isPlatformBrowser(this.platformId)) {
+      window.localStorage.setItem(key, value);
+    }
+  }
+
+  private removeItem(key: string) {
+    this.cookieService.remove(key);
+    if (isPlatformBrowser(this.platformId)) {
+      window.localStorage.removeItem(key);
+    }
+  }
+
   selectVTubers(ids: string[]) {
     for (const id of ids) {
       this.selectedVTubers.add(id);
     }
 
-    this.cookieService.put(
+    this.setItem(
       "v",
       binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
     );
@@ -64,19 +86,28 @@ export class ConfigService {
       this.selectedVTubers.delete(id);
     }
 
-    this.cookieService.put(
+    this.setItem(
       "v",
       binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
     );
   }
 
   toggleDarkMode() {
-    if (this.cookieService.get("t") === "d") {
-      this.cookieService.remove("t");
+    if (this.getItem("t") === "d") {
+      this.removeItem("t");
       this.document.body.classList.remove("dark");
     } else {
-      this.cookieService.put("t", "d");
+      this.setItem("t", "d");
       this.document.body.classList.add("dark");
     }
+  }
+
+  selectLanguage(locale: string) {
+    this.setItem("l", locale);
+    location.reload();
+  }
+
+  getLocale(): string | false {
+    return this.getItem("l");
   }
 }
