@@ -57,7 +57,7 @@ export class ConfigService {
   }
 
   private setItem(key: string, value: string) {
-    this.cookieService.put(key, value);
+    this.cookieService.put(key, value, { secure: true });
     if (isPlatformBrowser(this.platformId)) {
       window.localStorage.setItem(key, value);
     }
