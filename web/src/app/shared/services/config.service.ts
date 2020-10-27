@@ -64,7 +64,7 @@ export class ConfigService {
   }
 
   private removeItem(key: string) {
-    this.cookieService.remove(key);
+    this.cookieService.remove(key, { secure: true });
     if (isPlatformBrowser(this.platformId)) {
       window.localStorage.removeItem(key);
     }
