@@ -46,7 +46,7 @@ jobs:
       - name: Build
         run: |
           sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
-          yarn build --prod --statsJson --outputHashing=none --serviceWorker=false
+          yarn build --prod --outputHashing=none --serviceWorker=false
           yarn ng run holostats:workers:production
 
       - name: Deploy
