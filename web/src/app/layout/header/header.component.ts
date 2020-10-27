@@ -20,7 +20,7 @@ export class HeaderComponent {
     @Inject(LOCALE_ID) private locale: string
   ) {}
 
-  toggleDarkMode = this.config.toggleDarkMode;
+  toggleDarkMode = () => this.config.toggleDarkMode();
 
   selectLanguage(locale: string) {
     if (this.locale !== locale) {
