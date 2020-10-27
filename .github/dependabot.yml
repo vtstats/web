@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: cargo
+  directory: "/server"
+  schedule:
+    interval: weekly
+    time: "09:00"
+  open-pull-requests-limit: 10
+  target-branch: dev
+- package-ecosystem: npm
+  directory: "/web"
+  schedule:
+    interval: weekly
+    time: "09:00"
+  open-pull-requests-limit: 10
+  target-branch: dev
