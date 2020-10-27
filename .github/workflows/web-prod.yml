@@ -1,0 +1,56 @@
+name: Web Prod
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - web/**
+      - .github/workflows/web-prod.yml
+
+defaults:
+  run:
+    working-directory: web
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Use Node 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Add yarn global bin to path
+        run: echo "::add-path::$(yarn global bin)"
+
+      - name: Run Prettier
+        run: |
+          yarn global add prettier
+          prettier --check --ignore-path .gitignore 'src/**/*.{ts,js,json.html,scss}'
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+
+      - name: Build
+        run: |
+          sed -i "s/GIT_COMMIT_HASH/$(git rev-parse --short HEAD)/" src/environments/*
+          yarn ng run holostats:app-shell:production
+          yarn ng run holostats:workers:production
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: prod
