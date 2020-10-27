@@ -8,13 +8,16 @@ import { registerLocaleData, isPlatformBrowser } from "@angular/common";
 import { loadTranslations } from "@angular/localize";
 import localeEn from "@angular/common/locales/en";
 import localeZh from "@angular/common/locales/zh-Hant";
+import localeMs from "@angular/common/locales/ms";
 import { Locale } from "date-fns";
 import dateFnsLocaleEn from "date-fns/locale/en-US";
 import dateFnsLocaleZh from "date-fns/locale/zh-TW";
+import dateFnsLocaleMs from "date-fns/locale/ms";
 
 import { ConfigService } from "../app/shared/services/config.service";
 
 import translationsEn from "./translations/en";
+import translationsMs from "./translations/ms";
 import translationsZh from "./translations/zh";
 import { LOCAL_NAMES, localNamesFactory } from "./names";
 
@@ -32,6 +35,11 @@ const localeIdFactory = (config: ConfigService, platform: Object): string => {
       registerLocaleData(localeZh, "zh");
       return "zh";
     }
+    case "ms": {
+      loadTranslations(translationsMs);
+      registerLocaleData(localeMs, "ms");
+      return "ms";
+    }
     case "en":
     default: {
       loadTranslations(translationsEn);
@@ -45,6 +53,9 @@ const dateFnsLocaleFactory = (localeId: string): Locale => {
   switch (localeId) {
     case "zh": {
       return dateFnsLocaleZh;
+    }
+    case "ms": {
+      return dateFnsLocaleMs;
     }
     case "en":
     default: {
