@@ -19,5 +19,5 @@
       }
     }
   ],
-  "navigationUrls": ["/**", "!/api/**", "!/thumbnail/**"]
+  "navigationUrls": ["/**", "!/api/**"]
 }
