@@ -1,14 +1,19 @@
 use bytes::Bytes;
-use futures::future::{FutureExt, TryFutureExt};
+use futures::{FutureExt, TryFutureExt};
 use reqwest::{Client, Response, Url};
 
 use crate::error::Result;
 
 pub async fn youtube_thumbnail(id: &str, client: &Client) -> Result<Bytes> {
-    let url = Url::parse(&format!(
-        "https://img.youtube.com/vi/{}/maxresdefault.jpg",
-        id
-    ))?;
+    youtube_thumbnail_by_res(id, "maxresdefault", &client)
+        .or_else(|_| youtube_thumbnail_by_res(id, "sddefault", &client))
+        .or_else(|_| youtube_thumbnail_by_res(id, "mqdefault", &client))
+        .or_else(|_| youtube_thumbnail_by_res(id, "hqdefault", &client))
+        .await
+}
+
+async fn youtube_thumbnail_by_res(id: &str, res: &str, client: &Client) -> Result<Bytes> {
+    let url = Url::parse(&format!("https://img.youtube.com/vi/{}/{}.jpg", id, res))?;
 
     let res = client
         .get(url.clone())
