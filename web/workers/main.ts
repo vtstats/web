@@ -1,7 +1,16 @@
 // environment variables
-declare const B2_URL: string;
+declare const S3_URL: string;
+declare const S3_ACCESS_KEY_ID: string;
+declare const S3_SECRET_ACCESS_KEY: string;
 
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+import { AwsClient } from "aws4fetch";
+
+const aws = new AwsClient({
+  accessKeyId: S3_ACCESS_KEY_ID,
+  secretAccessKey: S3_SECRET_ACCESS_KEY,
+  service: "s3",
+});
 
 addEventListener("fetch", (event) => {
   try {
@@ -21,8 +30,9 @@ async function handleEvent(event: FetchEvent): Promise<Response> {
     return hanldeEtag(request, response);
   }
 
-  if (url.pathname.startsWith("/thumbnail")) {
-    const response = await getAssetFromB2(url.pathname.slice(10));
+  // prevent objects listing
+  if (url.pathname.startsWith("/thumbnail/") && url.pathname.endsWith(".jpg")) {
+    const response = await getAssetFromS3(url.pathname.slice(10));
 
     return hanldeEtag(request, response);
   }
@@ -34,12 +44,15 @@ async function handleEvent(event: FetchEvent): Promise<Response> {
   );
 }
 
-async function getAssetFromB2(key: string): Promise<Response> {
-  const response = await fetch(`${B2_URL}${key}`, {
+async function getAssetFromS3(key: string): Promise<Response> {
+  const response = await aws.fetch(`${S3_URL}${key}`, {
     cf: { cacheEverything: true, cacheTtl: 60 },
   });
 
   const headers = new Headers(response.headers);
+
+  headers.delete("x-amz-id-2");
+  headers.delete("x-amz-request-id");
 
   if (!response.ok) {
     headers.set("cache-control", "max-age=0, no-cache, no-store");
@@ -52,13 +65,6 @@ async function getAssetFromB2(key: string): Promise<Response> {
   }
 
   headers.set("cache-control", "public, max-age=3600");
-  if (headers.has("x-bz-upload-timestamp")) {
-    headers.set("etag", headers.get("x-bz-upload-timestamp") as string);
-  }
-  headers.delete("x-bz-content-sha1");
-  headers.delete("x-bz-file-id");
-  headers.delete("x-bz-file-name");
-  headers.delete("x-bz-upload-timestamp");
 
   return new Response(response.body, { headers });
 }

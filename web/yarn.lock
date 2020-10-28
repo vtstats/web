@@ -2096,6 +2096,11 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
+aws4fetch@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/aws4fetch/-/aws4fetch-1.0.12.tgz#b867cf7e23357951b74aaa211332331d60ffcf1a"
+  integrity sha512-q4lB1yOxtHnDfZVaLlsA9MlsUG+cu40K8M5hRqOiApfI5o8NDwVQqlpGOF81DktxJU7aZQQHp3Xumf8IZrjxcw==
+
 babel-loader@8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.1.0.tgz#c611d5112bd5209abe8b9fa84c3e4da25275f1c3"
