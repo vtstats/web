@@ -46,7 +46,7 @@ async function handleEvent(event: FetchEvent): Promise<Response> {
 
 async function getAssetFromS3(key: string): Promise<Response> {
   const response = await aws.fetch(`${S3_URL}${key}`, {
-    cf: { cacheEverything: true, cacheTtl: 60 },
+    cf: { cacheEverything: true, cacheTtl: 300 },
   });
 
   const headers = new Headers(response.headers);
