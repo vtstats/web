@@ -24,7 +24,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v1
         with:
-          path: "**/node_modules"
+          path: web/node_modules
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Use Node 10.x
