@@ -1378,10 +1378,10 @@
     "@types/mime" "^2.0.2"
     mime "^2.4.6"
 
-"@cloudflare/workers-types@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cloudflare/workers-types/-/workers-types-2.0.0.tgz#c57162155bd83744a0fa83276ffec0ad430f14e4"
-  integrity sha512-SFUPQzR5aV2TBLP4Re+xNX5KfAGArcRGA44OLulBDnfblEf3J+6kFvdJAQwFhFpqru3wImwT1cX0wahk6EeWTw==
+"@cloudflare/workers-types@^2.0.0", "@cloudflare/workers-types@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudflare/workers-types/-/workers-types-2.1.0.tgz#6e4f07567f4c914ad811c2d7a6172d0ae834c7f6"
+  integrity sha512-VmXaHTq0lt6Xre4aK1hUK25hjZjuEUkHtdUEt0FJamv+NzQO54Gwp6Zr5Cfu6SP5EQ/tTmTMP/tK9npA8zhcCg==
 
 "@istanbuljs/schema@^0.1.2":
   version "0.1.2"
