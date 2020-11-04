@@ -33,15 +33,16 @@ pub async fn publish_content(
 
         let _ = sqlx::query!(
             r#"
-                insert into youtube_streams (stream_id, vtuber_id, title, schedule_time, start_time, end_time)
-                     values ($1, $2, $3, $4, $5, $6)
+                insert into youtube_streams (stream_id, vtuber_id, title, status, schedule_time, start_time, end_time)
+                     values ($1, $2, $3, $4::text::stream_status, $5, $6, $7)
                 on conflict (stream_id) do update
-                        set (title, schedule_time, start_time, end_time)
-                          = ($3, $4, $5, $6)
+                        set (title, status, schedule_time, start_time, end_time)
+                          = ($3, $4::text::stream_status, $5, $6, $7)
             "#,
             streams[0].id,
             vtuber_id,
             title,
+            streams[0].status.as_str(),
             streams[0].schedule_time,
             streams[0].start_time,
             streams[0].end_time,
