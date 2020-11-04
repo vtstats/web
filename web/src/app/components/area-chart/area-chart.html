@@ -1,0 +1,31 @@
+<ngx-charts-area-chart
+  *ngIf="!loading; else shimmer"
+  class="area-chart"
+  [autoScale]="autoScale"
+  [scheme]="scheme"
+  [results]="results"
+  [gradient]="true"
+  [xAxis]="true"
+  [yAxis]="true"
+  [xAxisTickFormatting]="dateFormatter"
+  [yAxisTickFormatting]="numFormatting"
+  [legend]="false"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="false"
+  [roundDomains]="true"
+  [timeline]="timeline"
+>
+  <ng-template #tooltipTemplate let-model="model">
+    <p class="tooltip-caption">{{ timeForamt(model.name) }}</p>
+    <p class="tooltip-caption">{{ model.value | number }}</p>
+  </ng-template>
+
+  <ng-template #seriesTooltipTemplate let-model="model">
+    <p class="tooltip-caption">{{ timeForamt(model[0].name) }}</p>
+    <p class="tooltip-caption">{{ model[0].value | number }}</p>
+  </ng-template>
+</ngx-charts-area-chart>
+
+<ng-template #shimmer>
+  <div class="area-chart shimmer"></div>
+</ng-template>
