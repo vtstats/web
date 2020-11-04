@@ -1,0 +1,31 @@
+@import "~@angular/material/theming";
+
+@mixin vtuber-summary-theme($theme) {
+  $foreground: map-get($theme, "foreground");
+  $is-dark-theme: map-get($theme, "is-dark");
+
+  $background-shadow: if(
+    $is-dark-theme,
+    rgba(255, 255, 255, 0.1),
+    rgba(0, 0, 0, 0.1)
+  );
+
+  .vtuber-summary {
+    .mat-icon {
+      color: mat-color($foreground, "secondary-text");
+    }
+
+    .profile {
+      background-color: $background-shadow;
+    }
+  }
+}
+
+@mixin vtuber-summary-typography($config) {
+  .vtuber-summary {
+    .name {
+      font-size: mat-font-size($config, "title");
+      font-weight: mat-font-weight($config, "title");
+    }
+  }
+}
