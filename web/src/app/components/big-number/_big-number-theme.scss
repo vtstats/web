@@ -1,0 +1,25 @@
+@import "~@angular/material/theming";
+
+@mixin big-number-theme($theme) {
+  $foreground: map-get($theme, "foreground");
+
+  .big-number {
+    .label {
+      color: mat-color($foreground, "secondary-text");
+    }
+  }
+}
+
+@mixin big-number-typography($config) {
+  .big-number {
+    .value {
+      font-size: mat-font-size($config, "headline");
+      font-weight: mat-font-weight($config, "display-1");
+    }
+
+    .label {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+  }
+}

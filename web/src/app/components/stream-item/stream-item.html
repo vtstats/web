@@ -1,0 +1,114 @@
+<div
+  class="thumbnail"
+  [ngClass]="{ link: stream.status !== 'scheduled' }"
+  [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
+>
+  <div class="cover-wrapper">
+    <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
+  </div>
+
+  <div class="duration" [ngSwitch]="stream.status">
+    <ng-container *ngSwitchCase="'scheduled'">
+      {{ stream.scheduleTime | date: "HH:mm" }}
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'live'">
+      {{ stream.startTime | duration: (everySecond$ | async) }}
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'ended'">
+      {{ stream.startTime | duration: stream.endTime }}
+    </ng-container>
+  </div>
+
+  <a
+    class="icon"
+    href="https://youtu.be/{{ stream.streamId }}"
+    target="_blank"
+    (click)="$event.stopPropagation()"
+  >
+    <mat-icon svgIcon="open_in_new"></mat-icon>
+  </a>
+</div>
+
+<div
+  class="title"
+  title="{{ stream.title }}"
+  ellipsis
+  [ellipsis-content]="stream.title"
+></div>
+
+<ng-container [ngSwitch]="stream.status">
+  <div class="viewers current" *ngSwitchCase="'live'">
+    <mat-icon
+      class="view-icon"
+      svgIcon="eye"
+      i18n-title="@@streaming"
+      title="Streaming"
+    ></mat-icon>
+
+    <span i18n-title="@@averageViewers" title="Average Viewers">
+      {{ (stream.averageViewerCount | number) || "----" }}
+    </span>
+
+    <span class="separator"> / </span>
+
+    <span i18n-title="@@maximumViewers" title="Maximum Viewers">
+      {{ (stream.maxViewerCount | number) || "----" }}
+    </span>
+  </div>
+
+  <div class="viewers" *ngSwitchCase="'ended'">
+    <mat-icon
+      class="view-icon"
+      svgIcon="eye"
+      i18n-title="@@streamHasEnded"
+      title="Stream has ended"
+    ></mat-icon>
+
+    <span i18n-title="@@averageViewers" title="Average Viewers">
+      {{ (stream.averageViewerCount | number) || "----" }}
+    </span>
+
+    <span class="separator"> / </span>
+
+    <span i18n-title="@@maximumViewers" title="Maximum Viewers">
+      {{ (stream.maxViewerCount | number) || "----" }}
+    </span>
+  </div>
+</ng-container>
+
+<div class="meta">
+  <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
+  <span class="name">{{ stream.vtuberId | name }}</span>
+  <span class="dot">•</span>
+
+  <ng-container [ngSwitch]="stream.status">
+    <ng-container *ngSwitchCase="'scheduled'">
+      <span
+        class="time"
+        title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+      >
+        {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
+      </span>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'live'">
+      <span
+        class="time"
+        title="{{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+      >
+        {{ stream.startTime | distance: (everyMinute$ | async) }}
+      </span>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'ended'">
+      <span
+        class="time"
+        title="{{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+      >
+        {{ stream.startTime | distance: (everyMinute$ | async) }}
+      </span>
+    </ng-container>
+  </ng-container>
+</div>

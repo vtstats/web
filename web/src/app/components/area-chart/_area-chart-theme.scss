@@ -1,0 +1,43 @@
+@import "~@angular/material/theming";
+
+@mixin area-chart-theme($theme) {
+  $background: map-get($theme, "background");
+  $foreground: map-get($theme, "foreground");
+
+  .area-chart {
+    .tick {
+      fill: mat-color($foreground, "secondary-text");
+    }
+
+    .tooltip-anchor {
+      fill: mat-color($foreground, "secondary-text");
+    }
+
+    .gridline-path {
+      stroke: mat-color($foreground, "divider");
+    }
+
+    .x.axis {
+      fill: mat-color($foreground, "text");
+    }
+  }
+}
+
+@mixin area-chart-typography($config) {
+  .area-chart {
+    .tooltip-caption {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+
+    .tick {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+
+    .x.axis {
+      font-size: mat-font-size($config, "body-1");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+  }
+}
