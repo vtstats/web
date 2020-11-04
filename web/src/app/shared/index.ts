@@ -1,7 +1,3 @@
-export * from "./components/area-chart.component";
-export * from "./components/shimmer.stream-list.component";
-export * from "./components/shimmer-submenu.component";
-export * from "./components/shimmer-table.component";
 export * from "./directives/colored-number.directive";
 export * from "./pipes/distance.pipe";
 export * from "./pipes/duration.pipe";
