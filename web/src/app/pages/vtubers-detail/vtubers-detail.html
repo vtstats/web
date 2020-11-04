@@ -1,0 +1,117 @@
+<div class="mx-auto max-w-960">
+  <hs-vtuber-summary
+    [vtuber]="vtuber"
+    [channels]="channels"
+    [loading]="chartLoading"
+  ></hs-vtuber-summary>
+
+  <div class="chart-container">
+    <div class="chart" *ngIf="hasYouTubeChannel">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@youtubeSubscribers">
+          YouTube Subscribers
+        </hs-sub-menu-title>
+      </hs-sub-menu>
+
+      <hs-area-chart
+        [loading]="chartLoading"
+        [results]="youtubeSubs"
+        schemeKey="youtube"
+        timeUnit="day"
+      ></hs-area-chart>
+    </div>
+
+    <div class="chart" *ngIf="hasBilibiliChannel">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@bilibiliSubscribers">
+          Bilibili Subscribers
+        </hs-sub-menu-title>
+      </hs-sub-menu>
+
+      <hs-area-chart
+        [loading]="chartLoading"
+        [results]="bilibiliSubs"
+        schemeKey="bilibili"
+        timeUnit="day"
+      ></hs-area-chart>
+    </div>
+
+    <div class="chart" *ngIf="hasYouTubeChannel">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@youtubeViews">
+          YouTube Views
+        </hs-sub-menu-title>
+      </hs-sub-menu>
+
+      <hs-area-chart
+        [loading]="chartLoading"
+        [results]="youtubeViews"
+        schemeKey="youtube"
+        timeUnit="day"
+      ></hs-area-chart>
+    </div>
+
+    <div class="chart" *ngIf="hasBilibiliChannel">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@bilibiliViews">
+          Bilibili Views
+        </hs-sub-menu-title>
+      </hs-sub-menu>
+
+      <hs-area-chart
+        [loading]="chartLoading"
+        [results]="bilibiliViews"
+        schemeKey="bilibili"
+        timeUnit="day"
+      ></hs-area-chart>
+    </div>
+  </div>
+
+  <ng-container *ngIf="hasYouTubeChannel">
+    <div *ngIf="data$ | async as list">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@recentStreams">
+          Recent Streams
+        </hs-sub-menu-title>
+
+        <hs-sub-menu-extra>
+          <time
+            *ngIf="!list.loading; else shimmer"
+            i18n="@@updatedAt"
+            [attr.datetime]="list.updatedAt | formatISO"
+          >
+            Updated at {{ list.updatedAt | date: "MM/dd HH:mm" }}
+          </time>
+
+          <ng-template #shimmer>
+            <span class="shimmer text" [style.width.px]="120"></span>
+          </ng-template>
+        </hs-sub-menu-extra>
+      </hs-sub-menu>
+
+      <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
+        <hs-stream-list>
+          <hs-stream-item
+            *ngFor="let stream of list.streams; trackBy: trackBy"
+            [stream]="stream"
+          ></hs-stream-item>
+        </hs-stream-list>
+      </ng-container>
+
+      <ng-template #shimmerList>
+        <hs-stream-list>
+          <hs-shimmer-stream-item
+            *ngFor="let stream of [1, 2, 3, 4, 5]"
+          ></hs-shimmer-stream-item>
+        </hs-stream-list>
+      </ng-template>
+
+      <hs-loading-spinner
+        [hidden]="(list.loading && list.refresh) || list.reachedEnd"
+        (reach)="
+          list.loading ? null : loadMore$.next({ refresh: false, last: list.streams[list.streams.length - 1] })
+        "
+      ></hs-loading-spinner>
+    </div>
+  </ng-container>
+</div>

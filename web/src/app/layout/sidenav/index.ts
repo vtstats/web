@@ -1,1 +1,1 @@
-export { SidenavComponent } from "./sidenav.component";
+export { Sidenav } from "./sidenav";
