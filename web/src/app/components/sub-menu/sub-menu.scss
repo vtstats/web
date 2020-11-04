@@ -1,0 +1,11 @@
+.sub-menu {
+  padding: 12px 4px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .spacer {
+    flex: 1 0;
+  }
+}

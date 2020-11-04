@@ -3,44 +3,49 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import {
+  ChannelListOption,
   ChannelListResponse,
+  ChannelReportOption,
   ChannelReportResponse,
-  StreamReportResponse,
+  StreamListOption,
   StreamListResponse,
+  StreamReportOption,
+  StreamReportResponse,
 } from "src/app/models";
 
-import { ConfigService } from "./config.service";
-
-const BASE_URL = "https://holo.poi.cat/api/v3";
+const BASE_URL = "https://holo.poi.cat/api/v4";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(private http: HttpClient, private config: ConfigService) {}
+  constructor(private http: HttpClient) {}
 
-  getYouTubeChannels(): Observable<ChannelListResponse> {
+  youtubeChannels(opts: ChannelListOption): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
-      params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
+      params: new HttpParams().set("ids", opts.ids.join(",")),
     });
   }
 
-  getBilibiliChannels(): Observable<ChannelListResponse> {
+  bilibiliChannels(opts: ChannelListOption): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/bilibili_channels`, {
-      params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
+      params: new HttpParams().set("ids", opts.ids.join(",")),
     });
   }
 
-  getYouTubeStreams(
-    ids: string[],
-    options: { startAt?: Date; endAt?: Date } = {}
-  ): Observable<StreamListResponse> {
-    let params = new HttpParams().set("ids", ids.join(","));
+  youtubeStreams(opts: StreamListOption): Observable<StreamListResponse> {
+    let params = new HttpParams()
+      .set("ids", opts.ids.join(","))
+      .set("status", opts.status.join(","));
 
-    if (options.startAt) {
-      params = params.set("startAt", options.startAt.toISOString());
+    if (opts.orderBy) {
+      params = params.set("orderBy", opts.orderBy);
     }
 
-    if (options.endAt) {
-      params = params.set("endAt", options.endAt.toISOString());
+    if (opts.startAt) {
+      params = params.set("startAt", Number(opts.startAt).toString());
+    }
+
+    if (opts.endAt) {
+      params = params.set("endAt", Number(opts.endAt).toString());
     }
 
     return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
@@ -48,49 +53,35 @@ export class ApiService {
     });
   }
 
-  getYouTubeScheduleStream(): Observable<StreamListResponse> {
-    return this.http.get<StreamListResponse>(
-      `${BASE_URL}/youtube_schedule_streams`,
-      {
-        params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
-      }
-    );
-  }
+  channelReports(opts: ChannelReportOption): Observable<ChannelReportResponse> {
+    let params = new HttpParams()
+      .set("ids", opts.ids.join(","))
+      .set("metrics", opts.metrics.join(","));
 
-  getChannelReport(
-    ids: string,
-    metrics: string,
-    startAt: Date,
-    endAt: Date
-  ): Observable<ChannelReportResponse> {
-    const params = new HttpParams({
-      fromObject: {
-        ids,
-        metrics,
-        startAt: startAt.toISOString(),
-        endAt: endAt.toISOString(),
-      },
-    });
+    if (opts.startAt) {
+      params = params.set("startAt", Number(opts.startAt).toString());
+    }
+
+    if (opts.endAt) {
+      params = params.set("endAt", Number(opts.endAt).toString());
+    }
 
     return this.http.get<ChannelReportResponse>(`${BASE_URL}/channels_report`, {
       params,
     });
   }
 
-  getStreamReport(
-    ids: string,
-    metrics: string = "youtube_stream_viewer",
-    startAt?: Date,
-    endAt?: Date
-  ): Observable<StreamReportResponse> {
-    let params = new HttpParams().set("ids", ids).set("metrics", metrics);
+  streamReports(opts: StreamReportOption): Observable<StreamReportResponse> {
+    let params = new HttpParams()
+      .set("ids", opts.ids.join(","))
+      .set("metrics", opts.metrics.join(","));
 
-    if (startAt) {
-      params = params.set("startAt", startAt.toISOString());
+    if (opts.startAt) {
+      params = params.set("startAt", Number(opts.startAt).toString());
     }
 
-    if (endAt) {
-      params = params.set("endAt", endAt.toISOString());
+    if (opts.endAt) {
+      params = params.set("endAt", Number(opts.endAt).toString());
     }
 
     return this.http.get<StreamReportResponse>(`${BASE_URL}/streams_report`, {

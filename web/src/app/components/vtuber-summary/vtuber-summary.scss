@@ -1,0 +1,44 @@
+.vtuber-summary {
+  display: flex;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: 599px) {
+    flex-direction: column;
+  }
+
+  .info {
+    flex: 1;
+    text-align: center;
+    padding-bottom: 16px;
+
+    .profile {
+      width: 192px;
+      height: 192px;
+      border-radius: 50%;
+    }
+  }
+
+  .meta {
+    flex: 2;
+    width: 100%;
+    text-align: center;
+
+    .name {
+      padding-bottom: 8px;
+    }
+
+    .icons {
+      padding-bottom: 8px;
+    }
+
+    .mat-icon {
+      height: 20px;
+      width: 20px;
+      margin: 0 4px;
+    }
+  }
+}
