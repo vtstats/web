@@ -1,0 +1,47 @@
+<div class="mx-auto max-w-960" *ngIf="data$ | async as list">
+  <hs-sub-menu>
+    <hs-sub-menu-extra>
+      <time
+        *ngIf="!list.loading; else shimmer"
+        i18n="@@updatedAt"
+        [attr.datetime]="list.updatedAt | formatISO"
+      >
+        Updated at {{ list.updatedAt | date: "MM/dd HH:mm" }}
+      </time>
+
+      <ng-template #shimmer>
+        <span class="shimmer text" [style.width.px]="120"></span>
+      </ng-template>
+    </hs-sub-menu-extra>
+  </hs-sub-menu>
+
+  <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
+    <hs-stream-group
+      *ngFor="let group of list.streams | groupBy:'scheduleTime'"
+      [group]="group"
+    ></hs-stream-group>
+  </ng-container>
+
+  <ng-template #shimmerList>
+    <ng-container *ngFor="let x of [1, 2]">
+      <hs-sub-menu>
+        <hs-sub-menu-title>
+          <span class="shimmer text" [style.width.px]="42"></span>
+        </hs-sub-menu-title>
+      </hs-sub-menu>
+
+      <hs-stream-list>
+        <hs-shimmer-stream-item
+          *ngFor="let stream of [1, 2, 3, 4, 5]"
+        ></hs-shimmer-stream-item>
+      </hs-stream-list>
+    </ng-container>
+  </ng-template>
+
+  <hs-loading-spinner
+    [hidden]="list.loading && list.refresh"
+    (reach)="
+      list.loading ? null : loadMore$.next({ refresh: false, last: list.streams[list.streams.length - 1] })
+    "
+  ></hs-loading-spinner>
+</div>

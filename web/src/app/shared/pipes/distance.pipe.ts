@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform, Inject } from "@angular/core";
-import { formatDistanceStrict, parseISO, Locale } from "date-fns";
+import { Inject, Pipe, PipeTransform } from "@angular/core";
+import { formatDistanceStrict, Locale } from "date-fns";
 
 import { DATE_FNS_LOCALE } from "src/i18n";
 
@@ -7,11 +7,10 @@ import { DATE_FNS_LOCALE } from "src/i18n";
 export class DistancePipe implements PipeTransform {
   constructor(@Inject(DATE_FNS_LOCALE) private locale: Locale) {}
 
-  transform(start: Date | string, end: Date | string): string {
-    return formatDistanceStrict(
-      typeof start === "string" ? parseISO(start) : start,
-      typeof end === "string" ? parseISO(end) : end,
-      { locale: this.locale, addSuffix: true }
-    );
+  transform(start: Date | number, end: Date | number): string {
+    return formatDistanceStrict(start, end, {
+      locale: this.locale,
+      addSuffix: true,
+    });
   }
 }

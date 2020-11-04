@@ -1,0 +1,39 @@
+<div class="settings mx-auto max-w-960">
+  <h4 class="title">
+    <ng-container i18n="@@vtuberSelected">VTuber Selected</ng-container>
+    <span> ({{ config.selectedVTubers.size }}/{{ count }})</span>:
+  </h4>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <mat-checkbox
+        [checked]="isSelected(node.id)"
+        (change)="toggleVTuber(node.id)"
+      >
+        {{ node.id | name }}
+      </mat-checkbox>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      matTreeNodePadding
+    >
+      <button mat-icon-button matTreeNodeToggle>
+        <mat-icon
+          class="mat-icon-rtl-mirror"
+          [svgIcon]="
+            treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'
+          "
+        >
+        </mat-icon>
+      </button>
+      <mat-checkbox
+        [checked]="batchAllSelected(node.id)"
+        [indeterminate]="batchPartiallySelected(node.id)"
+        (change)="toggleBatch(node.id)"
+      >
+        {{ node.id | name }}
+      </mat-checkbox>
+    </mat-tree-node>
+  </mat-tree>
+</div>

@@ -10,11 +10,11 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { SharedModule } from "../shared";
 
-import { HeaderComponent } from "./header";
-import { SidenavComponent } from "./sidenav";
+import { Header } from "./header";
+import { Sidenav } from "./sidenav";
 
 @NgModule({
-  declarations: [HeaderComponent, SidenavComponent],
+  declarations: [Header, Sidenav],
   imports: [
     CommonModule,
     RouterModule,
@@ -26,6 +26,6 @@ import { SidenavComponent } from "./sidenav";
     MatTooltipModule,
     SharedModule,
   ],
-  exports: [HeaderComponent, SidenavComponent],
+  exports: [Header, Sidenav],
 })
 export class LayoutModule {}

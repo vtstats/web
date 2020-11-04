@@ -11,28 +11,29 @@ import { MatTreeModule } from "@angular/material/tree";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { SharedModule } from "../shared";
+import { ComponentsModule } from "../components/components.module";
 
-import { BilibiliChannelComponent } from "./bilibili-channel";
-import { SettingsComponent } from "./settings";
-import { YoutubeChannelComponent } from "./youtube-channel";
-import { YoutubeScheduleStreamComponent } from "./youtube-schedule-stream";
-import { YoutubeStreamComponent } from "./youtube-stream";
-import { VTubersDetailComponent } from "./vtubers-detail";
-import { StreamsDetailComponent } from "./streams-detail";
-import { NotFoundComponent } from "./not-found";
-import { AppShellComponent } from "./app-shell";
+import { BilibiliChannel } from "./bilibili-channel/bilibili-channel";
+import { Settings } from "./settings/settings";
+import { YoutubeChannel } from "./youtube-channel/youtube-channel";
+import { YoutubeScheduleStream } from "./youtube-schedule-stream/youtube-schedule-stream";
+import { YoutubeStream } from "./youtube-stream/youtube-stream";
+import { VTubersDetail } from "./vtubers-detail/vtubers-detail";
+import { StreamsDetail } from "./streams-detail/streams-detail";
+import { NotFound } from "./not-found/not-found";
+import { AppShell } from "./app-shell/app-shell";
 
 @NgModule({
   declarations: [
-    BilibiliChannelComponent,
-    SettingsComponent,
-    YoutubeChannelComponent,
-    YoutubeScheduleStreamComponent,
-    YoutubeStreamComponent,
-    VTubersDetailComponent,
-    StreamsDetailComponent,
-    NotFoundComponent,
-    AppShellComponent,
+    BilibiliChannel,
+    Settings,
+    YoutubeChannel,
+    YoutubeScheduleStream,
+    YoutubeStream,
+    VTubersDetail,
+    StreamsDetail,
+    NotFound,
+    AppShell,
   ],
   imports: [
     CommonModule,
@@ -45,6 +46,7 @@ import { AppShellComponent } from "./app-shell";
     MatSortModule,
     MatTableModule,
     MatTreeModule,
+    ComponentsModule,
     SharedModule,
   ],
 })

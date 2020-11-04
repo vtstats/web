@@ -1,0 +1,79 @@
+<div class="vtuber-summary">
+  <div class="info">
+    <img class="profile" src="/assets/profiles/{{ vtuber.id }}.jpg" />
+  </div>
+
+  <div class="meta">
+    <div class="name">{{ vtuber.id | name }}</div>
+
+    <div class="icons">
+      <a
+        *ngIf="vtuber.youtube"
+        target="_blank"
+        href="https://www.youtube.com/channel/{{ vtuber.youtube }}"
+      >
+        <mat-icon svgIcon="youtube"></mat-icon>
+      </a>
+
+      <a
+        *ngIf="vtuber.twitter"
+        target="_blank"
+        href="https://twitter.com/{{ vtuber.twitter }}"
+      >
+        <mat-icon svgIcon="twitter"></mat-icon>
+      </a>
+
+      <a
+        *ngIf="vtuber.bilibili"
+        target="_blank"
+        href="https://space.bilibili.com/{{ vtuber.bilibili }}"
+      >
+        <mat-icon svgIcon="bilibili"></mat-icon>
+      </a>
+    </div>
+
+    <ng-container *ngIf="!loading; else shimmer">
+      <hs-number-row *ngFor="let channel of channels" [ngSwitch]="channel.kind">
+        <ng-container *ngSwitchCase="'youtube'">
+          <hs-big-number
+            [value]="channel.subscriberCount | number"
+            i18n-label="@@youtubeSubscribers"
+            label="YouTube Subscribers"
+          ></hs-big-number>
+
+          <hs-big-number
+            [value]="channel.viewCount | number"
+            i18n-label="@@youtubeViews"
+            label="YouTube Views"
+          ></hs-big-number>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'bilibili'">
+          <hs-big-number
+            [value]="channel.subscriberCount | number"
+            i18n-label="@@bilibiliSubscribers"
+            label="Bilibili Subscribers"
+          ></hs-big-number>
+
+          <hs-big-number
+            [value]="channel.viewCount | number"
+            i18n-label="@@bilibiliViews"
+            label="Bilibili Views"
+          ></hs-big-number>
+        </ng-container>
+      </hs-number-row>
+    </ng-container>
+
+    <ng-template #shimmer>
+      <hs-number-row *ngIf="hasYouTubeChannel">
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+      </hs-number-row>
+
+      <hs-number-row *ngIf="hasBilibiliChannel">
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+      </hs-number-row>
+    </ng-template>
+  </div>
+</div>

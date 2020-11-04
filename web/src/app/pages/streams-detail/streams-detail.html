@@ -1,0 +1,19 @@
+<div class="mx-auto max-w-960">
+  <hs-stream-summary [stream]="stream" [loading]="loading"></hs-stream-summary>
+
+  <div class="chart">
+    <hs-sub-menu>
+      <hs-sub-menu-title i18n="@@streamViewers">
+        Stream Viewers
+      </hs-sub-menu-title>
+    </hs-sub-menu>
+
+    <hs-area-chart
+      [loading]="loading"
+      [results]="stats"
+      [timeline]="true"
+      schemeKey="youtube"
+      timeUnit="second"
+    ></hs-area-chart>
+  </div>
+</div>

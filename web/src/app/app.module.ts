@@ -5,46 +5,45 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { TransferHttpCacheModule } from "@nguniversal/common";
 import { CookieModule } from "ngx-cookie";
 
 import { environment } from "../environments/environment";
 
 import providers from "src/i18n";
+import { ConfigService } from "src/app/shared";
 
 import { LayoutModule } from "./layout";
 import {
   PagesModule,
-  BilibiliChannelComponent,
-  SettingsComponent,
-  YoutubeChannelComponent,
-  YoutubeScheduleStreamComponent,
-  YoutubeStreamComponent,
-  VTubersDetailComponent,
-  StreamsDetailComponent,
-  NotFoundComponent,
-  AppShellComponent,
+  BilibiliChannel,
+  Settings,
+  YoutubeChannel,
+  YoutubeScheduleStream,
+  YoutubeStream,
+  VTubersDetail,
+  StreamsDetail,
+  NotFound,
+  AppShell,
 } from "./pages";
 
 import { AppComponent } from "./app.component";
 
+import { ComponentsModule } from "./components/components.module";
+
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
-  { path: "shell", component: AppShellComponent },
-  { path: "youtube-channel", component: YoutubeChannelComponent },
-  { path: "bilibili-channel", component: BilibiliChannelComponent },
-  {
-    path: "youtube-schedule-stream",
-    component: YoutubeScheduleStreamComponent,
-  },
-  { path: "youtube-stream", component: YoutubeStreamComponent },
-  { path: "settings", component: SettingsComponent },
-  { path: "stream/:id", component: StreamsDetailComponent },
-  { path: "vtuber/:id", component: VTubersDetailComponent },
+  { path: "shell", component: AppShell },
+  { path: "youtube-channel", component: YoutubeChannel },
+  { path: "bilibili-channel", component: BilibiliChannel },
+  { path: "youtube-schedule-stream", component: YoutubeScheduleStream },
+  { path: "youtube-stream", component: YoutubeStream },
+  { path: "settings", component: Settings },
+  { path: "stream/:id", component: StreamsDetail },
+  { path: "vtuber/:id", component: VTubersDetail },
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
-  { path: "**", component: NotFoundComponent },
+  { path: "**", component: NotFound },
 ];
 
 @NgModule({
@@ -52,7 +51,7 @@ const ROUTES: Routes = [
   imports: [
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: "holostats" }),
-    TransferHttpCacheModule,
+    ComponentsModule,
     HttpClientModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
@@ -63,7 +62,7 @@ const ROUTES: Routes = [
     MatSidenavModule,
     LayoutModule,
   ],
-  providers,
+  providers: [ConfigService, ...providers],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
