@@ -1,0 +1,84 @@
+<div class="stream-summary" *ngIf="!loading; else shimmer">
+  <div class="cover">
+    <a class="link">
+      <img
+        class="img"
+        src="https://holo.poi.cat/thumbnail/{{ stream.streamId }}.jpg?ngsw-bypass"
+      />
+    </a>
+  </div>
+
+  <div class="meta">
+    <a class="title" href="https://youtu.be/{{ stream.streamId }}">
+      {{ stream.title }}
+    </a>
+
+    <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
+      <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
+      <span class="name">{{ stream.vtuberId | name }}</span>
+    </a>
+
+    <hs-number-row>
+      <hs-big-number
+        [value]="stream.startTime | date: 'HH:mm:ss'"
+        i18n-label="@@streamStartTime"
+        label="Start Time"
+      ></hs-big-number>
+
+      <ng-container *ngIf="stream.endTime; else clock">
+        <hs-big-number
+          [value]="stream.startTime | duration: stream.endTime"
+          i18n-label="@@streamDuration"
+          label="Duration"
+        ></hs-big-number>
+      </ng-container>
+
+      <ng-template #clock>
+        <hs-big-number
+          [value]="stream.startTime | duration: (everySecond$ | async)"
+          i18n-label="@@streamDuration"
+          label="Duration"
+        ></hs-big-number>
+      </ng-template>
+    </hs-number-row>
+
+    <hs-number-row>
+      <hs-big-number
+        [value]="(stream.averageViewerCount | number) || '-----'"
+        i18n-label="@@averageViewers"
+        label="Average Viewers"
+      ></hs-big-number>
+
+      <hs-big-number
+        [value]="(stream.maxViewerCount | number) || '-----'"
+        i18n-label="@@maximumViewers"
+        label="Maximum Viewers"
+      ></hs-big-number>
+    </hs-number-row>
+  </div>
+</div>
+
+<ng-template #shimmer>
+  <div class="stream-summary">
+    <div class="cover">
+      <span class="link"></span>
+    </div>
+
+    <div class="meta">
+      <div class="title">
+        <span class="text shimmer" [style.width.%]="100"></span>
+        <span class="text shimmer" [style.width.%]="70"></span>
+      </div>
+
+      <div class="liver">
+        <div class="profile"></div>
+        <span class="name shimmer text" [style.width.px]="100"></span>
+      </div>
+
+      <hs-number-row *ngFor="let x of [1, 2]">
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+        <hs-shimmer-big-number></hs-shimmer-big-number>
+      </hs-number-row>
+    </div>
+  </div>
+</ng-template>
