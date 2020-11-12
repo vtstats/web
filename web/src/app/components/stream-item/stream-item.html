@@ -3,7 +3,7 @@
   [ngClass]="{ link: stream.status !== 'scheduled' }"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
-  <div class="cover-wrapper">
+  <div class="cover">
     <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
   </div>
 
