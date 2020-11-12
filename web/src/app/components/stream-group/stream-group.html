@@ -1,8 +1,7 @@
 <hs-sub-menu>
-  <hs-sub-menu-title>{{ group.date | date: "MM/dd" }}</hs-sub-menu-title>
-  <hs-sub-menu-extra *ngIf="!isThisYear(group.date)">
-    {{ group.date | date: "yyyy" }}
-  </hs-sub-menu-extra>
+  <hs-sub-menu-title>
+    {{ group.date | date: isThisYear(group.date) ? "MM/dd": "yyyy/MM/dd" }}
+  </hs-sub-menu-title>
 </hs-sub-menu>
 
 <hs-stream-list>
