@@ -17,7 +17,7 @@
 
   <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
     <hs-stream-group
-      *ngFor="let group of list.streams | groupBy:'scheduleTime'"
+      *ngFor="let group of list.streams | groupBy:'scheduleTime'; trackBy: trackBy"
       [group]="group"
     ></hs-stream-group>
   </ng-container>
