@@ -22,21 +22,15 @@
         label="Start Time"
       ></hs-big-number>
 
-      <ng-container *ngIf="stream.endTime; else clock">
-        <hs-big-number
-          [value]="stream.startTime | duration: stream.endTime"
-          i18n-label="@@streamDuration"
-          label="Duration"
-        ></hs-big-number>
-      </ng-container>
-
-      <ng-template #clock>
-        <hs-big-number
-          [value]="stream.startTime | duration: (everySecond$ | async)"
-          i18n-label="@@streamDuration"
-          label="Duration"
-        ></hs-big-number>
-      </ng-template>
+      <hs-big-number
+        [value]="
+          stream.status === 'ended'
+          ? (stream.startTime | duration: stream.endTime)
+          : (stream.startTime | duration: (everySecond$ | async))
+        "
+        i18n-label="@@streamDuration"
+        label="Duration"
+      ></hs-big-number>
     </hs-number-row>
 
     <hs-number-row>
