@@ -3,9 +3,9 @@
   [ngClass]="{ link: stream.status !== 'scheduled' }"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
-  <div class="cover-wrapper">
+  <div class="cover">
     <img
-      class="cover"
+      class="img"
       src="https://holo.poi.cat/thumbnail/{{ stream.streamId }}.jpg?ngsw-bypass"
     />
   </div>
