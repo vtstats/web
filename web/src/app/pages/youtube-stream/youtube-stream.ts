@@ -7,6 +7,7 @@ import {
   StreamStatus,
   StreamList,
   StreamListLoadMoreOption,
+  StreamGroup,
 } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n/translations";
@@ -62,5 +63,9 @@ export class YoutubeStream implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.loadMore$.complete();
+  }
+
+  trackBy(_: number, group: StreamGroup): number {
+    return group.date;
   }
 }
