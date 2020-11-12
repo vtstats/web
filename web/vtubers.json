@@ -239,48 +239,6 @@
       "bilibili": 389056211,
       "default": true
     },
-    "yogiri": {
-      "id": "yogiri",
-      "twitter": "Yogiri_hololive",
-      "youtube": null,
-      "bilibili": 427061218,
-      "default": true
-    },
-    "civia": {
-      "id": "civia",
-      "twitter": "Civia_Hololive",
-      "youtube": "UCgNVXGlZIFK96XdEY20sVjg",
-      "bilibili": 354411419,
-      "default": true
-    },
-    "echo": {
-      "id": "echo",
-      "twitter": "SpadeEcho",
-      "youtube": null,
-      "bilibili": 456368455,
-      "default": true
-    },
-    "doris": {
-      "id": "doris",
-      "twitter": "",
-      "youtube": null,
-      "bilibili": 511613156,
-      "default": true
-    },
-    "artia": {
-      "id": "artia",
-      "twitter": "",
-      "youtube": null,
-      "bilibili": 511613155,
-      "default": true
-    },
-    "rosalyn": {
-      "id": "rosalyn",
-      "twitter": "",
-      "youtube": null,
-      "bilibili": 511613157,
-      "default": true
-    },
     "risu": {
       "id": "risu",
       "twitter": "ayunda_risu",
@@ -482,14 +440,6 @@
     "innk_music": {
       "id": "innk_music",
       "vtubers": ["azki"]
-    },
-    "hololive_cn_1st": {
-      "id": "hololive_cn_1st",
-      "vtubers": ["yogiri", "civia", "echo"]
-    },
-    "hololive_cn_2nd": {
-      "id": "hololive_cn_2nd",
-      "vtubers": ["doris", "artia", "rosalyn"]
     },
     "hololive_id": {
       "id": "hololive_id",
