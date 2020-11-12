@@ -70,10 +70,7 @@ pub async fn youtube_channels_list(
     .await
     .map_err(Error::Database)?;
 
-    let etag = updated_at
-        .map(|t| t.timestamp())
-        .unwrap_or_default()
-        .to_string();
+    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
 
     Ok(warp::reply::with_header(
         warp::reply::json(&ChannelsListResponseBody {
@@ -81,7 +78,7 @@ pub async fn youtube_channels_list(
             channels,
         }),
         "etag",
-        etag,
+        format!(r#""{}""#, etag),
     ))
 }
 
@@ -117,10 +114,7 @@ pub async fn bilibili_channels_list(
     .await
     .map_err(Error::Database)?;
 
-    let etag = updated_at
-        .map(|t| t.timestamp())
-        .unwrap_or_default()
-        .to_string();
+    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
 
     Ok(warp::reply::with_header(
         warp::reply::json(&ChannelsListResponseBody {
@@ -128,6 +122,6 @@ pub async fn bilibili_channels_list(
             channels,
         }),
         "etag",
-        etag,
+        format!(r#""{}""#, etag),
     ))
 }

@@ -174,10 +174,7 @@ pub async fn youtube_streams_list(
     .await
     .map_err(Error::Database)?;
 
-    let etag = updated_at
-        .map(|t| t.timestamp())
-        .unwrap_or_default()
-        .to_string();
+    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
 
     Ok(warp::reply::with_header(
         warp::reply::json(&StreamsListResponseBody {
@@ -185,6 +182,6 @@ pub async fn youtube_streams_list(
             streams,
         }),
         "etag",
-        etag,
+        format!(r#""{}""#, etag),
     ))
 }

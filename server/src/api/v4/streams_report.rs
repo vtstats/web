@@ -139,13 +139,12 @@ pub async fn streams_report(
         .map(|s| s.updated_at)
         .max()
         .map(|t| t.timestamp())
-        .unwrap_or_default()
-        .to_string();
+        .unwrap_or_default();
 
     Ok(warp::reply::with_header(
         warp::reply::json(&StreamsReportResponseBody { streams, reports }),
         "etag",
-        etag,
+        format!(r#""{}""#, etag),
     ))
 }
 

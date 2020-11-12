@@ -161,13 +161,12 @@ pub async fn channels_report(
         .map(|c| c.updated_at)
         .max()
         .map(|t| t.timestamp())
-        .unwrap_or_default()
-        .to_string();
+        .unwrap_or_default();
 
     Ok(warp::reply::with_header(
         warp::reply::json(&ChannelsReportResponseBody { channels, reports }),
         "etag",
-        etag,
+        format!(r#""{}""#, etag),
     ))
 }
 
@@ -183,8 +182,8 @@ async fn youtube_channel_subscriber(
             select time, value
               from youtube_channel_subscriber_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,
@@ -213,8 +212,8 @@ async fn youtube_channel_view(
             select time, value
               from youtube_channel_view_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,
@@ -243,8 +242,8 @@ async fn bilibili_channel_subscriber(
             select time, value
               from bilibili_channel_subscriber_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,
