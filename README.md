@@ -8,8 +8,12 @@
     src="https://img.shields.io/github/license/PoiScript/HoloStats"
   />
   <img
-    alt="GitHub Workflow Status - Angular"
-    src="https://github.com/PoiScript/HoloStats/workflows/Angular/badge.svg"
+    alt="GitHub Workflow Status - Web Prod"
+    src="https://github.com/PoiScript/HoloStats/workflows/Web%20Prod/badge.svg"
+  />
+  <img
+    alt="GitHub Workflow Status - Web Dev"
+    src="https://github.com/PoiScript/HoloStats/workflows/Web%20Dev/badge.svg"
   />
   <img
     alt="GitHub Workflow Status - Rust"
