@@ -42,6 +42,8 @@ pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
+    tracing::debug_span!("youtube_channels_v4", ids = ?query.ids);
+
     let updated_at = sqlx::query!("select max(updated_at) from youtube_channels")
         .fetch_one(&pool)
         .await
@@ -86,6 +88,8 @@ pub async fn bilibili_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
+    tracing::debug_span!("bilibili_channels_v4", ids = ?query.ids);
+
     let updated_at = sqlx::query!("select max(updated_at) from bilibili_channels")
         .fetch_one(&pool)
         .await

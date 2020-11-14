@@ -4,6 +4,7 @@ use serde::{
     Serialize,
 };
 use sqlx::PgPool;
+use tracing::field::{debug, Empty};
 use warp::{reply::Json, Rejection};
 
 use crate::error::Error;
@@ -73,6 +74,22 @@ pub async fn streams_report(
     query: StreamsReportRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
+    let span = tracing::debug_span!(
+        "streams_report_v3",
+        ids = %query.ids,
+        metrics = %query.metrics,
+        start_at = Empty,
+        end_at = Empty,
+    );
+
+    if let Some(start_at) = query.start_at {
+        span.record("start_at", &debug(start_at));
+    }
+
+    if let Some(end_at) = query.end_at {
+        span.record("end_at", &debug(end_at));
+    }
+
     let mut streams = vec![];
     let mut reports = vec![];
 

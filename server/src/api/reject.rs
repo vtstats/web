@@ -27,33 +27,14 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
         code = StatusCode::NOT_FOUND;
         message = "NOT_FOUND";
     } else if let Some(err) = err.find::<Error>() {
-        match err {
-            Error::Http(url, err) => {
-                eprintln!("Http Error: {} {:?}", url, err);
-                code = StatusCode::INTERNAL_SERVER_ERROR;
-                message = "HTTP_ERROR";
-            }
-            Error::Json(err) => {
-                eprintln!("Json Error: {:?}", err);
-                code = StatusCode::INTERNAL_SERVER_ERROR;
-                message = "JSON_ERROR";
-            }
-            Error::Database(err) => {
-                eprintln!("Database Error: {:?}", err);
-                code = StatusCode::INTERNAL_SERVER_ERROR;
-                message = "DATABASE_ERROR";
-            }
-            Error::Url(err) => {
-                eprintln!("Url Error: {:?}", err);
-                code = StatusCode::INTERNAL_SERVER_ERROR;
-                message = "URL_ERROR";
-            }
-            Error::Utf8(err) => {
-                eprintln!("Utf8 Error: {:?}", err);
-                code = StatusCode::INTERNAL_SERVER_ERROR;
-                message = "UTF8_ERROR";
-            }
-        }
+        code = StatusCode::INTERNAL_SERVER_ERROR;
+        message = match err {
+            Error::Http(_, _) => "HTTP_ERROR",
+            Error::Json(_) => "JSON_ERROR",
+            Error::Database(_) => "DATABASE_ERROR",
+            Error::Url(_) => "URL_ERROR",
+            Error::Utf8(_) => "UTF8_ERROR",
+        };
     } else if err.find::<warp::reject::InvalidQuery>().is_some() {
         code = StatusCode::UNPROCESSABLE_ENTITY;
         message = "INVALID_QUERY";
@@ -61,7 +42,6 @@ pub async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> 
         code = StatusCode::METHOD_NOT_ALLOWED;
         message = "METHOD_NOT_ALLOWED";
     } else {
-        eprintln!("unhandled rejection: {:?}", err);
         code = StatusCode::INTERNAL_SERVER_ERROR;
         message = "UNHANDLED_REJECTION";
     }

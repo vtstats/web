@@ -5,6 +5,7 @@ use chrono::{
 use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use sqlx::PgPool;
 use std::default::Default;
+use tracing::field::{debug, Empty};
 use warp::Rejection;
 
 use crate::error::Error;
@@ -24,7 +25,7 @@ pub struct StreamsListRequestQuery {
     pub end_at: Option<DateTime<Utc>>,
 }
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, Debug)]
 pub enum OrderBy {
     #[serde(rename = "start_time:asc")]
     StartTimeAsc,
@@ -104,6 +105,23 @@ pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
+    let span = tracing::debug_span!(
+        "youtube_streams_v4",
+        ids = ?query.ids,
+        status = ?query.status,
+        order_by = ?query.order_by,
+        start_at = Empty,
+        end_at = Empty,
+    );
+
+    if let Some(start_at) = query.start_at {
+        span.record("start_at", &debug(start_at));
+    }
+
+    if let Some(end_at) = query.end_at {
+        span.record("end_at", &debug(end_at));
+    }
+
     let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
         .fetch_one(&pool)
         .await

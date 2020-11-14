@@ -5,5 +5,7 @@ pub struct VerifyIntentRequestQuery {
 }
 
 pub fn verify_intent(query: VerifyIntentRequestQuery) -> String {
+    tracing::debug_span!("pubsub_verify", challenge = %query.challenge);
+
     query.challenge
 }

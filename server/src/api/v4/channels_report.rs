@@ -6,6 +6,7 @@ use serde::{ser::Serializer, Serialize};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use sqlx::PgPool;
 use std::str::FromStr;
+use tracing::field::{debug, Empty};
 use warp::Rejection;
 
 use crate::error::Error;
@@ -24,6 +25,7 @@ pub struct ChannelsReportRequestQuery {
     end_at: Option<DateTime<Utc>>,
 }
 
+#[derive(Debug)]
 pub enum Metrics {
     YoutubeChannelSubscriber,
     YoutubeChannelView,
@@ -99,6 +101,22 @@ pub async fn channels_report(
     query: ChannelsReportRequestQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
+    let span = tracing::debug_span!(
+        "channels_report_v4",
+        ids = ?query.ids,
+        metrics = ?query.metrics,
+        start_at = Empty,
+        end_at = Empty,
+    );
+
+    if let Some(start_at) = query.start_at {
+        span.record("start_at", &debug(start_at));
+    }
+
+    if let Some(end_at) = query.end_at {
+        span.record("end_at", &debug(end_at));
+    }
+
     let mut channels = Vec::with_capacity(query.ids.len());
     let mut reports = Vec::with_capacity(query.ids.len() * query.metrics.len());
 

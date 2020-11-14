@@ -2,6 +2,10 @@ use futures::future::TryFutureExt;
 use reqwest::Client;
 use roxmltree::Document;
 use sqlx::PgPool;
+use tracing::{
+    field::{display, Empty},
+    Span,
+};
 use warp::{http::StatusCode, Rejection};
 
 use crate::error::Error;
@@ -13,23 +17,28 @@ pub async fn publish_content(
     pool: PgPool,
     client: Client,
 ) -> Result<StatusCode, Rejection> {
+    let span = tracing::debug_span!("pubsub_publish", vtuber_id = Empty, video_id = Empty);
+
+    tracing::debug!(parent: &span, body = ?body);
+
     let doc = match Document::parse(&body) {
         Ok(doc) => doc,
-        Err(_) => {
-            eprintln!("Invalid XML: {}", body);
-            return Ok(StatusCode::OK);
-        }
+        Err(_) => return Ok(StatusCode::BAD_REQUEST),
     };
 
     if let Some((vtuber_id, video_id, title)) = parse_modification(&doc) {
+        span.record("vtuber_id", &display(vtuber_id));
+        span.record("video_id", &display(video_id));
+
         let streams = youtube_streams(&client, &[&video_id]).await?;
 
-        if streams.len() == 0 {
-            eprintln!("{}: stream not found", vtuber_id);
-            return Ok(StatusCode::OK);
+        tracing::debug!(parent: &span, streams = ?streams);
+
+        if streams.is_empty() {
+            return Ok(StatusCode::BAD_REQUEST);
         }
 
-        upload_thumbnail(&streams[0].id, &client).await;
+        upload_thumbnail(&streams[0].id, &span, &client).await;
 
         let _ = sqlx::query!(
             r#"
@@ -54,8 +63,9 @@ pub async fn publish_content(
         return Ok(StatusCode::OK);
     }
 
-    if let Some((stream_id, vtuber_id)) = parse_deletion(&doc) {
-        println!("try to delete stream {}", stream_id);
+    if let Some((video_id, vtuber_id)) = parse_deletion(&doc) {
+        span.record("vtuber_id", &display(vtuber_id));
+        span.record("video_id", &display(video_id));
 
         let _ = sqlx::query!(
             r#"
@@ -64,7 +74,7 @@ pub async fn publish_content(
                         and vtuber_id = $2
                         and status = 'scheduled'::stream_status
             "#,
-            stream_id,
+            video_id,
             vtuber_id,
         )
         .execute(&pool)
@@ -74,12 +84,10 @@ pub async fn publish_content(
         return Ok(StatusCode::OK);
     }
 
-    eprintln!("Invalid XML: {}", body);
-
-    return Ok(StatusCode::OK);
+    Ok(StatusCode::BAD_REQUEST)
 }
 
-async fn upload_thumbnail(stream_id: &str, client: &Client) {
+async fn upload_thumbnail(stream_id: &str, span: &Span, client: &Client) {
     match youtube_thumbnail(stream_id, &client)
         .and_then(|thumbnail| {
             upload_file(
@@ -91,8 +99,12 @@ async fn upload_thumbnail(stream_id: &str, client: &Client) {
         })
         .await
     {
-        Ok(_) => println!("{}: thumbnail uploaded", stream_id),
-        Err(e) => eprintln!("{}: failed to upload thumbnail {:?}", stream_id, e),
+        Ok(_) => {
+            tracing::debug!(parent: span, "thumbnail uploaded");
+        }
+        Err(e) => {
+            tracing::warn!(parent: span, err = ?e, "failed to upload thumbnail");
+        }
     }
 }
 

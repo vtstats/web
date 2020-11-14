@@ -6,6 +6,8 @@ use serde::{
 use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
+use tracing::field::{debug, Empty};
+
 use crate::error::Error;
 use crate::vtubers::VTUBERS;
 
@@ -71,6 +73,22 @@ pub async fn channels_report(
     query: ChannelsReportRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
+    let span = tracing::debug_span!(
+        "channels_report_v3",
+        ids = %query.ids,
+        metrics = %query.metrics,
+        start_at = Empty,
+        end_at = Empty,
+    );
+
+    if let Some(start_at) = query.start_at {
+        span.record("start_at", &debug(start_at));
+    }
+
+    if let Some(end_at) = query.end_at {
+        span.record("end_at", &debug(end_at));
+    }
+
     let mut channels = vec![];
     let mut reports = vec![];
 
@@ -152,8 +170,8 @@ async fn youtube_channel_subscriber(
             select time, value
               from youtube_channel_subscriber_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,
@@ -182,8 +200,8 @@ async fn youtube_channel_view(
             select time, value
               from youtube_channel_view_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,
@@ -212,8 +230,8 @@ async fn bilibili_channel_subscriber(
             select time, value
               from bilibili_channel_subscriber_statistic
              where vtuber_id = $1
-             and (time >= $2 or $2 is null)
-             and (time <= $3 or $3 is null)
+               and (time >= $2 or $2 is null)
+               and (time <= $3 or $3 is null)
         "#,
         id,
         start_at,

@@ -6,6 +6,7 @@ use std::str::FromStr;
 use super::youtube::youtube_api_key;
 use crate::error::Result;
 
+#[derive(Debug)]
 pub struct Stream {
     pub id: String,
     pub status: StreamStatus,
@@ -15,6 +16,7 @@ pub struct Stream {
     pub viewers: Option<i32>,
 }
 
+#[derive(Debug)]
 pub enum StreamStatus {
     Scheduled,
     Live,
