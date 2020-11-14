@@ -9,7 +9,7 @@ use super::utils::is_invalid_query;
 
 #[tokio::test]
 async fn invalid_query() {
-    let pool = PgPool::new(env!("DATABASE_URL")).await.unwrap();
+    let pool = PgPool::connect(env!("DATABASE_URL")).await.unwrap();
 
     let api = api(pool).recover(handle_rejection);
 

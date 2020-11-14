@@ -39,19 +39,6 @@ pub struct Stream {
     updated_at: DateTime<Utc>,
 }
 
-// TODO: sqlx doesn't yet support user-defined types in query_as!
-// https://github.com/launchbadge/sqlx/issues/148
-//
-// #[derive(PartialEq, Debug, sqlx::Type, serde::Serialize)]
-// #[sqlx(rename = "youtube_stream_status")]
-// #[sqlx(rename_all = "lowercase")]
-// #[serde(rename_all = "lowercase")]
-// enum YouTubeStreamStatus {
-//     Schedule,
-//     Live,
-//     End,
-// }
-
 pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     pool: PgPool,
@@ -129,7 +116,7 @@ pub struct ScheduleStream {
     pub stream_id: String,
     pub title: String,
     pub vtuber_id: String,
-    pub schedule_time: DateTime<Utc>,
+    pub schedule_time: Option<DateTime<Utc>>,
     pub updated_at: DateTime<Utc>,
 }
 

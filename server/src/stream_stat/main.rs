@@ -16,7 +16,7 @@ use crate::error::Result;
 async fn main() -> Result<()> {
     let client = Client::new();
 
-    let pool = PgPool::new(&env::var("DATABASE_URL").unwrap()).await?;
+    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
     let rows = sqlx::query!(
         r#"

@@ -101,7 +101,7 @@ pub async fn channels_report(
         if vtb.youtube.is_some() {
             let channel = sqlx::query_as!(
                 Channel,
-                r#"select *, 'youtube' as platform from youtube_channels where vtuber_id = $1"#,
+                r#"select *, 'youtube' as "platform!" from youtube_channels where vtuber_id = $1"#,
                 id
             )
             .fetch_one(&pool)
@@ -114,7 +114,7 @@ pub async fn channels_report(
         if vtb.bilibili.is_some() {
             let channel = sqlx::query_as!(
                 Channel,
-                r#"select *, 'bilibili' as platform from bilibili_channels where vtuber_id = $1"#,
+                r#"select *, 'bilibili' as "platform!" from bilibili_channels where vtuber_id = $1"#,
                 id
             )
             .fetch_one(&pool)

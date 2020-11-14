@@ -14,7 +14,7 @@ use utils::is_not_found;
 
 #[tokio::test]
 async fn not_found() {
-    let pool = PgPool::new(env!("DATABASE_URL")).await.unwrap();
+    let pool = PgPool::connect(env!("DATABASE_URL")).await.unwrap();
 
     let api = api(pool).recover(handle_rejection);
 

@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
         .with_span_events(FmtSpan::CLOSE)
         .init();
 
-    let pool = PgPool::new(&database_url).await?;
+    let pool = PgPool::connect(&database_url).await?;
 
     let client = Client::new();
 

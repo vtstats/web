@@ -85,21 +85,17 @@ pub struct Stream {
     max_viewer_count: Option<i32>,
     #[serde(with = "ts_milliseconds")]
     updated_at: DateTime<Utc>,
-    status: String,
+    status: StreamStatus,
 }
 
-// TODO: sqlx doesn't yet support user-defined types in query_as!
-// https://github.com/launchbadge/sqlx/issues/148
-//
-// #[derive(PartialEq, Debug, sqlx::Type, serde::Serialize)]
-// #[sqlx(rename = "youtube_stream_status")]
-// #[sqlx(rename_all = "lowercase")]
-// #[serde(rename_all = "lowercase")]
-// enum YouTubeStreamStatus {
-//     Schedule,
-//     Live,
-//     End,
-// }
+#[derive(Debug, sqlx::Type, serde::Serialize)]
+#[sqlx(rename = "stream_status", rename_all = "lowercase")]
+#[serde(rename_all = "lowercase")]
+pub enum StreamStatus {
+    Scheduled,
+    Live,
+    Ended,
+}
 
 pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
@@ -140,7 +136,7 @@ pub async fn youtube_streams_list(
                      average_viewer_count,
                      max_viewer_count,
                      updated_at,
-                     status::text
+                     status as "status: _"
                 from youtube_streams
                where vtuber_id = any($1)
                  and status::text = any($5)

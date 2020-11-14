@@ -90,7 +90,16 @@ pub struct Stream {
     pub max_viewer_count: Option<i32>,
     #[serde(with = "ts_milliseconds")]
     pub updated_at: DateTime<Utc>,
-    pub status: String,
+    pub status: StreamStatus,
+}
+
+#[derive(Debug, sqlx::Type, serde::Serialize)]
+#[sqlx(rename = "stream_status", rename_all = "lowercase")]
+#[serde(rename_all = "lowercase")]
+pub enum StreamStatus {
+    Scheduled,
+    Live,
+    Ended,
 }
 
 pub async fn streams_report(
@@ -129,7 +138,7 @@ pub async fn streams_report(
                        average_viewer_count,
                        max_viewer_count,
                        updated_at,
-                       status::text
+                       status as "status: _"
                   from youtube_streams
                  where stream_id = $1
             "#,
