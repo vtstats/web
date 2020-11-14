@@ -31,11 +31,11 @@ CREATE TYPE stream_status AS ENUM ('scheduled', 'live', 'ended');
 CREATE TABLE youtube_streams (
   stream_id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
-  vtuber_id TEXT REFERENCES youtube_channels,
+  vtuber_id TEXT REFERENCES youtube_channels NOT NULL,
   schedule_time TIMESTAMPTZ,
   start_time TIMESTAMPTZ,
   end_time TIMESTAMPTZ,
-  status stream_status,
+  status stream_status NOT NULL,
   average_viewer_count INTEGER,
   max_viewer_count INTEGER,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
