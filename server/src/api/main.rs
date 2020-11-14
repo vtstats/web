@@ -70,7 +70,8 @@ async fn main() -> Result<()> {
         }))
         .recover(reject::handle_rejection);
 
-    let addr: SocketAddr = option_env!("ADDR")
+    let addr: SocketAddr = env::var("ADDR")
+        .ok()
         .and_then(|addr| addr.parse().ok())
         .unwrap_or_else(|| ([127, 0, 0, 1], 4200).into());
 
