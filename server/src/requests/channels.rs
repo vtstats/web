@@ -5,6 +5,7 @@ use std::str::FromStr;
 use super::youtube::youtube_api_key;
 use crate::error::Result;
 
+#[derive(Debug)]
 pub struct Channel {
     pub id: String,
     pub view_count: i32,

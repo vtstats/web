@@ -2,6 +2,8 @@
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
+#[path = "../trace.rs"]
+mod trace;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
@@ -9,11 +11,16 @@ use chrono::Utc;
 use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
+use tracing_appender::rolling::Rotation;
 
 use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    let _guard = trace::init("stream_stat=debug", Rotation::DAILY);
+
+    let span = tracing::info_span!("stream_stat");
+
     let client = Client::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
@@ -35,6 +42,8 @@ async fn main() -> Result<()> {
     .await?;
 
     if rows.is_empty() {
+        tracing::debug!(parent: &span, "noop");
+
         return Ok(());
     }
 
@@ -43,7 +52,11 @@ async fn main() -> Result<()> {
         .map(|row| row.stream_id.as_str())
         .collect::<Vec<_>>();
 
+    tracing::debug!(parent: &span, len = ids.len(), ids = ?ids);
+
     let streams = requests::youtube_streams(&client, &ids).await?;
+
+    tracing::debug!(parent: &span, len = streams.len(), streams = ?streams);
 
     let now = Utc::now();
 
@@ -51,6 +64,8 @@ async fn main() -> Result<()> {
         .iter()
         .filter(|&id| !streams.iter().any(|stream| &stream.id == id))
     {
+        tracing::debug!(parent: &span, id, "missing stream");
+
         let _ = sqlx::query!(
             r#"
                 update youtube_streams
@@ -96,13 +111,6 @@ async fn main() -> Result<()> {
             .await?;
         }
     }
-
-    println!(
-        "Total: {} Skipped: {} Uppdated: {}",
-        ids.len(),
-        ids.len() - streams.len(),
-        streams.len()
-    );
 
     Ok(())
 }

@@ -5,6 +5,8 @@ mod pubsub;
 mod reject;
 #[path = "../requests/mod.rs"]
 mod requests;
+#[path = "../trace.rs"]
+mod trace;
 mod v3;
 mod v4;
 #[path = "../vtubers.rs"]
@@ -18,30 +20,16 @@ use sqlx::PgPool;
 use std::env;
 use std::net::SocketAddr;
 use tracing::field::{display, Empty};
-use tracing_subscriber::fmt::format::FmtSpan;
+use tracing_appender::rolling::Rotation;
 use warp::Filter;
 
 use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let filter = env::var("RUST_LOG").unwrap_or_else(|_| "api=debug,warp=debug".into());
+    let _guard = trace::init("api=debug,warp=debug", Rotation::DAILY);
 
-    let log_directory = env::var("LOG_DIR").unwrap();
-
-    let database_url = env::var("DATABASE_URL").unwrap();
-
-    let file_appender = tracing_appender::rolling::daily(log_directory, "log");
-
-    let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
-
-    tracing_subscriber::fmt()
-        .with_env_filter(filter)
-        .with_writer(non_blocking)
-        .with_span_events(FmtSpan::CLOSE)
-        .init();
-
-    let pool = PgPool::connect(&database_url).await?;
+    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
     let client = Client::new();
 
