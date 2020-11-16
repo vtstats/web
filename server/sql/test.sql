@@ -33,8 +33,8 @@ begin
 end;
 $$;
 
-insert into youtube_streams (stream_id, title, vtuber_id, updated_at)
-     values ('poi', 'Stream Title', 'ayame', :today);
+insert into youtube_streams (stream_id, title, vtuber_id, updated_at, status)
+     values ('poi', 'Stream Title', 'ayame', :today, 'ended');
 
 insert into youtube_stream_viewer_statistic (stream_id, value, time)
      values ('poi', 100, :today),
