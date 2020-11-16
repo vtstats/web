@@ -1935,6 +1935,7 @@ dependencies = [
  "serde_json",
  "serde_urlencoded",
  "tokio",
+ "tokio-rustls",
  "tower-service",
  "tracing",
  "tracing-futures",

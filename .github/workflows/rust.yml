@@ -69,7 +69,7 @@ jobs:
       - name: Build
         if: github.ref == 'refs/heads/master'
         run: |
-          cargo build --release
+          cargo build --release --features tls
           strip target/release/{api,subscribe,stream_stat,channel_stat}
         env:
           DATABASE_URL: postgres://holostats:holostats@localhost/holostats
