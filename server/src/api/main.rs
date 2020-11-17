@@ -63,18 +63,7 @@ async fn main() -> Result<()> {
         .and_then(|addr| addr.parse().ok())
         .unwrap_or_else(|| ([127, 0, 0, 1], 4200).into());
 
-    cfg_if::cfg_if! {
-        if #[cfg(feature = "tls")] {
-            warp::serve(routes)
-                .tls()
-                .cert_path(env::var("SSL_CERT_PATH").unwrap())
-                .key_path(env::var("SSL_KEY_PATH").unwrap())
-                .run(addr)
-                .await;
-        } else {
-            warp::serve(routes).run(addr).await;
-        }
-    }
+    warp::serve(routes).run(addr).await;
 
     Ok(())
 }

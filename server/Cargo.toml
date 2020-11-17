@@ -29,9 +29,6 @@ warp = { version = "0.2.5", default-features = false }
 [profile.release]
 lto = true
 
-[features]
-tls = ["warp/tls"]
-
 [[bin]]
 name = "api"
 path = "src/api/main.rs"
