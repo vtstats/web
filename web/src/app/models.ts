@@ -30,6 +30,7 @@ export type Stream = {
   streamId: string;
   title: string;
   vtuberId: string;
+  thumbnailUrl: string;
 
   scheduleTime?: string;
   startTime?: string;

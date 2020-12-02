@@ -1,9 +1,6 @@
 <div class="thumbnail link" [routerLink]="['/stream', stream.streamId]">
   <div class="cover-wrapper">
-    <img
-      class="cover"
-      src="https://holo.poi.cat/thumbnail/{{ stream.streamId }}.jpg?ngsw-bypass"
-    />
+    <img class="cover" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
   </div>
 
   <div *ngIf="stream.startTime" class="duration">

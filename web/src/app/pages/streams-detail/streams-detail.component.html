@@ -2,12 +2,7 @@
   <div class="hero">
     <div class="cover-wrapper">
       <a class="cover-link">
-        <img
-          class="cover"
-          src="https://holo.poi.cat/thumbnail/{{
-            stream.streamId
-          }}.jpg?ngsw-bypass"
-        />
+        <img class="cover" src="{{ stream?.thumbnailUrl }}?ngsw-bypass" />
       </a>
     </div>
 
@@ -17,12 +12,12 @@
         </ng-container>
       </div>
 
-      <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
+      <a class="liver" [routerLink]="['/vtuber', stream?.vtuberId]">
         <img
           class="profile"
-          src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+          src="/assets/thumbnail/{{ stream?.vtuberId }}.jpg"
         />
-        <span class="name">{{ stream.vtuberId | name }}</span>
+        <span class="name">{{ stream?.vtuberId | name }}</span>
       </a>
 
       <div class="statistic-container">
