@@ -1,4 +1,3 @@
-use futures::future::TryFutureExt;
 use reqwest::Client;
 use roxmltree::Document;
 use sqlx::PgPool;
@@ -38,20 +37,23 @@ pub async fn publish_content(
             return Ok(StatusCode::BAD_REQUEST);
         }
 
-        upload_thumbnail(&streams[0].id, &span, &client).await;
+        let thumbnail_url = upload_thumbnail(&streams[0].id, &span, &client)
+            .await
+            .map(|filename| format!("https://holo.poi.cat/thumbnail/{}", filename));
 
         let _ = sqlx::query!(
             r#"
-                insert into youtube_streams (stream_id, vtuber_id, title, status, schedule_time, start_time, end_time)
-                     values ($1, $2, $3, $4::text::stream_status, $5, $6, $7)
+                insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
+                     values ($1, $2, $3, $4::text::stream_status, $5, $6, $7, $8)
                 on conflict (stream_id) do update
-                        set (title, status, schedule_time, start_time, end_time)
-                          = ($3, $4::text::stream_status, $5, $6, $7)
+                        set (title, status, thumbnail_url, schedule_time, start_time, end_time)
+                          = ($3, $4::text::stream_status, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
             "#,
             streams[0].id,
             vtuber_id,
             title,
             streams[0].status.as_str(),
+            thumbnail_url,
             streams[0].schedule_time,
             streams[0].start_time,
             streams[0].end_time,
@@ -87,23 +89,26 @@ pub async fn publish_content(
     Ok(StatusCode::BAD_REQUEST)
 }
 
-async fn upload_thumbnail(stream_id: &str, span: &Span, client: &Client) {
-    match youtube_thumbnail(stream_id, &client)
-        .and_then(|thumbnail| {
-            upload_file(
-                format!("{}.jpg", stream_id),
-                thumbnail,
-                "image/jpg",
-                &client,
-            )
-        })
-        .await
-    {
+async fn upload_thumbnail(stream_id: &str, span: &Span, client: &Client) -> Option<String> {
+    // TODO: versioning filename using md5
+    let filename = format!("{}.jpg", stream_id);
+
+    let data = match youtube_thumbnail(stream_id, &client).await {
+        Ok(x) => x,
+        Err(e) => {
+            tracing::warn!(parent: span, err = ?e, "failed to upload thumbnail");
+            return None;
+        }
+    };
+
+    match upload_file(&filename, data, "image/jpg", &client).await {
         Ok(_) => {
             tracing::debug!(parent: span, "thumbnail uploaded");
+            Some(filename)
         }
         Err(e) => {
             tracing::warn!(parent: span, err = ?e, "failed to upload thumbnail");
+            None
         }
     }
 }

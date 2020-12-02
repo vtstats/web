@@ -80,6 +80,7 @@ pub struct Stream {
     pub stream_id: String,
     pub title: String,
     pub vtuber_id: String,
+    pub thumbnail_url: Option<String>,
     #[serde(with = "ts_milliseconds_option")]
     pub schedule_time: Option<DateTime<Utc>>,
     #[serde(with = "ts_milliseconds_option")]
@@ -132,6 +133,7 @@ pub async fn streams_report(
                 select stream_id,
                        title,
                        vtuber_id,
+                       thumbnail_url,
                        schedule_time,
                        start_time,
                        end_time,

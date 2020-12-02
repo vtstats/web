@@ -11,7 +11,7 @@ use std::str::FromStr;
 use crate::error::Result;
 
 pub async fn upload_file<T>(
-    filename: String,
+    filename: &str,
     data: T,
     content_type: &str,
     client: &Client,

@@ -31,6 +31,7 @@ CREATE TYPE stream_status AS ENUM ('scheduled', 'live', 'ended');
 CREATE TABLE youtube_streams (
   stream_id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
+  thumbnail_url TEXT,
   vtuber_id TEXT REFERENCES youtube_channels NOT NULL,
   schedule_time TIMESTAMPTZ,
   start_time TIMESTAMPTZ,
