@@ -36,6 +36,9 @@ insert into youtube_channels (vtuber_id)
             ('risu'),            -- Ayunda Risu
             ('moona'),           -- Moona Hoshinova
             ('iofi'),            -- Airani Iofifteen
+            ('ollie'),           -- Kureiji Ollie
+            ('melfissa'),        -- Anya Melfissa
+            ('reine'),           -- Pavolia Reine
             ('amelia'),          -- Watson Amelia
             ('calliope'),        -- Mori Calliope
             ('gura'),            -- Gawr Gura
