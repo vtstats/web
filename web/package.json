@@ -31,8 +31,6 @@
     "aws4fetch": "^1.0.12",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
-    "ngx-cookie": "^5.0.0",
-    "ngx-cookie-backend": "^5.0.0",
     "ngx-ellipsis": "^3.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",

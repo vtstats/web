@@ -19,13 +19,13 @@ export class ApiService {
 
   getYouTubeChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
-      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
+      params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
     });
   }
 
   getBilibiliChannels(): Observable<ChannelListResponse> {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/bilibili_channels`, {
-      params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
+      params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
     });
   }
 
@@ -52,7 +52,7 @@ export class ApiService {
     return this.http.get<StreamListResponse>(
       `${BASE_URL}/youtube_schedule_streams`,
       {
-        params: new HttpParams().set("ids", this.config.joinedSelectedVTubers),
+        params: new HttpParams().set("ids", [...this.config.vtuber].join(",")),
       }
     );
   }

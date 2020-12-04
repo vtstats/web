@@ -1,113 +1,63 @@
 import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
 import { DOCUMENT, isPlatformBrowser } from "@angular/common";
-import { CookieService } from "ngx-cookie";
 
 import { vtubers } from "vtubers";
 
-import { binToHash, hashToBin } from "./hash";
-
-const keys = Object.keys(vtubers);
-
 @Injectable({ providedIn: "root" })
 export class ConfigService {
-  selectedVTubers: Set<string>;
+  vtuber: Set<string>;
+  theme: string;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private cookieService: CookieService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    if (this.getItem("t") === "d") {
-      this.document.body.classList.add("dark");
-    }
-
-    const ids = this.getItem("v");
-
-    if (!ids) {
-      this.selectedVTubers = new Set(
-        Object.values(vtubers)
-          .filter((v) => v.default)
-          .map((v) => v.id)
-      );
-      return;
-    }
-
-    const bin = hashToBin(ids);
-
-    const v = bin.split("").reduce((acc, cur, idx) => {
-      if (cur === "1") {
-        acc.push(keys[idx]);
+    if (isPlatformBrowser(this.platformId)) {
+      if (window.localStorage.getItem("vtuber")) {
+        this.vtuber = new Set(window.localStorage.getItem("vtuber").split(","));
       }
+      this.theme = window.localStorage.getItem("theme");
+    }
 
-      return acc;
-    }, [] as string[]);
-
-    this.selectedVTubers = new Set(v);
-  }
-
-  get joinedSelectedVTubers(): string {
-    return Array.from(this.selectedVTubers).join(",");
-  }
-
-  private getItem(key: string): string | false {
-    return (
-      this.cookieService.get(key) ||
-      (isPlatformBrowser(this.platformId) && window.localStorage.getItem(key))
+    this.theme ??= "default";
+    this.vtuber ??= new Set(
+      Object.values(vtubers)
+        .filter((v) => v.default)
+        .map((v) => v.id)
     );
+
+    this.document.body.classList.add(this.theme);
   }
 
-  private setItem(key: string, value: string) {
-    this.cookieService.put(key, value, { secure: true });
-    if (isPlatformBrowser(this.platformId)) {
-      window.localStorage.setItem(key, value);
-    }
-  }
-
-  private removeItem(key: string) {
-    this.cookieService.remove(key, { secure: true });
-    if (isPlatformBrowser(this.platformId)) {
-      window.localStorage.removeItem(key);
-    }
-  }
-
-  selectVTubers(ids: string[]) {
+  addVtubers(ids: string[]) {
     for (const id of ids) {
-      this.selectedVTubers.add(id);
+      this.vtuber.add(id);
     }
-
-    this.setItem(
-      "v",
-      binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
-    );
+    this.setItem("vtuber", [...this.vtuber].join(","));
   }
 
-  unselectVTubers(ids: string[]) {
+  deleteVTubers(ids: string[]) {
     for (const id of ids) {
-      this.selectedVTubers.delete(id);
+      this.vtuber.delete(id);
     }
-
-    this.setItem(
-      "v",
-      binToHash(keys.map((k) => (this.selectedVTubers.has(k) ? 1 : 0)).join(""))
-    );
+    this.setItem("vtuber", [...this.vtuber].join(","));
   }
 
-  toggleDarkMode() {
-    if (this.getItem("t") === "d") {
-      this.removeItem("t");
-      this.document.body.classList.remove("dark");
-    } else {
-      this.setItem("t", "d");
-      this.document.body.classList.add("dark");
-    }
+  setTheme(newTheme: string) {
+    this.document.body.classList.replace(this.theme, newTheme);
+
+    this.setItem("theme", newTheme);
+    this.theme = newTheme;
   }
 
-  selectLanguage(locale: string) {
-    this.setItem("l", locale);
+  setLang(newLang: string) {
+    this.setItem("lang", newLang);
     location.reload();
   }
 
-  getLocale(): string | false {
-    return this.getItem("l");
+  private setItem(key: string, value: string) {
+    if (isPlatformBrowser(this.platformId)) {
+      window.localStorage.setItem(key, value);
+    }
   }
 }

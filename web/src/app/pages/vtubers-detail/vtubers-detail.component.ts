@@ -8,7 +8,7 @@ import { vtubers } from "vtubers";
 
 import { VTuber, Stream, StreamListResponse } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { LOCAL_NAMES, LocalNames } from "src/i18n/names";
+import { translate } from "src/i18n/translations";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -19,8 +19,7 @@ export class VTubersDetailComponent {
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
-    private title: Title,
-    @Inject(LOCAL_NAMES) private names: LocalNames
+    private title: Title
   ) {}
 
   chartLoading = false;
@@ -65,7 +64,7 @@ export class VTubersDetailComponent {
       return;
     }
 
-    this.title.setTitle(`${this.names[this.vtuber.id]} | HoloStats`);
+    this.title.setTitle(`${translate(this.vtuber.id)} | HoloStats`);
 
     this.chartLoading = true;
     this.streamLoading = true;

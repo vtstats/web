@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { parseISO, isSameDay } from "date-fns";
 
+import { translate } from "src/i18n/translations";
+
 import { Stream, StreamListResponse } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 
@@ -31,7 +33,7 @@ export class YoutubeStreamComponent implements OnInit {
       this.obs.unobserve(this.spinnerContainer.nativeElement);
 
       this.api
-        .getYouTubeStreams([...this.config.selectedVTubers], {
+        .getYouTubeStreams([...this.config.vtuber], {
           endAt: this.lastStreamStart,
         })
         .subscribe((res) => this.addStreams(res));
@@ -39,11 +41,11 @@ export class YoutubeStreamComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@youtubeStream:`} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeStream")} | HoloStats`);
 
     this.loading = true;
     this.api
-      .getYouTubeStreams([...this.config.selectedVTubers], {
+      .getYouTubeStreams([...this.config.vtuber], {
         endAt: new Date(),
       })
       .subscribe((res) => {

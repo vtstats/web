@@ -1,16 +1,15 @@
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { TransferHttpCacheModule } from "@nguniversal/common";
-import { CookieModule } from "ngx-cookie";
 
 import { environment } from "../environments/environment";
 
-import providers from "src/i18n";
+import { getLocaleId } from "../i18n/locale";
 
 import { LayoutModule } from "./layout";
 import {
@@ -54,7 +53,6 @@ const ROUTES: Routes = [
     BrowserModule.withServerTransition({ appId: "holostats" }),
     TransferHttpCacheModule,
     HttpClientModule,
-    CookieModule.forRoot(),
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
@@ -63,7 +61,7 @@ const ROUTES: Routes = [
     MatSidenavModule,
     LayoutModule,
   ],
-  providers,
+  providers: [{ provide: LOCALE_ID, useFactory: getLocaleId }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

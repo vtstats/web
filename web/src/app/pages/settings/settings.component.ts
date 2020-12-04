@@ -6,6 +6,8 @@ import {
   MatTreeFlattener,
 } from "@angular/material/tree";
 
+import { translate } from "src/i18n/translations";
+
 import { vtubers, batches } from "vtubers";
 
 import { ConfigService } from "src/app/shared";
@@ -54,43 +56,40 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@settings:`} | HoloStats`);
+    this.title.setTitle(`${translate("settings")} | HoloStats`);
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
 
-  isSelected = (id: string): boolean => this.config.selectedVTubers.has(id);
+  isSelected = (id: string): boolean => this.config.vtuber.has(id);
 
   getMemberIds = (id: string): string[] => batches[id].vtubers;
 
   toggleVTuber(id: string) {
     if (this.isSelected(id)) {
-      this.config.unselectVTubers([id]);
+      this.config.deleteVTubers([id]);
     } else {
-      this.config.selectVTubers([id]);
+      this.config.addVtubers([id]);
     }
   }
 
   toggleBatch(id: string) {
     const ids = this.getMemberIds(id);
 
-    if (ids.every((id) => this.isSelected(id))) {
-      this.config.unselectVTubers(ids);
+    if (ids.every(this.isSelected)) {
+      this.config.deleteVTubers(ids);
     } else {
-      this.config.selectVTubers(ids);
+      this.config.addVtubers(ids);
     }
   }
 
   batchAllSelected(id: string): boolean {
-    return this.getMemberIds(id).every((id) => this.isSelected(id));
+    return this.getMemberIds(id).every(this.isSelected);
   }
 
   batchPartiallySelected(id: string): boolean {
     const ids = this.getMemberIds(id);
 
-    return (
-      ids.some((id) => this.isSelected(id)) &&
-      !ids.every((id) => this.isSelected(id))
-    );
+    return ids.some(this.isSelected) && !ids.every(this.isSelected);
   }
 }

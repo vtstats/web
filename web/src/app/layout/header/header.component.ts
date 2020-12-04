@@ -1,12 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  Inject,
-  LOCALE_ID,
-} from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 import { ConfigService } from "src/app/shared";
+import { getLocaleId } from "src/i18n/locale";
 
 @Component({
   selector: "hs-header",
@@ -15,16 +10,19 @@ import { ConfigService } from "src/app/shared";
 export class HeaderComponent {
   @Output() menuClick = new EventEmitter();
 
-  constructor(
-    private config: ConfigService,
-    @Inject(LOCALE_ID) private locale: string
-  ) {}
+  constructor(private config: ConfigService) {}
 
-  toggleDarkMode = () => this.config.toggleDarkMode();
+  toggleDarkMode() {
+    if (this.config.theme === "dark") {
+      this.config.setTheme("default");
+    } else {
+      this.config.setTheme("dark");
+    }
+  }
 
-  selectLanguage(locale: string) {
-    if (this.locale !== locale) {
-      this.config.selectLanguage(locale);
+  selectLanguage(lang: string) {
+    if (getLocaleId() !== lang) {
+      this.config.setLang(lang);
     }
   }
 }

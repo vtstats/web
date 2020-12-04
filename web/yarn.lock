@@ -5691,20 +5691,6 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngx-cookie-backend@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-cookie-backend/-/ngx-cookie-backend-5.0.0.tgz#7415fb06f9bb552c04d37a07678c8f540e037049"
-  integrity sha512-0TY/Jhp/I/+1CDoG0J37ScZDuow4yXNIbrwG0VfLV/sdLJLqRCRa3mtJxZjenYNqwuvK2kYY2CGVrKU7a7Djkg==
-  dependencies:
-    tslib "^2.0.0"
-
-ngx-cookie@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-cookie/-/ngx-cookie-5.0.0.tgz#b5c04fbeac9b577fe6471ca2c740f0365beae41e"
-  integrity sha512-wzHC3u9n8H6O2YNfoptNM78re/wnRs1guo8Qg1yThtH64eL/E34JPuzAa/g085beIGhsXMR1YDJGVLnMbluo2A==
-  dependencies:
-    tslib "^2.0.0"
-
 ngx-ellipsis@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-3.0.0.tgz#002e879ec38612e65866f2b951dc8685cb5af42b"

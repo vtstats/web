@@ -3,6 +3,8 @@ import { Title } from "@angular/platform-browser";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 
+import { translate } from "src/i18n/translations";
+
 import { Channel } from "src/app/models";
 import { ApiService } from "src/app/shared";
 
@@ -24,7 +26,7 @@ export class YoutubeChannelComponent implements OnInit {
   dataSource = new MatTableDataSource<Channel>([]);
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@youtubeChannel:`} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeChannel")} | HoloStats`);
 
     this.loading = true;
     this.api.getYouTubeChannels().subscribe((res) => {

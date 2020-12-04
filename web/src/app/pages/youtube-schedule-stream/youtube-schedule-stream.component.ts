@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { isSameDay, parseISO } from "date-fns";
 
+import { translate } from "src/i18n/translations";
+
 import { Stream } from "src/app/models";
 import { ApiService } from "src/app/shared";
 
@@ -17,7 +19,7 @@ export class YoutubeScheduleStreamComponent implements OnInit {
   updatedAt = "";
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@youtubeSchedule:`} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeSchedule")} | HoloStats`);
 
     this.loading = true;
     this.api.getYouTubeScheduleStream().subscribe((res) => {
