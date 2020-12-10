@@ -120,6 +120,7 @@ pub struct ScheduleStream {
     pub vtuber_id: String,
     pub schedule_time: Option<DateTime<Utc>>,
     pub updated_at: DateTime<Utc>,
+    pub thumbnail_url: Option<String>,
 }
 
 pub async fn youtube_schedule_streams_list(
@@ -137,7 +138,7 @@ pub async fn youtube_schedule_streams_list(
     let streams = sqlx::query_as!(
         ScheduleStream,
         r#"
-              select stream_id, title, vtuber_id, schedule_time, updated_at
+              select stream_id, title, vtuber_id, schedule_time, updated_at, thumbnail_url
                 from youtube_streams
                where vtuber_id = any(string_to_array($1, ','))
                  and start_time is null
