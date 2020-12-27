@@ -122,8 +122,22 @@
 }
 
 .streams-pages.shimmering {
+  .cover-link {
+    .cover {
+      width: 50%;
+      margin: auto;
+      opacity: 0.2; 
+    }
+  }
+
   .title {
     height: 32px;
+  }
+
+  .liver {
+    svg {
+      opacity: 0.2;
+    }
   }
 
   .value {
