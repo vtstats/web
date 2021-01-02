@@ -1,8 +1,7 @@
 use chrono::{Timelike, Utc};
-use log::LevelFilter;
+use log::{LevelFilter, Log};
 use serde::Serialize;
 use serde_json::to_string;
-use simple_logger::SimpleLogger;
 use std::env;
 use std::fmt::Debug;
 use tracing::dispatcher::DefaultGuard;
@@ -13,12 +12,38 @@ use tracing_subscriber::layer::{Context, SubscriberExt};
 use tracing_subscriber::registry::LookupSpan;
 use tracing_subscriber::{Layer, Registry};
 
+struct TelemetryLogger;
+
+impl Log for TelemetryLogger {
+    fn enabled(&self, metadata: &log::Metadata) -> bool {
+        metadata.target().starts_with("newrelic_telemetry")
+    }
+
+    fn log(&self, record: &log::Record) {
+        if self.enabled(record.metadata()) {
+            println!("[NewRelic] {:<5} {}", record.level(), record.args());
+        }
+    }
+
+    fn flush(&self) {}
+}
+
+static LOGGER: TelemetryLogger = TelemetryLogger;
+
 pub fn init_logger() {
-    SimpleLogger::new()
-        .with_level(LevelFilter::Off)
-        .with_module_level("newrelic_telemetry", LevelFilter::Debug)
-        .init()
-        .expect("failed to initilize simple logger");
+    log::set_max_level(LevelFilter::Debug);
+    log::set_logger(&LOGGER).expect("failed to initilize telemetry logger");
+}
+
+struct TargetFilter(&'static str);
+
+impl<S> Layer<S> for TargetFilter
+where
+    S: Subscriber + for<'span> LookupSpan<'span>,
+{
+    fn enabled(&self, metadata: &Metadata<'_>, _: Context<'_, S>) -> bool {
+        metadata.target().starts_with(self.0)
+    }
 }
 
 pub fn init_tracing(target: &'static str, is_global: bool) -> Option<DefaultGuard> {
@@ -35,17 +60,6 @@ pub fn init_tracing(target: &'static str, is_global: bool) -> Option<DefaultGuar
         None
     } else {
         Some(tracing::subscriber::set_default(subscriber))
-    }
-}
-
-struct TargetFilter(&'static str);
-
-impl<S> Layer<S> for TargetFilter
-where
-    S: Subscriber + for<'span> LookupSpan<'span>,
-{
-    fn enabled(&self, metadata: &Metadata<'_>, _: Context<'_, S>) -> bool {
-        metadata.target().starts_with(self.0)
     }
 }
 
