@@ -1,81 +1,41 @@
-use chrono::{
-    serde::{ts_milliseconds, ts_milliseconds_option},
-    DateTime, Utc,
-};
+use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use sqlx::PgPool;
 use warp::Rejection;
 
-use crate::error::Error;
+use super::db;
 
 #[derive(serde::Deserialize)]
-pub struct ChannelsListRequestQuery {
+pub struct ReqQuery {
     #[serde(with = "StringWithSeparator::<CommaSeparator>")]
     ids: Vec<String>,
 }
 
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ChannelsListResponseBody {
+pub struct ResBody {
     #[serde(with = "ts_milliseconds_option")]
     pub updated_at: Option<DateTime<Utc>>,
-    pub channels: Vec<Channel>,
-}
-
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Channel {
-    pub vtuber_id: String,
-    pub subscriber_count: i32,
-    pub daily_subscriber_count: i32,
-    pub weekly_subscriber_count: i32,
-    pub monthly_subscriber_count: i32,
-    pub view_count: i32,
-    pub daily_view_count: i32,
-    pub weekly_view_count: i32,
-    pub monthly_view_count: i32,
-    #[serde(with = "ts_milliseconds")]
-    pub updated_at: DateTime<Utc>,
+    pub channels: Vec<db::Channel>,
 }
 
 pub async fn youtube_channels_list(
-    query: ChannelsListRequestQuery,
+    query: ReqQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
-    tracing::debug_span!("youtube_channels_v4", ids = ?query.ids);
+    tracing::info!(
+        name = "GET /api/v4/youtube_channels",
+        ids = ?query.ids.as_slice(),
+    );
 
-    let updated_at = sqlx::query!("select max(updated_at) from youtube_channels")
-        .fetch_one(&pool)
-        .await
-        .map(|row| row.max)
-        .map_err(Error::Database)?;
+    let updated_at = db::youtube_channel_max_updated_at(&pool).await?;
 
-    let channels = sqlx::query_as!(
-        Channel,
-        r#"
-            select vtuber_id,
-                   subscriber_count,
-                   daily_subscriber_count,
-                   weekly_subscriber_count,
-                   monthly_subscriber_count,
-                   view_count,
-                   daily_view_count,
-                   weekly_view_count,
-                   monthly_view_count,
-                   updated_at
-              from youtube_channels
-             where vtuber_id = any($1)
-        "#,
-        &query.ids
-    )
-    .fetch_all(&pool)
-    .await
-    .map_err(Error::Database)?;
+    let channels = db::youtube_channels(&query.ids, &pool).await?;
 
     let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
 
     Ok(warp::reply::with_header(
-        warp::reply::json(&ChannelsListResponseBody {
+        warp::reply::json(&ResBody {
             updated_at,
             channels,
         }),
@@ -85,43 +45,22 @@ pub async fn youtube_channels_list(
 }
 
 pub async fn bilibili_channels_list(
-    query: ChannelsListRequestQuery,
+    query: ReqQuery,
     pool: PgPool,
 ) -> Result<impl warp::Reply, Rejection> {
-    tracing::debug_span!("bilibili_channels_v4", ids = ?query.ids);
+    tracing::info!(
+        name = "GET /api/v4/bilibili_channels",
+        ids = ?query.ids.as_slice(),
+    );
 
-    let updated_at = sqlx::query!("select max(updated_at) from bilibili_channels")
-        .fetch_one(&pool)
-        .await
-        .map(|row| row.max)
-        .map_err(Error::Database)?;
+    let updated_at = db::bilibili_channel_max_updated_at(&pool).await?;
 
-    let channels = sqlx::query_as!(
-        Channel,
-        r#"
-            select vtuber_id,
-                   subscriber_count,
-                   daily_subscriber_count,
-                   weekly_subscriber_count,
-                   monthly_subscriber_count,
-                   view_count,
-                   daily_view_count,
-                   weekly_view_count,
-                   monthly_view_count,
-                   updated_at
-              from bilibili_channels
-             where vtuber_id = any($1)
-        "#,
-        &query.ids
-    )
-    .fetch_all(&pool)
-    .await
-    .map_err(Error::Database)?;
+    let channels = db::bilibili_channels(&query.ids, &pool).await?;
 
     let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
 
     Ok(warp::reply::with_header(
-        warp::reply::json(&ChannelsListResponseBody {
+        warp::reply::json(&ResBody {
             updated_at,
             channels,
         }),

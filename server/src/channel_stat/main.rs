@@ -2,148 +2,274 @@
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
-#[path = "../trace.rs"]
-mod trace;
+#[path = "../utils.rs"]
+mod utils;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
 use chrono::{DateTime, Utc};
-use reqwest::Client;
-use sqlx::PgPool;
+use sqlx::{Done, PgPool};
 use std::env;
-use tracing_appender::rolling::Rotation;
+use tracing::instrument;
 
 use crate::error::Result;
-use crate::vtubers::VTUBERS;
+use crate::requests::Channel;
+use crate::vtubers::{VTuber, VTUBERS};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = trace::init("channel_stat=debug", Rotation::DAILY);
+    utils::init_logger();
 
-    let _span = tracing::info_span!("channel_stat");
+    let _guard = utils::init_tracing("channel_stat", false);
 
+    real_main().await
+}
+
+#[instrument(
+    name = "channel_stat"
+    fields(service.name = "holostats-cron")
+)]
+async fn real_main() -> Result<()> {
     let client = reqwest::Client::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
     let now = Utc::now();
 
-    bilibili_channels_stat(now, &client, &pool).await?;
-
-    youtube_channels_stat(now, &client, &pool).await?;
-
-    Ok(())
-}
-
-async fn bilibili_channels_stat(now: DateTime<Utc>, client: &Client, pool: &PgPool) -> Result<()> {
     let ids = VTUBERS
         .iter()
         .filter_map(|v| v.bilibili)
         .collect::<Vec<_>>();
 
-    let span = tracing::debug_span!("bilibili_channels_stat", len = ids.len(), ids = ?ids);
-
     let channels = requests::bilibili_channels(&client, ids).await?;
 
-    tracing::debug!(parent: span, len = channels.len(), channels = ?channels);
+    let channels = channels
+        .into_iter()
+        .filter_map(|ch| {
+            VTUBERS
+                .iter()
+                .find(|vtb| vtb.bilibili == Some(&ch.id))
+                .map(|vtb| (ch, vtb))
+        })
+        .collect::<Vec<_>>();
 
-    for channel in &channels {
-        if let Some(vtb) = VTUBERS.iter().find(|v| v.bilibili == Some(&channel.id)) {
-            let _ = sqlx::query!(
-                r#"
-                    update bilibili_channels
-                       set (subscriber_count, view_count, updated_at)
-                         = ($1, $2, $3)
-                     where vtuber_id = $4
-                "#,
-                channel.subscriber_count,
-                channel.view_count,
-                now,
-                vtb.id,
-            )
-            .execute(pool)
-            .await?;
+    update_bilibili_channels(&channels, now, &pool).await?;
+    update_bilibili_channel_subscriber_statistic(&channels, now, &pool).await?;
+    update_bilibili_channel_view_statistic(&channels, now, &pool).await?;
 
-            let _ = sqlx::query!(
-                r#"
-                    insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
-                         values ($1, $2, $3)
-                "#,
-                vtb.id,
-                now,
-                channel.subscriber_count,
-            )
-            .execute(pool)
-            .await?;
+    let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
 
-            let _ = sqlx::query!(
-                r#"
-                    insert into bilibili_channel_view_statistic (vtuber_id, time, value)
-                         values ($1, $2, $3)
-                "#,
-                vtb.id,
-                now,
-                channel.view_count,
-            )
-            .execute(pool)
-            .await?;
-        }
-    }
+    let channels = requests::youtube_channels(&client, ids).await?;
+
+    let channels = channels
+        .into_iter()
+        .filter_map(|ch| {
+            VTUBERS
+                .iter()
+                .find(|vtb| vtb.youtube == Some(&ch.id))
+                .map(|vtb| (ch, vtb))
+        })
+        .collect::<Vec<_>>();
+
+    update_youtube_channels(&channels, now, &pool).await?;
+    update_youtube_channel_subscriber_statistic(&channels, now, &pool).await?;
+    update_youtube_channel_view_statistic(&channels, now, &pool).await?;
 
     Ok(())
 }
 
-async fn youtube_channels_stat(now: DateTime<Utc>, client: &Client, pool: &PgPool) -> Result<()> {
-    let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
+#[instrument(
+    name = "Update bilibili channels",
+    skip(pairs, now, pool),
+    fields(db.table = "bilibili_channels")
+)]
+async fn update_bilibili_channels(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
 
-    let span = tracing::debug_span!("youtube_channels_stat", len = ids.len(), ids = ?ids);
-
-    let channels = requests::youtube_channels(&client, ids).await?;
-
-    tracing::debug!(parent: span, len = channels.len(), channels = ?channels);
-
-    for channel in &channels {
-        if let Some(vtb) = VTUBERS.iter().find(|v| v.youtube == Some(&channel.id)) {
-            let _ = sqlx::query!(
-                r#"
-                    update youtube_channels
-                       set (subscriber_count, view_count, updated_at)
-                         = ($1, $2, $3)
-                     where vtuber_id = $4
-                "#,
-                channel.subscriber_count,
-                channel.view_count,
-                now,
-                vtb.id,
-            )
-            .execute(pool)
-            .await?;
-
-            let _ = sqlx::query!(
-                r#"
-                    insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
-                         values ($1, $2, $3)
-                "#,
-                vtb.id,
-                now,
-                channel.subscriber_count,
-            )
-            .execute(pool)
-            .await?;
-
-            let _ = sqlx::query!(
-                r#"
-                    insert into youtube_channel_view_statistic (vtuber_id, time, value)
-                         values ($1, $2, $3)
-                "#,
-                vtb.id,
-                now,
-                channel.view_count,
-            )
-            .execute(pool)
-            .await?;
-        }
+    for (channel, vtuber) in pairs.iter() {
+        let _ = sqlx::query!(
+            r#"
+                update bilibili_channels
+                    set (subscriber_count, view_count, updated_at)
+                        = ($1, $2, $3)
+                    where vtuber_id = $4
+            "#,
+            channel.subscriber_count,
+            channel.view_count,
+            now,
+            vtuber.id,
+        )
+        .execute(&mut tx)
+        .await?;
     }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update bilibili channels subscriber statistic",
+    skip(pairs, now, pool),
+    fields(db.table = "bilibili_channel_subscriber_statistic")
+)]
+async fn update_bilibili_channel_subscriber_statistic(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for (channel, vtuber) in pairs.iter() {
+        let _ = sqlx::query!(
+            r#"
+                insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
+                     values ($1, $2, $3)
+            "#,
+            vtuber.id,
+            now,
+            channel.subscriber_count,
+        )
+        .execute(&mut tx)
+        .await?;
+    }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update bilibili channels view statistic",
+    skip(pairs, now, pool),
+    fields(db.table = "bilibili_channel_view_statistic")
+)]
+async fn update_bilibili_channel_view_statistic(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for (channel, vtuber) in pairs.iter() {
+        let _ = sqlx::query!(
+            r#"
+                insert into bilibili_channel_view_statistic (vtuber_id, time, value)
+                     values ($1, $2, $3)
+            "#,
+            vtuber.id,
+            now,
+            channel.view_count,
+        )
+        .execute(&mut tx)
+        .await?;
+    }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update youtube channels",
+    skip(pairs, now, pool),
+    fields(db.table = "youtube_channels")
+)]
+async fn update_youtube_channels(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for (channel, vtuber) in pairs.iter() {
+        let _ = sqlx::query!(
+            r#"
+                update youtube_channels
+                    set (subscriber_count, view_count, updated_at)
+                        = ($1, $2, $3)
+                    where vtuber_id = $4
+            "#,
+            channel.subscriber_count,
+            channel.view_count,
+            now,
+            vtuber.id,
+        )
+        .execute(&mut tx)
+        .await?;
+    }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update youtube channels subscriber statistic",
+    skip(pairs, now, pool),
+    fields(db.table = "youtube_channel_subscriber_statistic")
+)]
+async fn update_youtube_channel_subscriber_statistic(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for (channel, vtuber) in pairs.iter() {
+        let _ = sqlx::query!(
+            r#"
+                insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
+                     values ($1, $2, $3)
+            "#,
+            vtuber.id,
+            now,
+            channel.subscriber_count,
+        )
+        .execute(&mut tx)
+        .await?;
+    }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update youtube channels view statistic",
+    skip(pairs, now, pool),
+    fields(db.table = "youtube_channel_view_statistic")
+)]
+async fn update_youtube_channel_view_statistic(
+    pairs: &[(Channel, &VTuber)],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+    let mut rows_affected = 0;
+
+    for (channel, vtuber) in pairs.iter() {
+        let done = sqlx::query!(
+            r#"
+                insert into youtube_channel_view_statistic (vtuber_id, time, value)
+                     values ($1, $2, $3)
+            "#,
+            vtuber.id,
+            now,
+            channel.view_count,
+        )
+        .execute(&mut tx)
+        .await?;
+        rows_affected += done.rows_affected();
+    }
+
+    tx.commit().await?;
+
+    tracing::info!(db.rows_affected = rows_affected);
 
     Ok(())
 }

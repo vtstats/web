@@ -5,7 +5,10 @@ pub struct VerifyIntentRequestQuery {
 }
 
 pub fn verify_intent(query: VerifyIntentRequestQuery) -> String {
-    tracing::debug_span!("pubsub_verify", challenge = %query.challenge);
+    tracing::info!(
+        name = "GET /api/pubsub/:pubsub",
+        challenge = &query.challenge.as_str()
+    );
 
     query.challenge
 }

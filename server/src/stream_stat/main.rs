@@ -2,32 +2,72 @@
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
-#[path = "../trace.rs"]
-mod trace;
+#[path = "../utils.rs"]
+mod utils;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
-use tracing_appender::rolling::Rotation;
+use tracing::instrument;
 
 use crate::error::Result;
+use crate::requests::Stream;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = trace::init("stream_stat=debug", Rotation::DAILY);
+    utils::init_logger();
 
-    let span = tracing::info_span!("stream_stat");
+    let _guard = utils::init_tracing("stream_stat", false);
 
+    real_main().await
+}
+
+#[instrument(
+    name = "stream_stat"
+    fields(service.name = "holostats-cron"),
+)]
+async fn real_main() -> Result<()> {
     let client = Client::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
+    let ids = select_interest_streams(&pool).await?;
+
+    if ids.is_empty() {
+        return Ok(());
+    }
+
+    let streams = requests::youtube_streams(&client, &ids).await?;
+
+    let now = Utc::now();
+
+    let offline_ids = ids
+        .iter()
+        .filter(|&id| !streams.iter().any(|stream| &stream.id == id))
+        .collect::<Vec<_>>();
+
+    if !offline_ids.is_empty() {
+        terminate_stream(&offline_ids, now, &pool).await?;
+    }
+
+    update_youtube_streams(&streams, now, &pool).await?;
+    update_youtube_stream_viewer_statistic(&streams, now, &pool).await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Select interest streams",
+    skip(pool),
+    fields(db.table = "youtube_streams"),
+)]
+async fn select_interest_streams(pool: &PgPool) -> Result<Vec<String>> {
     let rows = sqlx::query!(
         r#"
-            select stream_id
+            select stream_id as id
               from youtube_streams
              where end_time IS NULL
                and (
@@ -38,34 +78,21 @@ async fn main() -> Result<()> {
                    )
         "#
     )
-    .fetch_all(&pool)
+    .fetch_all(pool)
     .await?;
 
-    if rows.is_empty() {
-        tracing::debug!(parent: &span, "noop");
+    Ok(rows.into_iter().map(|row| row.id).collect::<Vec<_>>())
+}
 
-        return Ok(());
-    }
+#[instrument(
+    name = "Terminate offline YouTube streams",
+    skip(now, pool),
+    fields(db.table = "youtube_streams", ?ids),
+)]
+async fn terminate_stream(ids: &[&String], now: DateTime<Utc>, pool: &PgPool) -> Result<()> {
+    let mut tx = pool.begin().await?;
 
-    let ids = rows
-        .iter()
-        .map(|row| row.stream_id.as_str())
-        .collect::<Vec<_>>();
-
-    tracing::debug!(parent: &span, len = ids.len(), ids = ?ids);
-
-    let streams = requests::youtube_streams(&client, &ids).await?;
-
-    tracing::debug!(parent: &span, len = streams.len(), streams = ?streams);
-
-    let now = Utc::now();
-
-    for id in ids
-        .iter()
-        .filter(|&id| !streams.iter().any(|stream| &stream.id == id))
-    {
-        tracing::debug!(parent: &span, id, "missing stream");
-
+    for id in ids {
         let _ = sqlx::query!(
             r#"
                 update youtube_streams
@@ -75,11 +102,28 @@ async fn main() -> Result<()> {
             now,
             id,
         )
-        .execute(&pool)
+        .execute(&mut tx)
         .await?;
     }
 
-    for stream in &streams {
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update YouTube Streams",
+    skip(streams, now, pool),
+    fields(db.table = "youtube_streams"),
+)]
+async fn update_youtube_streams(
+    streams: &[Stream],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for stream in streams.iter() {
         let _ = sqlx::query!(
             r#"
                 update youtube_streams
@@ -94,9 +138,28 @@ async fn main() -> Result<()> {
             stream.end_time,
             stream.id,
         )
-        .execute(&pool)
+        .execute(&mut tx)
         .await?;
+    }
 
+    tx.commit().await?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Update YouTube stream viewer statistic",
+    skip(streams, now, pool),
+    fields(db.table = "youtube_stream_viewer_statistic"),
+)]
+async fn update_youtube_stream_viewer_statistic(
+    streams: &[Stream],
+    now: DateTime<Utc>,
+    pool: &PgPool,
+) -> Result<()> {
+    let mut tx = pool.begin().await?;
+
+    for stream in streams.iter() {
         if let Some(viewers) = stream.viewers {
             let _ = sqlx::query!(
                 r#"
@@ -107,10 +170,12 @@ async fn main() -> Result<()> {
                 now,
                 viewers,
             )
-            .execute(&pool)
+            .execute(&mut tx)
             .await?;
         }
     }
+
+    tx.commit().await?;
 
     Ok(())
 }

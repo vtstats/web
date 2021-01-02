@@ -1,8 +1,6 @@
-use sqlx::PgPool;
-use warp::Filter;
-
 mod channels_list;
 mod channels_report;
+mod db;
 mod streams_list;
 mod streams_report;
 
@@ -10,6 +8,9 @@ use channels_list::{bilibili_channels_list, youtube_channels_list};
 use channels_report::channels_report;
 use streams_list::youtube_streams_list;
 use streams_report::streams_report;
+
+use sqlx::PgPool;
+use warp::Filter;
 
 use crate::filters::with_db;
 

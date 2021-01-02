@@ -1,6 +1,5 @@
 use chrono::{DateTime, Utc};
 use sqlx::PgPool;
-use tracing::field::{debug, Empty};
 use warp::{reply::Json, Rejection};
 
 use crate::error::Error;
@@ -44,19 +43,17 @@ pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    let span = tracing::debug_span!(
-        "youtube_streams_v3",
-        ids = %query.ids,
-        start_at = Empty,
-        end_at = Empty,
+    tracing::info!(
+        name = "GET /api/v3/youtube_streams",
+        ids = &query.ids.as_str(),
     );
 
     if let Some(start_at) = query.start_at {
-        span.record("start_at", &debug(start_at));
+        tracing::info!(?start_at);
     }
 
     if let Some(end_at) = query.end_at {
-        span.record("end_at", &debug(end_at));
+        tracing::info!(?end_at);
     }
 
     let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
@@ -127,7 +124,10 @@ pub async fn youtube_schedule_streams_list(
     query: ScheduleStreamsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    tracing::debug_span!("youtube_schedule_streams_v3", ids = %query.ids);
+    tracing::info!(
+        name = "GET /api/v3/youtube_schedule_streams",
+        ids = &query.ids.as_str(),
+    );
 
     let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
         .fetch_one(&pool)

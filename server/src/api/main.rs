@@ -5,8 +5,8 @@ mod pubsub;
 mod reject;
 #[path = "../requests/mod.rs"]
 mod requests;
-#[path = "../trace.rs"]
-mod trace;
+#[path = "../utils.rs"]
+mod utils;
 mod v3;
 mod v4;
 #[path = "../vtubers.rs"]
@@ -19,15 +19,16 @@ use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
 use std::net::SocketAddr;
-use tracing::field::{display, Empty};
-use tracing_appender::rolling::Rotation;
+use tracing::field::Empty;
 use warp::Filter;
 
 use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = trace::init("api=debug,warp=debug", Rotation::DAILY);
+    utils::init_logger();
+
+    utils::init_tracing("api", true);
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
@@ -42,21 +43,17 @@ async fn main() -> Result<()> {
                 .or(pubsub::pubsub(pool, client)),
         )
         .with(cors)
+        .recover(reject::handle_rejection)
         .with(warp::trace(|info| {
-            let span = tracing::info_span!(
-                "request",
-                method = %info.method(),
-                path = %info.path(),
-                referer = Empty,
-            );
+            let span =
+                tracing::info_span!("request", service.name = "holostats-api", referer = Empty);
 
             if let Some(referer) = info.referer() {
-                span.record("referer", &display(referer));
+                span.record("referer", &referer);
             }
 
             span
-        }))
-        .recover(reject::handle_rejection);
+        }));
 
     let addr: SocketAddr = env::var("ADDR")
         .ok()

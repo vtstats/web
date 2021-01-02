@@ -7,9 +7,20 @@ use reqwest::{
 };
 use sha2::{Digest, Sha256};
 use std::str::FromStr;
+use tracing::instrument;
 
 use crate::error::Result;
 
+#[instrument(
+    name = "Update file to S3",
+    skip(client, data),
+    fields(
+        filename,
+        content_type,
+        content_length = data.as_ref().len(),
+        http.method = "PUT",
+    )
+)]
 pub async fn upload_file<T>(
     filename: &str,
     data: T,

@@ -35,7 +35,10 @@ pub async fn youtube_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    tracing::debug_span!("youtube_channels_v3", ids = ?query.ids);
+    tracing::info!(
+        name = "GET /api/v3/youtube_channels",
+        ids = &query.ids.as_str(),
+    );
 
     let updated_at = sqlx::query!("select max(updated_at) from youtube_channels")
         .fetch_one(&pool)
@@ -75,7 +78,10 @@ pub async fn bilibili_channels_list(
     query: ChannelsListRequestQuery,
     pool: PgPool,
 ) -> Result<Json, Rejection> {
-    tracing::debug_span!("bilibili_channels_v3", ids = ?query.ids);
+    tracing::info!(
+        name = "GET /api/v3/bilibili_channels",
+        ids = &query.ids.as_str(),
+    );
 
     let updated_at = sqlx::query!("select max(updated_at) from bilibili_channels")
         .fetch_one(&pool)

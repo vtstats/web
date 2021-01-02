@@ -1,14 +1,12 @@
 use reqwest::Client;
 use roxmltree::Document;
+use sha2::{Digest, Sha256};
 use sqlx::PgPool;
-use tracing::{
-    field::{display, Empty},
-    Span,
-};
+use tracing::instrument;
 use warp::{http::StatusCode, Rejection};
 
 use crate::error::Error;
-use crate::requests::{upload_file, youtube_streams, youtube_thumbnail};
+use crate::requests::{upload_file, youtube_streams, youtube_thumbnail, Stream};
 use crate::vtubers::VTUBERS;
 
 pub async fn publish_content(
@@ -16,101 +14,46 @@ pub async fn publish_content(
     pool: PgPool,
     client: Client,
 ) -> Result<StatusCode, Rejection> {
-    let span = tracing::debug_span!("pubsub_publish", vtuber_id = Empty, video_id = Empty);
-
-    tracing::debug!(parent: &span, body = ?body);
+    tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str(),);
 
     let doc = match Document::parse(&body) {
         Ok(doc) => doc,
-        Err(_) => return Ok(StatusCode::BAD_REQUEST),
+        Err(_) => {
+            tracing::error!(err.msg = "failed to parse xml");
+            return Ok(StatusCode::BAD_REQUEST);
+        }
     };
 
     if let Some((vtuber_id, video_id, title)) = parse_modification(&doc) {
-        span.record("vtuber_id", &display(vtuber_id));
-        span.record("video_id", &display(video_id));
+        tracing::info!(action = "Update video", vtuber_id, video_id);
 
-        let streams = youtube_streams(&client, &[&video_id]).await?;
-
-        tracing::debug!(parent: &span, streams = ?streams);
+        let streams = youtube_streams(&client, &[video_id.to_string()]).await?;
 
         if streams.is_empty() {
+            tracing::error!(err.msg = "stream not found");
             return Ok(StatusCode::BAD_REQUEST);
         }
 
-        let thumbnail_url = upload_thumbnail(&streams[0].id, &span, &client)
+        let thumbnail_url = upload_thumbnail(&streams[0].id, &client)
             .await
             .map(|filename| format!("https://holo.poi.cat/thumbnail/{}", filename));
 
-        let _ = sqlx::query!(
-            r#"
-                insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
-                     values ($1, $2, $3, $4::text::stream_status, $5, $6, $7, $8)
-                on conflict (stream_id) do update
-                        set (title, status, thumbnail_url, schedule_time, start_time, end_time)
-                          = ($3, $4::text::stream_status, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
-            "#,
-            streams[0].id,
-            vtuber_id,
-            title,
-            streams[0].status.as_str(),
-            thumbnail_url,
-            streams[0].schedule_time,
-            streams[0].start_time,
-            streams[0].end_time,
-        )
-        .execute(&pool)
-        .await
-        .map_err(Error::Database)?;
+        update_youtube_stream(&streams[0], vtuber_id, title, thumbnail_url, &pool).await?;
 
         return Ok(StatusCode::OK);
     }
 
     if let Some((video_id, vtuber_id)) = parse_deletion(&doc) {
-        span.record("vtuber_id", &display(vtuber_id));
-        span.record("video_id", &display(video_id));
+        tracing::info!(action = "Delete video", vtuber_id, video_id);
 
-        let _ = sqlx::query!(
-            r#"
-                delete from youtube_streams
-                      where stream_id = $1
-                        and vtuber_id = $2
-                        and status = 'scheduled'::stream_status
-            "#,
-            video_id,
-            vtuber_id,
-        )
-        .execute(&pool)
-        .await
-        .map_err(Error::Database)?;
+        delete_schedule_stream(video_id, vtuber_id, &pool).await?;
 
         return Ok(StatusCode::OK);
     }
 
+    tracing::error!(err.msg = "unkown xml schema");
+
     Ok(StatusCode::BAD_REQUEST)
-}
-
-async fn upload_thumbnail(stream_id: &str, span: &Span, client: &Client) -> Option<String> {
-    // TODO: versioning filename using md5
-    let filename = format!("{}.jpg", stream_id);
-
-    let data = match youtube_thumbnail(stream_id, &client).await {
-        Ok(x) => x,
-        Err(e) => {
-            tracing::warn!(parent: span, err = ?e, "failed to upload thumbnail");
-            return None;
-        }
-    };
-
-    match upload_file(&filename, data, "image/jpg", &client).await {
-        Ok(_) => {
-            tracing::debug!(parent: span, "thumbnail uploaded");
-            Some(filename)
-        }
-        Err(e) => {
-            tracing::warn!(parent: span, err = ?e, "failed to upload thumbnail");
-            None
-        }
-    }
 }
 
 pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a str)> {
@@ -158,4 +101,89 @@ pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
         .map(|v| v.id)?;
 
     Some((stream_id, vtuber_id))
+}
+
+async fn upload_thumbnail(stream_id: &str, client: &Client) -> Option<String> {
+    let data = match youtube_thumbnail(stream_id, &client).await {
+        Ok(x) => x,
+        Err(e) => {
+            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
+            return None;
+        }
+    };
+
+    let content_sha256 = Sha256::digest(data.as_ref());
+
+    let filename = format!("{}.{}.jpg", stream_id, hex::encode(content_sha256));
+
+    match upload_file(&filename, data, "image/jpg", &client).await {
+        Ok(_) => Some(filename),
+        Err(e) => {
+            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
+            None
+        }
+    }
+}
+
+#[instrument(
+    name = "Update youtube stream",
+    skip(stream, vtuber_id, title, thumbnail_url, pool),
+    fields(db.table = "youtube_streams")
+)]
+async fn update_youtube_stream(
+    stream: &Stream,
+    vtuber_id: &str,
+    title: &str,
+    thumbnail_url: Option<String>,
+    pool: &PgPool,
+) -> Result<(), Error> {
+    let _ = sqlx::query!(
+        r#"
+            insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
+                 values ($1, $2, $3, $4::text::stream_status, $5, $6, $7, $8)
+            on conflict (stream_id) do update
+                    set (title, status, thumbnail_url, schedule_time, start_time, end_time)
+                      = ($3, $4::text::stream_status, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
+        "#,
+        stream.id,
+        vtuber_id,
+        title,
+        stream.status.as_str(),
+        thumbnail_url,
+        stream.schedule_time,
+        stream.start_time,
+        stream.end_time,
+    )
+    .execute(pool)
+    .await
+    .map_err(Error::Database)?;
+
+    Ok(())
+}
+
+#[instrument(
+    name = "Delete schedule stream",
+    skip(stream_id, vtuber_id, pool),
+    fields(db.table = "youtube_streams")
+)]
+async fn delete_schedule_stream(
+    stream_id: &str,
+    vtuber_id: &str,
+    pool: &PgPool,
+) -> Result<(), Error> {
+    let _ = sqlx::query!(
+        r#"
+            delete from youtube_streams
+                  where stream_id = $1
+                    and vtuber_id = $2
+                    and status = 'scheduled'::stream_status
+        "#,
+        stream_id,
+        vtuber_id,
+    )
+    .execute(pool)
+    .await
+    .map_err(Error::Database)?;
+
+    Ok(())
 }
