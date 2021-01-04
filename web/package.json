@@ -28,7 +28,7 @@
     "@nguniversal/common": "~10.1.0",
     "@nguniversal/express-engine": "^10.1.0",
     "@swimlane/ngx-charts": "^16.0.0",
-    "aws4fetch": "^1.0.12",
+    "aws4fetch": "^1.0.13",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
     "ngx-ellipsis": "^3.0.0",
