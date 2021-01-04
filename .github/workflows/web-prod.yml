@@ -32,16 +32,11 @@ jobs:
         with:
           node-version: 10.x
 
-      - name: Add yarn global bin to path
-        run: echo "::add-path::$(yarn global bin)"
-
-      - name: Run Prettier
-        run: |
-          yarn global add prettier
-          prettier --check --ignore-path .gitignore 'src/**/*.{ts,js,json.html,scss}'
-
       - name: Install dependencies
         run: yarn install --prefer-offline
+
+      - name: Run Prettier
+        run: yarn prettier --check --ignore-path .gitignore 'src/**/*.{ts,js,json.html,scss}'
 
       - name: Build
         run: |
