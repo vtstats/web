@@ -24,6 +24,7 @@ macro_rules! vtubers {
 
 vtubers! {
     hololive,     Some("UCJFZiqLMntJufDCHc6bQixg"), Some("286700005"),
+    yagoo,        Some("UCu2DMOGLeR_DSStCyeQpi5Q"), None,
     sora,         Some("UCp6993wxpyDPHUpavwDFqgg"), Some("286179206"),
     roboco,       Some("UCDqI2jOz0weumE8s7paEk6g"), Some("20813493"),
     miko,         Some("UC-hM6YJuNYVAmUWxeIr9FeA"), Some("366690056"),
