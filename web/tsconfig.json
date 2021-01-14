@@ -17,7 +17,7 @@
     "lib": ["es2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "vtubers": ["./vtubers.json"]
+      "vtubers": ["./vtubers.ts"]
     }
   },
   "angularCompilerOptions": {

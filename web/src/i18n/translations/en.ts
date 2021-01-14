@@ -33,6 +33,7 @@ const translations: Translations = {
 
   // VTubers
   hololive: "Hololive Official",
+  yagoo: "YAGOO",
   sora: "Tokino Sora",
   roboco: "Roboco",
   miko: "Sakura Miko",

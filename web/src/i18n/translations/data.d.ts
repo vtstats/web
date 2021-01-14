@@ -1,4 +1,4 @@
-import { vtubers, batches } from "vtubers";
+import { VTuberIds, BatchIds } from "vtubers";
 
 export type MessageIds =
   | "updatedAt"
@@ -29,7 +29,7 @@ export type MessageIds =
   | "selectLanguage"
   | "recentStreams"
   | "streamViewers"
-  | keyof typeof vtubers
-  | keyof typeof batches;
+  | VTuberIds
+  | BatchIds;
 
 export type Translations = Record<MessageIds, string>;

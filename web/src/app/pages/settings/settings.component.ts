@@ -8,7 +8,7 @@ import {
 
 import { translate } from "src/i18n/translations";
 
-import { vtubers, batches } from "vtubers";
+import { vtubers, batches, VTuberIds } from "vtubers";
 
 import { ConfigService } from "src/app/shared";
 
@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit {
   constructor(public config: ConfigService, private title: Title) {
     this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
       id,
-      members: batch.vtubers.map((id) => vtubers[id]),
+      members: batch?.map((id) => vtubers[id]),
     }));
   }
 
@@ -63,7 +63,7 @@ export class SettingsComponent implements OnInit {
 
   isSelected = (id: string): boolean => this.config.vtuber.has(id);
 
-  getMemberIds = (id: string): string[] => batches[id].vtubers;
+  getMemberIds = (id: string): string[] => batches[id];
 
   toggleVTuber(id: string) {
     if (this.isSelected(id)) {
