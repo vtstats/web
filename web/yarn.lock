@@ -5691,12 +5691,13 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngx-ellipsis@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-3.0.0.tgz#002e879ec38612e65866f2b951dc8685cb5af42b"
-  integrity sha512-T7QdFPEVvNepYRlP0GkOkejJjIn2T+SwZnXcXTPpFsRJMh8u12m2MQQEwSpGg3XGHFGUphwJCZV+oUl6PJMWxg==
+ngx-ellipsis@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-3.1.1.tgz#575bdad3bd9dfe87b0f2df4f01700f734623244c"
+  integrity sha512-5lERr0PCXBbXAUnTCn6KGV5C0kWpg2FEcU5FggjLYvuWEyL+AcgGn9Wt20VUmMcDpfuUk6jxHyTzqV1xHeAY/g==
   dependencies:
     resize-observer-polyfill "*"
+    tslib "^2.0.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
