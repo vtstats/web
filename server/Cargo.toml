@@ -16,7 +16,7 @@ reqwest = { version = "0.10.9", default-features = false, features = ["json", "r
 roxmltree = "0.14.0"
 serde = { version = "1.0.118", features = ["derive"] }
 serde_json = "1.0.61"
-serde_with = "1.6.0"
+serde_with = "1.6.1"
 sha2 = "0.9.2"
 sqlx = { version = "0.4.1", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono"] }
 tokio = { version = "0.2.22", features = ["macros"] }
