@@ -160,7 +160,7 @@ pub async fn youtube_stream_max_updated_at(pool: &PgPool) -> Result<Option<UtcTi
         .map_err(Error::Database)
 }
 
-// statistic
+// ==== statistic ====
 
 pub struct Statistic {
     pub id: String,

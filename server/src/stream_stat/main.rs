@@ -128,11 +128,11 @@ async fn update_youtube_streams(
             r#"
                 update youtube_streams
                    set (updated_at, status, schedule_time, start_time, end_time)
-                     = ($1, $2::text::stream_status, $3, $4, $5)
+                     = ($1, $2, $3, $4, $5)
                  where stream_id = $6
             "#,
             now,
-            stream.status.as_str(),
+            stream.status: _,
             stream.schedule_time,
             stream.start_time,
             stream.end_time,

@@ -140,15 +140,15 @@ async fn update_youtube_stream(
     let _ = sqlx::query!(
         r#"
             insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
-                 values ($1, $2, $3, $4::text::stream_status, $5, $6, $7, $8)
+                 values ($1, $2, $3, $4, $5, $6, $7, $8)
             on conflict (stream_id) do update
                     set (title, status, thumbnail_url, schedule_time, start_time, end_time)
-                      = ($3, $4::text::stream_status, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
+                      = ($3, $4, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
         "#,
         stream.id,
         vtuber_id,
         title,
-        stream.status.as_str(),
+        stream.status: _,
         thumbnail_url,
         stream.schedule_time,
         stream.start_time,

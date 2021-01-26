@@ -19,21 +19,12 @@ pub struct Stream {
     pub viewers: Option<i32>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, sqlx::Type)]
+#[sqlx(rename = "stream_status", rename_all = "lowercase")]
 pub enum StreamStatus {
     Scheduled,
     Live,
     Ended,
-}
-
-impl StreamStatus {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            StreamStatus::Scheduled => "scheduled",
-            StreamStatus::Live => "live",
-            StreamStatus::Ended => "ended",
-        }
-    }
 }
 
 #[derive(Deserialize, Debug)]
