@@ -5,7 +5,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { TransferHttpCacheModule } from "@nguniversal/common";
 
 import { environment } from "../environments/environment";
 
@@ -22,14 +21,12 @@ import {
   VTubersDetailComponent,
   StreamsDetailComponent,
   NotFoundComponent,
-  AppShellComponent,
 } from "./pages";
 
 import { AppComponent } from "./app.component";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
-  { path: "shell", component: AppShellComponent },
   { path: "youtube-channel", component: YoutubeChannelComponent },
   { path: "bilibili-channel", component: BilibiliChannelComponent },
   {
@@ -50,8 +47,7 @@ const ROUTES: Routes = [
   declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: "holostats" }),
-    TransferHttpCacheModule,
+    BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
     ServiceWorkerModule.register("ngsw-worker.js", {

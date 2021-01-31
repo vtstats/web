@@ -2,7 +2,7 @@ type = "javascript"
 account_id = "f1c2ab938f91fa76af879185e872f215"
 
 [site]
-bucket = "dist/browser"
+bucket = "dist"
 entry-point = "workers"
 
 [env.dev]

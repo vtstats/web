@@ -1,5 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { fromEvent } from "rxjs";
@@ -93,8 +92,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
-    @Inject(PLATFORM_ID) private platformId: string
+    private sanitizer: DomSanitizer
   ) {
     for (const icon of icons) {
       this.iconRegistry.addSvgIconLiteral(
@@ -105,15 +103,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      fromEvent(window, "resize")
-        .pipe(
-          throttleTime(500),
-          startWith(window.innerWidth),
-          map(() => window.innerWidth)
-        )
-        .subscribe((width) => this.updateSidenav(width));
-    }
+    fromEvent(window, "resize")
+      .pipe(
+        throttleTime(500),
+        startWith(window.innerWidth),
+        map(() => window.innerWidth)
+      )
+      .subscribe((width) => this.updateSidenav(width));
   }
 
   updateSidenav(width: number) {

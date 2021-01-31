@@ -1,13 +1,13 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-  "index": "/shell.html",
+  "index": "/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/shell.html", "/manifest.webmanifest", "/*.css", "/*.js"]
+        "files": ["/index.html", "/manifest.webmanifest", "/*.css", "/*.js"]
       }
     },
     {

@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/browser",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -100,27 +100,6 @@
             "browserTarget": "holostats:build"
           }
         },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "sourceMap": false,
-              "optimization": true
-            }
-          }
-        },
         "workers": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
@@ -133,21 +112,6 @@
               "outputHashing": "media",
               "sourceMap": false,
               "optimization": true
-            }
-          }
-        },
-        "app-shell": {
-          "builder": "@angular-devkit/build-angular:app-shell",
-          "options": {
-            "outputIndexPath": "dist/browser/shell.html",
-            "browserTarget": "holostats:build",
-            "serverTarget": "holostats:server",
-            "route": "shell"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "holostats:build:production",
-              "serverTarget": "holostats:server:production"
             }
           }
         }

@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
-import { DOCUMENT, isPlatformBrowser } from "@angular/common";
+import { Injectable, Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 
 import { vtubers } from "vtubers";
 
@@ -8,16 +8,11 @@ export class ConfigService {
   vtuber: Set<string>;
   theme: string;
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    if (isPlatformBrowser(this.platformId)) {
-      if (window.localStorage.getItem("vtuber")) {
-        this.vtuber = new Set(window.localStorage.getItem("vtuber").split(","));
-      }
-      this.theme = window.localStorage.getItem("theme");
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    if (window.localStorage.getItem("vtuber")) {
+      this.vtuber = new Set(window.localStorage.getItem("vtuber").split(","));
     }
+    this.theme = window.localStorage.getItem("theme");
 
     this.theme ??= "default";
     this.vtuber ??= new Set(
@@ -56,8 +51,6 @@ export class ConfigService {
   }
 
   private setItem(key: string, value: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      window.localStorage.setItem(key, value);
-    }
+    window.localStorage.setItem(key, value);
   }
 }

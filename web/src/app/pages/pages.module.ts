@@ -20,7 +20,6 @@ import { YoutubeStreamComponent } from "./youtube-stream";
 import { VTubersDetailComponent } from "./vtubers-detail";
 import { StreamsDetailComponent } from "./streams-detail";
 import { NotFoundComponent } from "./not-found";
-import { AppShellComponent } from "./app-shell";
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { AppShellComponent } from "./app-shell";
     VTubersDetailComponent,
     StreamsDetailComponent,
     NotFoundComponent,
-    AppShellComponent,
   ],
   imports: [
     CommonModule,
