@@ -10,7 +10,12 @@ export class ConfigService {
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     if (window.localStorage.getItem("vtuber")) {
-      this.vtuber = new Set(window.localStorage.getItem("vtuber").split(","));
+      this.vtuber = new Set(
+        window.localStorage
+          .getItem("vtuber")
+          .split(",")
+          .filter((id) => id in vtubers)
+      );
     }
     this.theme = window.localStorage.getItem("theme");
 

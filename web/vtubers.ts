@@ -42,12 +42,6 @@ export type VTuberIds =
   | "okayu"
   | "korone"
   | "azki"
-  | "yogiri"
-  | "civia"
-  | "echo"
-  | "doris"
-  | "artia"
-  | "rosalyn"
   | "risu"
   | "moona"
   | "iofi"
@@ -66,7 +60,6 @@ export type VTuberIds =
   | "nana"
   | "ui"
   | "miyabi"
-  | "kira"
   | "izuru"
   | "aruran"
   | "rikka"
@@ -319,43 +312,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     bilibili: 389056211,
     default: true,
   },
-  yogiri: {
-    id: "yogiri",
-    twitter: "Yogiri_hololive",
-    bilibili: 427061218,
-    default: true,
-  },
-  civia: {
-    id: "civia",
-    twitter: "Civia_Hololive",
-    youtube: "UCgNVXGlZIFK96XdEY20sVjg",
-    bilibili: 354411419,
-    default: true,
-  },
-  echo: {
-    id: "echo",
-    twitter: "SpadeEcho",
-    bilibili: 456368455,
-    default: true,
-  },
-  doris: {
-    id: "doris",
-    twitter: "",
-    bilibili: 511613156,
-    default: true,
-  },
-  artia: {
-    id: "artia",
-    twitter: "",
-    bilibili: 511613155,
-    default: true,
-  },
-  rosalyn: {
-    id: "rosalyn",
-    twitter: "",
-    bilibili: 511613157,
-    default: true,
-  },
   risu: {
     id: "risu",
     twitter: "ayunda_risu",
@@ -470,11 +426,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "miyabihanasaki",
     youtube: "UC6t3-_N8A6ME1JShZHHqOMw",
   },
-  kira: {
-    id: "kira",
-    twitter: "kagamikirach",
-    youtube: "UCEzsociuFqVwgZuMaZqaCsg",
-  },
   izuru: {
     id: "izuru",
     twitter: "kanadeizuru",
@@ -528,8 +479,6 @@ export type BatchIds =
   | "hololive_5th"
   | "hololive_gamers"
   | "innk_music"
-  | "hololive_cn_1st"
-  | "hololive_cn_2nd"
   | "hololive_id_1st"
   | "hololive_id_2nd"
   | "hololive_en"
@@ -551,12 +500,10 @@ export const batches: Record<BatchIds, Batch> = {
   hololive_5th: ["lamy", "nene", "botan", "polka"],
   hololive_gamers: ["fubuki", "mio", "okayu", "korone"],
   innk_music: ["azki"],
-  hololive_cn_1st: ["yogiri", "civia", "echo"],
-  hololive_cn_2nd: ["doris", "artia", "rosalyn"],
   hololive_id_1st: ["risu", "moona", "iofi"],
   hololive_id_2nd: ["ollie", "melfissa", "reine"],
   hololive_en: ["amelia", "calliope", "gura", "inanis", "kiara"],
-  holostars_1st: ["miyabi", "kira", "izuru", "aruran", "rikka"],
+  holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
   others: ["luna", "nekomiya", "tamaki", "pph", "nana", "ui"],

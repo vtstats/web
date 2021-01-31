@@ -66,14 +66,6 @@ vtubers! {
     korone,       Some("UChAnqc_AY5_I3Px5dig3X1Q"), Some("412135619"),
     // Innk Music
     azki,         Some("UC0TXe_LYZ4scaW2XMyi5_kw"), Some("389056211"),
-    // Hololive China 2nd Gen
-    yogiri,       None,                             Some("427061218"),
-    civia,        Some("UCgNVXGlZIFK96XdEY20sVjg"), Some("354411419"),
-    echo,         None,                             Some("456368455"),
-    // Hololive China 1st Gen
-    doris,        None,                             Some("511613156"),
-    artia,        None,                             Some("511613155"),
-    rosalyn,      None,                             Some("511613157"),
     // Hololive Indonesia 1st Gen
     risu,         Some("UCOyYb1c43VlX9rc_lT6NKQw"), None,
     moona,        Some("UCP0BspO_AMEe3aQqqpo89Dg"), None,
@@ -90,7 +82,6 @@ vtubers! {
     kiara,        Some("UCHsx4Hqa-1ORjQTh9TYDhww"), Some("674600646"),
     // Holostars 1st Gen
     miyabi,       Some("UC6t3-_N8A6ME1JShZHHqOMw"), None,
-    kira,         Some("UCEzsociuFqVwgZuMaZqaCsg"), None,
     izuru,        Some("UCZgOv3YDEs-ZnZWDYVwJdmA"), None,
     aruran,       Some("UCKeAhJvy8zgXWbh9duVjIaQ"), None,
     rikka,        Some("UC9mf_ZVpouoILRY9NUIaK-w"), None,

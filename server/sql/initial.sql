@@ -52,7 +52,6 @@ insert into youtube_channels (vtuber_id)
             ('ui'),              -- しぐれうい
             ('rurudo'),          -- rurudo
             ('miyabi'),          -- 花咲みやび
-            ('kira'),            -- 鏡見キラ
             ('izuru'),           -- 奏手イヅル
             ('aruran'),          -- アルランディス
             ('rikka'),           -- 律可
@@ -96,12 +95,6 @@ insert into bilibili_channels (vtuber_id)
             ('okayu'),           -- 猫又おかゆ
             ('korone'),          -- 戌神ころね
             ('azki'),            -- AZKi
-            ('yogiri'),          -- 夜霧 Yogiri
-            ('civia'),           -- 希薇娅 Civia
-            ('echo'),            -- 黑桃影 Echo
-            ('doris'),           -- 朵莉丝 Doris
-            ('artia'),           -- 阿媂娅 Artia
-            ('rosalyn'),         -- 罗莎琳 Rosalyn
             ('amelia'),          -- Watson Amelia
             ('calliope'),        -- Mori Calliope
             ('gura'),            -- Gawr Gura
