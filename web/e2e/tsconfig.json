@@ -1,0 +1,16 @@
+{
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2018",
+    "lib": ["es2018", "DOM"],
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "moduleResolution": "Node",
+    "types": ["node", "./steps"]
+  },
+  "include": ["tests/*"]
+}
