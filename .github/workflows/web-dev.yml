@@ -27,10 +27,10 @@ jobs:
           path: web/node_modules
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Use Node 10.x
+      - name: Use Node 12
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 12
 
       - name: Install dependencies
         run: yarn install --prefer-offline
