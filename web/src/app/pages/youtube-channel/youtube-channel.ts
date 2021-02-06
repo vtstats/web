@@ -11,7 +11,7 @@ import { startWith, switchMap, tap } from "rxjs/operators";
 
 import { Channel } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
-import { translate } from "src/i18n/translations";
+import { translate } from "src/i18n";
 
 @Component({
   selector: "hs-youtube-channel",
