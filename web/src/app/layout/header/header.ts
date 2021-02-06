@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 
 import { ConfigService } from "src/app/shared";
-import { getLocaleId } from "src/i18n/locale";
+import { getLocaleId } from "src/i18n";
 
 @Component({
   selector: "hs-header",

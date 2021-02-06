@@ -6,7 +6,7 @@ import {
   MatTreeFlattener,
 } from "@angular/material/tree";
 
-import { translate } from "src/i18n/translations";
+import { translate } from "src/i18n";
 
 import { vtubers, batches, VTuberIds } from "vtubers";
 
