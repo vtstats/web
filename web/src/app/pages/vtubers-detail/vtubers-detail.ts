@@ -1,14 +1,6 @@
-import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import type { DataItem, MultiSeries } from "@swimlane/ngx-charts";
-import { endOfDay, startOfDay, subDays } from "date-fns";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
 
@@ -16,7 +8,6 @@ import { vtubers } from "vtubers";
 
 import {
   Channel,
-  ChannelReportKind,
   Stream,
   StreamList,
   StreamListLoadMoreOption,
@@ -24,7 +15,7 @@ import {
   VTuber,
 } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { translate } from "src/i18n/translations";
+import { translate } from "src/i18n";
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -53,10 +44,6 @@ export class VTubersDetail implements OnInit, OnDestroy {
   chartLoading = false;
 
   channels: Channel[];
-  bilibiliSubs: MultiSeries = [];
-  bilibiliViews: MultiSeries = [];
-  youtubeSubs: MultiSeries = [];
-  youtubeViews: MultiSeries = [];
 
   loadMore$ = new Subject<StreamListLoadMoreOption>();
 
@@ -99,65 +86,10 @@ export class VTubersDetail implements OnInit, OnDestroy {
     }
 
     this.title.setTitle(`${translate(this.vtuber.id)} | HoloStats`);
-
-    this.chartLoading = true;
-
-    const now = Date.now();
-
-    this.api
-      .channelReports({
-        ids: [this.vtuber.id],
-        metrics: [
-          ChannelReportKind.youtubeChannelSubscriber,
-          ChannelReportKind.youtubeChannelView,
-          ChannelReportKind.bilibiliChannelSubscriber,
-          ChannelReportKind.bilibiliChannelView,
-        ],
-        startAt: startOfDay(subDays(now, 7)),
-        endAt: endOfDay(now),
-      })
-      .subscribe((res) => {
-        this.channels = res.channels;
-
-        this.chartLoading = false;
-
-        for (const report of res.reports) {
-          const series = this.generateSeries(report.rows);
-
-          switch (report.kind) {
-            case ChannelReportKind.youtubeChannelSubscriber:
-              this.youtubeSubs.push({ name: "", series });
-              break;
-            case ChannelReportKind.youtubeChannelView:
-              this.youtubeViews.push({ name: "", series });
-              break;
-            case ChannelReportKind.bilibiliChannelSubscriber:
-              this.bilibiliSubs.push({ name: "", series });
-              break;
-            case ChannelReportKind.bilibiliChannelView:
-              this.bilibiliViews.push({ name: "", series });
-              break;
-          }
-        }
-      });
   }
 
   ngOnDestroy() {
     this.loadMore$.complete();
-  }
-
-  generateSeries(rows: Array<[number, number]>): DataItem[] {
-    const res = [];
-    let prev: number;
-
-    for (const [date, value] of rows) {
-      if (prev === undefined || prev !== value) {
-        res.push({ name: new Date(date), value });
-        prev = value;
-      }
-    }
-
-    return res;
   }
 
   trackBy(_: number, stream: Stream): string {

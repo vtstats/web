@@ -1,0 +1,17 @@
+@import "~@angular/material/theming";
+
+@mixin channel-stats-chart-theme($theme) {
+  $background: map-get($theme, "background");
+  $foreground: map-get($theme, "foreground");
+
+  .channel-stats-chart {
+    color: mat-color($foreground, "secondary-text");
+  }
+}
+
+@mixin channel-stats-chart-typography($config) {
+  .channel-stats-chart {
+    font-size: mat-font-size($config, "body-2");
+    font-weight: mat-font-weight($config, "body-2");
+  }
+}
