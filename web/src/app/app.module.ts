@@ -8,7 +8,7 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 
 import { environment } from "../environments/environment";
 
-import { getLocaleId } from "../i18n/locale";
+import { getLocaleId } from "../i18n";
 
 import { LayoutModule } from "./layout";
 import {
