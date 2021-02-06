@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import type { MultiSeries } from "@swimlane/ngx-charts";
 
-import { Stream, StreamReportKind } from "src/app/models";
+import { Report, Stream, StreamReportKind } from "src/app/models";
 import { ApiService, TickService } from "src/app/shared";
 
 @Component({
@@ -24,7 +23,7 @@ export class StreamsDetail implements OnInit {
 
   loading = false;
   stream: Stream;
-  stats: MultiSeries = [];
+  reports: Report<StreamReportKind>[];
 
   ngOnInit() {
     this.loading = true;
@@ -37,24 +36,14 @@ export class StreamsDetail implements OnInit {
       .subscribe((res) => {
         this.loading = false;
 
-        if (res.streams.length > 0) {
-          this.stream = res.streams[0];
-        } else {
+        if (res.streams.length == 0) {
           this.router.navigateByUrl("/404");
           return;
         }
 
+        this.stream = res.streams[0];
+        this.reports = res.reports;
         this.title.setTitle(`${this.stream.title} | HoloStats`);
-
-        if (res.reports?.[0].kind == StreamReportKind.youtubeStreamViewer) {
-          this.stats.push({
-            name: "",
-            series: res.reports[0].rows.map(([date, value]) => ({
-              name: new Date(date),
-              value,
-            })),
-          });
-        }
       });
   }
 }
