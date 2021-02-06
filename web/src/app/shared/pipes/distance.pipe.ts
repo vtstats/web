@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { formatDistanceStrict } from "date-fns";
 
-import { getDateFnsLocale } from "src/i18n/locale";
+import { getDateFnsLocale } from "src/i18n";
 
 @Pipe({ name: "distance" })
 export class DistancePipe implements PipeTransform {

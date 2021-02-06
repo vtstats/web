@@ -1,4 +1,7 @@
-import { Translations } from "./data";
+import type { Translations } from "./data";
+
+import locale from "@angular/common/locales/ms";
+import dateFnsLocale from "date-fns/locale/ms";
 
 const translations: Translations = {
   // UI
@@ -112,4 +115,4 @@ const translations: Translations = {
   others: "Lain-lain",
 };
 
-export default translations;
+export { locale, dateFnsLocale, translations };
