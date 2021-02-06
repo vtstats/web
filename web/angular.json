@@ -48,7 +48,8 @@
               "src/manifest.webmanifest"
             ],
             "styles": ["src/styles/main.scss"],
-            "i18nMissingTranslation": "error"
+            "i18nMissingTranslation": "error",
+            "allowedCommonJsDependencies": ["apexcharts"]
           },
           "configurations": {
             "production": {

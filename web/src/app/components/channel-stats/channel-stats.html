@@ -1,0 +1,11 @@
+<hs-vtuber-summary
+  [vtuber]="vtuber"
+  [channels]="channels"
+  [loading]="loading"
+></hs-vtuber-summary>
+
+<div class="chart-container">
+  <div class="chart" *ngFor="let report of reports">
+    <hs-channel-stats-chart [report]="report"></hs-channel-stats-chart>
+  </div>
+</div>
