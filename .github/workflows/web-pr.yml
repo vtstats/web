@@ -42,6 +42,7 @@ jobs:
         uses: microsoft/playwright-github-action@v1
 
       - name: Run e2e
+        continue-on-error: true
         run: |
           node e2e/server.js &
           yarn e2e
