@@ -5,6 +5,7 @@ mod pubsub;
 mod reject;
 #[path = "../requests/mod.rs"]
 mod requests;
+mod sitemap;
 #[path = "../utils.rs"]
 mod utils;
 mod v3;
@@ -40,6 +41,7 @@ async fn main() -> Result<()> {
         .and(
             v4::api(pool.clone())
                 .or(v3::api(pool.clone()))
+                .or(sitemap::sitemap(pool.clone()))
                 .or(pubsub::pubsub(pool, client)),
         )
         .with(cors)
