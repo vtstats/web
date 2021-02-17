@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  NgZone,
   OnDestroy,
   ViewChild,
   ViewEncapsulation,
@@ -12,7 +11,6 @@ import type { ApexOptions } from "apexcharts";
 @Component({
   selector: "apx-chart",
   template: `<div class="apx-chart" #chart></div>`,
-  styleUrls: ["apx-chart.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -21,8 +19,6 @@ export class ApxChart implements OnDestroy {
   private chartElement: ElementRef;
 
   private chartObj: ApexCharts | undefined;
-
-  constructor(private zone: NgZone) {}
 
   ngOnDestroy() {
     if (this.chartObj) {

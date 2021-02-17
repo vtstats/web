@@ -6,12 +6,12 @@
 
 // components
 @import "src/app/components/apx-chart/apx-chart-theme";
-@import "src/app/components/vtuber-summary/vtuber-summary-theme";
 @import "src/app/components/big-number/big-number-theme";
 @import "src/app/components/stream-summary/stream-summary-theme";
 @import "src/app/components/stream-item/stream-item-theme";
 @import "src/app/components/channel-table/channel-table-theme";
 @import "src/app/components/sub-menu/sub-menu-theme";
+@import "src/app/components/channel-stats/channel-stats-theme";
 @import "src/app/components/channel-stats-chart/channel-stats-chart-theme";
 
 // pages
@@ -27,7 +27,6 @@
   @include global-theme($theme);
   @include material-theme($theme);
   @include stream-item-theme($theme);
-  @include vtuber-summary-theme($theme);
   @include stream-summary-theme($theme);
   @include channel-table-theme($theme);
   @include sub-menu-theme($theme);
@@ -35,6 +34,7 @@
   @include header-theme($theme);
   @include not-found-theme($theme);
   @include big-number-theme($theme);
+  @include channel-stats-theme($theme);
   @include channel-stats-chart-theme($theme);
   @include apx-chart-theme($theme);
 }
@@ -43,13 +43,12 @@
   @include material-typography($config);
   @include not-found-typography($config);
   @include stream-item-typography($config);
-  @include vtuber-summary-typography($config);
   @include stream-summary-typography($config);
   @include sub-menu-typography($config);
   @include sidenav-typography($config);
   @include settings-typography($config);
   @include big-number-typography($config);
-  @include channel-stats-chart-typography($config);
+  @include channel-stats-typography($config);
   @include apx-chart-typography($config);
 }
 
