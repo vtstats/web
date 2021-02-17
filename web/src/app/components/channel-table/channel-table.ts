@@ -22,54 +22,27 @@ import type { Channel } from "src/app/models";
 export class ChannelTable implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
-  _dataSoruce = new MatTableDataSource<Channel>([]);
-
-  @Input() loading: boolean;
+  data = new MatTableDataSource<Channel>([]);
 
   @Input() set dataSouce(dataSouce: Array<Channel>) {
-    this._dataSoruce.data = dataSouce;
+    this.data.data = dataSouce;
   }
 
-  get data() {
-    if (this.loading) {
-      return new Array(7);
-    } else {
-      return this._dataSoruce;
-    }
-  }
-
-  get displayedColumns(): string[] {
-    if (this.loading) {
-      return [
-        "shimmerProfile",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-        "shimmerText",
-      ];
-    } else {
-      return [
-        "profile",
-        "name",
-        "subscriberCount",
-        "dailySubscriberCount",
-        "weeklySubscriberCount",
-        "monthlySubscriberCount",
-        "viewCount",
-        "dailyViewCount",
-        "weeklyViewCount",
-        "monthlyViewCount",
-      ];
-    }
-  }
+  displayedColumns: string[] = [
+    "profile",
+    "name",
+    "subscriberCount",
+    "dailySubscriberCount",
+    "weeklySubscriberCount",
+    "monthlySubscriberCount",
+    "viewCount",
+    "dailyViewCount",
+    "weeklyViewCount",
+    "monthlyViewCount",
+  ];
 
   ngAfterViewInit() {
-    this._dataSoruce.sort = this.sort;
+    this.data.sort = this.sort;
   }
 
   trackBy(_: number, channel: Channel): string {
@@ -77,6 +50,32 @@ export class ChannelTable implements AfterViewInit {
   }
 
   getTotal(path: Exclude<keyof Channel, "vtuberId" | "kind">): number {
-    return this._dataSoruce.data.reduce((acc, item) => acc + item[path], 0);
+    return this.data.data.reduce((acc, item) => acc + item[path], 0);
   }
+}
+
+@Component({
+  selector: "hs-channel-table-shimmer",
+  templateUrl: "channel-table-shimmer.html",
+  styleUrls: ["channel-table.scss"],
+  encapsulation: ViewEncapsulation.None,
+  host: { class: "channel-table" },
+})
+export class ChannelTableShimmer {
+  @ViewChild(MatSort) sort: MatSort;
+
+  data = new Array(7);
+
+  displayedColumns: string[] = [
+    "shimmerProfile",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+    "shimmerText",
+  ];
 }

@@ -13,18 +13,28 @@ import { EllipsisModule } from "ngx-ellipsis";
 
 import { ApxChart } from "./apx-chart/apx-chart";
 import { ChannelStats } from "./channel-stats/channel-stats";
-import { ChannelStatsChart } from "./channel-stats-chart/channel-stats-chart";
-import { BigNumber } from "./big-number/big-number";
-import { ChannelTable } from "./channel-table/channel-table";
+import {
+  ChannelStatsChart,
+  ChannelStatsChartShimmer,
+} from "./channel-stats-chart/channel-stats-chart";
+import { BigNumber, BigNumberShimmer } from "./big-number/big-number";
+import {
+  ChannelTable,
+  ChannelTableShimmer,
+} from "./channel-table/channel-table";
 import { LoadingSpinner } from "./loading-spinner/loading-spinner";
 import { NumberRow } from "./number-row/number-row";
-import { ShimmerBigNumber } from "./shimmer-big-number/shimmer-big-number";
-import { ShimmerStreamItem } from "./shimmer-stream-item/shimmer-stream-item";
-import { StreamItem } from "./stream-item/stream-item";
+import { StreamItem, StreamItemShimmer } from "./stream-item/stream-item";
 import { StreamGroup } from "./stream-group/stream-group";
 import { StreamsList } from "./stream-list/stream-list";
-import { StreamStatsChart } from "./stream-stats-chart/stream-stats-chart";
-import { StreamsSummary } from "./stream-summary/stream-summary";
+import {
+  StreamStatsChart,
+  StreamStatsChartShimmer,
+} from "./stream-stats-chart/stream-stats-chart";
+import {
+  StreamsSummary,
+  StreamsSummaryShimmer,
+} from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
 
 import { SharedModule } from "src/app/shared";
@@ -34,17 +44,21 @@ import { SharedModule } from "src/app/shared";
     ApxChart,
     ChannelStats,
     ChannelStatsChart,
+    ChannelStatsChartShimmer,
     BigNumber,
+    BigNumberShimmer,
     ChannelTable,
+    ChannelTableShimmer,
     LoadingSpinner,
     NumberRow,
     StreamGroup,
-    ShimmerBigNumber,
-    ShimmerStreamItem,
     StreamItem,
+    StreamItemShimmer,
     StreamsList,
     StreamStatsChart,
+    StreamStatsChartShimmer,
     StreamsSummary,
+    StreamsSummaryShimmer,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
@@ -67,15 +81,17 @@ import { SharedModule } from "src/app/shared";
     BigNumber,
     ChannelStats,
     ChannelTable,
+    ChannelTableShimmer,
     LoadingSpinner,
     NumberRow,
     StreamGroup,
-    ShimmerBigNumber,
-    ShimmerStreamItem,
     StreamItem,
+    StreamItemShimmer,
     StreamsList,
     StreamStatsChart,
+    StreamStatsChartShimmer,
     StreamsSummary,
+    StreamsSummaryShimmer,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,

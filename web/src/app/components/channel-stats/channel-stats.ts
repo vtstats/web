@@ -54,33 +54,4 @@ export class ChannelStats implements OnInit {
         this.reports = res.reports;
       });
   }
-
-  prev() {
-    this.start -= 24 * 60 * 60 * 1000;
-    this.end -= 24 * 60 * 60 * 1000;
-    this.zoomX();
-  }
-
-  next() {
-    this.start += 24 * 60 * 60 * 1000;
-    this.end += 24 * 60 * 60 * 1000;
-    this.zoomX();
-  }
-
-  changeRange(day: number) {
-    this.end = this.reports[0].rows[this.reports[0].rows.length - 1][0];
-    this.start = this.end - day * 24 * 60 * 60 * 1000;
-    this.zoomX();
-  }
-
-  zoomX() {
-    [
-      "youtube_channel_subscriber",
-      "youtube_channel_view",
-      "bilibili_channel_subscriber",
-      "bilibili_channel_view",
-    ].forEach((id) =>
-      (window as any).ApexCharts.exec(id, "zoomX", this.start, this.end)
-    );
-  }
 }
