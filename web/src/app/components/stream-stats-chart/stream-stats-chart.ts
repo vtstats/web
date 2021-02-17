@@ -19,11 +19,12 @@ import { translate } from "src/i18n";
 @Component({
   selector: "hs-stream-stats-chart",
   template: `
-    <div>
+    <div class="stream-stats-chart">
       <span>{{ title }}</span>
+      <apx-chart #chart></apx-chart>
     </div>
-    <apx-chart #chart></apx-chart>
   `,
+  styleUrls: ["stream-stats-chart.scss"],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

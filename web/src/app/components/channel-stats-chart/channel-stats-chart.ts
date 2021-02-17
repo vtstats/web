@@ -5,14 +5,12 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   OnChanges,
+  ChangeDetectorRef,
 } from "@angular/core";
-import { formatNumber } from "@angular/common";
+import { format } from "date-fns";
 
 import { ApxChart } from "../apx-chart/apx-chart";
 
-// these d3 dependencies came from ngx-charts
-import { format } from "d3-format";
-import { timeFormat } from "d3-time-format";
 import { ChannelReportKind, Report } from "src/app/models";
 import { translate } from "src/i18n";
 
@@ -20,14 +18,24 @@ import { translate } from "src/i18n";
   selector: "hs-channel-stats-chart",
   template: `
     <div class="channel-stats-chart">
-      <div class="toolbar">
-        <span>{{ title }}</span>
-        <span class="spacer"></span>
-        <button mat-icon-button (click)="changeRange(1)">1d</button>
-        <button mat-icon-button (click)="changeRange(3)">3d</button>
-        <button mat-icon-button (click)="changeRange(7)">7d</button>
+      <div class="container">
+        <div class="desc">
+          <span class="title">
+            {{ title }}
+          </span>
+          <div class="row">
+            <span class="number">
+              {{ value | number }}
+            </span>
+            <span class="spacer"></span>
+            <span>{{ date }}</span>
+          </div>
+        </div>
+        <div class="chart">
+          <apx-chart #chart></apx-chart>
+        </div>
       </div>
-      <apx-chart #chart></apx-chart>
+      <mat-divider></mat-divider>
     </div>
   `,
   styleUrls: ["channel-stats-chart.scss"],
@@ -39,6 +47,12 @@ export class ChannelStatsChart implements OnChanges {
 
   @ViewChild("chart", { static: true })
   private chart: ApxChart;
+
+  constructor(private cdf: ChangeDetectorRef) {}
+
+  private start: number;
+  private end: number;
+  private dataPointIndex: number = -1;
 
   get title(): string {
     return translate(
@@ -62,78 +76,95 @@ export class ChannelStatsChart implements OnChanges {
     }
   }
 
-  custom = ({ series, seriesIndex, dataPointIndex, w }) => {
-    return (
-      timeFormat("%m/%d %H:%M")(
-        w.globals.seriesX[seriesIndex][dataPointIndex]
-      ) +
-      "<br/>" +
-      formatNumber(series[seriesIndex][dataPointIndex], "en")
-    );
-  };
+  get date(): string {
+    let d = this.report.rows[
+      this.dataPointIndex === -1
+        ? this.report.rows.length - 1
+        : this.dataPointIndex
+    ][0];
+    return format(d, "yyyy-MM-dd HH:mm");
+  }
 
-  numFormatting = (num: number): string => format("~s")(Math.trunc(num));
+  get value(): number {
+    return this.report.rows[
+      this.dataPointIndex === -1
+        ? this.report.rows.length - 1
+        : this.dataPointIndex
+    ][1];
+  }
+
+  prev() {
+    this.start -= 24 * 60 * 60 * 1000;
+    this.end -= 24 * 60 * 60 * 1000;
+    this.chart.zoomX(this.start, this.end);
+  }
+
+  next() {
+    this.start += 24 * 60 * 60 * 1000;
+    this.end += 24 * 60 * 60 * 1000;
+    this.chart.zoomX(this.start, this.end);
+  }
 
   changeRange(day: number) {
-    const end = this.report.rows[this.report.rows.length - 1][0];
-    this.chart.zoomX(end - day * 24 * 60 * 60 * 1000, end);
+    this.end = this.report.rows[this.report.rows.length - 1][0];
+    this.start = this.end - day * 24 * 60 * 60 * 1000;
+    this.chart.zoomX(this.start, this.end);
   }
 
   ngOnChanges() {
     this.chart.createChart({
       series: [{ data: this.report.rows }],
-      stroke: {
-        width: 4,
-      },
-      yaxis: {
-        labels: {
-          formatter: this.numFormatting,
-          minWidth: 40,
-        },
-      },
+      stroke: { width: 3 },
       tooltip: {
-        custom: this.custom,
+        custom: () => "",
       },
       xaxis: {
         type: "datetime",
-        tooltip: {
-          enabled: false,
-        },
-        labels: {
-          // @ts-ignore
-          formatter: timeFormat("%m/%d"),
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          show: true,
-          position: "back",
-          stroke: {
-            width: 1,
-          },
-        },
+        floating: true,
+        labels: { show: false },
+        tooltip: { enabled: false },
+        axisTicks: { show: false },
       },
-      markers: {
-        size: 0,
+      yaxis: {
+        floating: true,
+        axisTicks: { show: false },
+        labels: { show: false },
       },
-      dataLabels: {
-        enabled: false,
-      },
+      markers: { size: 0 },
+      dataLabels: { enabled: false },
       chart: {
-        id: this.title,
+        id: this.report.kind,
         type: "area",
-        height: 350,
-        group: "poi",
+        height: 120,
         toolbar: {
           show: false,
           autoSelected: "pan",
         },
-        selection: {
-          enabled: false,
+        selection: { enabled: false },
+        events: {
+          mouseMove: (_a, _b, config) => {
+            this.dataPointIndex = config.dataPointIndex;
+            this.cdf.markForCheck();
+          },
+        },
+      },
+      grid: {
+        yaxis: { lines: { show: false } },
+        xaxis: { lines: { show: true } },
+        padding: {
+          left: -20,
+          right: 0,
+          bottom: 0,
+          top: -20,
         },
       },
       colors: this.colors,
+      responsive: [
+        {
+          breakpoint: 600,
+          options: { chart: { height: 80 } },
+        },
+      ],
     });
   }
 }

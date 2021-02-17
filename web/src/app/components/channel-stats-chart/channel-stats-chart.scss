@@ -1,10 +1,61 @@
 .channel-stats-chart {
-  .toolbar {
+  width: 100%;
+  margin-bottom: 8px;
+
+  .chart {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .row {
     display: flex;
+    flex-direction: row;
     align-items: center;
   }
 
   .spacer {
     flex: 1;
+  }
+
+  .date {
+    font-size: 16px;
+  }
+
+  .number {
+    font-size: 16px;
+  }
+
+  @media (min-width: 755px) {
+    .container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .row {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .desc {
+      margin-top: 16px;
+      flex: 1;
+    }
+
+    .number {
+      font-size: 24px;
+    }
+
+    .chart {
+      width: 75%;
+    }
+  }
+
+  .apx-chart {
+    .apexcharts-tooltip.apexcharts-theme-light {
+      display: none;
+    }
   }
 }

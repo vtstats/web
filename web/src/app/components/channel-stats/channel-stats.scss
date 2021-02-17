@@ -3,33 +3,23 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  @media screen and (max-width: 599px) {
-    flex-direction: column;
-  }
+  padding-bottom: 16px;
+  padding-top: 16px;
 
   .info {
-    flex: 1;
-    text-align: center;
-    padding-bottom: 16px;
+    margin-right: 24px;
 
     .profile {
-      width: 192px;
-      height: 192px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
     }
   }
 
   .meta {
-    flex: 2;
-    width: 100%;
     text-align: center;
 
     .name {
-      padding-bottom: 8px;
-    }
-
-    .icons {
       padding-bottom: 8px;
     }
 
@@ -38,5 +28,14 @@
       width: 20px;
       margin: 0 4px;
     }
+  }
+}
+
+.chart-container {
+  padding-right: 16px;
+  padding-left: 16px;
+
+  .toolbar {
+    text-align: right;
   }
 }

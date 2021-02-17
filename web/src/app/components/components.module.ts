@@ -7,6 +7,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { MatDividerModule } from "@angular/material/divider";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { EllipsisModule } from "ngx-ellipsis";
 
@@ -25,7 +26,6 @@ import { StreamsList } from "./stream-list/stream-list";
 import { StreamStatsChart } from "./stream-stats-chart/stream-stats-chart";
 import { StreamsSummary } from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
-import { VTubeSummary } from "./vtuber-summary/vtuber-summary";
 
 import { SharedModule } from "src/app/shared";
 
@@ -48,7 +48,6 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
-    VTubeSummary,
   ],
   imports: [
     CommonModule,
@@ -61,6 +60,7 @@ import { SharedModule } from "src/app/shared";
     MatTableModule,
     MatIconModule,
     MatSortModule,
+    MatDividerModule,
     SharedModule,
   ],
   exports: [
@@ -79,7 +79,6 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
-    VTubeSummary,
   ],
 })
 export class ComponentsModule {}
