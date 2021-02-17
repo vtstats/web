@@ -18,8 +18,15 @@ import { TickService } from "src/app/shared";
 export class StreamsSummary {
   constructor(private tick: TickService) {}
 
-  @Input() loading: boolean;
   @Input() stream: Stream;
 
   everySecond$ = this.tick.everySecond$;
 }
+
+@Component({
+  selector: "hs-stream-summary-shimmer",
+  templateUrl: "stream-summary-shimmer.html",
+  styleUrls: ["stream-summary.scss"],
+  encapsulation: ViewEncapsulation.None,
+})
+export class StreamsSummaryShimmer {}

@@ -34,16 +34,28 @@
   </div>
 </div>
 
-<div class="chart-container">
-  <div class="toolbar">
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="changeRange(1)">1d</button>
-    <button mat-icon-button (click)="changeRange(3)">3d</button>
-    <button mat-icon-button (click)="changeRange(7)">7d</button>
+<ng-container *ngIf="!loading; else shimmer">
+  <div class="chart-container">
+    <hs-channel-stats-chart
+      *ngFor="let report of reports"
+      [report]="report"
+    ></hs-channel-stats-chart>
   </div>
+</ng-container>
 
-  <hs-channel-stats-chart
-    *ngFor="let report of reports"
-    [report]="report"
-  ></hs-channel-stats-chart>
-</div>
+<ng-template #shimmer>
+  <div class="chart-container">
+    <hs-channel-stats-chart-shimmer
+      *ngIf="hasYouTubeChannel"
+    ></hs-channel-stats-chart-shimmer>
+    <hs-channel-stats-chart-shimmer
+      *ngIf="hasYouTubeChannel"
+    ></hs-channel-stats-chart-shimmer>
+    <hs-channel-stats-chart-shimmer
+      *ngIf="hasBilibiliChannel"
+    ></hs-channel-stats-chart-shimmer>
+    <hs-channel-stats-chart-shimmer
+      *ngIf="hasBilibiliChannel"
+    ></hs-channel-stats-chart-shimmer>
+  </div>
+</ng-template>

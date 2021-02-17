@@ -16,7 +16,10 @@
   </hs-sub-menu>
 </div>
 
-<hs-channel-table
-  [loading]="loading"
-  [dataSouce]="dataSource"
-></hs-channel-table>
+<ng-container *ngIf="!loading; else shimmerTable">
+  <hs-channel-table [dataSouce]="dataSource"></hs-channel-table>
+</ng-container>
+
+<ng-template #shimmerTable>
+  <hs-channel-table-shimmer></hs-channel-table-shimmer>
+</ng-template>

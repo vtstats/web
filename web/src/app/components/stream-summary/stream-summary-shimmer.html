@@ -1,0 +1,22 @@
+<div class="stream-summary">
+  <div class="cover">
+    <span class="link"></span>
+  </div>
+
+  <div class="meta">
+    <div class="title">
+      <span class="text shimmer" [style.width.%]="100"></span>
+      <span class="text shimmer" [style.width.%]="70"></span>
+    </div>
+
+    <div class="liver">
+      <div class="profile"></div>
+      <span class="name shimmer text" [style.width.px]="100"></span>
+    </div>
+
+    <hs-number-row *ngFor="let x of [1, 2]">
+      <hs-big-number-shimmer></hs-big-number-shimmer>
+      <hs-big-number-shimmer></hs-big-number-shimmer>
+    </hs-number-row>
+  </div>
+</div>
