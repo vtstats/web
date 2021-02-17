@@ -5,12 +5,6 @@
   $foreground: map-get($theme, "foreground");
   $is-dark-theme: map-get($theme, "is-dark");
 
-  .chart-container {
-    .toolbar {
-      color: mat-color($foreground, "secondary-text");
-    }
-  }
-
   $background-shadow: if(
     $is-dark-theme,
     rgba(255, 255, 255, 0.1),
@@ -29,13 +23,6 @@
 }
 
 @mixin channel-stats-typography($config) {
-  .chart-container {
-    .toolbar {
-      font-size: mat-font-size($config, "body-2");
-      font-weight: mat-font-weight($config, "body-2");
-    }
-  }
-
   .vtuber-summary {
     .name {
       font-size: mat-font-size($config, "title");

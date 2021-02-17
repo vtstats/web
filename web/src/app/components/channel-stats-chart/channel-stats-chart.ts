@@ -32,7 +32,7 @@ import { translate } from "src/i18n";
           </div>
         </div>
         <div class="chart">
-          <apx-chart #chart></apx-chart>
+          <apx-chart #chart [height]="120" [marginBottom]="15"></apx-chart>
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -93,24 +93,6 @@ export class ChannelStatsChart implements OnChanges {
     ][1];
   }
 
-  prev() {
-    this.start -= 24 * 60 * 60 * 1000;
-    this.end -= 24 * 60 * 60 * 1000;
-    this.chart.zoomX(this.start, this.end);
-  }
-
-  next() {
-    this.start += 24 * 60 * 60 * 1000;
-    this.end += 24 * 60 * 60 * 1000;
-    this.chart.zoomX(this.start, this.end);
-  }
-
-  changeRange(day: number) {
-    this.end = this.report.rows[this.report.rows.length - 1][0];
-    this.start = this.end - day * 24 * 60 * 60 * 1000;
-    this.chart.zoomX(this.start, this.end);
-  }
-
   ngOnChanges() {
     this.chart.createChart({
       series: [{ data: this.report.rows }],
@@ -168,3 +150,31 @@ export class ChannelStatsChart implements OnChanges {
     });
   }
 }
+
+@Component({
+  selector: "hs-channel-stats-chart-shimmer",
+  template: `
+    <div class="channel-stats-chart">
+      <div class="container">
+        <div class="desc">
+          <span class="title text shimmer" [style.width.px]="150"></span>
+          <div class="row">
+            <span class="number text shimmer" [style.width.px]="100"></span>
+            <span class="spacer"></span>
+            <span class="text shimmer" [style.width.px]="130"></span>
+          </div>
+        </div>
+        <div
+          class="chart shimmer"
+          [style.height.px]="120"
+          [style.marginBottom.px]="15"
+        ></div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  `,
+  styleUrls: ["channel-stats-chart.scss"],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ChannelStatsChartShimmer {}

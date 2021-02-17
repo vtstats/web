@@ -11,7 +11,6 @@ import { ApxChart } from "../apx-chart/apx-chart";
 import { formatNumber } from "@angular/common";
 
 // these d3 dependencies came from ngx-charts
-import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import { ChannelReportKind, Report } from "src/app/models";
 import { translate } from "src/i18n";
@@ -21,7 +20,7 @@ import { translate } from "src/i18n";
   template: `
     <div class="stream-stats-chart">
       <span>{{ title }}</span>
-      <apx-chart #chart></apx-chart>
+      <apx-chart #chart [height]="350"></apx-chart>
     </div>
   `,
   styleUrls: ["stream-stats-chart.scss"],
@@ -51,8 +50,6 @@ export class StreamStatsChart implements OnChanges {
       formatNumber(series[seriesIndex][dataPointIndex], "en")
     );
   };
-
-  numFormatting = (num: number): string => format("~s")(Math.trunc(num));
 
   ngOnChanges() {
     this.chart.createChart({
@@ -99,7 +96,6 @@ export class StreamStatsChart implements OnChanges {
         id: this.title,
         type: "area",
         height: 350,
-        group: "poi",
         toolbar: {
           show: false,
           autoSelected: "pan",
@@ -112,3 +108,17 @@ export class StreamStatsChart implements OnChanges {
     });
   }
 }
+
+@Component({
+  selector: "hs-stream-stats-chart-shimmer",
+  template: `
+    <div class="stream-stats-chart">
+      <span class="text shimmer" [style.width.px]="90"></span>
+      <div class="shimmer" [style.height.px]="350"></div>
+    </div>
+  `,
+  styleUrls: ["stream-stats-chart.scss"],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class StreamStatsChartShimmer {}

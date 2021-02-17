@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 4px;
   }
 
   .spacer {
@@ -46,6 +47,7 @@
 
     .number {
       font-size: 24px;
+      margin-bottom: 4px;
     }
 
     .chart {
