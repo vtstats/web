@@ -8,7 +8,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
-import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { ApxChart } from "./apx-chart/apx-chart";
@@ -67,7 +66,6 @@ import { SharedModule } from "src/app/shared";
     CommonModule,
     RouterModule,
     PortalModule,
-    NgxChartsModule,
     EllipsisModule,
     MatButtonModule,
     MatProgressSpinnerModule,
