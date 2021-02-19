@@ -39,8 +39,8 @@ import { translate } from "src/i18n";
     </div>
   `,
   styleUrls: ["channel-stats-chart.scss"],
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ChannelStatsChart implements OnChanges {
   @Input() report: Report<ChannelReportKind>;
@@ -50,8 +50,6 @@ export class ChannelStatsChart implements OnChanges {
 
   constructor(private cdf: ChangeDetectorRef) {}
 
-  private start: number;
-  private end: number;
   private dataPointIndex: number = -1;
 
   get title(): string {

@@ -50,10 +50,7 @@ export class ApxChart implements OnDestroy {
     }
 
     if ((window as any).ApexCharts) {
-      this.chartObj = new ApexCharts(this.chartElement.nativeElement, options);
-      this.loading = false;
-      this.cdf.markForCheck();
-      this.render();
+      this.initChart(options);
       return;
     }
 
@@ -62,11 +59,15 @@ export class ApxChart implements OnDestroy {
       "apexcharts/dist/apexcharts.js"
     ).then(({ default: ApexCharts }) => {
       (window as any).ApexCharts = ApexCharts;
-      this.chartObj = new ApexCharts(this.chartElement.nativeElement, options);
-      this.loading = false;
-      this.cdf.markForCheck();
-      this.render();
+      this.initChart(options);
     });
+  }
+
+  public initChart(options: ApexOptions) {
+    this.chartObj = new ApexCharts(this.chartElement.nativeElement, options);
+    this.loading = false;
+    this.cdf.markForCheck();
+    this.render();
   }
 
   public render(): Promise<void> {
