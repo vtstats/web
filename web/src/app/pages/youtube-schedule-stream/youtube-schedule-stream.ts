@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
@@ -16,6 +16,8 @@ import { translate } from "src/i18n";
 @Component({
   selector: "hs-youtube-schedule-stream",
   templateUrl: "youtube-schedule-stream.html",
+  styleUrls: ["youtube-schedule-stream.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeScheduleStream implements OnInit, OnDestroy {
   constructor(
