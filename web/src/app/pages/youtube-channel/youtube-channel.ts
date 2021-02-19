@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ViewEncapsulation,
 } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Subject } from "rxjs";
@@ -16,7 +17,9 @@ import { translate } from "src/i18n";
 @Component({
   selector: "hs-youtube-channel",
   templateUrl: "youtube-channel.html",
+  styleUrls: ["youtube-channel.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeChannel implements OnInit, OnDestroy {
   constructor(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -8,6 +8,8 @@ import { ApiService, TickService } from "src/app/shared";
 @Component({
   selector: "hs-streams-detail",
   templateUrl: "streams-detail.html",
+  styleUrls: ["streams-detail.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class StreamsDetail implements OnInit {
   constructor(

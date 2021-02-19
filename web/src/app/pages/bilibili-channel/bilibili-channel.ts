@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ViewEncapsulation,
 } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Subject } from "rxjs";
@@ -16,7 +17,9 @@ import { translate } from "src/i18n";
 @Component({
   selector: "hs-bilibili-channel",
   templateUrl: "bilibili-channel.html",
+  styleUrls: ["bilibili-channel.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class BilibiliChannel implements OnInit, OnDestroy {
   constructor(
