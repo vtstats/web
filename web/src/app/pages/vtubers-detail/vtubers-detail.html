@@ -2,7 +2,7 @@
   <hs-channel-stats [vtuber]="vtuber"> </hs-channel-stats>
 
   <ng-container *ngIf="hasYouTubeChannel">
-    <div *ngIf="data$ | async as list">
+    <div class="recent-streams" *ngIf="data$ | async as list">
       <hs-sub-menu>
         <hs-sub-menu-title i18n="@@recentStreams">
           Recent Streams

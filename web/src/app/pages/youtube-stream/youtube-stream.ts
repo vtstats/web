@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Observable, Subject } from "rxjs";
 import { startWith, tap, map, scan, switchMap } from "rxjs/operators";
@@ -15,6 +15,8 @@ import { translate } from "src/i18n";
 @Component({
   selector: "hs-youtube-stream",
   templateUrl: "youtube-stream.html",
+  styleUrls: ["youtube-stream.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class YoutubeStream implements OnInit, OnDestroy {
   constructor(
