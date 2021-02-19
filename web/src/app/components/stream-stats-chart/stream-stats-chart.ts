@@ -6,26 +6,31 @@ import {
   ViewChild,
   OnChanges,
 } from "@angular/core";
-
-import { ApxChart } from "../apx-chart/apx-chart";
 import { formatNumber } from "@angular/common";
+import { format } from "date-fns";
 
-// these d3 dependencies came from ngx-charts
-import { timeFormat } from "d3-time-format";
 import { ChannelReportKind, Report } from "src/app/models";
-import { translate } from "src/i18n";
+import { ApxChart } from "src/app/components/apx-chart/apx-chart";
+import { translate, getLocaleId } from "src/i18n";
+
+const custom = ({ series, seriesIndex, dataPointIndex, w }) => {
+  return (
+    format(w.globals.seriesX[seriesIndex][dataPointIndex], "MM/dd HH:mm") +
+    "<br/>" +
+    formatNumber(series[seriesIndex][dataPointIndex], getLocaleId())
+  );
+};
 
 @Component({
   selector: "hs-stream-stats-chart",
   template: `
-    <div class="stream-stats-chart">
-      <span>{{ title }}</span>
-      <apx-chart #chart [height]="350"></apx-chart>
-    </div>
+    <span>{{ title }}</span>
+    <apx-chart #chart [height]="350"></apx-chart>
   `,
   styleUrls: ["stream-stats-chart.scss"],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: "stream-stats-chart" },
 })
 export class StreamStatsChart implements OnChanges {
   @Input() report: Report<ChannelReportKind>;
@@ -41,16 +46,6 @@ export class StreamStatsChart implements OnChanges {
   @ViewChild("chart", { static: true })
   private chart: ApxChart;
 
-  custom = ({ series, seriesIndex, dataPointIndex, w }) => {
-    return (
-      timeFormat("%m/%d %H:%M")(
-        w.globals.seriesX[seriesIndex][dataPointIndex]
-      ) +
-      "<br/>" +
-      formatNumber(series[seriesIndex][dataPointIndex], "en")
-    );
-  };
-
   ngOnChanges() {
     this.chart.createChart({
       series: [{ data: this.report.rows }],
@@ -59,12 +54,12 @@ export class StreamStatsChart implements OnChanges {
       },
       yaxis: {
         labels: {
-          formatter: (val) => formatNumber(val, "en"),
+          formatter: (val) => formatNumber(val, getLocaleId()),
           minWidth: 40,
         },
       },
       tooltip: {
-        custom: this.custom,
+        custom,
       },
       xaxis: {
         type: "datetime",
@@ -72,8 +67,7 @@ export class StreamStatsChart implements OnChanges {
           enabled: false,
         },
         labels: {
-          // @ts-ignore
-          formatter: timeFormat("%H:%M"),
+          formatter: (date) => format((date as unknown) as number, "HH:MM"),
         },
         axisTicks: {
           show: false,
@@ -112,12 +106,9 @@ export class StreamStatsChart implements OnChanges {
 @Component({
   selector: "hs-stream-stats-chart-shimmer",
   template: `
-    <div class="stream-stats-chart">
-      <span class="text shimmer" [style.width.px]="90"></span>
-      <div class="shimmer" [style.height.px]="350"></div>
-    </div>
+    <span class="text shimmer" [style.width.px]="90"></span>
+    <div class="shimmer" [style.height.px]="350"></div>
   `,
-  styleUrls: ["stream-stats-chart.scss"],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
