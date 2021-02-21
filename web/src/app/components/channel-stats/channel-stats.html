@@ -45,17 +45,8 @@
 
 <ng-template #shimmer>
   <div class="chart-container">
-    <hs-channel-stats-chart-shimmer
-      *ngIf="hasYouTubeChannel"
-    ></hs-channel-stats-chart-shimmer>
-    <hs-channel-stats-chart-shimmer
-      *ngIf="hasYouTubeChannel"
-    ></hs-channel-stats-chart-shimmer>
-    <hs-channel-stats-chart-shimmer
-      *ngIf="hasBilibiliChannel"
-    ></hs-channel-stats-chart-shimmer>
-    <hs-channel-stats-chart-shimmer
-      *ngIf="hasBilibiliChannel"
-    ></hs-channel-stats-chart-shimmer>
+    <ng-container *ngFor="let i of shimmers">
+      <hs-channel-stats-chart-shimmer></hs-channel-stats-chart-shimmer>
+    </ng-container>
   </div>
 </ng-template>

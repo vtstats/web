@@ -31,7 +31,7 @@ import { translate } from "src/i18n";
             <span>{{ date }}</span>
           </div>
         </div>
-        <div class="chart">
+        <div class="chart" (mouseleave)="resetDataPointIndex()">
           <apx-chart #chart [height]="120" [marginBottom]="15"></apx-chart>
         </div>
       </div>
@@ -91,6 +91,11 @@ export class ChannelStatsChart implements OnChanges {
     ][1];
   }
 
+  resetDataPointIndex() {
+    this.dataPointIndex = -1;
+    this.cdf.markForCheck();
+  }
+
   ngOnChanges() {
     this.chart.createChart({
       series: [{ data: this.report.rows }],
@@ -116,11 +121,8 @@ export class ChannelStatsChart implements OnChanges {
         id: this.report.kind,
         type: "area",
         height: 120,
-        toolbar: {
-          show: false,
-          autoSelected: "pan",
-        },
-        selection: { enabled: false },
+        toolbar: { show: false },
+        zoom: { enabled: false },
         events: {
           mouseMove: (_a, _b, config) => {
             this.dataPointIndex = config.dataPointIndex;
