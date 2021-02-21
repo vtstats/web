@@ -90,13 +90,8 @@ export class StreamStatsChart implements OnChanges {
         id: this.title,
         type: "area",
         height: 350,
-        toolbar: {
-          show: false,
-          autoSelected: "pan",
-        },
-        selection: {
-          enabled: false,
-        },
+        toolbar: { show: false },
+        zoom: { enabled: false },
       },
       colors: this.colors,
     });

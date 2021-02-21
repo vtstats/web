@@ -15,15 +15,8 @@ export class ChannelStats implements OnInit {
 
   @Input() vtuber: VTuber;
 
-  start: number;
-  end: number;
-
-  get hasYouTubeChannel(): boolean {
-    return !!this.vtuber.youtube;
-  }
-
-  get hasBilibiliChannel(): boolean {
-    return !!this.vtuber.bilibili;
+  get shimmers(): Array<any> {
+    return this.vtuber.youtube && this.vtuber.bilibili ? Array(4) : Array(2);
   }
 
   loading = false;
