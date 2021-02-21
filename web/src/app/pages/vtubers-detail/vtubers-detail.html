@@ -1,7 +1,7 @@
 <div class="mx-auto max-w-960">
   <hs-channel-stats [vtuber]="vtuber"> </hs-channel-stats>
 
-  <ng-container *ngIf="hasYouTubeChannel">
+  <ng-container *ngIf="vtuber.youtube">
     <div class="recent-streams" *ngIf="data$ | async as list">
       <hs-sub-menu>
         <hs-sub-menu-title i18n="@@recentStreams">

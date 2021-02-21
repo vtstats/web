@@ -7,7 +7,6 @@ import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
 import { vtubers } from "vtubers";
 
 import {
-  Channel,
   Stream,
   StreamList,
   StreamListLoadMoreOption,
@@ -32,18 +31,6 @@ export class VTubersDetail implements OnInit, OnDestroy {
   ) {}
 
   vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
-
-  get hasYouTubeChannel(): boolean {
-    return !!this.vtuber.youtube;
-  }
-
-  get hasBilibiliChannel(): boolean {
-    return !!this.vtuber.bilibili;
-  }
-
-  chartLoading = false;
-
-  channels: Channel[];
 
   loadMore$ = new Subject<StreamListLoadMoreOption>();
 
