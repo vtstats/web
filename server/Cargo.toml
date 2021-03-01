@@ -24,7 +24,7 @@ tracing = "0.1.21"
 tracing-futures = "0.2.5"
 tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", branch = "a" }
 tracing-subscriber = { version = "0.2.15", default-features = false, features = ["registry"] }
-url = "2.1.1"
+url = "2.2.1"
 warp = { version = "0.2.5", default-features = false }
 
 [profile.release]
