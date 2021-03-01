@@ -1425,10 +1425,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@cloudflare/kv-asset-handler@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.0.12.tgz#4fc397912a0897a5cf8c0b5eb7c983b5e8b36979"
-  integrity sha512-3XCs9TRhQh/yUs1ST9cIMLB8C5c1JRKcDYTPJbAmcgI0kO2FPCSZz+kyNb9x25DuGQeqOMMwmxHPtiOfTki/Gw==
+"@cloudflare/kv-asset-handler@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.1.0.tgz#0febbf4ac6dd04d2c069405cffdcc7cf64b95494"
+  integrity sha512-sXZRw/Z5JJfi/nGh66SECSm5L2zomyf6f9O3nc5QOI11/R3W/4N+BPOecp/Dc8eL/q/Rwgb7lwhhjnqy8O5CYA==
   dependencies:
     "@cloudflare/workers-types" "^2.0.0"
     "@types/mime" "^2.0.2"
@@ -6036,20 +6036,10 @@ mime@1.6.0, mime@^1.4.1:
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
 
-mime@^2.3.1:
+mime@^2.3.1, mime@^2.4.4, mime@^2.4.6:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.5.0.tgz#2b4af934401779806ee98026bb42e8c1ae1876b1"
   integrity sha512-ft3WayFSFUVBuJj7BMLKAQcSlItKtfjsKDDsii3rqFDAZ7t11zRe8ASw/GlmivGwVUYtwkQrxiGGpL6gFvB0ag==
-
-mime@^2.4.4:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.5.tgz#d8de2ecb92982dedbb6541c9b6841d7f218ea009"
-  integrity sha512-3hQhEUF027BuxZjQA3s7rIv/7VCQPa27hN9u9g87sEkWaKwQPuXOkVKtOeiyUrnWqTDiOs8Ed2rwg733mB0R5w==
-
-mime@^2.4.6:
-  version "2.4.6"
-  resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.6.tgz#e5b407c90db442f2beb5b162373d07b69affa4d1"
-  integrity sha512-RZKhC3EmpBchfTGBVb8fb+RL2cWyw/32lshnsETttkBAyAUXSGHxbEJWWRXc751DrIxG1q04b8QwMbAwkRPpUA==
 
 mimic-fn@^1.0.0:
   version "1.2.0"
