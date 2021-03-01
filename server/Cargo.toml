@@ -19,7 +19,7 @@ serde_json = "1.0.61"
 serde_with = "1.6.0"
 sha2 = "0.9.2"
 sqlx = { version = "0.4.1", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono"] }
-tokio = { version = "0.2.22", features = ["macros"] }
+tokio = { version = "0.2.25", features = ["macros"] }
 tracing = "0.1.21"
 tracing-futures = "0.2.4"
 tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", branch = "a" }
