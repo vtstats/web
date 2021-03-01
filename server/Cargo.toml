@@ -17,7 +17,7 @@ roxmltree = "0.14.0"
 serde = { version = "1.0.118", features = ["derive"] }
 serde_json = "1.0.61"
 serde_with = "1.6.0"
-sha2 = "0.9.2"
+sha2 = "0.9.3"
 sqlx = { version = "0.4.1", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono"] }
 tokio = { version = "0.2.25", features = ["macros"] }
 tracing = "0.1.21"
