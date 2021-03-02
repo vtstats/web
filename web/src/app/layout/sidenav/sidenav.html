@@ -11,15 +11,6 @@
     </a>
     <a
       mat-list-item
-      routerLink="/bilibili-channel"
-      routerLinkActive="active"
-      (click)="buttonClick.emit()"
-    >
-      <mat-icon mat-list-icon svgIcon="bilibili"></mat-icon>
-      <p mat-line i18n="@@bilibiliChannel">Bilibili Channel</p>
-    </a>
-    <a
-      mat-list-item
       routerLink="/youtube-stream"
       routerLinkActive="active"
       (click)="buttonClick.emit()"
@@ -60,7 +51,7 @@
     </a>
     <a
       class="link"
-      href="https://github.com/PoiScript/HoloStats/commit/{{ commitHash }}"
+      href="https://github.com/linnil1/HoloStats/commit/{{ commitHash }}"
       target="_blank"
     >
       Commit: {{ commitHash }}

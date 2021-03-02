@@ -13,7 +13,6 @@ import { getLocaleId } from "../i18n";
 import { LayoutModule } from "./layout";
 import {
   PagesModule,
-  BilibiliChannel,
   Settings,
   YoutubeChannel,
   YoutubeScheduleStream,
@@ -30,7 +29,6 @@ import { ComponentsModule } from "./components/components.module";
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "youtube-channel", component: YoutubeChannel },
-  { path: "bilibili-channel", component: BilibiliChannel },
   { path: "youtube-schedule-stream", component: YoutubeScheduleStream },
   { path: "youtube-stream", component: YoutubeStream },
   { path: "settings", component: Settings },
