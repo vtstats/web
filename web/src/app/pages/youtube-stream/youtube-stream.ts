@@ -60,7 +60,7 @@ export class YoutubeStream implements OnInit, OnDestroy {
   );
 
   ngOnInit() {
-    this.title.setTitle(`${translate("youtubeStream")} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeStream")} | TaiwanVuber`);
   }
 
   ngOnDestroy() {

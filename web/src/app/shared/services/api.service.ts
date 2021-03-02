@@ -13,7 +13,8 @@ import {
   StreamReportResponse,
 } from "src/app/models";
 
-const BASE_URL = "https://holo.poi.cat/api/v4";
+const BASE_URL = "https://taiwanv.linnil1.me/api/v4";
+// const BASE_URL = "http://localhost:4200/api/v4";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {

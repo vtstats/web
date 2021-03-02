@@ -72,7 +72,7 @@ export class VTubersDetail implements OnInit, OnDestroy {
       return;
     }
 
-    this.title.setTitle(`${translate(this.vtuber.id)} | HoloStats`);
+    this.title.setTitle(`${translate(this.vtuber.id)} | TaiwanVuber`);
   }
 
   ngOnDestroy() {

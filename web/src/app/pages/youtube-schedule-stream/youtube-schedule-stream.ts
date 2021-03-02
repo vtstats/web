@@ -62,7 +62,7 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
   );
 
   ngOnInit() {
-    this.title.setTitle(`${translate("youtubeSchedule")} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeSchedule")} | TaiwanVuber`);
   }
 
   ngOnDestroy() {

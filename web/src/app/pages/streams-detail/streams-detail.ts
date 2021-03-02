@@ -45,7 +45,7 @@ export class StreamsDetail implements OnInit {
 
         this.stream = res.streams[0];
         this.reports = res.reports;
-        this.title.setTitle(`${this.stream.title} | HoloStats`);
+        this.title.setTitle(`${this.stream.title} | TaiwanVuber`);
       });
   }
 }

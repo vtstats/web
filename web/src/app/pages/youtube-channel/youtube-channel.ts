@@ -36,7 +36,7 @@ export class YoutubeChannel implements OnInit, OnDestroy {
   load$ = new Subject<boolean>();
 
   ngOnInit() {
-    this.title.setTitle(`${translate("youtubeChannel")} | HoloStats`);
+    this.title.setTitle(`${translate("youtubeChannel")} | TaiwanVuber`);
 
     this.load$
       .pipe(

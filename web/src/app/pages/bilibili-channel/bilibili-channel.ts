@@ -36,7 +36,7 @@ export class BilibiliChannel implements OnInit, OnDestroy {
   load$ = new Subject<boolean>();
 
   ngOnInit() {
-    this.title.setTitle(`${translate("bilibiliChannel")} | HoloStats`);
+    this.title.setTitle(`${translate("bilibiliChannel")} | TaiwanVuber`);
 
     this.load$
       .pipe(

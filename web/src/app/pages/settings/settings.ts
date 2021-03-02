@@ -58,7 +58,7 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle(`${translate("settings")} | HoloStats`);
+    this.title.setTitle(`${translate("settings")} | TaiwanVuber`);
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;

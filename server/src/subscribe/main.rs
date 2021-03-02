@@ -45,7 +45,7 @@ async fn real_main() -> Result<()> {
 )]
 async fn subscribe(client: &Client, channel_id: &str) {
     const CALLBACK_URL: &str =
-        concat!("https://holo.poi.cat/api/pubsub/", env!("PUBSUBHUBBUB_URL"));
+        concat!("https://taiwanv-dev.linnil1.me/api/pubsub/", env!("PUBSUBHUBBUB_URL"));
 
     const TOPIC_BASE_URL: &str = "https://www.youtube.com/xml/feeds/videos.xml?channel_id=";
 

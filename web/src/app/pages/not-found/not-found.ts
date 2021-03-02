@@ -11,6 +11,6 @@ export class NotFound implements OnInit {
   constructor(private title: Title) {}
 
   ngOnInit() {
-    this.title.setTitle("Not Found | HoloStats");
+    this.title.setTitle("Not Found | TaiwanVuber");
   }
 }
