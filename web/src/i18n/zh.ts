@@ -56,7 +56,6 @@ const translations: Translations = {
   yuna: "水野魚娜 Mizuno yuna",
   yumemi: "雲之上夢見 YumemiChannel",
 
-
   // Batches
   yahoo: "Yahoo",
   yenz: "艷世設計 YENZdesign",

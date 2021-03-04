@@ -91,7 +91,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
   },
   usagi: {
     id: "usagi",
-    twitter: "",
+    twitter: "kuroxusagihime",
     youtube: "UC0u_-3zgLkSYpQOxlBi-5Ng",
     default: true,
   },
@@ -149,8 +149,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UCRUFY2ZCyVOvC-1rJIVZlKg",
     default: true,
   },
-
-
 };
 
 export type BatchIds =
