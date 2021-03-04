@@ -32,7 +32,7 @@ static LOGGER: TelemetryLogger = TelemetryLogger;
 
 pub fn init_logger() {
     log::set_max_level(LevelFilter::Debug);
-    log::set_logger(&LOGGER).expect("failed to initilize telemetry logger");
+    // log::set_logger(&LOGGER).expect("failed to initilize telemetry logger");
 }
 
 struct TargetFilter(&'static str);

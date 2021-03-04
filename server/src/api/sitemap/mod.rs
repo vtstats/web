@@ -24,8 +24,9 @@ async fn sitemap_get(pool: PgPool) -> Result<impl warp::Reply, Rejection> {
         .await
         .map_err(Error::Database)?;
 
-    let mut res =
-        String::with_capacity("https://taiwanv.linnil1.me/stream/xxxxxxxxxxx".len() * streams.len());
+    let mut res = String::with_capacity(
+        "https://taiwanv.linnil1.me/stream/xxxxxxxxxxx".len() * streams.len(),
+    );
 
     // TODO: error handling
     for page in PAGES {
