@@ -1,0 +1,12 @@
+<hs-sub-menu>
+  <hs-sub-menu-title>
+    {{ group.date | date: isThisYear(group.date) ? "MM/dd": "yyyy/MM/dd" }}
+  </hs-sub-menu-title>
+</hs-sub-menu>
+
+<hs-stream-list>
+  <hs-stream-item
+    *ngFor="let stream of group.streams; trackBy: trackBy"
+    [stream]="stream"
+  ></hs-stream-item>
+</hs-stream-list>

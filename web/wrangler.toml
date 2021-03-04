@@ -1,16 +1,16 @@
 type = "javascript"
-account_id = "f1c2ab938f91fa76af879185e872f215"
+account_id = "84360be8d748ddadfd6897136883929a"
 
 [site]
 bucket = "dist"
 entry-point = "workers"
 
 [env.dev]
-name = "holo-dev"
-route = "holo-dev.poi.cat/*"
-zone_id = "4f27c98d90fd913efe41acfb093e019a"
+name = "taiwanv-dev"
+route = "taiwanv-dev.linnil1.me/*"
+zone_id = "81f4ea11d5b83ab03a5b2c7cb73678eb"
 
 [env.prod]
-name = "holo"
-route = "holo.poi.cat/*"
-zone_id = "4f27c98d90fd913efe41acfb093e019a"
+name = "taiwanv"
+route = "taiwanv.linnil1.me/*"
+zone_id = "81f4ea11d5b83ab03a5b2c7cb73678eb"

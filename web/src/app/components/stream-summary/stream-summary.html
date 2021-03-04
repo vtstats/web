@@ -1,0 +1,50 @@
+<div class="stream-summary">
+  <div class="cover">
+    <a class="link">
+      <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
+    </a>
+  </div>
+
+  <div class="meta">
+    <a class="title" href="https://youtu.be/{{ stream.streamId }}">
+      {{ stream.title }}
+    </a>
+
+    <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
+      <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
+      <span class="name">{{ stream.vtuberId | name }}</span>
+    </a>
+
+    <hs-number-row>
+      <hs-big-number
+        [value]="stream.startTime | date: 'HH:mm:ss'"
+        i18n-label="@@streamStartTime"
+        label="Start Time"
+      ></hs-big-number>
+
+      <hs-big-number
+        [value]="
+          stream.status === 'ended'
+          ? (stream.startTime | duration: stream.endTime)
+          : (stream.startTime | duration: (everySecond$ | async))
+        "
+        i18n-label="@@streamDuration"
+        label="Duration"
+      ></hs-big-number>
+    </hs-number-row>
+
+    <hs-number-row>
+      <hs-big-number
+        [value]="(stream.averageViewerCount | number) || '-----'"
+        i18n-label="@@averageViewers"
+        label="Average Viewers"
+      ></hs-big-number>
+
+      <hs-big-number
+        [value]="(stream.maxViewerCount | number) || '-----'"
+        i18n-label="@@maximumViewers"
+        label="Maximum Viewers"
+      ></hs-big-number>
+    </hs-number-row>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.sidenav {
+  width: 250px;
+  min-height: 100%;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  .list {
+    flex: 1;
+  }
+
+  .info {
+    user-select: none;
+    padding: 16px 16px 8px 16px;
+  }
+
+  .link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .copyright {
+    padding: 8px 16px 16px 16px;
+  }
+
+  .active {
+    font-weight: 500;
+  }
+
+  .logo {
+    height: 24px;
+    width: 90px;
+    padding-left: 12px;
+
+    path {
+      fill: currentColor;
+    }
+  }
+}
+
+.drawer-content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+  margin: 0 auto;
+}
+
+.dark {
+  .sidenav {
+    background-color: rgba(40, 40, 40, 0.98);
+  }
+}

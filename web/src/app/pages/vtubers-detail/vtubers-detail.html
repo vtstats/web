@@ -1,0 +1,51 @@
+<div class="mx-auto max-w-960">
+  <hs-channel-stats [vtuber]="vtuber"> </hs-channel-stats>
+
+  <ng-container *ngIf="vtuber.youtube">
+    <div class="recent-streams" *ngIf="data$ | async as list">
+      <hs-sub-menu>
+        <hs-sub-menu-title i18n="@@recentStreams">
+          Recent Streams
+        </hs-sub-menu-title>
+
+        <hs-sub-menu-extra>
+          <time
+            *ngIf="!list.loading; else shimmer"
+            i18n="@@updatedAt"
+            [attr.datetime]="list.updatedAt | formatISO"
+          >
+            Updated at {{ list.updatedAt | date: "MM/dd HH:mm" }}
+          </time>
+
+          <ng-template #shimmer>
+            <span class="shimmer text" [style.width.px]="120"></span>
+          </ng-template>
+        </hs-sub-menu-extra>
+      </hs-sub-menu>
+
+      <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
+        <hs-stream-list>
+          <hs-stream-item
+            *ngFor="let stream of list.streams; trackBy: trackBy"
+            [stream]="stream"
+          ></hs-stream-item>
+        </hs-stream-list>
+      </ng-container>
+
+      <ng-template #shimmerList>
+        <hs-stream-list>
+          <hs-stream-item-shimmer
+            *ngFor="let stream of [1, 2, 3, 4, 5]"
+          ></hs-stream-item-shimmer>
+        </hs-stream-list>
+      </ng-template>
+
+      <hs-loading-spinner
+        [hidden]="(list.loading && list.refresh) || list.reachedEnd"
+        (reach)="
+          list.loading ? null : loadMore$.next({ refresh: false, last: list.streams[list.streams.length - 1] })
+        "
+      ></hs-loading-spinner>
+    </div>
+  </ng-container>
+</div>

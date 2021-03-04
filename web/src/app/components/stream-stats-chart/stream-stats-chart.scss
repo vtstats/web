@@ -1,0 +1,17 @@
+.stream-stats-chart {
+  .apx-chart {
+    // copy from .mat-tooltip
+    .apexcharts-tooltip.apexcharts-theme-light {
+      border: none;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      padding-left: 8px;
+      padding-right: 8px;
+      color: white;
+      border-radius: 4px;
+      margin: 14px;
+      text-align: center;
+      background: rgba(97, 97, 97, 0.9);
+    }
+  }
+}

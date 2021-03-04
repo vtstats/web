@@ -36,7 +36,7 @@ pub async fn publish_content(
 
         let thumbnail_url = upload_thumbnail(&streams[0].id, &client)
             .await
-            .map(|filename| format!("https://holo.poi.cat/thumbnail/{}", filename));
+            .map(|filename| format!("https://taiwanv.linnil1.me/thumbnail/{}", filename));
 
         update_youtube_stream(&streams[0], vtuber_id, title, thumbnail_url, &pool).await?;
 

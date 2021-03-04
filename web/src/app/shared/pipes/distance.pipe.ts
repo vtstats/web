@@ -1,15 +1,14 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { formatDistanceStrict, parseISO } from "date-fns";
+import { formatDistanceStrict } from "date-fns";
 
-import { getDateFnsLocale } from "src/i18n/locale";
+import { getDateFnsLocale } from "src/i18n";
 
 @Pipe({ name: "distance" })
 export class DistancePipe implements PipeTransform {
-  transform(start: Date | string, end: Date | string): string {
-    return formatDistanceStrict(
-      typeof start === "string" ? parseISO(start) : start,
-      typeof end === "string" ? parseISO(end) : end,
-      { locale: getDateFnsLocale(), addSuffix: true }
-    );
+  transform(start: number | Date, end: number | Date): string {
+    return formatDistanceStrict(start, end, {
+      locale: getDateFnsLocale(),
+      addSuffix: true,
+    });
   }
 }

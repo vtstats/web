@@ -24,24 +24,25 @@ async fn sitemap_get(pool: PgPool) -> Result<impl warp::Reply, Rejection> {
         .await
         .map_err(Error::Database)?;
 
-    let mut res =
-        String::with_capacity("https://holo.poi.cat/stream/xxxxxxxxxxx".len() * streams.len());
+    let mut res = String::with_capacity(
+        "https://taiwanv.linnil1.me/stream/xxxxxxxxxxx".len() * streams.len(),
+    );
 
     // TODO: error handling
     for page in PAGES {
-        let _ = res.write_str("https://holo.poi.cat");
+        let _ = res.write_str("https://taiwanv.linnil1.me");
         let _ = res.write_str(page);
         let _ = res.write_str("\n");
     }
 
     for vtb in VTUBERS {
-        let _ = res.write_str("https://holo.poi.cat/vtuber/");
+        let _ = res.write_str("https://taiwanv.linnil1.me/vtuber/");
         let _ = res.write_str(vtb.id);
         let _ = res.write_str("\n");
     }
 
     for stream in streams {
-        let _ = res.write_str("https://holo.poi.cat/stream/");
+        let _ = res.write_str("https://taiwanv.linnil1.me/stream/");
         let _ = res.write_str(&stream.stream_id);
         let _ = res.write_str("\n");
     }

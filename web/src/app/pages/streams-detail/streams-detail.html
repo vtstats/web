@@ -1,0 +1,15 @@
+<div class="streams-detail">
+  <ng-container *ngIf="!loading; else shimmer">
+    <hs-stream-summary [stream]="stream"></hs-stream-summary>
+
+    <div class="chart" *ngFor="let report of reports">
+      <hs-stream-stats-chart [report]="report"> </hs-stream-stats-chart>
+    </div>
+  </ng-container>
+
+  <ng-template #shimmer>
+    <hs-stream-summary-shimmer></hs-stream-summary-shimmer>
+
+    <hs-stream-stats-chart-shimmer></hs-stream-stats-chart-shimmer>
+  </ng-template>
+</div>

@@ -34,7 +34,7 @@ where
     let date = now.format("%Y%m%dT%H%M%SZ");
     let today = now.format("%Y%m%d");
 
-    let scope = format!("{today}/poi/s3/aws4_request", today = today);
+    let scope = format!("{today}/ap-northeast-1/s3/aws4_request", today = today);
 
     let content_sha256 = Sha256::digest(data.as_ref());
 
@@ -77,7 +77,7 @@ host;x-amz-content-sha256;x-amz-date
 
         let secret = concat!("AWS4", env!("S3_ACCESS_KEY")).as_bytes();
         let k_date = hmac_sha256!(secret, today.to_string().as_bytes());
-        let k_region = hmac_sha256!(k_date.as_slice(), b"poi");
+        let k_region = hmac_sha256!(k_date.as_slice(), b"ap-northeast-1");
         let k_service = hmac_sha256!(k_region.as_slice(), b"s3");
         let k_signing = hmac_sha256!(k_service.as_slice(), b"aws4_request");
         hmac_sha256!(k_signing.as_slice(), string_to_sign.as_bytes())

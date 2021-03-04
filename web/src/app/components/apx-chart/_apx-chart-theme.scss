@@ -1,0 +1,34 @@
+@import "~@angular/material/theming";
+
+@mixin apx-chart-theme($theme) {
+  $background: map-get($theme, "background");
+  $foreground: map-get($theme, "foreground");
+
+  .apx-chart {
+    .apexcharts-xaxis > line,
+    .apexcharts-gridline,
+    .apexcharts-xcrosshairs {
+      stroke: mat-color($foreground, "divider");
+    }
+
+    .apexcharts-text,
+    .apexcharts-title-text {
+      fill: mat-color($foreground, "text");
+    }
+  }
+}
+
+@mixin apx-chart-typography($config) {
+  .apx-chart {
+    .apexcharts-tooltip {
+      font-size: mat-font-size($config, "caption");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+
+    .apexcharts-xaxis-label,
+    .apexcharts-yaxis-label {
+      font-size: mat-font-size($config, "body-1");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+  }
+}
