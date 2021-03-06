@@ -9,17 +9,23 @@ type VTuber = {
 export type VTuberIds =
   | "aoi"
   | "asa"
+  | "fengxu"
+  | "fujinokuma"
   | "haruka"
+  | "himemiyayuka"
   | "hoonie"
   | "ikusen"
   | "kaina"
   | "kurita"
   | "kwakon"
+  | "lapis"
+  | "lumina"
   | "miru"
   | "nyoro"
   | "rana"
   | "rayer"
   | "ruroro"
+  | "sanmou"
   | "shaya"
   | "tedobear"
   | "tsmatch"
@@ -41,10 +47,28 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UCxm2qC7Z7cjDAd6yPyl-sKQ",
     default: true,
   },
+  fengxu: {
+    id: "fengxu",
+    twitter: "FengXu_vtb",
+    youtube: "UCYPSP_gJ-BcREmsDzBIaRvw",
+    default: true,
+  },
+  fujinokuma: {
+    id: "fujinokuma",
+    twitter: "fujinokuma_mama",
+    youtube: "UCmyDLzP9ZBAK2JO4kUuJMRQ",
+    default: true,
+  },
   haruka: {
     id: "haruka",
     twitter: "haruka_owl",
     youtube: "UCl1RVJbkPnpNbO9-CsDqPmQ",
+    default: true,
+  },
+  himemiyayuka: {
+    id: "himemiyayuka",
+    twitter: "Hana_Yuukaa",
+    youtube: "UC1d1dmxkh_yanq1U1gli7jw",
     default: true,
   },
   hoonie: {
@@ -77,6 +101,18 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UCyZZMKRn-mUEkPzaqa9b6bg",
     default: true,
   },
+  lapis: {
+    id: "lapis",
+    twitter: "ryoukenlapis",
+    youtube: "UCb_9R8SZy_HSJi53zxVh7kg",
+    default: true,
+  },
+  lumina: {
+    id: "lumina",
+    twitter: "lumina16569269",
+    youtube: "UCc5cZPorgyc23wKN-Ng1R6w",
+    default: true,
+  },
   miru: {
     id: "miru",
     twitter: "AnninMirudayo",
@@ -105,6 +141,12 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     id: "ruroro",
     twitter: "ruroroismek",
     youtube: "UCRf7OJA3azS4RsGd_G96FUw",
+    default: true,
+  },
+  sanmou: {
+    id: "sanmou",
+    twitter: "3MouDolp",
+    youtube: "UCPqYxut8IQxG4HAMrJx5ffQ",
     default: true,
   },
   shaya: {
@@ -157,14 +199,19 @@ export type BatchIds =
   | "aoi"
   | "asa"
   | "cyberlive"
+  | "fengxu"
+  | "fourvtuber"
+  | "fujinokuma"
   | "haruka"
+  | "himemiyayuka"
+  | "hinet"
   | "kaina"
   | "kolhunter"
   | "kurita"
   | "kwakon"
+  | "lapis"
   | "miru"
   | "shaya"
-  | "tedobear"
   | "tsmatch"
   | "ubye"
   | "usagi"
@@ -180,14 +227,19 @@ export const batches: Record<BatchIds, Batch> = {
   "aoi": null,
   "asa": null,
   "cyberlive": ["nyoro", "yuna"],
+  "fengxu": null,
+  "fourvtuber": ["sanmou", "tedobear"],
+  "fujinokuma": null,
   "haruka": null,
+  "himemiyayuka": null,
+  "hinet": ["lumina"],
   "kaina": null,
   "kolhunter": ["ruroro"],
   "kurita": null,
   "kwakon": null,
+  "lapis": null,
   "miru": null,
   "shaya": null,
-  "tedobear": null,
   "tsmatch": null,
   "ubye": null,
   "usagi": null,
