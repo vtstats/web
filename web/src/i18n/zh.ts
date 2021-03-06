@@ -66,7 +66,7 @@ const translations: Translations = {
   acclaim: "Acclaim 事務所",
   acg: "ACG稽查員 ACGInspector",
   cyberlive: "CyberLive",
-  fourvtuber: "4vtuber",
+  fourvtuber: "4virtual",
   hinet: "HiNet 光世代",
   kolhunter: "網紅獵人 KOL Hunter",
   yahoo: "Yahoo",
