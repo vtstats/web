@@ -1,21 +1,20 @@
-insert into youtube_channels (vtuber_id)
-     values ('miru'),
-            ('ubye'),
-            ('hoonie'),
-            ('rayer'),
-            ('rana'),
-            ('shaya'),
-            ('ruroro'),
-            ('kwakon'),
-            ('ikusen'),
-            ('aoi'),
-            ('usagi'),
-            ('haruka'),
-            ('tsmatch'),
-            ('tedobear'),
-            ('kurita'),
-            ('asa'),
-            ('kaina'),
-            ('nyoro'),
-            ('yuna'),
-            ('yumemi');
+insert into youtube_channels (vtuber_id) values ('aoi');
+insert into youtube_channels (vtuber_id) values ('asa');
+insert into youtube_channels (vtuber_id) values ('haruka');
+insert into youtube_channels (vtuber_id) values ('hoonie');
+insert into youtube_channels (vtuber_id) values ('ikusen');
+insert into youtube_channels (vtuber_id) values ('kaina');
+insert into youtube_channels (vtuber_id) values ('kurita');
+insert into youtube_channels (vtuber_id) values ('kwakon');
+insert into youtube_channels (vtuber_id) values ('miru');
+insert into youtube_channels (vtuber_id) values ('nyoro');
+insert into youtube_channels (vtuber_id) values ('rana');
+insert into youtube_channels (vtuber_id) values ('rayer');
+insert into youtube_channels (vtuber_id) values ('ruroro');
+insert into youtube_channels (vtuber_id) values ('shaya');
+insert into youtube_channels (vtuber_id) values ('tedobear');
+insert into youtube_channels (vtuber_id) values ('tsmatch');
+insert into youtube_channels (vtuber_id) values ('ubye');
+insert into youtube_channels (vtuber_id) values ('usagi');
+insert into youtube_channels (vtuber_id) values ('yumemi');
+insert into youtube_channels (vtuber_id) values ('yuna');

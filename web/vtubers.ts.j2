@@ -1,0 +1,28 @@
+type VTuber = {
+  id: string;
+  twitter?: string;
+  youtube?: string;
+  bilibili?: number;
+  default?: true;
+};
+
+export type VTuberIds ={% for v in vtubers %}
+  | "{{v.id}}"{% endfor %};
+
+export const vtubers: Record<VTuberIds, VTuber> = {{'{'}}{% for v in vtubers %}
+  {{v.id}}: {
+    id: "{{v.id}}",
+    twitter: "{{v.twitter}}",
+    youtube: "{{v.youtube}}",
+    default: {{v.default}},
+  },{% endfor %}
+};
+
+export type BatchIds ={% for v in batches %}
+  | "{{v.id}}"{% endfor %};
+
+type Batch = VTuberIds[];
+
+export const batches: Record<BatchIds, Batch> = {{'{'}}{% for v in batches %}
+  "{{v.id}}": {{ v.member }},{% endfor %}
+};

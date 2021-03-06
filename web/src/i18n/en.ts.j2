@@ -34,35 +34,11 @@ const translations: Translations = {
   recentStreams: "Recent Streams",
   streamViewers: "Stream Viewers",
 
-  // VTubers
-  aoi: "夏日葵",
-  asa: "Asa Ifrit Ch.",
-  haruka: "星見遙 Haruka",
-  hoonie: "β虎妮 Hoonie friends",
-  ikusen: "いくせん Ikusen",
-  kaina: "灰名 Kaina",
-  kurita: "鼠屋栗太 Kurita",
-  kwakon: "小空 KITSUNEKON",
-  miru: "杏仁ミル Annin Miru",
-  nyoro: "香草奈若 Vanilla Nyoro",
-  rana: "鳥羽樂奈 TobaRana",
-  rayer: "蕾兒 Rayer",
-  ruroro: "璐洛洛 Ruroro",
-  shaya: "莎亞 Shaya",
-  tedobear: "虛擬熊頭 TedoBear",
-  tsmatch: "火柴 TSMATCH",
-  ubye: "悠白 Ubye",
-  usagi: "兔姬 USAGIHIME CLUB.",
-  yumemi: "雲之上夢見 YumemiChannel",
-  yuna: "水野魚娜 Mizuno yuna",
+  // VTubers{% for v in vtubers %}
+  {{v.id}}: "{{v.name}}",{% endfor %}
 
-  // Batches
-  acclaim: "Acclaim 事務所",
-  acg: "ACG稽查員 ACGInspector",
-  cyberlive: "CyberLive",
-  kolhunter: "網紅獵人 KOL Hunter",
-  yahoo: "Yahoo",
-  yenz: "艷世設計 YENZdesign",
+  // Batches{% for v in batches %}{% if v.member != "null" %}
+  {{v.id}}: "{{v.name}}",{% endif %}{% endfor %}
 };
 
 export { locale, dateFnsLocale, translations };
