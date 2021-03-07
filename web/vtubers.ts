@@ -3,13 +3,14 @@ type VTuber = {
   twitter?: string;
   youtube?: string;
   bilibili?: number;
-  default?: true;
+  default?: boolean;
 };
 
 export type VTuberIds =
   | "aoi"
   | "asa"
   | "fengxu"
+  | "fifteen"
   | "fujinokuma"
   | "haruka"
   | "himemiyayuka"
@@ -22,6 +23,7 @@ export type VTuberIds =
   | "lumina"
   | "miru"
   | "nyoro"
+  | "pedko"
   | "rana"
   | "rayer"
   | "ruroro"
@@ -52,6 +54,12 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "FengXu_vtb",
     youtube: "UCYPSP_gJ-BcREmsDzBIaRvw",
     default: true,
+  },
+  fifteen: {
+    id: "fifteen",
+    twitter: "no15_rescute",
+    youtube: "UC_UqaRNrLcaL4fp2IAPV0OQ",
+    default: false,
   },
   fujinokuma: {
     id: "fujinokuma",
@@ -125,6 +133,12 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UC4J0GZLM55qrFh2L-ZAb2LA",
     default: true,
   },
+  pedko: {
+    id: "pedko",
+    twitter: "Padko_tablet",
+    youtube: "UC2yG-9ekUwTs8Q0yMSycMxA",
+    default: true,
+  },
   rana: {
     id: "rana",
     twitter: "RanaVtb",
@@ -153,7 +167,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     id: "shaya",
     twitter: "About_Shaya",
     youtube: "UCU8O__T_J93Cnoi6HoRoPow",
-    default: true,
+    default: false,
   },
   tedobear: {
     id: "tedobear",
@@ -198,6 +212,7 @@ export type BatchIds =
   | "acg"
   | "aoi"
   | "asa"
+  | "changing"
   | "cyberlive"
   | "fengxu"
   | "fourvtuber"
@@ -226,6 +241,7 @@ export const batches: Record<BatchIds, Batch> = {
   "acg": ["rayer"],
   "aoi": null,
   "asa": null,
+  "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
   "fengxu": null,
   "fourvtuber": ["sanmou", "tedobear"],

@@ -38,6 +38,7 @@ const translations: Translations = {
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
   fengxu: "風絮 FengXu Ch.",
+  fifteen: "十五號 No.Fifteen",
   fujinokuma: "藤乃熊 Fujinokuma",
   haruka: "星見遙 Haruka",
   himemiyayuka: "姬宮優花 Himemiya Yuka",
@@ -50,6 +51,7 @@ const translations: Translations = {
   lumina: "Lumina",
   miru: "杏仁ミル Annin Miru",
   nyoro: "香草奈若 Vanilla Nyoro",
+  pedko: "平平子 Padko",
   rana: "鳥羽樂奈 TobaRana",
   rayer: "蕾兒 Rayer",
   ruroro: "璐洛洛 Ruroro",
@@ -65,6 +67,7 @@ const translations: Translations = {
   // Batches
   acclaim: "Acclaim 事務所",
   acg: "ACG稽查員 ACGInspector",
+  changing: "春魚工作室",
   cyberlive: "CyberLive",
   fourvtuber: "4virtual",
   hinet: "HiNet 光世代",
