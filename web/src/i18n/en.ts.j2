@@ -1,0 +1,44 @@
+import type { Translations } from "./data";
+
+import locale from "@angular/common/locales/en";
+import dateFnsLocale from "date-fns/locale/en-US";
+
+const translations: Translations = {
+  // UI
+  updatedAt: "Updated at {$INTERPOLATION}",
+  name: "Name",
+  total: "Total",
+  subscribers: "Subscribers",
+  views: "Views",
+  lastDay: "Last Day",
+  last7Days: "Last 7 Days",
+  last30Days: "Last 30 Days",
+  youtubeChannel: "YouTube Channel",
+  bilibiliChannel: "Bilibili Channel",
+  youtubeStream: "YouTube Stream",
+  youtubeSchedule: "YouTube Schedule",
+  settings: "Settings",
+  toggleDarkMode: "Toggle Dark Mode",
+  averageViewers: "Average Viewers",
+  maximumViewers: "Maximum Viewers",
+  streamHasEnded: "Stream has ended",
+  streaming: "Streaming",
+  streamStartTime: "Start Time",
+  streamDuration: "Duration",
+  youtubeSubscribers: "YouTube Subscribers",
+  bilibiliSubscribers: "Bilibili Subscribers",
+  youtubeViews: "YouTube Views",
+  bilibiliViews: "Bilibili Views",
+  vtuberSelected: "VTuber Selected",
+  selectLanguage: "Select Language",
+  recentStreams: "Recent Streams",
+  streamViewers: "Stream Viewers",
+
+  // VTubers{% for v in vtubers %}
+  {{v.id}}: "{{v.name}}",{% endfor %}
+
+  // Batches{% for v in batches %}{% if v.member != "null" %}
+  {{v.id}}: "{{v.name}}",{% endif %}{% endfor %}
+};
+
+export { locale, dateFnsLocale, translations };

@@ -1,0 +1,28 @@
+#![allow(clippy::unreadable_literal)]
+#![allow(dead_code)]
+
+#[derive(Debug)]
+pub struct VTuber {
+    pub id: &'static str,
+    pub youtube: Option<&'static str>,
+    pub bilibili: Option<&'static str>,
+}
+
+macro_rules! vtubers {
+    ($( $(#[doc = $_:expr])? $id:ident, $youtube:expr, $bilibili:expr, )*) => {
+        pub const VTUBERS: &[VTuber] = &[
+            $(
+                VTuber {
+                    id: stringify!($id),
+                    youtube: $youtube,
+                    bilibili: $bilibili
+                }
+            ),*
+        ];
+    };
+}
+
+vtubers! {{'{'}}{% for v in vtubers %}
+    {{ "%-15s" | format(v.id) }}, Some("{{v.youtube}}"), None,{% endfor %}
+}
+
