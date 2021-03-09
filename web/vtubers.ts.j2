@@ -3,7 +3,9 @@ type VTuber = {
   twitter?: string;
   youtube?: string;
   bilibili?: number;
-  default?: true;
+  discord?: string;
+  facebook?: string;
+  default?: boolean;
 };
 
 export type VTuberIds ={% for v in vtubers %}
@@ -12,8 +14,10 @@ export type VTuberIds ={% for v in vtubers %}
 export const vtubers: Record<VTuberIds, VTuber> = {{'{'}}{% for v in vtubers %}
   {{v.id}}: {
     id: "{{v.id}}",
-    twitter: "{{v.twitter}}",
     youtube: "{{v.youtube}}",
+    twitter: "{{v.twitter}}",
+    discord: "{{v.discord}}",
+    facebook: "{{v.facebook}}",
     default: {{v.default}},
   },{% endfor %}
 };

@@ -12,6 +12,8 @@ import sys
 def read_vtuber(f):
     """ read vtuber data """
     vtubers = pd.read_csv(f)
+    vtubers = vtubers.replace(np.nan, '', regex=True)
+    print(vtubers)
     vtubers = vtubers.to_dict("records")
     vtubers = sorted(vtubers, key=lambda i: i['id'])
     for i in vtubers:
@@ -24,7 +26,7 @@ def extract_batch(vtubers):
     """ Get batch information from vtubers """
     batches = {}
     for i in vtubers:
-        if i['companyid'] is np.nan:
+        if not i['companyid']:
             batches[i['id']] = {
                 'id': i['id'],
                 'name': i['name'],
