@@ -69,7 +69,7 @@ const translations: Translations = {
   acg: "ACG稽查員 ACGInspector",
   changing: "春魚工作室",
   cyberlive: "CyberLive",
-  fourvtuber: "4virtual",
+  fourvirtual: "4virtual",
   hinet: "HiNet 光世代",
   kolhunter: "網紅獵人 KOL Hunter",
   yahoo: "Yahoo",
