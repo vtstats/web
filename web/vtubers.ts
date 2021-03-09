@@ -3,6 +3,7 @@ type VTuber = {
   twitter?: string;
   youtube?: string;
   bilibili?: number;
+  discord?: string;
   default?: boolean;
 };
 
