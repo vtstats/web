@@ -4,6 +4,7 @@ type VTuber = {
   youtube?: string;
   bilibili?: number;
   discord?: string;
+  facebook?: string;
   default?: boolean;
 };
 
