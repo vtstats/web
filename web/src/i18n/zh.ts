@@ -58,6 +58,7 @@ const translations: Translations = {
   sanmou: "三毛毛毛 SanMou",
   shaya: "莎亞 Shaya",
   tedobear: "虛擬熊頭 TedoBear",
+  tedobear2: "泰多貝亞 TedoBear",
   tsmatch: "火柴 TSMATCH",
   ubye: "悠白 Ubye",
   usagi: "兔姬 USAGIHIME CLUB.",

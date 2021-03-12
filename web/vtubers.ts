@@ -32,6 +32,7 @@ export type VTuberIds =
   | "sanmou"
   | "shaya"
   | "tedobear"
+  | "tedobear2"
   | "tsmatch"
   | "ubye"
   | "usagi"
@@ -221,6 +222,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "VirtualTedobear",
     discord: "",
     facebook: "",
+    default: false,
+  },
+  tedobear2: {
+    id: "tedobear2",
+    youtube: "UCzHbCUKXn65icryUIgn1ETA",
+    twitter: "VirtualTedobear",
+    discord: "",
+    facebook: "",
     default: true,
   },
   tsmatch: {
@@ -302,7 +311,7 @@ export const batches: Record<BatchIds, Batch> = {
   "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
   "fengxu": null,
-  "fourvirtual": ["sanmou", "tedobear"],
+  "fourvirtual": ["sanmou", "tedobear", "tedobear2"],
   "fujinokuma": null,
   "haruka": null,
   "himemiyayuka": null,
