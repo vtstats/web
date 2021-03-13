@@ -39,6 +39,10 @@ export class YoutubeStream implements OnInit, OnDestroy {
         .pipe(
           map((res) => ({
             streams: res.streams,
+            liveids: res.streams
+              .filter((s) => s.status === "live")
+              .map((s) => s.streamId)
+              .join(","),
             updatedAt: res.updatedAt,
             loading: false,
             reachedEnd: res.streams.length < 24,

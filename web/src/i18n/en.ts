@@ -33,6 +33,7 @@ const translations: Translations = {
   selectLanguage: "Select Language",
   recentStreams: "Recent Streams",
   streamViewers: "Stream Viewers",
+  watchLiveByHolotool: "Watch live streams via Holotools",
 
   // VTubers
   aoi: "夏日葵",
