@@ -4,6 +4,8 @@ export type VTuber = {
   twitter: string;
   youtube: string | null;
   bilibili: number | null;
+  discord: string | null;
+  facebook: string | null;
   default: boolean;
 };
 

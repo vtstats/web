@@ -33,6 +33,7 @@ const translations: Translations = {
   selectLanguage: "Select Language",
   recentStreams: "Recent Streams",
   streamViewers: "Stream Viewers",
+  watchLiveByHolotool: "Watch live streams via Holotools",
 
   // VTubers
   aoi: "夏日葵",
@@ -58,6 +59,7 @@ const translations: Translations = {
   sanmou: "三毛毛毛 SanMou",
   shaya: "莎亞 Shaya",
   tedobear: "虛擬熊頭 TedoBear",
+  tedobear2: "泰多貝亞 TedoBear",
   tsmatch: "火柴 TSMATCH",
   ubye: "悠白 Ubye",
   usagi: "兔姬 USAGIHIME CLUB.",
@@ -69,7 +71,7 @@ const translations: Translations = {
   acg: "ACG稽查員 ACGInspector",
   changing: "春魚工作室",
   cyberlive: "CyberLive",
-  fourvtuber: "4virtual",
+  fourvirtual: "4virtual",
   hinet: "HiNet 光世代",
   kolhunter: "網紅獵人 KOL Hunter",
   yahoo: "Yahoo",

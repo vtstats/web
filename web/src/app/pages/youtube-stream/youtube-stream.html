@@ -1,4 +1,13 @@
 <div class="youtube-stream" *ngIf="data$ | async as list">
+  <ng-container *ngIf="list.liveids">
+    <a mat-flat-button
+      i18n="@@watchLiveByHolotool"
+      target="_blank"
+      [attr.href]="'https://hololive.jetri.co/#/ameliawatchon?videoId=' + list.liveids"
+    >
+      Watch all live streams via Holotools
+    </a>
+  </ng-container>
   <hs-sub-menu>
     <hs-sub-menu-extra>
       <time

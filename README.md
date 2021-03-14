@@ -43,3 +43,11 @@ I retrieve the vtubers information from https://vt.cdein.cc
 1. Edit `vtubers.csv` and put that in issue OR
 2. Pull request after running `python3 csv_to_script.py` OR
 3. PM me or ask in public and tag me
+
+## Difference between original one
+* Bilibili Removed
+* Discord and Facebook link are added
+* A python script that generates scripts from a single csv by jinja2 templates
+* scp are used instead of rsync in CICD
+* Add taiwan vtubers data
+* Some of HoloStat and poi are renamed

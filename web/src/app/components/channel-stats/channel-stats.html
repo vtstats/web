@@ -30,6 +30,22 @@
       >
         <mat-icon svgIcon="bilibili"></mat-icon>
       </a>
+
+      <a
+        *ngIf="vtuber.discord"
+        target="_blank"
+        href="https://discord.gg/{{ vtuber.discord }}"
+      >
+        <mat-icon svgIcon="discord"></mat-icon>
+      </a>
+
+      <a
+        *ngIf="vtuber.facebook"
+        target="_blank"
+        href="https://www.facebook.com/{{ vtuber.facebook }}"
+      >
+        <mat-icon svgIcon="facebook"></mat-icon>
+      </a>
     </div>
   </div>
 </div>

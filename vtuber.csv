@@ -1,29 +1,30 @@
-id,twitter,youtube,default,name,companyid,companyname
-miru,AnninMirudayo,UCFahBR2wixu0xOex84bXFvg,True,杏仁ミル Annin Miru,,
-ubye,UbyeCloud,UC-o-1qjKkMLq-ZFxXIzOUBQ,True,悠白 Ubye,,
-hoonie,hooniefriends,UC6s0wLR0TZauzTVoGGw2r6g,True,β虎妮 Hoonie friends,yahoo,Yahoo
-rayer,ACGInspector,UCDb47NT3QzoCiorDtK9C_qg,True,蕾兒 Rayer,acg,ACG稽查員 ACGInspector
-rana,RanaVtb,UCFEd5V7VcxBPPcuMGpmvkQA,True,鳥羽樂奈 TobaRana,yenz,艷世設計 YENZdesign
-shaya,About_Shaya,UCU8O__T_J93Cnoi6HoRoPow,False,莎亞 Shaya,,
-ruroro,ruroroismek,UCRf7OJA3azS4RsGd_G96FUw,True,璐洛洛 Ruroro,kolhunter,網紅獵人 KOL Hunter
-kwakon,kwa_kon,UCyZZMKRn-mUEkPzaqa9b6bg,True,小空 KITSUNEKON,,
-ikusen,Ikusen_,UCKazkVudNQs8ZhwfXj_RNPw,True,いくせん Ikusen,acclaim,Acclaim 事務所
-aoi,SummerAoi_0810,UCLZyaaUwBw2ZvwLt6uY3_bQ,True,夏日葵,,
-usagi,kuroxusagihime,UC0u_-3zgLkSYpQOxlBi-5Ng,True,兔姬 USAGIHIME CLUB.,,
-haruka,haruka_owl,UCl1RVJbkPnpNbO9-CsDqPmQ,True,星見遙 Haruka,,
-tsmatch,Tsmatch_T96,UCXzEDlhV7wJuMY4c-Fvz7uQ,True,火柴 TSMATCH,,
-tedobear,VirtualTedobear,UCqy310kNTAokme7plaXTwQw,True,虛擬熊頭 TedoBear,fourvtuber,4virtual
-kurita,nezumiyakurita,UCsvSrfDReAqYM32_VW8t09w,True,鼠屋栗太 Kurita,,
-asa,AsaIfrit,UCxm2qC7Z7cjDAd6yPyl-sKQ,True,Asa Ifrit Ch.,,
-kaina,kaina0124,UCN7sEdAjj4Q--al9pDsCPOg,True,灰名 Kaina,,
-nyoro,NyoroVanilla,UC4J0GZLM55qrFh2L-ZAb2LA,True,香草奈若 Vanilla Nyoro,cyberlive,CyberLive
-yuna,Mizunoyuna1,UCjj4xu_HzcrOr9Jsltw0gCQ,True,水野魚娜 Mizuno yuna,cyberlive,CyberLive
-yumemi,Kumonoue_Yumemi,UCRUFY2ZCyVOvC-1rJIVZlKg,True,雲之上夢見 YumemiChannel,,
-fujinokuma,fujinokuma_mama,UCmyDLzP9ZBAK2JO4kUuJMRQ,True,藤乃熊 Fujinokuma,,
-fengxu,FengXu_vtb,UCYPSP_gJ-BcREmsDzBIaRvw,True,風絮 FengXu Ch.,,
-himemiyayuka,Hana_Yuukaa,UC1d1dmxkh_yanq1U1gli7jw,True,姬宮優花 Himemiya Yuka,,
-sanmou,3MouDolp,UCPqYxut8IQxG4HAMrJx5ffQ,True,三毛毛毛 SanMou,fourvtuber,4virtual
-lumina,lumina16569269,UCc5cZPorgyc23wKN-Ng1R6w,True,Lumina,hinet,HiNet 光世代
-lapis,ryoukenlapis,UCb_9R8SZy_HSJi53zxVh7kg,True,綾賢ラピス Ryoken Lapis,,
-pedko,Padko_tablet,UC2yG-9ekUwTs8Q0yMSycMxA,True,平平子 Padko,changing,春魚工作室
-fifteen,no15_rescute,UC_UqaRNrLcaL4fp2IAPV0OQ,False,十五號 No.Fifteen,changing,春魚工作室
+id,youtube,twitter,discord,facebook,default,name,companyid,companyname
+miru,UCFahBR2wixu0xOex84bXFvg,AnninMirudayo,,AnninMirudayo,True,杏仁ミル Annin Miru,,
+ubye,UC-o-1qjKkMLq-ZFxXIzOUBQ,UbyeCloud,,Ubyecloud,True,悠白 Ubye,,
+hoonie,UC6s0wLR0TZauzTVoGGw2r6g,hooniefriends,,hoonie.friends,True,β虎妮 Hoonie friends,yahoo,Yahoo
+rayer,UCDb47NT3QzoCiorDtK9C_qg,ACGInspector,zXC2Bw5ZUs,,True,蕾兒 Rayer,acg,ACG稽查員 ACGInspector
+rana,UCFEd5V7VcxBPPcuMGpmvkQA,RanaVtb,tobarana,RanaVtb,True,鳥羽樂奈 TobaRana,yenz,艷世設計 YENZdesign
+shaya,UCU8O__T_J93Cnoi6HoRoPow,About_Shaya,3YeKzZB,Shaya-100558584706248,False,莎亞 Shaya,,
+ruroro,UCRf7OJA3azS4RsGd_G96FUw,ruroroismek,,ruroroisme,True,璐洛洛 Ruroro,kolhunter,網紅獵人 KOL Hunter
+kwakon,UCyZZMKRn-mUEkPzaqa9b6bg,kwa_kon,,VtuberKon,True,小空 KITSUNEKON,,
+ikusen,UCKazkVudNQs8ZhwfXj_RNPw,Ikusen_,,ikusen.vtuber.52,True,いくせん Ikusen,acclaim,Acclaim 事務所
+aoi,UCLZyaaUwBw2ZvwLt6uY3_bQ,SummerAoi_0810,,summer.aoi810,True,夏日葵,,
+usagi,UC0u_-3zgLkSYpQOxlBi-5Ng,kuroxusagihime,,usagihime777,True,兔姬 USAGIHIME CLUB.,,
+haruka,UCl1RVJbkPnpNbO9-CsDqPmQ,haruka_owl,,Harukaowl,True,星見遙 Haruka,,
+tsmatch,UCXzEDlhV7wJuMY4c-Fvz7uQ,Tsmatch_T96,,,True,火柴 TSMATCH,,
+tedobear,UCqy310kNTAokme7plaXTwQw,VirtualTedobear,,,False,虛擬熊頭 TedoBear,fourvirtual,4virtual
+tedobear2,UCzHbCUKXn65icryUIgn1ETA,VirtualTedobear,,,True,泰多貝亞 TedoBear,fourvirtual,4virtual
+kurita,UCsvSrfDReAqYM32_VW8t09w,nezumiyakurita,,101107638560961,True,鼠屋栗太 Kurita,,
+asa,UCxm2qC7Z7cjDAd6yPyl-sKQ,AsaIfrit,,,True,Asa Ifrit Ch.,,
+kaina,UCN7sEdAjj4Q--al9pDsCPOg,kaina0124,,kaina0124,True,灰名 Kaina,,
+nyoro,UC4J0GZLM55qrFh2L-ZAb2LA,NyoroVanilla,,"104820211486861",True,香草奈若 Vanilla Nyoro,cyberlive,CyberLive
+yuna,UCjj4xu_HzcrOr9Jsltw0gCQ,Mizunoyuna1,,Mizunoyuna321,True,水野魚娜 Mizuno yuna,cyberlive,CyberLive
+yumemi,UCRUFY2ZCyVOvC-1rJIVZlKg,Kumonoue_Yumemi,,,True,雲之上夢見 YumemiChannel,,
+fujinokuma,UCmyDLzP9ZBAK2JO4kUuJMRQ,fujinokuma_mama,,,True,藤乃熊 Fujinokuma,,
+fengxu,UCYPSP_gJ-BcREmsDzBIaRvw,FengXu_vtb,,FengXuVTB,True,風絮 FengXu Ch.,,
+himemiyayuka,UC1d1dmxkh_yanq1U1gli7jw,Hana_Yuukaa,,hanayuuka.girl,True,姬宮優花 Himemiya Yuka,,
+sanmou,UCPqYxut8IQxG4HAMrJx5ffQ,3MouDolp,,,True,三毛毛毛 SanMou,fourvirtual,4virtual
+lumina,UCc5cZPorgyc23wKN-Ng1R6w,lumina16569269,,broadbandhinet,True,Lumina,hinet,HiNet 光世代
+lapis,UCb_9R8SZy_HSJi53zxVh7kg,ryoukenlapis,,105752011459849,True,綾賢ラピス Ryoken Lapis,,
+pedko,UC2yG-9ekUwTs8Q0yMSycMxA,Padko_tablet,,Padko.Ch,True,平平子 Padko,changing,春魚工作室
+fifteen,UC_UqaRNrLcaL4fp2IAPV0OQ,no15_rescute,,RESCUTE119,False,十五號 No.Fifteen,changing,春魚工作室

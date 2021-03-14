@@ -46,6 +46,7 @@ vtubers! {
     sanmou         , Some("UCPqYxut8IQxG4HAMrJx5ffQ"), None,
     shaya          , Some("UCU8O__T_J93Cnoi6HoRoPow"), None,
     tedobear       , Some("UCqy310kNTAokme7plaXTwQw"), None,
+    tedobear2      , Some("UCzHbCUKXn65icryUIgn1ETA"), None,
     tsmatch        , Some("UCXzEDlhV7wJuMY4c-Fvz7uQ"), None,
     ubye           , Some("UC-o-1qjKkMLq-ZFxXIzOUBQ"), None,
     usagi          , Some("UC0u_-3zgLkSYpQOxlBi-5Ng"), None,

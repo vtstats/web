@@ -21,6 +21,7 @@ insert into youtube_channels (vtuber_id) values ('ruroro');
 insert into youtube_channels (vtuber_id) values ('sanmou');
 insert into youtube_channels (vtuber_id) values ('shaya');
 insert into youtube_channels (vtuber_id) values ('tedobear');
+insert into youtube_channels (vtuber_id) values ('tedobear2');
 insert into youtube_channels (vtuber_id) values ('tsmatch');
 insert into youtube_channels (vtuber_id) values ('ubye');
 insert into youtube_channels (vtuber_id) values ('usagi');
