@@ -12,6 +12,8 @@ use crate::{error::Result, utils};
 #[derive(Debug)]
 pub struct Stream {
     pub id: String,
+    pub title: String,
+    pub channel_id: String,
     pub status: StreamStatus,
     pub start_time: Option<DateTime<Utc>>,
     pub end_time: Option<DateTime<Utc>>,
@@ -36,7 +38,15 @@ pub struct VideosListResponse {
 #[serde(rename_all = "camelCase")]
 pub struct Video {
     pub id: String,
+    pub snippet: Option<Snippet>,
     pub live_streaming_details: Option<LiveStreamingDetails>,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct Snippet {
+    pub channel_id: String,
+    pub title: String,
 }
 
 #[skip_serializing_none]
@@ -58,9 +68,11 @@ pub async fn youtube_streams(client: &Client, ids: &[String]) -> Result<Vec<Stre
         let videos = youtube_videos_api(&client, &chunk.join(",")).await?;
 
         streams.extend(videos.into_iter().filter_map(|video| {
-            if let Some(detail) = video.live_streaming_details {
-                Some(Stream {
+            match (video.snippet, video.live_streaming_details) {
+                (Some(snippet), Some(detail)) => Some(Stream {
                     id: video.id,
+                    title: snippet.title,
+                    channel_id: snippet.channel_id,
                     status: if detail.actual_end_time.is_some() {
                         StreamStatus::Ended
                     } else if detail.actual_start_time.is_some() {
@@ -74,9 +86,8 @@ pub async fn youtube_streams(client: &Client, ids: &[String]) -> Result<Vec<Stre
                     viewers: detail
                         .concurrent_viewers
                         .and_then(|v| i32::from_str(&v).ok()),
-                })
-            } else {
-                None
+                }),
+                _ => None,
             }
         }));
     }
@@ -93,8 +104,8 @@ async fn youtube_videos_api(client: &Client, id: &str) -> Result<Vec<Video>> {
     let url = Url::parse_with_params(
         "https://www.googleapis.com/youtube/v3/videos",
         &[
-            ("part", "id,liveStreamingDetails"),
-            ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers))"),
+            ("part", "id,liveStreamingDetails,snippet"),
+            ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers),snippet(title,channelId))"),
             ("maxResults", "50"),
             ("key", utils::youtube_api_key()),
             ("id", id),

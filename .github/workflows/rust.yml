@@ -71,7 +71,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           cargo build --release
-          strip target/release/{api,subscribe,stream_stat,channel_stat}
+          strip target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
         env:
           DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
@@ -85,6 +85,6 @@ jobs:
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        run: rsync -avzzP target/release/{api,subscribe,stream_stat,channel_stat} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
+        run: rsync -avzzP target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
         env:
           RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}

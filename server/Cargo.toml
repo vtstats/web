@@ -43,6 +43,10 @@ name = "channel_stat"
 path = "src/channel_stat/main.rs"
 
 [[bin]]
+name = "rss_refresh"
+path = "src/rss_refresh/main.rs"
+
+[[bin]]
 name = "subscribe"
 path = "src/subscribe/main.rs"
 
