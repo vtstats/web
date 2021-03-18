@@ -7,7 +7,7 @@ use warp::{http::StatusCode, Rejection};
 
 use crate::error::Error;
 use crate::requests::{upload_file, youtube_streams, youtube_thumbnail, Stream};
-use crate::vtubers::VTUBERS;
+use crate::vtubers::VTuber;
 
 pub async fn publish_content(
     body: String,
@@ -24,7 +24,7 @@ pub async fn publish_content(
         }
     };
 
-    if let Some((vtuber_id, video_id, title)) = parse_modification(&doc) {
+    if let Some((vtuber_id, video_id)) = parse_modification(&doc) {
         tracing::info!(action = "Update video", vtuber_id, video_id);
 
         let streams = youtube_streams(&client, &[video_id.to_string()]).await?;
@@ -38,7 +38,7 @@ pub async fn publish_content(
             .await
             .map(|filename| format!("https://taiwanv.linnil1.me/thumbnail/{}", filename));
 
-        update_youtube_stream(&streams[0], vtuber_id, title, thumbnail_url, &pool).await?;
+        update_youtube_stream(&streams[0], vtuber_id, thumbnail_url, &pool).await?;
 
         return Ok(StatusCode::OK);
     }
@@ -56,17 +56,10 @@ pub async fn publish_content(
     Ok(StatusCode::BAD_REQUEST)
 }
 
-pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'a str)> {
+pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
     let video_id = doc
         .descendants()
         .find(|n| n.tag_name().name() == "videoId")
-        .and_then(|n| n.text())?;
-
-    // skip the frist title element
-    let title = doc
-        .descendants()
-        .filter(|n| n.tag_name().name() == "title")
-        .nth(1)
         .and_then(|n| n.text())?;
 
     let channel_id = doc
@@ -74,12 +67,9 @@ pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str, &'
         .find(|n| n.tag_name().name() == "channelId")
         .and_then(|n| n.text())?;
 
-    let vtuber_id = VTUBERS
-        .iter()
-        .find(|v| v.youtube == Some(channel_id))
-        .map(|v| v.id)?;
+    let vtuber_id = VTuber::find_by_youtube_channel_id(channel_id).map(|v| v.id)?;
 
-    Some((vtuber_id, video_id, title))
+    Some((vtuber_id, video_id))
 }
 
 pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
@@ -95,10 +85,7 @@ pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
         .and_then(|n| n.text())
         .and_then(|n| n.get("https://www.youtube.com/channel/".len()..))?;
 
-    let vtuber_id = VTUBERS
-        .iter()
-        .find(|v| v.youtube == Some(channel_id))
-        .map(|v| v.id)?;
+    let vtuber_id = VTuber::find_by_youtube_channel_id(channel_id).map(|v| v.id)?;
 
     Some((stream_id, vtuber_id))
 }
@@ -127,13 +114,12 @@ async fn upload_thumbnail(stream_id: &str, client: &Client) -> Option<String> {
 
 #[instrument(
     name = "Update youtube stream",
-    skip(stream, vtuber_id, title, thumbnail_url, pool),
+    skip(stream, vtuber_id, thumbnail_url, pool),
     fields(db.table = "youtube_streams")
 )]
 async fn update_youtube_stream(
     stream: &Stream,
     vtuber_id: &str,
-    title: &str,
     thumbnail_url: Option<String>,
     pool: &PgPool,
 ) -> Result<(), Error> {
@@ -147,7 +133,7 @@ async fn update_youtube_stream(
         "#,
         stream.id,
         vtuber_id,
-        title,
+        stream.title,
         stream.status: _,
         thumbnail_url,
         stream.schedule_time,

@@ -8,6 +8,12 @@ pub struct VTuber {
     pub bilibili: Option<&'static str>,
 }
 
+impl VTuber {
+    pub fn find_by_youtube_channel_id(channel_id: &str) -> Option<&VTuber> {
+        VTUBERS.iter().find(|v| v.youtube == Some(channel_id))
+    }
+}
+
 macro_rules! vtubers {
     ($( $(#[doc = $_:expr])? $id:ident, $youtube:expr, $bilibili:expr, )*) => {
         pub const VTUBERS: &[VTuber] = &[
