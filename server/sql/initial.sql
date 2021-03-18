@@ -1,3 +1,4 @@
+insert into youtube_channels (vtuber_id) values ('amamiyayume');
 insert into youtube_channels (vtuber_id) values ('aoi');
 insert into youtube_channels (vtuber_id) values ('asa');
 insert into youtube_channels (vtuber_id) values ('fengxu');
@@ -18,6 +19,7 @@ insert into youtube_channels (vtuber_id) values ('pedko');
 insert into youtube_channels (vtuber_id) values ('rana');
 insert into youtube_channels (vtuber_id) values ('rayer');
 insert into youtube_channels (vtuber_id) values ('ruroro');
+insert into youtube_channels (vtuber_id) values ('sakuranoruu');
 insert into youtube_channels (vtuber_id) values ('sanmou');
 insert into youtube_channels (vtuber_id) values ('shaya');
 insert into youtube_channels (vtuber_id) values ('tedobear');

@@ -36,6 +36,7 @@ const translations: Translations = {
   watchLiveByHolotool: "Watch live streams via Holotools",
 
   // VTubers
+  amamiyayume: "雨宮夢 YUME Channel",
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
   fengxu: "風絮 FengXu Ch.",
@@ -56,6 +57,7 @@ const translations: Translations = {
   rana: "鳥羽樂奈 TobaRana",
   rayer: "蕾兒 Rayer",
   ruroro: "璐洛洛 Ruroro",
+  sakuranoruu: "櫻野露 露露TIME",
   sanmou: "三毛毛毛 SanMou",
   shaya: "莎亞 Shaya",
   tedobear: "虛擬熊頭 TedoBear",
@@ -69,6 +71,7 @@ const translations: Translations = {
   // Batches
   acclaim: "Acclaim 事務所",
   acg: "ACG稽查員 ACGInspector",
+  blossomlive: "BlossomLIVE",
   changing: "春魚工作室",
   cyberlive: "CyberLive",
   fourvirtual: "4virtual",

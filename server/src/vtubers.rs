@@ -29,6 +29,7 @@ macro_rules! vtubers {
 }
 
 vtubers! {
+    amamiyayume    , Some("UClQot-XYs9KQ2fmItSz4IjA"), None,
     aoi            , Some("UCLZyaaUwBw2ZvwLt6uY3_bQ"), None,
     asa            , Some("UCxm2qC7Z7cjDAd6yPyl-sKQ"), None,
     fengxu         , Some("UCYPSP_gJ-BcREmsDzBIaRvw"), None,
@@ -49,6 +50,7 @@ vtubers! {
     rana           , Some("UCFEd5V7VcxBPPcuMGpmvkQA"), None,
     rayer          , Some("UCDb47NT3QzoCiorDtK9C_qg"), None,
     ruroro         , Some("UCRf7OJA3azS4RsGd_G96FUw"), None,
+    sakuranoruu    , Some("UCgL6PS1vba90zrZW9xmiwng"), None,
     sanmou         , Some("UCPqYxut8IQxG4HAMrJx5ffQ"), None,
     shaya          , Some("UCU8O__T_J93Cnoi6HoRoPow"), None,
     tedobear       , Some("UCqy310kNTAokme7plaXTwQw"), None,

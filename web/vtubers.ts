@@ -9,6 +9,7 @@ type VTuber = {
 };
 
 export type VTuberIds =
+  | "amamiyayume"
   | "aoi"
   | "asa"
   | "fengxu"
@@ -29,6 +30,7 @@ export type VTuberIds =
   | "rana"
   | "rayer"
   | "ruroro"
+  | "sakuranoruu"
   | "sanmou"
   | "shaya"
   | "tedobear"
@@ -40,6 +42,14 @@ export type VTuberIds =
   | "yuna";
 
 export const vtubers: Record<VTuberIds, VTuber> = {
+  amamiyayume: {
+    id: "amamiyayume",
+    youtube: "UClQot-XYs9KQ2fmItSz4IjA",
+    twitter: "amamiyayume20",
+    discord: "",
+    facebook: "amamiyayume20",
+    default: false,
+  },
   aoi: {
     id: "aoi",
     youtube: "UCLZyaaUwBw2ZvwLt6uY3_bQ",
@@ -200,6 +210,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "ruroroisme",
     default: true,
   },
+  sakuranoruu: {
+    id: "sakuranoruu",
+    youtube: "UCgL6PS1vba90zrZW9xmiwng",
+    twitter: "sakuranoruu",
+    discord: "",
+    facebook: "Wishswing",
+    default: false,
+  },
   sanmou: {
     id: "sanmou",
     youtube: "UCPqYxut8IQxG4HAMrJx5ffQ",
@@ -277,8 +295,10 @@ export const vtubers: Record<VTuberIds, VTuber> = {
 export type BatchIds =
   | "acclaim"
   | "acg"
+  | "amamiyayume"
   | "aoi"
   | "asa"
+  | "blossomlive"
   | "changing"
   | "cyberlive"
   | "fengxu"
@@ -306,8 +326,10 @@ type Batch = VTuberIds[];
 export const batches: Record<BatchIds, Batch> = {
   "acclaim": ["ikusen"],
   "acg": ["rayer"],
+  "amamiyayume": null,
   "aoi": null,
   "asa": null,
+  "blossomlive": ["sakuranoruu"],
   "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
   "fengxu": null,
