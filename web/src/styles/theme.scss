@@ -7,6 +7,7 @@
 // components
 @import "src/app/components/apx-chart/apx-chart-theme";
 @import "src/app/components/big-number/big-number-theme";
+@import "src/app/components/date-select/date-select-theme";
 @import "src/app/components/stream-summary/stream-summary-theme";
 @import "src/app/components/stream-item/stream-item-theme";
 @import "src/app/components/channel-table/channel-table-theme";
@@ -37,6 +38,7 @@
   @include channel-stats-theme($theme);
   @include channel-stats-chart-theme($theme);
   @include apx-chart-theme($theme);
+  @include date-select-theme($theme);
 }
 
 @mixin hs-typography($config) {

@@ -1,0 +1,30 @@
+<button
+  mat-button
+  (click)="_isOpen = !_isOpen"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  {{ getBtnText() }}
+
+  <mat-icon *ngIf="!_range.start && !_range.end" svgIcon="chevron_down">
+  </mat-icon>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="_isOpen"
+  (overlayOutsideClick)="onClose()"
+>
+  <div class="date-select">
+    <mat-calendar
+      [selected]="_range"
+      [comparisonStart]="_range.start"
+      [comparisonStart]="_range.end"
+      (selectedChange)="onChange($event)"
+      [minDate]="_min"
+      [maxDate]="_max"
+    ></mat-calendar>
+  </div>
+</ng-template>

@@ -5,13 +5,19 @@ import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
 
 import {
   StreamList,
-  StreamListLoadMoreOption,
   StreamListOrderBy,
   StreamStatus,
   StreamGroup,
+  Stream,
 } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
+
+type Option = {
+  startAt?: number;
+  endAt?: number;
+  refresh: boolean;
+};
 
 @Component({
   selector: "hs-youtube-schedule-stream",
@@ -26,17 +32,19 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
     private config: ConfigService
   ) {}
 
-  loadMore$ = new Subject<StreamListLoadMoreOption>();
+  option$ = new Subject<Option>();
 
-  data$: Observable<StreamList> = this.loadMore$.pipe(
-    startWith<StreamListLoadMoreOption>({ refresh: true }),
-    switchMap(({ refresh, last }) =>
+  data$: Observable<StreamList> = this.option$.pipe(
+    startWith<Option>({ refresh: true }),
+    scan<Option, Option>((acc, cur) => ({ ...acc, ...cur })),
+    switchMap(({ refresh, startAt, endAt }) =>
       this.api
         .youtubeStreams({
           ids: [...this.config.vtuber],
           status: [StreamStatus.scheduled],
           orderBy: StreamListOrderBy.scheduleTimeAsc,
-          startAt: last?.scheduleTime,
+          startAt,
+          endAt,
         })
         .pipe(
           map((res) => ({
@@ -65,8 +73,15 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
     this.title.setTitle(`${translate("youtubeSchedule")} | HoloStats`);
   }
 
+  onRechedEnd(lastStream: Stream) {
+    this.option$.next({
+      startAt: lastStream.scheduleTime,
+      refresh: false,
+    });
+  }
+
   ngOnDestroy() {
-    this.loadMore$.complete();
+    this.option$.complete();
   }
 
   trackBy(_: number, group: StreamGroup): number {

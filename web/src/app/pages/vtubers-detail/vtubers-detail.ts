@@ -6,15 +6,15 @@ import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
 
 import { vtubers } from "vtubers";
 
-import {
-  Stream,
-  StreamList,
-  StreamListLoadMoreOption,
-  StreamStatus,
-  VTuber,
-} from "src/app/models";
+import { Stream, StreamList, StreamStatus, VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
 import { translate } from "src/i18n";
+
+type Option = {
+  startAt?: number;
+  endAt?: number;
+  refresh: boolean;
+};
 
 @Component({
   selector: "hs-vtubers-detail",
@@ -32,16 +32,18 @@ export class VTubersDetail implements OnInit, OnDestroy {
 
   vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
 
-  loadMore$ = new Subject<StreamListLoadMoreOption>();
+  option$ = new Subject<Option>();
 
-  data$: Observable<StreamList> = this.loadMore$.pipe(
-    startWith<StreamListLoadMoreOption>({ refresh: true }),
-    switchMap(({ refresh, last }) =>
+  data$: Observable<StreamList> = this.option$.pipe(
+    startWith<Option>({ refresh: true }),
+    scan<Option, Option>((acc, cur) => ({ ...acc, ...cur })),
+    switchMap(({ refresh, startAt, endAt }) =>
       this.api
         .youtubeStreams({
           ids: [this.vtuber.id],
           status: [StreamStatus.live, StreamStatus.ended],
-          endAt: last?.startTime,
+          startAt,
+          endAt,
         })
         .pipe(
           map((res) => ({
@@ -75,8 +77,15 @@ export class VTubersDetail implements OnInit, OnDestroy {
     this.title.setTitle(`${translate(this.vtuber.id)} | HoloStats`);
   }
 
+  onRechedEnd(lastStream: Stream) {
+    this.option$.next({
+      endAt: lastStream.startTime,
+      refresh: false,
+    });
+  }
+
   ngOnDestroy() {
-    this.loadMore$.complete();
+    this.option$.complete();
   }
 
   trackBy(_: number, stream: Stream): string {
