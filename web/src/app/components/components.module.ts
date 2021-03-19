@@ -6,6 +6,8 @@ import { MatTableModule } from "@angular/material/table";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -39,6 +41,8 @@ import {
 } from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
 import { DateSelect } from "./date-select/date-select";
+import { VTuberSelect } from "./vtuber-select/vtuber-select";
+import { FilterGroup } from "./filter-group/filter-group";
 
 import { SharedModule } from "src/app/shared";
 
@@ -66,6 +70,8 @@ import { SharedModule } from "src/app/shared";
     SubMenuTitle,
     SubMenuExtra,
     DateSelect,
+    VTuberSelect,
+    FilterGroup,
   ],
   imports: [
     CommonModule,
@@ -80,6 +86,8 @@ import { SharedModule } from "src/app/shared";
     MatTableModule,
     MatIconModule,
     MatSortModule,
+    MatListModule,
+    MatTooltipModule,
     MatDividerModule,
     SharedModule,
   ],
@@ -102,6 +110,8 @@ import { SharedModule } from "src/app/shared";
     SubMenuTitle,
     SubMenuExtra,
     DateSelect,
+    VTuberSelect,
+    FilterGroup,
   ],
 })
 export class ComponentsModule {}

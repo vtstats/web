@@ -1,0 +1,34 @@
+@import "~@angular/material/theming";
+
+@mixin vtuber-select-theme($theme) {
+  $primary: map-get($theme, primary);
+  $background: map-get($theme, "background");
+
+  .vtuber-select {
+    .text {
+      background-color: mat-color($background, "unselected-chip");
+    }
+
+    .more,
+    .profile {
+      background-color: mat-color($background, "background");
+
+      &.selected {
+        border: 2px solid mat-color($primary);
+      }
+    }
+  }
+
+  .vtuber-select-popover {
+    background-color: mat-color($background, "card");
+  }
+}
+
+@mixin vtuber-select-typography($config) {
+  .vtuber-select {
+    .more {
+      font-size: mat-font-size($config, "body-2");
+      font-weight: mat-font-weight($config, "body-2");
+    }
+  }
+}

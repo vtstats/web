@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Observable, Subject } from "rxjs";
 import { startWith, tap, map, scan, switchMap } from "rxjs/operators";
@@ -13,9 +7,9 @@ import { startOfDay, endOfDay } from "date-fns";
 import { StreamStatus, StreamList, StreamGroup, Stream } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
-import { DateSelect } from "src/app/components/date-select/date-select";
 
 type Option = {
+  ids?: string[];
   startAt?: number;
   endAt?: number;
   refresh: boolean;
@@ -34,19 +28,15 @@ export class YoutubeStream implements OnInit, OnDestroy {
     private config: ConfigService
   ) {}
 
-  @ViewChild(DateSelect, { static: false }) dateSelect: DateSelect;
-
-  displayClear: boolean = false;
-
   option$ = new Subject<Option>();
 
   data$: Observable<StreamList> = this.option$.pipe(
-    startWith({ refresh: true }),
+    startWith({ ids: [], refresh: true }),
     scan<Option, Option>((acc, cur) => ({ ...acc, ...cur })),
-    switchMap(({ startAt, endAt, refresh }) =>
+    switchMap(({ ids, startAt, endAt, refresh }) =>
       this.api
         .youtubeStreams({
-          ids: [...this.config.vtuber],
+          ids: ids.length === 0 ? [...this.config.vtuber] : ids,
           status: [StreamStatus.live, StreamStatus.ended],
           endAt,
           startAt,
@@ -90,7 +80,6 @@ export class YoutubeStream implements OnInit, OnDestroy {
   }
 
   onDateRangeChange(range: [Date, Date]) {
-    this.displayClear = true;
     this.option$.next({
       startAt: Number(startOfDay(range[0])),
       endAt: Number(endOfDay(range[1])),
@@ -98,12 +87,15 @@ export class YoutubeStream implements OnInit, OnDestroy {
     });
   }
 
-  clear() {
-    this.dateSelect.clear();
-    this.displayClear = false;
+  onVTuberChange(ids: Set<string>) {
+    this.option$.next({ ids: [...ids], refresh: true });
+  }
+
+  onClear() {
     this.option$.next({
       startAt: null,
       endAt: null,
+      ids: [],
       refresh: true,
     });
   }

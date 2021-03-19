@@ -1,5 +1,13 @@
 <div class="youtube-schedule-stream" *ngIf="data$ | async as list">
   <hs-sub-menu>
+    <hs-sub-menu-title>
+      <hs-filter-group
+        [displayDateRange]="false"
+        (clear)="onClear()"
+        (vtuberChanged)="onVTuberChange($event)"
+      >
+      </hs-filter-group>
+    </hs-sub-menu-title>
     <hs-sub-menu-extra>
       <time
         *ngIf="!list.loading; else shimmer"

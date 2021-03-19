@@ -14,6 +14,7 @@ import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
 
 type Option = {
+  ids?: string[];
   startAt?: number;
   endAt?: number;
   refresh: boolean;
@@ -35,12 +36,12 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
   option$ = new Subject<Option>();
 
   data$: Observable<StreamList> = this.option$.pipe(
-    startWith<Option>({ refresh: true }),
+    startWith<Option>({ ids: [], refresh: true }),
     scan<Option, Option>((acc, cur) => ({ ...acc, ...cur })),
-    switchMap(({ refresh, startAt, endAt }) =>
+    switchMap(({ ids, refresh, startAt, endAt }) =>
       this.api
         .youtubeStreams({
-          ids: [...this.config.vtuber],
+          ids: ids.length === 0 ? [...this.config.vtuber] : ids,
           status: [StreamStatus.scheduled],
           orderBy: StreamListOrderBy.scheduleTimeAsc,
           startAt,
@@ -73,11 +74,19 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
     this.title.setTitle(`${translate("youtubeSchedule")} | HoloStats`);
   }
 
+  onVTuberChange(ids: Set<string>) {
+    this.option$.next({ ids: [...ids], refresh: true });
+  }
+
   onRechedEnd(lastStream: Stream) {
     this.option$.next({
       startAt: lastStream.scheduleTime,
       refresh: false,
     });
+  }
+
+  onClear() {
+    this.option$.next({ ids: [], refresh: true });
   }
 
   ngOnDestroy() {

@@ -15,9 +15,9 @@
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="trigger"
   [cdkConnectedOverlayOpen]="_isOpen"
-  (overlayOutsideClick)="onClose()"
+  (overlayOutsideClick)="onClickOutside($event)"
 >
-  <div class="date-select">
+  <div class="date-select" [@transform]="_isOpen">
     <mat-calendar
       [selected]="_range"
       [comparisonStart]="_range.start"

@@ -1,5 +1,13 @@
 <div class="table-sub-menu">
   <hs-sub-menu>
+    <hs-sub-menu-title>
+      <hs-filter-group
+        (clear)="onClear()"
+        [displayDateRange]="false"
+        (vtuberChanged)="onVTuberChange($event)"
+      >
+      </hs-filter-group>
+    </hs-sub-menu-title>
     <hs-sub-menu-extra>
       <time
         *ngIf="!loading; else shimmer"
