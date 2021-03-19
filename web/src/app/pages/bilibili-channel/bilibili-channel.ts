@@ -14,6 +14,10 @@ import { Channel } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
 
+type Option = {
+  ids: string[];
+};
+
 @Component({
   selector: "hs-bilibili-channel",
   templateUrl: "bilibili-channel.html",
@@ -33,20 +37,22 @@ export class BilibiliChannel implements OnInit, OnDestroy {
   updatedAt: number;
   dataSource: Array<Channel> = [];
 
-  load$ = new Subject<boolean>();
+  option$ = new Subject<Option>();
 
   ngOnInit() {
     this.title.setTitle(`${translate("bilibiliChannel")} | HoloStats`);
 
-    this.load$
+    this.option$
       .pipe(
-        startWith(true),
+        startWith({ ids: [] }),
         tap(() => {
           this.loading = true;
           this.cdr.markForCheck();
         }),
-        switchMap(() =>
-          this.api.bilibiliChannels({ ids: [...this.config.vtuber] })
+        switchMap(({ ids }) =>
+          this.api.bilibiliChannels({
+            ids: ids.length === 0 ? [...this.config.vtuber] : ids,
+          })
         )
       )
       .subscribe({
@@ -59,7 +65,15 @@ export class BilibiliChannel implements OnInit, OnDestroy {
       });
   }
 
+  onVTuberChange(ids: Set<string>) {
+    this.option$.next({ ids: [...ids] });
+  }
+
+  onClear() {
+    this.option$.next({ ids: [] });
+  }
+
   ngOnDestroy() {
-    this.load$.complete();
+    this.option$.complete();
   }
 }

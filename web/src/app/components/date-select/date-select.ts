@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 import {
   DateRange,
@@ -12,10 +19,33 @@ import format from "date-fns/format";
   templateUrl: "./date-select.html",
   styleUrls: ["./date-select.scss"],
   providers: [MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER],
+  animations: [
+    trigger("transform", [
+      state(
+        "void",
+        style({
+          opacity: 0,
+          transform: "scale(0.8)",
+        })
+      ),
+      transition(
+        "void => enter",
+        animate(
+          "120ms cubic-bezier(0, 0, 0.2, 1)",
+          style({
+            opacity: 1,
+            transform: "scale(1)",
+          })
+        )
+      ),
+      transition(
+        "* => void",
+        animate("100ms 25ms linear", style({ opacity: 0 }))
+      ),
+    ]),
+  ],
 })
 export class DateSelect {
-  @Input() startAt: Date = null;
-  @Input() endAt: Date = null;
   @Output() selectedChange = new EventEmitter<[Date, Date]>();
 
   _min = new Date(2016, 10, 29);
@@ -23,12 +53,11 @@ export class DateSelect {
 
   _isOpen = false;
 
-  _range = new DateRange(this.startAt, this.endAt);
+  _range = new DateRange(null, null);
 
   _lastRange = this._range;
 
   public clear() {
-    console.log("cleared");
     this._range = new DateRange(null, null);
   }
 
@@ -76,7 +105,8 @@ export class DateSelect {
     )}`;
   }
 
-  onClose() {
+  onClickOutside(event: MouseEvent) {
+    event.stopPropagation();
     this._isOpen = false;
     if (this._range.start && !this._range.end) {
       this._range = this._lastRange;

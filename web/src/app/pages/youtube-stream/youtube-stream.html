@@ -1,15 +1,12 @@
 <div class="youtube-stream" *ngIf="data$ | async as list">
   <hs-sub-menu>
     <hs-sub-menu-title>
-      <hs-date-select
-        (selectedChange)="this.onDateRangeChange($event)"
-      ></hs-date-select>
-      <mat-divider
-        *ngIf="displayClear"
-        [vertical]="true"
-        style="display: inline"
-      ></mat-divider>
-      <button *ngIf="displayClear" mat-button (click)="clear()">Clear</button>
+      <hs-filter-group
+        (clear)="onClear()"
+        (dateRangeChanged)="onDateRangeChange($event)"
+        (vtuberChanged)="onVTuberChange($event)"
+      >
+      </hs-filter-group>
     </hs-sub-menu-title>
     <hs-sub-menu-extra>
       <time

@@ -3,6 +3,8 @@ import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
+import { startOfDay } from "date-fns";
+import endOfDay from "date-fns/endOfDay";
 
 import { vtubers } from "vtubers";
 
@@ -81,6 +83,22 @@ export class VTubersDetail implements OnInit, OnDestroy {
     this.option$.next({
       endAt: lastStream.startTime,
       refresh: false,
+    });
+  }
+
+  onDateRangeChange(range: [Date, Date]) {
+    this.option$.next({
+      startAt: Number(startOfDay(range[0])),
+      endAt: Number(endOfDay(range[1])),
+      refresh: true,
+    });
+  }
+
+  onClear() {
+    this.option$.next({
+      endAt: null,
+      startAt: null,
+      refresh: true,
     });
   }
 
