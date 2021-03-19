@@ -6,6 +6,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatDividerModule } from "@angular/material/divider";
 import { MatTableModule } from "@angular/material/table";
 import { MatTreeModule } from "@angular/material/tree";
 import { EllipsisModule } from "ngx-ellipsis";
@@ -44,6 +47,9 @@ import { NotFound } from "./not-found/not-found";
     MatSortModule,
     MatTableModule,
     MatTreeModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatDividerModule,
     ComponentsModule,
     SharedModule,
   ],

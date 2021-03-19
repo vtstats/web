@@ -8,6 +8,9 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+import { OverlayModule } from "@angular/cdk/overlay";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { ApxChart } from "./apx-chart/apx-chart";
@@ -35,6 +38,7 @@ import {
   StreamsSummaryShimmer,
 } from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
+import { DateSelect } from "./date-select/date-select";
 
 import { SharedModule } from "src/app/shared";
 
@@ -61,12 +65,16 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
+    DateSelect,
   ],
   imports: [
     CommonModule,
     RouterModule,
     PortalModule,
     EllipsisModule,
+    OverlayModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatTableModule,
@@ -93,6 +101,7 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
+    DateSelect,
   ],
 })
 export class ComponentsModule {}

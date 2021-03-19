@@ -12,6 +12,8 @@
   @include mat-sidenav-theme($theme);
   @include mat-card-theme($theme);
 
+  @include mat-datepicker-theme($theme);
+
   .mat-drawer-backdrop.mat-drawer-shown {
     background-color: rgba(0, 0, 0, 0.5);
   }
@@ -42,4 +44,7 @@
   @include mat-table-typography($config);
   @include mat-tooltip-typography($config);
   @include mat-tree-typography($config);
+  @include mat-select-typography($config);
+  @include mat-datepicker-typography($config);
+  @include mat-form-field-typography($config);
 }

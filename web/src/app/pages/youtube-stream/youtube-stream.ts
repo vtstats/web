@@ -1,16 +1,25 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Observable, Subject } from "rxjs";
 import { startWith, tap, map, scan, switchMap } from "rxjs/operators";
+import { startOfDay, endOfDay } from "date-fns";
 
-import {
-  StreamStatus,
-  StreamList,
-  StreamListLoadMoreOption,
-  StreamGroup,
-} from "src/app/models";
+import { StreamStatus, StreamList, StreamGroup, Stream } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
+import { DateSelect } from "src/app/components/date-select/date-select";
+
+type Option = {
+  startAt?: number;
+  endAt?: number;
+  refresh: boolean;
+};
 
 @Component({
   selector: "hs-youtube-stream",
@@ -25,16 +34,22 @@ export class YoutubeStream implements OnInit, OnDestroy {
     private config: ConfigService
   ) {}
 
-  loadMore$ = new Subject<StreamListLoadMoreOption>();
+  @ViewChild(DateSelect, { static: false }) dateSelect: DateSelect;
 
-  data$: Observable<StreamList> = this.loadMore$.pipe(
-    startWith<StreamListLoadMoreOption>({ refresh: true }),
-    switchMap(({ refresh, last }) =>
+  displayClear: boolean = false;
+
+  option$ = new Subject<Option>();
+
+  data$: Observable<StreamList> = this.option$.pipe(
+    startWith({ refresh: true }),
+    scan<Option, Option>((acc, cur) => ({ ...acc, ...cur })),
+    switchMap(({ startAt, endAt, refresh }) =>
       this.api
         .youtubeStreams({
           ids: [...this.config.vtuber],
           status: [StreamStatus.live, StreamStatus.ended],
-          endAt: last?.startTime,
+          endAt,
+          startAt,
         })
         .pipe(
           map((res) => ({
@@ -64,7 +79,33 @@ export class YoutubeStream implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loadMore$.complete();
+    this.option$.complete();
+  }
+
+  onRechedEnd(lastStream: Stream) {
+    this.option$.next({
+      endAt: lastStream.startTime,
+      refresh: false,
+    });
+  }
+
+  onDateRangeChange(range: [Date, Date]) {
+    this.displayClear = true;
+    this.option$.next({
+      startAt: Number(startOfDay(range[0])),
+      endAt: Number(endOfDay(range[1])),
+      refresh: true,
+    });
+  }
+
+  clear() {
+    this.dateSelect.clear();
+    this.displayClear = false;
+    this.option$.next({
+      startAt: null,
+      endAt: null,
+      refresh: true,
+    });
   }
 
   trackBy(_: number, group: StreamGroup): number {

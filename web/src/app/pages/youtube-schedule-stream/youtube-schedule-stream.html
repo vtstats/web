@@ -41,7 +41,7 @@
   <hs-loading-spinner
     [hidden]="(list.loading && list.refresh) || list.reachedEnd"
     (reach)="
-      list.loading ? null : loadMore$.next({ refresh: false, last: list.streams[list.streams.length - 1] })
+      list.loading ? null : this.onRechedEnd(list.streams[list.streams.length - 1])
     "
   ></hs-loading-spinner>
 </div>
