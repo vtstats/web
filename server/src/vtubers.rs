@@ -102,7 +102,8 @@ vtubers! {
     luna,         Some("UCQYADFw7xEJ9oZSM5ZbqyBw"), Some("265224956"),
     nekomiya,     Some("UCevD0wKzJFpfIkvHOiQsfLQ"), Some("291296062"),
     tamaki,       Some("UC8NZiqKx6fsDT3AVcMiVFyA"), Some("12362451"),
-    pph,          Some("UC1pR2ig6NhndhvicEgclNdA"), Some("393940396"),
     nana,         Some("UCbfv8uuUXt3RSJGEwxny5Rw"), Some("386900246"),
     ui,           Some("UCt30jJgChL8qeT9VPadidSw"), Some("2601367"),
+    pochimaru,    Some("UC22BVlBsZc6ta3Dqz75NU6Q"), None,
+    ayamy,        Some("UCr9p1ZjLKgfaoqNorY7PiWQ"), Some("521070071"),
 }
