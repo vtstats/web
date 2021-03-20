@@ -44,7 +44,5 @@
   @include mat-table-typography($config);
   @include mat-tooltip-typography($config);
   @include mat-tree-typography($config);
-  @include mat-select-typography($config);
   @include mat-datepicker-typography($config);
-  @include mat-form-field-typography($config);
 }

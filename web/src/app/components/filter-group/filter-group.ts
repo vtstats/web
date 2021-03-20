@@ -6,19 +6,19 @@ import {
   ViewChild,
 } from "@angular/core";
 
-import { DateSelect } from "../date-select/date-select";
-import { VTuberSelect } from "../vtuber-select/vtuber-select";
+import { DateFilter } from "../date-filter/date-filter";
+import { VTuberFilter } from "../vtuber-filter/vtuber-filter";
 
 @Component({
   selector: "hs-filter-group",
   templateUrl: "filter-group.html",
 })
 export class FilterGroup {
-  @ViewChild(DateSelect) dateSelect: DateSelect;
+  @ViewChild(DateFilter) dateSelect: DateFilter;
   @Input() displayDateRange: boolean = true;
   @Output() dateRangeChanged = new EventEmitter<[Date, Date]>();
 
-  @ViewChild(VTuberSelect) vtuberSelect: VTuberSelect;
+  @ViewChild(VTuberFilter) vtuberSelect: VTuberFilter;
   @Input() displayVTuber: boolean = true;
   @Output() vtuberChanged = new EventEmitter<Set<string>>();
 

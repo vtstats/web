@@ -1,11 +1,5 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
 import { Component, EventEmitter, Output } from "@angular/core";
+import { translate } from "src/i18n";
 
 import {
   DateRange,
@@ -14,38 +8,16 @@ import {
 import { isAfter, isSameDay, isThisYear } from "date-fns";
 import format from "date-fns/format";
 
+import animations from "./date-filter-animations";
+
 @Component({
-  selector: "hs-date-select",
-  templateUrl: "./date-select.html",
-  styleUrls: ["./date-select.scss"],
+  selector: "hs-date-filter",
+  templateUrl: "./date-filter.html",
+  styleUrls: ["./date-filter.scss"],
   providers: [MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER],
-  animations: [
-    trigger("transform", [
-      state(
-        "void",
-        style({
-          opacity: 0,
-          transform: "scale(0.8)",
-        })
-      ),
-      transition(
-        "void => enter",
-        animate(
-          "120ms cubic-bezier(0, 0, 0.2, 1)",
-          style({
-            opacity: 1,
-            transform: "scale(1)",
-          })
-        )
-      ),
-      transition(
-        "* => void",
-        animate("100ms 25ms linear", style({ opacity: 0 }))
-      ),
-    ]),
-  ],
+  animations,
 })
-export class DateSelect {
+export class DateFilter {
   @Output() selectedChange = new EventEmitter<[Date, Date]>();
 
   _min = new Date(2016, 10, 29);
@@ -79,7 +51,7 @@ export class DateSelect {
 
   getBtnText() {
     if (!this._range.start && !this._range.end) {
-      return "Select Date";
+      return translate("selectDate");
     }
 
     const formStr =

@@ -1,11 +1,4 @@
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
-import {
   Component,
   EventEmitter,
   Output,
@@ -14,38 +7,16 @@ import {
 import { MatSelectionListChange } from "@angular/material/list";
 import { ConfigService } from "src/app/shared";
 
+import animations from "./vtuber-filter-animations";
+
 @Component({
-  selector: "hs-vtuber-select",
-  templateUrl: "vtuber-select.html",
-  styleUrls: ["vtuber-select.scss"],
+  selector: "hs-vtuber-filter",
+  templateUrl: "vtuber-filter.html",
+  styleUrls: ["vtuber-filter.scss"],
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger("transform", [
-      state(
-        "void",
-        style({
-          opacity: 0,
-          transform: "scale(0.8)",
-        })
-      ),
-      transition(
-        "void => enter",
-        animate(
-          "120ms cubic-bezier(0, 0, 0.2, 1)",
-          style({
-            opacity: 1,
-            transform: "scale(1)",
-          })
-        )
-      ),
-      transition(
-        "* => void",
-        animate("100ms 25ms linear", style({ opacity: 0 }))
-      ),
-    ]),
-  ],
+  animations,
 })
-export class VTuberSelect {
+export class VTuberFilter {
   constructor(private config: ConfigService) {}
 
   selected: Set<string> = new Set();

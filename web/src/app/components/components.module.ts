@@ -40,8 +40,8 @@ import {
   StreamsSummaryShimmer,
 } from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
-import { DateSelect } from "./date-select/date-select";
-import { VTuberSelect } from "./vtuber-select/vtuber-select";
+import { DateFilter } from "./date-filter/date-filter";
+import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
 
 import { SharedModule } from "src/app/shared";
@@ -69,8 +69,8 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
-    DateSelect,
-    VTuberSelect,
+    DateFilter,
+    VTuberFilter,
     FilterGroup,
   ],
   imports: [
@@ -109,8 +109,6 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
-    DateSelect,
-    VTuberSelect,
     FilterGroup,
   ],
 })

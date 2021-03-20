@@ -1,12 +1,12 @@
-<hs-vtuber-select
+<hs-vtuber-filter
   *ngIf="displayVTuber"
   (selectedChange)="displayClear = true; vtuberChanged.emit($event)"
-></hs-vtuber-select>
+></hs-vtuber-filter>
 
-<hs-date-select
+<hs-date-filter
   *ngIf="displayDateRange"
   (selectedChange)="displayClear = true; dateRangeChanged.emit($event)"
-></hs-date-select>
+></hs-date-filter>
 
 <ng-container *ngIf="displayClear">
   <mat-divider [vertical]="true" style="display: inline"></mat-divider>

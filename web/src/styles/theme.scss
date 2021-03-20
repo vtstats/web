@@ -7,14 +7,14 @@
 // components
 @import "src/app/components/apx-chart/apx-chart-theme";
 @import "src/app/components/big-number/big-number-theme";
-@import "src/app/components/date-select/date-select-theme";
+@import "src/app/components/date-filter/date-filter-theme";
 @import "src/app/components/stream-summary/stream-summary-theme";
 @import "src/app/components/stream-item/stream-item-theme";
 @import "src/app/components/channel-table/channel-table-theme";
 @import "src/app/components/sub-menu/sub-menu-theme";
 @import "src/app/components/channel-stats/channel-stats-theme";
 @import "src/app/components/channel-stats-chart/channel-stats-chart-theme";
-@import "src/app/components/vtuber-select/vtuber-select-theme";
+@import "src/app/components/vtuber-filter/vtuber-filter-theme";
 
 // pages
 @import "src/app/pages/not-found/not-found-theme";
@@ -39,8 +39,8 @@
   @include channel-stats-theme($theme);
   @include channel-stats-chart-theme($theme);
   @include apx-chart-theme($theme);
-  @include date-select-theme($theme);
-  @include vtuber-select-theme($theme);
+  @include date-filter-theme($theme);
+  @include vtuber-filter-theme($theme);
 }
 
 @mixin hs-typography($config) {
@@ -54,7 +54,7 @@
   @include big-number-typography($config);
   @include channel-stats-typography($config);
   @include apx-chart-typography($config);
-  @include vtuber-select-typography($config);
+  @include vtuber-filter-typography($config);
 }
 
 @include hs-typography($hs-typography-config);

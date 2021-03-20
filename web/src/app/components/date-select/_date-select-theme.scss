@@ -1,9 +1,0 @@
-@import "~@angular/material/theming";
-
-@mixin date-select-theme($theme) {
-  $background: map-get($theme, "background");
-
-  .date-select {
-    background-color: mat-color($background, "card");
-  }
-}
