@@ -28,11 +28,7 @@ fn modification() {
 
     assert_eq!(
         parse_modification(&Document::parse(full).unwrap()),
-        Some((
-            "miru",
-            "hAo6NGQlkOA",
-            "【 歌枠 】久しぶりに歌ってやるんだ～～～～～～！！！」"
-        ))
+        Some(("miru", "hAo6NGQlkOA"))
     );
 
     let minimal = r#"
@@ -47,11 +43,7 @@ fn modification() {
 
     assert_eq!(
         parse_modification(&Document::parse(minimal).unwrap()),
-        Some((
-            "miru",
-            "hAo6NGQlkOA",
-            "【 歌枠 】久しぶりに歌ってやるんだ～～～～～～！！！」"
-        ))
+        Some(("miru", "hAo6NGQlkOA"))
     );
 }
 

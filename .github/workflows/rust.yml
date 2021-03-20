@@ -71,7 +71,7 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         run: |
           cargo build --release
-          strip target/release/{api,subscribe,stream_stat,channel_stat}
+          strip target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
         env:
           DATABASE_URL: postgres://holostats:holostats@localhost/holostats
           YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
@@ -92,7 +92,7 @@ jobs:
           username: ci
           port: ${{ secrets.DEPLOY_PORT }}
           key: ${{ secrets.DEPLOY_KEY }}
-          source: "server/target/release/api,server/target/release/subscribe,server/target/release/stream_stat,server/target/release/channel_stat"
+          source: "server/target/release/api,server/target/release/subscribe,server/target/release/stream_stat,server/target/release/channel_stat,server/target/release/rss_refresh"
           target: "bin"
           overwrite: true
 
@@ -104,6 +104,6 @@ jobs:
           username: ci
           port: ${{ secrets.DEPLOY_PORT }}
           key: ${{ secrets.DEPLOY_KEY }}
-          source: "server/target/release/api,server/target/release/subscribe,server/target/release/stream_stat,server/target/release/channel_stat"
+          source: "server/target/release/api,server/target/release/subscribe,server/target/release/stream_stat,server/target/release/channel_stat,server/target/release/rss_refresh"
           target: "bin"
           overwrite: true

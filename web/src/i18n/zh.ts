@@ -36,8 +36,10 @@ const translations: Translations = {
   watchLiveByHolotool: "使用 holotools 觀看直播",
 
   // VTubers
+  amamiyayume: "雨宮夢 YUME Channel",
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
+  choco: "邱可 Choco",
   fengxu: "風絮 FengXu Ch.",
   fifteen: "十五號 No.Fifteen",
   fujinokuma: "藤乃熊 Fujinokuma",
@@ -53,9 +55,11 @@ const translations: Translations = {
   miru: "杏仁ミル Annin Miru",
   nyoro: "香草奈若 Vanilla Nyoro",
   pedko: "平平子 Padko",
+  queenie: "祈霓722 Ch.",
   rana: "鳥羽樂奈 TobaRana",
   rayer: "蕾兒 Rayer",
   ruroro: "璐洛洛 Ruroro",
+  sakuranoruu: "櫻野露 露露TIME",
   sanmou: "三毛毛毛 SanMou",
   shaya: "莎亞 Shaya",
   tedobear: "虛擬熊頭 TedoBear",
@@ -65,15 +69,18 @@ const translations: Translations = {
   usagi: "兔姬 USAGIHIME CLUB.",
   yumemi: "雲之上夢見 YumemiChannel",
   yuna: "水野魚娜 Mizuno yuna",
+  zasasa: "夏莎莎 Zasasa",
 
   // Batches
   acclaim: "Acclaim 事務所",
   acg: "ACG稽查員 ACGInspector",
+  blossomlive: "BlossomLIVE",
   changing: "春魚工作室",
   cyberlive: "CyberLive",
   fourvirtual: "4virtual",
   hinet: "HiNet 光世代",
   kolhunter: "網紅獵人 KOL Hunter",
+  queenie722: "七二二軍團 722Queenie",
   yahoo: "Yahoo",
   yenz: "艷世設計 YENZdesign",
 };

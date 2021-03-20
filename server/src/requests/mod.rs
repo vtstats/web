@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 mod channels;
+pub mod rss;
 mod streams;
 mod thumbnail;
 mod upload;

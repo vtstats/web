@@ -9,8 +9,10 @@ type VTuber = {
 };
 
 export type VTuberIds =
+  | "amamiyayume"
   | "aoi"
   | "asa"
+  | "choco"
   | "fengxu"
   | "fifteen"
   | "fujinokuma"
@@ -26,9 +28,11 @@ export type VTuberIds =
   | "miru"
   | "nyoro"
   | "pedko"
+  | "queenie"
   | "rana"
   | "rayer"
   | "ruroro"
+  | "sakuranoruu"
   | "sanmou"
   | "shaya"
   | "tedobear"
@@ -37,9 +41,18 @@ export type VTuberIds =
   | "ubye"
   | "usagi"
   | "yumemi"
-  | "yuna";
+  | "yuna"
+  | "zasasa";
 
 export const vtubers: Record<VTuberIds, VTuber> = {
+  amamiyayume: {
+    id: "amamiyayume",
+    youtube: "UClQot-XYs9KQ2fmItSz4IjA",
+    twitter: "amamiyayume20",
+    discord: "",
+    facebook: "amamiyayume20",
+    default: false,
+  },
   aoi: {
     id: "aoi",
     youtube: "UCLZyaaUwBw2ZvwLt6uY3_bQ",
@@ -53,6 +66,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UCxm2qC7Z7cjDAd6yPyl-sKQ",
     twitter: "AsaIfrit",
     discord: "",
+    facebook: "",
+    default: true,
+  },
+  choco: {
+    id: "choco",
+    youtube: "UCZVkCI9NKz7q9JVW9oiTQJA",
+    twitter: "ACGinspector2",
+    discord: "A5aZpAQ",
     facebook: "",
     default: true,
   },
@@ -176,6 +197,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "Padko.Ch",
     default: true,
   },
+  queenie: {
+    id: "queenie",
+    youtube: "UCtWuTDvZeZ09COJ2SjfESzQ",
+    twitter: "722Queenie",
+    discord: "",
+    facebook: "110969990806061",
+    default: false,
+  },
   rana: {
     id: "rana",
     youtube: "UCFEd5V7VcxBPPcuMGpmvkQA",
@@ -199,6 +228,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "",
     facebook: "ruroroisme",
     default: true,
+  },
+  sakuranoruu: {
+    id: "sakuranoruu",
+    youtube: "UCgL6PS1vba90zrZW9xmiwng",
+    twitter: "sakuranoruu",
+    discord: "",
+    facebook: "Wishswing",
+    default: false,
   },
   sanmou: {
     id: "sanmou",
@@ -272,13 +309,23 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "Mizunoyuna321",
     default: true,
   },
+  zasasa: {
+    id: "zasasa",
+    youtube: "UCaN_Pq3x9pzhb7t9KhxQm8Q",
+    twitter: "spicy_zasasa",
+    discord: "",
+    facebook: "110969990806061",
+    default: false,
+  },
 };
 
 export type BatchIds =
   | "acclaim"
   | "acg"
+  | "amamiyayume"
   | "aoi"
   | "asa"
+  | "blossomlive"
   | "changing"
   | "cyberlive"
   | "fengxu"
@@ -293,6 +340,7 @@ export type BatchIds =
   | "kwakon"
   | "lapis"
   | "miru"
+  | "queenie722"
   | "shaya"
   | "tsmatch"
   | "ubye"
@@ -305,9 +353,11 @@ type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
   "acclaim": ["ikusen"],
-  "acg": ["rayer"],
+  "acg": ["choco", "rayer"],
+  "amamiyayume": null,
   "aoi": null,
   "asa": null,
+  "blossomlive": ["sakuranoruu"],
   "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
   "fengxu": null,
@@ -322,6 +372,7 @@ export const batches: Record<BatchIds, Batch> = {
   "kwakon": null,
   "lapis": null,
   "miru": null,
+  "queenie722": ["queenie", "zasasa"],
   "shaya": null,
   "tsmatch": null,
   "ubye": null,
