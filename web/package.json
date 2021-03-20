@@ -37,7 +37,7 @@
     "@angular/cli": "~11.2.3",
     "@angular/compiler-cli": "~11.2.4",
     "@angular/language-service": "~11.2.4",
-    "@cloudflare/workers-types": "^2.1.0",
+    "@cloudflare/workers-types": "^2.2.1",
     "codeceptjs": "^3.0.5",
     "playwright": "^1.9.1",
     "prettier": "^2.2.1",
