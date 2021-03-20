@@ -51,4 +51,4 @@ name = "subscribe"
 path = "src/subscribe/main.rs"
 
 [dev-dependencies]
-pretty_assertions = "0.6.1"
+pretty_assertions = "0.7.1"
