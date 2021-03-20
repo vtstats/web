@@ -1,10 +1,10 @@
 @import "~@angular/material/theming";
 
-@mixin vtuber-select-theme($theme) {
+@mixin vtuber-filter-theme($theme) {
   $primary: map-get($theme, primary);
   $background: map-get($theme, "background");
 
-  .vtuber-select {
+  .vtuber-filter-row {
     .text {
       background-color: mat-color($background, "unselected-chip");
     }
@@ -19,13 +19,13 @@
     }
   }
 
-  .vtuber-select-popover {
+  .vtuber-filter-overlay {
     background-color: mat-color($background, "card");
   }
 }
 
-@mixin vtuber-select-typography($config) {
-  .vtuber-select {
+@mixin vtuber-filter-typography($config) {
+  .vtuber-filter-row {
     .more {
       font-size: mat-font-size($config, "body-2");
       font-weight: mat-font-weight($config, "body-2");

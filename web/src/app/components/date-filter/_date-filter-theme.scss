@@ -1,0 +1,14 @@
+@import "~@angular/material/theming";
+
+@mixin date-filter-theme($theme) {
+  $foreground: map-get($theme, "foreground");
+  $background: map-get($theme, "background");
+
+  .date-filter-overlay {
+    background-color: mat-color($background, "card");
+  }
+
+  .date-filter-arrow {
+    border-top-color: mat-color($foreground, "icon");
+  }
+}

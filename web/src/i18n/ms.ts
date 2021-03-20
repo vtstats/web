@@ -33,6 +33,8 @@ const translations: Translations = {
   selectLanguage: "Pilihan Bahasa",
   recentStreams: "Siaran Terkini",
   streamViewers: "Tontonan Siaran",
+  // TODO(i18n):
+  selectDate: "Select Date",
 
   // VTubers
   hololive: "hololive Rasmi",

@@ -29,6 +29,7 @@ export type MessageIds =
   | "selectLanguage"
   | "recentStreams"
   | "streamViewers"
+  | "selectDate"
   | VTuberIds
   | BatchIds;
 

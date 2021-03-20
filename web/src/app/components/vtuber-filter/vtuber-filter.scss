@@ -1,6 +1,6 @@
 @import "~@angular/material/theming";
 
-.vtuber-select {
+.vtuber-filter-row {
   display: inline-flex;
   vertical-align: middle;
 
@@ -46,8 +46,8 @@
   }
 }
 
-.vtuber-select-popover {
-  max-height: 224px;
+.vtuber-filter-overlay {
+  max-height: 325px;
   overflow-y: auto;
   border-radius: 4px;
   margin: 0;
