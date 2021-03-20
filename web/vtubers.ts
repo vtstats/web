@@ -56,9 +56,10 @@ export type VTuberIds =
   | "luna"
   | "nekomiya"
   | "tamaki"
-  | "pph"
   | "nana"
   | "ui"
+  | "pochimaru"
+  | "ayamy"
   | "miyabi"
   | "izuru"
   | "aruran"
@@ -401,12 +402,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UC8NZiqKx6fsDT3AVcMiVFyA",
     bilibili: 12362451,
   },
-  pph: {
-    id: "pph",
-    twitter: "PinkyPopHepburn",
-    youtube: "UC1pR2ig6NhndhvicEgclNdA",
-    bilibili: 393940396,
-  },
   nana: {
     id: "nana",
     twitter: "nana_kaguraaa",
@@ -419,6 +414,20 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "ui_shig",
     youtube: "UCt30jJgChL8qeT9VPadidSw",
     bilibili: 2601367,
+    default: true,
+  },
+  pochimaru: {
+    id: "pochimaru",
+    twitter: "lizhi3",
+    youtube: "UC22BVlBsZc6ta3Dqz75NU6Q",
+    bilibili: null,
+    default: true,
+  },
+  ayamy: {
+    id: "ayamy",
+    twitter: "ayamy_garubinu",
+    youtube: "UCr9p1ZjLKgfaoqNorY7PiWQ",
+    bilibili: 521070071,
     default: true,
   },
   miyabi: {
@@ -506,5 +515,5 @@ export const batches: Record<BatchIds, Batch> = {
   holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
-  others: ["luna", "nekomiya", "tamaki", "pph", "nana", "ui"],
+  others: ["luna", "nekomiya", "tamaki", "nana", "ui", "ayamy", "pochimaru"],
 };
