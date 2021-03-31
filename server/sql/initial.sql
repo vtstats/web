@@ -1,6 +1,7 @@
 insert into youtube_channels (vtuber_id) values ('amamiyayume');
 insert into youtube_channels (vtuber_id) values ('aoi');
 insert into youtube_channels (vtuber_id) values ('asa');
+insert into youtube_channels (vtuber_id) values ('chilla');
 insert into youtube_channels (vtuber_id) values ('choco');
 insert into youtube_channels (vtuber_id) values ('fengxu');
 insert into youtube_channels (vtuber_id) values ('fifteen');
