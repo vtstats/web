@@ -12,6 +12,7 @@ export type VTuberIds =
   | "amamiyayume"
   | "aoi"
   | "asa"
+  | "chilla"
   | "choco"
   | "fengxu"
   | "fifteen"
@@ -67,6 +68,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "AsaIfrit",
     discord: "",
     facebook: "",
+    default: true,
+  },
+  chilla: {
+    id: "chilla",
+    youtube: "UCykgAuIjn70_CXLNjZ8zppQ",
+    twitter: "Chilla_Storia",
+    discord: "Y4fp3k2",
+    facebook: "storiagame",
     default: true,
   },
   choco: {
@@ -320,6 +329,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
 };
 
 export type BatchIds =
+  | "STORIA"
   | "acclaim"
   | "acg"
   | "amamiyayume"
@@ -352,6 +362,7 @@ export type BatchIds =
 type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
+  "STORIA": ["chilla"],
   "acclaim": ["ikusen"],
   "acg": ["choco", "rayer"],
   "amamiyayume": null,
