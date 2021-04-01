@@ -100,7 +100,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "no15_rescute",
     discord: "",
     facebook: "RESCUTE119",
-    default: false,
+    default: true,
   },
   fujinokuma: {
     id: "fujinokuma",
@@ -180,7 +180,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "lumina16569269",
     discord: "",
     facebook: "broadbandhinet",
-    default: true,
+    default: false,
   },
   miru: {
     id: "miru",
