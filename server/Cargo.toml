@@ -13,7 +13,7 @@ hex = "0.4.2"
 hmac = "0.10.1"
 log = "0.4.14"
 reqwest = { version = "0.10.9", default-features = false, features = ["json", "rustls-tls"] }
-roxmltree = "0.14.0"
+roxmltree = "0.14.1"
 serde = { version = "1.0.118", features = ["derive"] }
 serde_json = "1.0.64"
 serde_with = "1.6.4"
