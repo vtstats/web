@@ -39,6 +39,8 @@ const translations: Translations = {
   amamiyayume: "雨宮夢 YUME Channel",
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
+  ayamizuka: "綾瑞香 AyaMizuKa",
+  chilla: "祈菈‧貝希毛絲 ch.Narrator / STORIA",
   choco: "邱可 Choco",
   fengxu: "風絮 FengXu Ch.",
   fifteen: "十五號 No.Fifteen",
@@ -72,6 +74,7 @@ const translations: Translations = {
   zasasa: "夏莎莎 Zasasa",
 
   // Batches
+  STORIA: "STORIA遊戲工作室",
   acclaim: "Acclaim 事務所",
   acg: "ACG稽查員 ACGInspector",
   blossomlive: "BlossomLIVE",

@@ -32,6 +32,8 @@ vtubers! {
     amamiyayume    , Some("UClQot-XYs9KQ2fmItSz4IjA"), None,
     aoi            , Some("UCLZyaaUwBw2ZvwLt6uY3_bQ"), None,
     asa            , Some("UCxm2qC7Z7cjDAd6yPyl-sKQ"), None,
+    ayamizuka      , Some("UCYuCbE3H9xmR8_HSFizYFYg"), None,
+    chilla         , Some("UCykgAuIjn70_CXLNjZ8zppQ"), None,
     choco          , Some("UCZVkCI9NKz7q9JVW9oiTQJA"), None,
     fengxu         , Some("UCYPSP_gJ-BcREmsDzBIaRvw"), None,
     fifteen        , Some("UC_UqaRNrLcaL4fp2IAPV0OQ"), None,

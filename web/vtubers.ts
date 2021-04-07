@@ -12,6 +12,8 @@ export type VTuberIds =
   | "amamiyayume"
   | "aoi"
   | "asa"
+  | "ayamizuka"
+  | "chilla"
   | "choco"
   | "fengxu"
   | "fifteen"
@@ -69,6 +71,22 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "",
     default: true,
   },
+  ayamizuka: {
+    id: "ayamizuka",
+    youtube: "UCYuCbE3H9xmR8_HSFizYFYg",
+    twitter: "AyaMizuKaVtuber",
+    discord: "cmUfWfAXBW",
+    facebook: "AyaMizuKaVtuber",
+    default: true,
+  },
+  chilla: {
+    id: "chilla",
+    youtube: "UCykgAuIjn70_CXLNjZ8zppQ",
+    twitter: "Chilla_Storia",
+    discord: "Y4fp3k2",
+    facebook: "storiagame",
+    default: true,
+  },
   choco: {
     id: "choco",
     youtube: "UCZVkCI9NKz7q9JVW9oiTQJA",
@@ -91,7 +109,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "no15_rescute",
     discord: "",
     facebook: "RESCUTE119",
-    default: false,
+    default: true,
   },
   fujinokuma: {
     id: "fujinokuma",
@@ -171,7 +189,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "lumina16569269",
     discord: "",
     facebook: "broadbandhinet",
-    default: true,
+    default: false,
   },
   miru: {
     id: "miru",
@@ -203,7 +221,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "722Queenie",
     discord: "",
     facebook: "110969990806061",
-    default: false,
+    default: true,
   },
   rana: {
     id: "rana",
@@ -315,16 +333,18 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "spicy_zasasa",
     discord: "",
     facebook: "110969990806061",
-    default: false,
+    default: true,
   },
 };
 
 export type BatchIds =
+  | "STORIA"
   | "acclaim"
   | "acg"
   | "amamiyayume"
   | "aoi"
   | "asa"
+  | "ayamizuka"
   | "blossomlive"
   | "changing"
   | "cyberlive"
@@ -352,11 +372,13 @@ export type BatchIds =
 type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
+  "STORIA": ["chilla"],
   "acclaim": ["ikusen"],
   "acg": ["choco", "rayer"],
   "amamiyayume": null,
   "aoi": null,
   "asa": null,
+  "ayamizuka": null,
   "blossomlive": ["sakuranoruu"],
   "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
