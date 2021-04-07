@@ -12,6 +12,7 @@ export type VTuberIds =
   | "amamiyayume"
   | "aoi"
   | "asa"
+  | "ayamizuka"
   | "chilla"
   | "choco"
   | "fengxu"
@@ -68,6 +69,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "AsaIfrit",
     discord: "",
     facebook: "",
+    default: true,
+  },
+  ayamizuka: {
+    id: "ayamizuka",
+    youtube: "UCYuCbE3H9xmR8_HSFizYFYg",
+    twitter: "AyaMizuKaVtuber",
+    discord: "cmUfWfAXBW",
+    facebook: "AyaMizuKaVtuber",
     default: true,
   },
   chilla: {
@@ -212,7 +221,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "722Queenie",
     discord: "",
     facebook: "110969990806061",
-    default: false,
+    default: true,
   },
   rana: {
     id: "rana",
@@ -324,7 +333,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "spicy_zasasa",
     discord: "",
     facebook: "110969990806061",
-    default: false,
+    default: true,
   },
 };
 
@@ -335,6 +344,7 @@ export type BatchIds =
   | "amamiyayume"
   | "aoi"
   | "asa"
+  | "ayamizuka"
   | "blossomlive"
   | "changing"
   | "cyberlive"
@@ -368,6 +378,7 @@ export const batches: Record<BatchIds, Batch> = {
   "amamiyayume": null,
   "aoi": null,
   "asa": null,
+  "ayamizuka": null,
   "blossomlive": ["sakuranoruu"],
   "changing": ["fifteen", "pedko"],
   "cyberlive": ["nyoro", "yuna"],
