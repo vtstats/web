@@ -16,6 +16,7 @@ insert into youtube_channels (vtuber_id) values ('kurita');
 insert into youtube_channels (vtuber_id) values ('kwakon');
 insert into youtube_channels (vtuber_id) values ('lapis');
 insert into youtube_channels (vtuber_id) values ('lumina');
+insert into youtube_channels (vtuber_id) values ('miamya');
 insert into youtube_channels (vtuber_id) values ('miru');
 insert into youtube_channels (vtuber_id) values ('nyoro');
 insert into youtube_channels (vtuber_id) values ('pedko');

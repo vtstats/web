@@ -27,6 +27,7 @@ export type VTuberIds =
   | "kwakon"
   | "lapis"
   | "lumina"
+  | "miamya"
   | "miru"
   | "nyoro"
   | "pedko"
@@ -191,6 +192,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "broadbandhinet",
     default: false,
   },
+  miamya: {
+    id: "miamya",
+    youtube: "UCIR0USMXU0r7N8spBJHNA7A",
+    twitter: "MiaMya0615",
+    discord: "AspSwcr",
+    facebook: "MiaMya0615",
+    default: true,
+  },
   miru: {
     id: "miru",
     youtube: "UCFahBR2wixu0xOex84bXFvg",
@@ -352,7 +361,6 @@ export type BatchIds =
   | "fourvirtual"
   | "fujinokuma"
   | "haruka"
-  | "himemiyayuka"
   | "hinet"
   | "kaina"
   | "kolhunter"
@@ -360,6 +368,7 @@ export type BatchIds =
   | "kwakon"
   | "lapis"
   | "miru"
+  | "moegenki"
   | "queenie722"
   | "shaya"
   | "tsmatch"
@@ -386,7 +395,6 @@ export const batches: Record<BatchIds, Batch> = {
   "fourvirtual": ["sanmou", "tedobear", "tedobear2"],
   "fujinokuma": null,
   "haruka": null,
-  "himemiyayuka": null,
   "hinet": ["lumina"],
   "kaina": null,
   "kolhunter": ["ruroro"],
@@ -394,6 +402,7 @@ export const batches: Record<BatchIds, Batch> = {
   "kwakon": null,
   "lapis": null,
   "miru": null,
+  "moegenki": ["himemiyayuka", "miamya"],
   "queenie722": ["queenie", "zasasa"],
   "shaya": null,
   "tsmatch": null,

@@ -47,6 +47,7 @@ vtubers! {
     kwakon         , Some("UCyZZMKRn-mUEkPzaqa9b6bg"), None,
     lapis          , Some("UCb_9R8SZy_HSJi53zxVh7kg"), None,
     lumina         , Some("UCc5cZPorgyc23wKN-Ng1R6w"), None,
+    miamya         , Some("UCIR0USMXU0r7N8spBJHNA7A"), None,
     miru           , Some("UCFahBR2wixu0xOex84bXFvg"), None,
     nyoro          , Some("UC4J0GZLM55qrFh2L-ZAb2LA"), None,
     pedko          , Some("UC2yG-9ekUwTs8Q0yMSycMxA"), None,
