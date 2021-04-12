@@ -8,6 +8,7 @@ insert into youtube_channels (vtuber_id) values ('fengxu');
 insert into youtube_channels (vtuber_id) values ('fifteen');
 insert into youtube_channels (vtuber_id) values ('fujinokuma');
 insert into youtube_channels (vtuber_id) values ('haruka');
+insert into youtube_channels (vtuber_id) values ('healingluka');
 insert into youtube_channels (vtuber_id) values ('himemiyayuka');
 insert into youtube_channels (vtuber_id) values ('hoonie');
 insert into youtube_channels (vtuber_id) values ('ikusen');

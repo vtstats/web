@@ -46,6 +46,7 @@ const translations: Translations = {
   fifteen: "十五號 No.Fifteen",
   fujinokuma: "藤乃熊 Fujinokuma",
   haruka: "星見遙 Haruka",
+  healingluka: "希靈 Healing Ch.",
   himemiyayuka: "姬宮優花 Himemiya Yuka",
   hoonie: "β虎妮 Hoonie friends",
   ikusen: "いくせん Ikusen",

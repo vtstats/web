@@ -39,6 +39,7 @@ vtubers! {
     fifteen        , Some("UC_UqaRNrLcaL4fp2IAPV0OQ"), None,
     fujinokuma     , Some("UCmyDLzP9ZBAK2JO4kUuJMRQ"), None,
     haruka         , Some("UCl1RVJbkPnpNbO9-CsDqPmQ"), None,
+    healingluka    , Some("UCM1nL55m_QImE0ZRqvGmWWQ"), None,
     himemiyayuka   , Some("UC1d1dmxkh_yanq1U1gli7jw"), None,
     hoonie         , Some("UC6s0wLR0TZauzTVoGGw2r6g"), None,
     ikusen         , Some("UCKazkVudNQs8ZhwfXj_RNPw"), None,

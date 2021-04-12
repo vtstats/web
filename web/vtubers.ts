@@ -19,6 +19,7 @@ export type VTuberIds =
   | "fifteen"
   | "fujinokuma"
   | "haruka"
+  | "healingluka"
   | "himemiyayuka"
   | "hoonie"
   | "ikusen"
@@ -126,6 +127,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "haruka_owl",
     discord: "",
     facebook: "Harukaowl",
+    default: true,
+  },
+  healingluka: {
+    id: "healingluka",
+    youtube: "UCM1nL55m_QImE0ZRqvGmWWQ",
+    twitter: "Healingluka",
+    discord: "",
+    facebook: "HealingLuka",
     default: true,
   },
   himemiyayuka: {
@@ -361,6 +370,7 @@ export type BatchIds =
   | "fourvirtual"
   | "fujinokuma"
   | "haruka"
+  | "healingluka"
   | "hinet"
   | "kaina"
   | "kolhunter"
@@ -395,6 +405,7 @@ export const batches: Record<BatchIds, Batch> = {
   "fourvirtual": ["sanmou", "tedobear", "tedobear2"],
   "fujinokuma": null,
   "haruka": null,
+  "healingluka": null,
   "hinet": ["lumina"],
   "kaina": null,
   "kolhunter": ["ruroro"],
