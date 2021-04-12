@@ -32,6 +32,7 @@ export type VTuberIds =
   | "miru"
   | "nyoro"
   | "pedko"
+  | "proose"
   | "queenie"
   | "rana"
   | "rayer"
@@ -39,6 +40,8 @@ export type VTuberIds =
   | "sakuranoruu"
   | "sanmou"
   | "shaya"
+  | "silverbell"
+  | "sudayoruka"
   | "tedobear"
   | "tedobear2"
   | "tsmatch"
@@ -233,6 +236,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "Padko.Ch",
     default: true,
   },
+  proose: {
+    id: "proose",
+    youtube: "UCl7ci9Pexnjf7UGpWxqj8qw",
+    twitter: "purusu0325",
+    discord: "",
+    facebook: "106704748184668",
+    default: false,
+  },
   queenie: {
     id: "queenie",
     youtube: "UCtWuTDvZeZ09COJ2SjfESzQ",
@@ -288,6 +299,22 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "3YeKzZB",
     facebook: "Shaya-100558584706248",
     default: false,
+  },
+  silverbell: {
+    id: "silverbell",
+    youtube: "UCwO7OC8he-XAkrDNvGe5kXA",
+    twitter: "SilverBellVtub1",
+    discord: "",
+    facebook: "SilverBell.lVtuber",
+    default: false,
+  },
+  sudayoruka: {
+    id: "sudayoruka",
+    youtube: "UCuy-kZJ7HWwUU-eKv0zUZFQ",
+    twitter: "sudayoruka",
+    discord: "p6CRD63Mzc",
+    facebook: "sudayoruka",
+    default: true,
   },
   tedobear: {
     id: "tedobear",
@@ -379,8 +406,11 @@ export type BatchIds =
   | "lapis"
   | "miru"
   | "moegenki"
+  | "proose"
   | "queenie722"
+  | "renewlive"
   | "shaya"
+  | "silverbell"
   | "tsmatch"
   | "ubye"
   | "usagi"
@@ -414,8 +444,11 @@ export const batches: Record<BatchIds, Batch> = {
   "lapis": null,
   "miru": null,
   "moegenki": ["himemiyayuka", "miamya"],
+  "proose": null,
   "queenie722": ["queenie", "zasasa"],
+  "renewlive": ["sudayoruka"],
   "shaya": null,
+  "silverbell": null,
   "tsmatch": null,
   "ubye": null,
   "usagi": null,
