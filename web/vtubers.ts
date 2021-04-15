@@ -41,10 +41,12 @@ export type VTuberIds =
   | "sanmou"
   | "shaya"
   | "silverbell"
+  | "soysaucexd"
   | "sudayoruka"
   | "tedobear"
   | "tedobear2"
   | "tsmatch"
+  | "twsiriya"
   | "ubye"
   | "usagi"
   | "yumemi"
@@ -308,6 +310,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "SilverBell.lVtuber",
     default: false,
   },
+  soysaucexd: {
+    id: "soysaucexd",
+    youtube: "UCy5l7iZCTy-alDJ9rL5kuXQ",
+    twitter: "SoysauceXD",
+    discord: "",
+    facebook: "",
+    default: false,
+  },
   sudayoruka: {
     id: "sudayoruka",
     youtube: "UCuy-kZJ7HWwUU-eKv0zUZFQ",
@@ -339,6 +349,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "",
     facebook: "",
     default: true,
+  },
+  twsiriya: {
+    id: "twsiriya",
+    youtube: "UCOpI60ey2pDJnmV2T351AOg",
+    twitter: "twsiriya",
+    discord: "",
+    facebook: "105037511566512",
+    default: false,
   },
   ubye: {
     id: "ubye",
@@ -411,7 +429,9 @@ export type BatchIds =
   | "renewlive"
   | "shaya"
   | "silverbell"
+  | "soysaucexd"
   | "tsmatch"
+  | "twsiriya"
   | "ubye"
   | "usagi"
   | "yahoo"
@@ -449,7 +469,9 @@ export const batches: Record<BatchIds, Batch> = {
   "renewlive": ["sudayoruka"],
   "shaya": null,
   "silverbell": null,
+  "soysaucexd": null,
   "tsmatch": null,
+  "twsiriya": null,
   "ubye": null,
   "usagi": null,
   "yahoo": ["hoonie"],
