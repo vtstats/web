@@ -1,0 +1,10 @@
+[Unit]
+Description=Taiwanv - Channel Stat Timer
+
+[Timer]
+OnCalendar=4:00:00
+AccuracySec=1us
+Unit=taiwanv_channel_stat.service
+
+[Install]
+WantedBy=multi-user.target
