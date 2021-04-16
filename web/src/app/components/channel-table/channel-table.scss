@@ -57,6 +57,11 @@
     justify-content: flex-end;
   }
 
+  .mat-header-cell {
+    max-width: 50em;
+    white-space: normal;
+  }
+
   .mat-column-shimmerText {
     padding-left: 12px;
     padding-right: 12px;

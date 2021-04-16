@@ -39,7 +39,7 @@ const translations: Translations = {
   weeklyVideo: "周增短片",
   weeklyLive: "周增直播",
   weeklyDuration: "周影片時數",
-  monthlyVideo: "月短片",
+  monthlyVideo: "月增短片",
   monthlyLive: "月增直播",
   monthlyDuration: "月影片時數",
 
@@ -48,7 +48,7 @@ const translations: Translations = {
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
   ayamizuka: "綾瑞香 AyaMizuKa",
-  chilla: "祈菈‧貝希毛絲 ch.Narrator / STORIA",
+  chilla: "祈菈‧貝希毛絲 ch.Narrator",
   choco: "邱可 Choco",
   fengxu: "風絮 FengXu Ch.",
   fifteen: "十五號 No.Fifteen",
