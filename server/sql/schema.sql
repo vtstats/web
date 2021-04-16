@@ -13,6 +13,16 @@ CREATE TABLE youtube_channels (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE youtube_channels_ex (
+  vtuber_id TEXT NOT NULL REFERENCES youtube_channels,
+  video_count INTEGER NOT NULL DEFAULT 0,
+  weekly_video INTEGER NOT NULL DEFAULT 0,
+  weekly_live INTEGER NOT NULL DEFAULT 0,
+  monthly_video INTEGER NOT NULL DEFAULT 0,
+  monthly_live INTEGER NOT NULL DEFAULT 0,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE bilibili_channels (
   vtuber_id TEXT PRIMARY KEY,
   subscriber_count INTEGER NOT NULL DEFAULT 0,
@@ -197,3 +207,31 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_youtube_streams_viewer_count_trigger
 AFTER INSERT ON youtube_stream_viewer_statistic
 FOR EACH ROW EXECUTE PROCEDURE update_youtube_streams_viewer_count();
+
+
+CREATE OR REPLACE FUNCTION update_youtube_channel_ex_videocount()
+RETURNS trigger AS $$
+BEGIN
+    with data as (
+        select start_time, (end_time - start_time) AS duration
+            from youtube_streams
+            where vtuber_id = NEW.vtuber_id AND end_time IS NOT NULL
+    )
+  update youtube_channels_ex
+     set (video_count, weekly_video, weekly_live, monthly_video, monthly_live)
+       = (
+           COALESCE((SELECT count(start_time) FROM data), 0),
+           COALESCE((SELECT count(start_time) FROM data WHERE start_time > (NOW() - INTERVAL '1 week') AND duration <= INTERVAL '30 minute'), 0),
+           COALESCE((SELECT count(start_time) FROM data WHERE start_time > (NOW() - INTERVAL '1 week') AND duration > INTERVAL '30 minute'), 0),
+           COALESCE((SELECT count(start_time) FROM data WHERE start_time > (NOW() - INTERVAL '1 month') AND duration <= INTERVAL '30 minute'), 0),
+           COALESCE((SELECT count(start_time) FROM data WHERE start_time > (NOW() - INTERVAL '1 month') AND duration > INTERVAL '30 minute'), 0)
+         )
+   where vtuber_id= NEW.vtuber_id;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_youtube_channel_ex_videocount_trigger
+AFTER INSERT OR UPDATE OR DELETE ON youtube_streams
+FOR EACH ROW EXECUTE PROCEDURE update_youtube_channel_ex_videocount();

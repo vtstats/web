@@ -72,6 +72,64 @@ pub async fn youtube_channel_max_updated_at(pool: &PgPool) -> Result<Option<UtcT
         .map_err(Error::Database)
 }
 
+// ==== channel EX ====
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ChannelEX {
+    pub kind: String,
+    pub vtuber_id: String,
+    pub video_count: i32,
+    pub weekly_video: i32,
+    pub monthly_video: i32,
+    pub weekly_live: i32,
+    pub monthly_live: i32,
+    #[serde(with = "ts_milliseconds")]
+    pub updated_at: UtcTime,
+}
+
+#[instrument(
+    name = "Select from youtube_channels_ex",
+    skip(ids, pool),
+    fields(db.table = "youtube_channels_ex")
+)]
+pub async fn youtube_channels_ex(ids: &[String], pool: &PgPool) -> Result<Vec<ChannelEX>> {
+    sqlx::query_as!(
+        ChannelEX,
+        r#"
+            select 'youtube' as "kind!",
+                   vtuber_id,
+                   video_count,
+                   weekly_video,
+                   monthly_video,
+                   weekly_live,
+                   monthly_live,
+                   updated_at
+              from youtube_channels_ex
+             where vtuber_id = any($1)
+        "#,
+        &ids
+    )
+    .fetch_all(pool)
+    .await
+    .map_err(Error::Database)
+}
+
+#[instrument(
+    name = "Get last updated time of youtube_channels_ex",
+    skip(pool),
+    fields(db.table = "youtube_channels_ex")
+)]
+pub async fn youtube_channel_ex_max_updated_at(pool: &PgPool) -> Result<Option<UtcTime>> {
+    sqlx::query!("select max(updated_at) from youtube_channels_ex")
+        .fetch_one(pool)
+        .await
+        .map(|row| row.max)
+        .map_err(Error::Database)
+}
+
+// ==== Bilibili channel ====
+
 #[instrument(
     name = "Select from bilibili_channels",
     skip(ids, pool),
