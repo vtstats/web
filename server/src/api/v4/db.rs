@@ -81,9 +81,11 @@ pub struct ChannelEX {
     pub vtuber_id: String,
     pub video_count: i32,
     pub weekly_video: i32,
-    pub monthly_video: i32,
     pub weekly_live: i32,
+    pub weekly_duration: i32,
+    pub monthly_video: i32,
     pub monthly_live: i32,
+    pub monthly_duration: i32,
     #[serde(with = "ts_milliseconds")]
     pub updated_at: UtcTime,
 }
@@ -101,9 +103,11 @@ pub async fn youtube_channels_ex(ids: &[String], pool: &PgPool) -> Result<Vec<Ch
                    vtuber_id,
                    video_count,
                    weekly_video,
-                   monthly_video,
                    weekly_live,
+                   weekly_duration,
+                   monthly_video,
                    monthly_live,
+                   monthly_duration,
                    updated_at
               from youtube_channels_ex
              where vtuber_id = any($1)

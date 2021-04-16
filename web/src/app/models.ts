@@ -32,8 +32,10 @@ export type ChannelEX = {
   videoCount: number;
   weeklyVideo: number;
   weeklyLive: number;
+  weeklyDuration: number;
   monthlyVideo: number;
   monthlyLive: number;
+  monthlyDuration: number;
 };
 
 export type ChannelListOption = {

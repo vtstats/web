@@ -34,8 +34,10 @@ export class ChannelTableEX implements AfterViewInit {
     "videoCount",
     "weeklyVideo",
     "weeklyLive",
+    "weeklyDuration",
     "monthlyVideo",
     "monthlyLive",
+    "monthlyDuration",
   ];
 
   ngAfterViewInit() {
@@ -61,10 +63,12 @@ export class ChannelTableEX implements AfterViewInit {
 export class ChannelTableEXShimmer {
   @ViewChild(MatSort) sort: MatSort;
 
-  data = new Array(5);
+  data = new Array(7);
 
   displayedColumns: string[] = [
     "shimmerProfile",
+    "shimmerText",
+    "shimmerText",
     "shimmerText",
     "shimmerText",
     "shimmerText",

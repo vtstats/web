@@ -35,11 +35,13 @@ const translations: Translations = {
   recentStreams: "近期直播",
   streamViewers: "直播同接",
   watchLiveByHolotool: "使用 holotools 觀看直播",
-  "videoCount": "Videos",
-  "weeklyVideo": "Vidoes 7 Days",
-  "monthlyVideo": "Vidoes 30 Days",
-  "weeklyLive": "Lives 7 Days",
-  "monthlyLive": "Lives 30 Days",
+  videoCount: "影片數",
+  weeklyVideo: "周增短片",
+  weeklyLive: "周增直播",
+  weeklyDuration: "周影片時數",
+  monthlyVideo: "月短片",
+  monthlyLive: "月增直播",
+  monthlyDuration: "月影片時數",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",

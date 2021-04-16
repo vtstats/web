@@ -33,9 +33,11 @@ export type MessageIds =
   | "watchLiveByHolotool"
   | "videoCount"
   | "weeklyVideo"
-  | "monthlyVideo"
   | "weeklyLive"
+  | "weeklyDuration"
+  | "monthlyVideo"
   | "monthlyLive"
+  | "monthlyDuration"
   | VTuberIds
   | BatchIds;
 

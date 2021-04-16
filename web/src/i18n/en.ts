@@ -35,11 +35,13 @@ const translations: Translations = {
   recentStreams: "Recent Streams",
   streamViewers: "Stream Viewers",
   watchLiveByHolotool: "Watch live streams via Holotools",
-  "videoCount": "Videos",
-  "weeklyVideo": "Last 7 Days Vidoes",
-  "weeklyLive": "Last 7 Days Lives",
-  "monthlyVideo": "Last 30 Days Vidoes",
-  "monthlyLive": "Last 30 Days Lives",
+  videoCount: "Videos",
+  weeklyVideo: "7 Days Shorts",
+  weeklyLive: "7 Days Lives",
+  weeklyDuration: "7 Days Length",
+  monthlyVideo: "30 Days Shorts",
+  monthlyLive: "30 Days Lives",
+  monthlyDuration: "30 Days Length",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",
