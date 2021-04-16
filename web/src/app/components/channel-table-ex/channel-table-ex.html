@@ -43,8 +43,8 @@
     <td mat-cell *matCellDef="let row"
         [coloredNumber]="row.weeklyVideo"> {{ row.weeklyVideo | number }}</td>
     <td mat-footer-cell *matFooterCellDef 
-        [coloredNumber]="row.weeklyVideo">
-      {{ getTotal("weeklyVideo ") | number }}
+        [coloredNumber]="getTotal('weeklyVideo')">
+      {{ getTotal("weeklyVideo") | number }}
     </td>
   </ng-container>
 
@@ -54,8 +54,8 @@
     </th>
     <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklyLive"> {{ row.weeklyLive | number }}</td>
     <td mat-footer-cell *matFooterCellDef
-        [coloredNumber]="row.weeklyLive">
-      {{ getTotal("weeklyLive ") | number }}
+        [coloredNumber]="getTotal('weeklyLive')">
+      {{ getTotal("weeklyLive") | number }}
     </td>
   </ng-container>
 
@@ -65,7 +65,7 @@
     </th>
     <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklyLive"> {{ row.weeklyDuration | interval }}</td>
     <td mat-footer-cell *matFooterCellDef
-        [coloredNumber]="row.weeklyDuration">
+        [coloredNumber]="getTotal('weeklyDuration')">
       {{ getTotal("weeklyDuration") | interval }}
     </td>
   </ng-container>
@@ -77,8 +77,8 @@
     <td mat-cell *matCellDef="let row"
         [coloredNumber]="row.monthlyVideo">{{ row.monthlyVideo | number }}</td>
     <td mat-footer-cell *matFooterCellDef
-        [coloredNumber]="row.monthlyVideo">
-      {{ getTotal("monthlyVideo ") | number }}
+        [coloredNumber]="getTotal('monthlyVideo')">
+      {{ getTotal("monthlyVideo") | number }}
     </td>
   </ng-container>
 
@@ -89,8 +89,8 @@
     <td mat-cell *matCellDef="let row"
         [coloredNumber]="row.monthlyVideo">{{ row.monthlyLive | number }}</td>
     <td mat-footer-cell *matFooterCellDef
-        [coloredNumber]="row.monthlyLive">
-      {{ getTotal("monthlyLive ") | number }}
+        [coloredNumber]="getTotal('monthlyLive')">
+      {{ getTotal("monthlyLive") | number }}
     </td>
   </ng-container>
 
@@ -100,7 +100,7 @@
     </th>
     <td mat-cell *matCellDef="let row" [coloredNumber]="row.monthlyDuration"> {{ row.monthlyDuration | interval }}</td>
     <td mat-footer-cell *matFooterCellDef
-        [coloredNumber]="row.monthlyDuration">
+        [coloredNumber]="getTotal('monthlyDuration')">
       {{ getTotal("monthlyDuration") | interval }}
     </td>
   </ng-container>
