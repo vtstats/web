@@ -27,26 +27,28 @@ async def main():
     ids = re.findall("https://www.youtube.com/channel/(.*?)\"", rep.text)
     youtube = build("youtube", "v3", developerKey=apikey)
 
-    for id in ids:
+    for i in range(0, len(ids), 50):
+        cids = ids[i:i+50]
         # this google api is sync, not good
-        stat = youtube.channels().list(part="statistics", id=id).execute()
-        if not stat.get('items'):
-            continue
-        stat = stat['items'][0]['statistics']
-
-        stat_subs, stat_views = None, None
-        if stat.get('subscriberCount'):
-            stat_subs = int(stat['subscriberCount'])
-        if stat.get('viewCount'):
-            stat_views = int(stat['viewCount'])
-        print(id, stat_subs, stat_views)
-        await insert_db(conn, id, stat_subs, stat_views)
+        stat = youtube.channels().list(part="statistics",
+                                       id=",".join(cids),
+                                       maxResults=50).execute()
+        for record in stat['items']:
+            id = record['id']
+            stat = record['statistics']
+            stat_subs, stat_views = None, None
+            if stat.get('subscriberCount'):
+                stat_subs = int(stat['subscriberCount'])
+            if stat.get('viewCount'):
+                stat_views = int(stat['viewCount'])
+            print(id, stat_subs, stat_views)
+            await insert_db(conn, id, stat_subs, stat_views)
 
     await conn.close()
 
 
 # main
-apikey = os.environ.get("YOUTUBE_API_KEY0")
+apikey = os.environ.get("YOUTUBE_API_KEY1")
 db_url = os.environ.get("DATABASE_URL",
-                        "postgres://holostats:holostats@localhost:5432/holostats")
+                        "postgres://holostats:holostats@localhost:5433/holostats")
 asyncio.run(main())
