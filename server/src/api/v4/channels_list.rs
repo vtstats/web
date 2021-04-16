@@ -44,6 +44,39 @@ pub async fn youtube_channels_list(
     ))
 }
 
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResBodyEX {
+    #[serde(with = "ts_milliseconds_option")]
+    pub updated_at: Option<DateTime<Utc>>,
+    pub channels: Vec<db::ChannelEX>,
+}
+
+pub async fn youtube_channels_ex_list(
+    query: ReqQuery,
+    pool: PgPool,
+) -> Result<impl warp::Reply, Rejection> {
+    tracing::info!(
+        name = "GET /api/v4/youtube_channels_ex",
+        ids = ?query.ids.as_slice(),
+    );
+
+    let updated_at = db::youtube_channel_max_updated_at(&pool).await?;
+
+    let channels = db::youtube_channels_ex(&query.ids, &pool).await?;
+
+    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
+
+    Ok(warp::reply::with_header(
+        warp::reply::json(&ResBodyEX {
+            updated_at,
+            channels,
+        }),
+        "etag",
+        format!(r#""{}""#, etag),
+    ))
+}
+
 pub async fn bilibili_channels_list(
     query: ReqQuery,
     pool: PgPool,

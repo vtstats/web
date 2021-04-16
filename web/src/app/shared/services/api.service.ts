@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import {
   ChannelListOption,
   ChannelListResponse,
+  ChannelListResponseEX,
   ChannelReportOption,
   ChannelReportResponse,
   StreamListOption,
@@ -24,6 +25,17 @@ export class ApiService {
     return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
       params: new HttpParams().set("ids", opts.ids.join(",")),
     });
+  }
+
+  youtubeChannelsEX(
+    opts: ChannelListOption
+  ): Observable<ChannelListResponseEX> {
+    return this.http.get<ChannelListResponseEX>(
+      `${BASE_URL}/youtube_channels_ex`,
+      {
+        params: new HttpParams().set("ids", opts.ids.join(",")),
+      }
+    );
   }
 
   bilibiliChannels(opts: ChannelListOption): Observable<ChannelListResponse> {

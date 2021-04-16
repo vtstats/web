@@ -33,7 +33,8 @@
 
   $columns: subscriberCount, dailySubscriberCount, weeklySubscriberCount,
     monthlySubscriberCount, viewCount, dailyViewCount, weeklyViewCount,
-    monthlyViewCount;
+    videoCount, weeklyVideo, weeklyLive, monthlyVideo, monthlyLive,
+    weeklyDuration, monthlyDuration, monthlyViewCount;
 
   @each $columns in $columns {
     .mat-footer-cell.mat-column-#{$columns},
@@ -54,6 +55,11 @@
 
   .mat-sort-header-container {
     justify-content: flex-end;
+  }
+
+  .mat-header-cell {
+    max-width: 50em;
+    white-space: normal;
   }
 
   .mat-column-shimmerText {

@@ -1,0 +1,25 @@
+<div class="table-sub-menu">
+  <hs-sub-menu>
+    <hs-sub-menu-extra>
+      <time
+        *ngIf="!loading; else shimmer"
+        i18n="@@updatedAt"
+        [attr.datetime]="updatedAt | formatISO"
+      >
+        Updated at {{ updatedAt | date: "MM/dd HH:mm" }}
+      </time>
+
+      <ng-template #shimmer>
+        <span class="shimmer text" [style.width.px]="120"></span>
+      </ng-template>
+    </hs-sub-menu-extra>
+  </hs-sub-menu>
+</div>
+
+<ng-container *ngIf="!loading; else shimmerTableEX">
+  <hs-channel-table-ex [dataSouce]="dataSource"></hs-channel-table-ex>
+</ng-container>
+
+<ng-template #shimmerTableEX>
+  <hs-channel-table-ex-shimmer></hs-channel-table-ex-shimmer>
+</ng-template>

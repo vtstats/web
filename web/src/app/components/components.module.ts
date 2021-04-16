@@ -21,6 +21,10 @@ import {
   ChannelTable,
   ChannelTableShimmer,
 } from "./channel-table/channel-table";
+import {
+  ChannelTableEX,
+  ChannelTableEXShimmer,
+} from "./channel-table-ex/channel-table-ex";
 import { LoadingSpinner } from "./loading-spinner/loading-spinner";
 import { NumberRow } from "./number-row/number-row";
 import { StreamItem, StreamItemShimmer } from "./stream-item/stream-item";
@@ -48,6 +52,8 @@ import { SharedModule } from "src/app/shared";
     BigNumberShimmer,
     ChannelTable,
     ChannelTableShimmer,
+    ChannelTableEX,
+    ChannelTableEXShimmer,
     LoadingSpinner,
     NumberRow,
     StreamGroup,
@@ -80,6 +86,8 @@ import { SharedModule } from "src/app/shared";
     ChannelStats,
     ChannelTable,
     ChannelTableShimmer,
+    ChannelTableEX,
+    ChannelTableEXShimmer,
     LoadingSpinner,
     NumberRow,
     StreamGroup,

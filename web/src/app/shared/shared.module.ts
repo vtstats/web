@@ -9,7 +9,7 @@ import { EllipsisModule } from "ngx-ellipsis";
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
 
 import { DistancePipe } from "./pipes/distance.pipe";
-import { DurationPipe } from "./pipes/duration.pipe";
+import { DurationPipe, IntervalPipe } from "./pipes/duration.pipe";
 import { FormatISOPipe } from "./pipes/format-iso.pipe";
 import { GroupByPipe } from "./pipes/group-by.pipe";
 import { NamePipe } from "./pipes/name.pipe";
@@ -21,6 +21,7 @@ import { TickService } from "./services/tick.service";
   declarations: [
     DistancePipe,
     DurationPipe,
+    IntervalPipe,
     FormatISOPipe,
     GroupByPipe,
     NamePipe,
@@ -37,6 +38,7 @@ import { TickService } from "./services/tick.service";
   exports: [
     DistancePipe,
     DurationPipe,
+    IntervalPipe,
     FormatISOPipe,
     GroupByPipe,
     NamePipe,

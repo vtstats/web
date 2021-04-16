@@ -1,0 +1,10 @@
+[Unit]
+Description=TaiwanV - Channel Stat
+
+[Service]
+Type=simple
+ExecStart=python3 /root/server/save_all_subs.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

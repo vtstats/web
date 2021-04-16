@@ -19,6 +19,7 @@ export type VTuberIds =
   | "fifteen"
   | "fujinokuma"
   | "haruka"
+  | "healingluka"
   | "himemiyayuka"
   | "hoonie"
   | "ikusen"
@@ -27,9 +28,11 @@ export type VTuberIds =
   | "kwakon"
   | "lapis"
   | "lumina"
+  | "miamya"
   | "miru"
   | "nyoro"
   | "pedko"
+  | "proose"
   | "queenie"
   | "rana"
   | "rayer"
@@ -37,9 +40,13 @@ export type VTuberIds =
   | "sakuranoruu"
   | "sanmou"
   | "shaya"
+  | "silverbell"
+  | "soysaucexd"
+  | "sudayoruka"
   | "tedobear"
   | "tedobear2"
   | "tsmatch"
+  | "twsiriya"
   | "ubye"
   | "usagi"
   | "yumemi"
@@ -127,6 +134,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "Harukaowl",
     default: true,
   },
+  healingluka: {
+    id: "healingluka",
+    youtube: "UCM1nL55m_QImE0ZRqvGmWWQ",
+    twitter: "Healingluka",
+    discord: "",
+    facebook: "HealingLuka",
+    default: true,
+  },
   himemiyayuka: {
     id: "himemiyayuka",
     youtube: "UC1d1dmxkh_yanq1U1gli7jw",
@@ -191,6 +206,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "broadbandhinet",
     default: false,
   },
+  miamya: {
+    id: "miamya",
+    youtube: "UCIR0USMXU0r7N8spBJHNA7A",
+    twitter: "MiaMya0615",
+    discord: "AspSwcr",
+    facebook: "MiaMya0615",
+    default: true,
+  },
   miru: {
     id: "miru",
     youtube: "UCFahBR2wixu0xOex84bXFvg",
@@ -214,6 +237,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "",
     facebook: "Padko.Ch",
     default: true,
+  },
+  proose: {
+    id: "proose",
+    youtube: "UCl7ci9Pexnjf7UGpWxqj8qw",
+    twitter: "purusu0325",
+    discord: "",
+    facebook: "106704748184668",
+    default: false,
   },
   queenie: {
     id: "queenie",
@@ -271,6 +302,30 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "Shaya-100558584706248",
     default: false,
   },
+  silverbell: {
+    id: "silverbell",
+    youtube: "UCwO7OC8he-XAkrDNvGe5kXA",
+    twitter: "SilverBellVtub1",
+    discord: "",
+    facebook: "SilverBell.lVtuber",
+    default: false,
+  },
+  soysaucexd: {
+    id: "soysaucexd",
+    youtube: "UCy5l7iZCTy-alDJ9rL5kuXQ",
+    twitter: "SoysauceXD",
+    discord: "",
+    facebook: "",
+    default: false,
+  },
+  sudayoruka: {
+    id: "sudayoruka",
+    youtube: "UCuy-kZJ7HWwUU-eKv0zUZFQ",
+    twitter: "sudayoruka",
+    discord: "p6CRD63Mzc",
+    facebook: "sudayoruka",
+    default: true,
+  },
   tedobear: {
     id: "tedobear",
     youtube: "UCqy310kNTAokme7plaXTwQw",
@@ -294,6 +349,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "",
     facebook: "",
     default: true,
+  },
+  twsiriya: {
+    id: "twsiriya",
+    youtube: "UCOpI60ey2pDJnmV2T351AOg",
+    twitter: "twsiriya",
+    discord: "",
+    facebook: "105037511566512",
+    default: false,
   },
   ubye: {
     id: "ubye",
@@ -352,7 +415,7 @@ export type BatchIds =
   | "fourvirtual"
   | "fujinokuma"
   | "haruka"
-  | "himemiyayuka"
+  | "healingluka"
   | "hinet"
   | "kaina"
   | "kolhunter"
@@ -360,9 +423,15 @@ export type BatchIds =
   | "kwakon"
   | "lapis"
   | "miru"
+  | "moegenki"
+  | "proose"
   | "queenie722"
+  | "renewlive"
   | "shaya"
+  | "silverbell"
+  | "soysaucexd"
   | "tsmatch"
+  | "twsiriya"
   | "ubye"
   | "usagi"
   | "yahoo"
@@ -386,7 +455,7 @@ export const batches: Record<BatchIds, Batch> = {
   "fourvirtual": ["sanmou", "tedobear", "tedobear2"],
   "fujinokuma": null,
   "haruka": null,
-  "himemiyayuka": null,
+  "healingluka": null,
   "hinet": ["lumina"],
   "kaina": null,
   "kolhunter": ["ruroro"],
@@ -394,9 +463,15 @@ export const batches: Record<BatchIds, Batch> = {
   "kwakon": null,
   "lapis": null,
   "miru": null,
+  "moegenki": ["himemiyayuka", "miamya"],
+  "proose": null,
   "queenie722": ["queenie", "zasasa"],
+  "renewlive": ["sudayoruka"],
   "shaya": null,
+  "silverbell": null,
+  "soysaucexd": null,
   "tsmatch": null,
+  "twsiriya": null,
   "ubye": null,
   "usagi": null,
   "yahoo": ["hoonie"],

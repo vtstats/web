@@ -30,7 +30,7 @@ struct YouTubeChannel {
 #[serde(rename_all = "camelCase")]
 struct YouTubeChannelStatistics {
     view_count: String,
-    subscriber_count: String,
+    subscriber_count: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -66,10 +66,18 @@ pub async fn youtube_channels(client: &Client, ids: Vec<&str>) -> Result<Vec<Cha
     for chunk in ids.chunks(50) {
         let channels = youtube_channels_api(&client, &chunk.join(",")).await?;
 
-        res.extend(channels.into_iter().map(|channel| Channel {
-            id: channel.id,
-            view_count: i32::from_str(&channel.statistics.view_count).unwrap(),
-            subscriber_count: i32::from_str(&channel.statistics.subscriber_count).unwrap(),
+        res.extend(channels.into_iter().map(|channel| {
+            Channel {
+                id: channel.id,
+                view_count: i32::from_str(&channel.statistics.view_count).unwrap(),
+                subscriber_count: i32::from_str(
+                    &channel
+                        .statistics
+                        .subscriber_count
+                        .unwrap_or(String::from("0")),
+                )
+                .unwrap(),
+            }
         }));
     }
 

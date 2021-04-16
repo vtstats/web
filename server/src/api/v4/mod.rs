@@ -4,7 +4,7 @@ mod db;
 mod streams_list;
 mod streams_report;
 
-use channels_list::{bilibili_channels_list, youtube_channels_list};
+use channels_list::{bilibili_channels_list, youtube_channels_ex_list, youtube_channels_list};
 use channels_report::channels_report;
 use streams_list::youtube_streams_list;
 use streams_report::streams_report;
@@ -19,6 +19,7 @@ pub fn api(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     warp::path("v4").and(
         api_youtube_channels(pool.clone())
+            .or(api_youtube_channels_ex(pool.clone()))
             .or(api_bilibili_channels(pool.clone()))
             .or(api_youtube_streams(pool.clone()))
             .or(api_streams_report(pool.clone()))
@@ -34,6 +35,16 @@ pub fn api_youtube_channels(
         .and(warp::query())
         .and(with_db(pool))
         .and_then(youtube_channels_list)
+}
+
+pub fn api_youtube_channels_ex(
+    pool: PgPool,
+) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    warp::path!("youtube_channels_ex")
+        .and(warp::get())
+        .and(warp::query())
+        .and(with_db(pool))
+        .and_then(youtube_channels_ex_list)
 }
 
 pub fn api_bilibili_channels(
