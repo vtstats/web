@@ -15,6 +15,7 @@ import {
   PagesModule,
   Settings,
   YoutubeChannel,
+  YoutubeChannelEX,
   YoutubeScheduleStream,
   YoutubeStream,
   VTubersDetail,
@@ -29,6 +30,7 @@ import { ComponentsModule } from "./components/components.module";
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "youtube-channel", component: YoutubeChannel },
+  { path: "youtube-channel-ex", component: YoutubeChannelEX },
   { path: "youtube-schedule-stream", component: YoutubeScheduleStream },
   { path: "youtube-stream", component: YoutubeStream },
   { path: "settings", component: Settings },

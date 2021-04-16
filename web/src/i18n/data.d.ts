@@ -10,6 +10,7 @@ export type MessageIds =
   | "last7Days"
   | "last30Days"
   | "youtubeChannel"
+  | "youtubeChannelEX"
   | "bilibiliChannel"
   | "youtubeStream"
   | "youtubeSchedule"
@@ -30,6 +31,13 @@ export type MessageIds =
   | "recentStreams"
   | "streamViewers"
   | "watchLiveByHolotool"
+  | "videoCount"
+  | "weeklyVideo"
+  | "weeklyLive"
+  | "weeklyDuration"
+  | "monthlyVideo"
+  | "monthlyLive"
+  | "monthlyDuration"
   | VTuberIds
   | BatchIds;
 
