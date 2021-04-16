@@ -14,6 +14,7 @@ const translations: Translations = {
   last7Days: "Last 7 Days",
   last30Days: "Last 30 Days",
   youtubeChannel: "YouTube Channel",
+  youtubeChannelEX: "YouTube Stream Stat",
   bilibiliChannel: "Bilibili Channel",
   youtubeStream: "YouTube Stream",
   youtubeSchedule: "YouTube Schedule",
@@ -34,6 +35,11 @@ const translations: Translations = {
   recentStreams: "Recent Streams",
   streamViewers: "Stream Viewers",
   watchLiveByHolotool: "Watch live streams via Holotools",
+  "videoCount": "Videos",
+  "weeklyVideo": "Last 7 Days Vidoes",
+  "weeklyLive": "Last 7 Days Lives",
+  "monthlyVideo": "Last 30 Days Vidoes",
+  "monthlyLive": "Last 30 Days Lives",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",

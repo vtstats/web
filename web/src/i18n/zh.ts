@@ -14,6 +14,7 @@ const translations: Translations = {
   last7Days: "週增",
   last30Days: "月增",
   youtubeChannel: "YouTube 頻道",
+  youtubeChannelEX: "YouTube 頻道 EX",
   bilibiliChannel: "Bilibili 頻道",
   youtubeStream: "YouTube 直播",
   youtubeSchedule: "YouTube 預定直播",
@@ -34,6 +35,11 @@ const translations: Translations = {
   recentStreams: "近期直播",
   streamViewers: "直播同接",
   watchLiveByHolotool: "使用 holotools 觀看直播",
+  "videoCount": "Videos",
+  "weeklyVideo": "Vidoes 7 Days",
+  "monthlyVideo": "Vidoes 30 Days",
+  "weeklyLive": "Lives 7 Days",
+  "monthlyLive": "Lives 30 Days",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",

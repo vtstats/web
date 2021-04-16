@@ -1,0 +1,88 @@
+<table
+  class="mx-auto"
+  mat-table
+  [dataSource]="data"
+  [trackBy]="trackBy"
+  matSort
+  matSortActive="videoCount"
+  matSortDirection="desc"
+  matSortDisableClear
+>
+  <ng-container matColumnDef="profile">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row">
+      <img
+        class="profile"
+        src="/assets/thumbnail/{{ row.vtuberId }}.jpg"
+        [routerLink]="['/vtuber', row.vtuberId]"
+      />
+    </td>
+    <td mat-footer-cell *matFooterCellDef></td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef i18n="@@name">Name</th>
+    <td mat-cell *matCellDef="let row" lang="jp">{{ row.vtuberId | name }}</td>
+    <td mat-footer-cell *matFooterCellDef i18n="@@total">Total</td>
+  </ng-container>
+
+  <ng-container matColumnDef="videoCount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@videoCount">
+      Videos
+    </th>
+    <td mat-cell *matCellDef="let row">{{ row.videoCount | number }}</td>
+    <td mat-footer-cell *matFooterCellDef>
+      {{ getTotal("videoCount") | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="weeklyVideo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@weeklyVideo">
+      Videos in Last 7 Days
+    </th>
+    <td mat-cell *matCellDef="let row"
+        [coloredNumber]="row.weeklyVideo"> {{ row.weeklyVideo | number }}</td>
+    <td mat-footer-cell *matFooterCellDef 
+        [coloredNumber]="row.weeklyVideo">
+      {{ getTotal("weeklyVideo ") | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="weeklyLive">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@weeklyLive">
+      Lives in Last 7 Days
+    </th>
+    <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklyLive"> {{ row.weeklyLive | number }}</td>
+    <td mat-footer-cell *matFooterCellDef
+        [coloredNumber]="row.weeklyLive">
+      {{ getTotal("weeklyLive ") | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="monthlyVideo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@monthlyVideo">
+      Videos in Last 30 Days
+    </th>
+    <td mat-cell *matCellDef="let row"
+        [coloredNumber]="row.monthlyVideo">{{ row.monthlyVideo | number }}</td>
+    <td mat-footer-cell *matFooterCellDef
+        [coloredNumber]="row.monthlyVideo">
+      {{ getTotal("monthlyVideo ") | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="monthlyLive">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@monthlyLive">
+      Lives in Last 30 Days
+    </th>
+    <td mat-cell *matCellDef="let row"
+        [coloredNumber]="row.monthlyVideo">{{ row.monthlyLive | number }}</td>
+    <td mat-footer-cell *matFooterCellDef
+        [coloredNumber]="row.monthlyLive">
+      {{ getTotal("monthlyLive ") | number }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

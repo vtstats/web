@@ -16,6 +16,7 @@ import { ComponentsModule } from "../components/components.module";
 import { BilibiliChannel } from "./bilibili-channel/bilibili-channel";
 import { Settings } from "./settings/settings";
 import { YoutubeChannel } from "./youtube-channel/youtube-channel";
+import { YoutubeChannelEX } from "./youtube-channel-ex/youtube-channel-ex";
 import { YoutubeScheduleStream } from "./youtube-schedule-stream/youtube-schedule-stream";
 import { YoutubeStream } from "./youtube-stream/youtube-stream";
 import { VTubersDetail } from "./vtubers-detail/vtubers-detail";
@@ -27,6 +28,7 @@ import { NotFound } from "./not-found/not-found";
     BilibiliChannel,
     Settings,
     YoutubeChannel,
+    YoutubeChannelEX,
     YoutubeScheduleStream,
     YoutubeStream,
     VTubersDetail,

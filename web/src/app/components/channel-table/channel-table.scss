@@ -33,6 +33,7 @@
 
   $columns: subscriberCount, dailySubscriberCount, weeklySubscriberCount,
     monthlySubscriberCount, viewCount, dailyViewCount, weeklyViewCount,
+    videoCount, weeklyVideo, weeklyLive, monthlyVideo, monthlyLive,
     monthlyViewCount;
 
   @each $columns in $columns {
