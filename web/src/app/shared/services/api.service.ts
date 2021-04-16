@@ -27,10 +27,15 @@ export class ApiService {
     });
   }
 
-  youtubeChannelsEX(opts: ChannelListOption): Observable<ChannelListResponseEX> {
-    return this.http.get<ChannelListResponseEX>(`${BASE_URL}/youtube_channels_ex`, {
-      params: new HttpParams().set("ids", opts.ids.join(",")),
-    });
+  youtubeChannelsEX(
+    opts: ChannelListOption
+  ): Observable<ChannelListResponseEX> {
+    return this.http.get<ChannelListResponseEX>(
+      `${BASE_URL}/youtube_channels_ex`,
+      {
+        params: new HttpParams().set("ids", opts.ids.join(",")),
+      }
+    );
   }
 
   bilibiliChannels(opts: ChannelListOption): Observable<ChannelListResponse> {
