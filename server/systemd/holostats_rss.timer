@@ -1,0 +1,10 @@
+[Unit]
+Description=HoloStats - RSS routine
+
+[Timer]
+OnCalendar=*:*:0
+AccuracySec=1us
+Unit=holostats_rss.service
+
+[Install]
+WantedBy=multi-user.target
