@@ -61,3 +61,4 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: web
           environment: dev
+          wranglerVersion: 1.15.1
