@@ -3,29 +3,38 @@ name = "holostats-server"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
-# build = "build.rs"
 
 [dependencies]
-bytes = "0.5.6"
+bytes = "1.0.1"
 chrono = { version = "0.4.19", features = ["serde"] }
-futures = "0.3.8"
-hex = "0.4.2"
+futures = "0.3.14"
+hex = "0.4.3"
 hmac = "0.10.1"
 log = "0.4.14"
-reqwest = { version = "0.10.9", default-features = false, features = ["json", "rustls-tls"] }
-roxmltree = "0.14.0"
-serde = { version = "1.0.118", features = ["derive"] }
+reqwest = { version = "0.11.3", default-features = false, features = [
+    "json",
+    "rustls-tls"
+] }
+roxmltree = "0.14.1"
+serde = { version = "1.0.125", features = ["derive"] }
 serde_json = "1.0.64"
-serde_with = "1.6.4"
+serde_with = "1.8.1"
 sha2 = "0.9.3"
-sqlx = { version = "0.4.1", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono"] }
-tokio = { version = "0.2.25", features = ["macros"] }
+sqlx = { version = "0.5.2", default-features = false, features = [
+    "runtime-tokio-rustls",
+    "macros",
+    "postgres",
+    "chrono"
+] }
+tokio = { version = "1.5.0", features = ["macros"] }
 tracing = "0.1.25"
 tracing-futures = "0.2.5"
-tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", branch = "a" }
-tracing-subscriber = { version = "0.2.16", default-features = false, features = ["registry"] }
+tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", rev = "838560a4acd346db2a9cfd1ca109518e5125ae5d" }
+tracing-subscriber = { version = "0.2.17", default-features = false, features = [
+    "registry"
+] }
 url = "2.2.1"
-warp = { version = "0.2.5", default-features = false }
+warp = { version = "0.3.1", default-features = false }
 
 [profile.release]
 lto = true
@@ -51,4 +60,4 @@ name = "subscribe"
 path = "src/subscribe/main.rs"
 
 [dev-dependencies]
-pretty_assertions = "0.6.1"
+pretty_assertions = "0.7.2"

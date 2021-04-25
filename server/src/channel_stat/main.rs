@@ -8,7 +8,7 @@ mod utils;
 mod vtubers;
 
 use chrono::{DateTime, Utc};
-use sqlx::{Done, PgPool};
+use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
 

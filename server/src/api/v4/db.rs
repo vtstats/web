@@ -139,7 +139,7 @@ pub struct Stream {
 }
 
 #[derive(Debug, sqlx::Type, serde::Serialize)]
-#[sqlx(rename = "stream_status", rename_all = "lowercase")]
+#[sqlx(type_name = "stream_status", rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum StreamStatus {
     Scheduled,

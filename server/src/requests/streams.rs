@@ -22,7 +22,7 @@ pub struct Stream {
 }
 
 #[derive(Debug, sqlx::Type)]
-#[sqlx(rename = "stream_status", rename_all = "lowercase")]
+#[sqlx(type_name = "stream_status", rename_all = "lowercase")]
 pub enum StreamStatus {
     Scheduled,
     Live,

@@ -7,12 +7,6 @@ use crate::error::Error;
 
 impl Reject for Error {}
 
-impl From<Error> for Rejection {
-    fn from(err: Error) -> Rejection {
-        warp::reject::custom(err)
-    }
-}
-
 #[derive(serde::Serialize)]
 pub struct ErrorMessage {
     pub code: u16,
