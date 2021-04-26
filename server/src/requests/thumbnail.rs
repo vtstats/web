@@ -15,7 +15,7 @@ pub async fn youtube_thumbnail(id: &str, client: &Client) -> Result<Bytes> {
 }
 
 #[instrument(
-    name = "Get YouTube video thumbnail",
+    name = "Get YouTube video thumbnail by res",
     skip(client),
     fields(http.method = "GET", id, res)
 )]
