@@ -53,38 +53,24 @@ jobs:
       - name: Format
         run: cargo fmt -- --check
 
+      - name: Create .env
+        run: mv .env.example .env
+
       - name: Run Test
         run: |
           psql postgres://holostats:holostats@localhost/holostats -f sql/test.sql
           cargo test
-        env:
-          YOUTUBE_API_KEY0: YOUTUBE_API_KEY0
-          YOUTUBE_API_KEY1: YOUTUBE_API_KEY1
-          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
-          PUBSUBHUBBUB_URL: PUBSUBHUBBUB_URL
-          S3_KEY_ID: S3_KEY_ID
-          S3_ACCESS_KEY: S3_ACCESS_KEY
-          S3_HOST: S3_HOST
-          NEW_RELIC_API_KEY: NEW_RELIC_API_KEY
 
       - name: Build
         if: github.ref == 'refs/heads/master'
         run: |
           cargo build --release
           strip target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
-        env:
-          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
-          YOUTUBE_API_KEY0: ${{ secrets.YOUTUBE_API_KEY0 }}
-          YOUTUBE_API_KEY1: ${{ secrets.YOUTUBE_API_KEY1 }}
-          PUBSUBHUBBUB_URL: ${{ secrets.PUBSUBHUBBUB_URL }}
-          COOKIE: ${{ secrets.COOKIE }}
-          S3_KEY_ID: ${{ secrets.S3_KEY_ID }}
-          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-          S3_HOST: ${{ secrets.S3_HOST }}
-          NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
 
-      - name: Deploy
+      - name: Release
         if: github.ref == 'refs/heads/master'
-        run: rsync -avzzP target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh} rsync://ci@${{ secrets.RSYNC_HOST }}/bin
+        uses: softprops/action-gh-release@v1
+        files:
+          - target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
         env:
-          RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
