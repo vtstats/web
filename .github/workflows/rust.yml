@@ -72,6 +72,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
+            target/release/api
+            target/release/subscribe
+            target/release/stream_stat
+            target/release/channel_stat
+            target/release/rss_refresh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
