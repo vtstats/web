@@ -15,6 +15,8 @@ use utils::is_not_found;
 
 #[tokio::test]
 async fn not_found() {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     let uri = var("DATABASE_URL").unwrap();
 
     let pool = PgPool::connect(&uri).await.unwrap();

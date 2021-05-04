@@ -7,7 +7,6 @@ mod utils;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
-use dotenv::dotenv;
 use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
@@ -31,7 +30,7 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
-    dotenv().expect("Failed to load .env file");
+    dotenv::dotenv().expect("Failed to load .env file");
 
     let hub = RequestHub::new();
 

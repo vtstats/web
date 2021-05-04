@@ -10,6 +10,8 @@ use super::utils::is_invalid_query;
 
 #[tokio::test]
 async fn invalid_query() {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     let uri = var("DATABASE_URL").unwrap();
 
     let pool = PgPool::connect(&uri).await.unwrap();

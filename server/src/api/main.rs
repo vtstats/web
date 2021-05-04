@@ -16,7 +16,6 @@ mod vtubers;
 #[cfg(test)]
 mod tests;
 
-use dotenv::dotenv;
 use sqlx::PgPool;
 use std::env;
 use std::net::SocketAddr;
@@ -28,7 +27,7 @@ use crate::requests::RequestHub;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    dotenv().expect("Failed to load .env file");
+    dotenv::dotenv().expect("Failed to load .env file");
 
     utils::init_logger();
 
