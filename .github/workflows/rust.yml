@@ -70,7 +70,8 @@ jobs:
       - name: Release
         if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v1
-        files:
-          - target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
+        with:
+          files: |
+            target/release/{api,subscribe,stream_stat,channel_stat,rss_refresh}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
