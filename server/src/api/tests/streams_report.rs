@@ -1,4 +1,5 @@
 use sqlx::PgPool;
+use std::env::var;
 use warp::test::request;
 use warp::Filter;
 
@@ -9,7 +10,9 @@ use super::utils::is_invalid_query;
 
 #[tokio::test]
 async fn invalid_query() {
-    let pool = PgPool::connect(env!("DATABASE_URL")).await.unwrap();
+    let uri = var("DATABASE_URL").unwrap();
+
+    let pool = PgPool::connect(&uri).await.unwrap();
 
     let api = api(pool).recover(handle_rejection);
 

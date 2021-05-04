@@ -8,13 +8,13 @@ mod utils;
 mod vtubers;
 
 use chrono::{DateTime, Utc};
-use reqwest::Client;
+use dotenv::dotenv;
 use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
 
 use crate::error::Result;
-use crate::requests::Stream;
+use crate::requests::{RequestHub, Stream};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -30,7 +30,9 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron"),
 )]
 async fn real_main() -> Result<()> {
-    let client = Client::new();
+    dotenv().expect("Failed to load .env file");
+
+    let hub = RequestHub::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
@@ -40,7 +42,7 @@ async fn real_main() -> Result<()> {
         return Ok(());
     }
 
-    let streams = requests::youtube_streams(&client, &ids).await?;
+    let streams = hub.youtube_streams(&ids).await?;
 
     let now = Utc::now();
 

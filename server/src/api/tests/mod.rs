@@ -4,6 +4,7 @@ mod utils;
 mod xml;
 
 use sqlx::PgPool;
+use std::env::var;
 use warp::test::request;
 use warp::Filter;
 
@@ -14,7 +15,9 @@ use utils::is_not_found;
 
 #[tokio::test]
 async fn not_found() {
-    let pool = PgPool::connect(env!("DATABASE_URL")).await.unwrap();
+    let uri = var("DATABASE_URL").unwrap();
+
+    let pool = PgPool::connect(&uri).await.unwrap();
 
     let api = api(pool).recover(handle_rejection);
 

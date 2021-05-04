@@ -1,8 +1,7 @@
-use chrono::{Timelike, Utc};
 use log::{LevelFilter, Log};
 use serde::Serialize;
 use serde_json::to_string;
-use std::env;
+use std::env::var;
 use std::fmt::Debug;
 use tracing::dispatcher::DefaultGuard;
 use tracing::field::{display, DisplayValue};
@@ -49,8 +48,12 @@ where
 pub fn init_tracing(target: &'static str, is_global: bool) -> Option<DefaultGuard> {
     let filter = TargetFilter(target);
 
-    let layer = NewRelicLayer::new(BlockingReporter::new(env!("NEW_RELIC_API_KEY")))
-        .with_event(WithEvent::Flatten);
+    let reporter = match var("NEW_RELIC_API_KEY") {
+        Ok(api_key) => BlockingReporter::new(&api_key),
+        Err(_) => return None,
+    };
+
+    let layer = NewRelicLayer::new(reporter).with_event(WithEvent::Flatten);
 
     let subscriber = Registry::default().with(filter).with(layer);
 
@@ -66,13 +69,4 @@ pub fn init_tracing(target: &'static str, is_global: bool) -> Option<DefaultGuar
 #[allow(dead_code)]
 pub fn json<T: Serialize + Debug>(t: &T) -> DisplayValue<String> {
     display(to_string(t).unwrap_or_else(|_| format!("{:?}", t)))
-}
-
-#[allow(dead_code)]
-pub fn youtube_api_key() -> &'static str {
-    if Utc::now().hour() % 2 == 0 {
-        env!("YOUTUBE_API_KEY0")
-    } else {
-        env!("YOUTUBE_API_KEY1")
-    }
 }

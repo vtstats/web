@@ -28,7 +28,7 @@ fn modification() {
 
     assert_eq!(
         parse_modification(&Document::parse(full).unwrap()),
-        Some(("ayame", "hAo6NGQlkOA",))
+        Some(("ayame", "hAo6NGQlkOA"))
     );
 
     let minimal = r#"
@@ -43,7 +43,7 @@ fn modification() {
 
     assert_eq!(
         parse_modification(&Document::parse(minimal).unwrap()),
-        Some(("ayame", "hAo6NGQlkOA",))
+        Some(("ayame", "hAo6NGQlkOA"))
     );
 }
 
@@ -62,7 +62,7 @@ fn deletion() {
 
     assert_eq!(
         parse_deletion(&Document::parse(full).unwrap()),
-        Some(("HJiD8KcZKfs", "noel",))
+        Some(("HJiD8KcZKfs", "noel"))
     );
 
     let minimal = r#"
@@ -76,6 +76,6 @@ fn deletion() {
 
     assert_eq!(
         parse_deletion(&Document::parse(minimal).unwrap()),
-        Some(("HJiD8KcZKfs", "noel",))
+        Some(("HJiD8KcZKfs", "noel"))
     );
 }

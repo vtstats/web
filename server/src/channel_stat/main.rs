@@ -8,12 +8,13 @@ mod utils;
 mod vtubers;
 
 use chrono::{DateTime, Utc};
+use dotenv::dotenv;
 use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
 
 use crate::error::Result;
-use crate::requests::Channel;
+use crate::requests::{Channel, RequestHub};
 use crate::vtubers::{VTuber, VTUBERS};
 
 #[tokio::main]
@@ -30,7 +31,9 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
-    let client = reqwest::Client::new();
+    dotenv().expect("Failed to load .env file");
+
+    let hub = RequestHub::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
@@ -41,7 +44,7 @@ async fn real_main() -> Result<()> {
         .filter_map(|v| v.bilibili)
         .collect::<Vec<_>>();
 
-    let channels = requests::bilibili_channels(&client, ids).await?;
+    let channels = hub.bilibili_channels(ids).await?;
 
     let channels = channels
         .into_iter()
@@ -59,7 +62,7 @@ async fn real_main() -> Result<()> {
 
     let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
 
-    let channels = requests::youtube_channels(&client, ids).await?;
+    let channels = hub.youtube_channels(ids).await?;
 
     let channels = channels
         .into_iter()

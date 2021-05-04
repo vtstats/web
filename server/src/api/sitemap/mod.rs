@@ -19,7 +19,7 @@ const PAGES: &[&str] = &[
 async fn sitemap_get(pool: PgPool) -> Result<impl warp::Reply, Rejection> {
     tracing::info!(name = "GET /api/sitemap");
 
-    let streams = sqlx::query!(r#"select stream_id from youtube_streams"#,)
+    let streams = sqlx::query!(r#"select stream_id from youtube_streams"#)
         .fetch_all(&pool)
         .await
         .map_err(Error::Database)?;

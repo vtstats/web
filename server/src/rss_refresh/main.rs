@@ -7,14 +7,13 @@ mod utils;
 #[path = "../vtubers.rs"]
 mod vtubers;
 
-use reqwest::Client;
-use sha2::{Digest, Sha256};
+use dotenv::dotenv;
 use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
 
 use crate::error::{Error, Result};
-use crate::requests::{upload_file, youtube_streams, youtube_thumbnail, Stream};
+use crate::requests::{RequestHub, Stream};
 use crate::utils::json;
 use crate::vtubers::{VTuber, VTUBERS};
 
@@ -32,13 +31,15 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
-    let channel_ids = VTUBERS.iter().filter_map(|vtb| vtb.youtube);
+    dotenv().expect("Failed to load .env file");
 
-    let client = Client::new();
+    let hub = RequestHub::new();
+
+    let channel_ids = VTUBERS.iter().filter_map(|vtb| vtb.youtube);
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
-    let feeds = requests::rss::fetch_feeds(&client, channel_ids).await?;
+    let feeds = hub.fetch_feeds(channel_ids).await?;
 
     let video_ids = feeds
         .iter()
@@ -51,7 +52,7 @@ async fn real_main() -> Result<()> {
         return Ok(());
     }
 
-    let streams = youtube_streams(&client, &missing_video_ids).await?;
+    let streams = hub.youtube_streams(&missing_video_ids).await?;
 
     if streams.is_empty() {
         tracing::error!(err.msg = "stream not found");
@@ -59,9 +60,7 @@ async fn real_main() -> Result<()> {
     }
 
     for stream in streams {
-        let thumbnail_url = upload_thumbnail(&stream.id, &client)
-            .await
-            .map(|filename| format!("https://holo.poi.cat/thumbnail/{}", filename));
+        let thumbnail_url = hub.upload_thumbnail(&stream.id).await;
 
         let vtuber = VTuber::find_by_youtube_channel_id(&stream.channel_id);
 
@@ -82,17 +81,13 @@ async fn real_main() -> Result<()> {
 }
 
 fn find_video_id(feed: &str) -> Option<String> {
-    if let Some(line) = feed.lines().nth(14) {
-        let line = line.trim();
+    feed.lines()
+        .nth(14)
         // <yt:videoId>XXXXXXXXXXX</yt:videoId>
-        if line.starts_with("<yt:videoId>") && line.ends_with("</yt:videoId>") {
-            let id = &line["<yt:videoId>".len()..(line.len() - "</yt:videoId>".len())];
-
-            return Some(id.into());
-        }
-    }
-
-    None
+        .map(|s| s.trim())
+        .and_then(|s| s.strip_prefix("<yt:videoId>"))
+        .and_then(|s| s.strip_suffix("</yt:videoId>"))
+        .map(Into::into)
 }
 
 #[instrument(
@@ -125,28 +120,6 @@ async fn find_missing_video_id(pool: &PgPool, video_ids: &[String]) -> Result<Ve
     tracing::info!(video_ids = json(&ids));
 
     Ok(ids)
-}
-
-async fn upload_thumbnail(stream_id: &str, client: &Client) -> Option<String> {
-    let data = match youtube_thumbnail(stream_id, &client).await {
-        Ok(x) => x,
-        Err(e) => {
-            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
-            return None;
-        }
-    };
-
-    let content_sha256 = Sha256::digest(data.as_ref());
-
-    let filename = format!("{}.{}.jpg", stream_id, hex::encode(content_sha256));
-
-    match upload_file(&filename, data, "image/jpg", &client).await {
-        Ok(_) => Some(filename),
-        Err(e) => {
-            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
-            None
-        }
-    }
 }
 
 #[instrument(

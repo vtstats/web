@@ -576,6 +576,7 @@ version = "0.1.0"
 dependencies = [
  "bytes",
  "chrono",
+ "dotenv",
  "futures",
  "hex",
  "hmac",
