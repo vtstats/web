@@ -80,8 +80,8 @@ export const vtubers: Record<VTuberIds, VTuber> = {
   },
   yagoo: {
     id: "yagoo",
-    twitter: "hololivetv",
-    youtube: "UCJFZiqLMntJufDCHc6bQixg",
+    twitter: "tanigox",
+    youtube: "UCu2DMOGLeR_DSStCyeQpi5Q",
   },
   sora: {
     id: "sora",
