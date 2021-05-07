@@ -17,6 +17,8 @@ use crate::requests::{RequestHub, Stream};
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     utils::init_logger();
 
     let _guard = utils::init_tracing("stream_stat", false);
@@ -29,8 +31,6 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron"),
 )]
 async fn real_main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     let hub = RequestHub::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;

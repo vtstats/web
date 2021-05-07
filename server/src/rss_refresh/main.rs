@@ -18,6 +18,8 @@ use crate::vtubers::{VTuber, VTUBERS};
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     utils::init_logger();
 
     let _guard = utils::init_tracing("rss_refresh", false);
@@ -30,8 +32,6 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     let hub = RequestHub::new();
 
     let channel_ids = VTUBERS.iter().filter_map(|vtb| vtb.youtube);
