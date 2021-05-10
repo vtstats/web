@@ -42,6 +42,7 @@ const translations: Translations = {
   monthlyVideo: "月增短片",
   monthlyLive: "月增直播",
   monthlyDuration: "月影片時數",
+  selectDate: "選擇日期",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",

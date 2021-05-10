@@ -42,6 +42,7 @@ const translations: Translations = {
   monthlyVideo: "#Shorts in last 30 days",
   monthlyLive: "#Lives in last 30 days",
   monthlyDuration: "Total stream time in last 30 days",
+  selectDate: "Select Date",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",

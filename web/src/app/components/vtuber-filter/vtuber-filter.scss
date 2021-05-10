@@ -1,0 +1,61 @@
+@import "~@angular/material/theming";
+
+.vtuber-filter-row {
+  display: inline-flex;
+  vertical-align: middle;
+
+  .text {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .more,
+  .profile {
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    margin: 4px;
+    padding: 2px;
+
+    &.selected {
+      margin: 2px;
+    }
+
+    &.off {
+      margin-left: -10px;
+    }
+
+    &.off.selected {
+      margin-left: -12px;
+    }
+
+    &:hover {
+      z-index: 10 !important;
+    }
+  }
+
+  .more {
+    text-align: center;
+    line-height: 32px;
+  }
+}
+
+.vtuber-filter-overlay {
+  max-height: 325px;
+  overflow-y: auto;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  @include mat-elevation(4);
+
+  .mat-list-option .mat-list-avatar {
+    height: 32px;
+    width: 32px;
+  }
+}

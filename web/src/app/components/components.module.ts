@@ -6,8 +6,13 @@ import { MatTableModule } from "@angular/material/table";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+import { OverlayModule } from "@angular/cdk/overlay";
 import { EllipsisModule } from "ngx-ellipsis";
 
 import { ApxChart } from "./apx-chart/apx-chart";
@@ -39,6 +44,9 @@ import {
   StreamsSummaryShimmer,
 } from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
+import { DateFilter } from "./date-filter/date-filter";
+import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
+import { FilterGroup } from "./filter-group/filter-group";
 
 import { SharedModule } from "src/app/shared";
 
@@ -67,17 +75,25 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
+    DateFilter,
+    VTuberFilter,
+    FilterGroup,
   ],
   imports: [
     CommonModule,
     RouterModule,
     PortalModule,
     EllipsisModule,
+    OverlayModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatIconModule,
     MatSortModule,
+    MatListModule,
+    MatTooltipModule,
     MatDividerModule,
     SharedModule,
   ],
@@ -101,6 +117,7 @@ import { SharedModule } from "src/app/shared";
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
+    FilterGroup,
   ],
 })
 export class ComponentsModule {}
