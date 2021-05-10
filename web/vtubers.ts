@@ -28,9 +28,11 @@ export type VTuberIds =
   | "kwakon"
   | "lapis"
   | "lumina"
+  | "lutra"
   | "miamya"
   | "miru"
   | "nyoro"
+  | "obear"
   | "pedko"
   | "proose"
   | "queenie"
@@ -206,6 +208,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "broadbandhinet",
     default: false,
   },
+  lutra: {
+    id: "lutra",
+    youtube: "UCmyc8eVR3G9A7hjaHsLR6NQ",
+    twitter: "Lutra_rescute",
+    discord: "",
+    facebook: "RESCUTE119",
+    default: true,
+  },
   miamya: {
     id: "miamya",
     youtube: "UCIR0USMXU0r7N8spBJHNA7A",
@@ -228,6 +238,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "NyoroVanilla",
     discord: "",
     facebook: "104820211486861",
+    default: true,
+  },
+  obear: {
+    id: "obear",
+    youtube: "UCW5O-tjdwofBwfispeMSPfw",
+    twitter: "",
+    discord: "",
+    facebook: "",
     default: true,
   },
   pedko: {
@@ -420,9 +438,11 @@ export type BatchIds =
   | "kwakon"
   | "lapis"
   | "lumina"
+  | "lutra"
   | "miamya"
   | "miru"
   | "nyoro"
+  | "obear"
   | "pedko"
   | "proose"
   | "queenie"
@@ -467,9 +487,11 @@ export const batches: Record<BatchIds, Batch> = {
   "kwakon": null,
   "lapis": null,
   "lumina": null,
+  "lutra": null,
   "miamya": null,
   "miru": null,
   "nyoro": null,
+  "obear": null,
   "pedko": null,
   "proose": null,
   "queenie": null,
