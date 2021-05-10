@@ -13,10 +13,17 @@ export const getLocaleId = (): string => locale;
 
 export const getDateFnsLocale = (): Locale => dateFnsLocale;
 
+const supportedLanguages = ["en", "zh"];
+
 export function init(): Promise<void> {
-  const lang =
+  let lang =
     window.localStorage.getItem("lang") ||
     window.navigator.language.slice(0, 2);
+
+  // fallback to default language
+  if (!supportedLanguages.includes(lang)) {
+    lang = "en";
+  }
 
   locale = lang;
 

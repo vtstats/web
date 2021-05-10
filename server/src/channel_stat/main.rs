@@ -8,16 +8,18 @@ mod utils;
 mod vtubers;
 
 use chrono::{DateTime, Utc};
-use sqlx::{Done, PgPool};
+use sqlx::PgPool;
 use std::env;
 use tracing::instrument;
 
 use crate::error::Result;
-use crate::requests::Channel;
+use crate::requests::{Channel, RequestHub};
 use crate::vtubers::{VTuber, VTUBERS};
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     utils::init_logger();
 
     let _guard = utils::init_tracing("channel_stat", false);
@@ -30,7 +32,7 @@ async fn main() -> Result<()> {
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
-    let client = reqwest::Client::new();
+    let hub = RequestHub::new();
 
     let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
@@ -41,7 +43,7 @@ async fn real_main() -> Result<()> {
         .filter_map(|v| v.bilibili)
         .collect::<Vec<_>>();
 
-    let channels = requests::bilibili_channels(&client, ids).await?;
+    let channels = hub.bilibili_channels(ids).await?;
 
     let channels = channels
         .into_iter()
@@ -59,7 +61,7 @@ async fn real_main() -> Result<()> {
 
     let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
 
-    let channels = requests::youtube_channels(&client, ids).await?;
+    let channels = hub.youtube_channels(ids).await?;
 
     let channels = channels
         .into_iter()

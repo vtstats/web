@@ -1,13 +1,14 @@
 use chrono::{DateTime, Utc};
 use futures::future::TryFutureExt;
-use reqwest::{Client, Url};
+use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 use std::str::FromStr;
 use tracing::instrument;
 
+use super::RequestHub;
+use crate::error::Result;
 use crate::utils::json;
-use crate::{error::Result, utils};
 
 #[derive(Debug)]
 pub struct Stream {
@@ -22,7 +23,7 @@ pub struct Stream {
 }
 
 #[derive(Debug, sqlx::Type)]
-#[sqlx(rename = "stream_status", rename_all = "lowercase")]
+#[sqlx(type_name = "stream_status", rename_all = "lowercase")]
 pub enum StreamStatus {
     Scheduled,
     Live,
@@ -59,67 +60,70 @@ pub struct LiveStreamingDetails {
     pub concurrent_viewers: Option<String>,
 }
 
-#[instrument(name = "Fetch YouTube Streams", skip(client, ids))]
-pub async fn youtube_streams(client: &Client, ids: &[String]) -> Result<Vec<Stream>> {
-    let mut streams = Vec::with_capacity(ids.len());
+impl RequestHub {
+    #[instrument(name = "Fetch YouTube Streams", skip(self, ids))]
+    pub async fn youtube_streams(&self, ids: &[String]) -> Result<Vec<Stream>> {
+        let mut streams = Vec::with_capacity(ids.len());
 
-    // youtube limits 50 streams per request
-    for chunk in ids.chunks(50) {
-        let videos = youtube_videos_api(&client, &chunk.join(",")).await?;
+        // youtube limits 50 streams per request
+        for chunk in ids.chunks(50) {
+            let videos = self.youtube_videos_api(&chunk.join(",")).await?;
 
-        streams.extend(videos.into_iter().filter_map(|video| {
-            match (video.snippet, video.live_streaming_details) {
-                (Some(snippet), Some(detail)) => Some(Stream {
-                    id: video.id,
-                    title: snippet.title,
-                    channel_id: snippet.channel_id,
-                    status: if detail.actual_end_time.is_some() {
-                        StreamStatus::Ended
-                    } else if detail.actual_start_time.is_some() {
-                        StreamStatus::Live
-                    } else {
-                        StreamStatus::Scheduled
-                    },
-                    start_time: detail.actual_start_time,
-                    end_time: detail.actual_end_time,
-                    schedule_time: detail.scheduled_start_time,
-                    viewers: detail
-                        .concurrent_viewers
-                        .and_then(|v| i32::from_str(&v).ok()),
-                }),
-                _ => None,
-            }
-        }));
+            streams.extend(videos.into_iter().filter_map(|video| {
+                match (video.snippet, video.live_streaming_details) {
+                    (Some(snippet), Some(detail)) => Some(Stream {
+                        id: video.id,
+                        title: snippet.title,
+                        channel_id: snippet.channel_id,
+                        status: if detail.actual_end_time.is_some() {
+                            StreamStatus::Ended
+                        } else if detail.actual_start_time.is_some() {
+                            StreamStatus::Live
+                        } else {
+                            StreamStatus::Scheduled
+                        },
+                        start_time: detail.actual_start_time,
+                        end_time: detail.actual_end_time,
+                        schedule_time: detail.scheduled_start_time,
+                        viewers: detail
+                            .concurrent_viewers
+                            .and_then(|v| i32::from_str(&v).ok()),
+                    }),
+                    _ => None,
+                }
+            }));
+        }
+
+        Ok(streams)
     }
 
-    Ok(streams)
-}
-
-#[instrument(
-    name = "Call YouTube vidoes API",
-    skip(client),
-    fields(http.method = "GET", id),
-)]
-async fn youtube_videos_api(client: &Client, id: &str) -> Result<Vec<Video>> {
-    let url = Url::parse_with_params(
-        "https://www.googleapis.com/youtube/v3/videos",
-        &[
-            ("part", "id,liveStreamingDetails,snippet"),
-            ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers),snippet(title,channelId))"),
-            ("maxResults", "50"),
-            ("key", utils::youtube_api_key()),
-            ("id", id),
+    #[instrument(
+        name = "Call YouTube vidoes API",
+        skip(self),
+        fields(http.method = "GET", id),
+    )]
+    async fn youtube_videos_api(&self, id: &str) -> Result<Vec<Video>> {
+        let url = Url::parse_with_params(
+            "https://www.googleapis.com/youtube/v3/videos",
+            &[
+                ("part", "id,liveStreamingDetails,snippet"),
+                ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers),snippet(title,channelId))"),
+                ("maxResults", "50"),
+                ("key", self.youtube_api_key()),
+                ("id", id),
             ],
         )?;
 
-    let res = client
-        .get(url.clone())
-        .send()
-        .and_then(|res| res.json::<VideosListResponse>())
-        .map_err(|err| (url, err))
-        .await?;
+        let res = self
+            .client
+            .get(url.clone())
+            .send()
+            .and_then(|res| res.json::<VideosListResponse>())
+            .map_err(|err| (url, err))
+            .await?;
 
-    tracing::info!(videos = json(&res.items));
+        tracing::info!(videos = json(&res.items));
 
-    Ok(res.items)
+        Ok(res.items)
+    }
 }

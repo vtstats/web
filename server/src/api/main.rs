@@ -16,7 +16,6 @@ mod vtubers;
 #[cfg(test)]
 mod tests;
 
-use reqwest::Client;
 use sqlx::PgPool;
 use std::env;
 use std::net::SocketAddr;
@@ -24,16 +23,19 @@ use tracing::field::Empty;
 use warp::Filter;
 
 use crate::error::Result;
+use crate::requests::RequestHub;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    dotenv::dotenv().expect("Failed to load .env file");
+
     utils::init_logger();
 
     utils::init_tracing("api", true);
 
-    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
+    let hub = RequestHub::new();
 
-    let client = Client::new();
+    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
 
     let cors = warp::cors().allow_any_origin();
 
@@ -42,7 +44,7 @@ async fn main() -> Result<()> {
             v4::api(pool.clone())
                 .or(v3::api(pool.clone()))
                 .or(sitemap::sitemap(pool.clone()))
-                .or(pubsub::pubsub(pool, client)),
+                .or(pubsub::pubsub(pool, hub)),
         )
         .with(cors)
         .recover(reject::handle_rejection)

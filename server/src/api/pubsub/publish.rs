@@ -1,20 +1,18 @@
-use reqwest::Client;
 use roxmltree::Document;
-use sha2::{Digest, Sha256};
 use sqlx::PgPool;
 use tracing::instrument;
 use warp::{http::StatusCode, Rejection};
 
 use crate::error::Error;
-use crate::requests::{upload_file, youtube_streams, youtube_thumbnail, Stream};
+use crate::requests::{RequestHub, Stream};
 use crate::vtubers::VTuber;
 
 pub async fn publish_content(
     body: String,
     pool: PgPool,
-    client: Client,
+    hub: RequestHub,
 ) -> Result<StatusCode, Rejection> {
-    tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str(),);
+    tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str());
 
     let doc = match Document::parse(&body) {
         Ok(doc) => doc,
@@ -27,16 +25,14 @@ pub async fn publish_content(
     if let Some((vtuber_id, video_id)) = parse_modification(&doc) {
         tracing::info!(action = "Update video", vtuber_id, video_id);
 
-        let streams = youtube_streams(&client, &[video_id.to_string()]).await?;
+        let streams = hub.youtube_streams(&[video_id.to_string()]).await?;
 
         if streams.is_empty() {
             tracing::error!(err.msg = "stream not found");
             return Ok(StatusCode::BAD_REQUEST);
         }
 
-        let thumbnail_url = upload_thumbnail(&streams[0].id, &client)
-            .await
-            .map(|filename| format!("https://taiwanv.linnil1.me/thumbnail/{}", filename));
+        let thumbnail_url = hub.upload_thumbnail(&streams[0].id).await;
 
         update_youtube_stream(&streams[0], vtuber_id, thumbnail_url, &pool).await?;
 
@@ -88,28 +84,6 @@ pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
     let vtuber_id = VTuber::find_by_youtube_channel_id(channel_id).map(|v| v.id)?;
 
     Some((stream_id, vtuber_id))
-}
-
-async fn upload_thumbnail(stream_id: &str, client: &Client) -> Option<String> {
-    let data = match youtube_thumbnail(stream_id, &client).await {
-        Ok(x) => x,
-        Err(e) => {
-            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
-            return None;
-        }
-    };
-
-    let content_sha256 = Sha256::digest(data.as_ref());
-
-    let filename = format!("{}.{}.jpg", stream_id, hex::encode(content_sha256));
-
-    match upload_file(&filename, data, "image/jpg", &client).await {
-        Ok(_) => Some(filename),
-        Err(e) => {
-            tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
-            None
-        }
-    }
 }
 
 #[instrument(
