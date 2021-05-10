@@ -42,13 +42,14 @@ const translations: Translations = {
   monthlyVideo: "月增短片",
   monthlyLive: "月增直播",
   monthlyDuration: "月影片時數",
+  selectDate: "選擇日期",
 
   // VTubers
   amamiyayume: "雨宮夢 YUME Channel",
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
   ayamizuka: "綾瑞香 AyaMizuKa",
-  chilla: "祈菈‧貝希毛絲 ch.Narrator",
+  chilla: "祈菈‧貝希毛絲 ch.Narrator/STORIA",
   choco: "邱可 Choco",
   fengxu: "風絮 FengXu Ch.",
   fifteen: "十五號 No.Fifteen",
@@ -63,9 +64,11 @@ const translations: Translations = {
   kwakon: "小空 KITSUNEKON",
   lapis: "綾賢ラピス Ryoken Lapis",
   lumina: "Lumina",
+  lutra: "露恰露恰 Lutralutra Ch.",
   miamya: "瀰婭ミア MiaMya",
   miru: "杏仁ミル Annin Miru",
   nyoro: "香草奈若 Vanilla Nyoro",
+  obear: "歐貝爾 Obear Ch.",
   pedko: "平平子 Padko",
   proose: "布魯斯頻道 Proose ch.",
   queenie: "祈霓722 Ch.",
@@ -89,20 +92,6 @@ const translations: Translations = {
   zasasa: "夏莎莎 Zasasa",
 
   // Batches
-  STORIA: "STORIA遊戲工作室",
-  acclaim: "Acclaim 事務所",
-  acg: "ACG稽查員 ACGInspector",
-  blossomlive: "BlossomLIVE",
-  changing: "春魚工作室",
-  cyberlive: "CyberLive",
-  fourvirtual: "4virtual",
-  hinet: "HiNet 光世代",
-  kolhunter: "網紅獵人 KOL Hunter",
-  moegenki: "Moegenki 萌元氣",
-  queenie722: "七二二軍團 722Queenie",
-  renewlive: "RenewLive",
-  yahoo: "Yahoo",
-  yenz: "艷世設計 YENZdesign",
 };
 
 export default translations;

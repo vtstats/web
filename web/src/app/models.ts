@@ -149,8 +149,3 @@ export type StreamList = {
   streams: Array<Stream>;
   updatedAt: number;
 };
-
-export type StreamListLoadMoreOption = {
-  refresh: boolean;
-  last?: Stream;
-};

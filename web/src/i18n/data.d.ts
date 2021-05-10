@@ -38,6 +38,7 @@ export type MessageIds =
   | "monthlyVideo"
   | "monthlyLive"
   | "monthlyDuration"
+  | "selectDate"
   | VTuberIds
   | BatchIds;
 

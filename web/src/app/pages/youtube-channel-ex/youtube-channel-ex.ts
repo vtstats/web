@@ -14,6 +14,10 @@ import { ChannelEX } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
 import { translate } from "src/i18n";
 
+type Option = {
+  ids?: string[];
+};
+
 @Component({
   selector: "hs-youtube-channel-ex",
   templateUrl: "youtube-channel-ex.html",
@@ -33,20 +37,22 @@ export class YoutubeChannelEX implements OnInit, OnDestroy {
   updatedAt: number;
   dataSource: Array<ChannelEX> = [];
 
-  load$ = new Subject<boolean>();
+  option$ = new Subject<Option>();
 
   ngOnInit() {
     this.title.setTitle(`${translate("youtubeChannelEX")} | TaiwanVuber`);
 
-    this.load$
+    this.option$
       .pipe(
-        startWith(true),
+        startWith({ ids: [] }),
         tap(() => {
           this.loading = true;
           this.cdr.markForCheck();
         }),
-        switchMap(() =>
-          this.api.youtubeChannelsEX({ ids: [...this.config.vtuber] })
+        switchMap(({ ids }) =>
+          this.api.youtubeChannelsEX({
+            ids: ids.length === 0 ? [...this.config.vtuber] : ids,
+          })
         )
       )
       .subscribe({
@@ -59,7 +65,15 @@ export class YoutubeChannelEX implements OnInit, OnDestroy {
       });
   }
 
+  onClear() {
+    this.option$.next({ ids: [] });
+  }
+
+  onVTuberChange(ids: Set<string>) {
+    this.option$.next({ ids: [...ids] });
+  }
+
   ngOnDestroy() {
-    this.load$.complete();
+    this.option$.complete();
   }
 }

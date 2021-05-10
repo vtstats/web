@@ -28,9 +28,11 @@ export type VTuberIds =
   | "kwakon"
   | "lapis"
   | "lumina"
+  | "lutra"
   | "miamya"
   | "miru"
   | "nyoro"
+  | "obear"
   | "pedko"
   | "proose"
   | "queenie"
@@ -206,6 +208,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "broadbandhinet",
     default: false,
   },
+  lutra: {
+    id: "lutra",
+    youtube: "UCmyc8eVR3G9A7hjaHsLR6NQ",
+    twitter: "Lutra_rescute",
+    discord: "",
+    facebook: "RESCUTE119",
+    default: true,
+  },
   miamya: {
     id: "miamya",
     youtube: "UCIR0USMXU0r7N8spBJHNA7A",
@@ -228,6 +238,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "NyoroVanilla",
     discord: "",
     facebook: "104820211486861",
+    default: true,
+  },
+  obear: {
+    id: "obear",
+    youtube: "UCW5O-tjdwofBwfispeMSPfw",
+    twitter: "",
+    discord: "",
+    facebook: "",
     default: true,
   },
   pedko: {
@@ -401,80 +419,98 @@ export const vtubers: Record<VTuberIds, VTuber> = {
 };
 
 export type BatchIds =
-  | "STORIA"
-  | "acclaim"
-  | "acg"
   | "amamiyayume"
   | "aoi"
   | "asa"
   | "ayamizuka"
-  | "blossomlive"
-  | "changing"
-  | "cyberlive"
+  | "chilla"
+  | "choco"
   | "fengxu"
-  | "fourvirtual"
+  | "fifteen"
   | "fujinokuma"
   | "haruka"
   | "healingluka"
-  | "hinet"
+  | "himemiyayuka"
+  | "hoonie"
+  | "ikusen"
   | "kaina"
-  | "kolhunter"
   | "kurita"
   | "kwakon"
   | "lapis"
+  | "lumina"
+  | "lutra"
+  | "miamya"
   | "miru"
-  | "moegenki"
+  | "nyoro"
+  | "obear"
+  | "pedko"
   | "proose"
-  | "queenie722"
-  | "renewlive"
+  | "queenie"
+  | "rana"
+  | "rayer"
+  | "ruroro"
+  | "sakuranoruu"
+  | "sanmou"
   | "shaya"
   | "silverbell"
   | "soysaucexd"
+  | "sudayoruka"
+  | "tedobear"
+  | "tedobear2"
   | "tsmatch"
   | "twsiriya"
   | "ubye"
   | "usagi"
-  | "yahoo"
-  | "yenz"
-  | "yumemi";
+  | "yumemi"
+  | "yuna"
+  | "zasasa";
 
 type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
-  "STORIA": ["chilla"],
-  "acclaim": ["ikusen"],
-  "acg": ["choco", "rayer"],
   "amamiyayume": null,
   "aoi": null,
   "asa": null,
   "ayamizuka": null,
-  "blossomlive": ["sakuranoruu"],
-  "changing": ["fifteen", "pedko"],
-  "cyberlive": ["nyoro", "yuna"],
+  "chilla": null,
+  "choco": null,
   "fengxu": null,
-  "fourvirtual": ["sanmou", "tedobear", "tedobear2"],
+  "fifteen": null,
   "fujinokuma": null,
   "haruka": null,
   "healingluka": null,
-  "hinet": ["lumina"],
+  "himemiyayuka": null,
+  "hoonie": null,
+  "ikusen": null,
   "kaina": null,
-  "kolhunter": ["ruroro"],
   "kurita": null,
   "kwakon": null,
   "lapis": null,
+  "lumina": null,
+  "lutra": null,
+  "miamya": null,
   "miru": null,
-  "moegenki": ["himemiyayuka", "miamya"],
+  "nyoro": null,
+  "obear": null,
+  "pedko": null,
   "proose": null,
-  "queenie722": ["queenie", "zasasa"],
-  "renewlive": ["sudayoruka"],
+  "queenie": null,
+  "rana": null,
+  "rayer": null,
+  "ruroro": null,
+  "sakuranoruu": null,
+  "sanmou": null,
   "shaya": null,
   "silverbell": null,
   "soysaucexd": null,
+  "sudayoruka": null,
+  "tedobear": null,
+  "tedobear2": null,
   "tsmatch": null,
   "twsiriya": null,
   "ubye": null,
   "usagi": null,
-  "yahoo": ["hoonie"],
-  "yenz": ["rana"],
   "yumemi": null,
+  "yuna": null,
+  "zasasa": null,
 };

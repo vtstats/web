@@ -1,9 +1,9 @@
 [Unit]
-Description=HoloStats - Channel Stat
+Description=HoloStats - RSS
 
 [Service]
 Type=simple
-ExecStart=/root/server/target/release/channel_stat
+ExecStart=/root/server/target/release/rss_refresh
 Restart=on-failure
 RuntimeMaxSec=5
 

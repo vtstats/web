@@ -5,6 +5,7 @@ Description=HoloStats - Stream Stat
 Type=simple
 ExecStart=/root/server/target/release/stream_stat
 Restart=on-failure
+RuntimeMaxSec=5
 
 [Install]
 WantedBy=multi-user.target
