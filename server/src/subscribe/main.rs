@@ -45,7 +45,7 @@ async fn real_main() -> Result<()> {
 )]
 async fn subscribe(client: &Client, channel_id: &str) {
     const CALLBACK_URL: &str = concat!(
-        "https://taiwanv-dev.linnil1.me/api/pubsub/",
+        "https://taiwanv.linnil1.me/api/pubsub/",
         env!("PUBSUBHUBBUB_URL")
     );
 
