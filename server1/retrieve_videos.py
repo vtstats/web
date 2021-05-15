@@ -80,6 +80,7 @@ async def main():
             # TODO: add publishedAfter 4/16 4:00
             rep = youtube.search().list(part="snippet",
                                         channelId=vt['youtube'],
+                                        publishedAfter="2021-05-14T00:00:00Z",
                                         type="video",
                                         maxResults=50,
                                         pageToken=token).execute()
@@ -111,12 +112,12 @@ async def main():
             for video in data:
                 if 'updated_at' not in video:
                     n_skip += 1
-                    print("Skip", video)
+                    myprint("Skip", video)
                     continue
                 row = await conn.fetchrow("SELECT * FROM youtube_streams WHERE stream_id = $1", video['stream_id'])
                 if row:
                     n_skip += 1
-                    print("Skip", video)
+                    myprint("Skip", video)
                     continue
 
                 # stupid ways
@@ -124,7 +125,7 @@ async def main():
                 keys1 = " ,".join(keys)
                 keys2 = " ,".join([f"${i+1}" for i in range(len(keys))])
                 async with conn.transaction():
-                    print("Write", video)
+                    myprint("Write", video)
                     n_ok += 1
                     await conn.execute(f"INSERT INTO youtube_streams ({keys1}) VALUES ({keys2})", *values)
 

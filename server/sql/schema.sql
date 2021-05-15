@@ -14,7 +14,7 @@ CREATE TABLE youtube_channels (
 );
 
 CREATE TABLE youtube_channels_ex (
-  vtuber_id TEXT NOT NULL REFERENCES youtube_channels,
+  vtuber_id TEXT PRIMARY KEY NOT NULL REFERENCES youtube_channels,
   video_count INTEGER NOT NULL DEFAULT 0,
   weekly_video INTEGER NOT NULL DEFAULT 0,
   weekly_live INTEGER NOT NULL DEFAULT 0,

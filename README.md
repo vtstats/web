@@ -52,3 +52,10 @@ I retrieve the vtubers information from https://vt.cdein.cc
 * Add taiwan vtubers data
 * Some of HoloStat and poi are renamed
 * Some python utilities in `server1/`
+* A new statistic table of video counts and video length in specific time interval
+
+## Article
+Here is my article to record the work I have done to deploy the entire serivce.
+(Not included maintaing and new features).
+
+https://linnil1.medium.com/taiwanv-%E7%B6%B2%E7%AB%99%E6%9E%B6%E8%A8%AD-90c11098746d
