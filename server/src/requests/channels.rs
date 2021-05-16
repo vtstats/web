@@ -6,6 +6,7 @@ use std::str::FromStr;
 use tracing::instrument;
 
 use super::RequestHub;
+use crate::config::CONFIG;
 use crate::error::Result;
 use crate::utils::json;
 
@@ -159,7 +160,7 @@ impl RequestHub {
         let res = self
             .client
             .get(url.clone())
-            .header(COOKIE, &self.bilibili_cookie)
+            .header(COOKIE, &CONFIG.bilibili.cookie)
             .send()
             .and_then(|res| res.json::<BilibiliUpstatResponse>())
             .map_err(|err| (url, err))

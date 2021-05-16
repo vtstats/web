@@ -1,0 +1,318 @@
+# This is an example file for configuring HoloStats.
+# Line starts with `#` is comment and will be ignored when parsing.
+#
+[server]
+address = "127.0.0.1:4200"
+hostname = "example.com"
+
+[database]
+url = "postgres://holostats:holostats@localhost/holostats"
+
+[youtube]
+api_keys = ["youtube_api_key1", "youtube_api_key2", "youtube_api_key3"]
+pubsub_path = "XXXXXXX-XXXX-XXX-XXX-XXXX"
+
+[bilibili]
+cookie = "SESSDATA=YYYYYYYYYY"
+
+[s3]
+host = "s3.wasabisys.com"
+key_id = "XXX"
+access_key = "YYY"
+region = "us-east-1"
+public_url = "https://example.com/s3"
+
+[newrelic]
+api_key = "NRII-XXXXXXX-XXXXXXXXXX"
+
+[[vtubers]]
+id = "hololive"
+youtube = "UCJFZiqLMntJufDCHc6bQixg"
+bilibili = "286700005"
+
+[[vtubers]]
+id = "yagoo"
+youtube = "UCu2DMOGLeR_DSStCyeQpi5Q"
+
+[[vtubers]]
+id = "sora"
+youtube = "UCp6993wxpyDPHUpavwDFqgg"
+bilibili = "286179206"
+
+[[vtubers]]
+id = "roboco"
+youtube = "UCDqI2jOz0weumE8s7paEk6g"
+bilibili = "20813493"
+
+[[vtubers]]
+id = "miko"
+youtube = "UC-hM6YJuNYVAmUWxeIr9FeA"
+bilibili = "366690056"
+
+[[vtubers]]
+id = "suisei"
+youtube = "UC5CwaMl1eIgY8h02uZw7u8A"
+bilibili = "9034870"
+
+[[vtubers]]
+id = "fubuki"
+youtube = "UCdn5BQ06XqgXoAxIhbqw5Rg"
+bilibili = "332704117"
+
+[[vtubers]]
+id = "matsuri"
+youtube = "UCQ0UDLQCjY0rmuxCDE38FGg"
+bilibili = "336731767"
+
+[[vtubers]]
+id = "haato"
+youtube = "UC1CfXB_kRs3C-zaeTG3oGyg"
+bilibili = "339567211"
+
+[[vtubers]]
+id = "aki"
+youtube = "UCFTLzh12_nrtzqBPsTCqenA"
+bilibili = "389857131"
+
+[[vtubers]]
+id = "mel"
+youtube = "UCD8HOxPs4Xvsm8H0ZxXGiBw"
+bilibili = "389856447"
+
+[[vtubers]]
+id = "choco"
+youtube = "UC1suqwovbL1kzsoaZgFZLKg"
+bilibili = "389858754"
+
+[[vtubers]]
+id = "choco_alt"
+youtube = "UCp3tgHXw_HI0QMk1K8qh3gQ"
+
+[[vtubers]]
+id = "shion"
+youtube = "UCXTpFs_3PqI41qX2d9tL2Rw"
+bilibili = "389857640"
+
+[[vtubers]]
+id = "aqua"
+youtube = "UC1opHUrw8rvnsadT-iGp7Cg"
+bilibili = "375504219"
+
+[[vtubers]]
+id = "subaru"
+youtube = "UCvzGlP9oQwU--Y0r9id_jnA"
+bilibili = "389859190"
+
+[[vtubers]]
+id = "ayame"
+youtube = "UC7fk0CB07ly8oSl0aqKkqFg"
+bilibili = "389858027"
+
+[[vtubers]]
+id = "pekora"
+youtube = "UC1DCedRgGHBdm81E1llLhOQ"
+bilibili = "443305053"
+
+[[vtubers]]
+id = "rushia"
+youtube = "UCl_gCybOJRIgOXw6Qb4qJzQ"
+bilibili = "443300418"
+
+[[vtubers]]
+id = "flare"
+youtube = "UCvInZx9h3jC2JzsIzoOebWg"
+bilibili = "454737600"
+
+[[vtubers]]
+id = "marine"
+youtube = "UCCzUftO8KOVkV4wQG1vkUvg"
+bilibili = "454955503"
+
+[[vtubers]]
+id = "noel"
+youtube = "UCdyqAaZDKHXg4Ahi7VENThQ"
+bilibili = "454733056"
+
+[[vtubers]]
+id = "kanata"
+youtube = "UCZlDXzGoo7d44bwdNObFacg"
+bilibili = "491474048"
+
+[[vtubers]]
+id = "coco"
+youtube = "UCS9uQI-jC3DE0L4IpXyvr6w"
+bilibili = "491474049"
+
+[[vtubers]]
+id = "watame"
+youtube = "UCqm3BQLlJfvkTsX_hvm0UmA"
+bilibili = "491474050"
+
+[[vtubers]]
+id = "towa"
+youtube = "UC1uv2Oq6kNxgATlCiez59hw"
+bilibili = "491474051"
+
+[[vtubers]]
+id = "himemoriluna"
+youtube = "UCa9Y57gfeY0Zro_noHRVrnw"
+bilibili = "491474052"
+
+[[vtubers]]
+id = "lamy"
+youtube = "UCFKOVgVbGmX65RxO3EtH3iw"
+bilibili = "624252706"
+
+[[vtubers]]
+id = "nene"
+youtube = "UCAWSyEs_Io8MtpY3m-zqILA"
+bilibili = "624252709"
+
+[[vtubers]]
+id = "botan"
+youtube = "UCUKD-uaobj9jiqB-VXt71mA"
+bilibili = "624252710"
+
+[[vtubers]]
+id = "polka"
+youtube = "UCK9V2B22uJYu3N7eR_BT9QA"
+bilibili = "624252712"
+
+[[vtubers]]
+id = "mio"
+youtube = "UCp-5t9SrOQwXMU7iIjQfARg"
+bilibili = "389862071"
+
+[[vtubers]]
+id = "okayu"
+youtube = "UCvaTdHTWBGv3MKj3KVqJVCw"
+bilibili = "412135222"
+
+[[vtubers]]
+id = "korone"
+youtube = "UChAnqc_AY5_I3Px5dig3X1Q"
+bilibili = "412135619"
+
+[[vtubers]]
+id = "azki"
+youtube = "UC0TXe_LYZ4scaW2XMyi5_kw"
+bilibili = "389056211"
+
+[[vtubers]]
+id = "risu"
+youtube = "UCOyYb1c43VlX9rc_lT6NKQw"
+
+[[vtubers]]
+id = "moona"
+youtube = "UCP0BspO_AMEe3aQqqpo89Dg"
+
+[[vtubers]]
+id = "iofi"
+youtube = "UCAoy6rzhSf4ydcYjJw3WoVg"
+
+[[vtubers]]
+id = "ollie"
+youtube = "UCYz_5n-uDuChHtLo7My1HnQ"
+
+[[vtubers]]
+id = "melfissa"
+youtube = "UC727SQYUvx5pDDGQpTICNWg"
+
+[[vtubers]]
+id = "reine"
+youtube = "UChgTyjG-pdNvxxhdsXfHQ5Q"
+
+[[vtubers]]
+id = "amelia"
+youtube = "UCyl1z3jo3XHR1riLFKG5UAg"
+bilibili = "674600649"
+
+[[vtubers]]
+id = "calliope"
+youtube = "UCL_qhgtOy0dy1Agp8vkySQg"
+bilibili = "674600645"
+
+[[vtubers]]
+id = "gura"
+youtube = "UCoSrY_IQQVpmIRZ9Xf-y93g"
+bilibili = "674600648"
+
+[[vtubers]]
+id = "inanis"
+youtube = "UCMwGHR0BTZuLsmjY_NT5Pwg"
+bilibili = "674600647"
+
+[[vtubers]]
+id = "kiara"
+youtube = "UCHsx4Hqa-1ORjQTh9TYDhww"
+bilibili = "674600646"
+
+[[vtubers]]
+id = "miyabi"
+youtube = "UC6t3-_N8A6ME1JShZHHqOMw"
+
+[[vtubers]]
+id = "izuru"
+youtube = "UCZgOv3YDEs-ZnZWDYVwJdmA"
+
+[[vtubers]]
+id = "aruran"
+youtube = "UCKeAhJvy8zgXWbh9duVjIaQ"
+
+[[vtubers]]
+id = "rikka"
+youtube = "UC9mf_ZVpouoILRY9NUIaK-w"
+
+[[vtubers]]
+id = "astel"
+youtube = "UCNVEsYbiZjH5QLmGeSgTSzg"
+
+[[vtubers]]
+id = "temma"
+youtube = "UCGNI4MENvnsymYjKiZwv9eg"
+
+[[vtubers]]
+id = "roberu"
+youtube = "UCANDOlYTJT7N5jlRC3zfzVA"
+
+[[vtubers]]
+id = "shien"
+youtube = "UChSvpZYRPh0FvG4SJGSga3g"
+
+[[vtubers]]
+id = "oga"
+youtube = "UCwL7dgTxKo8Y4RFIKWaf8gA"
+
+[[vtubers]]
+id = "luna"
+youtube = "UCQYADFw7xEJ9oZSM5ZbqyBw"
+bilibili = "265224956"
+
+[[vtubers]]
+id = "nekomiya"
+youtube = "UCevD0wKzJFpfIkvHOiQsfLQ"
+bilibili = "291296062"
+
+[[vtubers]]
+id = "tamaki"
+youtube = "UC8NZiqKx6fsDT3AVcMiVFyA"
+bilibili = "12362451"
+
+[[vtubers]]
+id = "nana"
+youtube = "UCbfv8uuUXt3RSJGEwxny5Rw"
+bilibili = "386900246"
+
+[[vtubers]]
+id = "ui"
+youtube = "UCt30jJgChL8qeT9VPadidSw"
+bilibili = "2601367"
+
+[[vtubers]]
+id = "pochimaru"
+youtube = "UC22BVlBsZc6ta3Dqz75NU6Q"
+
+[[vtubers]]
+id = "ayamy"
+youtube = "UCr9p1ZjLKgfaoqNorY7PiWQ"
+bilibili = "521070071"

@@ -10,6 +10,7 @@ use std::str::FromStr;
 use tracing::instrument;
 
 use super::RequestHub;
+use crate::config::CONFIG;
 use crate::error::Result;
 
 impl RequestHub {
@@ -46,7 +47,7 @@ x-amz-date:{date}
 host;x-amz-content-sha256;x-amz-date
 {content_sha256}"#,
             filename = filename,
-            host = self.s3_host,
+            host = CONFIG.s3.host,
             date = date,
             content_sha256 = content_sha256
         );
@@ -58,7 +59,7 @@ host;x-amz-content-sha256;x-amz-date
         let scope = format!(
             "{today}/{region}/s3/aws4_request",
             today = today,
-            region = self.s3_region
+            region = CONFIG.s3.region
         );
 
         // StringToSign = Algorithm + \n + RequestDateTime + \n + CredentialScope + \n + HashedCanonicalRequest
@@ -79,12 +80,12 @@ host;x-amz-content-sha256;x-amz-date
         }
 
         // kSecret = your secret access key
-        let k_secret = format!("AWS4{}", self.s3_access_key);
+        let k_secret = format!("AWS4{}", CONFIG.s3.access_key);
         let k_secret = k_secret.as_bytes();
         // kDate = HMAC("AWS4" + kSecret, Date)
         let k_date = hmac_sha256!(k_secret, today.to_string().as_bytes());
         // kRegion = HMAC(kDate, Region)
-        let k_region = hmac_sha256!(k_date.as_slice(), self.s3_region.as_bytes());
+        let k_region = hmac_sha256!(k_date.as_slice(), CONFIG.s3.region.as_bytes());
         // kService = HMAC(kRegion, Service)
         let k_service = hmac_sha256!(k_region.as_slice(), b"s3");
         // kSigning = HMAC(kService, "aws4_request")
@@ -96,14 +97,14 @@ host;x-amz-content-sha256;x-amz-date
         // task4
         let authorization = format!(
             "AWS4-HMAC-SHA256 Credential={key_id}/{scope}, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature={signature}",
-            key_id = self.s3_key_id,
+            key_id = CONFIG.s3.key_id,
             scope = scope,
             signature = signature,
         );
 
         let s3_url = format!(
             "https://{host}/{filename}",
-            host = self.s3_host,
+            host = CONFIG.s3.host,
             filename = filename
         );
 

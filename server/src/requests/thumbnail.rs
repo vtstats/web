@@ -5,6 +5,7 @@ use sha2::{Digest, Sha256};
 use tracing::instrument;
 
 use super::RequestHub;
+use crate::config::CONFIG;
 use crate::error::Result;
 
 impl RequestHub {
@@ -23,7 +24,7 @@ impl RequestHub {
         let filename = format!("{}.{}.jpg", stream_id, hex::encode(content_sha256));
 
         match self.upload_file(&filename, data, "image/jpg").await {
-            Ok(_) => Some(format!("{}{}", self.s3_public_url, filename)),
+            Ok(_) => Some(format!("{}{}", CONFIG.s3.public_url, filename)),
             Err(e) => {
                 tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
                 None

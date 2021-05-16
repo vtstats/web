@@ -1,7 +1,6 @@
 use log::{LevelFilter, Log};
 use serde::Serialize;
 use serde_json::to_string;
-use std::env::var;
 use std::fmt::Debug;
 use tracing::dispatcher::DefaultGuard;
 use tracing::field::{display, DisplayValue};
@@ -10,6 +9,8 @@ use tracing_newrelic::{BlockingReporter, NewRelicLayer, WithEvent};
 use tracing_subscriber::layer::{Context, SubscriberExt};
 use tracing_subscriber::registry::LookupSpan;
 use tracing_subscriber::{Layer, Registry};
+
+use crate::config::CONFIG;
 
 struct TelemetryLogger;
 
@@ -46,12 +47,12 @@ where
 }
 
 pub fn init_tracing(target: &'static str, is_global: bool) -> Option<DefaultGuard> {
-    let filter = TargetFilter(target);
-
-    let reporter = match var("NEW_RELIC_API_KEY") {
-        Ok(api_key) => BlockingReporter::new(&api_key),
-        Err(_) => return None,
+    let reporter = match &CONFIG.newrelic.api_key {
+        Some(api_key) => BlockingReporter::new(&api_key),
+        _ => return None,
     };
+
+    let filter = TargetFilter(target);
 
     let layer = NewRelicLayer::new(reporter).with_event(WithEvent::Flatten);
 

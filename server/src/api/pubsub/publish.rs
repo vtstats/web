@@ -3,9 +3,9 @@ use sqlx::PgPool;
 use tracing::instrument;
 use warp::{http::StatusCode, Rejection};
 
+use crate::config::CONFIG;
 use crate::error::Error;
 use crate::requests::{RequestHub, Stream};
-use crate::vtubers::VTuber;
 
 pub async fn publish_content(
     body: String,
@@ -63,9 +63,9 @@ pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
         .find(|n| n.tag_name().name() == "channelId")
         .and_then(|n| n.text())?;
 
-    let vtuber_id = VTuber::find_by_youtube_channel_id(channel_id).map(|v| v.id)?;
+    let vtuber = CONFIG.find_by_youtube_channel_id(channel_id)?;
 
-    Some((vtuber_id, video_id))
+    Some((&vtuber.id, video_id))
 }
 
 pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
@@ -81,9 +81,9 @@ pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
         .and_then(|n| n.text())
         .and_then(|n| n.get("https://www.youtube.com/channel/".len()..))?;
 
-    let vtuber_id = VTuber::find_by_youtube_channel_id(channel_id).map(|v| v.id)?;
+    let vtuber = CONFIG.find_by_youtube_channel_id(channel_id)?;
 
-    Some((stream_id, vtuber_id))
+    Some((stream_id, &vtuber.id))
 }
 
 #[instrument(

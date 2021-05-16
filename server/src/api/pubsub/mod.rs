@@ -1,5 +1,4 @@
 use sqlx::PgPool;
-use std::env::var;
 use warp::Filter;
 
 pub mod publish;
@@ -8,6 +7,7 @@ pub mod verify;
 use publish::publish_content;
 use verify::verify_intent;
 
+use crate::config::CONFIG;
 use crate::filters::{string_body, with_db};
 use crate::requests::RequestHub;
 
@@ -16,7 +16,7 @@ pub fn pubsub(
     hub: RequestHub,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     warp::path::path("pubsub")
-        .and(warp::path::path(var("PUBSUB_PATH").unwrap()))
+        .and(warp::path::path(&CONFIG.youtube.pubsub_path))
         .and(warp::path::end())
         .and(pubsub_verify().or(pubsub_publish(pool, hub)))
 }

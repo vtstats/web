@@ -1,23 +1,21 @@
+#[path = "../config.rs"]
+mod config;
 #[path = "../error.rs"]
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
 #[path = "../utils.rs"]
 mod utils;
-#[path = "../vtubers.rs"]
-mod vtubers;
 
 use futures::{stream, StreamExt};
 use tracing::instrument;
 
+use crate::config::CONFIG;
 use crate::error::Result;
 use crate::requests::RequestHub;
-use crate::vtubers::VTUBERS;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     utils::init_logger();
 
     let _guard = utils::init_tracing("subscribe", false);
@@ -32,15 +30,16 @@ async fn main() -> Result<()> {
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 
-    let ids = VTUBERS.iter().filter_map(|v| v.youtube).collect::<Vec<_>>();
+    let subscribe_stream = CONFIG
+        .vtubers
+        .iter()
+        .filter_map(|v| v.youtube.as_ref())
+        .map(|channel_id| hub.subscribe_youtube_pubsub(&channel_id));
 
-    stream::iter(
-        ids.iter()
-            .map(|channel_id| hub.subscribe_youtube_pubsub(&channel_id)),
-    )
-    .buffer_unordered(10)
-    .collect::<Vec<()>>()
-    .await;
+    stream::iter(subscribe_stream)
+        .buffer_unordered(10)
+        .collect::<Vec<()>>()
+        .await;
 
     Ok(())
 }
