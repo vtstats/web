@@ -1,3 +1,4 @@
+insert into youtube_channels (vtuber_id) values ('ahiruibi');
 insert into youtube_channels (vtuber_id) values ('amamiyayume');
 insert into youtube_channels (vtuber_id) values ('aoi');
 insert into youtube_channels (vtuber_id) values ('asa');
@@ -36,6 +37,7 @@ insert into youtube_channels (vtuber_id) values ('soysaucexd');
 insert into youtube_channels (vtuber_id) values ('sudayoruka');
 insert into youtube_channels (vtuber_id) values ('tedobear');
 insert into youtube_channels (vtuber_id) values ('tedobear2');
+insert into youtube_channels (vtuber_id) values ('tendododo1129');
 insert into youtube_channels (vtuber_id) values ('tsmatch');
 insert into youtube_channels (vtuber_id) values ('twsiriya');
 insert into youtube_channels (vtuber_id) values ('ubye');
@@ -44,6 +46,7 @@ insert into youtube_channels (vtuber_id) values ('yumemi');
 insert into youtube_channels (vtuber_id) values ('yuna');
 insert into youtube_channels (vtuber_id) values ('zasasa');
 
+insert into youtube_channels_ex (vtuber_id) values ('ahiruibi');
 insert into youtube_channels_ex (vtuber_id) values ('amamiyayume');
 insert into youtube_channels_ex (vtuber_id) values ('aoi');
 insert into youtube_channels_ex (vtuber_id) values ('asa');
@@ -82,6 +85,7 @@ insert into youtube_channels_ex (vtuber_id) values ('soysaucexd');
 insert into youtube_channels_ex (vtuber_id) values ('sudayoruka');
 insert into youtube_channels_ex (vtuber_id) values ('tedobear');
 insert into youtube_channels_ex (vtuber_id) values ('tedobear2');
+insert into youtube_channels_ex (vtuber_id) values ('tendododo1129');
 insert into youtube_channels_ex (vtuber_id) values ('tsmatch');
 insert into youtube_channels_ex (vtuber_id) values ('twsiriya');
 insert into youtube_channels_ex (vtuber_id) values ('ubye');

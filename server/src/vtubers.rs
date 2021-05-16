@@ -29,6 +29,7 @@ macro_rules! vtubers {
 }
 
 vtubers! {
+    ahiruibi       , Some("UCH9Yw2PyGW0AtGltOuVcq_A"), None,
     amamiyayume    , Some("UClQot-XYs9KQ2fmItSz4IjA"), None,
     aoi            , Some("UCLZyaaUwBw2ZvwLt6uY3_bQ"), None,
     asa            , Some("UCxm2qC7Z7cjDAd6yPyl-sKQ"), None,
@@ -67,6 +68,7 @@ vtubers! {
     sudayoruka     , Some("UCuy-kZJ7HWwUU-eKv0zUZFQ"), None,
     tedobear       , Some("UCqy310kNTAokme7plaXTwQw"), None,
     tedobear2      , Some("UCzHbCUKXn65icryUIgn1ETA"), None,
+    tendododo1129  , Some("UC7P5GH9nvcjP120r62h3v3g"), None,
     tsmatch        , Some("UCXzEDlhV7wJuMY4c-Fvz7uQ"), None,
     twsiriya       , Some("UCOpI60ey2pDJnmV2T351AOg"), None,
     ubye           , Some("UC-o-1qjKkMLq-ZFxXIzOUBQ"), None,

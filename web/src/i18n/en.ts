@@ -45,6 +45,7 @@ const translations: Translations = {
   selectDate: "Select Date",
 
   // VTubers
+  ahiruibi: "鴨鴨伊比 Ahiru Ibi",
   amamiyayume: "雨宮夢 YUME Channel",
   aoi: "夏日葵",
   asa: "Asa Ifrit Ch.",
@@ -83,6 +84,7 @@ const translations: Translations = {
   sudayoruka: "須多夜花·ヨルカ ch.",
   tedobear: "虛擬熊頭 TedoBear",
   tedobear2: "泰多貝亞 TedoBear",
+  tendododo1129: "天堂密室 Tendo ch.",
   tsmatch: "火柴 TSMATCH",
   twsiriya: "希莉亞 Siriya",
   ubye: "悠白 Ubye",

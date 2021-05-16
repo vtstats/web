@@ -9,6 +9,7 @@ type VTuber = {
 };
 
 export type VTuberIds =
+  | "ahiruibi"
   | "amamiyayume"
   | "aoi"
   | "asa"
@@ -47,6 +48,7 @@ export type VTuberIds =
   | "sudayoruka"
   | "tedobear"
   | "tedobear2"
+  | "tendododo1129"
   | "tsmatch"
   | "twsiriya"
   | "ubye"
@@ -56,6 +58,14 @@ export type VTuberIds =
   | "zasasa";
 
 export const vtubers: Record<VTuberIds, VTuber> = {
+  ahiruibi: {
+    id: "ahiruibi",
+    youtube: "UCH9Yw2PyGW0AtGltOuVcq_A",
+    twitter: "Ahiru_Ibi",
+    discord: "",
+    facebook: "Ahiru.Ibi",
+    default: true,
+  },
   amamiyayume: {
     id: "amamiyayume",
     youtube: "UClQot-XYs9KQ2fmItSz4IjA",
@@ -360,6 +370,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "",
     default: true,
   },
+  tendododo1129: {
+    id: "tendododo1129",
+    youtube: "UC7P5GH9nvcjP120r62h3v3g",
+    twitter: "Tendododo1129",
+    discord: "",
+    facebook: "Tendo1129",
+    default: true,
+  },
   tsmatch: {
     id: "tsmatch",
     youtube: "UCXzEDlhV7wJuMY4c-Fvz7uQ",
@@ -419,6 +437,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
 };
 
 export type BatchIds =
+  | "ahiruibi"
   | "amamiyayume"
   | "aoi"
   | "asa"
@@ -457,6 +476,7 @@ export type BatchIds =
   | "sudayoruka"
   | "tedobear"
   | "tedobear2"
+  | "tendododo1129"
   | "tsmatch"
   | "twsiriya"
   | "ubye"
@@ -468,6 +488,7 @@ export type BatchIds =
 type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
+  "ahiruibi": null,
   "amamiyayume": null,
   "aoi": null,
   "asa": null,
@@ -506,6 +527,7 @@ export const batches: Record<BatchIds, Batch> = {
   "sudayoruka": null,
   "tedobear": null,
   "tedobear2": null,
+  "tendododo1129": null,
   "tsmatch": null,
   "twsiriya": null,
   "ubye": null,
