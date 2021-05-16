@@ -60,6 +60,7 @@ export type VTuberIds =
   | "ui"
   | "pochimaru"
   | "ayamy"
+  | "nabi"
   | "miyabi"
   | "izuru"
   | "aruran"
@@ -430,6 +431,13 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     bilibili: 521070071,
     default: true,
   },
+  nabi: {
+    id: "nabi",
+    twitter: "nab0i",
+    youtube: "UCzKkwB84Y0ql0EvyOWRSkEw",
+    bilibili: null,
+    default: true,
+  },
   miyabi: {
     id: "miyabi",
     twitter: "miyabihanasaki",
@@ -515,5 +523,14 @@ export const batches: Record<BatchIds, Batch> = {
   holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
-  others: ["luna", "nekomiya", "tamaki", "nana", "ui", "ayamy", "pochimaru"],
+  others: [
+    "luna",
+    "nekomiya",
+    "tamaki",
+    "nana",
+    "ui",
+    "ayamy",
+    "pochimaru",
+    "nabi",
+  ],
 };
