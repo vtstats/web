@@ -2,19 +2,33 @@
 # Line starts with `#` is comment and will be ignored when parsing.
 #
 [server]
-address = "127.0.0.1:4200"
+address = "127.0.0.1:2434"
 hostname = "example.com"
 
+# Database Configuration
+# HoloStats only supports PostgreSQL
 [database]
 url = "postgres://holostats:holostats@localhost/holostats"
 
+# YouTube Crawling Configuration
 [youtube]
+# YouTube API keys
 api_keys = ["youtube_api_key1", "youtube_api_key2", "youtube_api_key3"]
+# URL path for receving pubsub from YouTube
+#
+# The actual url will be "https://${hostname}/api/pubsub/${pubsub_path}"
 pubsub_path = "XXXXXXX-XXXX-XXX-XXX-XXXX"
 
+# Bilibili Crawling Configuration
 [bilibili]
+# Bilibili account cookie
+# Certain api requires authorization
 cookie = "SESSDATA=YYYYYYYYYY"
 
+# S3 Configuration
+# HoloStats uses s3 for storing stream thumbnailss
+#
+# You can opt out this feature in the future
 [s3]
 host = "s3.wasabisys.com"
 key_id = "XXX"
@@ -22,6 +36,10 @@ access_key = "YYY"
 region = "us-east-1"
 public_url = "https://example.com/s3"
 
+# New Relic Configuration
+# HoloStats uses New Relic for collecting metrics data
+#
+# You can opt out by removing and commenting out the whole section
 [newrelic]
 api_key = "NRII-XXXXXXX-XXXXXXXXXX"
 
@@ -316,3 +334,7 @@ youtube = "UC22BVlBsZc6ta3Dqz75NU6Q"
 id = "ayamy"
 youtube = "UCr9p1ZjLKgfaoqNorY7PiWQ"
 bilibili = "521070071"
+
+[[vtubers]]
+id = "nabi"
+youtube = "UCzKkwB84Y0ql0EvyOWRSkEw"
