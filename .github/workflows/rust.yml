@@ -60,3 +60,6 @@ jobs:
         run: |
           psql postgres://holostats:holostats@localhost/holostats -f sql/test.sql
           cargo test
+        env:
+          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
+
