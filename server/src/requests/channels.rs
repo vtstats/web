@@ -32,6 +32,9 @@ struct YouTubeChannel {
 #[serde(rename_all = "camelCase")]
 struct YouTubeChannelStatistics {
     view_count: String,
+    // according to https://github.com/PoiScript/HoloStats/issues/582
+    // subscriber_count may be empty in some cases
+    #[serde(default)]
     subscriber_count: String,
 }
 
@@ -71,8 +74,9 @@ impl RequestHub {
 
             res.extend(channels.into_iter().map(|channel| Channel {
                 id: channel.id,
-                view_count: i32::from_str(&channel.statistics.view_count).unwrap(),
-                subscriber_count: i32::from_str(&channel.statistics.subscriber_count).unwrap(),
+                view_count: i32::from_str(&channel.statistics.view_count).unwrap_or_default(),
+                subscriber_count:
+                    i32::from_str(&channel.statistics.subscriber_count).unwrap_or_default(),
             }));
         }
 
