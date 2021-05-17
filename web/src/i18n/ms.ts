@@ -87,6 +87,7 @@ const translations: Translations = {
   nekomiya: "Nekomiya Hinata",
   tamaki: "Inuyama Tamaki",
   ayamy: "Ayamy",
+  nabi: "Aoi Nabi",
   pochimaru: "Pochimaru",
   nana: "Kagura Nana",
   ui: "Shigure Ui",

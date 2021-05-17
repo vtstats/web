@@ -86,6 +86,7 @@ const translations: Translations = {
   nekomiya: "猫宮ひなた",
   tamaki: "犬山たまき",
   ayamy: "あやみ",
+  nabi: "蒼彩なび",
   pochimaru: "ぽちまる",
   nana: "カグラナナ",
   ui: "しぐれうい",
