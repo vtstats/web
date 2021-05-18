@@ -3,9 +3,9 @@ use std::fmt::Write;
 use sqlx::PgPool;
 use warp::{Filter, Rejection};
 
+use crate::config::CONFIG;
 use crate::error::Error;
 use crate::filters::with_db;
-use crate::vtubers::VTUBERS;
 
 const PAGES: &[&str] = &[
     "/youtube-channel",
@@ -24,27 +24,25 @@ async fn sitemap_get(pool: PgPool) -> Result<impl warp::Reply, Rejection> {
         .await
         .map_err(Error::Database)?;
 
-    let mut res = String::with_capacity(
-        "https://taiwanv.linnil1.me/stream/xxxxxxxxxxx".len() * streams.len(),
-    );
+    let url_len = "https://".len() + CONFIG.server.hostname.len() + "/stream/xxxxxxxxxxx".len();
+
+    let mut res = String::with_capacity(url_len * streams.len());
 
     // TODO: error handling
     for page in PAGES {
-        let _ = res.write_str("https://taiwanv.linnil1.me");
-        let _ = res.write_str(page);
-        let _ = res.write_str("\n");
+        let _ = writeln!(res, "https://{}{}", CONFIG.server.hostname, page);
     }
 
-    for vtb in VTUBERS {
-        let _ = res.write_str("https://taiwanv.linnil1.me/vtuber/");
-        let _ = res.write_str(vtb.id);
-        let _ = res.write_str("\n");
+    for vtb in &CONFIG.vtubers {
+        let _ = writeln!(res, "https://{}/vtuber/{}", CONFIG.server.hostname, vtb.id);
     }
 
     for stream in streams {
-        let _ = res.write_str("https://taiwanv.linnil1.me/stream/");
-        let _ = res.write_str(&stream.stream_id);
-        let _ = res.write_str("\n");
+        let _ = writeln!(
+            res,
+            "https://{}/stream/{}",
+            CONFIG.server.hostname, &stream.stream_id
+        );
     }
 
     Ok(res)

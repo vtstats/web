@@ -1,24 +1,22 @@
+#[path = "../config.rs"]
+mod config;
 #[path = "../error.rs"]
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
 #[path = "../utils.rs"]
 mod utils;
-#[path = "../vtubers.rs"]
-mod vtubers;
 
 use chrono::{DateTime, Utc};
 use sqlx::PgPool;
-use std::env;
 use tracing::instrument;
 
+use crate::config::CONFIG;
 use crate::error::Result;
 use crate::requests::{RequestHub, Stream};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     utils::init_logger();
 
     let _guard = utils::init_tracing("stream_stat", false);
@@ -33,7 +31,7 @@ async fn main() -> Result<()> {
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 
-    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
+    let pool = PgPool::connect(&CONFIG.database.url).await?;
 
     let ids = select_interest_streams(&pool).await?;
 

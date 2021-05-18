@@ -79,7 +79,7 @@ def download_thumbnail(vtubers, rewrite=False):
 
 def render_vtuber(vtubers, batches):
     """ write the files """
-    render("server/src/vtubers.rs", vtubers)
+    render("server/holostats.toml", vtubers)
     render("server/sql/initial.sql", vtubers)
     render("web/vtubers.ts", vtubers, batches)
     render("web/src/i18n/zh.ts", vtubers, batches, trailing=True)

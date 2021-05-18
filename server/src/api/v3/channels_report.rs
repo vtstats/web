@@ -6,8 +6,8 @@ use serde::{
 use sqlx::PgPool;
 use warp::{reply::Json, Rejection};
 
+use crate::config::CONFIG;
 use crate::error::Error;
-use crate::vtubers::VTUBERS;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -89,7 +89,7 @@ pub async fn channels_report(
     let mut reports = vec![];
 
     for id in query.ids.split(',') {
-        let vtb = match VTUBERS.iter().find(|v| v.id == id) {
+        let vtb = match CONFIG.vtubers.iter().find(|v| v.id == id) {
             Some(vtb) => vtb,
             _ => continue,
         };

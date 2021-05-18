@@ -1,25 +1,24 @@
+#[path = "../config.rs"]
+mod config;
 #[path = "../error.rs"]
 mod error;
 #[path = "../requests/mod.rs"]
 mod requests;
 #[path = "../utils.rs"]
 mod utils;
-#[path = "../vtubers.rs"]
-mod vtubers;
 
+use chrono::Utc;
+use futures::{stream, StreamExt, TryStreamExt};
 use sqlx::PgPool;
-use std::env;
 use tracing::instrument;
 
+use crate::config::CONFIG;
 use crate::error::{Error, Result};
 use crate::requests::{RequestHub, Stream};
 use crate::utils::json;
-use crate::vtubers::{VTuber, VTUBERS};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     utils::init_logger();
 
     let _guard = utils::init_tracing("rss_refresh", false);
@@ -34,11 +33,20 @@ async fn main() -> Result<()> {
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 
-    let channel_ids = VTUBERS.iter().filter_map(|vtb| vtb.youtube);
+    let now_str = Utc::now().to_string();
 
-    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
+    let fetches = CONFIG
+        .vtubers
+        .iter()
+        .filter_map(|vtb| vtb.youtube.as_ref())
+        .map(|id| hub.fetch_rss_feed(&id, &now_str));
 
-    let feeds = hub.fetch_feeds(channel_ids).await?;
+    let pool = PgPool::connect(&CONFIG.database.url).await?;
+
+    let feeds = stream::iter(fetches)
+        .buffer_unordered(10)
+        .try_collect::<Vec<String>>()
+        .await?;
 
     let video_ids = feeds
         .iter()
@@ -61,11 +69,11 @@ async fn real_main() -> Result<()> {
     for stream in streams {
         let thumbnail_url = hub.upload_thumbnail(&stream.id).await;
 
-        let vtuber = VTuber::find_by_youtube_channel_id(&stream.channel_id);
+        let vtuber = CONFIG.find_by_youtube_channel_id(&stream.channel_id);
 
         match vtuber {
             Some(vtb) => {
-                update_youtube_stream(&stream, vtb.id, thumbnail_url, &pool).await?;
+                update_youtube_stream(&stream, &vtb.id, thumbnail_url, &pool).await?;
             }
             _ => {
                 tracing::error!(

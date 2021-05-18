@@ -6,6 +6,7 @@ use std::str::FromStr;
 use tracing::instrument;
 
 use super::RequestHub;
+use crate::config::CONFIG;
 use crate::error::Result;
 use crate::utils::json;
 
@@ -31,7 +32,10 @@ struct YouTubeChannel {
 #[serde(rename_all = "camelCase")]
 struct YouTubeChannelStatistics {
     view_count: String,
-    subscriber_count: Option<String>,
+    // according to https://github.com/PoiScript/HoloStats/issues/582
+    // subscriber_count may be empty in some cases
+    #[serde(default)]
+    subscriber_count: String,
 }
 
 #[derive(Deserialize)]
@@ -68,18 +72,11 @@ impl RequestHub {
         for chunk in ids.chunks(50) {
             let channels = self.youtube_channels_api(&chunk.join(",")).await?;
 
-            res.extend(channels.into_iter().map(|channel| {
-                Channel {
-                    id: channel.id,
-                    view_count: i32::from_str(&channel.statistics.view_count).unwrap(),
-                    subscriber_count: i32::from_str(
-                        &channel
-                            .statistics
-                            .subscriber_count
-                            .unwrap_or(String::from("0")),
-                    )
-                    .unwrap(),
-                }
+            res.extend(channels.into_iter().map(|channel| Channel {
+                id: channel.id,
+                view_count: i32::from_str(&channel.statistics.view_count).unwrap_or_default(),
+                subscriber_count:
+                    i32::from_str(&channel.statistics.subscriber_count).unwrap_or_default(),
             }));
         }
 
@@ -167,7 +164,7 @@ impl RequestHub {
         let res = self
             .client
             .get(url.clone())
-            .header(COOKIE, &self.bilibili_cookie)
+            .header(COOKIE, &CONFIG.bilibili.cookie)
             .send()
             .and_then(|res| res.json::<BilibiliUpstatResponse>())
             .map_err(|err| (url, err))

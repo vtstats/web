@@ -1,3 +1,5 @@
+#[path = "../config.rs"]
+mod config;
 #[path = "../error.rs"]
 mod error;
 mod filters;
@@ -10,32 +12,28 @@ mod sitemap;
 mod utils;
 mod v3;
 mod v4;
-#[path = "../vtubers.rs"]
-mod vtubers;
 
 #[cfg(test)]
 mod tests;
 
 use sqlx::PgPool;
-use std::env;
 use std::net::SocketAddr;
 use tracing::field::Empty;
 use warp::Filter;
 
+use crate::config::CONFIG;
 use crate::error::Result;
 use crate::requests::RequestHub;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    dotenv::dotenv().expect("Failed to load .env file");
-
     utils::init_logger();
 
     utils::init_tracing("api", true);
 
     let hub = RequestHub::new();
 
-    let pool = PgPool::connect(&env::var("DATABASE_URL").unwrap()).await?;
+    let pool = PgPool::connect(&CONFIG.database.url).await?;
 
     let cors = warp::cors().allow_any_origin();
 
@@ -59,10 +57,11 @@ async fn main() -> Result<()> {
             span
         }));
 
-    let addr: SocketAddr = env::var("ADDR")
-        .ok()
-        .and_then(|addr| addr.parse().ok())
-        .unwrap_or_else(|| ([127, 0, 0, 1], 4200).into());
+    let addr: SocketAddr = CONFIG
+        .server
+        .address
+        .parse()
+        .unwrap_or_else(|_| ([127, 0, 0, 1], 4200).into());
 
     warp::serve(routes).run(addr).await;
 

@@ -53,13 +53,15 @@ jobs:
       - name: Format
         run: cargo fmt -- --check
 
-      - name: Create .env
-        run: mv .env.example .env
+      - name: Create holostats.toml
+        run: mv holostats.example.toml holostats.toml
 
       - name: Run Test
         run: |
           psql postgres://holostats:holostats@localhost/holostats -f sql/test.sql
           cargo test
+        env:
+          DATABASE_URL: postgres://holostats:holostats@localhost/holostats
 
       - name: Build
         if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
