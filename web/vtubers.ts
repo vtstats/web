@@ -42,8 +42,10 @@ export type VTuberIds =
   | "ruroro"
   | "sakuranoruu"
   | "sanmou"
+  | "shalalavtuber"
   | "shaya"
   | "silverbell"
+  | "sitwvtuber"
   | "soysaucexd"
   | "sudayoruka"
   | "tedobear"
@@ -322,6 +324,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "",
     default: true,
   },
+  shalalavtuber: {
+    id: "shalalavtuber",
+    youtube: "UCfSznBOuXiDxON_YUMCSFiQ",
+    twitter: "ShalalaVtuber",
+    discord: "maRrdC6",
+    facebook: "shalalavtuber",
+    default: true,
+  },
   shaya: {
     id: "shaya",
     youtube: "UCU8O__T_J93Cnoi6HoRoPow",
@@ -337,6 +347,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     discord: "",
     facebook: "SilverBell.lVtuber",
     default: false,
+  },
+  sitwvtuber: {
+    id: "sitwvtuber",
+    youtube: "UCjv4bfP_67WLuPheS-Z8Ekg",
+    twitter: "SiTWVtuber",
+    discord: "",
+    facebook: "",
+    default: true,
   },
   soysaucexd: {
     id: "soysaucexd",
@@ -470,8 +488,10 @@ export type BatchIds =
   | "ruroro"
   | "sakuranoruu"
   | "sanmou"
+  | "shalalavtuber"
   | "shaya"
   | "silverbell"
+  | "sitwvtuber"
   | "soysaucexd"
   | "sudayoruka"
   | "tedobear"
@@ -521,8 +541,10 @@ export const batches: Record<BatchIds, Batch> = {
   "ruroro": null,
   "sakuranoruu": null,
   "sanmou": null,
+  "shalalavtuber": null,
   "shaya": null,
   "silverbell": null,
+  "sitwvtuber": null,
   "soysaucexd": null,
   "sudayoruka": null,
   "tedobear": null,
