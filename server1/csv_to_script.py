@@ -7,6 +7,7 @@ from pprint import pprint
 from jinja2 import Environment, BaseLoader
 import argparse
 import sys
+import os
 
 
 def read_vtuber(f):
@@ -54,8 +55,14 @@ def extract_batch(vtubers):
 def render(f, vtubers, batches={}, trailing=False):
     """ read xx.j2 and rewrite xx """
     env = Environment(loader=BaseLoader(), keep_trailing_newline=trailing)
+    keys = {
+        'S3_KEY_ID': os.environ.get("S3_KEY_ID"),
+        'S3_ACCESS_KEY': os.environ.get("S3_ACCESS_KEY"),
+        'YOUTUBE_API_KEYS': os.environ.get("YOUTUBE_API_KEYS").split(","),
+        'PUBSUB_PATH': os.environ.get("PUBSUB_PATH")
+    }
     template = env.from_string(open(f + '.j2').read())
-    template = template.stream(vtubers=vtubers, batches=batches)
+    template = template.stream(vtubers=vtubers, batches=batches, keys=keys)
     # print(''.join(list(template)))
     template.dump(f)
 
@@ -63,9 +70,8 @@ def render(f, vtubers, batches={}, trailing=False):
 def download_thumbnail(vtubers, rewrite=False):
     """ Download the thumbnail of vtuber """
     from googleapiclient.discovery import build
-    import os
     youtube = build('youtube', 'v3',
-                    developerKey=os.environ['YOUTUBE_API_KEY0'])
+                    developerKey=os.environ['YOUTUBE_API_KEY'])
     for i in vtubers:
         thumbnail_path = "web/src/assets/thumbnail/" + i['id'] + ".jpg"
         if not rewrite and os.path.exists(thumbnail_path):
@@ -80,7 +86,7 @@ def download_thumbnail(vtubers, rewrite=False):
 def render_vtuber(vtubers, batches):
     """ write the files """
     render("server/holostats.toml", vtubers)
-    render("server/sql/initial.sql", vtubers)
+    render("server/sql/initial.taiwanv.sql", vtubers)
     render("web/vtubers.ts", vtubers, batches)
     render("web/src/i18n/zh.ts", vtubers, batches, trailing=True)
     render("web/src/i18n/en.ts", vtubers, batches, trailing=True)
@@ -92,7 +98,7 @@ if __name__ == "__main__":
             description='Utility to add new vtubers from vtubers.csv')
     parser.add_argument('--download', action='store_true',
                         help="Download the thumbnail. "
-                             "Usage: YOUTUBE_API_KEY0=xxxx "
+                             "Usage: YOUTUBE_API_KEY=xxxx "
                              "python3 csv_to_script --download")
     parser.add_argument('--render', action='store_true',
                         help="Regenerate vtuber-related script")

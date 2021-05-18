@@ -40,9 +40,8 @@ Included:
 I retrieve the vtubers information from https://vt.cdein.cc
 
 ## How to add new vtubers to this web.
-1. Edit `vtubers.csv` and put that in issue OR
-2. Pull request after running `python3 server1/csv_to_script.py` OR
-3. PM me or ask in public and tag me
+1. Edit `vtubers.csv` and PR or put that in issue OR
+2. PM me in Discord
 
 ## Difference between original one
 * Bilibili Removed
