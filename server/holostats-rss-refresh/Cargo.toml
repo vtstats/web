@@ -1,0 +1,21 @@
+[package]
+name = "holostats-rss-refresh"
+version = "0.1.0"
+authors = ["PoiScript <poiscript@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "rss-refresh"
+path = "main.rs"
+
+[dependencies]
+anyhow = "1.0.40"
+chrono = { version = "0.4.19", features = ["serde"] }
+futures = "0.3.15"
+tokio = { version = "1.5.0", features = ["macros"] }
+tracing = "0.1.25"
+tracing-futures = "0.2.5"
+holostats-config = { path = "../holostats-config" }
+holostats-database = { path = "../holostats-database" }
+holostats-request = { path = "../holostats-request" }
+holostats-utils = { path = "../holostats-utils" }

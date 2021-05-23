@@ -1,0 +1,26 @@
+[package]
+name = "holostats-request"
+version = "0.1.0"
+authors = ["PoiScript <poiscript@gmail.com>"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+anyhow = "1.0.40"
+bytes = "1.0.1"
+chrono = { version = "0.4.19", features = ["serde"] }
+futures = "0.3.15"
+hex = "0.4.3"
+hmac = "0.10.1"
+serde = { version = "1.0.126", features = ["derive"] }
+serde_with = "1.9.1"
+sha2 = "0.9.5"
+tracing = "0.1.26"
+reqwest = { version = "0.11.3", default-features = false, features = [
+    "json",
+    "rustls-tls"
+] }
+holostats-config = { path = "../holostats-config" }
+holostats-utils = { path = "../holostats-utils" }

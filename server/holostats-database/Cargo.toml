@@ -1,0 +1,24 @@
+[package]
+name = "holostats-database"
+version = "0.1.0"
+authors = ["PoiScript <poiscript@gmail.com>"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+chrono = { version = "0.4.19", features = ["serde"] }
+serde = { version = "1.0.125", features = ["derive"] }
+serde_with = "1.8.1"
+sqlx = { version = "0.5.1", default-features = false, features = [
+    "runtime-tokio-rustls",
+    "macros",
+    "postgres",
+    "chrono"
+] }
+tokio = { version = "1.5.0", features = ["macros"] }
+tracing = "0.1.25"
+tracing-futures = "0.2.5"
+sqlx-core = "=0.5.1"
+holostats-config = { path = "../holostats-config" }
