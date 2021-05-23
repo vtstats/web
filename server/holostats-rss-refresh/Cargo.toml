@@ -5,7 +5,7 @@ authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
 
 [[bin]]
-name = "rss-refresh"
+name = "rss_refresh"
 path = "main.rs"
 
 [dependencies]

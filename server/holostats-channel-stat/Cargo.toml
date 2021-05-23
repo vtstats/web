@@ -5,7 +5,7 @@ authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
 
 [[bin]]
-name = "channel-stat"
+name = "channel_stat"
 path = "main.rs"
 
 [dependencies]
