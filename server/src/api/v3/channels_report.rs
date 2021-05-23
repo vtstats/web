@@ -1,18 +1,15 @@
 use chrono::{DateTime, Utc};
-use serde::{
-    ser::{SerializeTuple, Serializer},
-    Serialize,
-};
-use sqlx::PgPool;
+use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use warp::{reply::Json, Rejection};
 
-use crate::config::CONFIG;
+use crate::database::{channels::Channel as Channel_, statistic::Report, Database};
 use crate::error::Error;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChannelsReportRequestQuery {
-    ids: String,
+    #[serde(with = "StringWithSeparator::<CommaSeparator>")]
+    ids: Vec<String>,
     metrics: String,
     start_at: Option<DateTime<Utc>>,
     end_at: Option<DateTime<Utc>>,
@@ -22,33 +19,7 @@ pub struct ChannelsReportRequestQuery {
 #[serde(rename_all = "camelCase")]
 pub struct ChannelsReportResponseBody {
     channels: Vec<Channel>,
-    reports: Vec<ChannelsReport>,
-}
-
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ChannelsReport {
-    id: String,
-    kind: String,
-    rows: Vec<Row>,
-}
-
-pub struct Row {
-    pub time: DateTime<Utc>,
-    pub value: i32,
-}
-
-// serializing row as a tuple, it helps reducing response size
-impl Serialize for Row {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut tuple = serializer.serialize_tuple(2)?;
-        tuple.serialize_element(&self.time)?;
-        tuple.serialize_element(&self.value)?;
-        tuple.end()
-    }
+    reports: Vec<Report>,
 }
 
 #[derive(serde::Serialize)]
@@ -67,13 +38,31 @@ pub struct Channel {
     updated_at: DateTime<Utc>,
 }
 
+impl From<Channel_> for Channel {
+    fn from(ch: Channel_) -> Self {
+        Channel {
+            platform: ch.kind,
+            vtuber_id: ch.vtuber_id,
+            subscriber_count: ch.subscriber_count,
+            daily_subscriber_count: ch.daily_subscriber_count,
+            weekly_subscriber_count: ch.weekly_subscriber_count,
+            monthly_subscriber_count: ch.monthly_subscriber_count,
+            view_count: ch.view_count,
+            daily_view_count: ch.daily_view_count,
+            weekly_view_count: ch.weekly_view_count,
+            monthly_view_count: ch.monthly_view_count,
+            updated_at: ch.updated_at,
+        }
+    }
+}
+
 pub async fn channels_report(
     query: ChannelsReportRequestQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<Json, Rejection> {
     tracing::info!(
         name = "GET /api/v3/channels_report",
-        ids = &query.ids.as_str(),
+        ids = ?query.ids.as_slice(),
         metrics = &query.metrics.as_str(),
     );
 
@@ -85,191 +74,42 @@ pub async fn channels_report(
         tracing::info!(?end_at);
     }
 
-    let mut channels = vec![];
+    let channels = db
+        .youtube_channels(&query.ids)
+        .await
+        .map_err(Error::Database)?;
+
+    let channels = channels.into_iter().map(Into::into).collect();
+
     let mut reports = vec![];
 
-    for id in query.ids.split(',') {
-        let vtb = match CONFIG.vtubers.iter().find(|v| v.id == id) {
-            Some(vtb) => vtb,
-            _ => continue,
-        };
-
-        if vtb.youtube.is_some() {
-            let channel = sqlx::query_as!(
-                Channel,
-                r#"select *, 'youtube' as "platform!" from youtube_channels where vtuber_id = $1"#,
-                id
-            )
-            .fetch_one(&pool)
-            .await
-            .map_err(Error::Database)?;
-
-            channels.push(channel);
-        }
-
-        if vtb.bilibili.is_some() {
-            let channel = sqlx::query_as!(
-                Channel,
-                r#"select *, 'bilibili' as "platform!" from bilibili_channels where vtuber_id = $1"#,
-                id
-            )
-            .fetch_one(&pool)
-            .await
-            .map_err(Error::Database)?;
-
-            channels.push(channel);
-        }
-
-        for metric in query.metrics.split(',') {
+    for metric in query.metrics.split(',') {
+        reports.extend(
             match metric {
-                "youtube_channel_subscriber" => reports.push(
-                    youtube_channel_subscriber(id.to_string(), query.start_at, query.end_at, &pool)
-                        .await?,
-                ),
-                "youtube_channel_view" => reports.push(
-                    youtube_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
-                        .await?,
-                ),
-                "bilibili_channel_subscriber" => reports.push(
-                    bilibili_channel_subscriber(
-                        id.to_string(),
-                        query.start_at,
-                        query.end_at,
-                        &pool,
-                    )
-                    .await?,
-                ),
-                "bilibili_channel_view" => reports.push(
-                    bilibili_channel_view(id.to_string(), query.start_at, query.end_at, &pool)
-                        .await?,
-                ),
-                _ => (),
+                "youtube_channel_subscriber" => {
+                    db.youtube_channel_subscriber(&query.ids, &query.start_at, &query.end_at)
+                        .await
+                }
+                "youtube_channel_view" => {
+                    db.youtube_channel_view(&query.ids, &query.start_at, &query.end_at)
+                        .await
+                }
+                "bilibili_channel_subscriber" => {
+                    db.bilibili_channel_subscriber(&query.ids, &query.start_at, &query.end_at)
+                        .await
+                }
+                "bilibili_channel_view" => {
+                    db.bilibili_channel_view(&query.ids, &query.start_at, &query.end_at)
+                        .await
+                }
+                _ => continue,
             }
-        }
+            .map_err(Error::Database)?,
+        );
     }
 
     Ok(warp::reply::json(&ChannelsReportResponseBody {
         channels,
         reports,
     }))
-}
-
-async fn youtube_channel_subscriber(
-    id: String,
-    start_at: Option<DateTime<Utc>>,
-    end_at: Option<DateTime<Utc>>,
-    pool: &PgPool,
-) -> Result<ChannelsReport, Rejection> {
-    let rows = sqlx::query_as!(
-        Row,
-        r#"
-            select time, value
-              from youtube_channel_subscriber_statistic
-             where vtuber_id = $1
-               and (time >= $2 or $2 is null)
-               and (time <= $3 or $3 is null)
-        "#,
-        id,
-        start_at,
-        end_at
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(ChannelsReport {
-        id,
-        kind: String::from("youtube_channel_subscriber"),
-        rows,
-    })
-}
-
-async fn youtube_channel_view(
-    id: String,
-    start_at: Option<DateTime<Utc>>,
-    end_at: Option<DateTime<Utc>>,
-    pool: &PgPool,
-) -> Result<ChannelsReport, Rejection> {
-    let rows = sqlx::query_as!(
-        Row,
-        r#"
-            select time, value
-              from youtube_channel_view_statistic
-             where vtuber_id = $1
-               and (time >= $2 or $2 is null)
-               and (time <= $3 or $3 is null)
-        "#,
-        id,
-        start_at,
-        end_at
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(ChannelsReport {
-        id,
-        kind: String::from("youtube_channel_view"),
-        rows,
-    })
-}
-
-async fn bilibili_channel_subscriber(
-    id: String,
-    start_at: Option<DateTime<Utc>>,
-    end_at: Option<DateTime<Utc>>,
-    pool: &PgPool,
-) -> Result<ChannelsReport, Rejection> {
-    let rows = sqlx::query_as!(
-        Row,
-        r#"
-            select time, value
-              from bilibili_channel_subscriber_statistic
-             where vtuber_id = $1
-               and (time >= $2 or $2 is null)
-               and (time <= $3 or $3 is null)
-        "#,
-        id,
-        start_at,
-        end_at
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(ChannelsReport {
-        id,
-        kind: String::from("bilibili_channel_subscriber"),
-        rows,
-    })
-}
-
-async fn bilibili_channel_view(
-    id: String,
-    start_at: Option<DateTime<Utc>>,
-    end_at: Option<DateTime<Utc>>,
-    pool: &PgPool,
-) -> Result<ChannelsReport, Rejection> {
-    let rows = sqlx::query_as!(
-        Row,
-        r#"
-            select time, value
-              from bilibili_channel_view_statistic
-             where vtuber_id = $1
-               and (time >= $2 or $2 is null)
-               and (time <= $3 or $3 is null)
-        "#,
-        id,
-        start_at,
-        end_at
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(ChannelsReport {
-        id,
-        kind: String::from("bilibili_channel_view"),
-        rows,
-    })
 }

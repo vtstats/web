@@ -1,0 +1,346 @@
+use chrono::{
+    serde::{ts_milliseconds, ts_milliseconds_option},
+    DateTime, Utc,
+};
+use serde::Serialize;
+use serde_with::skip_serializing_none;
+use sqlx::Result;
+use tracing::instrument;
+
+use super::Database;
+
+type UtcTime = DateTime<Utc>;
+
+#[skip_serializing_none]
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Stream {
+    pub stream_id: String,
+    pub title: String,
+    pub vtuber_id: String,
+    pub thumbnail_url: Option<String>,
+    #[serde(with = "ts_milliseconds_option")]
+    pub schedule_time: Option<UtcTime>,
+    #[serde(with = "ts_milliseconds_option")]
+    pub start_time: Option<UtcTime>,
+    #[serde(with = "ts_milliseconds_option")]
+    pub end_time: Option<UtcTime>,
+    pub average_viewer_count: Option<i32>,
+    pub max_viewer_count: Option<i32>,
+    #[serde(with = "ts_milliseconds")]
+    pub updated_at: UtcTime,
+    pub status: StreamStatus,
+}
+
+#[derive(Debug, sqlx::Type, Serialize)]
+#[sqlx(type_name = "stream_status", rename_all = "lowercase")]
+#[serde(rename_all = "lowercase")]
+pub enum StreamStatus {
+    Scheduled,
+    Live,
+    Ended,
+}
+
+#[derive(Debug)]
+pub enum OrderBy {
+    StartTimeAsc,
+    EndTimeAsc,
+    ScheduleTimeAsc,
+    StartTimeDesc,
+    EndTimeDesc,
+    ScheduleTimeDesc,
+}
+
+impl OrderBy {
+    fn as_str(&self) -> &'static str {
+        match self {
+            OrderBy::StartTimeAsc => "start_time:asc",
+            OrderBy::EndTimeAsc => "end_time:asc",
+            OrderBy::ScheduleTimeAsc => "schedule_time:asc",
+            OrderBy::StartTimeDesc => "start_time:desc",
+            OrderBy::EndTimeDesc => "end_time:desc",
+            OrderBy::ScheduleTimeDesc => "schedule_time:desc",
+        }
+    }
+}
+
+impl Database {
+    pub async fn stream_ids(&self) -> Result<Vec<String>> {
+        sqlx::query!(r#"select stream_id from youtube_streams"#)
+            .map(|row| row.stream_id)
+            .fetch_all(&self.pool)
+            .await
+    }
+
+    #[instrument(
+        name = "Select youtube streams",
+        skip(self),
+        fields(db.table = "youtube_streams"),
+    )]
+    pub async fn youtube_streams(
+        &self,
+        ids: &[String],
+        status: &[String],
+        order_by: OrderBy,
+        start_at: &Option<UtcTime>,
+        end_at: &Option<UtcTime>,
+    ) -> Result<Vec<Stream>> {
+        sqlx::query_as!(
+            Stream,
+            r#"
+      select stream_id,
+             title,
+             vtuber_id,
+             thumbnail_url,
+             schedule_time,
+             start_time,
+             end_time,
+             average_viewer_count,
+             max_viewer_count,
+             updated_at,
+             status as "status: _"
+        from youtube_streams
+       where vtuber_id = any($1)
+         and status::text = any($5)
+         and (
+               -- start_at
+               case $4
+                 when 'schedule_time:asc'  then schedule_time > $2
+                 when 'schedule_time:desc' then schedule_time > $2
+                 when 'end_time:asc'       then end_time      > $2
+                 when 'end_time:desc'      then end_time      > $2
+                 when 'start_time:asc'     then start_time    > $2
+                 when 'start_time:desc'    then start_time    > $2
+               end
+               or $2 is null
+             )
+         and (
+               -- end_at
+               case $4
+                 when 'schedule_time:asc'  then schedule_time < $3
+                 when 'schedule_time:desc' then schedule_time < $3
+                 when 'end_time:asc'       then end_time      < $3
+                 when 'end_time:desc'      then end_time      < $3
+                 when 'start_time:asc'     then start_time    < $3
+                 when 'start_time:desc'    then start_time    < $3
+               end
+               or $3 is null
+             )
+    order by case $4
+               when 'start_time:asc'     then start_time
+               when 'end_time:asc'       then end_time
+               when 'schedule_time:asc'  then schedule_time
+               else null
+             end asc,
+             case $4
+               when 'start_time:desc'    then start_time
+               when 'end_time:desc'      then end_time
+               when 'schedule_time:desc' then schedule_time
+               else null
+             end desc
+       limit 24
+            "#,
+            ids,
+            *start_at,
+            *end_at,
+            order_by.as_str(),
+            status,
+        )
+        .fetch_all(&self.pool)
+        .await
+    }
+
+    #[instrument(
+        name = "Select youtube streams",
+        skip(self),
+        fields(db.table = "youtube_streams"),
+    )]
+    pub async fn youtube_streams_by_ids(&self, ids: &[String]) -> Result<Vec<Stream>> {
+        sqlx::query_as!(
+            Stream,
+            r#"
+    select stream_id,
+           title,
+           vtuber_id,
+           thumbnail_url,
+           schedule_time,
+           start_time,
+           end_time,
+           average_viewer_count,
+           max_viewer_count,
+           updated_at,
+           status as "status: _"
+      from youtube_streams
+     where stream_id = any($1)
+            "#,
+            ids
+        )
+        .fetch_all(&self.pool)
+        .await
+    }
+
+    #[instrument(
+        name = "Upsert youtube stream",
+        skip(self),
+        fields(db.table = "youtube_streams")
+    )]
+    pub async fn upsert_youtube_stream(
+        &self,
+        id: String,
+        vtuber_id: &str,
+        title: String,
+        status: StreamStatus,
+        thumbnail_url: Option<String>,
+        schedule_time: Option<UtcTime>,
+        start_time: Option<UtcTime>,
+        end_time: Option<UtcTime>,
+    ) -> Result<()> {
+        let _ = sqlx::query!(
+            r#"
+    insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
+         values ($1, $2, $3, $4, $5, $6, $7, $8)
+    on conflict (stream_id) do update
+            set (title, status, thumbnail_url, schedule_time, start_time, end_time)
+              = ($3, $4, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
+            "#,
+            id,
+            vtuber_id,
+            title,
+            status: _,
+            thumbnail_url,
+            schedule_time,
+            start_time,
+            end_time,
+        )
+        .execute(&self.pool)
+        .await?;
+
+        Ok(())
+    }
+
+    #[instrument(
+        name = "Delete schedule stream",
+        skip(self),
+        fields(db.table = "youtube_streams")
+    )]
+    pub async fn delete_schedule_stream(&self, stream_id: &str, vtuber_id: &str) -> Result<()> {
+        let _ = sqlx::query!(
+            r#"
+    delete from youtube_streams
+          where stream_id = $1
+            and vtuber_id = $2
+            and status = 'scheduled'::stream_status
+            "#,
+            stream_id,
+            vtuber_id,
+        )
+        .execute(&self.pool)
+        .await;
+        Ok(())
+    }
+
+    #[instrument(
+        name = "Get last updated time of youtube_streams",
+        skip(self),
+        fields(db.table = "youtube_streams")
+    )]
+    pub async fn youtube_stream_last_updated(&self) -> Result<Option<UtcTime>> {
+        sqlx::query!("select max(updated_at) from youtube_streams")
+            .fetch_one(&self.pool)
+            .await
+            .map(|row| row.max)
+    }
+
+    #[instrument(
+        name = "Get last updated time of youtube_streams",
+        skip(self),
+        fields(db.table = "youtube_streams")
+    )]
+    pub async fn youtube_ongoing_streams(&self) -> Result<Vec<String>> {
+        sqlx::query!(
+            r#"
+    select stream_id
+      from youtube_streams
+     where end_time IS NULL
+       and (
+             start_time is not null or (
+               schedule_time > now() - interval '6 hours'
+               and schedule_time < now() + interval '5 minutes'
+             )
+           )
+            "#
+        )
+        .map(|row| row.stream_id)
+        .fetch_all(&self.pool)
+        .await
+    }
+
+    #[instrument(
+        name = "Terminate offline YouTube streams",
+        skip(self),
+        fields(db.table = "youtube_streams"),
+    )]
+    pub async fn terminate_stream(&self, ids: &[String], now: DateTime<Utc>) -> Result<()> {
+        let _ = sqlx::query!(
+            r#"
+    update youtube_streams
+       set end_time = $1
+     where stream_id = any($2)
+            "#,
+            now,
+            ids,
+        )
+        .execute(&self.pool)
+        .await?;
+
+        Ok(())
+    }
+
+    pub async fn update_youtube_stream_statistic(
+        &self,
+        id: String,
+        datetime: UtcTime,
+        status: StreamStatus,
+        schedule_time: Option<UtcTime>,
+        start_time: Option<UtcTime>,
+        end_time: Option<UtcTime>,
+        viewers: Option<i32>,
+    ) -> Result<()> {
+        let mut tx = self.pool.begin().await?;
+
+        let _ = sqlx::query!(
+            r#"
+    update youtube_streams
+       set (updated_at, status, schedule_time, start_time, end_time)
+         = ($1, $2, $3, $4, $5)
+     where stream_id = $6
+            "#,
+            datetime,
+            status: _,
+            schedule_time,
+            start_time,
+            end_time,
+            id,
+        )
+        .execute(&mut tx)
+        .await?;
+
+        if let Some(viewers) = viewers {
+            let _ = sqlx::query!(
+                r#"
+    insert into youtube_stream_viewer_statistic (stream_id, time, value)
+         values ($1, $2, $3)
+                "#,
+                id,
+                datetime,
+                viewers,
+            )
+            .execute(&mut tx)
+            .await?;
+        }
+
+        tx.commit().await?;
+
+        Ok(())
+    }
+}

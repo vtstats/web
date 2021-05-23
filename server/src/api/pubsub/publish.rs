@@ -1,15 +1,14 @@
 use roxmltree::Document;
-use sqlx::PgPool;
-use tracing::instrument;
 use warp::{http::StatusCode, Rejection};
 
 use crate::config::CONFIG;
+use crate::database::{streams::StreamStatus as StreamStatus_, Database};
 use crate::error::Error;
-use crate::requests::{RequestHub, Stream};
+use crate::requests::{RequestHub, StreamStatus};
 
 pub async fn publish_content(
     body: String,
-    pool: PgPool,
+    db: Database,
     hub: RequestHub,
 ) -> Result<StatusCode, Rejection> {
     tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str());
@@ -32,9 +31,26 @@ pub async fn publish_content(
             return Ok(StatusCode::BAD_REQUEST);
         }
 
-        let thumbnail_url = hub.upload_thumbnail(&streams[0].id).await;
+        for stream in streams {
+            let thumbnail_url = hub.upload_thumbnail(&stream.id).await;
 
-        update_youtube_stream(&streams[0], vtuber_id, thumbnail_url, &pool).await?;
+            db.upsert_youtube_stream(
+                stream.id,
+                vtuber_id,
+                stream.title,
+                match stream.status {
+                    StreamStatus::Ended => StreamStatus_::Ended,
+                    StreamStatus::Live => StreamStatus_::Live,
+                    StreamStatus::Scheduled => StreamStatus_::Scheduled,
+                },
+                thumbnail_url,
+                stream.schedule_time,
+                stream.start_time,
+                stream.end_time,
+            )
+            .await
+            .map_err(Error::Database)?;
+        }
 
         return Ok(StatusCode::OK);
     }
@@ -42,7 +58,9 @@ pub async fn publish_content(
     if let Some((video_id, vtuber_id)) = parse_deletion(&doc) {
         tracing::info!(action = "Delete video", vtuber_id, video_id);
 
-        delete_schedule_stream(video_id, vtuber_id, &pool).await?;
+        db.delete_schedule_stream(video_id, vtuber_id)
+            .await
+            .map_err(Error::Database)?;
 
         return Ok(StatusCode::OK);
     }
@@ -84,66 +102,4 @@ pub fn parse_deletion<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
     let vtuber = CONFIG.find_by_youtube_channel_id(channel_id)?;
 
     Some((stream_id, &vtuber.id))
-}
-
-#[instrument(
-    name = "Update youtube stream",
-    skip(stream, vtuber_id, thumbnail_url, pool),
-    fields(db.table = "youtube_streams")
-)]
-async fn update_youtube_stream(
-    stream: &Stream,
-    vtuber_id: &str,
-    thumbnail_url: Option<String>,
-    pool: &PgPool,
-) -> Result<(), Error> {
-    let _ = sqlx::query!(
-        r#"
-            insert into youtube_streams (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)
-                 values ($1, $2, $3, $4, $5, $6, $7, $8)
-            on conflict (stream_id) do update
-                    set (title, status, thumbnail_url, schedule_time, start_time, end_time)
-                      = ($3, $4, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
-        "#,
-        stream.id,
-        vtuber_id,
-        stream.title,
-        stream.status: _,
-        thumbnail_url,
-        stream.schedule_time,
-        stream.start_time,
-        stream.end_time,
-    )
-    .execute(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(())
-}
-
-#[instrument(
-    name = "Delete schedule stream",
-    skip(stream_id, vtuber_id, pool),
-    fields(db.table = "youtube_streams")
-)]
-async fn delete_schedule_stream(
-    stream_id: &str,
-    vtuber_id: &str,
-    pool: &PgPool,
-) -> Result<(), Error> {
-    let _ = sqlx::query!(
-        r#"
-            delete from youtube_streams
-                  where stream_id = $1
-                    and vtuber_id = $2
-                    and status = 'scheduled'::stream_status
-        "#,
-        stream_id,
-        vtuber_id,
-    )
-    .execute(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(())
 }

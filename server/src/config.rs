@@ -12,6 +12,7 @@ pub struct Config {
     pub youtube: YouTubeConfig,
     pub bilibili: BilibiliConfig,
     pub s3: S3Config,
+    #[serde(default)]
     pub newrelic: NewRelicConfig,
     pub vtubers: Vec<VTuber>,
 }

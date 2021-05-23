@@ -1,13 +1,15 @@
 use chrono::{DateTime, Utc};
-use sqlx::PgPool;
+use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use warp::{reply::Json, Rejection};
 
+use crate::database::{streams::OrderBy, streams::Stream as Stream_, Database};
 use crate::error::Error;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamsListRequestQuery {
-    pub ids: String,
+    #[serde(with = "StringWithSeparator::<CommaSeparator>")]
+    pub ids: Vec<String>,
     pub start_at: Option<DateTime<Utc>>,
     pub end_at: Option<DateTime<Utc>>,
 }
@@ -19,6 +21,7 @@ pub struct StreamsListResponseBody {
     pub streams: Vec<Stream>,
 }
 
+#[skip_serializing_none]
 #[derive(Debug, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Stream {
@@ -26,26 +29,38 @@ pub struct Stream {
     title: String,
     vtuber_id: String,
     thumbnail_url: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     schedule_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     start_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     end_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     average_viewer_count: Option<i32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     max_viewer_count: Option<i32>,
     updated_at: DateTime<Utc>,
 }
 
+impl From<Stream_> for Stream {
+    fn from(st: Stream_) -> Self {
+        Stream {
+            stream_id: st.stream_id,
+            title: st.title,
+            vtuber_id: st.vtuber_id,
+            thumbnail_url: st.thumbnail_url,
+            schedule_time: st.schedule_time,
+            start_time: st.start_time,
+            end_time: st.end_time,
+            average_viewer_count: st.average_viewer_count,
+            max_viewer_count: st.max_viewer_count,
+            updated_at: st.updated_at,
+        }
+    }
+}
+
 pub async fn youtube_streams_list(
     query: StreamsListRequestQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<Json, Rejection> {
     tracing::info!(
         name = "GET /api/v3/youtube_streams",
-        ids = &query.ids.as_str(),
+        ids = ?query.ids.as_slice(),
     );
 
     if let Some(start_at) = query.start_at {
@@ -56,39 +71,23 @@ pub async fn youtube_streams_list(
         tracing::info!(?end_at);
     }
 
-    let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
-        .fetch_one(&pool)
+    let updated_at = db
+        .youtube_stream_last_updated()
         .await
-        .map(|row| row.max)
         .map_err(Error::Database)?;
 
-    let streams = sqlx::query_as!(
-        Stream,
-        r#"
-              select stream_id,
-                     title,
-                     vtuber_id,
-                     thumbnail_url,
-                     schedule_time,
-                     start_time,
-                     end_time,
-                     average_viewer_count,
-                     max_viewer_count,
-                     updated_at
-                from youtube_streams
-               where vtuber_id = any(string_to_array($1, ','))
-                 and (start_time > $2 or $2 is null)
-                 and (start_time < $3 or $3 is null)
-            order by start_time desc
-               limit 24
-        "#,
-        query.ids,
-        query.start_at,
-        query.end_at
-    )
-    .fetch_all(&pool)
-    .await
-    .map_err(Error::Database)?;
+    let streams = db
+        .youtube_streams(
+            &query.ids,
+            &["live".into(), "ended".into()],
+            OrderBy::StartTimeDesc,
+            &query.start_at,
+            &query.end_at,
+        )
+        .await
+        .map_err(Error::Database)?;
+
+    let streams = streams.into_iter().map(Into::into).collect();
 
     Ok(warp::reply::json(&StreamsListResponseBody {
         updated_at,
@@ -99,7 +98,8 @@ pub async fn youtube_streams_list(
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScheduleStreamsListRequestQuery {
-    pub ids: String,
+    #[serde(with = "StringWithSeparator::<CommaSeparator>")]
+    pub ids: Vec<String>,
 }
 
 #[derive(serde::Serialize)]
@@ -120,37 +120,45 @@ pub struct ScheduleStream {
     pub thumbnail_url: Option<String>,
 }
 
+impl From<Stream_> for ScheduleStream {
+    fn from(st: Stream_) -> Self {
+        ScheduleStream {
+            stream_id: st.stream_id,
+            title: st.title,
+            vtuber_id: st.vtuber_id,
+            thumbnail_url: st.thumbnail_url,
+            schedule_time: st.schedule_time,
+            updated_at: st.updated_at,
+        }
+    }
+}
+
 pub async fn youtube_schedule_streams_list(
     query: ScheduleStreamsListRequestQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<Json, Rejection> {
     tracing::info!(
         name = "GET /api/v3/youtube_schedule_streams",
-        ids = &query.ids.as_str(),
+        ids = ?query.ids.as_slice(),
     );
 
-    let updated_at = sqlx::query!("select max(updated_at) from youtube_streams")
-        .fetch_one(&pool)
+    let updated_at = db
+        .youtube_stream_last_updated()
         .await
-        .map(|row| row.max)
         .map_err(Error::Database)?;
 
-    let streams = sqlx::query_as!(
-        ScheduleStream,
-        r#"
-              select stream_id, title, vtuber_id, schedule_time, updated_at, thumbnail_url
-                from youtube_streams
-               where vtuber_id = any(string_to_array($1, ','))
-                 and start_time is null
-                 and end_time is null
-                 and schedule_time is not null
-            order by schedule_time asc
-        "#,
-        query.ids
-    )
-    .fetch_all(&pool)
-    .await
-    .map_err(Error::Database)?;
+    let streams = db
+        .youtube_streams(
+            &query.ids,
+            &["scheduled".into()],
+            OrderBy::ScheduleTimeAsc,
+            &None,
+            &None,
+        )
+        .await
+        .map_err(Error::Database)?;
+
+    let streams = streams.into_iter().map(Into::into).collect();
 
     Ok(warp::reply::json(&ScheduleStreamsListResponseBody {
         streams,

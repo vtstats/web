@@ -1,9 +1,9 @@
 use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
-use sqlx::PgPool;
 use warp::Rejection;
 
-use super::db;
+use crate::database::{channels::Channel, Database};
+use crate::error::Error;
 
 #[derive(serde::Deserialize)]
 pub struct ReqQuery {
@@ -16,55 +16,55 @@ pub struct ReqQuery {
 pub struct ResBody {
     #[serde(with = "ts_milliseconds_option")]
     pub updated_at: Option<DateTime<Utc>>,
-    pub channels: Vec<db::Channel>,
+    pub channels: Vec<Channel>,
 }
 
 pub async fn youtube_channels_list(
     query: ReqQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
     tracing::info!(
         name = "GET /api/v4/youtube_channels",
         ids = ?query.ids.as_slice(),
     );
 
-    let updated_at = db::youtube_channel_max_updated_at(&pool).await?;
+    let updated_at = db
+        .youtube_channel_last_updated()
+        .await
+        .map_err(Error::Database)?;
 
-    let channels = db::youtube_channels(&query.ids, &pool).await?;
+    let channels = db
+        .youtube_channels(&query.ids)
+        .await
+        .map_err(Error::Database)?;
 
-    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
-
-    Ok(warp::reply::with_header(
-        warp::reply::json(&ResBody {
-            updated_at,
-            channels,
-        }),
-        "etag",
-        format!(r#""{}""#, etag),
-    ))
+    Ok(warp::reply::json(&ResBody {
+        updated_at,
+        channels,
+    }))
 }
 
 pub async fn bilibili_channels_list(
     query: ReqQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
     tracing::info!(
         name = "GET /api/v4/bilibili_channels",
         ids = ?query.ids.as_slice(),
     );
 
-    let updated_at = db::bilibili_channel_max_updated_at(&pool).await?;
+    let updated_at = db
+        .bilibili_channel_last_updated()
+        .await
+        .map_err(Error::Database)?;
 
-    let channels = db::bilibili_channels(&query.ids, &pool).await?;
+    let channels = db
+        .bilibili_channels(&query.ids)
+        .await
+        .map_err(Error::Database)?;
 
-    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
-
-    Ok(warp::reply::with_header(
-        warp::reply::json(&ResBody {
-            updated_at,
-            channels,
-        }),
-        "etag",
-        format!(r#""{}""#, etag),
-    ))
+    Ok(warp::reply::json(&ResBody {
+        updated_at,
+        channels,
+    }))
 }

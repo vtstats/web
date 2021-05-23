@@ -1,11 +1,9 @@
 use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
-use sqlx::PgPool;
 use std::default::Default;
-use tracing::instrument;
 use warp::Rejection;
 
-use super::db;
+use crate::database::{streams::OrderBy as OrderBy_, streams::Stream, Database};
 use crate::error::Error;
 
 #[derive(serde::Deserialize)]
@@ -39,15 +37,15 @@ pub enum OrderBy {
     ScheduleTimeDesc,
 }
 
-impl OrderBy {
-    fn as_str(&self) -> &'static str {
+impl Into<OrderBy_> for OrderBy {
+    fn into(self) -> OrderBy_ {
         match self {
-            OrderBy::StartTimeAsc => "start_time:asc",
-            OrderBy::EndTimeAsc => "end_time:asc",
-            OrderBy::ScheduleTimeAsc => "schedule_time:asc",
-            OrderBy::StartTimeDesc => "start_time:desc",
-            OrderBy::EndTimeDesc => "end_time:desc",
-            OrderBy::ScheduleTimeDesc => "schedule_time:desc",
+            OrderBy::StartTimeAsc => OrderBy_::StartTimeAsc,
+            OrderBy::EndTimeAsc => OrderBy_::EndTimeAsc,
+            OrderBy::ScheduleTimeAsc => OrderBy_::ScheduleTimeAsc,
+            OrderBy::StartTimeDesc => OrderBy_::StartTimeDesc,
+            OrderBy::EndTimeDesc => OrderBy_::EndTimeDesc,
+            OrderBy::ScheduleTimeDesc => OrderBy_::ScheduleTimeDesc,
         }
     }
 }
@@ -63,12 +61,12 @@ impl Default for OrderBy {
 pub struct ResBody {
     #[serde(with = "ts_milliseconds_option")]
     pub updated_at: Option<DateTime<Utc>>,
-    pub streams: Vec<db::Stream>,
+    pub streams: Vec<Stream>,
 }
 
 pub async fn youtube_streams_list(
     query: ReqQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
     tracing::info!(
         name = "GET /api/v4/youtube_streams",
@@ -85,89 +83,24 @@ pub async fn youtube_streams_list(
         tracing::info!(?end_at);
     }
 
-    let updated_at = db::youtube_stream_max_updated_at(&pool).await?;
-    let streams = youtube_streams(&query, &pool).await?;
+    let updated_at = db
+        .youtube_stream_last_updated()
+        .await
+        .map_err(Error::Database)?;
 
-    let etag = updated_at.map(|t| t.timestamp()).unwrap_or_default();
+    let streams = db
+        .youtube_streams(
+            &query.ids,
+            &query.status,
+            query.order_by.into(),
+            &query.start_at,
+            &query.end_at,
+        )
+        .await
+        .map_err(Error::Database)?;
 
-    Ok(warp::reply::with_header(
-        warp::reply::json(&ResBody {
-            updated_at,
-            streams,
-        }),
-        "etag",
-        format!(r#""{}""#, etag),
-    ))
-}
-
-#[instrument(
-    name = "Select youtube streams",
-    skip(query, pool),
-    fields(db.table = "youtube_streams"),
-)]
-async fn youtube_streams(query: &ReqQuery, pool: &PgPool) -> Result<Vec<db::Stream>, Error> {
-    sqlx::query_as!(
-        db::Stream,
-        r#"
-              select stream_id,
-                     title,
-                     vtuber_id,
-                     thumbnail_url,
-                     schedule_time,
-                     start_time,
-                     end_time,
-                     average_viewer_count,
-                     max_viewer_count,
-                     updated_at,
-                     status as "status: _"
-                from youtube_streams
-               where vtuber_id = any($1)
-                 and status::text = any($5)
-                 and (
-                       -- start_at
-                       case $4
-                         when 'schedule_time:asc'  then schedule_time > $2
-                         when 'schedule_time:desc' then schedule_time > $2
-                         when 'end_time:asc'       then end_time      > $2
-                         when 'end_time:desc'      then end_time      > $2
-                         when 'start_time:asc'     then start_time    > $2
-                         when 'start_time:desc'    then start_time    > $2
-                       end
-                       or $2 is null
-                     )
-                 and (
-                       -- end_at
-                       case $4
-                         when 'schedule_time:asc'  then schedule_time < $3
-                         when 'schedule_time:desc' then schedule_time < $3
-                         when 'end_time:asc'       then end_time      < $3
-                         when 'end_time:desc'      then end_time      < $3
-                         when 'start_time:asc'     then start_time    < $3
-                         when 'start_time:desc'    then start_time    < $3
-                       end
-                       or $3 is null
-                     )
-            order by case $4
-                       when 'start_time:asc'     then start_time
-                       when 'end_time:asc'       then end_time
-                       when 'schedule_time:asc'  then schedule_time
-                       else null
-                     end asc,
-                     case $4
-                       when 'start_time:desc'    then start_time
-                       when 'end_time:desc'      then end_time
-                       when 'schedule_time:desc' then schedule_time
-                       else null
-                     end desc
-               limit 24
-        "#,
-        &query.ids,
-        query.start_at,
-        query.end_at,
-        query.order_by.as_str(),
-        &query.status,
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)
+    Ok(warp::reply::json(&ResBody {
+        updated_at,
+        streams,
+    }))
 }

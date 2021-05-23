@@ -12,8 +12,8 @@ use reqwest::Client;
 
 use crate::config::CONFIG;
 
-pub use channels::Channel;
-pub use streams::Stream;
+pub use channels::*;
+pub use streams::*;
 
 #[derive(Clone)]
 pub struct RequestHub {

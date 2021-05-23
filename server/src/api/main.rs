@@ -1,5 +1,7 @@
 #[path = "../config.rs"]
 mod config;
+#[path = "../database/mod.rs"]
+mod database;
 #[path = "../error.rs"]
 mod error;
 mod filters;
@@ -16,12 +18,12 @@ mod v4;
 #[cfg(test)]
 mod tests;
 
-use sqlx::PgPool;
 use std::net::SocketAddr;
 use tracing::field::Empty;
 use warp::Filter;
 
 use crate::config::CONFIG;
+use crate::database::Database;
 use crate::error::Result;
 use crate::requests::RequestHub;
 
@@ -33,16 +35,16 @@ async fn main() -> Result<()> {
 
     let hub = RequestHub::new();
 
-    let pool = PgPool::connect(&CONFIG.database.url).await?;
+    let db = Database::new().await?;
 
     let cors = warp::cors().allow_any_origin();
 
     let routes = warp::path("api")
         .and(
-            v4::api(pool.clone())
-                .or(v3::api(pool.clone()))
-                .or(sitemap::sitemap(pool.clone()))
-                .or(pubsub::pubsub(pool, hub)),
+            v4::api(db.clone())
+                .or(v3::api(db.clone()))
+                .or(sitemap::sitemap(db.clone()))
+                .or(pubsub::pubsub(db, hub)),
         )
         .with(cors)
         .recover(reject::handle_rejection)
@@ -57,11 +59,9 @@ async fn main() -> Result<()> {
             span
         }));
 
-    let addr: SocketAddr = CONFIG
-        .server
-        .address
-        .parse()
-        .unwrap_or_else(|_| ([127, 0, 0, 1], 4200).into());
+    let addr: SocketAddr = CONFIG.server.address.parse().unwrap();
+
+    println!("API server running at {}", addr);
 
     warp::serve(routes).run(addr).await;
 

@@ -1,12 +1,12 @@
 use std::convert::Infallible;
 
-use sqlx::PgPool;
 use warp::Filter;
 
+use crate::database::Database;
 use crate::error::Error;
 
-pub fn with_db(pool: PgPool) -> impl Filter<Extract = (PgPool,), Error = Infallible> + Clone {
-    warp::any().map(move || pool.clone())
+pub fn with_db(db: Database) -> impl Filter<Extract = (Database,), Error = Infallible> + Clone {
+    warp::any().map(move || db.clone())
 }
 
 pub fn string_body() -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {

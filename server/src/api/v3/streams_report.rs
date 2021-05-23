@@ -1,17 +1,15 @@
 use chrono::{DateTime, Utc};
-use serde::{
-    ser::{SerializeTuple, Serializer},
-    Serialize,
-};
-use sqlx::PgPool;
+use serde_with::{rust::StringWithSeparator, skip_serializing_none, CommaSeparator};
 use warp::{reply::Json, Rejection};
 
+use crate::database::{statistic::Report, streams::Stream as Stream_, Database};
 use crate::error::Error;
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamsReportRequestQuery {
-    ids: String,
+    #[serde(with = "StringWithSeparator::<CommaSeparator>")]
+    ids: Vec<String>,
     metrics: String,
     start_at: Option<DateTime<Utc>>,
     end_at: Option<DateTime<Utc>>,
@@ -21,35 +19,10 @@ pub struct StreamsReportRequestQuery {
 #[serde(rename_all = "camelCase")]
 pub struct StreamsReportResponseBody {
     pub streams: Vec<Stream>,
-    pub reports: Vec<StreamsReport>,
+    pub reports: Vec<Report>,
 }
 
-#[derive(serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct StreamsReport {
-    pub id: String,
-    pub kind: String,
-    pub rows: Vec<Row>,
-}
-
-pub struct Row {
-    pub time: DateTime<Utc>,
-    pub value: i32,
-}
-
-// serializing row as a tuple, it helps reducing response size
-impl Serialize for Row {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut tuple = serializer.serialize_tuple(2)?;
-        tuple.serialize_element(&self.time)?;
-        tuple.serialize_element(&self.value)?;
-        tuple.end()
-    }
-}
-
+#[skip_serializing_none]
 #[derive(Debug, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Stream {
@@ -57,26 +30,38 @@ pub struct Stream {
     pub title: String,
     pub vtuber_id: String,
     pub thumbnail_url: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub schedule_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub start_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub end_time: Option<DateTime<Utc>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub average_viewer_count: Option<i32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub max_viewer_count: Option<i32>,
     pub updated_at: DateTime<Utc>,
 }
 
+impl From<Stream_> for Stream {
+    fn from(st: Stream_) -> Self {
+        Stream {
+            stream_id: st.stream_id,
+            title: st.title,
+            vtuber_id: st.vtuber_id,
+            thumbnail_url: st.thumbnail_url,
+            schedule_time: st.schedule_time,
+            start_time: st.start_time,
+            end_time: st.end_time,
+            average_viewer_count: st.average_viewer_count,
+            max_viewer_count: st.max_viewer_count,
+            updated_at: st.updated_at,
+        }
+    }
+}
+
 pub async fn streams_report(
     query: StreamsReportRequestQuery,
-    pool: PgPool,
+    db: Database,
 ) -> Result<Json, Rejection> {
     tracing::info!(
         name = "GET /api/v3/streams_report",
-        ids = &query.ids.as_str(),
+        ids = ?query.ids.as_slice(),
         metrics = &query.metrics.as_str(),
     );
 
@@ -88,42 +73,23 @@ pub async fn streams_report(
         tracing::info!(?end_at);
     }
 
-    let mut streams = vec![];
-    let mut reports = vec![];
-
-    for id in query.ids.split(',') {
-        let stream = sqlx::query_as!(
-            Stream,
-            r#"
-                select stream_id,
-                       title,
-                       vtuber_id,
-                       thumbnail_url,
-                       schedule_time,
-                       start_time,
-                       end_time,
-                       average_viewer_count,
-                       max_viewer_count,
-                       updated_at
-                  from youtube_streams
-                 where stream_id = $1
-            "#,
-            id
-        )
-        .fetch_optional(&pool)
+    let streams = db
+        .youtube_streams_by_ids(&query.ids)
         .await
         .map_err(Error::Database)?;
 
-        if let Some(stream) = stream {
-            streams.push(stream);
-            for metric in query.metrics.split(',') {
-                match metric {
-                    "youtube_stream_viewer" => reports.push(
-                        youtube_stream_viewer(id, query.start_at, query.end_at, &pool).await?,
-                    ),
-                    _ => (),
-                }
-            }
+    let streams = streams.into_iter().map(Into::into).collect();
+
+    let mut reports = vec![];
+
+    for metric in query.metrics.split(',') {
+        match metric {
+            "youtube_stream_viewer" => reports.extend(
+                db.youtube_stream_viewer(&query.ids, &query.start_at, &query.end_at)
+                    .await
+                    .map_err(Error::Database)?,
+            ),
+            _ => (),
         }
     }
 
@@ -131,34 +97,4 @@ pub async fn streams_report(
         streams,
         reports,
     }))
-}
-
-async fn youtube_stream_viewer(
-    id: &str,
-    start_at: Option<DateTime<Utc>>,
-    end_at: Option<DateTime<Utc>>,
-    pool: &PgPool,
-) -> Result<StreamsReport, Rejection> {
-    let rows = sqlx::query_as!(
-        Row,
-        r#"
-            select time, value
-              from youtube_stream_viewer_statistic
-             where stream_id = $1
-               and (time >= $2 or $2 is null)
-               and (time <= $3 or $3 is null)
-        "#,
-        id,
-        start_at,
-        end_at
-    )
-    .fetch_all(pool)
-    .await
-    .map_err(Error::Database)?;
-
-    Ok(StreamsReport {
-        id: id.to_string(),
-        kind: String::from("youtube_stream_viewer"),
-        rows,
-    })
 }
