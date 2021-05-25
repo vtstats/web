@@ -39,7 +39,9 @@ export type VTuberIds =
   | "queenie"
   | "rana"
   | "rayer"
+  | "rhe850726"
   | "ruroro"
+  | "rutanbuna"
   | "sakuranoruu"
   | "sanmou"
   | "shalalavtuber"
@@ -210,7 +212,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "ryoukenlapis",
     discord: "",
     facebook: "105752011459849",
-    default: true,
+    default: false,
   },
   lumina: {
     id: "lumina",
@@ -300,12 +302,28 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "",
     default: true,
   },
+  rhe850726: {
+    id: "rhe850726",
+    youtube: "UCzDR7vKAgJATmBeUsE3b8cQ",
+    twitter: "RHE850726",
+    discord: "",
+    facebook: "109109321338440",
+    default: false,
+  },
   ruroro: {
     id: "ruroro",
     youtube: "UCRf7OJA3azS4RsGd_G96FUw",
     twitter: "ruroroismek",
     discord: "",
     facebook: "ruroroisme",
+    default: true,
+  },
+  rutanbuna: {
+    id: "rutanbuna",
+    youtube: "UCnSa7dnmEf6bmyS_34yqE_A",
+    twitter: "Rutanbuna",
+    discord: "",
+    facebook: "",
     default: true,
   },
   sakuranoruu: {
@@ -485,7 +503,9 @@ export type BatchIds =
   | "queenie"
   | "rana"
   | "rayer"
+  | "rhe850726"
   | "ruroro"
+  | "rutanbuna"
   | "sakuranoruu"
   | "sanmou"
   | "shalalavtuber"
@@ -538,7 +558,9 @@ export const batches: Record<BatchIds, Batch> = {
   "queenie": null,
   "rana": null,
   "rayer": null,
+  "rhe850726": null,
   "ruroro": null,
+  "rutanbuna": null,
   "sakuranoruu": null,
   "sanmou": null,
   "shalalavtuber": null,
