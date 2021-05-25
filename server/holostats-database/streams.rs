@@ -300,6 +300,7 @@ impl Database {
     pub async fn update_youtube_stream_statistic(
         &self,
         id: String,
+        title: String,
         datetime: UtcTime,
         status: StreamStatus,
         schedule_time: Option<UtcTime>,
@@ -312,10 +313,11 @@ impl Database {
         let _ = sqlx::query!(
             r#"
     update youtube_streams
-       set (updated_at, status, schedule_time, start_time, end_time)
-         = ($1, $2, $3, $4, $5)
-     where stream_id = $6
+       set (title, updated_at, status, schedule_time, start_time, end_time)
+         = ($1, $2, $3, $4, $5, $6)
+     where stream_id = $7
             "#,
+            title,
             datetime,
             status: _,
             schedule_time,

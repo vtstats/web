@@ -41,6 +41,7 @@ async fn real_main() -> Result<()> {
     for stream in streams {
         db.update_youtube_stream_statistic(
             stream.id,
+            stream.title,
             now,
             match stream.status {
                 StreamStatus::Ended => StreamStatus_::Ended,
