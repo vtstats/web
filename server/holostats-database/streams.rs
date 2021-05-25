@@ -284,7 +284,8 @@ impl Database {
         let _ = sqlx::query!(
             r#"
     update youtube_streams
-       set end_time = $1
+       set (end_time, updated_at, status)
+         = ($1, $1, 'ended'::stream_status)
      where stream_id = any($2)
             "#,
             now,
