@@ -97,6 +97,7 @@ export class ChannelStatsChart implements OnChanges {
   }
 
   ngOnChanges() {
+    this.report.rows.sort((a, b) => (a[0] < b[0] ? -1 : 1));
     this.chart.createChart({
       series: [{ data: this.report.rows }],
       stroke: { width: 3 },
