@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.4",
     "@angular/router": "~11.2.4",
     "@angular/service-worker": "~11.2.4",
-    "@cloudflare/kv-asset-handler": "^0.1.0",
+    "@cloudflare/kv-asset-handler": "^0.1.2",
     "apexcharts": "^3.25.0",
     "aws4fetch": "^1.0.13",
     "date-fns": "^2.18.0",
