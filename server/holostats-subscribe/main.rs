@@ -1,5 +1,5 @@
-use anyhow::Result;
-use futures::{stream, StreamExt};
+use anyhow::{Error, Result};
+use futures::{stream, StreamExt, TryStreamExt};
 use holostats_config::CONFIG;
 use holostats_request::RequestHub;
 use holostats_utils::tracing::init;
@@ -27,8 +27,9 @@ async fn real_main() -> Result<()> {
 
     stream::iter(subscribe_stream)
         .buffer_unordered(10)
-        .collect::<Vec<()>>()
-        .await;
+        .map_err(Error::new)
+        .try_collect::<Vec<()>>()
+        .await?;
 
     Ok(())
 }
