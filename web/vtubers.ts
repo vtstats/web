@@ -14,16 +14,19 @@ export type VTuberIds =
   | "aoi"
   | "asa"
   | "ayamizuka"
+  | "balaenmlnam"
   | "chilla"
   | "choco"
   | "fengxu"
   | "fifteen"
   | "fujinokuma"
+  | "gentotaitan"
   | "haruka"
   | "healingluka"
   | "himemiyayuka"
   | "hoonie"
   | "ikusen"
+  | "jimu0918"
   | "kaina"
   | "kurita"
   | "kwakon"
@@ -31,6 +34,7 @@ export type VTuberIds =
   | "lumina"
   | "lutra"
   | "miamya"
+  | "mirotabasco"
   | "miru"
   | "nyoro"
   | "obear"
@@ -56,6 +60,7 @@ export type VTuberIds =
   | "tsmatch"
   | "twsiriya"
   | "ubye"
+  | "umihimeiriya"
   | "usagi"
   | "yumemi"
   | "yuna"
@@ -66,7 +71,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     id: "ahiruibi",
     youtube: "UCH9Yw2PyGW0AtGltOuVcq_A",
     twitter: "Ahiru_Ibi",
-    discord: "",
+    discord: "ahiruibi",
     facebook: "Ahiru.Ibi",
     default: true,
   },
@@ -100,6 +105,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "AyaMizuKaVtuber",
     discord: "cmUfWfAXBW",
     facebook: "AyaMizuKaVtuber",
+    default: true,
+  },
+  balaenmlnam: {
+    id: "balaenmlnam",
+    youtube: "UCUxIkkVP4EIIPhF8M1KRBjw",
+    twitter: "Balaen_MLNAM",
+    discord: "",
+    facebook: "",
     default: true,
   },
   chilla: {
@@ -142,6 +155,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "",
     default: true,
   },
+  gentotaitan: {
+    id: "gentotaitan",
+    youtube: "UC3T7xU1_r3-LAx5PKHYyxsg",
+    twitter: "GentoTaitan",
+    discord: "",
+    facebook: "",
+    default: true,
+  },
   haruka: {
     id: "haruka",
     youtube: "UCl1RVJbkPnpNbO9-CsDqPmQ",
@@ -180,6 +201,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "Ikusen_",
     discord: "",
     facebook: "ikusen.vtuber.52",
+    default: true,
+  },
+  jimu0918: {
+    id: "jimu0918",
+    youtube: "UCqwae8F5d7iwGdf9e932K5w",
+    twitter: "Jimu0918",
+    discord: "",
+    facebook: "",
     default: true,
   },
   kaina: {
@@ -238,6 +267,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "MiaMya0615",
     default: true,
   },
+  mirotabasco: {
+    id: "mirotabasco",
+    youtube: "UCXe8hqIk_Yap31y7EOCMdzg",
+    twitter: "mirotabasco",
+    discord: "",
+    facebook: "basuko.ta",
+    default: true,
+  },
   miru: {
     id: "miru",
     youtube: "UCFahBR2wixu0xOex84bXFvg",
@@ -276,7 +313,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "purusu0325",
     discord: "",
     facebook: "106704748184668",
-    default: false,
+    default: true,
   },
   queenie: {
     id: "queenie",
@@ -308,7 +345,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "RHE850726",
     discord: "",
     facebook: "109109321338440",
-    default: false,
+    default: true,
   },
   ruroro: {
     id: "ruroro",
@@ -428,7 +465,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "twsiriya",
     discord: "",
     facebook: "105037511566512",
-    default: false,
+    default: true,
   },
   ubye: {
     id: "ubye",
@@ -436,6 +473,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "UbyeCloud",
     discord: "",
     facebook: "Ubyecloud",
+    default: true,
+  },
+  umihimeiriya: {
+    id: "umihimeiriya",
+    youtube: "UCv_W2ZpvfrLAzsHqtjWGKYw",
+    twitter: "umihimeiriya",
+    discord: "AgNGGzmf",
+    facebook: "UmihimeIriya",
     default: true,
   },
   usagi: {
@@ -478,16 +523,19 @@ export type BatchIds =
   | "aoi"
   | "asa"
   | "ayamizuka"
+  | "balaenmlnam"
   | "chilla"
   | "choco"
   | "fengxu"
   | "fifteen"
   | "fujinokuma"
+  | "gentotaitan"
   | "haruka"
   | "healingluka"
   | "himemiyayuka"
   | "hoonie"
   | "ikusen"
+  | "jimu0918"
   | "kaina"
   | "kurita"
   | "kwakon"
@@ -495,6 +543,7 @@ export type BatchIds =
   | "lumina"
   | "lutra"
   | "miamya"
+  | "mirotabasco"
   | "miru"
   | "nyoro"
   | "obear"
@@ -520,6 +569,7 @@ export type BatchIds =
   | "tsmatch"
   | "twsiriya"
   | "ubye"
+  | "umihimeiriya"
   | "usagi"
   | "yumemi"
   | "yuna"
@@ -533,16 +583,19 @@ export const batches: Record<BatchIds, Batch> = {
   "aoi": null,
   "asa": null,
   "ayamizuka": null,
+  "balaenmlnam": null,
   "chilla": null,
   "choco": null,
   "fengxu": null,
   "fifteen": null,
   "fujinokuma": null,
+  "gentotaitan": null,
   "haruka": null,
   "healingluka": null,
   "himemiyayuka": null,
   "hoonie": null,
   "ikusen": null,
+  "jimu0918": null,
   "kaina": null,
   "kurita": null,
   "kwakon": null,
@@ -550,6 +603,7 @@ export const batches: Record<BatchIds, Batch> = {
   "lumina": null,
   "lutra": null,
   "miamya": null,
+  "mirotabasco": null,
   "miru": null,
   "nyoro": null,
   "obear": null,
@@ -575,6 +629,7 @@ export const batches: Record<BatchIds, Batch> = {
   "tsmatch": null,
   "twsiriya": null,
   "ubye": null,
+  "umihimeiriya": null,
   "usagi": null,
   "yumemi": null,
   "yuna": null,
