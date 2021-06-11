@@ -4,6 +4,7 @@ import csv
 import asyncio
 from datetime import datetime, timedelta
 from pprint import pprint
+import argparse
 
 import asyncpg
 from googleapiclient.discovery import build
@@ -11,15 +12,14 @@ from googleapiclient.discovery import build
 apikey = os.environ.get("YOUTUBE_API_KEY1")
 db_url = os.environ.get("DATABASE_URL",
                         "postgres://holostats:holostats@localhost:5432/holostats")
-csvfile = "vtuber.csv"
 
 
-def customVT():
-    vtubers = read_csv()
-    return vtubers[35:]
+def customVT(lastn, csvfile):
+    vtubers = read_csv(csvfile)
+    return vtubers[-lastn:]
 
 
-def read_csv():
+def read_csv(csvfile):
     with open(csvfile, "r") as fin:
         reader = csv.DictReader(fin)
         return list(reader)
@@ -27,6 +27,7 @@ def read_csv():
 
 def parse8601(t):
     return datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
+
 
 def myprint(a, b):
     print(a)
@@ -70,17 +71,16 @@ def parse_time(ids):
     return data
 
 
-async def main():
+async def main(args):
     conn = await asyncpg.connect(db_url)
 
-    for vt in customVT():
+    for vt in customVT(args.lastn, args.vtuber_csv):
         n_ok, n_skip = 0, 0
         token = None
         while True:
-            # TODO: add publishedAfter 4/16 4:00
             rep = youtube.search().list(part="snippet",
                                         channelId=vt['youtube'],
-                                        publishedAfter="2021-05-14T00:00:00Z",
+                                        publishedAfter=args.lastdate,
                                         type="video",
                                         maxResults=50,
                                         pageToken=token).execute()
@@ -138,5 +138,20 @@ async def main():
         print(vt, f"ok {n_ok} skip {n_skip}")
 
 
+def setup_parser():
+    parser = argparse.ArgumentParser(
+            description='Utility to retrieve videos from vtubers')
+    parser.add_argument('--lastn', default=0, type=int,
+                        help="Update last n row in vtubers.csv")
+    parser.add_argument('--lastdate', default="2016-11-29T00:00:00Z",
+                        help="Update videos from lastdate")
+    parser.add_argument('--vtuber_csv', default="./vtuber.csv",
+                        help="Path to vtubers.csv")
+    return parser
+
+
+# TODO: add publishedAfter 5/15 4:00
+parser = setup_parser()
+args = parser.parse_args()
 youtube = build("youtube", "v3", developerKey=apikey)
-asyncio.run(main())
+asyncio.run(main(args))
