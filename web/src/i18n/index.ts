@@ -13,7 +13,7 @@ export const getLocaleId = (): string => locale;
 
 export const getDateFnsLocale = (): Locale => dateFnsLocale;
 
-const supportedLanguages = ["en", "ms", "zh"];
+const supportedLanguages = ["en", "ms", "zh", "es"];
 
 export function init(): Promise<void> {
   let lang =
