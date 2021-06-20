@@ -49,7 +49,7 @@
             ],
             "styles": ["src/styles/main.scss"],
             "i18nMissingTranslation": "error",
-            "allowedCommonJsDependencies": ["apexcharts"]
+            "allowedCommonJsDependencies": ["apexcharts", "date-fns"]
           },
           "configurations": {
             "production": {
