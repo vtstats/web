@@ -13,7 +13,7 @@ import {
   StreamReportResponse,
 } from "src/app/models";
 
-const BASE_URL = "https://holo.poi.cat/api/v4";
+const BASE_URL = "https://holoapi.poi.cat/api/v4";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
