@@ -6,8 +6,6 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 
-import { environment } from "src/environments/environment";
-
 @Component({
   selector: "hs-sidenav",
   templateUrl: "sidenav.html",
@@ -17,6 +15,5 @@ import { environment } from "src/environments/environment";
 export class Sidenav {
   @Output() buttonClick = new EventEmitter();
 
-  readonly commitHash = environment.commit_hash;
   readonly angularVer = VERSION.full;
 }
