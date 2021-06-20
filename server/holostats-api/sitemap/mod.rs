@@ -15,26 +15,32 @@ const PAGES: &[&str] = &[
     "/settings",
 ];
 
-// Returns a sitemap for crawler
-async fn sitemap_get(db: Database) -> Result<impl warp::Reply, Rejection> {
+#[derive(serde::Deserialize)]
+pub struct Query {
+    #[serde(rename = "baseUrl")]
+    base_url: String,
+}
+
+// Returns a sitemap for crawler like google search
+async fn sitemap_get(query: Query, db: Database) -> Result<impl warp::Reply, Rejection> {
     tracing::info!(name = "GET /api/sitemap");
 
     let ids = db.stream_ids().await.map_err(Into::<WarpError>::into)?;
 
-    let url_len = "https://".len() + CONFIG.server.hostname.len() + "/stream/xxxxxxxxxxx".len();
+    let url_len = "https://".len() + query.base_url.len() + "/stream/xxxxxxxxxxx".len();
 
     let mut res = String::with_capacity(url_len * ids.len());
 
     for id in ids {
-        let _ = writeln!(res, "https://{}/stream/{}", CONFIG.server.hostname, id);
+        let _ = writeln!(res, "https://{}/stream/{}", query.base_url, id);
     }
 
     for page in PAGES {
-        let _ = writeln!(res, "https://{}{}", CONFIG.server.hostname, page);
+        let _ = writeln!(res, "https://{}{}", query.base_url, page);
     }
 
     for vtb in &CONFIG.vtubers {
-        let _ = writeln!(res, "https://{}/vtuber/{}", CONFIG.server.hostname, vtb.id);
+        let _ = writeln!(res, "https://{}/vtuber/{}", query.base_url, vtb.id);
     }
 
     Ok(res)
@@ -45,6 +51,7 @@ pub fn sitemap(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     warp::path!("sitemap")
         .and(warp::get())
+        .and(warp::query())
         .and(with_db(db))
         .and_then(sitemap_get)
 }
