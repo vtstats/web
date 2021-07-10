@@ -53,6 +53,7 @@ export type VTuberIds =
   | "gura"
   | "inanis"
   | "kiara"
+  | "irys"
   | "luna"
   | "nekomiya"
   | "tamaki"
@@ -385,6 +386,12 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     bilibili: 674600646,
     default: true,
   },
+  irys: {
+    id: "irys",
+    twitter: "irys_en",
+    youtube: "UC8rcEBzJSleTkf_-agPM20g",
+    default: true,
+  },
   luna: {
     id: "luna",
     twitter: "_KaguyaLuna",
@@ -499,6 +506,7 @@ export type BatchIds =
   | "hololive_id_1st"
   | "hololive_id_2nd"
   | "hololive_en"
+  | "hololive_en_vsinger"
   | "holostars_1st"
   | "holostars_2nd"
   | "holostars_3rd"
@@ -520,6 +528,7 @@ export const batches: Record<BatchIds, Batch> = {
   hololive_id_1st: ["risu", "moona", "iofi"],
   hololive_id_2nd: ["ollie", "melfissa", "reine"],
   hololive_en: ["amelia", "calliope", "gura", "inanis", "kiara"],
+  hololive_en_vsinger: ["irys"],
   holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
