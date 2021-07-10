@@ -44,6 +44,7 @@ insert into youtube_channels (vtuber_id)
             ('gura'),            -- Gawr Gura
             ('inanis'),          -- Ninomae Ina'nis
             ('kiara'),           -- Takanashi Kiara
+            ('irys'),            -- IRyS
             ('luna'),            -- 輝夜月
             ('nekomiya'),        -- 猫宮ひなた
             ('tamaki'),          -- 犬山たまき
