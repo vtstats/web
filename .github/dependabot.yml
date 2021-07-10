@@ -7,6 +7,10 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 10
     target-branch: dev
+    ignore:
+      # ignore all patch updates
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
 
   - package-ecosystem: npm
     directory: "/web"
@@ -16,6 +20,6 @@ updates:
     open-pull-requests-limit: 10
     target-branch: dev
     ignore:
-      # angualr-related packages should be managed by angualr-cli
-      - dependency-name: "@angualr/*"
-      - dependency-name: "rxjs"
+      # ignore all patch updates
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
