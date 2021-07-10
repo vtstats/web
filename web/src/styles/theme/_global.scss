@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin global-theme($theme) {
   $background: map-get($theme, "background");
@@ -6,12 +6,12 @@
   $is-dark-theme: map-get($theme, "is-dark");
 
   @if $is-dark-theme {
-    background-color: mat-color($background, "card");
-    color: mat-color($foreground, "text");
+    background-color: mat.get-color-from-palette($background, "card");
+    color: mat.get-color-from-palette($foreground, "text");
   } @else {
     body {
-      background-color: mat-color($background, "card");
-      color: mat-color($foreground, "text");
+      background-color: mat.get-color-from-palette($background, "card");
+      color: mat.get-color-from-palette($foreground, "text");
     }
   }
 }

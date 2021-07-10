@@ -19,9 +19,7 @@
         "@schematics/angular:guard": {
           "skipTests": true
         },
-        "@schematics/angular:module": {
-          "skipTests": true
-        },
+        "@schematics/angular:module": {},
         "@schematics/angular:pipe": {
           "skipTests": true
         },
@@ -49,7 +47,13 @@
             ],
             "styles": ["src/styles/main.scss"],
             "i18nMissingTranslation": "error",
-            "allowedCommonJsDependencies": ["apexcharts", "date-fns"]
+            "allowedCommonJsDependencies": ["apexcharts", "date-fns"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -62,10 +66,8 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
@@ -82,7 +84,8 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -106,7 +109,9 @@
           "options": {
             "outputPath": "workers/dist",
             "main": "workers/main.ts",
-            "tsConfig": "workers/tsconfig.json"
+            "tsConfig": "workers/tsconfig.json",
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {
@@ -114,7 +119,8 @@
               "sourceMap": false,
               "optimization": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         }
       }
     }

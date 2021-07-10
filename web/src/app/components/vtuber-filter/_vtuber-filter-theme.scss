@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin vtuber-filter-theme($theme) {
   $primary: map-get($theme, primary);
@@ -6,29 +6,29 @@
 
   .vtuber-filter-row {
     .text {
-      background-color: mat-color($background, "unselected-chip");
+      background-color: mat.get-color-from-palette($background, "unselected-chip");
     }
 
     .more,
     .profile {
-      background-color: mat-color($background, "background");
+      background-color: mat.get-color-from-palette($background, "background");
 
       &.selected {
-        border: 2px solid mat-color($primary);
+        border: 2px solid mat.get-color-from-palette($primary);
       }
     }
   }
 
   .vtuber-filter-overlay {
-    background-color: mat-color($background, "card");
+    background-color: mat.get-color-from-palette($background, "card");
   }
 }
 
 @mixin vtuber-filter-typography($config) {
   .vtuber-filter-row {
     .more {
-      font-size: mat-font-size($config, "body-2");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "body-2");
+      font-weight: mat.font-weight($config, "body-2");
     }
   }
 }

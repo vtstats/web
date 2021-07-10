@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin stream-item-theme($theme) {
   $is-dark-theme: map-get($theme, "is-dark");
@@ -13,14 +13,14 @@
 
   .stream-item {
     .viewers {
-      color: mat-color($foreground, "secondary-text");
+      color: mat.get-color-from-palette($foreground, "secondary-text");
     }
 
     .current {
       color: if(
         $is-dark-theme,
-        map-get(mat-palette($mat-red), 300),
-        map-get(mat-palette($mat-red), 800)
+        map-get(mat.define-palette(mat.$red-palette), 300),
+        map-get(mat.define-palette(mat.$red-palette), 800)
       );
     }
 
@@ -37,19 +37,19 @@
 @mixin stream-item-typography($config) {
   .stream-item {
     .duration {
-      font-size: mat-font-size($config, "caption");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "caption");
+      font-weight: mat.font-weight($config, "body-2");
     }
 
     .title {
-      font-size: mat-font-size($config, "body-1");
-      font-weight: mat-font-weight($config, "body-1");
+      font-size: mat.font-size($config, "body-1");
+      font-weight: mat.font-weight($config, "body-1");
     }
 
     .meta,
     .viewers {
-      font-size: mat-font-size($config, "caption");
-      font-weight: mat-font-weight($config, "body-1");
+      font-size: mat.font-size($config, "caption");
+      font-weight: mat.font-weight($config, "body-1");
     }
   }
 }

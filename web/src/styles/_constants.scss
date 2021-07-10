@@ -1,27 +1,46 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
+@use 'sass:map';
 
-$hs-typography-config: mat-typography-config();
+$hs-typography-config: mat.define-typography-config();
 
-$mat-light-theme-background: map-merge(
-  $mat-light-theme-background,
+$hs-light-theme: map.deep-merge(
+  mat.define-light-theme(
+    (
+      color: (
+        primary: mat.$blue-gray-palette,
+        accent: mat.$blue-gray-palette,
+      ),
+    )
+  ),
   (
-    "card": white,
-    "background": #f9f9f9,
+    background: (
+      card: white,
+    ),
+    color: (
+      background: (
+        background: #f9f9f9,
+      ),
+    ),
   )
 );
 
-$mat-dark-theme-background: map-merge(
-  $mat-dark-theme-background,
+$hs-dark-theme: map.deep-merge(
+  mat.define-dark-theme(
+    (
+      color: (
+        primary: mat.define-palette(mat.$blue-gray-palette, 300),
+        accent: mat.define-palette(mat.$blue-gray-palette, 300),
+      ),
+    )
+  ),
   (
-    "card": #282828,
-    "background": #1f1f1f,
+    background: (
+      card: #282828,
+    ),
+    color: (
+      background: (
+        background: #1f1f1f,
+      ),
+    ),
   )
 );
-
-$hs-light-primary: mat-palette($mat-blue-gray);
-$hs-light-accent: mat-palette($mat-blue-gray);
-$hs-light-theme: mat-light-theme($hs-light-primary, $hs-light-accent);
-
-$hs-dark-primary: mat-palette($mat-blue-gray, 300);
-$hs-dark-accent: mat-palette($mat-blue-gray, 300);
-$hs-dark-theme: mat-dark-theme($hs-dark-primary, $hs-dark-accent);

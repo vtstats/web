@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin channel-stats-theme($theme) {
   $background: map-get($theme, "background");
@@ -13,7 +13,7 @@
 
   .vtuber-summary {
     .mat-icon {
-      color: mat-color($foreground, "secondary-text");
+      color: mat.get-color-from-palette($foreground, "secondary-text");
     }
 
     .profile {
@@ -25,8 +25,8 @@
 @mixin channel-stats-typography($config) {
   .vtuber-summary {
     .name {
-      font-size: mat-font-size($config, "title");
-      font-weight: mat-font-weight($config, "title");
+      font-size: mat.font-size($config, "title");
+      font-weight: mat.font-weight($config, "title");
     }
   }
 }

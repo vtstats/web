@@ -1,4 +1,5 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
+@use '~@angular/cdk' as cdk;
 
 // layout
 @import "src/app/layout/header/header-theme";
@@ -20,10 +21,13 @@
 @import "src/app/pages/not-found/not-found-theme";
 @import "src/app/pages/settings/settings-theme";
 
-@include mat-ripple();
-@include cdk-a11y();
-@include cdk-overlay();
-@include cdk-text-field();
+@include mat.ripple();
+@include cdk.a11y-visually-hidden();
+@include cdk.overlay();
+@include cdk.text-field();
+
+// FIXME
+mat.$theme-ignore-duplication-warnings: true;
 
 @mixin hs-theme($theme) {
   @include global-theme($theme);

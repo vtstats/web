@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 .vtuber-filter-row {
   display: inline-flex;
@@ -52,7 +52,7 @@
   border-radius: 4px;
   margin: 0;
   padding: 0;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .mat-list-option .mat-list-avatar {
     height: 32px;

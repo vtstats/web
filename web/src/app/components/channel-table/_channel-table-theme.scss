@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin channel-table-theme($theme) {
   $is-dark-theme: map-get($theme, "is-dark");
@@ -14,16 +14,16 @@
     .negative {
       color: if(
         $is-dark-theme,
-        map-get(mat-palette($mat-red), 300),
-        map-get(mat-palette($mat-red), 800)
+        map-get(mat.define-palette(mat.$red-palette), 300),
+        map-get(mat.define-palette(mat.$red-palette), 800)
       );
     }
 
     .positive {
       color: if(
         $is-dark-theme,
-        map-get(mat-palette($mat-green), 300),
-        map-get(mat-palette($mat-green), 800)
+        map-get(mat.define-palette(mat.$green-palette), 300),
+        map-get(mat.define-palette(mat.$green-palette), 800)
       );
     }
 

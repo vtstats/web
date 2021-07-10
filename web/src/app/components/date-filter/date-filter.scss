@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 .date-filter-overlay {
   width: 300px;
@@ -6,7 +6,7 @@
   border-radius: 4px;
   margin: 0;
   padding: 0;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 }
 
 .date-filter-arrow {

@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin stream-summary-theme($theme) {
   $foreground: map-get($theme, "foreground");
@@ -13,7 +13,7 @@
   .stream-summary {
     .title,
     .name {
-      color: mat-color($foreground, "text");
+      color: mat.get-color-from-palette($foreground, "text");
     }
 
     .profile,
@@ -26,13 +26,13 @@
 @mixin stream-summary-typography($config) {
   .stream-summary {
     .name {
-      font-size: mat-font-size($config, "body-2");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "body-2");
+      font-weight: mat.font-weight($config, "body-2");
     }
 
     .title {
-      font-size: mat-font-size($config, "title");
-      font-weight: mat-font-weight($config, "title");
+      font-size: mat.font-size($config, "title");
+      font-weight: mat.font-weight($config, "title");
     }
   }
 }

@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin apx-chart-theme($theme) {
   $background: map-get($theme, "background");
@@ -8,12 +8,12 @@
     .apexcharts-xaxis > line,
     .apexcharts-gridline,
     .apexcharts-xcrosshairs {
-      stroke: mat-color($foreground, "divider");
+      stroke: mat.get-color-from-palette($foreground, "divider");
     }
 
     .apexcharts-text,
     .apexcharts-title-text {
-      fill: mat-color($foreground, "text");
+      fill: mat.get-color-from-palette($foreground, "text");
     }
   }
 }
@@ -21,14 +21,14 @@
 @mixin apx-chart-typography($config) {
   .apx-chart {
     .apexcharts-tooltip {
-      font-size: mat-font-size($config, "caption");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "caption");
+      font-weight: mat.font-weight($config, "body-2");
     }
 
     .apexcharts-xaxis-label,
     .apexcharts-yaxis-label {
-      font-size: mat-font-size($config, "body-1");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "body-1");
+      font-weight: mat.font-weight($config, "body-2");
     }
   }
 }

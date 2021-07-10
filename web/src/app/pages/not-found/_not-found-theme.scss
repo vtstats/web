@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin not-found-theme($theme) {
   $foreground: map-get($theme, "foreground");
@@ -6,7 +6,7 @@
   .not-found {
     .watame,
     .title {
-      color: mat-color($foreground, "secondary-text");
+      color: mat.get-color-from-palette($foreground, "secondary-text");
     }
   }
 }
@@ -14,13 +14,13 @@
 @mixin not-found-typography($config) {
   .not-found {
     .title {
-      font-size: mat-font-size($config, "display-1");
-      font-weight: mat-font-weight($config, "display-1");
+      font-size: mat.font-size($config, "display-1");
+      font-weight: mat.font-weight($config, "display-1");
     }
 
     .watame {
-      font-size: mat-font-size($config, "body-2");
-      font-weight: mat-font-weight($config, "body-2");
+      font-size: mat.font-size($config, "body-2");
+      font-weight: mat.font-weight($config, "body-2");
     }
   }
 }
