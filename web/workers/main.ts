@@ -25,7 +25,10 @@ async function handleEvent(event: FetchEvent): Promise<Response> {
   const url = new URL(request.url);
 
   if (url.pathname.startsWith("/api")) {
-    const response = await fetch(request);
+    const response = await fetch(
+      "https://holoapi.poi.cat" + url.pathname,
+      event.request
+    );
 
     return hanldeEtag(request, response);
   }
