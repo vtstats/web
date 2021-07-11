@@ -6,7 +6,10 @@
 
   .vtuber-filter-row {
     .text {
-      background-color: mat.get-color-from-palette($background, "unselected-chip");
+      background-color: mat.get-color-from-palette(
+        $background,
+        "unselected-chip"
+      );
     }
 
     .more,

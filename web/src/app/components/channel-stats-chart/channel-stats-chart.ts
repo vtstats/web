@@ -50,7 +50,7 @@ export class ChannelStatsChart implements OnChanges {
 
   constructor(private cdf: ChangeDetectorRef) {}
 
-  private dataPointIndex: number = -1;
+  private dataPointIndex: number = null;
 
   get title(): string {
     return translate(
@@ -74,25 +74,20 @@ export class ChannelStatsChart implements OnChanges {
     }
   }
 
+  get dataPoint(): [number, number] {
+    return this.report.rows[this.dataPointIndex || this.report.rows.length - 1];
+  }
+
   get date(): string {
-    let d = this.report.rows[
-      this.dataPointIndex === -1
-        ? this.report.rows.length - 1
-        : this.dataPointIndex
-    ][0];
-    return format(d, "yyyy-MM-dd HH:mm");
+    return format(this.dataPoint[0], "yyyy-MM-dd HH:mm");
   }
 
   get value(): number {
-    return this.report.rows[
-      this.dataPointIndex === -1
-        ? this.report.rows.length - 1
-        : this.dataPointIndex
-    ][1];
+    return this.dataPoint[1];
   }
 
   resetDataPointIndex() {
-    this.dataPointIndex = -1;
+    this.dataPointIndex = null;
     this.cdf.markForCheck();
   }
 

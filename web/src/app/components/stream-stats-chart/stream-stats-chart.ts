@@ -73,7 +73,7 @@ export class StreamStatsChart implements OnChanges {
           enabled: false,
         },
         labels: {
-          formatter: (date) => format((date as unknown) as number, "HH:mm"),
+          formatter: (date) => format(date as unknown as number, "HH:mm"),
         },
         axisTicks: {
           show: false,
