@@ -7,8 +7,8 @@ $hs-light-theme: map.deep-merge(
   mat.define-light-theme(
     (
       color: (
-        primary: mat.$blue-gray-palette,
-        accent: mat.$blue-gray-palette,
+        primary: mat.define-palette(mat.$blue-gray-palette),
+        accent: mat.define-palette(mat.$blue-gray-palette),
       ),
     )
   ),
