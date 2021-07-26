@@ -39,7 +39,7 @@
     "@angular/language-service": "~12.1.1",
     "@cloudflare/workers-types": "^2.1.0",
     "codeceptjs": "^3.0.5",
-    "playwright": "^1.9.1",
+    "playwright": "^1.13.0",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
     "tslint": "~6.1.0",
