@@ -30,3 +30,5 @@ impl RequestHub {
         &CONFIG.youtube.api_keys[idx]
     }
 }
+
+pub use reqwest::Error as RequestError;

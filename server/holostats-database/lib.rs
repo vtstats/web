@@ -17,3 +17,5 @@ impl Database {
         Ok(Database { pool })
     }
 }
+
+pub use sqlx::Error as DatabaseError;

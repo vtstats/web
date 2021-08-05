@@ -34,8 +34,12 @@ async fn main() -> Result<()> {
         .with(cors)
         .recover(reject::handle_rejection)
         .with(warp::trace(|info| {
-            let span =
-                tracing::info_span!("request", service.name = "holostats-api", referer = Empty);
+            let span = tracing::info_span!(
+                "request",
+                span.kind = "server",
+                service.name = "holostats-api",
+                referer = Empty
+            );
 
             if let Some(referer) = info.referer() {
                 span.record("referer", &referer);
