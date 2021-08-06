@@ -34,6 +34,7 @@ export type VTuberIds =
   | "lapis"
   | "lumina"
   | "lutra"
+  | "makinoshiro"
   | "miamya"
   | "mirotabasco"
   | "miru"
@@ -271,6 +272,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "RESCUTE119",
     default: true,
   },
+  makinoshiro: {
+    id: "makinoshiro",
+    youtube: "UCbZcxNKrC0a6IZYBowvzAUg",
+    twitter: "MakinoShiro",
+    discord: "",
+    facebook: "",
+    default: true,
+  },
   miamya: {
     id: "miamya",
     youtube: "UCIR0USMXU0r7N8spBJHNA7A",
@@ -301,7 +310,7 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "NoeRelive0101",
     discord: "",
     facebook: "NoeYinRelive",
-    default: relive_諾櫻 noe,
+    default: true,
   },
   nyoro: {
     id: "nyoro",
@@ -579,6 +588,7 @@ export type BatchIds =
   | "lapis"
   | "lumina"
   | "lutra"
+  | "makinoshiro"
   | "miamya"
   | "mirotabasco"
   | "miru"
@@ -643,6 +653,7 @@ export const batches: Record<BatchIds, Batch> = {
   "lapis": null,
   "lumina": null,
   "lutra": null,
+  "makinoshiro": null,
   "miamya": null,
   "mirotabasco": null,
   "miru": null,
