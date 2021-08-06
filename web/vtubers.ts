@@ -15,6 +15,7 @@ export type VTuberIds =
   | "asa"
   | "ayamizuka"
   | "balaenmlnam"
+  | "beryllulu"
   | "chilla"
   | "choco"
   | "fengxu"
@@ -36,6 +37,7 @@ export type VTuberIds =
   | "miamya"
   | "mirotabasco"
   | "miru"
+  | "noerelive0101"
   | "nyoro"
   | "obear"
   | "pedko"
@@ -44,6 +46,7 @@ export type VTuberIds =
   | "rana"
   | "rayer"
   | "rhe850726"
+  | "rumi0813"
   | "ruroro"
   | "rutanbuna"
   | "sakuranoruu"
@@ -62,6 +65,7 @@ export type VTuberIds =
   | "ubye"
   | "umihimeiriya"
   | "usagi"
+  | "woofwoffle"
   | "yumemi"
   | "yuna"
   | "zasasa";
@@ -113,6 +117,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "Balaen_MLNAM",
     discord: "",
     facebook: "",
+    default: true,
+  },
+  beryllulu: {
+    id: "beryllulu",
+    youtube: "UCPYNvBYZ8ClPPJ6274K4rVA",
+    twitter: "Beryl_lulu",
+    discord: "",
+    facebook: "Berylulu.tw",
     default: true,
   },
   chilla: {
@@ -283,6 +295,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "AnninMirudayo",
     default: true,
   },
+  noerelive0101: {
+    id: "noerelive0101",
+    youtube: "UCgVuzUu24q8KIDOjJcmCnIQ",
+    twitter: "NoeRelive0101",
+    discord: "",
+    facebook: "NoeYinRelive",
+    default: relive_諾櫻 noe,
+  },
   nyoro: {
     id: "nyoro",
     youtube: "UC4J0GZLM55qrFh2L-ZAb2LA",
@@ -345,6 +365,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "RHE850726",
     discord: "",
     facebook: "109109321338440",
+    default: true,
+  },
+  rumi0813: {
+    id: "rumi0813",
+    youtube: "UCswRX8mNNdn1fjRctZqzjgA",
+    twitter: "Rumi__0813",
+    discord: "",
+    facebook: "lanmewko",
     default: true,
   },
   ruroro: {
@@ -491,6 +519,14 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     facebook: "usagihime777",
     default: true,
   },
+  woofwoffle: {
+    id: "woofwoffle",
+    youtube: "UCprlKrFgmLW4F_Ec80PWuCw",
+    twitter: "woof_woffle",
+    discord: "",
+    facebook: "",
+    default: true,
+  },
   yumemi: {
     id: "yumemi",
     youtube: "UCRUFY2ZCyVOvC-1rJIVZlKg",
@@ -524,6 +560,7 @@ export type BatchIds =
   | "asa"
   | "ayamizuka"
   | "balaenmlnam"
+  | "beryllulu"
   | "chilla"
   | "choco"
   | "fengxu"
@@ -545,6 +582,7 @@ export type BatchIds =
   | "miamya"
   | "mirotabasco"
   | "miru"
+  | "noerelive0101"
   | "nyoro"
   | "obear"
   | "pedko"
@@ -553,6 +591,7 @@ export type BatchIds =
   | "rana"
   | "rayer"
   | "rhe850726"
+  | "rumi0813"
   | "ruroro"
   | "rutanbuna"
   | "sakuranoruu"
@@ -571,6 +610,7 @@ export type BatchIds =
   | "ubye"
   | "umihimeiriya"
   | "usagi"
+  | "woofwoffle"
   | "yumemi"
   | "yuna"
   | "zasasa";
@@ -584,6 +624,7 @@ export const batches: Record<BatchIds, Batch> = {
   "asa": null,
   "ayamizuka": null,
   "balaenmlnam": null,
+  "beryllulu": null,
   "chilla": null,
   "choco": null,
   "fengxu": null,
@@ -605,6 +646,7 @@ export const batches: Record<BatchIds, Batch> = {
   "miamya": null,
   "mirotabasco": null,
   "miru": null,
+  "noerelive0101": null,
   "nyoro": null,
   "obear": null,
   "pedko": null,
@@ -613,6 +655,7 @@ export const batches: Record<BatchIds, Batch> = {
   "rana": null,
   "rayer": null,
   "rhe850726": null,
+  "rumi0813": null,
   "ruroro": null,
   "rutanbuna": null,
   "sakuranoruu": null,
@@ -631,6 +674,7 @@ export const batches: Record<BatchIds, Batch> = {
   "ubye": null,
   "umihimeiriya": null,
   "usagi": null,
+  "woofwoffle": null,
   "yumemi": null,
   "yuna": null,
   "zasasa": null,
