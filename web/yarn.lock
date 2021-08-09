@@ -2400,10 +2400,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codeceptjs@^3.0.5:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/codeceptjs/-/codeceptjs-3.0.7.tgz#5d453630f8a4d3886993f423b3daad08c2491947"
-  integrity sha512-YtIhxfkgASI+mTvpxRYFiBUu2lXCNQXMKp8D9RWiYBT4sX3885yUU4FVIhFfpUaOeOUxDDkyUQRP9odW1boAiA==
+codeceptjs@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/codeceptjs/-/codeceptjs-3.1.1.tgz#77757ca779549258451e08a0136c7164357382ed"
+  integrity sha512-9ns82gxMc04kAy7S2FI0ZhevAOSBrZnHGTX9AXivhmg7hyK5QUKfm6grSVcFxwEHBbQta2G98h8W32eKGo4POA==
   dependencies:
     "@codeceptjs/configure" "^0.6.2"
     "@codeceptjs/helper" "^1.0.2"
