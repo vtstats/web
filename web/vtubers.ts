@@ -54,6 +54,11 @@ export type VTuberIds =
   | "inanis"
   | "kiara"
   | "irys"
+  | "sana"
+  | "ceres"
+  | "ouro"
+  | "mumei"
+  | "hakos"
   | "luna"
   | "nekomiya"
   | "tamaki"
@@ -392,6 +397,38 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UC8rcEBzJSleTkf_-agPM20g",
     default: true,
   },
+
+  sana: {
+    id: "sana",
+    twitter: "tsukumosana",
+    youtube: "UCsUj0dszADCGbF3gNrQEuSQ",
+    default: true,
+  },
+  ceres: {
+    id: "ceres",
+    twitter: "ceresfauna",
+    youtube: "UCO_aKKYxn4tvrqPjcTzZ6EQ",
+    default: true,
+  },
+  ouro: {
+    id: "ouro",
+    twitter: "ourokronii",
+    youtube: "UCmbs8T6MWqUHP1tIQvSgKrg",
+    default: true,
+  },
+  mumei: {
+    id: "mumei",
+    twitter: "nanashimumei_en",
+    youtube: "UC3n5uGu18FoCy23ggWWp8tA",
+    default: true,
+  },
+  hakos: {
+    id: "hakos",
+    twitter: "hakosbaelz",
+    youtube: "UCgmPnx-EEeOrZSg5Tiw7ZRQ",
+    default: true,
+  },
+
   luna: {
     id: "luna",
     twitter: "_KaguyaLuna",
@@ -428,7 +465,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     id: "pochimaru",
     twitter: "lizhi3",
     youtube: "UC22BVlBsZc6ta3Dqz75NU6Q",
-    bilibili: null,
     default: true,
   },
   ayamy: {
@@ -442,7 +478,6 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     id: "nabi",
     twitter: "nab0i",
     youtube: "UCzKkwB84Y0ql0EvyOWRSkEw",
-    bilibili: null,
     default: true,
   },
   miyabi: {
@@ -505,7 +540,8 @@ export type BatchIds =
   | "innk_music"
   | "hololive_id_1st"
   | "hololive_id_2nd"
-  | "hololive_en"
+  | "hololive_en_myth"
+  | "hololive_en_council"
   | "hololive_en_vsinger"
   | "holostars_1st"
   | "holostars_2nd"
@@ -527,8 +563,9 @@ export const batches: Record<BatchIds, Batch> = {
   innk_music: ["azki"],
   hololive_id_1st: ["risu", "moona", "iofi"],
   hololive_id_2nd: ["ollie", "melfissa", "reine"],
-  hololive_en: ["amelia", "calliope", "gura", "inanis", "kiara"],
+  hololive_en_myth: ["amelia", "calliope", "gura", "inanis", "kiara"],
   hololive_en_vsinger: ["irys"],
+  hololive_en_council: ["sana", "ceres", "ouro", "mumei", "hakos"],
   holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
