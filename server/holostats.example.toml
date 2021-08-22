@@ -14,10 +14,6 @@ url = "postgres://holostats:holostats@localhost/holostats"
 [youtube]
 # YouTube API keys
 api_keys = ["youtube_api_key1", "youtube_api_key2", "youtube_api_key3"]
-# URL path for receving pubsub from YouTube
-#
-# The actual url will be "https://${hostname}/api/pubsub/${pubsub_path}"
-pubsub_path = "XXXXXXX-XXXX-XXX-XXX-XXXX"
 pubsub_secret = "XXXXXXX-XXXX-XXX-XXX-XXXX"
 
 # Bilibili Crawling Configuration

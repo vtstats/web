@@ -11,18 +11,18 @@ use crate::reject::WarpError;
 
 pub async fn publish_content(
     body: String,
-    signature: Option<String>,
+    signature: String,
     db: Database,
     hub: RequestHub,
 ) -> Result<StatusCode, Rejection> {
-    tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str());
+    tracing::info!(name = "POST /api/pubsub", text = &body.as_str());
 
-    if let Some(signature) = signature.as_ref().map(|s| s.trim_start_matches("sha1=")) {
-        if verify_signature(&body, signature) {
-            println!("signature = {}: verified", signature);
-        } else {
-            eprintln!("signature = {}: failed", signature);
-        }
+    let expected = generate_signature(&body);
+    let found = signature.trim_start_matches("sha1=");
+
+    if expected != found {
+        eprintln!("Bad signature, expected: {}, found: {}", expected, found);
+        return Ok(StatusCode::BAD_REQUEST);
     }
 
     let doc = match Document::parse(&body) {
@@ -85,7 +85,7 @@ pub async fn publish_content(
     Ok(StatusCode::BAD_REQUEST)
 }
 
-pub fn verify_signature(data: &str, signature: &str) -> bool {
+pub fn generate_signature(data: &str) -> String {
     let mut mac = Hmac::<Sha1>::new_from_slice(CONFIG.youtube.pubsub_secret.as_bytes())
         .expect("HMAC can take key of any size");
 
@@ -93,7 +93,7 @@ pub fn verify_signature(data: &str, signature: &str) -> bool {
 
     let result = mac.finalize().into_bytes();
 
-    hex::encode(result) == signature
+    hex::encode(result)
 }
 
 pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {
