@@ -91,7 +91,9 @@ pub fn verify_signature(data: &str, signature: &str) -> bool {
 
     mac.update(data.as_bytes());
 
-    mac.verify(signature.as_bytes()).is_ok()
+    let result = mac.finalize().into_bytes();
+
+    hex::encode(result) == signature
 }
 
 pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {

@@ -621,6 +621,7 @@ dependencies = [
  "anyhow",
  "bytes",
  "chrono",
+ "hex",
  "hmac 0.11.0",
  "holostats-config",
  "holostats-database",
