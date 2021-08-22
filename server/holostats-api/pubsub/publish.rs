@@ -1,7 +1,9 @@
+use hmac::{Hmac, Mac, NewMac};
 use holostats_config::CONFIG;
 use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
 use roxmltree::Document;
+use sha1::Sha1;
 use std::convert::Into;
 use warp::{http::StatusCode, Rejection};
 
@@ -9,10 +11,19 @@ use crate::reject::WarpError;
 
 pub async fn publish_content(
     body: String,
+    signature: Option<String>,
     db: Database,
     hub: RequestHub,
 ) -> Result<StatusCode, Rejection> {
     tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str());
+
+    if let Some(signature) = signature {
+        if verify_signature(&body, &signature) {
+            println!("signature = {}: verified", signature);
+        } else {
+            eprintln!("signature = {}: failed", signature);
+        }
+    }
 
     let doc = match Document::parse(&body) {
         Ok(doc) => doc,
@@ -72,6 +83,15 @@ pub async fn publish_content(
     tracing::error!(err.msg = "unkown xml schema");
 
     Ok(StatusCode::BAD_REQUEST)
+}
+
+pub fn verify_signature(data: &str, signature: &str) -> bool {
+    let mut mac = Hmac::<Sha1>::new_from_slice(CONFIG.youtube.pubsub_secret.as_bytes())
+        .expect("HMAC can take key of any size");
+
+    mac.update(data.as_bytes());
+
+    mac.verify(signature.as_bytes()).is_ok()
 }
 
 pub fn parse_modification<'a>(doc: &'a Document) -> Option<(&'a str, &'a str)> {

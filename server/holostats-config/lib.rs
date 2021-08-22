@@ -30,6 +30,7 @@ pub struct DatabaseConfig {
 pub struct YouTubeConfig {
     pub api_keys: Vec<String>,
     pub pubsub_path: String,
+    pub pubsub_secret: String,
 }
 
 #[derive(Deserialize)]

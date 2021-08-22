@@ -33,6 +33,7 @@ pub fn pubsub_publish(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     warp::post()
         .and(string_body())
+        .and(warp::header::optional::<String>("x-hub-signature"))
         .and(with_db(db))
         .and(warp::any().map(move || hub.clone()))
         .and_then(publish_content)
