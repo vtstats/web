@@ -9,10 +9,10 @@ name = "channel_stat"
 path = "main.rs"
 
 [dependencies]
-anyhow = "1.0.40"
+anyhow = "1.0.43"
 chrono = { version = "0.4.19", features = ["serde"] }
-tokio = { version = "1.5.0", features = ["macros"] }
-tracing = "0.1.25"
+tokio = { version = "1.10.0", features = ["macros"] }
+tracing = "0.1.26"
 tracing-futures = "0.2.5"
 holostats-config = { path = "../holostats-config" }
 holostats-database = { path = "../holostats-database" }

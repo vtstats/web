@@ -8,6 +8,6 @@ edition = "2018"
 path = "lib.rs"
 
 [dependencies]
-once_cell = "1.7.2"
-serde = { version = "1.0.126", features = ["derive"] }
+once_cell = "1.8.0"
+serde = { version = "1.0.128", features = ["derive"] }
 toml = "0.5.8"
