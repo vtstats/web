@@ -73,7 +73,8 @@ host;x-amz-content-sha256;x-amz-date
         // task3
         macro_rules! hmac_sha256 {
             ($key:expr, $data:expr) => {{
-                let mut mac = Hmac::<Sha256>::new_varkey($key).unwrap();
+                let mut mac =
+                    Hmac::<Sha256>::new_from_slice($key).expect("HMAC can take key of any size");
                 mac.update($data);
                 mac.finalize().into_bytes()
             }};
