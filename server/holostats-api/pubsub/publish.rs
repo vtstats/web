@@ -17,8 +17,8 @@ pub async fn publish_content(
 ) -> Result<StatusCode, Rejection> {
     tracing::info!(name = "POST /api/pubsub/:pubsub", text = &body.as_str());
 
-    if let Some(signature) = signature {
-        if verify_signature(&body, &signature) {
+    if let Some(signature) = signature.as_ref().map(|s| s.trim_start_matches("sha1=")) {
+        if verify_signature(&body, signature) {
             println!("signature = {}: verified", signature);
         } else {
             eprintln!("signature = {}: failed", signature);
