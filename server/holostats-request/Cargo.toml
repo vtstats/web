@@ -15,7 +15,7 @@ futures = "0.3.16"
 hex = "0.4.3"
 hmac = "0.11.0"
 serde = { version = "1.0.128", features = ["derive"] }
-serde_with = "1.9.4"
+serde_with = "1.10.0"
 sha2 = "0.9.5"
 tracing = "0.1.26"
 reqwest = { version = "0.11.4", default-features = false, features = [

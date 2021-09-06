@@ -10,7 +10,7 @@ path = "lib.rs"
 [dependencies]
 chrono = { version = "0.4.19", features = ["serde"] }
 serde = { version = "1.0.128", features = ["derive"] }
-serde_with = "1.9.4"
+serde_with = "1.10.0"
 sqlx = { version = "0.5.7", default-features = false, features = [
     "runtime-tokio-rustls",
     "macros",
