@@ -14,6 +14,7 @@ async fn main() -> Result<()> {
 
 #[instrument(
     name = "subscribe-feed"
+    span.kind = "consumer"
     fields(service.name = "holostats-cron")
 )]
 async fn real_main() -> Result<()> {
