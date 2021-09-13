@@ -15,8 +15,10 @@ async fn main() -> Result<()> {
 
 #[instrument(
     name = "channel_stat"
-    span.kind = "consumer"
-    fields(service.name = "holostats-cron")
+    fields(
+        service.name = "holostats-cron",
+        span.kind = "consumer"
+    )
 )]
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
