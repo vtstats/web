@@ -5,6 +5,7 @@ use chrono::{
 use serde::Serialize;
 use serde_with::skip_serializing_none;
 use sqlx::Result;
+use std::cmp::{max, min};
 use tracing::instrument;
 
 use super::Database;
@@ -373,5 +374,50 @@ impl Database {
         tracing::info!(video_ids = ?ids);
 
         Ok(ids)
+    }
+
+    #[instrument(
+        name = "Get stream times",
+        skip(self),
+        fields(db.table = "youtube_streams")
+    )]
+    pub async fn stream_times(&self, vtuber_id: &str) -> Result<Vec<(i64, i64)>> {
+        let streams = sqlx::query!(
+            r#"
+    select start_time as "start!", end_time as "end!"
+      from youtube_streams
+     where vtuber_id = $1
+       and start_time > (now() - '6 months'::interval)
+       and end_time is not null
+  order by start_time desc
+            "#,
+            vtuber_id
+        )
+        .fetch_all(&self.pool)
+        .await?;
+
+        let one_hour: i64 = 60 * 60;
+
+        Ok(streams
+            .iter()
+            .fold(Vec::<(i64, i64)>::new(), |mut acc, rec| {
+                let start = rec.start.timestamp();
+                let end = rec.end.timestamp();
+
+                let mut t = start - (start % one_hour);
+
+                while t < end {
+                    let duration = min(t + one_hour, end) - max(start, t);
+
+                    match acc.last_mut() {
+                        Some(last) if last.0 == t => last.1 += duration,
+                        _ => acc.push((t, duration)),
+                    }
+
+                    t += one_hour;
+                }
+
+                acc
+            }))
     }
 }
