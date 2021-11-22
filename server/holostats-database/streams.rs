@@ -387,7 +387,7 @@ impl Database {
     select start_time as "start!", end_time as "end!"
       from youtube_streams
      where vtuber_id = $1
-       and start_time > (now() - '6 months'::interval)
+       and start_time > (now() - '44 weeks'::interval)
        and end_time is not null
   order by start_time desc
             "#,
