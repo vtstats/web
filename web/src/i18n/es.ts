@@ -34,6 +34,10 @@ const translations: Translations = {
   recentStreams: "Transmisiones recientes",
   streamViewers: "Espectadores",
   selectDate: "Seleccionar fecha",
+  // TODO(i18n)
+  noStream: "No stream on {$PH}",
+  streamTimeOn: "Stream {$PH} on {$PH_1}",
+  streamTimes: "Stream Times",
 
   // VTubers
   hololive: "Hololive Official",

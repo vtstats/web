@@ -35,6 +35,9 @@ const translations: Translations = {
   streamViewers: "Tontonan Siaran",
   // TODO(i18n):
   selectDate: "Select Date",
+  noStream: "No stream on {$PH}",
+  streamTimeOn: "Stream {$PH} on {$PH_1}",
+  streamTimes: "Stream Times",
 
   // VTubers
   hololive: "hololive Rasmi",

@@ -129,3 +129,7 @@ export type StreamList = {
   streams: Array<Stream>;
   updatedAt: number;
 };
+
+export type StreamTimesResponse = {
+  times: [number, number][];
+};

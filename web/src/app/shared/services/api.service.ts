@@ -11,6 +11,7 @@ import {
   StreamListResponse,
   StreamReportOption,
   StreamReportResponse,
+  StreamTimesResponse,
 } from "src/app/models";
 
 const BASE_URL = "https://holoapi.poi.cat/api/v4";
@@ -86,6 +87,12 @@ export class ApiService {
 
     return this.http.get<StreamReportResponse>(`${BASE_URL}/streams_report`, {
       params,
+    });
+  }
+
+  streamTimes(id: string): Observable<StreamTimesResponse> {
+    return this.http.get<StreamTimesResponse>(`${BASE_URL}/stream_times`, {
+      params: new HttpParams().set("id", id),
     });
   }
 }

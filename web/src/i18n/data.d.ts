@@ -30,6 +30,9 @@ export type MessageIds =
   | "recentStreams"
   | "streamViewers"
   | "selectDate"
+  | "noStream"
+  | "streamTimeOn"
+  | "streamTimes"
   | VTuberIds
   | BatchIds;
 
