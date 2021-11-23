@@ -12,6 +12,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
+import { MatMenuModule } from "@angular/material/menu";
 import { OverlayModule } from "@angular/cdk/overlay";
 import { EllipsisModule } from "ngx-ellipsis";
 
@@ -43,6 +44,8 @@ import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
 import { DateFilter } from "./date-filter/date-filter";
 import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
+import { StreamTime } from "./stream-time/stream-time";
+import { StreamTimeTooltip } from "./stream-time/stream-time-tooltip";
 
 import { SharedModule } from "src/app/shared";
 
@@ -66,6 +69,8 @@ import { SharedModule } from "src/app/shared";
     StreamStatsChartShimmer,
     StreamsSummary,
     StreamsSummaryShimmer,
+    StreamTime,
+    StreamTimeTooltip,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
@@ -87,6 +92,7 @@ import { SharedModule } from "src/app/shared";
     MatIconModule,
     MatSortModule,
     MatListModule,
+    MatMenuModule,
     MatTooltipModule,
     MatDividerModule,
     SharedModule,
@@ -106,6 +112,7 @@ import { SharedModule } from "src/app/shared";
     StreamStatsChartShimmer,
     StreamsSummary,
     StreamsSummaryShimmer,
+    StreamTime,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,

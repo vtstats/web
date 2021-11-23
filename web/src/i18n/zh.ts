@@ -34,6 +34,9 @@ const translations: Translations = {
   recentStreams: "最近直播",
   streamViewers: "直播同接",
   selectDate: "選擇日期",
+  noStream: "{$PH}: 无直播",
+  streamTimeOn: "{$PH_1}: 直播時間 {$PH}",
+  streamTimes: "直播時間",
 
   // VTubers
   hololive: "ホロライブ公式",

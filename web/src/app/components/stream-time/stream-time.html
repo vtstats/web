@@ -1,0 +1,16 @@
+<div class="stream-time">
+  <hs-sub-menu>
+    <hs-sub-menu-title i18n="@@streamTimes"> Stream Times </hs-sub-menu-title>
+  </hs-sub-menu>
+
+  <div
+    class="heatmap"
+    #heatmap
+    (mouseout)="_handleMouseout($event)"
+    (mouseover)="_handleMouseover($event)"
+  ></div>
+</div>
+
+<ng-template hsStreamTimeTooltip [origin]="tooltipOverlayOrigin">
+  <div class="stream-time-tooltip">{{tooltipMessage}}</div>
+</ng-template>
