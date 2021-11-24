@@ -1,12 +1,10 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { translate } from "src/i18n";
 
 import {
   DateRange,
   MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER,
 } from "@angular/material/datepicker";
-import { isAfter, isSameDay, isThisYear } from "date-fns";
-import format from "date-fns/format";
+import { isAfter, isSameDay, isThisYear, format } from "date-fns";
 
 import animations from "./date-filter-animations";
 
@@ -51,7 +49,7 @@ export class DateFilter {
 
   getBtnText() {
     if (!this._range.start && !this._range.end) {
-      return translate("selectDate");
+      return $localize`:@@selectDate:`;
     }
 
     const formStr =

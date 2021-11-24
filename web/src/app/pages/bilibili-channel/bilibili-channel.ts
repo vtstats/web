@@ -12,7 +12,6 @@ import { startWith, switchMap, tap } from "rxjs/operators";
 
 import { Channel } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
-import { translate } from "src/i18n";
 
 type Option = {
   ids: string[];
@@ -40,7 +39,7 @@ export class BilibiliChannel implements OnInit, OnDestroy {
   option$ = new Subject<Option>();
 
   ngOnInit() {
-    this.title.setTitle(`${translate("bilibiliChannel")} | HoloStats`);
+    this.title.setTitle(`${$localize`:@@bilibiliChannel:`} | HoloStats`);
 
     this.option$
       .pipe(

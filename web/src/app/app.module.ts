@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, LOCALE_ID } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -7,8 +7,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 
 import { environment } from "../environments/environment";
-
-import { getLocaleId } from "../i18n";
 
 import { LayoutModule } from "./layout";
 import {
@@ -57,7 +55,6 @@ const ROUTES: Routes = [
     MatSidenavModule,
     LayoutModule,
   ],
-  providers: [{ provide: LOCALE_ID, useFactory: getLocaleId }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,21 +5,14 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   OnChanges,
+  Inject,
+  LOCALE_ID,
 } from "@angular/core";
 import { formatNumber } from "@angular/common";
 import { format } from "date-fns";
 
 import { ChannelReportKind, Report } from "src/app/models";
 import { ApxChart } from "src/app/components/apx-chart/apx-chart";
-import { getLocaleId } from "src/i18n";
-
-const custom = ({ series, seriesIndex, dataPointIndex, w }) => {
-  return (
-    format(w.globals.seriesX[seriesIndex][dataPointIndex], "MM/dd HH:mm") +
-    "<br/>" +
-    formatNumber(series[seriesIndex][dataPointIndex], getLocaleId())
-  );
-};
 
 @Component({
   selector: "hs-stream-stats-chart",
@@ -43,6 +36,8 @@ const custom = ({ series, seriesIndex, dataPointIndex, w }) => {
   host: { class: "stream-stats-chart" },
 })
 export class StreamStatsChart implements OnChanges {
+  constructor(@Inject(LOCALE_ID) private localeId: string) {}
+
   @Input() report: Report<ChannelReportKind>;
 
   get updatedAt(): number {
@@ -60,12 +55,21 @@ export class StreamStatsChart implements OnChanges {
       },
       yaxis: {
         labels: {
-          formatter: (val) => formatNumber(val, getLocaleId()),
+          formatter: (val) => formatNumber(val, this.localeId),
           minWidth: 40,
         },
       },
       tooltip: {
-        custom,
+        custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+          return (
+            format(
+              w.globals.seriesX[seriesIndex][dataPointIndex],
+              "MM/dd HH:mm"
+            ) +
+            "<br/>" +
+            formatNumber(series[seriesIndex][dataPointIndex], this.localeId)
+          );
+        },
       },
       xaxis: {
         type: "datetime",

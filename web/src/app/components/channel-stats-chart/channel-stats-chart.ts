@@ -12,7 +12,6 @@ import { format } from "date-fns";
 import { ApxChart } from "../apx-chart/apx-chart";
 
 import { ChannelReportKind, Report } from "src/app/models";
-import { translate } from "src/i18n";
 
 @Component({
   selector: "hs-channel-stats-chart",
@@ -53,14 +52,12 @@ export class ChannelStatsChart implements OnChanges {
   private dataPointIndex: number = null;
 
   get title(): string {
-    return translate(
-      {
-        [ChannelReportKind.youtubeChannelSubscriber]: "youtubeSubscribers",
-        [ChannelReportKind.youtubeChannelView]: "youtubeViews",
-        [ChannelReportKind.bilibiliChannelSubscriber]: "bilibiliSubscribers",
-        [ChannelReportKind.bilibiliChannelView]: "bilibiliViews",
-      }[this.report.kind]
-    );
+    return {
+      [ChannelReportKind.youtubeChannelSubscriber]: $localize`:@@youtubeSubscribers:`,
+      [ChannelReportKind.youtubeChannelView]: $localize`:@@youtubeViews:`,
+      [ChannelReportKind.bilibiliChannelSubscriber]: $localize`:@@bilibiliSubscribers:`,
+      [ChannelReportKind.bilibiliChannelView]: $localize`:@@bilibiliViews:`,
+    }[this.report.kind];
   }
 
   get colors(): string[] {

@@ -6,7 +6,6 @@ import { startOfDay, endOfDay } from "date-fns";
 
 import { StreamStatus, StreamList, StreamGroup, Stream } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
-import { translate } from "src/i18n";
 
 type Option = {
   ids?: string[];
@@ -65,7 +64,7 @@ export class YoutubeStream implements OnInit, OnDestroy {
   );
 
   ngOnInit() {
-    this.title.setTitle(`${translate("youtubeStream")} | HoloStats`);
+    this.title.setTitle(`${$localize`:@@youtubeStream:`} | HoloStats`);
   }
 
   ngOnDestroy() {

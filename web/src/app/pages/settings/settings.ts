@@ -6,9 +6,7 @@ import {
   MatTreeFlattener,
 } from "@angular/material/tree";
 
-import { translate } from "src/i18n";
-
-import { vtubers, batches, VTuberIds } from "vtubers";
+import { vtubers, batches } from "vtubers";
 
 import { ConfigService } from "src/app/shared";
 
@@ -58,7 +56,7 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle(`${translate("settings")} | HoloStats`);
+    this.title.setTitle(`${$localize`:@@settings:`} | HoloStats`);
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
