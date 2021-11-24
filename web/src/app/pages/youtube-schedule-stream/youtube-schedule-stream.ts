@@ -11,7 +11,6 @@ import {
   Stream,
 } from "src/app/models";
 import { ApiService, ConfigService } from "src/app/shared";
-import { translate } from "src/i18n";
 
 type Option = {
   ids?: string[];
@@ -71,7 +70,7 @@ export class YoutubeScheduleStream implements OnInit, OnDestroy {
   );
 
   ngOnInit() {
-    this.title.setTitle(`${translate("youtubeSchedule")} | HoloStats`);
+    this.title.setTitle(`${$localize`:@@youtubeSchedule:`} | HoloStats`);
   }
 
   onVTuberChange(ids: Set<string>) {
