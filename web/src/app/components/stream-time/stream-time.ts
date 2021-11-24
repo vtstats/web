@@ -12,15 +12,12 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import {
-  addDays,
   differenceInWeeks,
   eachDayOfInterval,
-  eachWeekOfInterval,
   formatDuration,
   fromUnixTime,
   getDate,
   getDay,
-  isWithinInterval,
   subWeeks,
 } from "date-fns";
 import SVG from "svg.js";
@@ -60,12 +57,16 @@ export class StreamTime implements OnDestroy, AfterViewInit {
   private heatmapEl: ElementRef;
 
   _svg: SVG.Doc;
+  loading: boolean;
 
   ngAfterViewInit() {
+    this.loading = true;
+
     this.ngZone.runOutsideAngular(() => this._drawShimmer());
 
     this.api.streamTimes(this.vtuber.id).subscribe((res) => {
       this.ngZone.runOutsideAngular(() => this._draw(res.times));
+      this.loading = false;
     });
   }
 
@@ -77,6 +78,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
   _handleMouseout(e: MouseEvent) {
     if (
+      !this.loading &&
       e.target instanceof Element &&
       e.target.tagName.toLowerCase() === "rect" &&
       this.tooltipOverlayOrigin === e.target
@@ -87,6 +89,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
   _handleMouseover(e: MouseEvent) {
     if (
+      !this.loading &&
       e.target instanceof Element &&
       e.target.tagName.toLowerCase() === "rect" &&
       this.tooltipOverlayOrigin !== e.target
@@ -137,18 +140,18 @@ export class StreamTime implements OnDestroy, AfterViewInit {
       return acc;
     }, [] as number[][]);
 
-    eachWeekOfInterval({ start, end }).forEach((week, weekIdx) => {
-      const x = leftPadding + weekIdx * (size + gutter);
+    eachDayOfInterval({ start, end }).forEach((d) => {
+      const day = getDay(d);
+      const week = differenceInWeeks(d, start, { roundingMethod: "ceil" });
 
-      const month = eachDayOfInterval({
-        start: week,
-        end: addDays(week, 6),
-      }).find((day) => getDate(day) === 1);
+      const x = leftPadding + week * (size + gutter);
+      const y = day * (size + gutter);
+      const v = values[week]?.[day] || 0;
 
       // month ticks
-      if (month) {
+      if (getDate(d) === 1) {
         this._svg
-          .text(formatDate(month, "MMM", this.locale))
+          .text(formatDate(d, "MMM", this.locale))
           .addClass("stream-time-tick")
           .font({
             anchor: "middle",
@@ -160,21 +163,12 @@ export class StreamTime implements OnDestroy, AfterViewInit {
           .move(x + size / 2, 7 * (size + gutter));
       }
 
-      [0, 1, 2, 3, 4, 5, 6].forEach((dayIdx) => {
-        const d = addDays(week, dayIdx);
-
-        if (isWithinInterval(d, { start, end })) {
-          const v = values[weekIdx]?.[dayIdx] || 0;
-          const y = dayIdx * (size + gutter);
-
-          this._svg
-            .rect(size, size)
-            .radius(2, 2)
-            .fill(getFill(v))
-            .attr({ "x-value": v, "x-date": d.getTime() })
-            .move(x, y);
-        }
-      });
+      this._svg
+        .rect(size, size)
+        .radius(2, 2)
+        .fill(getFill(v))
+        .attr({ "x-value": v, "x-date": d.getTime() })
+        .move(x, y);
     });
 
     // week ticks
@@ -206,22 +200,14 @@ export class StreamTime implements OnDestroy, AfterViewInit {
       this._svg = SVG(this.heatmapEl.nativeElement).size(920, 160);
     }
 
-    eachWeekOfInterval({ start, end }).forEach((week, weekIdx) => {
-      const x = leftPadding + weekIdx * (size + gutter);
+    eachDayOfInterval({ start, end }).forEach((d) => {
+      const day = getDay(d);
+      const week = differenceInWeeks(d, start, { roundingMethod: "ceil" });
 
-      [0, 1, 2, 3, 4, 5, 6].forEach((dayIdx) => {
-        const d = addDays(week, dayIdx);
+      const x = leftPadding + week * (size + gutter);
+      const y = day * (size + gutter);
 
-        if (isWithinInterval(d, { start, end })) {
-          const y = dayIdx * (size + gutter);
-
-          this._svg
-            .rect(size, size)
-            .radius(2, 2)
-            .addClass("shimmer")
-            .move(x, y);
-        }
-      });
+      this._svg.rect(size, size).radius(2, 2).fill(getFill(0)).move(x, y);
     });
   }
 }
