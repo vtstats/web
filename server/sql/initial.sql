@@ -28,6 +28,11 @@ insert into youtube_channels (vtuber_id)
             ('lamy'),            -- 雪花ラミィ
             ('nene'),            -- 桃鈴ねね
             ('botan'),           -- 獅白ぼたん
+            ('chloe'),           -- 沙花叉クロヱ
+            ('iroha'),           -- 風真いろは
+            ('koyori'),          -- 博衣こより
+            ('laplus'),          -- ラプラス・ダークネス
+            ('lui'),             -- 鷹嶺ルイ
             ('polka'),           -- 尾丸ポルカ
             ('mio'),             -- 大神ミオ
             ('okayu'),           -- 猫又おかゆ

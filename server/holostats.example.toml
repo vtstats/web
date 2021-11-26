@@ -194,6 +194,26 @@ youtube = "UCK9V2B22uJYu3N7eR_BT9QA"
 bilibili = "624252712"
 
 [[vtubers]]
+id = "laplus"
+youtube = "UCENwRMx5Yh42zWpzURebzTw"
+
+[[vtubers]]
+id = "lui"
+youtube = "UCs9_O1tRPMQTHQ-N_L6FU2g"
+
+[[vtubers]]
+id = "koyori"
+youtube = "UC6eWCld0KwmyHFbAqK3V-Rw"
+
+[[vtubers]]
+id = "chloe"
+youtube = "UCIBY1ollUsauvVi4hW4cumw"
+
+[[vtubers]]
+id = "iroha"
+youtube = "UC_vMYWcDjmfdpH6r4TTn1MQ"
+
+[[vtubers]]
 id = "mio"
 youtube = "UCp-5t9SrOQwXMU7iIjQfARg"
 bilibili = "389862071"
