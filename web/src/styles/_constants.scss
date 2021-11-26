@@ -1,5 +1,5 @@
-@use '~@angular/material' as mat;
-@use 'sass:map';
+@use "@angular/material" as mat;
+@use "sass:map";
 
 $hs-typography-config: mat.define-typography-config();
 

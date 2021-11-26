@@ -9,6 +9,7 @@
 /node_modules
 
 # misc
+.angular/cache
 yarn-error.log
 
 # System Files
