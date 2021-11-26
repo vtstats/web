@@ -38,6 +38,11 @@ export type VTuberIds =
   | "nene"
   | "botan"
   | "polka"
+  | "laplus"
+  | "lui"
+  | "koyori"
+  | "chloe"
+  | "iroha"
   | "mio"
   | "okayu"
   | "korone"
@@ -292,6 +297,36 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     bilibili: 624252712,
     default: true,
   },
+  laplus: {
+    id: "laplus",
+    twitter: "LaplusDarknesss",
+    youtube: "UCENwRMx5Yh42zWpzURebzTw",
+    default: true,
+  },
+  lui: {
+    id: "lui",
+    twitter: "takanelui",
+    youtube: "UCs9_O1tRPMQTHQ-N_L6FU2g",
+    default: true,
+  },
+  koyori: {
+    id: "koyori",
+    twitter: "hakuikoyori",
+    youtube: "UC6eWCld0KwmyHFbAqK3V-Rw",
+    default: true,
+  },
+  chloe: {
+    id: "chloe",
+    twitter: "sakamatachloe",
+    youtube: "UCIBY1ollUsauvVi4hW4cumw",
+    default: true,
+  },
+  iroha: {
+    id: "iroha",
+    twitter: "kazamairohach",
+    youtube: "UC_vMYWcDjmfdpH6r4TTn1MQ",
+    default: true,
+  },
   mio: {
     id: "mio",
     twitter: "ookamimio",
@@ -536,6 +571,7 @@ export type BatchIds =
   | "hololive_3rd"
   | "hololive_4th"
   | "hololive_5th"
+  | "hololive_6th"
   | "hololive_gamers"
   | "innk_music"
   | "hololive_id_1st"
@@ -559,6 +595,7 @@ export const batches: Record<BatchIds, Batch> = {
   hololive_3rd: ["pekora", "rushia", "flare", "marine", "noel"],
   hololive_4th: ["kanata", "coco", "watame", "towa", "himemoriluna"],
   hololive_5th: ["lamy", "nene", "botan", "polka"],
+  hololive_6th: ["chloe", "iroha", "koyori", "laplus", "lui"],
   hololive_gamers: ["fubuki", "mio", "okayu", "korone"],
   innk_music: ["azki"],
   hololive_id_1st: ["risu", "moona", "iofi"],
