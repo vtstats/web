@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @mixin material-theme($theme) {
   @include mat.button-theme($theme);

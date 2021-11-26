@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @mixin channel-table-theme($theme) {
   $is-dark-theme: map-get($theme, "is-dark");

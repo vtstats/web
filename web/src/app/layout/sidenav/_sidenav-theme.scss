@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @mixin sidenav-theme($theme) {
   $is-dark-theme: map-get($theme, "is-dark");
