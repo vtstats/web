@@ -1,3 +1,9 @@
+2021 11 27
+----
+
+Upgrade to Angular 13. [Drop support for IE11.](https://github.com/angular/angular/issues/41840)
+
+
 2021 11 26
 ----
 
