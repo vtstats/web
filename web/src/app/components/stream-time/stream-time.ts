@@ -12,12 +12,13 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import {
-  differenceInWeeks,
+  addWeeks,
   eachDayOfInterval,
   formatDuration,
   fromUnixTime,
   getDate,
   getDay,
+  isSameWeek,
   subWeeks,
 } from "date-fns";
 import SVG from "svg.js";
@@ -32,6 +33,19 @@ const getFill = (v: number) => {
   if (v <= 3.0 * 60 * 60) return "#00bfa588";
   if (v <= 4.5 * 60 * 60) return "#00bfa5CC";
   return "#00bfa5FF";
+};
+
+const relativeInWeek = (date: Date, base: Date): number => {
+  let i = 0;
+
+  while (i < 50) {
+    if (isSameWeek(addWeeks(base, i), date, { weekStartsOn: 0 })) {
+      return i;
+    }
+    i++;
+  }
+
+  return i;
 };
 
 @Component({
@@ -130,7 +144,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
     const values = times.reduce((acc, [time, value]) => {
       const d = fromUnixTime(time);
-      const week = differenceInWeeks(d, start, { roundingMethod: "ceil" });
+      const week = relativeInWeek(d, start);
       const day = getDay(d);
 
       acc[week] ||= [];
@@ -142,7 +156,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
     eachDayOfInterval({ start, end }).forEach((d) => {
       const day = getDay(d);
-      const week = differenceInWeeks(d, start, { roundingMethod: "ceil" });
+      const week = relativeInWeek(d, start);
 
       const x = leftPadding + week * (size + gutter);
       const y = day * (size + gutter);
@@ -202,7 +216,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
     eachDayOfInterval({ start, end }).forEach((d) => {
       const day = getDay(d);
-      const week = differenceInWeeks(d, start, { roundingMethod: "ceil" });
+      const week = relativeInWeek(d, start);
 
       const x = leftPadding + week * (size + gutter);
       const y = day * (size + gutter);
