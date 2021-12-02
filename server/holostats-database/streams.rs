@@ -253,7 +253,7 @@ impl Database {
     }
 
     #[instrument(
-        name = "Get last updated time of youtube_streams",
+        name = "Get youtube ongoing streams",
         skip(self),
         fields(db.table = "youtube_streams")
     )]
