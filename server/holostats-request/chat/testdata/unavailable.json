@@ -1,0 +1,16 @@
+{
+  "responseContext": null,
+  "trackingParams": "",
+  "contents": {
+    "messageRenderer": {
+      "text": {
+        "runs": [
+          {
+            "text": "Sorry, live chat is currently unavailable."
+          }
+        ]
+      },
+      "trackingParams": ""
+    }
+  }
+}

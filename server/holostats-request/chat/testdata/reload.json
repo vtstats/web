@@ -1,0 +1,14 @@
+{
+  "responseContext": null,
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "reloadContinuationData": {
+            "continuation": ""
+          }
+        }
+      ]
+    }
+  }
+}

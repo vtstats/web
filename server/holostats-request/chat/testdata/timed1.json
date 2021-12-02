@@ -1,0 +1,1599 @@
+{
+  "continuationContents": {
+    "liveChatContinuation": {
+      "continuations": [
+        {
+          "timedContinuationData": {
+            "timeoutMs": 4824,
+            "continuation": ""
+          }
+        }
+      ],
+      "actions": [
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "かわいい"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "百夜"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525320170",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "cheetah？XD"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Silence voice"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525479457",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (1 month)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (1 month)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "チーター？！"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "RoflWaffles"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525452622",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (2 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (2 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "Cheater!?"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Dokuro T"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525606474",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (1 year)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (1 year)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "どうぞー"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "壁"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525493131",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (6 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (6 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "TMT so cute"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Weaker Inf"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525871759",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "トワ様悪い子じゃないって分かるから許されるのでは"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "白峰【しろみね】リン"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129525919524",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "Welcome to the family!"
+                    },
+                    {
+                      "emoji": {
+                        "emojiId": "UC1uv2Oq6kNxgATlCiez59hw/HMiJXtjCKs-7-wOC5YSYCw",
+                        "shortcuts": [
+                          ":_トワ様いえーい:",
+                          ":トワ様いえーい:"
+                        ],
+                        "searchTerms": [
+                          "_トワ様いえーい",
+                          "トワ様いえーい"
+                        ],
+                        "image": {
+                          "thumbnails": [
+                            {
+                              "url": "https://example.com",
+                              "width": 24,
+                              "height": 24
+                            },
+                            {
+                              "url": "https://example.com",
+                              "width": 48,
+                              "height": 48
+                            }
+                          ],
+                          "accessibility": {
+                            "accessibilityData": {
+                              "label": "トワ様いえーい"
+                            }
+                          }
+                        },
+                        "isCustomEmoji": true
+                      }
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Jimmy Axe"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129526120897",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (6 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (6 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "かわいい"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "ザプ / ZapMinty-!"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129526133712",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "Towa-sama Mecha Kawaii!"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "⠀🔰⠀𝗣𝗔𝗡𝗧𝗦𝗨⠀🔰⠀"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129526823096",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "地位ッター？"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "てんたる"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129527077268",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "TMT"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "リュート・スマイリー"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129527725178",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "ちいったー"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "アルティメットエイジ"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129528656061",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (2 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (2 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "チイッター"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "fugyao fugyai"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129529269666",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "안녕하세요~ 만나서 반갑습니다."
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "부비트랩"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129529237126",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "ちったー"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "ホロホロ鳥"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129529199188",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (2 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (2 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "#1 trending in twitter?"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Red Icon"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530309441",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "New member",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "New member"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "omg"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "Epic Bruh Momento"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530290503",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "kksk"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "yixin zhou"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530447972",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "まだ1位やで"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "お前"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530689553",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (2 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (2 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "す゛い゛ま゛せ゛ぇ゛ぇ゛ん゛！゛"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "祐悟飯"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530906103",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "emoji": {
+                        "emojiId": "UC1uv2Oq6kNxgATlCiez59hw/ztLUXo37BNf3-QOflaJY",
+                        "shortcuts": [
+                          ":_トワ様キラキラ:",
+                          ":トワ様キラキラ:"
+                        ],
+                        "searchTerms": [
+                          "_トワ様キラキラ",
+                          "トワ様キラキラ"
+                        ],
+                        "image": {
+                          "thumbnails": [
+                            {
+                              "url": "https://example.com",
+                              "width": 24,
+                              "height": 24
+                            },
+                            {
+                              "url": "https://example.com",
+                              "width": 48,
+                              "height": 48
+                            }
+                          ],
+                          "accessibility": {
+                            "accessibilityData": {
+                              "label": "トワ様キラキラ"
+                            }
+                          }
+                        },
+                        "isCustomEmoji": true
+                      }
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "themoobz"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129530997242",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (2 months)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (2 months)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "めっちゃ似合うな"
+                    },
+                    {
+                      "text": "w"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "y wat"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129531108742",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "ぎゃあわいい"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "綾鷹綾鷹"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129531281699",
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        },
+        {
+          "addChatItemAction": {
+            "item": {
+              "liveChatTextMessageRenderer": {
+                "message": {
+                  "runs": [
+                    {
+                      "text": "3万ツイートされてんで"
+                    }
+                  ]
+                },
+                "authorName": {
+                  "simpleText": "焼き麦焼き米焼き卵"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://example.com",
+                      "width": 32,
+                      "height": 32
+                    },
+                    {
+                      "url": "https://example.com",
+                      "width": 64,
+                      "height": 64
+                    }
+                  ]
+                },
+                "contextMenuEndpoint": {
+                  "commandMetadata": {
+                    "webCommandMetadata": {
+                      "ignoreNavigation": true
+                    }
+                  },
+                  "liveChatItemContextMenuEndpoint": {
+                    "params": ""
+                  }
+                },
+                "id": "id",
+                "timestampUsec": "1620129531281250",
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://example.com"
+                          },
+                          {
+                            "url": "https://example.com"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (1 year)",
+                      "accessibility": {
+                        "accessibilityData": {
+                          "label": "Member (1 year)"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "authorExternalChannelId": "channelId",
+                "contextMenuAccessibility": {
+                  "accessibilityData": {
+                    "label": "Comment actions"
+                  }
+                }
+              }
+            },
+            "clientId": ""
+          }
+        }
+      ]
+    }
+  }
+}

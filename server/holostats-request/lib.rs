@@ -1,4 +1,5 @@
 mod channels;
+mod chat;
 mod pubsub;
 mod rss;
 mod streams;
@@ -10,6 +11,7 @@ use holostats_config::CONFIG;
 use reqwest::Client;
 
 pub use channels::*;
+pub use chat::*;
 pub use streams::*;
 
 #[derive(Clone)]

@@ -24,3 +24,7 @@ reqwest = { version = "0.11.4", default-features = false, features = [
 ] }
 holostats-config = { path = "../holostats-config" }
 holostats-utils = { path = "../holostats-utils" }
+
+[dev-dependencies]
+pretty_assertions = "1.0.0"
+serde_json = "1.0.72"

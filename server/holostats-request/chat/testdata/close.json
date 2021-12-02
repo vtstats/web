@@ -1,0 +1,16 @@
+{
+  "responseContext": null,
+  "trackingParams": "",
+  "contents": {
+    "messageRenderer": {
+      "text": {
+        "runs": [
+          {
+            "text": "Chat is disabled for this live stream."
+          }
+        ]
+      },
+      "trackingParams": ""
+    }
+  }
+}
