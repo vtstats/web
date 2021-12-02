@@ -1,5 +1,6 @@
 use anyhow::Result;
 use chrono::Utc;
+use holostats_config::CONFIG;
 use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
 use holostats_utils::tracing::init;
@@ -42,6 +43,18 @@ async fn real_main() -> Result<()> {
     db.terminate_stream(&offline_ids, now).await?;
 
     for stream in streams {
+        if let Some(vtb) = CONFIG.find_by_youtube_channel_id(&stream.channel_id) {
+            let payload = &format!("{},{}", vtb.id, stream.id);
+
+            // sends a notification to other clients
+            if let Err(err) = db.notify("get_live_chat", payload).await {
+                eprintln!(
+                    "Failed to notify `get_live_chat` channel w/ payload `{}`: {}",
+                    payload, err
+                );
+            }
+        }
+
         db.update_youtube_stream_statistic(
             stream.id,
             stream.title,

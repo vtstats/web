@@ -1,4 +1,5 @@
 pub mod channels;
+pub mod notify;
 pub mod statistic;
 pub mod streams;
 
