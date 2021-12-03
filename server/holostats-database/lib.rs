@@ -1,10 +1,11 @@
 pub mod channels;
+pub mod live_chat;
 pub mod notify;
 pub mod statistic;
 pub mod streams;
 
 use holostats_config::CONFIG;
-use sqlx::{PgPool, Result};
+use sqlx::{postgres::PgListener, PgPool, Result};
 
 #[derive(Clone)]
 pub struct Database {
@@ -16,6 +17,10 @@ impl Database {
         let pool = PgPool::connect(&CONFIG.database.url).await?;
 
         Ok(Database { pool })
+    }
+
+    pub async fn listener() -> Result<PgListener> {
+        PgListener::connect(&CONFIG.database.url).await
     }
 }
 

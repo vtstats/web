@@ -72,6 +72,37 @@ CREATE TABLE youtube_stream_viewer_statistic (
   value INTEGER NOT NULL
 );
 
+CREATE TABLE youtube_live_chat_statistic (
+  stream_id TEXT NOT NULL,
+  time TIMESTAMPTZ NOT NULL,
+  message_count INTEGER NOT NULL DEFAULT 0,
+  message_from_member_count INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TYPE paid_message_type AS ENUM ('super_chat', 'super_sticker');
+
+CREATE TABLE youtube_live_chat_paid_messages (
+  type paid_message_type NOT NULL,
+  stream_id TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_channel_id TEXT NOT NULL,
+  time TIMESTAMPTZ NOT NULL,
+  text TEXT NOT NULL,
+  badges TEXT,
+);
+
+CREATE TYPE member_message_type AS ENUM ('new', 'milestone');
+
+CREATE TABLE youtube_live_chat_member_messages (
+  type member_message_type NOT NULL,
+  stream_id TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_channel_id TEXT NOT NULL,
+  time TIMESTAMPTZ NOT NULL,
+  text TEXT NOT NULL,
+  badges TEXT,
+);
+
 ---- Triggers
 
 CREATE OR REPLACE FUNCTION update_youtube_channel_subscriber_count()

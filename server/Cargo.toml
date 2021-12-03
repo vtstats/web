@@ -9,6 +9,7 @@ members = [
     "holostats-stream-stat",
     "holostats-subscribe",
     "holostats-utils",
+    "holostats-live-chat",
 ]
 
 [profile.release]

@@ -681,6 +681,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "holostats-live-chat"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "chrono",
+ "futures",
+ "holostats-config",
+ "holostats-database",
+ "holostats-request",
+ "holostats-utils",
+ "pretty_assertions 1.0.0",
+ "quick-protobuf",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
 name = "holostats-request"
 version = "0.1.0"
 dependencies = [
@@ -1221,6 +1241,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5c7ed8b8c7b886ea3ed7dde405212185f423ab44682667c8c6dd14aa1d9f6612"
 dependencies = [
  "unicode-xid",
+]
+
+[[package]]
+name = "quick-protobuf"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6ca6639207ac869e31cca06b8adbc7676278f22b321e51115766009b4f192dbb"
+dependencies = [
+ "byteorder",
 ]
 
 [[package]]

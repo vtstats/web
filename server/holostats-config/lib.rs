@@ -66,6 +66,10 @@ pub struct VTuber {
 }
 
 impl Config {
+    pub fn find_by_id(&self, id: &str) -> Option<&VTuber> {
+        self.vtubers.iter().find(|vtb| vtb.id == id)
+    }
+
     pub fn find_by_youtube_channel_id(&self, channel_id: &str) -> Option<&VTuber> {
         self.vtubers
             .iter()

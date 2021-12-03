@@ -1,0 +1,69 @@
+// Run `pb-rs holostats-live-chat/continuation/continuation.proto` to generate rust code
+
+// youtube use protobuf to encode continuation,
+// there're no way for me to knowing each fields mean,
+// so i simply name them with A, B, C ¯\_(ツ)_/¯
+
+// continuation: 0ofMyANhGlhDaWtxSndvWVZVTnhiVE5DVVV4c1NtWjJhMVJ6V0Y5b2RtMHdWVzFCRWd0eFRtVkthRXBXUkU5VE9Cb1Q2cWpkdVFFTkNndHhUbVZLYUVwV1JFOVRPQ0FCMAGCAQIIAQ==
+// 119693434 {                       <- B
+//     3: "CikqJwo..."
+//     6: 1
+//     16 {                          <- A
+//       1: 1
+//     }
+//   }
+
+// video: CikqJwoYVUNxbTNCUUxsSmZ2a1RzWF9odm0wVW1BEgtxTmVKaEpWRE9TOBoT6qjduQENCgtxTmVKaEpWRE9TOCAB
+// 1 {                               <- D
+//   5 {                             <- C
+//     1: "UCqm3BQLlJfvkTsX_hvm0UmA"
+//     2: "qNeJhJVDOS8"
+//   }
+// }
+// 3 {                               <- F
+//   48687757 {                      <- E
+//     1: "qNeJhJVDOS8"
+//   }
+// }
+// 4: 1
+
+syntax = "proto3";
+
+package continuation;
+
+message A {
+    int32 f1 = 1;
+}
+
+message B {
+    string video = 3;
+    int32 f6 = 6;
+    A a = 16;
+}
+
+message Continuation {
+    B b = 119693434;
+}
+
+message C {
+    string channel_id = 1;
+    string video_id = 2;
+}
+
+message D {
+    C c = 5;
+}
+
+message E {
+    string video_id = 1;
+}
+
+message F {
+    E e = 48687757;
+}
+
+message Video {
+    D d = 1;
+    F f = 3;
+    int64 s4 = 4;
+}
