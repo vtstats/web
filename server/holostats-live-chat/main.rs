@@ -1,5 +1,8 @@
 mod continuation;
 
+use std::collections::HashSet;
+use std::sync::{Arc, Mutex};
+
 use anyhow::Result;
 use chrono::NaiveDateTime;
 use chrono::{DateTime, Utc};
@@ -22,21 +25,37 @@ async fn main() -> Result<()> {
 
     listener.listen("get_live_chat").await?;
 
+    let seen = Arc::new(Mutex::new(HashSet::<String>::new()));
+
     loop {
         let notification = listener.recv().await?;
 
         let payload = notification.payload();
 
         if let Some((vtb_id, stream_id)) = payload.split_once(',') {
+            {
+                let mut seen = seen.lock().unwrap();
+
+                if seen.contains(stream_id) {
+                    continue;
+                } else {
+                    seen.insert(stream_id.into());
+                }
+            }
+
             let db = db.clone();
             let hub = hub.clone();
             let vtb_id = vtb_id.to_owned();
             let stream_id = stream_id.to_owned();
 
+            let seen = seen.clone();
+
             tokio::spawn(async move {
                 if let Err(err) = get_live_chat(db, hub, vtb_id.clone(), stream_id.clone()).await {
                     eprintln!("[[{:>15}/{}]]: err {}", vtb_id, stream_id, err);
                 }
+
+                seen.lock().unwrap().remove(&stream_id);
             });
         } else {
             eprintln!("Wrong notification payload: {}", payload);
