@@ -29,4 +29,4 @@ holostats-request = { path = "../holostats-request" }
 holostats-utils = { path = "../holostats-utils" }
 
 [dev-dependencies]
-pretty_assertions = "0.7.2"
+pretty_assertions = "1.0.0"
