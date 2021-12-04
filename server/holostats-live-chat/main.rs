@@ -63,10 +63,10 @@ async fn main() -> Result<()> {
     }
 }
 
-fn parse_timestamp(s: String, trunc_minute: bool) -> Option<DateTime<Utc>> {
+fn parse_timestamp(s: String, trunc: bool) -> Option<DateTime<Utc>> {
     s.get(0..(s.len() - 6))
         .and_then(|t| t.parse().ok())
-        .map(|t: i64| if trunc_minute { t - (t % 60) } else { t })
+        .map(|t: i64| if trunc { t - (t % 15) } else { t })
         .map(|t| NaiveDateTime::from_timestamp(t, 0))
         .map(|d| DateTime::<Utc>::from_utc(d, Utc))
 }
