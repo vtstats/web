@@ -9,9 +9,9 @@ name = "subscribe"
 path = "main.rs"
 
 [dependencies]
-anyhow = "1.0.43"
-futures = "0.3.16"
-tokio = { version = "1.10.0", features = ["macros"] }
+anyhow = "1.0.51"
+futures = "0.3.18"
+tokio = { version = "1.14.0", features = ["macros"] }
 tracing = "0.1.26"
 tracing-futures = "0.2.5"
 holostats-config = { path = "../holostats-config" }

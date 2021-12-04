@@ -9,8 +9,8 @@ path = "lib.rs"
 
 [dependencies]
 log = "0.4.14"
-serde = "1.0.128"
-serde_json = "1.0.66"
+serde = "1.0.130"
+serde_json = "1.0.72"
 tracing = "0.1.26"
 tracing-futures = "0.2.5"
 tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", rev = "838560a4acd346db2a9cfd1ca109518e5125ae5d" }

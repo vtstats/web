@@ -9,16 +9,16 @@ path = "lib.rs"
 
 [dependencies]
 chrono = { version = "0.4.19", features = ["serde"] }
-serde = { version = "1.0.128", features = ["derive"] }
-serde_with = "1.9.4"
-sqlx = { version = "0.5.7", default-features = false, features = [
+serde = { version = "1.0.130", features = ["derive"] }
+serde_with = "1.11.0"
+sqlx = { version = "0.5.9", default-features = false, features = [
     "runtime-tokio-rustls",
     "macros",
     "postgres",
     "chrono"
 ] }
-tokio = { version = "1.10.0", features = ["macros"] }
+tokio = { version = "1.14.0", features = ["macros"] }
 tracing = "0.1.26"
 tracing-futures = "0.2.5"
-sqlx-core = "0.5.7"
+sqlx-core = "0.5.9"
 holostats-config = { path = "../holostats-config" }

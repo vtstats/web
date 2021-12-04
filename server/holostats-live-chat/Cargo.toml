@@ -9,17 +9,17 @@ name = "live_chat"
 path = "main.rs"
 
 [dependencies]
-anyhow = "1.0.43"
+anyhow = "1.0.51"
 base64 = "0.13.0"
 chrono = { version = "0.4.19", features = ["serde"] }
-futures = "0.3.16"
+futures = "0.3.18"
 holostats-config = { path = "../holostats-config" }
 holostats-database = { path = "../holostats-database" }
 holostats-request = { path = "../holostats-request" }
 holostats-utils = { path = "../holostats-utils" }
 quick-protobuf = "0.8.0"
 serde_json = "1.0.72"
-tokio = { version = "1.10.0", features = ["macros"] }
+tokio = { version = "1.14.0", features = ["macros"] }
 tracing = "0.1.26"
 tracing-futures = "0.2.5"
 
