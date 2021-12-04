@@ -52,7 +52,7 @@ async fn main() -> Result<()> {
 
             tokio::spawn(async move {
                 if let Err(err) = get_live_chat(db, hub, vtb_id.clone(), stream_id.clone()).await {
-                    eprintln!("[[{:>15}/{}]]: err {}", vtb_id, stream_id, err);
+                    eprintln!("[{:>15}/{}]: err {}", vtb_id, stream_id, err);
                 }
 
                 seen.lock().unwrap().remove(&stream_id);

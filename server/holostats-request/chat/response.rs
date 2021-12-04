@@ -141,13 +141,14 @@ pub struct ChatItem {
 pub struct LiveChatTextMessageRenderer {
     pub timestamp_usec: String,
     pub author_external_channel_id: String,
+    #[serde(default)]
     pub author_name: AuthorName,
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
     pub message: Option<Message>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct AuthorName {
     pub simple_text: String,
@@ -173,6 +174,7 @@ pub struct Amount {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LiveChatPaidStickerRenderer {
+    #[serde(default)]
     pub author_name: AuthorName,
     pub author_external_channel_id: String,
     pub timestamp_usec: String,
@@ -207,6 +209,7 @@ pub struct PurchaseAmountText {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LiveChatPaidMessageRenderer {
+    #[serde(default)]
     pub author_name: AuthorName,
     pub author_external_channel_id: String,
     pub timestamp_usec: String,
@@ -219,6 +222,7 @@ pub struct LiveChatPaidMessageRenderer {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LiveChatMembershipItemRenderer {
+    #[serde(default)]
     pub author_name: AuthorName,
     pub author_external_channel_id: String,
     pub timestamp_usec: String,
