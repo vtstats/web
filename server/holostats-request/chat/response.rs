@@ -104,6 +104,15 @@ pub struct Action {
     #[serde(default)]
     pub add_banner_to_live_chat_command: Ignored,
     #[serde(default)]
+    pub remove_banner_for_live_chat_command: Ignored,
+    #[serde(default)]
+    pub show_live_chat_action_panel_action: Ignored,
+    #[serde(default)]
+    pub close_live_chat_action_panel_action: Ignored,
+    #[serde(default)]
+    pub update_live_chat_poll_action: Ignored,
+
+    #[serde(default)]
     pub click_tracking_params: Ignored,
 
     #[serde(flatten)]
@@ -131,6 +140,8 @@ pub struct ChatItem {
     pub live_chat_viewer_engagement_message_renderer: Ignored,
     #[serde(default)]
     pub live_chat_placeholder_item_renderer: Ignored,
+    #[serde(default)]
+    pub live_chat_mode_change_message_renderer: Ignored,
 
     #[serde(flatten)]
     pub unknown: HashMap<String, Ignored>,
@@ -411,6 +422,10 @@ impl LiveChatMessage {
             replay_chat_item_action: _,
             show_live_chat_tooltip_command: _,
             add_banner_to_live_chat_command: _,
+            remove_banner_for_live_chat_command: _,
+            show_live_chat_action_panel_action: _,
+            close_live_chat_action_panel_action: _,
+            update_live_chat_poll_action: _,
             click_tracking_params: _,
             unknown,
         } = action;
@@ -424,6 +439,7 @@ impl LiveChatMessage {
                     live_chat_paid_sticker_renderer,
                     live_chat_viewer_engagement_message_renderer: _,
                     live_chat_placeholder_item_renderer: _,
+                    live_chat_mode_change_message_renderer: _,
                     unknown,
                 },
         }) = add_chat_item_action
