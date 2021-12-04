@@ -570,7 +570,7 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "pretty_assertions",
  "roxmltree",
  "serde",
@@ -592,7 +592,7 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "tokio",
  "tracing",
  "tracing-futures",
@@ -633,7 +633,7 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "pretty_assertions",
  "quick-protobuf",
  "serde_json",
@@ -653,7 +653,7 @@ dependencies = [
  "hex",
  "hmac",
  "holostats-config",
- "holostats-utils",
+ "holostats-tracing",
  "pretty_assertions",
  "reqwest",
  "serde",
@@ -673,7 +673,7 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "tokio",
  "tracing",
  "tracing-futures",
@@ -688,7 +688,7 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "tokio",
  "tracing",
  "tracing-futures",
@@ -703,14 +703,14 @@ dependencies = [
  "holostats-config",
  "holostats-database",
  "holostats-request",
- "holostats-utils",
+ "holostats-tracing",
  "tokio",
  "tracing",
  "tracing-futures",
 ]
 
 [[package]]
-name = "holostats-utils"
+name = "holostats-tracing"
 version = "0.1.0"
 dependencies = [
  "holostats-config",

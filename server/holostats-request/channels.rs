@@ -2,7 +2,7 @@ use anyhow::Result;
 use futures::future::{try_join, TryFutureExt};
 use futures::{stream, StreamExt};
 use holostats_config::CONFIG;
-use holostats_utils::tracing::json;
+use holostats_tracing::json;
 use reqwest::{header::COOKIE, Url};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;

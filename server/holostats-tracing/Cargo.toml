@@ -1,8 +1,9 @@
 [package]
-name = "holostats-utils"
+name = "holostats-tracing"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
+publish = false
 
 [lib]
 path = "lib.rs"

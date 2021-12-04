@@ -3,7 +3,7 @@ use chrono::Utc;
 use holostats_config::CONFIG;
 use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
-use holostats_utils::tracing::init;
+use holostats_tracing::init;
 use tracing::instrument;
 
 #[tokio::main]

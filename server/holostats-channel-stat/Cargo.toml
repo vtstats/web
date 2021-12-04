@@ -3,6 +3,7 @@ name = "holostats-channel-stat"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
+publish = false
 
 [[bin]]
 name = "channel_stat"
@@ -17,4 +18,4 @@ tracing-futures = "0.2.5"
 holostats-config = { path = "../holostats-config" }
 holostats-database = { path = "../holostats-database" }
 holostats-request = { path = "../holostats-request" }
-holostats-utils = { path = "../holostats-utils" }
+holostats-tracing = { path = "../holostats-tracing" }

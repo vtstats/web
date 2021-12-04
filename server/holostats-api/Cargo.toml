@@ -3,6 +3,7 @@ name = "holostats-api"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
+publish = false
 
 [[bin]]
 name = "api"
@@ -26,7 +27,7 @@ warp = { version = "0.3.2", default-features = false }
 holostats-config = { path = "../holostats-config" }
 holostats-database = { path = "../holostats-database" }
 holostats-request = { path = "../holostats-request" }
-holostats-utils = { path = "../holostats-utils" }
+holostats-tracing = { path = "../holostats-tracing" }
 
 [dev-dependencies]
 pretty_assertions = "1.0.0"

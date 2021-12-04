@@ -1,7 +1,7 @@
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use futures::future::TryFutureExt;
-use holostats_utils::tracing::json;
+use holostats_tracing::json;
 use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;

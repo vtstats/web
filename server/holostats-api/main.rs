@@ -9,7 +9,7 @@ use anyhow::Result;
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::RequestHub;
-use holostats_utils::tracing::init;
+use holostats_tracing::init;
 use std::net::SocketAddr;
 use tracing::field::Empty;
 use warp::Filter;

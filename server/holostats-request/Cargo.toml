@@ -3,6 +3,7 @@ name = "holostats-request"
 version = "0.1.0"
 authors = ["PoiScript <poiscript@gmail.com>"]
 edition = "2018"
+publish = false
 
 [lib]
 path = "lib.rs"
@@ -23,7 +24,7 @@ reqwest = { version = "0.11.7", default-features = false, features = [
     "rustls-tls"
 ] }
 holostats-config = { path = "../holostats-config" }
-holostats-utils = { path = "../holostats-utils" }
+holostats-tracing = { path = "../holostats-tracing" }
 
 [dev-dependencies]
 pretty_assertions = "1.0.0"

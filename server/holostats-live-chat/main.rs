@@ -10,7 +10,7 @@ use continuation::get_continuation;
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::{LiveChatMessage, RequestHub};
-use holostats_utils::tracing::init;
+use holostats_tracing::init;
 use tokio::time::sleep;
 use tracing::instrument;
 

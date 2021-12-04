@@ -4,12 +4,12 @@ members = [
     "holostats-channel-stat",
     "holostats-config",
     "holostats-database",
+    "holostats-live-chat",
     "holostats-request",
     "holostats-rss-refresh",
     "holostats-stream-stat",
     "holostats-subscribe",
-    "holostats-utils",
-    "holostats-live-chat",
+    "holostats-tracing",
 ]
 
 [profile.release]
