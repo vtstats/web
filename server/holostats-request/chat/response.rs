@@ -111,6 +111,8 @@ pub struct Action {
     pub close_live_chat_action_panel_action: Ignored,
     #[serde(default)]
     pub update_live_chat_poll_action: Ignored,
+    #[serde(default)]
+    pub replace_chat_item_action: Ignored,
 
     #[serde(default)]
     pub click_tracking_params: Ignored,
@@ -427,6 +429,7 @@ impl LiveChatMessage {
             close_live_chat_action_panel_action: _,
             update_live_chat_poll_action: _,
             click_tracking_params: _,
+            replace_chat_item_action: _,
             unknown,
         } = action;
 
