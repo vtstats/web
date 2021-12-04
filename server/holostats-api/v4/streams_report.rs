@@ -23,6 +23,8 @@ pub struct ReqQuery {
 #[derive(Debug)]
 pub enum Metrics {
     YoutubeStreamViewer,
+    YoutubeLiveChatMessage,
+    YoutubeLiveChatMessageFromMember,
 }
 
 impl FromStr for Metrics {
@@ -31,6 +33,10 @@ impl FromStr for Metrics {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "youtube_stream_viewer" => Ok(Metrics::YoutubeStreamViewer),
+            "youtube_live_chat_message" => Ok(Metrics::YoutubeLiveChatMessage),
+            "youtube_live_chat_message_from_member" => {
+                Ok(Metrics::YoutubeLiveChatMessageFromMember)
+            }
             _ => Err("unknown metrics"),
         }
     }
@@ -71,6 +77,14 @@ pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::
         reports.extend(match metric {
             Metrics::YoutubeStreamViewer => db
                 .youtube_stream_viewer(&query.ids, &query.start_at, &query.end_at)
+                .await
+                .map_err(Into::<WarpError>::into)?,
+            Metrics::YoutubeLiveChatMessage => db
+                .youtube_live_chat_message(&query.ids, &query.start_at, &query.end_at)
+                .await
+                .map_err(Into::<WarpError>::into)?,
+            Metrics::YoutubeLiveChatMessageFromMember => db
+                .youtube_live_chat_message_from_member(&query.ids, &query.start_at, &query.end_at)
                 .await
                 .map_err(Into::<WarpError>::into)?,
         });

@@ -193,4 +193,64 @@ impl Database {
         .await
         .map(|rows| generate_report(rows, "youtube_stream_viewer"))
     }
+
+    #[instrument(
+        name = "Select youtube_live_chat_statistic",
+        skip(self),
+        fields(db.table = "youtube_live_chat_statistic"),
+    )]
+    pub async fn youtube_live_chat_message(
+        &self,
+        ids: &[String],
+        start_at: &Option<UtcTime>,
+        end_at: &Option<UtcTime>,
+    ) -> Result<Vec<Report>> {
+        sqlx::query_as!(
+            Statistic,
+            r#"
+      select stream_id as id, time, message_count as value
+        from youtube_live_chat_statistic
+       where stream_id = any($1)
+         and (time >= $2 or $2 is null)
+         and (time <= $3 or $3 is null)
+    order by stream_id, time asc
+            "#,
+            ids,
+            *start_at,
+            *end_at
+        )
+        .fetch_all(&self.pool)
+        .await
+        .map(|rows| generate_report(rows, "youtube_live_chat_message"))
+    }
+
+    #[instrument(
+        name = "Select youtube_live_chat_statistic",
+        skip(self),
+        fields(db.table = "youtube_live_chat_statistic"),
+    )]
+    pub async fn youtube_live_chat_message_from_member(
+        &self,
+        ids: &[String],
+        start_at: &Option<UtcTime>,
+        end_at: &Option<UtcTime>,
+    ) -> Result<Vec<Report>> {
+        sqlx::query_as!(
+            Statistic,
+            r#"
+      select stream_id as id, time, message_from_member_count as value
+        from youtube_live_chat_statistic
+       where stream_id = any($1)
+         and (time >= $2 or $2 is null)
+         and (time <= $3 or $3 is null)
+       order by stream_id, time asc
+            "#,
+            ids,
+            *start_at,
+            *end_at
+        )
+        .fetch_all(&self.pool)
+        .await
+        .map(|rows| generate_report(rows, "youtube_live_chat_message_from_member"))
+    }
 }
