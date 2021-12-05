@@ -1,5 +1,9 @@
 use chrono::{DateTime, Utc};
-use holostats_database::{channels::Channel as Channel_, statistic::Report, Database};
+use holostats_database::{
+    channels::Channel as Channel_,
+    statistic::{Reports, Timestamp},
+    Database,
+};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
 use warp::{reply::Json, Rejection};
@@ -20,7 +24,7 @@ pub struct ChannelsReportRequestQuery {
 #[serde(rename_all = "camelCase")]
 pub struct ChannelsReportResponseBody {
     channels: Vec<Channel>,
-    reports: Vec<Report>,
+    reports: Reports<(Timestamp, i32)>,
 }
 
 #[derive(serde::Serialize)]

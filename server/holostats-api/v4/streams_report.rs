@@ -1,5 +1,9 @@
 use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
-use holostats_database::{statistic::Report, streams::Stream, Database};
+use holostats_database::{
+    statistic::{Report, Timestamp},
+    streams::Stream,
+    Database,
+};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
 use std::str::FromStr;
@@ -24,7 +28,6 @@ pub struct ReqQuery {
 pub enum Metrics {
     YoutubeStreamViewer,
     YoutubeLiveChatMessage,
-    YoutubeLiveChatMessageFromMember,
 }
 
 impl FromStr for Metrics {
@@ -34,19 +37,23 @@ impl FromStr for Metrics {
         match s {
             "youtube_stream_viewer" => Ok(Metrics::YoutubeStreamViewer),
             "youtube_live_chat_message" => Ok(Metrics::YoutubeLiveChatMessage),
-            "youtube_live_chat_message_from_member" => {
-                Ok(Metrics::YoutubeLiveChatMessageFromMember)
-            }
             _ => Err("unknown metrics"),
         }
     }
 }
 
 #[derive(serde::Serialize)]
+#[serde(untagged)]
+pub enum OneOf {
+    A(Report<(Timestamp, i32)>),
+    B(Report<(Timestamp, i32, i32)>),
+}
+
+#[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ResBody {
     pub streams: Vec<Stream>,
-    pub reports: Vec<Report>,
+    pub reports: Vec<OneOf>,
 }
 
 pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::Reply, Rejection> {
@@ -74,20 +81,22 @@ pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::
     );
 
     for metric in &query.metrics {
-        reports.extend(match metric {
-            Metrics::YoutubeStreamViewer => db
-                .youtube_stream_viewer(&query.ids, &query.start_at, &query.end_at)
-                .await
-                .map_err(Into::<WarpError>::into)?,
-            Metrics::YoutubeLiveChatMessage => db
-                .youtube_live_chat_message(&query.ids, &query.start_at, &query.end_at)
-                .await
-                .map_err(Into::<WarpError>::into)?,
-            Metrics::YoutubeLiveChatMessageFromMember => db
-                .youtube_live_chat_message_from_member(&query.ids, &query.start_at, &query.end_at)
-                .await
-                .map_err(Into::<WarpError>::into)?,
-        });
+        match metric {
+            Metrics::YoutubeStreamViewer => reports.extend(
+                db.youtube_stream_viewer(&query.ids, &query.start_at, &query.end_at)
+                    .await
+                    .map_err(Into::<WarpError>::into)?
+                    .into_iter()
+                    .map(OneOf::A),
+            ),
+            Metrics::YoutubeLiveChatMessage => reports.extend(
+                db.youtube_live_chat_message(&query.ids, &query.start_at, &query.end_at)
+                    .await
+                    .map_err(Into::<WarpError>::into)?
+                    .into_iter()
+                    .map(OneOf::B),
+            ),
+        }
     }
 
     Ok(warp::reply::json(&ResBody { streams, reports }))

@@ -612,6 +612,7 @@ name = "holostats-database"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "futures-util",
  "holostats-config",
  "serde",
  "serde_with",

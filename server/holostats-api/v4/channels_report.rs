@@ -1,5 +1,9 @@
 use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
-use holostats_database::{channels::Channel, statistic::Report, Database};
+use holostats_database::{
+    channels::Channel,
+    statistic::{Reports, Timestamp},
+    Database,
+};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
 use std::str::FromStr;
@@ -46,7 +50,7 @@ impl FromStr for Metrics {
 #[serde(rename_all = "camelCase")]
 pub struct ResBody {
     channels: Vec<Channel>,
-    reports: Vec<Report>,
+    reports: Reports<(Timestamp, i32)>,
 }
 
 pub async fn channels_report(query: ReqQuery, db: Database) -> Result<impl warp::Reply, Rejection> {
