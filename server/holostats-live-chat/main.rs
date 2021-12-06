@@ -106,6 +106,7 @@ async fn get_live_chat(
         let mut paid_texts = vec![];
         let mut paid_badges = vec![];
         let mut paid_amounts = vec![];
+        let mut paid_colors = vec![];
 
         let mut mem_types = vec![];
         let mut mem_author_names = vec![];
@@ -165,6 +166,7 @@ async fn get_live_chat(
                     amount,
                     badges,
                     text,
+                    color,
                 } => {
                     if let Some(date) = parse_timestamp(timestamp, false) {
                         paid_types.push(ty.as_str());
@@ -174,6 +176,7 @@ async fn get_live_chat(
                         paid_texts.push(text);
                         paid_amounts.push(amount);
                         paid_badges.push(badges.join(","));
+                        paid_colors.push(color);
                     }
                 }
             }
@@ -202,6 +205,7 @@ async fn get_live_chat(
             paid_times,
             paid_texts,
             paid_badges,
+            paid_colors,
         )
         .await?;
 

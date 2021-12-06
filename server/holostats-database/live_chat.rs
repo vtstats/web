@@ -50,7 +50,7 @@ impl Database {
 
     #[instrument(
         name = "insert live_chat_paid_messages",
-        skip(self, types, amounts, author_names, author_channel_ids, times, texts, badges),
+        skip(self, types, amounts, author_names, author_channel_ids, times, texts, badges, colors),
         fields(db.table = "youtube_live_chat_paid_messages"),
     )]
     pub async fn insert_live_chat_paid_messages(
@@ -63,6 +63,7 @@ impl Database {
         times: Vec<DateTime<Utc>>,
         texts: Vec<String>,
         badges: Vec<String>,
+        colors: Vec<i32>,
     ) -> Result<()> {
         sqlx::query!(
             r#"
@@ -75,7 +76,8 @@ impl Database {
                author_channel_id,
                time,
                text,
-               badges
+               badges,
+               color
              )
       select $1,
              unnest($2::TEXT[]::paid_message_type[]),
@@ -84,7 +86,8 @@ impl Database {
              unnest($5::TEXT[]),
              unnest($6::TIMESTAMPTZ[]),
              unnest($7::TEXT[]),
-             unnest($8::TEXT[])
+             unnest($8::TEXT[]),
+             unnest($9::INT[])
             "#,
             stream_id,
             &types,
@@ -93,7 +96,8 @@ impl Database {
             &author_channel_ids,
             &times,
             &texts,
-            &badges
+            &badges,
+            &colors
         )
         .execute(&self.pool)
         .await?;

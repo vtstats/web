@@ -195,6 +195,8 @@ pub struct LiveChatPaidStickerRenderer {
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
     pub sticker: Sticker,
+    #[serde(rename = "bodyBackgroundColor")]
+    pub color: i32,
 }
 
 #[derive(Deserialize, Debug)]
@@ -230,6 +232,8 @@ pub struct LiveChatPaidMessageRenderer {
     pub message: Option<Message>,
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
+    #[serde(rename = "bodyBackgroundColor")]
+    pub color: i32,
 }
 
 #[derive(Deserialize, Debug)]
@@ -333,6 +337,7 @@ pub enum LiveChatMessage {
         amount: String,
         badges: Vec<String>,
         text: String,
+        color: i32,
     },
 }
 
@@ -464,6 +469,7 @@ impl LiveChatMessage {
                     badges: flatten_badges(msg.author_badges),
                     text: concat_message(msg.message),
                     amount: msg.purchase_amount_text.simple_text,
+                    color: msg.color,
                 })
             } else if let Some(msg) = live_chat_membership_item_renderer {
                 let message_is_empty = msg.message.is_none();
@@ -498,6 +504,7 @@ impl LiveChatMessage {
                     timestamp: msg.timestamp_usec,
                     badges: flatten_badges(msg.author_badges),
                     amount: msg.purchase_amount_text.simple_text,
+                    color: msg.color,
                 })
             } else {
                 for (k, _) in unknown {
