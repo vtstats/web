@@ -27,6 +27,7 @@ import {
   ChannelTable,
   ChannelTableShimmer,
 } from "./channel-table/channel-table";
+import { LiveChat } from "./live-chat/live-chat";
 import { LoadingSpinner } from "./loading-spinner/loading-spinner";
 import { NumberRow } from "./number-row/number-row";
 import { StreamItem, StreamItemShimmer } from "./stream-item/stream-item";
@@ -45,7 +46,8 @@ import { DateFilter } from "./date-filter/date-filter";
 import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
 import { StreamTime } from "./stream-time/stream-time";
-import { StreamTimeTooltip } from "./stream-time/stream-time-tooltip";
+import { PopperComponent } from "./popper/popper";
+import { ChartAxis } from "./chart-axis/chart-axis";
 
 import { SharedModule } from "src/app/shared";
 
@@ -59,6 +61,8 @@ import { SharedModule } from "src/app/shared";
     BigNumberShimmer,
     ChannelTable,
     ChannelTableShimmer,
+    LiveChat,
+    PopperComponent,
     LoadingSpinner,
     NumberRow,
     StreamGroup,
@@ -70,13 +74,13 @@ import { SharedModule } from "src/app/shared";
     StreamsSummary,
     StreamsSummaryShimmer,
     StreamTime,
-    StreamTimeTooltip,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
     DateFilter,
     VTuberFilter,
     FilterGroup,
+    ChartAxis,
   ],
   imports: [
     CommonModule,
@@ -104,6 +108,8 @@ import { SharedModule } from "src/app/shared";
     ChannelTableShimmer,
     LoadingSpinner,
     NumberRow,
+    LiveChat,
+    PopperComponent,
     StreamGroup,
     StreamItem,
     StreamItemShimmer,

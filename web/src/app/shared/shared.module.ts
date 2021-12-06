@@ -11,10 +11,11 @@ import { ColoredNumberDirective } from "./directives/colored-number.directive";
 
 import { DistancePipe } from "./pipes/distance.pipe";
 import { DurationPipe } from "./pipes/duration.pipe";
+import { FormatDurationPipe } from "./pipes/format-duration.pipe";
 import { FormatISOPipe } from "./pipes/format-iso.pipe";
 import { GroupByPipe } from "./pipes/group-by.pipe";
-import { NamePipe } from "./pipes/name.pipe";
 import { ImagePipe } from "./pipes/image.pipe";
+import { NamePipe } from "./pipes/name.pipe";
 
 import { ApiService } from "./services/api.service";
 import { TickService } from "./services/tick.service";
@@ -24,6 +25,7 @@ import { TickService } from "./services/tick.service";
     DistancePipe,
     DurationPipe,
     FormatISOPipe,
+    FormatDurationPipe,
     GroupByPipe,
     NamePipe,
     ImagePipe,
@@ -42,6 +44,7 @@ import { TickService } from "./services/tick.service";
     DistancePipe,
     DurationPipe,
     FormatISOPipe,
+    FormatDurationPipe,
     GroupByPipe,
     NamePipe,
     ImagePipe,

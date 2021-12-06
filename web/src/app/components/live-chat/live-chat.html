@@ -1,0 +1,47 @@
+<hs-sub-menu>
+  <hs-sub-menu-title>Live Chat</hs-sub-menu-title>
+
+  <hs-sub-menu-extra>
+    <span
+      class="time-unit"
+      role="button"
+      [ngClass]="{ selected: fitContent}"
+      (click)="fitContent = true; _render()"
+    >
+      Fit
+    </span>
+
+    <span
+      class="time-unit"
+      role="button"
+      *ngFor="let u of [15000, 30000, 60000, 120000, 300000]"
+      [ngClass]="{ selected: !fitContent && timeUnit === u }"
+      (click)="timeUnit = u; fitContent = false; _render()"
+    >
+      {{formatTimeUnit(u)}}
+    </span>
+  </hs-sub-menu-extra>
+</hs-sub-menu>
+
+<div class="live-chat-chart" (mouseleave)="_handleMouseleave()">
+  <hs-chart-axis class="axis" [max]="max"></hs-chart-axis>
+
+  <div
+    #bars
+    class="bars"
+    (mousemove)="_handleMouseover($event)"
+    (dblclick)="_handleDblClick($event)"
+  ></div>
+
+  <hs-popper [reference]="popper.reference" [options]="popper.options">
+    <div>From {{ popper.from | date:'HH:mm:ss' }}</div>
+    <div>Until {{ popper.to | date:'HH:mm:ss' }}</div>
+    <div>Total messages: {{ popper.total | number }}</div>
+    <div *ngIf="popper.member > 0">
+      Member messages: {{ popper.member | number}}
+    </div>
+    <div *ngIf="stream.status === 'ended'" class="hint">
+      Double click to jump to
+    </div>
+  </hs-popper>
+</div>

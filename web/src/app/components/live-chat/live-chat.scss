@@ -1,5 +1,7 @@
-.stream-stats-chart {
+.live-chat-chart {
   position: relative;
+  // slightly larger than topMargin + height + bottomMargin
+  // to prevent overflow
   height: 360px;
 
   .bars {
@@ -13,6 +15,7 @@
   }
 
   .axis {
+    top: 0;
     right: 0;
     overflow: hidden;
     position: absolute;
@@ -21,13 +24,4 @@
   .label {
     user-select: none;
   }
-}
-
-.time-unit {
-  margin-left: 8px;
-  cursor: pointer;
-}
-
-.time-unit.selected {
-  font-weight: 600;
 }

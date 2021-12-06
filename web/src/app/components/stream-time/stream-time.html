@@ -3,14 +3,18 @@
     <hs-sub-menu-title i18n="@@streamTimes"> Stream Times </hs-sub-menu-title>
   </hs-sub-menu>
 
-  <div
-    class="heatmap"
-    #heatmap
-    (mouseout)="_handleMouseout($event)"
-    (mouseover)="_handleMouseover($event)"
-  ></div>
-</div>
+  <div class="heatmap" (mouseleave)="_handleMouseleave()">
+    <div #heatmap (mouseover)="_handleMouseover($event)"></div>
+  </div>
 
-<ng-template hsStreamTimeTooltip [origin]="tooltipOverlayOrigin">
-  <div class="stream-time-tooltip">{{tooltipMessage}}</div>
-</ng-template>
+  <hs-popper [reference]="popper.reference" [options]="popper.options">
+    <ng-container *ngIf="!!popper.value; else noStream" i18n="@@streamTimeOn">
+      Stream {{ popper.value | formatDuration }} on {{ popper.date |
+      date:'mediumDate' }}
+    </ng-container>
+
+    <ng-template #noStream i18n="@@noStream">
+      No stream on {{ popper.date | date:'mediumDate' }}
+    </ng-template>
+  </hs-popper>
+</div>

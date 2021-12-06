@@ -90,6 +90,7 @@ export type Report<K> = {
 
 export const enum StreamReportKind {
   youtubeStreamViewer = "youtube_stream_viewer",
+  youtubeLiveChatMessage = "youtube_live_chat_message",
 }
 
 export type StreamReportOption = {

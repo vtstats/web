@@ -14,7 +14,6 @@ import {
 import {
   addWeeks,
   eachDayOfInterval,
-  formatDuration,
   fromUnixTime,
   getDate,
   getDay,
@@ -25,7 +24,6 @@ import SVG from "svg.js";
 
 import type { VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { DATE_FNS_LOCALE } from "src/i18n";
 
 const getFill = (v: number) => {
   if (v <= 0) return "#00bfa510";
@@ -57,20 +55,26 @@ const relativeInWeek = (date: Date, base: Date): number => {
 export class StreamTime implements OnDestroy, AfterViewInit {
   constructor(
     @Inject(LOCALE_ID) private locale: string,
-    @Inject(DATE_FNS_LOCALE) private dateFnsLocale: Locale,
     private api: ApiService,
     private ngZone: NgZone
   ) {}
 
   @Input() vtuber: VTuber;
 
-  tooltipOverlayOrigin: any = null;
-  tooltipMessage: string;
+  popper = {
+    date: 0,
+    value: 0,
+    reference: null,
+    options: {
+      placement: "top",
+      modifiers: [{ name: "offset", options: { offset: [0, 8] } }],
+    },
+  };
 
   @ViewChild("heatmap", { static: true })
   private heatmapEl: ElementRef;
-
   _svg: SVG.Doc;
+
   loading: boolean;
 
   ngAfterViewInit() {
@@ -85,19 +89,12 @@ export class StreamTime implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this._svg) {
-      this._svg.clear();
-    }
+    if (this._svg) this._svg.clear();
   }
 
-  _handleMouseout(e: MouseEvent) {
-    if (
-      !this.loading &&
-      e.target instanceof Element &&
-      e.target.tagName.toLowerCase() === "rect" &&
-      this.tooltipOverlayOrigin === e.target
-    ) {
-      this.tooltipOverlayOrigin = null;
+  _handleMouseleave() {
+    if (!this.loading) {
+      this.popper.reference = null;
     }
   }
 
@@ -106,26 +103,11 @@ export class StreamTime implements OnDestroy, AfterViewInit {
       !this.loading &&
       e.target instanceof Element &&
       e.target.tagName.toLowerCase() === "rect" &&
-      this.tooltipOverlayOrigin !== e.target
+      this.popper.reference !== e.target
     ) {
-      const value = Number(e.target.getAttribute("x-value"));
-      const date = Number(e.target.getAttribute("x-date"));
-
-      const d = formatDate(date, "mediumDate", this.locale);
-
-      if (!value) {
-        this.tooltipMessage = $localize`:@@noStream:No stream on ${d}`;
-      } else {
-        const hours = Math.floor(value / 3600);
-        const minutes = Math.floor((value - hours * 3600) / 60);
-
-        this.tooltipMessage = $localize`:@@streamTimeOn:Stream ${formatDuration(
-          { hours, minutes },
-          { locale: this.dateFnsLocale }
-        )} on ${d}`;
-      }
-
-      this.tooltipOverlayOrigin = e.target;
+      this.popper.reference = e.target;
+      this.popper.date = Number(e.target.getAttribute("x-date"));
+      this.popper.value = Number(e.target.getAttribute("x-value"));
     }
   }
 

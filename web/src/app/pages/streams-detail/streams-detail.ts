@@ -33,7 +33,10 @@ export class StreamsDetail implements OnInit {
     this.api
       .streamReports({
         ids: [this.streamId],
-        metrics: [StreamReportKind.youtubeStreamViewer],
+        metrics: [
+          StreamReportKind.youtubeStreamViewer,
+          StreamReportKind.youtubeLiveChatMessage,
+        ],
       })
       .subscribe((res) => {
         this.loading = false;

@@ -1,0 +1,58 @@
+.hs-popper {
+  display: block;
+  user-select: none;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  background: rgb(97, 97, 97);
+  pointer-events: none;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  position: absolute;
+
+  &:not([data-popper-placement]) {
+    left: 0;
+    top: 0;
+    visibility: hidden;
+  }
+
+  &[data-popper-reference-hidden] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &[data-popper-placement^="top"] .arrow {
+    bottom: -4px;
+  }
+
+  &[data-popper-placement^="bottom"] .arrow {
+    top: -4px;
+  }
+
+  &[data-popper-placement^="left"] .arrow {
+    right: -4px;
+  }
+
+  &[data-popper-placement^="right"] .arrow {
+    left: -4px;
+  }
+
+  .arrow {
+    &,
+    &::before {
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      z-index: -1;
+    }
+
+    &::before {
+      content: "";
+      transform: rotate(45deg);
+      background-color: rgb(97, 97, 97);
+    }
+  }
+}

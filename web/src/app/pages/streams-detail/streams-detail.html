@@ -2,9 +2,16 @@
   <ng-container *ngIf="!loading; else shimmer">
     <hs-stream-summary [stream]="stream"></hs-stream-summary>
 
-    <div class="chart" *ngFor="let report of reports">
-      <hs-stream-stats-chart [report]="report"> </hs-stream-stats-chart>
-    </div>
+    <ng-container *ngFor="let report of reports" [ngSwitch]="report.kind">
+      <ng-container *ngSwitchCase="'youtube_live_chat'">
+        <hs-live-chat [rows]="report.rows" [stream]="stream"></hs-live-chat>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'youtube_stream_viewer'">
+        <hs-stream-stats-chart [rows]="report.rows" [stream]="stream">
+        </hs-stream-stats-chart>
+      </ng-container>
+    </ng-container>
   </ng-container>
 
   <ng-template #shimmer>

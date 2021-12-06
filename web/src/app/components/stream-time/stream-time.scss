@@ -3,34 +3,7 @@
 
   .heatmap {
     overflow-x: auto;
-    overflow-y: hidden;
     padding: 12px 0;
     direction: rtl;
   }
-
-  .arrow {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top-width: 5px;
-    border-top-style: solid;
-    margin: 0 0 0 5px;
-  }
-}
-
-.stream-time-tooltip {
-  user-select: none;
-
-  // copy from .mat-tooltip
-  border: none;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 8px;
-  padding-right: 8px;
-  color: white;
-  border-radius: 4px;
-  text-align: center;
-  background: rgba(97, 97, 97, 0.9);
 }
