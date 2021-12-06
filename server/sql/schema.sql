@@ -89,8 +89,9 @@ CREATE TABLE youtube_live_chat_paid_messages (
   author_channel_id TEXT NOT NULL,
   time TIMESTAMPTZ NOT NULL,
   text TEXT NOT NULL,
-  amount TEXT NOT NULL, 
-  badges TEXT
+  amount TEXT NOT NULL,
+  badges TEXT,
+  color INTEGER
 );
 
 CREATE TYPE member_message_type AS ENUM ('new', 'milestone');
