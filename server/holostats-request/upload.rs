@@ -123,6 +123,6 @@ host;x-amz-content-sha256;x-amz-date
             .map(|res| res.and_then(Response::error_for_status))
             .await?;
 
-        return Ok(());
+        Ok(())
     }
 }

@@ -33,4 +33,10 @@ impl RequestHub {
     }
 }
 
+impl Default for RequestHub {
+    fn default() -> Self {
+        RequestHub::new()
+    }
+}
+
 pub use reqwest::Error as RequestError;

@@ -34,15 +34,13 @@ impl Continuation {
         let Continuation {
             timed_continuation_data,
             invalidation_continuation_data,
-            reload_continuation_data,
+            reload_continuation_data: _,
         } = self;
 
         if let Some(data) = timed_continuation_data {
             Some(Duration::from_millis(data.timeout_ms))
         } else if let Some(data) = invalidation_continuation_data {
             Some(Duration::from_millis(data.timeout_ms))
-        } else if let Some(_) = reload_continuation_data {
-            None
         } else {
             None
         }
@@ -195,8 +193,8 @@ pub struct LiveChatPaidStickerRenderer {
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
     pub sticker: Sticker,
-    #[serde(rename = "bodyBackgroundColor")]
-    pub color: i32,
+    #[serde(rename = "backgroundColor")]
+    pub color: u64,
 }
 
 #[derive(Deserialize, Debug)]
@@ -233,7 +231,7 @@ pub struct LiveChatPaidMessageRenderer {
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
     #[serde(rename = "bodyBackgroundColor")]
-    pub color: i32,
+    pub color: u64,
 }
 
 #[derive(Deserialize, Debug)]
@@ -337,7 +335,7 @@ pub enum LiveChatMessage {
         amount: String,
         badges: Vec<String>,
         text: String,
-        color: i32,
+        color: String,
     },
 }
 
@@ -407,6 +405,15 @@ fn get_accessibility_label(acc: Option<Accessibility>) -> String {
         .unwrap_or_default()
 }
 
+fn get_color(color: u64) -> String {
+    let hex = format!("{:X}", color);
+    if hex.len() == 8 {
+        format!("{}{}", &hex[2..], &hex[0..2])
+    } else {
+        hex
+    }
+}
+
 impl LiveChatMessage {
     pub fn from_response(res: Response) -> Vec<LiveChatMessage> {
         res.continuation_contents
@@ -469,7 +476,7 @@ impl LiveChatMessage {
                     badges: flatten_badges(msg.author_badges),
                     text: concat_message(msg.message),
                     amount: msg.purchase_amount_text.simple_text,
-                    color: msg.color,
+                    color: get_color(msg.color),
                 })
             } else if let Some(msg) = live_chat_membership_item_renderer {
                 let message_is_empty = msg.message.is_none();
@@ -504,7 +511,7 @@ impl LiveChatMessage {
                     timestamp: msg.timestamp_usec,
                     badges: flatten_badges(msg.author_badges),
                     amount: msg.purchase_amount_text.simple_text,
-                    color: msg.color,
+                    color: get_color(msg.color),
                 })
             } else {
                 for (k, _) in unknown {

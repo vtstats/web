@@ -63,7 +63,7 @@ impl Database {
         times: Vec<DateTime<Utc>>,
         texts: Vec<String>,
         badges: Vec<String>,
-        colors: Vec<i32>,
+        colors: Vec<String>,
     ) -> Result<()> {
         sqlx::query!(
             r#"
@@ -87,7 +87,7 @@ impl Database {
              unnest($6::TIMESTAMPTZ[]),
              unnest($7::TEXT[]),
              unnest($8::TEXT[]),
-             unnest($9::INT[])
+             unnest($9::TEXT[])
             "#,
             stream_id,
             &types,
