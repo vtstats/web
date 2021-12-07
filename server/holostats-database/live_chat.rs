@@ -1,4 +1,4 @@
-use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
+use chrono::{serde::ts_milliseconds, DateTime, Utc};
 use serde::Serialize;
 use sqlx::Result;
 use tracing::instrument;
@@ -9,18 +9,18 @@ use super::Database;
 #[serde(rename_all = "camelCase")]
 pub struct PaidMessage {
     amount: String,
-    #[serde(with = "ts_milliseconds_option")]
-    time: Option<DateTime<Utc>>,
+    #[serde(with = "ts_milliseconds")]
+    time: DateTime<Utc>,
     #[serde(rename = "type")]
     ty: Option<String>,
-    color: Option<String>,
+    color: String,
 }
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MemberMessage {
-    #[serde(with = "ts_milliseconds_option")]
-    time: Option<DateTime<Utc>>,
+    #[serde(with = "ts_milliseconds")]
+    time: DateTime<Utc>,
     #[serde(rename = "type")]
     ty: Option<String>,
 }
