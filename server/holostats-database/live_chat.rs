@@ -1,8 +1,29 @@
-use chrono::{DateTime, Utc};
+use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
+use serde::Serialize;
 use sqlx::Result;
 use tracing::instrument;
 
 use super::Database;
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PaidMessage {
+    amount: String,
+    #[serde(with = "ts_milliseconds_option")]
+    time: Option<DateTime<Utc>>,
+    #[serde(rename = "type")]
+    ty: Option<String>,
+    color: Option<String>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MemberMessage {
+    #[serde(with = "ts_milliseconds_option")]
+    time: Option<DateTime<Utc>>,
+    #[serde(rename = "type")]
+    ty: Option<String>,
+}
 
 impl Database {
     #[instrument(
@@ -17,7 +38,7 @@ impl Database {
         message_counts: Vec<i32>,
         message_from_member_counts: Vec<i32>,
     ) -> Result<()> {
-        sqlx::query!(
+        let _res = sqlx::query!(
             r#"
  insert into youtube_live_chat_statistic as t
              (
@@ -65,7 +86,7 @@ impl Database {
         badges: Vec<String>,
         colors: Vec<String>,
     ) -> Result<()> {
-        sqlx::query!(
+        let _res = sqlx::query!(
             r#"
  insert into youtube_live_chat_paid_messages
              (
@@ -120,7 +141,7 @@ impl Database {
         texts: Vec<String>,
         badges: Vec<String>,
     ) -> Result<()> {
-        sqlx::query!(
+        let _res = sqlx::query!(
             r#"
  insert into youtube_live_chat_member_messages
              (
@@ -152,5 +173,46 @@ impl Database {
         .await?;
 
         Ok(())
+    }
+
+    #[instrument(
+        name = "select live_chat_paid_messages",
+        skip(self),
+        fields(db.table = "youtube_live_chat_paid_messages"),
+    )]
+    pub async fn select_paid_messages(&self, stream_id: &str) -> Result<Vec<PaidMessage>> {
+        sqlx::query_as!(
+            PaidMessage,
+            r#"
+      select type::TEXT as ty,
+             amount,
+             color,
+             time
+        from youtube_live_chat_paid_messages
+       where stream_id = $1
+            "#,
+            stream_id
+        )
+        .fetch_all(&self.pool)
+        .await
+    }
+
+    #[instrument(
+        name = "select live_chat_member_messages",
+        skip(self),
+        fields(db.table = "youtube_live_chat_member_messages"),
+    )]
+    pub async fn select_member_messages(&self, stream_id: &str) -> Result<Vec<MemberMessage>> {
+        sqlx::query_as!(
+            MemberMessage,
+            r#"
+      select type::TEXT as ty, time
+        from youtube_live_chat_member_messages
+       where stream_id = $1
+            "#,
+            stream_id
+        )
+        .fetch_all(&self.pool)
+        .await
     }
 }

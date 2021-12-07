@@ -1,11 +1,13 @@
 mod channels_list;
 mod channels_report;
+mod live_chat;
 mod stream_times;
 mod streams_list;
 mod streams_report;
 
 use channels_list::{bilibili_channels_list, youtube_channels_list};
 use channels_report::channels_report;
+use live_chat::live_chat_highlight;
 use stream_times::stream_times;
 use streams_list::youtube_streams_list;
 use streams_report::streams_report;
@@ -24,7 +26,8 @@ pub fn api(
             .or(api_youtube_streams(db.clone()))
             .or(api_stream_times(db.clone()))
             .or(api_streams_report(db.clone()))
-            .or(api_channels_report(db)),
+            .or(api_channels_report(db.clone()))
+            .or(api_live_chat_hightlight(db)),
     )
 }
 
@@ -86,4 +89,14 @@ pub fn api_stream_times(
         .and(warp::query())
         .and(with_db(db))
         .and_then(stream_times)
+}
+
+pub fn api_live_chat_hightlight(
+    db: Database,
+) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    warp::path!("live_chat" / "highlight")
+        .and(warp::get())
+        .and(warp::query())
+        .and(with_db(db))
+        .and_then(live_chat_highlight)
 }
