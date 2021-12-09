@@ -5,6 +5,7 @@ export type VTuber = {
   youtube: string | null;
   bilibili: number | null;
   default: boolean;
+  image: string;
 };
 
 export type Channel = {

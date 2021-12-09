@@ -11,7 +11,7 @@
     </a>
 
     <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
-      <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
+      <img class="profile" [cfImage]="[stream.vtuberId | image, 'thumbnail']" />
       <span class="name">{{ stream.vtuberId | name }}</span>
     </a>
 
