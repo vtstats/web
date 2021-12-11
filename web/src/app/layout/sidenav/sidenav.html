@@ -45,19 +45,23 @@
       <mat-icon mat-list-icon svgIcon="tune"></mat-icon>
       <p mat-line i18n="@@settings">Settings</p>
     </a>
-    <!-- TODO: -->
-    <!-- <a mat-list-item routerLink="/stream-summary">
-      <mat-icon mat-list-icon svgIcon="timeline"></mat-icon>
-      <p mat-line>同接概要</p>
-    </a> -->
   </mat-nav-list>
 
   <mat-divider></mat-divider>
 
   <div class="info">
+    <a
+      class="link"
+      href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
+      target="_blank"
+    >
+      News
+    </a>
+
     <a class="link" href="https://angular.io/" target="_blank">
       Angular: v{{ angularVer }}
     </a>
+
     <a
       class="link"
       href="https://github.com/PoiScript/HoloStats/commit/{{ commitId }}"
