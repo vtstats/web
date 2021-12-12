@@ -19,6 +19,7 @@
   }
 
   .thumbnail {
+    display: block;
     position: relative;
 
     &:before {
@@ -46,10 +47,6 @@
 
       object-position: center;
       object-fit: cover;
-    }
-
-    &.link {
-      cursor: pointer;
     }
 
     .duration {
@@ -86,8 +83,14 @@
 
   .title {
     line-height: 16px;
-    height: 32px;
     margin: 8px 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
   }
 
   .viewers {

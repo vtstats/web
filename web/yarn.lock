@@ -1539,11 +1539,6 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-1.0.0.tgz#3fdf5798f0b49e90155896f6291df186eac06c83"
   integrity sha512-9oLAnygRMi8Q5QkYEU4XWK04B+nuoXoxjRvRxgjuChkLZFBja0YPSgdZ7dZtwhncLBcQe/I/E+fLuk5qxcYVJA==
 
-"@juggle/resize-observer@*":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
-  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
-
 "@ngtools/webpack@13.0.3":
   version "13.0.3"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-13.0.3.tgz#ec31dfa49dae79aeee68cc970fea6f5fd9ebc76d"
@@ -5204,14 +5199,6 @@ nested-error-stacks@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.0.1.tgz#d2cc9fc5235ddb371fc44d506234339c8e4b0a4b"
   integrity sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==
-
-ngx-ellipsis@^3.1.1:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-3.1.4.tgz#4039fa7f579c4bfc364020b7629f91d6fceeda90"
-  integrity sha512-DqueXTH0XBtBg4Lxfv3DZS0UfAtfP/YCDdH2PKulcpQr3OGl1ZsmUGN0QlKHwBQ9V61b+QVBNTpYsace+xMkng==
-  dependencies:
-    "@juggle/resize-observer" "*"
-    tslib "^2.0.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"

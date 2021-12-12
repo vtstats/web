@@ -4,7 +4,6 @@ import { RouterModule } from "@angular/router";
 import { MatTableModule } from "@angular/material/table";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatIconModule } from "@angular/material/icon";
-import { EllipsisModule } from "ngx-ellipsis";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
 
@@ -35,7 +34,6 @@ import { TickService } from "./services/tick.service";
   imports: [
     CommonModule,
     RouterModule,
-    EllipsisModule,
     MatTableModule,
     MatIconModule,
     MatProgressSpinnerModule,

@@ -14,7 +14,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatMenuModule } from "@angular/material/menu";
 import { OverlayModule } from "@angular/cdk/overlay";
-import { EllipsisModule } from "ngx-ellipsis";
 
 import { ApxChart } from "./apx-chart/apx-chart";
 import { ChannelStats } from "./channel-stats/channel-stats";
@@ -86,7 +85,6 @@ import { SharedModule } from "src/app/shared";
     CommonModule,
     RouterModule,
     PortalModule,
-    EllipsisModule,
     OverlayModule,
     MatDatepickerModule,
     MatNativeDateModule,

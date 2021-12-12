@@ -1,6 +1,5 @@
-<div
+<a
   class="thumbnail"
-  [ngClass]="{ link: stream.status !== 'scheduled' }"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
   <div class="cover">
@@ -32,14 +31,15 @@
   >
     <mat-icon svgIcon="open_in_new"></mat-icon>
   </a>
-</div>
+</a>
 
-<div
+<a
   class="title"
   title="{{ stream.title }}"
-  ellipsis
-  [ellipsis-content]="stream.title"
-></div>
+  [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
+>
+  {{stream.title}}
+</a>
 
 <ng-container [ngSwitch]="stream.status">
   <div class="viewers current" *ngSwitchCase="'live'">

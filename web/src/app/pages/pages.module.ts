@@ -11,7 +11,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatTableModule } from "@angular/material/table";
 import { MatTreeModule } from "@angular/material/tree";
-import { EllipsisModule } from "ngx-ellipsis";
 
 import { SharedModule } from "../shared";
 import { ComponentsModule } from "../components/components.module";
@@ -39,7 +38,6 @@ import { NotFound } from "./not-found/not-found";
   imports: [
     CommonModule,
     RouterModule,
-    EllipsisModule,
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
