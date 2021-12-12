@@ -39,7 +39,8 @@ CREATE TABLE youtube_streams (
   status stream_status NOT NULL,
   average_viewer_count INTEGER,
   max_viewer_count INTEGER,
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  cf_images_id TEXT
 );
 
 CREATE TABLE youtube_channel_subscriber_statistic (
