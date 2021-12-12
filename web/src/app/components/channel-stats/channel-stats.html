@@ -1,6 +1,6 @@
 <div class="vtuber-summary">
   <div class="info">
-    <img class="profile" [cfImage]="[vtuber.image, 'profile']" />
+    <img class="profile" [src]="vtuber.image | cfImages:'240x240'" />
   </div>
 
   <div class="meta">
