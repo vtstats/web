@@ -29,7 +29,7 @@ import { Stream } from "src/app/models";
   encapsulation: ViewEncapsulation.None,
 })
 export class StreamStatsChart implements OnInit, OnDestroy {
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private host: ElementRef<HTMLElement>) {}
 
   @Input() streamId: string;
 
@@ -48,9 +48,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       modifiers: [{ name: "offset", options: { offset: [0, 12] } }],
     },
   };
-
-  popperReference = null;
-  popperMessage: string;
 
   @ViewChild("bars", { static: true })
   private lineEl: ElementRef;
@@ -80,10 +77,11 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   ngOnInit() {
     this._render();
 
+    // TODO: switch to resize observer
     this.sub = fromEvent(window, "resize")
       .pipe(
         filter(() => this.fitContent),
-        map(() => window.innerWidth),
+        map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
       )
@@ -105,11 +103,14 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     return unit >= 60000 ? `${unit / 60000}m` : `${unit / 1000}s`;
   }
 
-  _render(innerWidth: number = window.innerWidth) {
+  _render(w?: number) {
+    if (!w) {
+      w = this.host.nativeElement.getBoundingClientRect().width;
+    }
+
     const len = this.rows.length - 1;
 
-    const width =
-      Math.min(innerWidth, 960) - (this.leftMargin + this.rightMargin);
+    const width = w - (this.leftMargin + this.rightMargin);
 
     if (this.fitContent) {
       const unit = Math.ceil((len * 2) / width);

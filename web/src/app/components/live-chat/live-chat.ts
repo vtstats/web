@@ -10,7 +10,6 @@ import {
 } from "@angular/core";
 import { lightFormat } from "date-fns";
 import SVG from "svg.js";
-
 import { fromEvent, Subscription } from "rxjs";
 import {
   debounceTime,
@@ -18,6 +17,7 @@ import {
   map,
   distinctUntilChanged,
 } from "rxjs/operators";
+
 import { Stream } from "src/app/models";
 
 @Component({
@@ -27,7 +27,7 @@ import { Stream } from "src/app/models";
   encapsulation: ViewEncapsulation.None,
 })
 export class LiveChat implements OnInit, OnDestroy {
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private host: ElementRef<HTMLElement>) {}
 
   loading = false;
 
@@ -70,10 +70,11 @@ export class LiveChat implements OnInit, OnDestroy {
   ngOnInit() {
     this._render();
 
+    // TODO: switch to resize observer
     this.sub = fromEvent(window, "resize")
       .pipe(
         filter(() => this.fitContent),
-        map(() => window.innerWidth),
+        map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
       )
@@ -89,11 +90,13 @@ export class LiveChat implements OnInit, OnDestroy {
     return unit >= 60000 ? `${unit / 60000}m` : `${unit / 1000}s`;
   }
 
-  _render(innerWidth: number = window.innerWidth) {
+  _render(width?: number) {
+    if (!width) {
+      width = this.host.nativeElement.getBoundingClientRect().width;
+    }
+
     if (this.fitContent) {
-      const n = Math.floor(
-        (Math.min(innerWidth, 960) - 120) / (this.barWidth + this.innerPadding)
-      );
+      const n = Math.floor((width - 120) / (this.barWidth + this.innerPadding));
 
       this.timeUnit =
         Math.ceil(
