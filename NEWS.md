@@ -1,3 +1,20 @@
+If you like this project, consider [buying me a superchat](https://www.buymeacoffee.com/holostats). ;)
+
+
+
+2021 12 12
+----
+
+Introduce live chat chart and redesign stream viewers chart.
+
+Use **click and hover** to see the detail about the underlying data:
+
+<img width="1009" alt="image" src="https://user-images.githubusercontent.com/17513314/145717065-4c68dda8-1b5f-4221-ad92-5583dda48720.png">
+
+**Double click** will bring you to the corresponding position in the stream:
+
+![live-chat-graph](https://user-images.githubusercontent.com/17513314/145717107-b368d49a-e2e2-4eea-b13c-e4fe8d724294.gif) ![stream-viewers-graph](https://user-images.githubusercontent.com/17513314/145717111-0b56410e-6c47-4571-b140-1d1edfa79d8e.gif)
+
 2021 11 27
 ----
 
