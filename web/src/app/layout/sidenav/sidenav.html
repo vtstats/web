@@ -50,25 +50,40 @@
   <mat-divider></mat-divider>
 
   <div class="info">
-    <a
-      class="link"
-      href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
-      target="_blank"
-    >
-      News
-    </a>
+    <div>
+      <a
+        class="link"
+        href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
+        target="_blank"
+        [style.marginRight.px]="4"
+      >
+        News
+      </a>
 
-    <a class="link" href="https://angular.io/" target="_blank">
-      Angular: v{{ angularVer }}
-    </a>
+      <a
+        class="link"
+        href="https://www.buymeacoffee.com/holostats"
+        target="_blank"
+      >
+        Donate
+      </a>
+    </div>
 
-    <a
-      class="link"
-      href="https://github.com/PoiScript/HoloStats/commit/{{ commitId }}"
-      target="_blank"
-    >
-      Commit: {{ commitId }}
-    </a>
+    <div class="row">
+      <a class="link" href="https://angular.io/" target="_blank">
+        Angular: v{{ angularVer }}
+      </a>
+    </div>
+
+    <div class="row">
+      <a
+        class="link"
+        href="https://github.com/PoiScript/HoloStats/commit/{{ commitId }}"
+        target="_blank"
+      >
+        Commit: {{ commitId }}
+      </a>
+    </div>
   </div>
   <div class="copyright">&copy; 2019-2021 PoiScript</div>
 </div>
