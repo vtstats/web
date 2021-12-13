@@ -44,9 +44,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525320170",
@@ -57,8 +55,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -95,9 +92,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525479457",
@@ -130,8 +125,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -168,9 +162,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525452622",
@@ -203,8 +195,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -241,9 +232,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525606474",
@@ -276,8 +265,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -314,9 +302,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525493131",
@@ -349,8 +335,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -387,9 +372,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525871759",
@@ -400,8 +383,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -438,9 +420,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129525919524",
@@ -451,8 +431,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -522,9 +501,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129526120897",
@@ -557,8 +534,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -595,9 +571,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129526133712",
@@ -608,8 +582,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -646,9 +619,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129526823096",
@@ -659,8 +630,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -697,9 +667,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129527077268",
@@ -710,8 +678,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -748,9 +715,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129527725178",
@@ -761,8 +726,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -799,9 +763,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129528656061",
@@ -834,8 +796,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -872,9 +833,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129529269666",
@@ -885,8 +844,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -923,9 +881,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129529237126",
@@ -936,8 +892,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -974,9 +929,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129529199188",
@@ -1009,8 +962,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1047,9 +999,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530309441",
@@ -1082,8 +1032,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1120,9 +1069,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530290503",
@@ -1133,8 +1080,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1171,9 +1117,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530447972",
@@ -1184,8 +1128,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1222,9 +1165,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530689553",
@@ -1257,8 +1198,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1295,9 +1235,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530906103",
@@ -1308,8 +1246,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1376,9 +1313,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129530997242",
@@ -1411,8 +1346,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1452,9 +1386,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129531108742",
@@ -1465,8 +1397,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1503,9 +1434,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129531281699",
@@ -1516,8 +1445,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
@@ -1554,9 +1482,7 @@
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1620129531281250",
@@ -1589,8 +1515,7 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         }
       ]

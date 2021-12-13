@@ -1,20 +1,16 @@
 {
-  "responseContext": null,
-  "trackingParams": "",
   "continuationContents": {
     "liveChatContinuation": {
       "continuations": [
         {
           "timedContinuationData": {
             "timeoutMs": 5171,
-            "continuation": "",
-            "clickTrackingParams": ""
+            "continuation": ""
           }
         }
       ],
       "actions": [
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -43,15 +39,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353221521170",
@@ -84,12 +77,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -189,15 +180,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353222033717",
@@ -230,12 +218,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -264,15 +250,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353221806207",
@@ -283,12 +266,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -317,15 +298,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353222193962",
@@ -358,12 +336,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -392,15 +368,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353222318732",
@@ -433,12 +406,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -467,15 +438,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353223151035",
@@ -486,12 +454,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -520,15 +486,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353223314632",
@@ -561,12 +524,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -595,15 +556,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353223326041",
@@ -614,12 +572,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -648,15 +604,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353223598011",
@@ -689,12 +642,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -723,15 +674,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353223742037",
@@ -742,12 +690,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -776,15 +722,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224013979",
@@ -795,12 +738,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -829,15 +770,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224293206",
@@ -870,12 +808,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -904,15 +840,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224346870",
@@ -945,12 +878,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -979,15 +910,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224299323",
@@ -998,12 +926,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1032,15 +958,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224494030",
@@ -1073,12 +996,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1107,15 +1028,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353224657868",
@@ -1126,12 +1044,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1160,15 +1076,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353225124912",
@@ -1179,12 +1092,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1213,15 +1124,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353225983266",
@@ -1232,12 +1140,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1266,15 +1172,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226013234",
@@ -1307,12 +1210,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1341,15 +1242,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226785033",
@@ -1360,12 +1258,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1394,15 +1290,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226839553",
@@ -1435,12 +1328,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1469,15 +1360,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226763699",
@@ -1488,12 +1376,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1522,15 +1408,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226821509",
@@ -1541,12 +1424,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1575,15 +1456,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226960211",
@@ -1594,12 +1472,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1628,15 +1504,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226694148",
@@ -1647,12 +1520,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1681,15 +1552,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353226845704",
@@ -1722,12 +1590,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1756,15 +1622,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227573304",
@@ -1775,12 +1638,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1812,15 +1673,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227710649",
@@ -1831,12 +1689,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1865,15 +1721,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227665830",
@@ -1906,12 +1759,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -1977,15 +1828,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227639319",
@@ -2018,12 +1866,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2052,15 +1898,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227662899",
@@ -2071,12 +1914,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2176,15 +2017,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227954593",
@@ -2217,12 +2055,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2251,15 +2087,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228030789",
@@ -2270,12 +2103,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2304,15 +2135,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228091246",
@@ -2323,12 +2151,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2428,15 +2254,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228124393",
@@ -2469,12 +2292,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2503,15 +2324,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228181499",
@@ -2544,12 +2362,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2578,15 +2394,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228282729",
@@ -2597,12 +2410,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2631,15 +2442,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353227955309",
@@ -2650,12 +2458,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2684,15 +2490,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228618771",
@@ -2703,12 +2506,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2808,15 +2609,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228581982",
@@ -2849,12 +2647,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -2954,15 +2750,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228646720",
@@ -2995,12 +2788,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3063,15 +2854,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228935153",
@@ -3104,12 +2892,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3138,15 +2924,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353228906314",
@@ -3157,12 +2940,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3262,15 +3043,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229010124",
@@ -3303,12 +3081,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3337,15 +3113,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229097603",
@@ -3356,12 +3129,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3390,15 +3161,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229054607",
@@ -3409,12 +3177,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3443,15 +3209,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229012657",
@@ -3484,12 +3247,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3589,15 +3350,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229074672",
@@ -3630,12 +3388,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3664,15 +3420,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229151802",
@@ -3683,12 +3436,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3717,15 +3468,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229257715",
@@ -3736,12 +3484,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3844,15 +3590,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229197926",
@@ -3885,12 +3628,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3919,15 +3660,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229425602",
@@ -3938,12 +3676,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -3972,15 +3708,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229445446",
@@ -3991,12 +3724,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4025,15 +3756,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229426208",
@@ -4044,12 +3772,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4081,15 +3807,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229399586",
@@ -4100,12 +3823,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4205,15 +3926,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229526341",
@@ -4246,12 +3964,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4280,15 +3996,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229697784",
@@ -4299,12 +4012,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4404,15 +4115,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229925212",
@@ -4445,12 +4153,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4479,15 +4185,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230059005",
@@ -4498,12 +4201,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4538,15 +4239,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230151805",
@@ -4557,12 +4255,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4591,15 +4287,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230051118",
@@ -4610,12 +4303,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4644,15 +4335,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230223957",
@@ -4663,12 +4351,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4697,15 +4383,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353229947614",
@@ -4716,12 +4399,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4750,15 +4431,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230151380",
@@ -4769,12 +4447,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4803,15 +4479,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230510691",
@@ -4844,12 +4517,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4878,15 +4549,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230368466",
@@ -4897,12 +4565,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4931,15 +4597,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230579844",
@@ -4950,12 +4613,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -4993,15 +4654,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230755514",
@@ -5012,12 +4670,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5046,15 +4702,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230895180",
@@ -5065,12 +4718,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5099,15 +4750,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230507247",
@@ -5118,12 +4766,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5152,15 +4798,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353230634061",
@@ -5171,12 +4814,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5205,15 +4846,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231111124",
@@ -5246,12 +4884,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5280,15 +4916,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231212027",
@@ -5299,12 +4932,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5336,15 +4967,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231290402",
@@ -5377,12 +5005,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5411,15 +5037,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231585391",
@@ -5430,12 +5053,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5464,15 +5085,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231584944",
@@ -5483,12 +5101,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5588,15 +5204,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353231570907",
@@ -5629,12 +5242,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5734,15 +5345,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232031741",
@@ -5775,12 +5383,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5880,15 +5486,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232021451",
@@ -5921,12 +5524,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -5955,15 +5556,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232015186",
@@ -5974,12 +5572,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6008,15 +5604,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232310740",
@@ -6027,12 +5620,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6061,15 +5652,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232266013",
@@ -6080,12 +5668,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6114,15 +5700,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232646536",
@@ -6133,12 +5716,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6167,15 +5748,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353232664180",
@@ -6208,12 +5786,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6242,15 +5818,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353233360911",
@@ -6283,12 +5856,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6317,15 +5888,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353233594464",
@@ -6358,12 +5926,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6392,15 +5958,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353233318827",
@@ -6411,12 +5974,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6445,15 +6006,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353233482119",
@@ -6464,12 +6022,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6569,15 +6125,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353234083214",
@@ -6610,12 +6163,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6644,15 +6195,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353234253986",
@@ -6685,12 +6233,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6827,15 +6373,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353234332077",
@@ -6868,12 +6411,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -6902,15 +6443,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353234643993",
@@ -6921,12 +6459,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7026,15 +6562,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353234973767",
@@ -7067,12 +6600,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7172,15 +6703,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235036446",
@@ -7213,12 +6741,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7253,15 +6779,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235489506",
@@ -7272,12 +6795,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7377,15 +6898,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235454036",
@@ -7418,12 +6936,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7452,15 +6968,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235507506",
@@ -7493,12 +7006,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7527,15 +7038,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235523672",
@@ -7546,12 +7054,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7580,15 +7086,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235465428",
@@ -7599,12 +7102,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7633,15 +7134,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235794887",
@@ -7652,12 +7150,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7686,15 +7182,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235629676",
@@ -7727,12 +7220,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7764,15 +7255,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235775945",
@@ -7783,12 +7271,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7888,15 +7374,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235837422",
@@ -7929,12 +7412,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -7963,15 +7444,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353235644196",
@@ -7982,12 +7460,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8016,15 +7492,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236095228",
@@ -8057,12 +7530,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8091,15 +7562,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236079844",
@@ -8110,12 +7578,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8147,15 +7613,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236245216",
@@ -8166,12 +7629,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8271,15 +7732,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236230390",
@@ -8312,12 +7770,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8346,15 +7802,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236166512",
@@ -8365,12 +7818,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8399,15 +7850,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236436593",
@@ -8418,12 +7866,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8523,15 +7969,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236107155",
@@ -8564,12 +8007,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8598,15 +8039,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236428467",
@@ -8617,12 +8055,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8651,15 +8087,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236676493",
@@ -8670,12 +8103,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8704,15 +8135,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236497674",
@@ -8723,12 +8151,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8757,15 +8183,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353236816434",
@@ -8776,12 +8199,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8813,15 +8234,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237227800",
@@ -8854,12 +8272,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8888,15 +8304,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237354751",
@@ -8929,12 +8342,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -8963,15 +8374,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237097378",
@@ -8982,12 +8390,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9016,15 +8422,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237803314",
@@ -9035,12 +8438,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9069,15 +8470,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237591718",
@@ -9088,12 +8486,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9193,15 +8589,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237817328",
@@ -9234,12 +8627,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9268,15 +8659,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237942041",
@@ -9287,12 +8675,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9321,15 +8707,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353237867465",
@@ -9362,12 +8745,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9396,15 +8777,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353238242346",
@@ -9415,12 +8793,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9449,15 +8825,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353238243174",
@@ -9490,12 +8863,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9524,15 +8895,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353238313118",
@@ -9543,12 +8911,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9580,15 +8946,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353238574433",
@@ -9621,12 +8984,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9655,15 +9016,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353238701860",
@@ -9674,12 +9032,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9708,15 +9064,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239319665",
@@ -9727,12 +9080,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9761,15 +9112,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239449817",
@@ -9780,12 +9128,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9848,15 +9194,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239315906",
@@ -9889,12 +9232,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9923,15 +9264,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239552145",
@@ -9942,12 +9280,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -9976,15 +9312,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239591642",
@@ -9995,12 +9328,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10029,15 +9360,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239855893",
@@ -10070,12 +9398,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10175,15 +9501,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240011249",
@@ -10216,12 +9539,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10250,15 +9571,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239841857",
@@ -10269,12 +9587,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10303,15 +9619,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353239993289",
@@ -10344,12 +9657,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10449,15 +9760,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240091590",
@@ -10490,12 +9798,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10524,15 +9830,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240139110",
@@ -10543,12 +9846,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "markChatItemsByAuthorAsDeletedAction": {
             "deletedStateMessage": {
               "runs": [
@@ -10561,7 +9862,6 @@
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10590,15 +9890,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240291214",
@@ -10609,12 +9906,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10643,15 +9938,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240761397",
@@ -10662,12 +9954,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10699,15 +9989,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240784998",
@@ -10718,12 +10005,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10758,15 +10043,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241020760",
@@ -10777,12 +10059,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10811,15 +10091,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353240859987",
@@ -10830,12 +10107,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10867,15 +10142,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241045382",
@@ -10886,12 +10158,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -10920,15 +10190,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241180574",
@@ -10961,12 +10228,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11066,15 +10331,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241125014",
@@ -11107,12 +10369,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11141,15 +10401,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241240121",
@@ -11182,12 +10439,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11216,15 +10471,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241311872",
@@ -11235,12 +10487,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11269,15 +10519,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241681237",
@@ -11310,12 +10557,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11344,15 +10589,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241737688",
@@ -11363,12 +10605,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11468,15 +10708,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241869112",
@@ -11509,12 +10746,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11543,15 +10778,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241856358",
@@ -11562,12 +10794,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11596,15 +10826,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241752924",
@@ -11637,12 +10864,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11671,15 +10896,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241923481",
@@ -11690,12 +10912,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11795,15 +11015,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353241647512",
@@ -11836,12 +11053,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11870,15 +11085,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242277921",
@@ -11911,12 +11123,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11945,15 +11155,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242315836",
@@ -11964,12 +11171,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -11998,15 +11203,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242524915",
@@ -12017,12 +11219,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12051,15 +11251,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242451767",
@@ -12070,12 +11267,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12175,15 +11370,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242413130",
@@ -12216,12 +11408,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12250,15 +11440,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242603834",
@@ -12269,12 +11456,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12306,15 +11491,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242728774",
@@ -12347,12 +11529,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12381,15 +11561,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242656064",
@@ -12400,12 +11577,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12434,15 +11609,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242804803",
@@ -12453,12 +11625,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12487,15 +11657,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242859440",
@@ -12528,12 +11695,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12562,15 +11727,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243138825",
@@ -12581,12 +11743,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12615,15 +11775,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242926940",
@@ -12634,12 +11791,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12668,15 +11823,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243348040",
@@ -12687,12 +11839,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12721,15 +11871,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353242872968",
@@ -12762,12 +11909,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12796,15 +11941,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243473232",
@@ -12815,12 +11957,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12920,15 +12060,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243366710",
@@ -12961,12 +12098,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -12995,15 +12130,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243570210",
@@ -13036,12 +12168,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13079,15 +12209,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243679140",
@@ -13120,12 +12247,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13154,15 +12279,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353243662960",
@@ -13173,12 +12295,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13210,15 +12330,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353244207823",
@@ -13251,12 +12368,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13285,15 +12400,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353244422013",
@@ -13326,12 +12438,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13360,15 +12470,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353244691257",
@@ -13401,12 +12508,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13435,15 +12540,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353245142491",
@@ -13454,12 +12556,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13488,15 +12588,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353245469271",
@@ -13507,12 +12604,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13541,15 +12636,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353245221641",
@@ -13582,12 +12674,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13616,15 +12706,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353246143622",
@@ -13635,12 +12722,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13669,15 +12754,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353246562256",
@@ -13688,12 +12770,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13722,15 +12802,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353247147051",
@@ -13741,12 +12818,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13775,15 +12850,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353247355596",
@@ -13794,12 +12866,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13828,15 +12898,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353247434545",
@@ -13847,12 +12914,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13881,15 +12946,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353247628101",
@@ -13900,12 +12962,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -13934,15 +12994,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353248303045",
@@ -13975,12 +13032,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14009,15 +13064,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353248462091",
@@ -14028,12 +13080,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14090,15 +13140,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353248871624",
@@ -14131,12 +13178,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatPaidMessageRenderer": {
@@ -14176,29 +13221,24 @@
                 "authorExternalChannelId": "channelId",
                 "authorNameTextColor": 3003121664,
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "timestampColor": 2147483648,
                 "contextMenuAccessibility": {
                   "accessibilityData": {
                     "label": "コメントの操作"
                   }
-                },
-                "trackingParams": ""
+                }
               }
             }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14227,15 +13267,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353249487286",
@@ -14246,12 +13283,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14286,15 +13321,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353249513555",
@@ -14305,12 +13337,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14339,15 +13369,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353249914303",
@@ -14358,12 +13385,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14463,15 +13488,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353250339396",
@@ -14504,12 +13526,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "addChatItemAction": {
             "item": {
               "liveChatTextMessageRenderer": {
@@ -14538,15 +13558,12 @@
                   ]
                 },
                 "contextMenuEndpoint": {
-                  "clickTrackingParams": "",
                   "commandMetadata": {
                     "webCommandMetadata": {
                       "ignoreNavigation": true
                     }
                   },
-                  "liveChatItemContextMenuEndpoint": {
-                    "params": ""
-                  }
+                  "liveChatItemContextMenuEndpoint": {}
                 },
                 "id": "id",
                 "timestampUsec": "1638353251087207",
@@ -14557,12 +13574,10 @@
                   }
                 }
               }
-            },
-            "clientId": ""
+            }
           }
         },
         {
-          "clickTrackingParams": "",
           "showLiveChatTooltipCommand": {
             "tooltip": {
               "tooltipRenderer": {
@@ -14570,7 +13585,6 @@
                   "promoId": "tip-edu-c-live-chat-banner-w",
                   "impressionEndpoints": [
                     {
-                      "clickTrackingParams": "",
                       "commandMetadata": {
                         "webCommandMetadata": {
                           "sendPost": true,
@@ -14578,7 +13592,6 @@
                         }
                       },
                       "feedbackEndpoint": {
-                        "feedbackToken": "https://example.com",
                         "uiActions": {
                           "hideEnclosingContainer": false
                         }
@@ -14586,7 +13599,6 @@
                     }
                   ],
                   "acceptCommand": {
-                    "clickTrackingParams": "",
                     "commandMetadata": {
                       "webCommandMetadata": {
                         "sendPost": true,
@@ -14594,14 +13606,12 @@
                       }
                     },
                     "feedbackEndpoint": {
-                      "feedbackToken": "https://example.com",
                       "uiActions": {
                         "hideEnclosingContainer": true
                       }
                     }
                   },
                   "dismissCommand": {
-                    "clickTrackingParams": "",
                     "commandMetadata": {
                       "webCommandMetadata": {
                         "sendPost": true,
@@ -14609,7 +13619,6 @@
                       }
                     },
                     "feedbackEndpoint": {
-                      "feedbackToken": "https://example.com",
                       "uiActions": {
                         "hideEnclosingContainer": true
                       }
@@ -14630,14 +13639,12 @@
                 "dismissStrategy": {
                   "type": "TOOLTIP_DISMISS_TYPE_TAP_ANYWHERE"
                 },
-                "dwellTimeMs": "5000",
-                "trackingParams": ""
+                "dwellTimeMs": "5000"
               }
             }
           }
         }
-      ],
-      "trackingParams": ""
+      ]
     }
   }
 }
