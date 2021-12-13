@@ -193,7 +193,7 @@ pub struct LiveChatPaidStickerRenderer {
     #[serde(default)]
     pub author_badges: Vec<AuthorBadge>,
     pub sticker: Sticker,
-    #[serde(rename = "backgroundColor")]
+    #[serde(rename = "moneyChipBackgroundColor")]
     pub color: u64,
 }
 
