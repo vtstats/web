@@ -21,6 +21,7 @@
 @import "src/app/components/popper/popper-theme";
 @import "src/app/components/chart-axis/chart-axis-theme";
 @import "src/app/components/stream-stats-chart/stream-stats-chart-theme";
+@import "src/app/components/paid-chat-chart/paid-chat-chart-theme";
 
 // pages
 @import "src/app/pages/not-found/not-found-theme";
@@ -55,6 +56,7 @@ mat.$theme-ignore-duplication-warnings: true;
   @include chart-axis-theme($theme);
   @include stream-stats-chart-theme($theme);
   @include popper-theme($theme);
+  @include paid-chat-chart-theme($theme);
 }
 
 @mixin hs-typography($config) {
@@ -74,6 +76,7 @@ mat.$theme-ignore-duplication-warnings: true;
   @include chart-axis-typography($config);
   @include stream-stats-chart-typography($config);
   @include popper-typography($config);
+  @include paid-chat-chart-typography($config);
 }
 
 @include hs-typography($hs-typography-config);

@@ -1,0 +1,51 @@
+<hs-sub-menu>
+  <hs-sub-menu-title>Paid Live Chat</hs-sub-menu-title>
+
+  <hs-sub-menu-extra> </hs-sub-menu-extra>
+</hs-sub-menu>
+
+<div class="paid-chat-chart">
+  <div class="bars" #bars></div>
+
+  <hs-popper
+    #popperComp
+    [arrow]="false"
+    [class]="'paid-chat-popper mat-elevation-z3'"
+    [placement]="'bottom-start'"
+    [flip]="{ padding: 32 }"
+    [shift]="true"
+    [offset]="{ mainAxis: 16, crossAxis: 16 }"
+  >
+    <table>
+      <div class="title">{{ popper.currency }}</div>
+
+      <tbody>
+        <tr *ngFor="let group of popper.messagesByColor">
+          <td class="label">
+            <span class="dot" [style.background-color]="'#' + group.color">
+            </span>
+            {{group.cate}}
+          </td>
+
+          <td class="count">{{group.total | number }}</td>
+
+          <td class="amount">
+            {{ group.totalValue | currency:popper.symbol:'symbol' }}
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td class="label">Total</td>
+
+          <td class="count">{{ popper.total | number }}</td>
+
+          <td class="amount">
+            {{ popper.totalValue | currency:popper.symbol:'symbol' }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </hs-popper>
+</div>

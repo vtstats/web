@@ -47,6 +47,7 @@ import { FilterGroup } from "./filter-group/filter-group";
 import { StreamTime } from "./stream-time/stream-time";
 import { PopperComponent } from "./popper/popper";
 import { ChartAxis } from "./chart-axis/chart-axis";
+import { PaidLiveChat } from "./paid-chat-chart/paid-chat-chart";
 
 import { SharedModule } from "src/app/shared";
 
@@ -61,6 +62,7 @@ import { SharedModule } from "src/app/shared";
     ChannelTable,
     ChannelTableShimmer,
     LiveChat,
+    PaidLiveChat,
     PopperComponent,
     LoadingSpinner,
     NumberRow,
@@ -107,6 +109,7 @@ import { SharedModule } from "src/app/shared";
     LoadingSpinner,
     NumberRow,
     LiveChat,
+    PaidLiveChat,
     PopperComponent,
     StreamGroup,
     StreamItem,

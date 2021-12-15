@@ -7,6 +7,7 @@ import {
   ChannelListResponse,
   ChannelReportOption,
   ChannelReportResponse,
+  LiveChatHighlightResponse,
   StreamListOption,
   StreamListResponse,
   StreamReportOption,
@@ -94,5 +95,12 @@ export class ApiService {
     return this.http.get<StreamTimesResponse>(`${BASE_URL}/stream_times`, {
       params: new HttpParams().set("id", id),
     });
+  }
+
+  liveChatHighlight(id: string): Observable<LiveChatHighlightResponse> {
+    return this.http.get<LiveChatHighlightResponse>(
+      `${BASE_URL}/live_chat/highlight`,
+      { params: new HttpParams().set("id", id) }
+    );
   }
 }

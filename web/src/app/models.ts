@@ -136,3 +136,20 @@ export type StreamList = {
 export type StreamTimesResponse = {
   times: [number, number][];
 };
+
+export type LiveChatHighlightResponse = {
+  paid: PaidLiveChatMessage[];
+  member: MemberLiveChatMessage[];
+};
+
+export type PaidLiveChatMessage = {
+  amount: string;
+  time: number;
+  type: "super_chat" | "super_sticker";
+  color: string;
+};
+
+export type MemberLiveChatMessage = {
+  time: number;
+  type: "milestone" | "new";
+};
