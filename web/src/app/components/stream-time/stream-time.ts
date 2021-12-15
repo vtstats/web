@@ -1,6 +1,7 @@
 import { formatDate } from "@angular/common";
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
@@ -24,6 +25,7 @@ import SVG from "svg.js";
 
 import type { VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
+import { PopperComponent } from "../popper/popper";
 
 const getFill = (v: number) => {
   if (v <= 0) return "#00bfa510";
@@ -56,19 +58,18 @@ export class StreamTime implements OnDestroy, AfterViewInit {
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private api: ApiService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {}
 
   @Input() vtuber: VTuber;
 
+  @ViewChild("popperComp")
+  popperComp: PopperComponent;
+
   popper = {
     date: 0,
     value: 0,
-    reference: null,
-    options: {
-      placement: "top",
-      modifiers: [{ name: "offset", options: { offset: [0, 8] } }],
-    },
   };
 
   @ViewChild("heatmap", { static: true })
@@ -94,7 +95,7 @@ export class StreamTime implements OnDestroy, AfterViewInit {
 
   _handleMouseleave() {
     if (!this.loading) {
-      this.popper.reference = null;
+      this.popperComp.hide();
     }
   }
 
@@ -102,12 +103,16 @@ export class StreamTime implements OnDestroy, AfterViewInit {
     if (
       !this.loading &&
       e.target instanceof Element &&
-      e.target.tagName.toLowerCase() === "rect" &&
-      this.popper.reference !== e.target
+      e.target.tagName.toLowerCase() === "rect"
     ) {
-      this.popper.reference = e.target;
       this.popper.date = Number(e.target.getAttribute("x-date"));
       this.popper.value = Number(e.target.getAttribute("x-value"));
+
+      // Caveat: don't forget to trigger a re-render
+      // before re-position popper
+      this.cdr.detectChanges();
+
+      this.popperComp.update(e.target);
     }
   }
 

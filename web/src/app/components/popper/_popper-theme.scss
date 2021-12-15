@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
 
 @mixin popper-theme($theme) {
-  .hs-popper {
+  .hs-popper-styled {
     .hint {
       color: rgba(255, 255, 255, 0.6);
     }
@@ -9,7 +9,7 @@
 }
 
 @mixin popper-typography($config) {
-  .hs-popper {
+  .hs-popper-styled {
     font-size: mat.font-size($config, "caption");
     font-weight: mat.font-weight($config, "body-2");
   }

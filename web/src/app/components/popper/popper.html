@@ -1,4 +1,4 @@
-<div class="hs-popper" #popper>
-  <div *ngIf="arrow" class="arrow" data-popper-arrow></div>
+<div #popper [ngClass]="['hs-popper', class]">
+  <div #arrow class="arrow"></div>
   <ng-content></ng-content>
 </div>

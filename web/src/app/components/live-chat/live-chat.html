@@ -31,9 +31,17 @@
     class="bars"
     (mousemove)="_handleMouseover($event)"
     (dblclick)="_handleDblClick($event)"
+    (scroll)="popperComp.update()"
   ></div>
 
-  <hs-popper [reference]="popper.reference" [options]="popper.options">
+  <hs-popper
+    #popperComp
+    [arrow]="true"
+    [placement]="'top'"
+    [flip]="{ padding: 8 }"
+    [shift]="true"
+    [offset]="8"
+  >
     <div>From {{ popper.from | date:'HH:mm:ss' }}</div>
     <div>Until {{ popper.to | date:'HH:mm:ss' }}</div>
     <div>Total messages: {{ popper.total | number }}</div>

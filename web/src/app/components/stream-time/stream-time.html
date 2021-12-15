@@ -3,11 +3,22 @@
     <hs-sub-menu-title i18n="@@streamTimes"> Stream Times </hs-sub-menu-title>
   </hs-sub-menu>
 
-  <div class="heatmap" (mouseleave)="_handleMouseleave()">
+  <div
+    class="heatmap"
+    (mouseleave)="_handleMouseleave()"
+    (scroll)="popperComp.update()"
+  >
     <div #heatmap (mouseover)="_handleMouseover($event)"></div>
   </div>
 
-  <hs-popper [reference]="popper.reference" [options]="popper.options">
+  <hs-popper
+    #popperComp
+    placement="top"
+    [shift]="true"
+    [flip]="false"
+    [offset]="8"
+    [arrow]="true"
+  >
     <ng-container *ngIf="!!popper.value; else noStream" i18n="@@streamTimeOn">
       Stream {{ popper.value | formatDuration }} on {{ popper.date |
       date:'mediumDate' }}

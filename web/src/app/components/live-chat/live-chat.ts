@@ -19,6 +19,7 @@ import {
 } from "rxjs/operators";
 
 import { Stream } from "src/app/models";
+import { PopperComponent } from "../popper/popper";
 
 @Component({
   selector: "hs-live-chat",
@@ -31,16 +32,14 @@ export class LiveChat implements OnInit, OnDestroy {
 
   loading = false;
 
+  @ViewChild("popperComp")
+  popperComp: PopperComponent;
+
   popper = {
     from: 0,
     to: 0,
     total: 0,
     member: 0,
-    reference: null,
-    options: {
-      placement: "top",
-      modifiers: [{ name: "offset", options: { offset: [0, 8] } }],
-    },
   };
 
   @ViewChild("bars", { static: true })
@@ -214,9 +213,7 @@ export class LiveChat implements OnInit, OnDestroy {
   }
 
   _handleMouseleave() {
-    if (!this.loading) {
-      this.popper.reference = null;
-    }
+    this.popperComp.hide();
   }
 
   _handleMouseover(e: MouseEvent) {
@@ -229,7 +226,7 @@ export class LiveChat implements OnInit, OnDestroy {
       this.popper.to = Number(e.target.getAttribute("x-to"));
       this.popper.total = Number(e.target.getAttribute("x-v1"));
       this.popper.member = Number(e.target.getAttribute("x-v2"));
-      this.popper.reference = e.target;
+      this.popperComp.update(e.target);
     }
   }
 

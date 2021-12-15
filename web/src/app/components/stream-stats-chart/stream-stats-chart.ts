@@ -42,11 +42,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     idx: 0,
     date: 0,
     value: 0,
-    reference: null,
-    options: {
-      placement: "right",
-      modifiers: [{ name: "offset", options: { offset: [0, 12] } }],
-    },
   };
 
   @ViewChild("bars", { static: true })
@@ -348,22 +343,19 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     );
 
     this.ngZone.run(() => {
-      this.popper.reference = this.dataPoint.node;
       this.popper.idx = idx;
       this.popper.date = d;
       this.popper.value = v;
     });
 
     // popper reposition
-    this.popperComp.update();
+    this.popperComp.update(this.dataPoint.node);
   }
 
   _handleMouseleave() {
     this.guideLine.move(-2434, 0);
     this.dataPoint.move(-2434, 0);
-    this.ngZone.run(() => {
-      this.popper.reference = null;
-    });
+    this.popperComp.hide();
   }
 }
 

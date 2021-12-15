@@ -28,14 +28,17 @@
 <div class="stream-stats-chart">
   <hs-chart-axis class="axis" [max]="max"></hs-chart-axis>
 
-  <div #bars class="bars"></div>
+  <div #bars class="bars" (scroll)="popperComp.update()"></div>
 
   <hs-popper
     #popperComp
-    [reference]="popper.reference"
-    [options]="popper.options"
+    [placement]="'right'"
+    [arrow]="true"
+    [shift]="true"
+    [offset]="12"
+    [flip]="{ padding: 24 }"
   >
-    <div>{{ popper.date | date:'HH:mm:ss' }}</div>
+    <div>{{ popper.date | date:'yyyy/MM/dd HH:mm:ss' }}</div>
     <div>Stream viewers: {{ popper.value | number }}</div>
     <div *ngIf="stream.status === 'ended'" class="hint">
       Double click to jump to
