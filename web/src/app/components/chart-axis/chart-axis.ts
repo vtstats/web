@@ -49,7 +49,9 @@ export class ChartAxis implements OnDestroy, OnChanges {
     let scale = this.height / this.max;
     let unit = this.max / 5;
 
-    if (this.max >= 1000) {
+    if (this.max >= 10000) {
+      unit -= unit % 1000;
+    } else if (this.max >= 1000) {
       unit -= unit % 100;
     } else if (this.max >= 100) {
       unit -= unit % 10;
