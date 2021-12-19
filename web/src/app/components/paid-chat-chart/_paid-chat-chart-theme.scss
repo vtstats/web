@@ -13,7 +13,7 @@
       stroke: mat.get-color-from-palette($foreground, "divider");
     }
 
-    .point {
+    .v.label {
       fill: mat.get-color-from-palette($foreground, "secondary-text");
     }
   }

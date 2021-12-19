@@ -1,13 +1,10 @@
 import {
   Component,
   Input,
-  NgZone,
   ViewEncapsulation,
   OnInit,
   ElementRef,
   ViewChild,
-  Inject,
-  LOCALE_ID,
 } from "@angular/core";
 import {
   LiveChatHighlightResponse,
@@ -15,11 +12,15 @@ import {
   Stream,
 } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { map } from "rxjs/operators";
-import SVG from "svg.js";
-import { formatCurrency, formatNumber } from "@angular/common";
 import { fromEvent, Subscription } from "rxjs";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  startWith,
+  map,
+} from "rxjs/operators";
+import { ScaleLinear, scaleLinear } from "d3-scale";
+import { flatRollup, flatGroup, sort, sum } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
 import { PopperComponent } from "../popper/popper";
@@ -80,16 +81,7 @@ export class PaidLiveChat implements OnInit {
   popperComp: PopperComponent;
   popper = {
     idx: -1,
-    currency: "",
-    symbol: "",
-    total: 0,
-    totalValue: 0,
-    messagesByColor: [],
   };
-
-  @ViewChild("bars", { static: true })
-  private barsEl: ElementRef;
-  private barsSvg: SVG.Doc;
 
   readonly barHeight: number = 21;
   readonly innerPadding: number = 7;
@@ -99,220 +91,115 @@ export class PaidLiveChat implements OnInit {
   readonly topMargin: number = 30;
   readonly bottomMargin: number = 10;
 
-  items: {
-    currency: string;
-    currencyCode: string;
-    symbol: string;
-    total: number;
-    messages: PaidLiveChatMessage[];
-  }[] = [];
+  items: [
+    string,
+    {
+      total: number;
+      totalValue: number;
+      currency: string;
+      currencyCode: string;
+      currencySymbol: string;
+      items: [
+        string,
+        {
+          name: string;
+          total: number;
+          totalValue: number;
+        }
+      ][];
+    }
+  ][] = [];
 
   sub: Subscription;
 
-  constructor(
-    private ngZone: NgZone,
-    private api: ApiService,
-    private host: ElementRef<HTMLElement>,
-    @Inject(LOCALE_ID) private locale: string
-  ) {}
+  width: number;
+  xScale: ScaleLinear<number, number> = scaleLinear();
+
+  constructor(private api: ApiService, private host: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
     this.api
       .liveChatHighlight(this.stream.streamId)
-      .pipe(map(groupByCurrency))
+      .pipe(
+        map((res) =>
+          res.paid.map((msg) => {
+            const [symbol, value] = splitAmount(msg.amount);
+            const [currencyCode, currency] = symbolToCurrency[symbol] || [
+              symbol,
+              symbol,
+            ];
+
+            return {
+              ...msg,
+              value,
+              currency,
+              currencyCode,
+              currencySymbol: symbol,
+            } as PaidLiveChatMessage;
+          })
+        )
+      )
       .subscribe((items) => {
         if (items.length === 0) return;
-        this.items = items;
-        this.ngZone.runOutsideAngular(() => this._render());
+
+        this.items = sort(
+          flatRollup(
+            items,
+            (items) => ({
+              total: items.length,
+              totalValue: sum(items, (msg) => msg.value),
+              currency: items[0].currency,
+              currencyCode: items[0].currencyCode,
+              currencySymbol: items[0].currencySymbol,
+              items: sort(
+                flatRollup(
+                  items,
+                  (items) => ({
+                    name: hexToColorName[items[0].color],
+                    total: items.length,
+                    totalValue: sum(items, (item) => item.value),
+                  }),
+                  (item) => item.color
+                ),
+                ([_, group]) => group.totalValue
+              ),
+            }),
+            (item) => item.currencyCode
+          ),
+          ([_, group]) => -group.total
+        );
+
+        this._render();
       });
 
     // TODO: switch to resize observer
     this.sub = fromEvent(window, "resize")
       .pipe(
+        startWith({}),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe((w) => this._render(w));
+      .subscribe((w) => {
+        this.width = w;
+        this._render();
+      });
   }
 
-  _render(width?: number) {
-    if (this.barsSvg) {
-      this.barsSvg.off("mousemove");
-      this.barsSvg.off("mouseleave");
-      this.barsSvg.clear();
-    } else {
-      this.barsSvg = SVG(this.barsEl.nativeElement);
-    }
-
-    if (!width) {
-      width = this.host.nativeElement.getBoundingClientRect().width;
-    }
-
-    const height =
-      this.topMargin +
-      this.items.length * (this.innerPadding + this.barHeight) +
-      this.bottomMargin;
-
-    this.barsSvg.size(width, height);
-
-    const max = Math.max(...this.items.map((i) => i.messages.length));
-
-    const scale = (width - this.leftMargin - this.rightMargin) / max;
-
-    const sorted = this.items.sort(
-      (a, b) => b.messages.length - a.messages.length
-    );
+  _render() {
+    const max = Math.max(...this.items.map((i) => i[1].total));
 
     this.popperComp.update();
 
-    this.barsSvg
-      .line([
-        this.leftMargin,
-        this.topMargin - this.innerPadding,
-        this.leftMargin,
-        this.topMargin +
-          this.items.length * (this.innerPadding + this.barHeight),
-      ])
-      .addClass("line")
-      .stroke({ width: 1 });
-
-    let unit = Math.max(1, Math.floor(max / 5));
-
-    if (max >= 1000) {
-      unit -= unit % 100;
-    } else if (max >= 100) {
-      unit -= unit % 10;
-    }
-
-    for (let i = 1; i <= 6; i++) {
-      const v = i * unit;
-
-      if (v > max) break;
-
-      const x = this.leftMargin + v * scale;
-
-      this.barsSvg
-        .line([
-          x,
-          this.topMargin - this.innerPadding,
-          x,
-          this.topMargin +
-            this.items.length * (this.innerPadding + this.barHeight),
-        ])
-        .addClass("line")
-        .stroke({ width: 1 });
-
-      this.barsSvg
-        .text(formatNumber(v, this.locale))
-        .addClass("label")
-        .move(x, 0)
-        .font({ anchor: "middle", family: "Fira Code" });
-    }
-
-    for (const [idx, item] of sorted.entries()) {
-      this.barsSvg
-        .plain(item.currencyCode)
-        .addClass("label")
-        .font({
-          size: "14",
-          weight: "500",
-          family: "Fira Code, sans-serif",
-          anchor: "end",
-        })
-        .dx(this.leftMargin - this.innerPadding)
-        .cy(
-          this.topMargin +
-            (this.barHeight + this.innerPadding) * idx +
-            this.barHeight / 2
-        );
-
-      this.barsSvg
-        .rect(0, this.barHeight)
-        .attr({ idx })
-        .move(
-          this.leftMargin,
-          this.topMargin + (this.barHeight + this.innerPadding) * idx
-        )
-        .radius(2, 2)
-        .fill("#d81b60")
-        .animate(300)
-        .attr("width", item.messages.length * scale);
-
-      const inverse = item.messages.length * scale >= width / 2;
-
-      this.barsSvg
-        .plain(
-          formatCurrency(
-            item.total,
-            this.locale,
-            // currency
-            item.symbol,
-            // currency code
-            item.currency
-          )
-        )
-        .addClass(inverse ? "point-inverse" : "point")
-        .attr({ idx })
-        .font({
-          size: "14",
-          weight: "500",
-          family: "Fira Code, sans-serif",
-          anchor: inverse ? "end" : "start",
-        })
-        .dx(this.leftMargin)
-        .cy(
-          this.topMargin +
-            (this.barHeight + this.innerPadding) * idx +
-            this.barHeight / 2
-        )
-        .animate(300)
-        .attr(
-          "dx",
-          item.messages.length * scale + this.innerPadding * (inverse ? -1 : 1)
-        );
-    }
-
-    this.barsSvg.on("mousemove", this._handleMousemove, this);
-    this.barsSvg.on("mouseleave", this._handleMouseleave, this);
+    this.xScale
+      .domain([0, max])
+      .range([0, this.width - this.leftMargin - this.rightMargin]);
   }
 
   _handleMousemove(e: MouseEvent) {
     if (e.target instanceof Element && e.target.hasAttribute("idx")) {
       const idx = Number(e.target.getAttribute("idx"));
-
-      if (idx !== this.popper.idx) {
-        this.ngZone.run(() => {
-          const { currency, symbol, messages, total } = this.items[idx];
-          this.popper.currency = currency;
-          this.popper.symbol = symbol;
-          this.popper.total = messages.length;
-          this.popper.totalValue = total;
-          this.popper.messagesByColor = messages.reduce((acc, cur: any) => {
-            const idx = acc.findIndex((i) => i.color === cur.color);
-
-            if (idx >= 0) {
-              acc[idx].total += 1;
-              acc[idx].totalValue += cur.value;
-            } else {
-              acc.push({
-                currency: cur.currency,
-                symbol: cur.symbol,
-                color: cur.color,
-                cate: hexToColorName[cur.color],
-                total: 1,
-                totalValue: cur.value,
-              });
-            }
-
-            return acc;
-          }, []);
-          this.popper.messagesByColor.sort(
-            (a, b) => a.totalValue - b.totalValue
-          );
-        });
-      }
-
+      this.popper.idx = idx;
       this.popperComp.update({
         getBoundingClientRect: () => ({
           width: 0,
@@ -326,6 +213,10 @@ export class PaidLiveChat implements OnInit {
     } else {
       this.popperComp.hide();
     }
+  }
+
+  trackBy(idx, item) {
+    return item[0];
   }
 
   _handleMouseleave() {

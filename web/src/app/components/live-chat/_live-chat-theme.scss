@@ -8,6 +8,10 @@
     .label {
       fill: mat.get-color-from-palette($foreground, "hint-text");
     }
+
+    .line {
+      stroke: mat.get-color-from-palette($foreground, "divider");
+    }
   }
 }
 
@@ -17,5 +21,10 @@
       font-size: mat.font-size($config, "caption");
       font-weight: mat.font-weight($config, "body-2");
     }
+  }
+
+  .live-chat-popper {
+    font-size: mat.font-size($config, "caption");
+    font-weight: mat.font-weight($config, "body-2");
   }
 }

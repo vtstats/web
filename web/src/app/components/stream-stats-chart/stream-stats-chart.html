@@ -26,7 +26,25 @@
 </hs-sub-menu>
 
 <div class="stream-stats-chart">
-  <hs-chart-axis class="axis" [max]="max"></hs-chart-axis>
+  <svg class="axis" width="960" [attr.height]="height + topMargin">
+    <ng-container *ngFor="let value of yScale.ticks(6)">
+      <line
+        class="line"
+        [attr.x1]="0"
+        [attr.y1]="topMargin + yScale(max - value)"
+        [attr.x2]="960"
+        [attr.y2]="topMargin + yScale(max - value)"
+      ></line>
+      <text
+        *ngIf="value !== 0"
+        class="y label"
+        [attr.x]="960 - 16"
+        [attr.dy]="topMargin + yScale(max - value) + 16"
+      >
+        {{ value | number }}
+      </text>
+    </ng-container>
+  </svg>
 
   <div #bars class="bars" (scroll)="popperComp.update()"></div>
 

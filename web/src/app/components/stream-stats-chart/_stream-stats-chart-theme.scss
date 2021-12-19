@@ -12,6 +12,10 @@
     .guideline {
       stroke: if($is-dark-theme, rgb(255, 255, 255, 0.5), rgb(0, 0, 0, 0.5));
     }
+
+    .line {
+      stroke: mat.get-color-from-palette($foreground, "divider");
+    }
   }
 
   .time-unit.selected {

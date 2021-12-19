@@ -24,7 +24,25 @@
 </hs-sub-menu>
 
 <div class="live-chat-chart" (mouseleave)="_handleMouseleave()">
-  <hs-chart-axis class="axis" [max]="max"></hs-chart-axis>
+  <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
+    <ng-container *ngFor="let v of scale.ticks(6)">
+      <line
+        class="line"
+        [attr.x1]="0"
+        [attr.y1]="topMargin + scale(max - v)"
+        [attr.x2]="960"
+        [attr.y2]="topMargin + scale(max - v)"
+      ></line>
+      <text
+        *ngIf="v !== 0"
+        class="y label"
+        [attr.x]="960 - 16"
+        [attr.dy]="topMargin + scale(max - v) + 16"
+      >
+        {{ v | number }}
+      </text>
+    </ng-container>
+  </svg>
 
   <div
     #bars

@@ -18,8 +18,17 @@
     position: absolute;
   }
 
+  .line {
+    stroke-width: 1px;
+  }
+
   .label {
     user-select: none;
+    font-family: "Fira Code", monospace;
+  }
+
+  .y.label {
+    text-anchor: end;
   }
 }
 

@@ -18,6 +18,7 @@ import {
   map,
   distinctUntilChanged,
 } from "rxjs/operators";
+import { ScaleLinear, scaleLinear, scaleBand, ScaleBand } from "d3-scale";
 
 import { PopperComponent } from "../popper/popper";
 import { Stream } from "src/app/models";
@@ -61,7 +62,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   @Input() rows: [number, number][];
   @Input() stream: Stream;
 
-  scale = 1;
+  yScale: ScaleLinear<number, number> = scaleLinear();
   max = 300;
   step = 2;
   timeUnit = 15_000;
@@ -120,7 +121,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
     const rows = this._agg();
     this.max = Math.max(...rows.map((r) => r[1]));
-    this.scale = this.height / this.max;
+    this.yScale.domain([0, this.max]).range([0, this.height]);
 
     this.ngZone.runOutsideAngular(() => this._drawSvg(rows));
   }
@@ -159,7 +160,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       const points = [];
 
       for (const [idx, [at, v]] of rows.entries()) {
-        const h = +(v * this.scale).toFixed(2);
+        const h = this.yScale(v);
         points.push([
           this.leftMargin + idx * this.step,
           this.topMargin + this.height - h,
@@ -227,11 +228,11 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
         this.lineSvg
           .text(lightFormat(rows[index][0], "HH:mm"))
-          .addClass("label")
           .move(
             this.leftMargin + index * this.step,
             this.topMargin + this.height + 8
           )
+          .addClass("x label")
           .font({ anchor: "middle", family: "Fira Code" });
       }
     }
@@ -334,7 +335,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
     const [d, v] = rows[idx];
 
-    const h = +(v * this.scale).toFixed(2);
+    const h = this.yScale(v);
 
     this.guideLine.move(this.leftMargin + idx * this.step, 0);
     this.dataPoint.move(

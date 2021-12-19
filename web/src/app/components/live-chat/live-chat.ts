@@ -17,6 +17,7 @@ import {
   map,
   distinctUntilChanged,
 } from "rxjs/operators";
+import { ScaleLinear, scaleLinear } from "d3-scale";
 
 import { Stream } from "src/app/models";
 import { PopperComponent } from "../popper/popper";
@@ -59,7 +60,7 @@ export class LiveChat implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  scale = 1;
+  scale: ScaleLinear<number, number> = scaleLinear();
   max = 300;
   timeUnit = 15000;
   fitContent = true;
@@ -105,7 +106,7 @@ export class LiveChat implements OnInit, OnDestroy {
 
     const rows = this._agg();
     this.max = Math.max(...rows.map((r) => r[2]));
-    this.scale = this.height / this.max;
+    this.scale.domain([0, this.max]).range([0, this.height]);
     this.ngZone.runOutsideAngular(() => this._drawBars(rows));
   }
 
@@ -157,7 +158,7 @@ export class LiveChat implements OnInit, OnDestroy {
     const g2 = this.barsSvg.group().style({ "pointer-events": "none" });
 
     for (const [idx, [from, to, v1, v2]] of rows.entries()) {
-      const h1 = +(v1 * this.scale).toFixed(2);
+      const h1 = this.scale(v1);
       g1.rect(this.barWidth, 0)
         .fill("#B7A8F4")
         .radius(2, 2)
@@ -174,7 +175,7 @@ export class LiveChat implements OnInit, OnDestroy {
         );
 
       if (v2 !== 0) {
-        const h2 = +(v2 * this.scale).toFixed(2);
+        const h2 = this.scale(v2);
         g2.rect(this.barWidth, 0)
           .fill("#855CF8")
           .radius(2, 2)
@@ -207,7 +208,7 @@ export class LiveChat implements OnInit, OnDestroy {
       this.barsSvg
         .text(lightFormat(rows[index][0], "HH:mm"))
         .move(x, y + 8)
-        .addClass("label")
+        .addClass("x label")
         .font({ anchor: "middle", family: "Fira Code" });
     }
   }

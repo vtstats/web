@@ -1,11 +1,26 @@
 .paid-chat-chart {
-  .point-inverse {
-    fill: rgba(255, 255, 255, 0.9);
+  .x.label {
+    text-anchor: middle;
+    font-family: "Fira Code", monospace;
   }
 
-  .point,
-  .point-inverse {
+  .y.label {
+    font-family: "Fira Code", monospace;
+    font-weight: 500;
+    text-anchor: end;
+    dominant-baseline: central;
+  }
+
+  .v.label {
+    font-size: 14px;
+    font-family: "Fira Code", sans-serif;
+    dominant-baseline: central;
     user-select: none;
+  }
+
+  .v.label.inverse {
+    fill: rgba(255, 255, 255, 0.9);
+    text-anchor: end;
   }
 }
 

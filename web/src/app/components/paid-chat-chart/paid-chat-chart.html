@@ -5,7 +5,89 @@
 </hs-sub-menu>
 
 <div class="paid-chat-chart">
-  <div class="bars" #bars></div>
+  <svg
+    class="bars"
+    [attr.width]="width"
+    [attr.height]="topMargin + items.length * (innerPadding + barHeight) + bottomMargin"
+    (mousemove)="_handleMousemove($event)"
+    (mouseleave)="_handleMouseleave()"
+  >
+    <ng-container *ngFor="let value of xScale.ticks(8)">
+      <line
+        class="line"
+        [attr.x1]="leftMargin + xScale(value) || 0"
+        [attr.y1]="topMargin - innerPadding || 0"
+        [attr.x2]="leftMargin + xScale(value) || 0"
+        [attr.y2]="topMargin + items.length * (innerPadding + barHeight) || 0"
+      ></line>
+
+      <text
+        *ngIf="value !== 0"
+        class="x label"
+        [attr.x]="leftMargin + xScale(value)"
+        [attr.y]="topMargin - 16"
+      >
+        {{ value | number }}
+      </text>
+    </ng-container>
+
+    <ng-container *ngFor="let item of items; index as i; trackBy: trackBy">
+      <text
+        class="y label"
+        [attr.x]="leftMargin - innerPadding"
+        [attr.y]="topMargin + (barHeight + innerPadding) * i + (barHeight / 2)"
+        style="pointer-events: none"
+      >
+        {{ item[1].currencyCode }}
+      </text>
+
+      <rect
+        [attr.width]="xScale(item[1].total)"
+        [attr.height]="barHeight"
+        [attr.x]="leftMargin"
+        [attr.y]="topMargin + (barHeight + innerPadding) * i"
+        style="pointer-events: none"
+        rx="2"
+        ry="2"
+        fill="#b5204b"
+      ></rect>
+
+      <ng-container
+        *ngTemplateOutlet="xScale(item[1].total) < width / 2 ? normal : inverse; context: {$implicit: item[1]}"
+      ></ng-container>
+
+      <ng-template #normal let-item>
+        <text
+          class="v label"
+          [attr.x]="leftMargin + xScale(item.total) + innerPadding"
+          [attr.y]="topMargin + (barHeight + innerPadding) * i + (barHeight / 2)"
+          style="pointer-events: none"
+        >
+          {{ item.totalValue | currency:item.currencySymbol:'symbol' }}
+        </text>
+      </ng-template>
+
+      <ng-template #inverse let-item>
+        <text
+          class="v label inverse"
+          [attr.x]="leftMargin + xScale(item.total) - innerPadding"
+          [attr.y]="topMargin + (barHeight + innerPadding) * i + (barHeight / 2)"
+          style="pointer-events: none"
+        >
+          {{ item.totalValue | currency:item.currencySymbol:'symbol' }}
+        </text>
+      </ng-template>
+
+      <rect
+        [attr.width]="width - leftMargin - rightMargin"
+        [attr.height]="barHeight + innerPadding"
+        [attr.idx]="i"
+        [attr.x]="leftMargin"
+        [attr.y]="topMargin + (barHeight + innerPadding) * i - innerPadding / 2"
+        fill="transparent"
+      ></rect>
+    </ng-container>
+  </svg>
 
   <hs-popper
     #popperComp
@@ -16,33 +98,34 @@
     [shift]="true"
     [offset]="{ mainAxis: 16, crossAxis: 16 }"
   >
-    <table>
-      <div class="title">{{ popper.currency }}</div>
+    <table *ngIf="popper.idx >= 0">
+      <div class="title">{{ items[popper.idx]?.[1].currency }}</div>
 
       <tbody>
-        <tr *ngFor="let group of popper.messagesByColor">
+        <tr *ngFor="let group of items[popper.idx][1].items">
           <td class="label">
-            <span class="dot" [style.background-color]="'#' + group.color">
-            </span>
-            {{group.cate}}
+            <span class="dot" [style.background-color]="'#' + group[0]"> </span>
+            {{ group[1].name }}
           </td>
 
-          <td class="count">{{group.total | number }}</td>
+          <td class="count">{{ group[1].total | number }}</td>
 
           <td class="amount">
-            {{ group.totalValue | currency:popper.symbol:'symbol' }}
+            {{ group[1].totalValue |
+            currency:items[popper.idx][1].currencySymbol:'symbol' }}
           </td>
         </tr>
       </tbody>
 
-      <tfoot>
+      <tfoot *ngIf="items[popper.idx][1].items.length > 1">
         <tr>
-          <td class="label">Total</td>
+          <td class="label" i18n="@@total">Total</td>
 
-          <td class="count">{{ popper.total | number }}</td>
+          <td class="count">{{ items[popper.idx][1].total | number }}</td>
 
           <td class="amount">
-            {{ popper.totalValue | currency:popper.symbol:'symbol' }}
+            {{ items[popper.idx][1].totalValue |
+            currency:items[popper.idx][1].currencySymbol:'symbol' }}
           </td>
         </tr>
       </tfoot>

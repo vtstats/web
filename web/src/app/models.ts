@@ -147,6 +147,11 @@ export type PaidLiveChatMessage = {
   time: number;
   type: "super_chat" | "super_sticker";
   color: string;
+
+  currency: string;
+  currencyCode: string;
+  currencySymbol: string;
+  value: number;
 };
 
 export type MemberLiveChatMessage = {
