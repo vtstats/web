@@ -2,6 +2,7 @@ import { enableProdMode, LOCALE_ID } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { loadTranslations } from "@angular/localize";
 import { registerLocaleData } from "@angular/common";
+import * as Sentry from "@sentry/browser";
 
 import { environment } from "./environments/environment";
 
@@ -10,6 +11,11 @@ import { AppModule } from "./app/app.module";
 
 if (environment.production) {
   enableProdMode();
+
+  Sentry.init({
+    dsn: "https://64c25f8bfc9e45ffa532ed5ab1dc989f@o488466.ingest.sentry.io/6113288",
+    release: environment.commit_sha.slice(0, 7),
+  });
 }
 
 const lang = getLang();
