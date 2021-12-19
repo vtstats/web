@@ -1,5 +1,15 @@
 If you like this project, consider [buying me a superchat](https://www.buymeacoffee.com/holostats). ;)
 
+2021 12 19
+----
+
+Introduce paid live chat chart. Currently, it only supports group by currency.
+
+<img width="975" alt="Screen Shot 2021-12-19 at 10 34 25 PM" src="https://user-images.githubusercontent.com/17513314/146678727-ce853c93-df40-4f46-9f46-03c6172cb4e3.png">
+
+Also redesign the tooltip in live chat chart.
+
+<img width="1018" alt="Screen Shot 2021-12-19 at 10 35 59 PM" src="https://user-images.githubusercontent.com/17513314/146678776-2a89a5c8-2ef9-4055-9b8c-1a853bdd21ab.png">
 
 
 2021 12 12
