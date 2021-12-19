@@ -51,23 +51,49 @@
     (dblclick)="_handleDblClick($event)"
     (scroll)="popperComp.update()"
   ></div>
-
-  <hs-popper
-    #popperComp
-    [arrow]="true"
-    [placement]="'top'"
-    [flip]="{ padding: 8 }"
-    [shift]="true"
-    [offset]="8"
-  >
-    <div>From {{ popper.from | date:'HH:mm:ss' }}</div>
-    <div>Until {{ popper.to | date:'HH:mm:ss' }}</div>
-    <div>Total messages: {{ popper.total | number }}</div>
-    <div *ngIf="popper.member > 0">
-      Member messages: {{ popper.member | number}}
-    </div>
-    <div *ngIf="stream.status === 'ended'" class="hint">
-      Double click to jump to
-    </div>
-  </hs-popper>
 </div>
+
+<hs-popper
+  #popperComp
+  [arrow]="false"
+  [class]="'live-chat-popper mat-elevation-z3'"
+  [placement]="'bottom-start'"
+  [flip]="{ padding: 32 }"
+  [shift]="true"
+  [offset]="{ mainAxis: 16, crossAxis: 16 }"
+>
+  <div class="title">
+    {{ popper.from | date:'HH:mm:ss' }} - {{ popper.to | date:'HH:mm:ss' }}
+  </div>
+
+  <table cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        <td class="label">Normal</td>
+        <td class="count">
+          {{ (popper.total - popper.member) | number }} ({{ (popper.total -
+          popper.member) / popper.total | percent:'.1' }})
+        </td>
+      </tr>
+
+      <tr *ngIf="popper.member > 0">
+        <td class="label">Member</td>
+        <td class="count">
+          {{ popper.member | number }} ({{ popper.member / popper.total |
+          percent:'.1' }})
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot *ngIf="popper.member > 0">
+      <tr>
+        <td class="label" i18n="@@total">Total</td>
+        <td class="count">{{ popper.total | number }}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div *ngIf="stream.status === 'ended'" class="hint">
+    Double click to jump to
+  </div>
+</hs-popper>

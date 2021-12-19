@@ -5,12 +5,9 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
+  ChangeDetectorRef,
 } from "@angular/core";
-import {
-  LiveChatHighlightResponse,
-  PaidLiveChatMessage,
-  Stream,
-} from "src/app/models";
+import { PaidLiveChatMessage, Stream } from "src/app/models";
 import { ApiService } from "src/app/shared";
 import { fromEvent, Subscription } from "rxjs";
 import {
@@ -20,7 +17,7 @@ import {
   map,
 } from "rxjs/operators";
 import { ScaleLinear, scaleLinear } from "d3-scale";
-import { flatRollup, flatGroup, sort, sum } from "d3-array";
+import { flatRollup, sort, sum } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
 import { PopperComponent } from "../popper/popper";
@@ -32,40 +29,6 @@ const splitAmount = (amount: string): [string, number] => {
     amount.slice(0, idx).trim(),
     parseFloat(amount.slice(idx).replace(",", "")),
   ];
-};
-
-const groupByCurrency = (
-  res: LiveChatHighlightResponse
-): {
-  currencyCode: string;
-  currency: string;
-  total: number;
-  symbol: string;
-  messages: PaidLiveChatMessage[];
-}[] => {
-  return res.paid.reduce((acc, msg) => {
-    const [symbol, value] = splitAmount(msg.amount);
-    const [currencyCode, currency] = symbolToCurrency[symbol] || [
-      symbol,
-      symbol,
-    ];
-    const idx = acc.findIndex((i) => i.currencyCode === currencyCode);
-
-    if (idx >= 0) {
-      acc[idx].total += value;
-      acc[idx].messages.push({ value, ...msg });
-    } else {
-      acc.push({
-        currency,
-        currencyCode,
-        symbol,
-        total: value,
-        messages: [{ value, ...msg }],
-      });
-    }
-
-    return acc;
-  }, []);
 };
 
 @Component({
@@ -91,6 +54,7 @@ export class PaidLiveChat implements OnInit {
   readonly topMargin: number = 30;
   readonly bottomMargin: number = 10;
 
+  sum = 0;
   items: [
     string,
     {
@@ -112,12 +76,18 @@ export class PaidLiveChat implements OnInit {
 
   sub: Subscription;
 
-  width: number;
+  width: number = 0;
   xScale: ScaleLinear<number, number> = scaleLinear();
 
-  constructor(private api: ApiService, private host: ElementRef<HTMLElement>) {}
+  constructor(
+    private api: ApiService,
+    private host: ElementRef<HTMLElement>,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
+    this.width = this.host.nativeElement.getBoundingClientRect().width;
+
     this.api
       .liveChatHighlight(this.stream.streamId)
       .pipe(
@@ -166,10 +136,16 @@ export class PaidLiveChat implements OnInit {
             }),
             (item) => item.currencyCode
           ),
-          ([_, group]) => -group.total
+          ([_, group]) => -group.total,
+          ([_, group]) => group.currencyCode.charCodeAt(0)
         );
+        this.sum = sum(this.items, (item) => item[1].total);
 
-        this._render();
+        const max = Math.max(...this.items.map((i) => i[1].total));
+
+        this.xScale
+          .domain([0, max])
+          .range([0, this.width - this.leftMargin - this.rightMargin]);
       });
 
     // TODO: switch to resize observer
@@ -182,18 +158,8 @@ export class PaidLiveChat implements OnInit {
       )
       .subscribe((w) => {
         this.width = w;
-        this._render();
+        this.xScale.range([0, w - this.leftMargin - this.rightMargin]);
       });
-  }
-
-  _render() {
-    const max = Math.max(...this.items.map((i) => i[1].total));
-
-    this.popperComp.update();
-
-    this.xScale
-      .domain([0, max])
-      .range([0, this.width - this.leftMargin - this.rightMargin]);
   }
 
   _handleMousemove(e: MouseEvent) {

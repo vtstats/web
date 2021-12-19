@@ -158,21 +158,33 @@ export class LiveChat implements OnInit, OnDestroy {
     const g2 = this.barsSvg.group().style({ "pointer-events": "none" });
 
     for (const [idx, [from, to, v1, v2]] of rows.entries()) {
-      const h1 = this.scale(v1);
-      g1.rect(this.barWidth, 0)
-        .fill("#B7A8F4")
-        .radius(2, 2)
-        .move(
-          this.leftMargin + idx * (this.barWidth + this.innerPadding),
-          this.topMargin + this.height
-        )
+      g1.rect(this.barWidth + this.innerPadding, this.height)
         .attr({ "x-from": from, "x-to": to, "x-v1": v1, "x-v2": v2 })
-        .animate(300)
-        .attr("height", h1)
         .move(
-          this.leftMargin + idx * (this.barWidth + this.innerPadding),
-          this.topMargin + this.height - h1
-        );
+          this.leftMargin +
+            idx * (this.barWidth + this.innerPadding) -
+            this.innerPadding / 2,
+          this.topMargin
+        )
+        .fill("transparent");
+
+      {
+        const h1 = this.scale(v1);
+        g2.rect(this.barWidth, 0)
+          .fill("#B7A8F4")
+          .radius(2, 2)
+          .move(
+            this.leftMargin + idx * (this.barWidth + this.innerPadding),
+            this.topMargin + this.height
+          )
+
+          .animate(300)
+          .attr("height", h1)
+          .move(
+            this.leftMargin + idx * (this.barWidth + this.innerPadding),
+            this.topMargin + this.height - h1
+          );
+      }
 
       if (v2 !== 0) {
         const h2 = this.scale(v2);
@@ -221,13 +233,24 @@ export class LiveChat implements OnInit, OnDestroy {
     if (
       !this.loading &&
       e.target instanceof Element &&
-      e.target.tagName.toLowerCase() === "rect"
+      e.target.hasAttribute("x-from")
     ) {
       this.popper.from = Number(e.target.getAttribute("x-from"));
       this.popper.to = Number(e.target.getAttribute("x-to"));
       this.popper.total = Number(e.target.getAttribute("x-v1"));
       this.popper.member = Number(e.target.getAttribute("x-v2"));
-      this.popperComp.update(e.target);
+      this.popperComp.update({
+        getBoundingClientRect: () => ({
+          width: 0,
+          height: 0,
+          top: e.clientY,
+          right: e.clientX,
+          bottom: e.clientY,
+          left: e.clientX,
+        }),
+      } as Element);
+    } else {
+      this.popperComp.hide();
     }
   }
 
