@@ -65,7 +65,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "statsJson": true,
               "aot": true,
               "extractLicenses": true,
               "buildOptimizer": true,
