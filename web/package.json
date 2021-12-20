@@ -5,7 +5,6 @@
     "ng": "ng",
     "dev": "ng serve",
     "start": "ng serve",
-    "prebuild": "node env.ts",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
