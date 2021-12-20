@@ -21,7 +21,7 @@ if (environment.production) {
 const lang = getLang();
 
 import(
-  /* webpackChunkName: "i18n-[request]" */
+  /* webpackChunkName: "i18n/[request]" */
   /* webpackExclude: /(index|\.d)\.ts$/ */
   `./i18n/${lang}`
 )
