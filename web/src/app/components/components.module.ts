@@ -46,7 +46,6 @@ import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
 import { StreamTime } from "./stream-time/stream-time";
 import { PopperComponent } from "./popper/popper";
-import { ChartAxis } from "./chart-axis/chart-axis";
 import { PaidLiveChat } from "./paid-chat-chart/paid-chat-chart";
 
 import { SharedModule } from "src/app/shared";
@@ -81,7 +80,6 @@ import { SharedModule } from "src/app/shared";
     DateFilter,
     VTuberFilter,
     FilterGroup,
-    ChartAxis,
   ],
   imports: [
     CommonModule,

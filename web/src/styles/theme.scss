@@ -19,7 +19,6 @@
 @import "src/app/components/stream-time/stream-time-theme";
 @import "src/app/components/live-chat/live-chat-theme";
 @import "src/app/components/popper/popper-theme";
-@import "src/app/components/chart-axis/chart-axis-theme";
 @import "src/app/components/stream-stats-chart/stream-stats-chart-theme";
 @import "src/app/components/paid-chat-chart/paid-chat-chart-theme";
 
@@ -53,7 +52,6 @@ mat.$theme-ignore-duplication-warnings: true;
   @include vtuber-filter-theme($theme);
   @include stream-time-theme($theme);
   @include live-chat-theme($theme);
-  @include chart-axis-theme($theme);
   @include stream-stats-chart-theme($theme);
   @include popper-theme($theme);
   @include paid-chat-chart-theme($theme);
@@ -73,7 +71,6 @@ mat.$theme-ignore-duplication-warnings: true;
   @include vtuber-filter-typography($config);
   @include stream-time-typography($config);
   @include live-chat-typography($config);
-  @include chart-axis-typography($config);
   @include stream-stats-chart-typography($config);
   @include popper-typography($config);
   @include paid-chat-chart-typography($config);
