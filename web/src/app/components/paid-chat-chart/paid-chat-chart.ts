@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import {
   Component,
   Input,
@@ -5,22 +6,17 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-  ChangeDetectorRef,
 } from "@angular/core";
 import { PaidLiveChatMessage, Stream } from "src/app/models";
 import { ApiService } from "src/app/shared";
 import { fromEvent, Subscription } from "rxjs";
-import {
-  debounceTime,
-  distinctUntilChanged,
-  startWith,
-  map,
-} from "rxjs/operators";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 import { ScaleLinear, scaleLinear } from "d3-scale";
-import { flatRollup, sort, sum } from "d3-array";
+import { flatRollup, sort, sum, max } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
 import { PopperComponent } from "../popper/popper";
+import { within } from "src/utils";
 
 const splitAmount = (amount: string): [string, number] => {
   const idx = amount.split("").findIndex((c) => "0" <= c && c <= "9");
@@ -36,6 +32,18 @@ const splitAmount = (amount: string): [string, number] => {
   templateUrl: "paid-chat-chart.html",
   styleUrls: ["paid-chat-chart.scss"],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger("bar", [
+      transition(
+        ":enter",
+        [
+          style({ width: "0" }),
+          animate(300, style({ width: "{{ width }}px" })),
+        ],
+        { params: { width: 0 } }
+      ),
+    ]),
+  ],
 })
 export class PaidLiveChat implements OnInit {
   @Input() stream: Stream;
@@ -45,6 +53,9 @@ export class PaidLiveChat implements OnInit {
   popper = {
     idx: -1,
   };
+
+  @ViewChild("svg")
+  svg: ElementRef<HTMLElement>;
 
   readonly barHeight: number = 21;
   readonly innerPadding: number = 7;
@@ -77,13 +88,10 @@ export class PaidLiveChat implements OnInit {
   sub: Subscription;
 
   width: number = 0;
-  xScale: ScaleLinear<number, number> = scaleLinear();
+  xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
 
-  constructor(
-    private api: ApiService,
-    private host: ElementRef<HTMLElement>,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private api: ApiService, private host: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
     this.width = this.host.nativeElement.getBoundingClientRect().width;
@@ -141,30 +149,44 @@ export class PaidLiveChat implements OnInit {
         );
         this.sum = sum(this.items, (item) => item[1].total);
 
-        const max = Math.max(...this.items.map((i) => i[1].total));
-
         this.xScale
-          .domain([0, max])
+          .domain([0, max(this.items, (item) => item[1].total)])
           .range([0, this.width - this.leftMargin - this.rightMargin]);
+
+        this.yScale
+          .domain([0, this.items.length]) // n + 1
+          .range([
+            this.topMargin,
+            this.topMargin +
+              this.items.length * (this.barHeight + this.innerPadding),
+          ]);
       });
 
     // TODO: switch to resize observer
     this.sub = fromEvent(window, "resize")
       .pipe(
-        startWith({}),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
       )
       .subscribe((w) => {
         this.width = w;
-        this.xScale.range([0, w - this.leftMargin - this.rightMargin]);
+        this.xScale.range([0, this.width - this.leftMargin - this.rightMargin]);
       });
   }
 
   _handleMousemove(e: MouseEvent) {
-    if (e.target instanceof Element && e.target.hasAttribute("idx")) {
-      const idx = Number(e.target.getAttribute("idx"));
+    const { x, y } = this.svg.nativeElement.getBoundingClientRect();
+
+    const offsetX = e.clientX - x;
+    const offsetY = e.clientY - y;
+
+    const idx = Math.floor(this.yScale.invert(offsetY));
+
+    if (
+      within(idx, 0, this.items.length - 1) &&
+      within(offsetX, this.leftMargin, this.width - this.rightMargin)
+    ) {
       this.popper.idx = idx;
       this.popperComp.update({
         getBoundingClientRect: () => ({
@@ -177,7 +199,7 @@ export class PaidLiveChat implements OnInit {
         }),
       } as Element);
     } else {
-      this.popperComp.hide();
+      this.closePopper();
     }
   }
 
@@ -185,7 +207,8 @@ export class PaidLiveChat implements OnInit {
     return item[0];
   }
 
-  _handleMouseleave() {
+  closePopper() {
+    this.popper.idx = -1;
     this.popperComp.hide();
   }
 }

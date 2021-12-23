@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-960">
+<div class="mx-auto max-w-960" [style.margin-bottom.px]="60">
   <ng-container *ngIf="!loading; else shimmer">
     <hs-stream-summary [stream]="stream"></hs-stream-summary>
 
