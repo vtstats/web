@@ -1,9 +1,26 @@
 .stream-time {
   padding: 0 16px;
+}
 
-  .heatmap {
-    overflow-x: auto;
-    padding: 12px 0;
-    direction: rtl;
+.stream-time-chart {
+  overflow-x: auto;
+  padding: 12px 0;
+  direction: rtl;
+  user-select: none;
+
+  .label {
+    text-anchor: middle;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Fira Code";
+  }
+
+  .x.label {
+    text-anchor: middle;
+  }
+
+  .y.label {
+    text-anchor: start;
+    dominant-baseline: central;
   }
 }

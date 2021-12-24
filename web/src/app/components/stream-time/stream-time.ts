@@ -1,19 +1,15 @@
-import { formatDate } from "@angular/common";
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject,
   Input,
-  LOCALE_ID,
-  NgZone,
-  OnDestroy,
+  OnInit,
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
 import {
   addWeeks,
+  differenceInDays,
   eachDayOfInterval,
   fromUnixTime,
   getDate,
@@ -21,11 +17,13 @@ import {
   isSameWeek,
   subWeeks,
 } from "date-fns";
-import SVG from "svg.js";
+import { range } from "d3-array";
+import { scaleLinear } from "d3-scale";
 
 import type { VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
 import { PopperComponent } from "../popper/popper";
+import { within } from "src/utils";
 
 const getFill = (v: number) => {
   if (v <= 0) return "#00bfa510";
@@ -54,161 +52,105 @@ const relativeInWeek = (date: Date, base: Date): number => {
   styleUrls: ["stream-time.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class StreamTime implements OnDestroy, AfterViewInit {
-  constructor(
-    @Inject(LOCALE_ID) private locale: string,
-    private api: ApiService,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {}
-
+export class StreamTime implements OnInit {
   @Input() vtuber: VTuber;
 
   @ViewChild("popperComp")
   popperComp: PopperComponent;
+  popperIdx = -1;
 
-  popper = {
-    date: 0,
-    value: 0,
-  };
-
-  @ViewChild("heatmap", { static: true })
-  private heatmapEl: ElementRef;
-  _svg: SVG.Doc;
+  @ViewChild("svg")
+  svg: ElementRef<HTMLElement>;
 
   loading: boolean;
 
-  ngAfterViewInit() {
+  xScale = scaleLinear().domain([0, 45]).range([20, 920]);
+  yScale = scaleLinear().domain([0, 6]).range([0, 120]);
+  xTicks: { x: number; d: Date }[] = [];
+  yTicks: { y: number; d: Date }[] = [];
+
+  days: { x: number; y: number; d: number; v: number; c: string }[] = [];
+
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    const end = new Date();
+    const start = subWeeks(end, 44);
+
+    eachDayOfInterval({ start, end }).forEach((d) => {
+      const week = relativeInWeek(d, start);
+      const day = getDay(d);
+      const x = this.xScale(week);
+      const y = this.yScale(day);
+      this.days.push({ d: d.getTime(), x, y, v: 0, c: getFill(0) });
+
+      if (getDate(d) === 1) {
+        this.xTicks.push({ x: x + 8, d });
+      }
+    });
+
+    this.yTicks = range(0, 7).map((i) => ({
+      d: new Date(2017, 0, 1 + i),
+      y: this.yScale(i) + 8,
+    }));
+
     this.loading = true;
 
-    this.ngZone.runOutsideAngular(() => this._drawShimmer());
-
     this.api.streamTimes(this.vtuber.id).subscribe((res) => {
-      this.ngZone.runOutsideAngular(() => this._draw(res.times));
       this.loading = false;
+
+      for (const time of res.times) {
+        const idx = differenceInDays(fromUnixTime(time[0]), start);
+
+        if (within(idx, 0, this.days.length - 1)) {
+          this.days[idx].v += time[1];
+          this.days[idx].c = getFill(this.days[idx].v);
+        }
+      }
     });
   }
 
-  ngOnDestroy() {
-    if (this._svg) this._svg.clear();
-  }
+  tryOpenPopper(e: MouseEvent | TouchEvent) {
+    if (this.loading) return;
 
-  _handleMouseleave() {
-    if (!this.loading) {
-      this.popperComp.hide();
-    }
-  }
+    const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
 
-  _handleMouseover(e: MouseEvent) {
-    if (
-      !this.loading &&
-      e.target instanceof Element &&
-      e.target.tagName.toLowerCase() === "rect"
-    ) {
-      this.popper.date = Number(e.target.getAttribute("x-date"));
-      this.popper.value = Number(e.target.getAttribute("x-value"));
+    const { x, y, left, top } = this.svg.nativeElement.getBoundingClientRect();
 
-      // Caveat: don't forget to trigger a re-render
-      // before re-position popper
+    const offsetX = clientX - x;
+    const offsetY = clientY - y;
+
+    const idx = this.days.findIndex(
+      (day) =>
+        within(offsetX, day.x, day.x + 20) && within(offsetY, day.y, day.y + 20)
+    );
+
+    if (idx > 0) {
+      if (this.popperIdx === idx) return;
+
+      this.popperIdx = idx;
+      const x = left + this.days[idx].x;
+      const y = top + this.days[idx].y;
+
       this.cdr.detectChanges();
 
-      this.popperComp.update(e.target);
+      this.popperComp.update({
+        getBoundingClientRect: () => ({
+          width: 16,
+          height: 0,
+          right: x,
+          left: x,
+          top: y,
+          bottom: y,
+        }),
+      } as Element);
+    } else {
+      this.closePopper();
     }
   }
 
-  private _draw(times: [number, number][]) {
-    const size = 16;
-    const gutter = 4;
-    const leftPadding = 20;
-    const end = new Date();
-    const start = subWeeks(end, 44);
-
-    if (this._svg) {
-      this._svg.clear();
-    } else {
-      this._svg = SVG(this.heatmapEl.nativeElement).size(920, 160);
-    }
-
-    const values = times.reduce((acc, [time, value]) => {
-      const d = fromUnixTime(time);
-      const week = relativeInWeek(d, start);
-      const day = getDay(d);
-
-      acc[week] ||= [];
-      acc[week][day] ||= 0;
-      acc[week][day] += value;
-
-      return acc;
-    }, [] as number[][]);
-
-    eachDayOfInterval({ start, end }).forEach((d) => {
-      const day = getDay(d);
-      const week = relativeInWeek(d, start);
-
-      const x = leftPadding + week * (size + gutter);
-      const y = day * (size + gutter);
-      const v = values[week]?.[day] || 0;
-
-      // month ticks
-      if (getDate(d) === 1) {
-        this._svg
-          .text(formatDate(d, "MMM", this.locale))
-          .addClass("stream-time-tick")
-          .font({
-            anchor: "middle",
-            size: "12px",
-            weight: "400",
-            family: "Fira Code",
-            leading: size,
-          })
-          .move(x + size / 2, 7 * (size + gutter));
-      }
-
-      this._svg
-        .rect(size, size)
-        .radius(2, 2)
-        .fill(getFill(v))
-        .attr({ "x-value": v, "x-date": d.getTime() })
-        .move(x, y);
-    });
-
-    // week ticks
-    [0, 1, 2, 3, 4, 5, 6].forEach((day) => {
-      this._svg
-        .text(formatDate(new Date(2017, 0, day + 1), "EEEEE", this.locale))
-        .addClass("stream-time-tick")
-        .font({
-          anchor: "start",
-          size: "12px",
-          weight: "400",
-          family: "Fira Code",
-          leading: size,
-        })
-        .move(leftPadding - gutter * 2, day * (size + gutter));
-    });
-  }
-
-  private _drawShimmer() {
-    const size = 16;
-    const gutter = 4;
-    const leftPadding = 20;
-    const end = new Date();
-    const start = subWeeks(end, 44);
-
-    if (this._svg) {
-      this._svg.clear();
-    } else {
-      this._svg = SVG(this.heatmapEl.nativeElement).size(920, 160);
-    }
-
-    eachDayOfInterval({ start, end }).forEach((d) => {
-      const day = getDay(d);
-      const week = relativeInWeek(d, start);
-
-      const x = leftPadding + week * (size + gutter);
-      const y = day * (size + gutter);
-
-      this._svg.rect(size, size).radius(2, 2).fill(getFill(0)).move(x, y);
-    });
+  closePopper() {
+    this.popperIdx = -1;
+    this.popperComp.hide();
   }
 }
