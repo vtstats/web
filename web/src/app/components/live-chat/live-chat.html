@@ -14,7 +14,7 @@
   </hs-sub-menu-extra>
 </hs-sub-menu>
 
-<div class="live-chat-chart" (mouseleave)="hideTooltip()">
+<div class="live-chat-chart" (dblclick)="jumpTo($event)">
   <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
     <ng-container *ngFor="let v of yScale ? yScale.ticks(6) : []">
       <line
@@ -35,14 +35,14 @@
     </ng-container>
   </svg>
 
-  <div class="scroll" (scroll)="hideTooltip()">
+  <div class="scroll" (scroll)="closeTooltip()">
     <svg
       #svg
       [attr.width]="width"
       [attr.height]="topMargin + height + bottomMargin"
-      (mouseleave)="hideTooltip()"
-      (mousemove)="_handleMouseover($event)"
-      (dblclick)="_handleDblClick($event)"
+      holdGesture
+      (hold)="tryOpenTooltip($event)"
+      (release)="closeTooltip()"
     >
       <g
         *ngFor="let row of rows; index as i"

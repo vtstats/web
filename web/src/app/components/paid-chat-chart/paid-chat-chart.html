@@ -12,8 +12,9 @@
     class="bars"
     [attr.width]="width"
     [attr.height]="topMargin + items.length * (innerPadding + barHeight) + bottomMargin"
-    (mousemove)="_handleMousemove($event)"
-    (mouseleave)="closePopper()"
+    holdGesture
+    (hold)="tryOpenPopper($event)"
+    (release)="closePopper()"
   >
     <ng-container *ngFor="let value of xScale.ticks(8)">
       <line

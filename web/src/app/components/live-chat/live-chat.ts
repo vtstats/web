@@ -93,7 +93,7 @@ export class LiveChat implements OnInit, OnDestroy {
 
   changeTimeUnit(unit: number | "fit") {
     this.unit = unit;
-    this.hideTooltip();
+    this.closeTooltip();
     this._render();
   }
 
@@ -172,11 +172,13 @@ export class LiveChat implements OnInit, OnDestroy {
     }
   }
 
-  _handleMouseover(e: MouseEvent) {
+  tryOpenTooltip(e: MouseEvent | TouchEvent) {
+    const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
+
     const { x, y } = this.svg.nativeElement.getBoundingClientRect();
 
-    const offsetX = e.clientX - x;
-    const offsetY = e.clientY - y;
+    const offsetX = clientX - x;
+    const offsetY = clientY - y;
 
     const idx = Math.floor(this.xScale.invert(offsetX));
 
@@ -189,18 +191,18 @@ export class LiveChat implements OnInit, OnDestroy {
         getBoundingClientRect: () => ({
           width: 0,
           height: 0,
-          top: e.clientY,
-          right: e.clientX,
-          bottom: e.clientY,
-          left: e.clientX,
+          top: clientY,
+          right: clientX,
+          bottom: clientY,
+          left: clientX,
         }),
       } as Element);
     } else {
-      this.hideTooltip();
+      this.closeTooltip();
     }
   }
 
-  _handleDblClick(e: MouseEvent) {
+  jumpTo(e: MouseEvent) {
     const { x, y } = this.svg.nativeElement.getBoundingClientRect();
 
     const offsetX = e.clientX - x;
@@ -221,7 +223,7 @@ export class LiveChat implements OnInit, OnDestroy {
     }
   }
 
-  hideTooltip() {
+  closeTooltip() {
     this.dataIndex = -1;
     this.popperComp.hide();
   }

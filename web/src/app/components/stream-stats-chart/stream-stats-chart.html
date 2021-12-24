@@ -16,12 +16,7 @@
   </hs-sub-menu-extra>
 </hs-sub-menu>
 
-<div
-  class="stream-stats-chart"
-  (mousemove)="_handleMousemove($event)"
-  (mouseleave)="hidePopper()"
-  (dblclick)="_handleDblClick($event)"
->
+<div class="stream-stats-chart" (dblclick)="jumpTo($event)">
   <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
     <ng-container *ngFor="let value of yScale.ticks(6)">
       <line
@@ -42,11 +37,14 @@
     </ng-container>
   </svg>
 
-  <div class="scroll" (scroll)="popperComp.hide()">
+  <div class="scroll" (scroll)="closeTooltip()">
     <svg
       #svg
       [attr.width]="width"
       [attr.height]="topMargin + height + bottomMargin"
+      holdGesture
+      (hold)="tryOpenTooltip($event)"
+      (release)="closeTooltip()"
     >
       <defs>
         <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">

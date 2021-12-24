@@ -175,11 +175,13 @@ export class PaidLiveChat implements OnInit {
       });
   }
 
-  _handleMousemove(e: MouseEvent) {
+  tryOpenPopper(e: MouseEvent | TouchEvent) {
+    const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
+
     const { x, y } = this.svg.nativeElement.getBoundingClientRect();
 
-    const offsetX = e.clientX - x;
-    const offsetY = e.clientY - y;
+    const offsetX = clientX - x;
+    const offsetY = clientY - y;
 
     const idx = Math.floor(this.yScale.invert(offsetY));
 
@@ -192,10 +194,10 @@ export class PaidLiveChat implements OnInit {
         getBoundingClientRect: () => ({
           width: 0,
           height: 0,
-          top: e.clientY,
-          right: e.clientX,
-          bottom: e.clientY,
-          left: e.clientX,
+          top: clientY,
+          right: clientX,
+          bottom: clientY,
+          left: clientX,
         }),
       } as Element);
     } else {
@@ -203,12 +205,12 @@ export class PaidLiveChat implements OnInit {
     }
   }
 
-  trackBy(idx, item) {
-    return item[0];
-  }
-
   closePopper() {
     this.popper.idx = -1;
     this.popperComp.hide();
+  }
+
+  trackBy(idx, item) {
+    return item[0];
   }
 }

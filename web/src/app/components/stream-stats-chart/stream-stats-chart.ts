@@ -142,11 +142,12 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     this.ticks = range(1, this.rows.length - 1, 32);
   }
 
-  _handleMousemove(e: MouseEvent) {
+  tryOpenTooltip(e: MouseEvent | TouchEvent) {
+    const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
     const { x, y, top, left } = this.svg.nativeElement.getBoundingClientRect();
 
-    const offsetX = e.clientX - x;
-    const offsetY = e.clientY - y;
+    const offsetX = clientX - x;
+    const offsetY = clientY - y;
 
     const idx = bisectCenter(
       this.rows.map((x) => x[0]),
@@ -171,13 +172,11 @@ export class StreamStatsChart implements OnInit, OnDestroy {
         }),
       } as Element);
     } else {
-      this.hidePopper();
+      this.closeTooltip();
     }
   }
 
-  _handleTouchmove(e: TouchEvent) {}
-
-  _handleDblClick(e: MouseEvent) {
+  jumpTo(e: MouseEvent) {
     if (this.stream.status !== "ended") return;
 
     const { x, y } = this.svg.nativeElement.getBoundingClientRect();
@@ -201,7 +200,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     }
   }
 
-  hidePopper() {
+  closeTooltip() {
     this.dataPointIdx = -1;
     this.popperComp.hide();
   }

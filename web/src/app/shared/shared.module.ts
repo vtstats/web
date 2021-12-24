@@ -6,6 +6,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatIconModule } from "@angular/material/icon";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
+import { HoldGestureDirective } from "./directives/hold-gesture.directive";
 
 import { DistancePipe } from "./pipes/distance.pipe";
 import { DurationPipe } from "./pipes/duration.pipe";
@@ -26,6 +27,7 @@ import { TickService } from "./services/tick.service";
     GroupByPipe,
     NamePipe,
     ColoredNumberDirective,
+    HoldGestureDirective,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { TickService } from "./services/tick.service";
     GroupByPipe,
     NamePipe,
     ColoredNumberDirective,
+    HoldGestureDirective,
   ],
   providers: [ApiService, TickService],
 })

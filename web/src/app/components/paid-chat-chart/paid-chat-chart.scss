@@ -1,4 +1,8 @@
 .paid-chat-chart {
+  .bars {
+    user-select: none;
+  }
+
   .bar {
     fill: #b5204b;
   }
@@ -19,7 +23,6 @@
     font-size: 14px;
     font-family: "Fira Code", sans-serif;
     dominant-baseline: central;
-    user-select: none;
   }
 
   .v.label.inverse {
