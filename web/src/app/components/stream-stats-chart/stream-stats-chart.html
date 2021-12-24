@@ -1,65 +1,120 @@
 <hs-sub-menu>
   <hs-sub-menu-title>
-    <span i18n="@@streamViewers">Recent Streams</span>
+    <span i18n="@@streamViewers">Stream Viewers</span>
   </hs-sub-menu-title>
 
   <hs-sub-menu-extra>
     <span
       class="time-unit"
       role="button"
-      [ngClass]="{ selected: fitContent }"
-      (click)="fitContent = true; _render()"
-    >
-      Fit
-    </span>
-
-    <span
-      class="time-unit"
-      role="button"
-      *ngFor="let u of [15000, 30000, 60000]"
-      [ngClass]="{ selected: !fitContent && timeUnit === u }"
-      (click)="timeUnit = u; fitContent = false; _render()"
+      *ngFor="let u of ['fit', 15000, 30000, 60000]"
+      [ngClass]="{ selected: unit === u }"
+      (click)="unit = u; _render()"
     >
       {{formatTimeUnit(u)}}
     </span>
   </hs-sub-menu-extra>
 </hs-sub-menu>
 
-<div class="stream-stats-chart">
-  <svg class="axis" width="960" [attr.height]="height + topMargin">
+<div
+  class="stream-stats-chart"
+  (mousemove)="_handleMousemove($event)"
+  (mouseleave)="hidePopper()"
+  (dblclick)="_handleDblClick($event)"
+>
+  <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
     <ng-container *ngFor="let value of yScale.ticks(6)">
       <line
         class="line"
         [attr.x1]="0"
-        [attr.y1]="topMargin + yScale(max - value)"
+        [attr.y1]="yScale(value)"
         [attr.x2]="960"
-        [attr.y2]="topMargin + yScale(max - value)"
+        [attr.y2]="yScale(value)"
       ></line>
       <text
         *ngIf="value !== 0"
         class="y label"
         [attr.x]="960 - 16"
-        [attr.dy]="topMargin + yScale(max - value) + 16"
+        [attr.dy]="yScale(value) + 16"
       >
         {{ value | number }}
       </text>
     </ng-container>
   </svg>
 
-  <div #bars class="bars" (scroll)="popperComp.update()"></div>
+  <div class="scroll" (scroll)="popperComp.hide()">
+    <svg
+      #svg
+      [attr.width]="width"
+      [attr.height]="topMargin + height + bottomMargin"
+    >
+      <defs>
+        <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-opacity="0.38" stop-color="#ea4335" offset="0"></stop>
+          <stop stop-opacity="0" stop-color="#fcdee5" offset="0.9"></stop>
+        </linearGradient>
+      </defs>
 
-  <hs-popper
-    #popperComp
-    [placement]="'right'"
-    [arrow]="true"
-    [shift]="true"
-    [offset]="12"
-    [flip]="{ padding: 24 }"
-  >
-    <div>{{ popper.date | date:'yyyy/MM/dd HH:mm:ss' }}</div>
-    <div>Stream viewers: {{ popper.value | number }}</div>
-    <div *ngIf="stream.status === 'ended'" class="hint">
-      Double click to jump to
-    </div>
-  </hs-popper>
+      <path fill="url(#gradient)" [attr.d]="areaPath"></path>
+
+      <path
+        [attr.d]="linePath"
+        stroke="rgb(234, 67, 53)"
+        stroke-width="2"
+        fill="none"
+      ></path>
+
+      <ng-container *ngFor="let tick of ticks">
+        <line
+          class="line"
+          [attr.x1]="xScale(rows[tick][0])"
+          [attr.y1]="yScale(0)"
+          [attr.x2]="xScale(rows[tick][0])"
+          [attr.y2]="yScale(0) + 8"
+          stroke-width="1px"
+          stroke="#E6E6E6"
+        ></line>
+
+        <text
+          class="x label"
+          [attr.x]="xScale(rows[tick][0])"
+          [attr.y]="yScale(0) + 24"
+        >
+          {{ rows[tick][0] | date:'HH:mm' }}
+        </text>
+      </ng-container>
+
+      <line
+        class="guideline"
+        fill="none"
+        [attr.x1]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.y1]="0"
+        [attr.x2]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.y2]="yScale(0)"
+      ></line>
+
+      <circle
+        #point
+        [attr.r]="dataPointSize"
+        [attr.cx]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.cy]="yScale(rows[dataPointIdx]?.[1] || 0)"
+        fill="#ea4335"
+      ></circle>
+    </svg>
+  </div>
 </div>
+
+<hs-popper
+  #popperComp
+  [placement]="'right'"
+  [arrow]="true"
+  [shift]="true"
+  [offset]="12"
+  [flip]="{ padding: 24 }"
+>
+  <div>{{ rows[dataPointIdx]?.[0] | date:'yyyy/MM/dd HH:mm:ss' }}</div>
+  <div>Stream viewers: {{ rows[dataPointIdx]?.[1] | number }}</div>
+  <div *ngIf="stream.status === 'ended'" class="hint">
+    Double click to jump to
+  </div>
+</hs-popper>
