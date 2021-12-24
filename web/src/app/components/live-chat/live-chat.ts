@@ -1,15 +1,15 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import {
   Component,
   ElementRef,
   Input,
-  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { lightFormat } from "date-fns";
-import SVG from "svg.js";
+import { range, max, extent } from "d3-array";
+import { ScaleLinear, scaleLinear } from "d3-scale";
 import { fromEvent, Subscription } from "rxjs";
 import {
   debounceTime,
@@ -17,9 +17,9 @@ import {
   map,
   distinctUntilChanged,
 } from "rxjs/operators";
-import { ScaleLinear, scaleLinear } from "d3-scale";
 
 import { Stream } from "src/app/models";
+import { within } from "src/utils";
 import { PopperComponent } from "../popper/popper";
 
 @Component({
@@ -27,25 +27,29 @@ import { PopperComponent } from "../popper/popper";
   templateUrl: "live-chat.html",
   styleUrls: ["live-chat.scss"],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger("bar", [
+      transition(":enter", [
+        style({ "clip-path": "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" }),
+        animate(
+          400,
+          style({ "clip-path": "polygon(0 0, 100% 0, 100% 100%, 0 100%)" })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class LiveChat implements OnInit, OnDestroy {
-  constructor(private ngZone: NgZone, private host: ElementRef<HTMLElement>) {}
+  constructor(private host: ElementRef<HTMLElement>) {}
 
   loading = false;
 
   @ViewChild("popperComp")
   popperComp: PopperComponent;
+  dataIndex = -1;
 
-  popper = {
-    from: 0,
-    to: 0,
-    total: 0,
-    member: 0,
-  };
-
-  @ViewChild("bars", { static: true })
-  private barsEl: ElementRef;
-  private barsSvg: SVG.Doc;
+  @ViewChild("svg", { static: true })
+  private svg: ElementRef<HTMLElement>;
 
   readonly barWidth: number = 9;
   readonly innerPadding: number = 3;
@@ -56,16 +60,18 @@ export class LiveChat implements OnInit, OnDestroy {
   readonly topMargin: number = 10;
   readonly bottomMargin: number = 30;
 
-  @Input() rows: [number, number, number][];
+  @Input("rows") _raw: [number, number, number][];
+  @Input() stream: Stream;
 
   sub: Subscription;
+  rows: [number, number, number, number][] = [];
+  xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  ticks: number[] = [];
 
-  scale: ScaleLinear<number, number> = scaleLinear();
-  max = 300;
-  timeUnit = 15000;
-  fitContent = true;
+  unit: number | "fit" = "fit";
 
-  @Input() stream: Stream;
+  width = 0;
 
   ngOnInit() {
     this._render();
@@ -73,172 +79,112 @@ export class LiveChat implements OnInit, OnDestroy {
     // TODO: switch to resize observer
     this.sub = fromEvent(window, "resize")
       .pipe(
-        filter(() => this.fitContent),
+        filter(() => this.unit === "fit"),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe((w) => this._render(w));
+      .subscribe(() => this._render());
   }
 
   ngOnDestroy() {
-    if (this.barsSvg) this.barsSvg.clear();
     if (this.sub) this.sub.unsubscribe();
   }
 
-  formatTimeUnit(unit: number): string {
+  changeTimeUnit(unit: number | "fit") {
+    this.unit = unit;
+    this.hideTooltip();
+    this._render();
+  }
+
+  formatTimeUnit(unit: number | "fit"): string {
+    if (unit === "fit") return "Fit";
     return unit >= 60000 ? `${unit / 60000}m` : `${unit / 1000}s`;
   }
 
-  _render(width?: number) {
-    if (!width) {
-      width = this.host.nativeElement.getBoundingClientRect().width;
-    }
+  _render() {
+    const hostWidth = this.host.nativeElement.getBoundingClientRect().width;
 
-    if (this.fitContent) {
-      const n = Math.floor((width - 120) / (this.barWidth + this.innerPadding));
+    if (typeof this.unit === "number") {
+      this._agg(this.unit);
+      this.width = Math.max(
+        this.rows.length * (this.barWidth + this.innerPadding),
+        hostWidth
+      );
 
-      this.timeUnit =
-        Math.ceil(
-          (this.rows[this.rows.length - 1][0] - this.rows[0][0]) / n / 15000
-        ) * 15000;
-    }
-
-    const rows = this._agg();
-    this.max = Math.max(...rows.map((r) => r[2]));
-    this.scale.domain([0, this.max]).range([0, this.height]);
-    this.ngZone.runOutsideAngular(() => this._drawBars(rows));
-  }
-
-  private _agg(): [number, number, number, number][] {
-    const ret = [];
-    const sorted = this.rows.sort((a, b) => a[0] - b[0]);
-
-    if (sorted[0][0] < this.stream.startTime) {
-      ret.push([
-        sorted[0][0],
-        this.stream.startTime - (this.stream.startTime % this.timeUnit),
-        sorted[0][1],
-        sorted[0][2],
-      ]);
-    }
-
-    for (const row of sorted) {
-      const l = ret[ret.length - 1];
-      const t = row[0];
-
-      if (!l || !(l[0] <= t && t <= l[1])) {
-        const s = t - (t % this.timeUnit);
-        ret.push([s, s + this.timeUnit, row[1], row[2]]);
-      } else {
-        ret[ret.length - 1][2] += row[1];
-        ret[ret.length - 1][3] += row[2];
-      }
-    }
-
-    return ret;
-  }
-
-  private _drawBars(rows: [number, number, number, number][]) {
-    if (this.barsSvg) {
-      this.barsSvg.clear();
+      console.log(
+        `[live-chat] unit: ${this.unit} raw: ${this._raw.length} rows: ${this.rows.length}`
+      );
     } else {
-      this.barsSvg = SVG(this.barsEl.nativeElement);
+      const n = Math.floor(
+        (hostWidth - this.leftMargin - this.rightMargin) /
+          (this.barWidth + this.innerPadding)
+      );
+
+      const [min, max] = extent(this._raw, (row) => row[0]);
+
+      const unit = Math.ceil((max - min) / n / 15000) * 15000;
+
+      this._agg(unit);
+      this.width = hostWidth;
+
+      console.log(
+        `[live-chat] unit: ${unit}(fit) raw: ${this._raw.length} rows: ${this.rows.length}`
+      );
     }
 
-    this.barsSvg.size(
-      this.leftMargin +
-        rows.length * (this.barWidth + this.innerPadding) +
-        this.rightMargin,
-      this.topMargin + this.height + this.bottomMargin
+    const m = Math.max(
+      0,
+      (hostWidth - this.rows.length * (this.barWidth + this.innerPadding)) / 2
     );
 
-    const g1 = this.barsSvg.group();
+    this.xScale
+      .domain([0, this.rows.length]) // n+1
+      .range([this.leftMargin + m, this.width - this.rightMargin - m]);
 
-    const g2 = this.barsSvg.group().style({ "pointer-events": "none" });
+    this.yScale
+      .domain([0, max(this.rows, (row) => row[2])])
+      .range([this.height + this.topMargin, this.topMargin]);
 
-    for (const [idx, [from, to, v1, v2]] of rows.entries()) {
-      g1.rect(this.barWidth + this.innerPadding, this.height)
-        .attr({ "x-from": from, "x-to": to, "x-v1": v1, "x-v2": v2 })
-        .move(
-          this.leftMargin +
-            idx * (this.barWidth + this.innerPadding) -
-            this.innerPadding / 2,
-          this.topMargin
-        )
-        .fill("transparent");
-
-      {
-        const h1 = this.scale(v1);
-        g2.rect(this.barWidth, 0)
-          .fill("#B7A8F4")
-          .radius(2, 2)
-          .move(
-            this.leftMargin + idx * (this.barWidth + this.innerPadding),
-            this.topMargin + this.height
-          )
-
-          .animate(300)
-          .attr("height", h1)
-          .move(
-            this.leftMargin + idx * (this.barWidth + this.innerPadding),
-            this.topMargin + this.height - h1
-          );
-      }
-
-      if (v2 !== 0) {
-        const h2 = this.scale(v2);
-        g2.rect(this.barWidth, 0)
-          .fill("#855CF8")
-          .radius(2, 2)
-          .move(
-            this.leftMargin + idx * (this.barWidth + this.innerPadding),
-            this.topMargin + this.height
-          )
-          .animate(300)
-          .attr("height", h2)
-          .move(
-            this.leftMargin + idx * (this.barWidth + this.innerPadding),
-            this.topMargin + this.height - h2
-          );
-      }
-    }
-
-    for (let index = 0; index < rows.length; index += 5) {
-      const x =
-        this.leftMargin +
-        index * (this.barWidth + this.innerPadding) +
-        this.barWidth / 2;
-
-      const y = this.topMargin + this.height;
-
-      this.barsSvg
-        .line([x, y, x, y + 6])
-        .addClass("line")
-        .stroke({ width: 1, color: "#E6E6E6" });
-
-      this.barsSvg
-        .text(lightFormat(rows[index][0], "HH:mm"))
-        .move(x, y + 8)
-        .addClass("x label")
-        .font({ anchor: "middle", family: "Fira Code" });
-    }
+    this.ticks = range(
+      this.rows.findIndex((r) => r[0] % 60000 === 0),
+      this.rows.length,
+      8
+    );
   }
 
-  _handleMouseleave() {
-    this.popperComp.hide();
+  private _agg(unit: number) {
+    this._raw = this._raw.sort((a, b) => a[0] - b[0]);
+
+    this.rows = [];
+
+    for (const row of this._raw) {
+      const l = this.rows[this.rows.length - 1];
+      const t = row[0];
+
+      if (!l || !(t < l[1])) {
+        const s = t - (t % unit);
+        this.rows.push([s, s + unit, row[1], row[2]]);
+      } else {
+        this.rows[this.rows.length - 1][2] += row[1];
+        this.rows[this.rows.length - 1][3] += row[2];
+      }
+    }
   }
 
   _handleMouseover(e: MouseEvent) {
+    const { x, y } = this.svg.nativeElement.getBoundingClientRect();
+
+    const offsetX = e.clientX - x;
+    const offsetY = e.clientY - y;
+
+    const idx = Math.floor(this.xScale.invert(offsetX));
+
     if (
-      !this.loading &&
-      e.target instanceof Element &&
-      e.target.hasAttribute("x-from")
+      within(idx, 0, this.rows.length - 1) &&
+      within(offsetY, this.topMargin, this.topMargin + this.height)
     ) {
-      this.popper.from = Number(e.target.getAttribute("x-from"));
-      this.popper.to = Number(e.target.getAttribute("x-to"));
-      this.popper.total = Number(e.target.getAttribute("x-v1"));
-      this.popper.member = Number(e.target.getAttribute("x-v2"));
+      this.dataIndex = idx;
       this.popperComp.update({
         getBoundingClientRect: () => ({
           width: 0,
@@ -250,25 +196,33 @@ export class LiveChat implements OnInit, OnDestroy {
         }),
       } as Element);
     } else {
-      this.popperComp.hide();
+      this.hideTooltip();
     }
   }
 
   _handleDblClick(e: MouseEvent) {
+    const { x, y } = this.svg.nativeElement.getBoundingClientRect();
+
+    const offsetX = e.clientX - x;
+    const offsetY = e.clientY - y;
+
+    const idx = Math.floor(this.xScale.invert(offsetX));
+
     if (
       !this.loading &&
       this.stream.status === "ended" &&
-      e.target instanceof Element &&
-      e.target.tagName.toLowerCase() === "rect"
+      within(idx, 0, this.rows.length - 1) &&
+      within(offsetY, this.topMargin, this.topMargin + this.height) &&
+      this.rows[idx][0] > this.stream.startTime
     ) {
-      const from = Number(e.target.getAttribute("x-from"));
-      window.open(
-        `https://youtu.be/${this.stream.streamId}?t=${Math.max(
-          0,
-          Math.round((from - this.stream.startTime) / 1000)
-        )}s`,
-        "_blank"
-      );
+      const t = Math.round((this.rows[idx][0] - this.stream.startTime) / 1000);
+
+      window.open(`https://youtu.be/${this.stream.streamId}?t=${t}s`, "_blank");
     }
+  }
+
+  hideTooltip() {
+    this.dataIndex = -1;
+    this.popperComp.hide();
   }
 }

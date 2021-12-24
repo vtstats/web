@@ -5,52 +5,94 @@
     <span
       class="time-unit"
       role="button"
-      [ngClass]="{ selected: fitContent}"
-      (click)="fitContent = true; _render()"
-    >
-      Fit
-    </span>
-
-    <span
-      class="time-unit"
-      role="button"
-      *ngFor="let u of [15000, 30000, 60000, 120000, 300000]"
-      [ngClass]="{ selected: !fitContent && timeUnit === u }"
-      (click)="timeUnit = u; fitContent = false; _render()"
+      *ngFor="let u of ['fit', 15000, 30000, 60000, 120000, 300000]"
+      [ngClass]="{ selected: unit === u }"
+      (click)="changeTimeUnit(u)"
     >
       {{formatTimeUnit(u)}}
     </span>
   </hs-sub-menu-extra>
 </hs-sub-menu>
 
-<div class="live-chat-chart" (mouseleave)="_handleMouseleave()">
+<div class="live-chat-chart" (mouseleave)="hideTooltip()">
   <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
-    <ng-container *ngFor="let v of scale.ticks(6)">
+    <ng-container *ngFor="let v of yScale ? yScale.ticks(6) : []">
       <line
         class="line"
         [attr.x1]="0"
-        [attr.y1]="topMargin + scale(max - v)"
+        [attr.y1]="yScale(v)"
         [attr.x2]="960"
-        [attr.y2]="topMargin + scale(max - v)"
+        [attr.y2]="yScale(v)"
       ></line>
       <text
         *ngIf="v !== 0"
         class="y label"
         [attr.x]="960 - 16"
-        [attr.dy]="topMargin + scale(max - v) + 16"
+        [attr.dy]="yScale(v) + 16"
       >
         {{ v | number }}
       </text>
     </ng-container>
   </svg>
 
-  <div
-    #bars
-    class="bars"
-    (mousemove)="_handleMouseover($event)"
-    (dblclick)="_handleDblClick($event)"
-    (scroll)="popperComp.update()"
-  ></div>
+  <div class="scroll" (scroll)="hideTooltip()">
+    <svg
+      #svg
+      [attr.width]="width"
+      [attr.height]="topMargin + height + bottomMargin"
+      (mouseleave)="hideTooltip()"
+      (mousemove)="_handleMouseover($event)"
+      (dblclick)="_handleDblClick($event)"
+    >
+      <g
+        *ngFor="let row of rows; index as i"
+        [ngStyle]="{ opacity: dataIndex === -1 || dataIndex === i ? 1 : 0.4 }"
+      >
+        <rect
+          @bar
+          [attr.width]="barWidth"
+          [attr.height]="topMargin + height - yScale(row[2])"
+          [attr.x]="xScale(i)"
+          [attr.y]="yScale(row[2])"
+          rx="2"
+          ry="2"
+          fill="#B7A8F4"
+        ></rect>
+
+        <rect
+          @bar
+          *ngIf="row[3] > 0"
+          [attr.width]="barWidth"
+          [attr.height]="topMargin + height - yScale(row[3])"
+          [attr.x]="xScale(i)"
+          [attr.y]="yScale(row[3])"
+          rx="2"
+          ry="2"
+          fill="#855CF8"
+        ></rect>
+      </g>
+
+      <ng-container *ngFor="let i of ticks">
+        <line
+          class="line"
+          [attr.x1]="xScale(i) + (barWidth) / 2"
+          [attr.y1]="topMargin + height"
+          [attr.x2]="xScale(i) + (barWidth) / 2"
+          [attr.y2]="topMargin + height + 6"
+          stroke-width="1px"
+          stroke="#E6E6E6"
+        ></line>
+
+        <text
+          class="x label"
+          [attr.x]="xScale(i) + (barWidth) / 2"
+          [attr.y]="topMargin + height + 16"
+        >
+          {{ rows[i][0] | date:'HH:mm' }}
+        </text>
+      </ng-container>
+    </svg>
+  </div>
 </div>
 
 <hs-popper
@@ -62,38 +104,41 @@
   [shift]="true"
   [offset]="{ mainAxis: 16, crossAxis: 16 }"
 >
-  <div class="title">
-    {{ popper.from | date:'HH:mm:ss' }} - {{ popper.to | date:'HH:mm:ss' }}
-  </div>
+  <table *ngIf="0 <= dataIndex && dataIndex < rows.length">
+    <div class="title">
+      {{ rows[dataIndex][0] | date:'HH:mm:ss' }} - {{ rows[dataIndex][1] |
+      date:'HH:mm:ss' }}
+    </div>
 
-  <table cellspacing="0" cellpadding="0">
     <tbody>
       <tr>
         <td class="label">Normal</td>
         <td class="count">
-          {{ (popper.total - popper.member) | number }} ({{ (popper.total -
-          popper.member) / popper.total | percent:'.1' }})
-        </td>
-      </tr>
-
-      <tr *ngIf="popper.member > 0">
-        <td class="label">Member</td>
-        <td class="count">
-          {{ popper.member | number }} ({{ popper.member / popper.total |
+          {{ (rows[dataIndex][2] - rows[dataIndex][3]) | number }} ({{
+          (rows[dataIndex][2] - rows[dataIndex][3]) / rows[dataIndex][2] |
           percent:'.1' }})
         </td>
       </tr>
-    </tbody>
 
-    <tfoot *ngIf="popper.member > 0">
+      <tr>
+        <td class="label">Member</td>
+        <td class="count">
+          {{ rows[dataIndex][3] | number }} ({{ rows[dataIndex][3] /
+          rows[dataIndex][2] | percent:'.1' }})
+        </td>
+      </tr>
+
       <tr>
         <td class="label" i18n="@@total">Total</td>
-        <td class="count">{{ popper.total | number }}</td>
+        <td class="count">{{ rows[dataIndex][2] | number }}</td>
       </tr>
-    </tfoot>
-  </table>
+    </tbody>
 
-  <div *ngIf="stream.status === 'ended'" class="hint">
-    Double click to jump to
-  </div>
+    <div
+      *ngIf="stream.status === 'ended' && rows[dataIndex][0] > stream.startTime"
+      class="hint"
+    >
+      Double click to jump to
+    </div>
+  </table>
 </hs-popper>
