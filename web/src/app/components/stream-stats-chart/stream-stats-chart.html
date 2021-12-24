@@ -104,11 +104,11 @@
 
 <hs-popper
   #popperComp
-  [placement]="'right'"
   [arrow]="true"
   [shift]="true"
-  [offset]="12"
+  [offset]="16"
   [flip]="{ padding: 24 }"
+  [placement]="placement"
 >
   <div>{{ rows[dataPointIdx]?.[0] | date:'yyyy/MM/dd HH:mm:ss' }}</div>
   <div>Stream viewers: {{ rows[dataPointIdx]?.[1] | number }}</div>

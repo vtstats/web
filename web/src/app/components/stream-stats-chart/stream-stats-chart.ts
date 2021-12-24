@@ -21,7 +21,7 @@ import { area, curveLinear, line } from "d3-shape";
 
 import { PopperComponent } from "../popper/popper";
 import { Stream } from "src/app/models";
-import { truncateTo15Seconds, within } from "src/utils";
+import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
 
 @Component({
   selector: "hs-stream-stats-chart",
@@ -38,6 +38,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
   @ViewChild("popperComp")
   popperComp: PopperComponent;
+  dataPointIdx: number = -1;
+  placement = isTouchDevice ? "top" : "right";
 
   @ViewChild("svg", { static: true })
   svg: ElementRef<HTMLElement>;
@@ -59,7 +61,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   areaPath: string;
   linePath: string;
   width: number = 0;
-  dataPointIdx: number = -1;
 
   step = 3;
   unit: number | "fit" = "fit";

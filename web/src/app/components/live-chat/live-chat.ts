@@ -19,7 +19,7 @@ import {
 } from "rxjs/operators";
 
 import { Stream } from "src/app/models";
-import { within } from "src/utils";
+import { isTouchDevice, within } from "src/utils";
 import { PopperComponent } from "../popper/popper";
 
 @Component({
@@ -47,6 +47,18 @@ export class LiveChat implements OnInit, OnDestroy {
   @ViewChild("popperComp")
   popperComp: PopperComponent;
   dataIndex = -1;
+  offset = ({ placement }) => {
+    switch (placement) {
+      default:
+      case "bottom-start":
+        return { mainAxis: 16, crossAxis: 16 };
+      case "bottom-end":
+        return { mainAxis: 16, crossAxis: -16 };
+      case "top":
+        return { mainAxis: 32 };
+    }
+  };
+  placement = isTouchDevice ? "top" : "bottom-start";
 
   @ViewChild("svg", { static: true })
   private svg: ElementRef<HTMLElement>;

@@ -6,7 +6,7 @@
   <div
     class="heatmap"
     (mouseleave)="_handleMouseleave()"
-    (scroll)="popperComp.update()"
+    (scroll)="popperComp.hide()"
   >
     <div #heatmap (mouseover)="_handleMouseover($event)"></div>
   </div>

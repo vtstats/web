@@ -83,47 +83,47 @@
       </ng-template>
     </g>
   </svg>
-
-  <hs-popper
-    #popperComp
-    [arrow]="false"
-    [class]="'paid-chat-popper mat-elevation-z3'"
-    [placement]="'bottom-start'"
-    [flip]="{ padding: 32 }"
-    [shift]="true"
-    [offset]="{ mainAxis: 16, crossAxis: 16 }"
-  >
-    <table *ngIf="0 <= popper.idx && popper.idx < items.length">
-      <div class="title">{{ items[popper.idx][1].currency }}</div>
-
-      <tbody>
-        <tr *ngFor="let group of items[popper.idx][1].items">
-          <td class="label">
-            <span class="dot" [style.background-color]="'#' + group[0]"> </span>
-            {{ group[1].name }}
-          </td>
-
-          <td class="count">{{ group[1].total | number }}</td>
-
-          <td class="amount">
-            {{ group[1].totalValue |
-            currency:items[popper.idx][1].currencySymbol:'symbol' }}
-          </td>
-        </tr>
-      </tbody>
-
-      <tfoot *ngIf="items[popper.idx][1].items.length > 1">
-        <tr>
-          <td class="label" i18n="@@total">Total</td>
-
-          <td class="count">{{ items[popper.idx][1].total | number }}</td>
-
-          <td class="amount">
-            {{ items[popper.idx][1].totalValue |
-            currency:items[popper.idx][1].currencySymbol:'symbol' }}
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </hs-popper>
 </div>
+
+<hs-popper
+  #popperComp
+  [arrow]="false"
+  [class]="'paid-chat-popper mat-elevation-z3'"
+  [flip]="{ padding: 32 }"
+  [shift]="true"
+  [placement]="popper.placement"
+  [offset]="popper.offset"
+>
+  <table *ngIf="0 <= popper.idx && popper.idx < items.length">
+    <div class="title">{{ items[popper.idx][1].currency }}</div>
+
+    <tbody>
+      <tr *ngFor="let group of items[popper.idx][1].items">
+        <td class="label">
+          <span class="dot" [style.background-color]="'#' + group[0]"> </span>
+          {{ group[1].name }}
+        </td>
+
+        <td class="count">{{ group[1].total | number }}</td>
+
+        <td class="amount">
+          {{ group[1].totalValue |
+          currency:items[popper.idx][1].currencySymbol:'symbol' }}
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot *ngIf="items[popper.idx][1].items.length > 1">
+      <tr>
+        <td class="label" i18n="@@total">Total</td>
+
+        <td class="count">{{ items[popper.idx][1].total | number }}</td>
+
+        <td class="amount">
+          {{ items[popper.idx][1].totalValue |
+          currency:items[popper.idx][1].currencySymbol:'symbol' }}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</hs-popper>

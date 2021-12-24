@@ -16,7 +16,7 @@ import { flatRollup, sort, sum, max } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
 import { PopperComponent } from "../popper/popper";
-import { within } from "src/utils";
+import { isTouchDevice, within } from "src/utils";
 
 const splitAmount = (amount: string): [string, number] => {
   const idx = amount.split("").findIndex((c) => "0" <= c && c <= "9");
@@ -52,6 +52,18 @@ export class PaidLiveChat implements OnInit {
   popperComp: PopperComponent;
   popper = {
     idx: -1,
+    offset: ({ placement }) => {
+      switch (placement) {
+        default:
+        case "bottom-start":
+          return { mainAxis: 16, crossAxis: 16 };
+        case "bottom-end":
+          return { mainAxis: 16, crossAxis: -16 };
+        case "top":
+          return { mainAxis: 32 };
+      }
+    },
+    placement: isTouchDevice ? "top" : "bottom-start",
   };
 
   @ViewChild("svg")

@@ -14,6 +14,7 @@ import {
   shift,
   hide,
 } from "@floating-ui/dom";
+import type { Offset } from "@floating-ui/core/src/middleware/offset";
 
 @Component({
   selector: "hs-popper",
@@ -27,12 +28,11 @@ export class PopperComponent {
   @ViewChild("arrow", { static: true })
   arrowEl: ElementRef<HTMLElement>;
 
-  @Input() reference: Element;
   @Input() class: string = "hs-popper-styled";
   @Input() placement: Placement = "right";
   @Input() arrow: boolean = false;
   @Input() shift: boolean = true;
-  @Input() offset: any = 8;
+  @Input() offset: Offset = 8;
   @Input() flip: any = {};
 
   public hide() {
@@ -41,11 +41,9 @@ export class PopperComponent {
     });
   }
 
-  public update(newReference?: Element) {
-    if (newReference) this.reference = newReference;
-
-    if (this.reference) {
-      computePosition(this.reference, this.popper.nativeElement, {
+  public update(reference: Element) {
+    setTimeout(() => {
+      computePosition(reference, this.popper.nativeElement, {
         placement: this.placement,
         middleware: [
           this.offset && offset(this.offset),
@@ -80,6 +78,6 @@ export class PopperComponent {
           visibility: "visible",
         });
       });
-    }
+    }, 0);
   }
 }

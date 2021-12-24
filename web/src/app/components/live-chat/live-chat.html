@@ -99,10 +99,10 @@
   #popperComp
   [arrow]="false"
   [class]="'live-chat-popper mat-elevation-z3'"
-  [placement]="'bottom-start'"
   [flip]="{ padding: 32 }"
   [shift]="true"
-  [offset]="{ mainAxis: 16, crossAxis: 16 }"
+  [placement]="placement"
+  [offset]="offset"
 >
   <table *ngIf="0 <= dataIndex && dataIndex < rows.length">
     <div class="title">
