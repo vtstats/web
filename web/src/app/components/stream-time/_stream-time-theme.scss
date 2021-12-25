@@ -12,4 +12,8 @@
 }
 
 @mixin stream-time-typography($config) {
+  .stream-time-chart-tooltip {
+    font-size: mat.font-size($config, "caption");
+    font-weight: mat.font-weight($config, "body-2");
+  }
 }

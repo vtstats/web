@@ -102,17 +102,22 @@
   </div>
 </div>
 
-<hs-popper
-  #popperComp
-  [arrow]="true"
-  [shift]="true"
-  [offset]="16"
-  [flip]="{ padding: 24 }"
-  [placement]="placement"
+<div
+  *ngIf="0 <= dataPointIdx && dataPointIdx < rows.length"
+  class="stream-stats-chart-tooltip"
+  tooltip
+  [tooltipShift]="true"
+  [tooltipOffset]="16"
+  [tooltipFlip]="{ padding: 24 }"
+  [tooltipPlacement]="placement"
+  [tooltipArrow]="arrow"
+  [tooltipReferenceRect]="referenceRect"
+  [tooltipContextElement]="svg"
 >
-  <div>{{ rows[dataPointIdx]?.[0] | date:'yyyy/MM/dd HH:mm:ss' }}</div>
-  <div>Stream viewers: {{ rows[dataPointIdx]?.[1] | number }}</div>
+  <div class="arrow" #arrow></div>
+  <div>{{ rows[dataPointIdx][0] | date:'yyyy/MM/dd HH:mm:ss' }}</div>
+  <div>Stream viewers: {{ rows[dataPointIdx][1] | number }}</div>
   <div *ngIf="stream.status === 'ended'" class="hint">
     Double click to jump to
   </div>
-</hs-popper>
+</div>

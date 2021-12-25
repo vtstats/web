@@ -85,16 +85,18 @@
   </svg>
 </div>
 
-<hs-popper
-  #popperComp
-  [arrow]="false"
-  [class]="'paid-chat-popper mat-elevation-z3'"
-  [flip]="{ padding: 32 }"
-  [shift]="true"
-  [placement]="popper.placement"
-  [offset]="popper.offset"
+<div
+  *ngIf="0 <= popper.idx && popper.idx < items.length"
+  class="paid-chat-popper mat-elevation-z3"
+  tooltip
+  [tooltipFlip]="popper.flip"
+  [tooltipShift]="true"
+  [tooltipPlacement]="popper.placement"
+  [tooltipOffset]="popper.offset"
+  [tooltipReferenceRect]="popper.referenceRect"
+  [tooltipContextElement]="svg"
 >
-  <table *ngIf="0 <= popper.idx && popper.idx < items.length">
+  <table>
     <div class="title">{{ items[popper.idx][1].currency }}</div>
 
     <tbody>
@@ -126,4 +128,4 @@
       </tr>
     </tfoot>
   </table>
-</hs-popper>
+</div>

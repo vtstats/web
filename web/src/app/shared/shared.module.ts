@@ -7,6 +7,7 @@ import { MatIconModule } from "@angular/material/icon";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
 import { HoldGestureDirective } from "./directives/hold-gesture.directive";
+import { TooltipDirective } from "./directives/tooltip.directive";
 
 import { DistancePipe } from "./pipes/distance.pipe";
 import { DurationPipe } from "./pipes/duration.pipe";
@@ -28,6 +29,7 @@ import { TickService } from "./services/tick.service";
     NamePipe,
     ColoredNumberDirective,
     HoldGestureDirective,
+    TooltipDirective,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { TickService } from "./services/tick.service";
     NamePipe,
     ColoredNumberDirective,
     HoldGestureDirective,
+    TooltipDirective,
   ],
   providers: [ApiService, TickService],
 })

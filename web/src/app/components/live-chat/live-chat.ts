@@ -20,7 +20,6 @@ import {
 
 import { Stream } from "src/app/models";
 import { isTouchDevice, within } from "src/utils";
-import { PopperComponent } from "../popper/popper";
 
 @Component({
   selector: "hs-live-chat",
@@ -44,8 +43,6 @@ export class LiveChat implements OnInit, OnDestroy {
 
   loading = false;
 
-  @ViewChild("popperComp")
-  popperComp: PopperComponent;
   dataIndex = -1;
   offset = ({ placement }) => {
     switch (placement) {
@@ -59,6 +56,8 @@ export class LiveChat implements OnInit, OnDestroy {
     }
   };
   placement = isTouchDevice ? "top" : "bottom-start";
+  flip = isTouchDevice ? false : { padding: 32 };
+  referenceRect = null;
 
   @ViewChild("svg", { static: true })
   private svg: ElementRef<HTMLElement>;
@@ -199,16 +198,14 @@ export class LiveChat implements OnInit, OnDestroy {
       within(offsetY, this.topMargin, this.topMargin + this.height)
     ) {
       this.dataIndex = idx;
-      this.popperComp.update({
-        getBoundingClientRect: () => ({
-          width: 0,
-          height: 0,
-          top: clientY,
-          right: clientX,
-          bottom: clientY,
-          left: clientX,
-        }),
-      } as Element);
+      this.referenceRect = {
+        width: 0,
+        height: 0,
+        top: clientY,
+        right: clientX,
+        bottom: clientY,
+        left: clientX,
+      };
     } else {
       this.closeTooltip();
     }
@@ -237,6 +234,5 @@ export class LiveChat implements OnInit, OnDestroy {
 
   closeTooltip() {
     this.dataIndex = -1;
-    this.popperComp.hide();
   }
 }

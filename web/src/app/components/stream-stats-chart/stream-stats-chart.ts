@@ -19,7 +19,6 @@ import { ScaleLinear, scaleLinear } from "d3-scale";
 import { bisectCenter, extent, max, range } from "d3-array";
 import { area, curveLinear, line } from "d3-shape";
 
-import { PopperComponent } from "../popper/popper";
 import { Stream } from "src/app/models";
 import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
 
@@ -36,10 +35,9 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
   loading = false;
 
-  @ViewChild("popperComp")
-  popperComp: PopperComponent;
   dataPointIdx: number = -1;
   placement = isTouchDevice ? "top" : "right";
+  referenceRect = null;
 
   @ViewChild("svg", { static: true })
   svg: ElementRef<HTMLElement>;
@@ -162,16 +160,14 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       this.dataPointIdx = idx;
       const x = left + this.xScale(this.rows[idx][0]);
       const y = top + this.yScale(this.rows[idx][1]);
-      this.popperComp.update({
-        getBoundingClientRect: () => ({
-          width: 0,
-          height: 0,
-          right: x,
-          left: x,
-          top: y,
-          bottom: y,
-        }),
-      } as Element);
+      this.referenceRect = {
+        width: 0,
+        height: 0,
+        right: x,
+        left: x,
+        top: y,
+        bottom: y,
+      };
     } else {
       this.closeTooltip();
     }
@@ -203,7 +199,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
   closeTooltip() {
     this.dataPointIdx = -1;
-    this.popperComp.hide();
   }
 }
 

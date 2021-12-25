@@ -44,27 +44,28 @@
       </text>
     </svg>
   </div>
+</div>
 
-  <hs-popper
-    #popperComp
-    placement="top"
-    [shift]="true"
-    [flip]="false"
-    [offset]="8"
-    [arrow]="true"
-  >
-    <div *ngIf="0 <= popperIdx && popperIdx < days.length">
-      <ng-container
-        *ngIf="!!days[popperIdx].v; else noStream"
-        i18n="@@streamTimeOn"
-      >
-        Stream {{ days[popperIdx].v | formatDuration }} on {{ days[popperIdx].d
-        | date:'mediumDate' }}
-      </ng-container>
+<div
+  *ngIf="0 <= popperIdx && popperIdx < days.length"
+  class="stream-time-chart-tooltip"
+  tooltip
+  tooltipPlacement="top"
+  [tooltipShift]="true"
+  [tooltipFlip]="false"
+  [tooltipOffset]="offset"
+  [tooltipArrow]="arrow"
+  [tooltipReferenceRect]="referenceRect"
+  [tooltipContextElement]="svg"
+>
+  <div class="arrow" #arrow></div>
 
-      <ng-template #noStream i18n="@@noStream">
-        No stream on {{ days[popperIdx].d | date:'mediumDate' }}
-      </ng-template>
-    </div>
-  </hs-popper>
+  <ng-container *ngIf="days[popperIdx].v; else noStream" i18n="@@streamTimeOn">
+    Stream {{ days[popperIdx].v | formatDuration }} on {{ days[popperIdx].d |
+    date:'mediumDate' }}
+  </ng-container>
+
+  <ng-template #noStream i18n="@@noStream">
+    No stream on {{ days[popperIdx].d | date:'mediumDate' }}
+  </ng-template>
 </div>

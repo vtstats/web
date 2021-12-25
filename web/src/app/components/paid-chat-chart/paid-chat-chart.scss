@@ -38,7 +38,10 @@
 }
 
 .paid-chat-popper {
+  pointer-events: none;
   position: absolute;
+  top: 0;
+  left: 0;
   min-width: 200px;
   color: black;
   border-radius: 4px;

@@ -40,7 +40,10 @@
 }
 
 .live-chat-popper {
+  pointer-events: none;
   position: absolute;
+  left: 0;
+  top: 0;
   min-width: 200px;
   color: black;
   border-radius: 4px;

@@ -45,7 +45,6 @@ import { DateFilter } from "./date-filter/date-filter";
 import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
 import { StreamTime } from "./stream-time/stream-time";
-import { PopperComponent } from "./popper/popper";
 import { PaidLiveChat } from "./paid-chat-chart/paid-chat-chart";
 
 import { SharedModule } from "src/app/shared";
@@ -62,7 +61,6 @@ import { SharedModule } from "src/app/shared";
     ChannelTableShimmer,
     LiveChat,
     PaidLiveChat,
-    PopperComponent,
     LoadingSpinner,
     NumberRow,
     StreamGroup,
@@ -108,7 +106,6 @@ import { SharedModule } from "src/app/shared";
     NumberRow,
     LiveChat,
     PaidLiveChat,
-    PopperComponent,
     StreamGroup,
     StreamItem,
     StreamItemShimmer,

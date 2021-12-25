@@ -40,8 +40,11 @@ export class HoldGestureDirective {
   touchmove(event: TouchEvent) {
     if (this.holding) {
       this.onHold.emit(event);
+
       // preventDefault
-      return false;
+      if (event.cancelable) {
+        return false;
+      }
     }
 
     if (event.touches.length !== 1) return;
@@ -58,6 +61,7 @@ export class HoldGestureDirective {
   }
 
   @HostListener("touchend", ["$event"])
+  @HostListener("touchcancel", ["$event"])
   touchend(event: TouchEvent) {
     if (this.holding) {
       this.onRelease.emit(event);

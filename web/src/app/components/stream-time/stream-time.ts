@@ -22,8 +22,7 @@ import { scaleLinear } from "d3-scale";
 
 import type { VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { PopperComponent } from "../popper/popper";
-import { within } from "src/utils";
+import { isTouchDevice, within } from "src/utils";
 
 const getFill = (v: number) => {
   if (v <= 0) return "#00bfa510";
@@ -55,9 +54,9 @@ const relativeInWeek = (date: Date, base: Date): number => {
 export class StreamTime implements OnInit {
   @Input() vtuber: VTuber;
 
-  @ViewChild("popperComp")
-  popperComp: PopperComponent;
   popperIdx = -1;
+  offset = isTouchDevice ? 16 : 8;
+  referenceRect = null;
 
   @ViewChild("svg")
   svg: ElementRef<HTMLElement>;
@@ -128,22 +127,20 @@ export class StreamTime implements OnInit {
     if (idx > 0) {
       if (this.popperIdx === idx) return;
 
-      this.popperIdx = idx;
       const x = left + this.days[idx].x;
       const y = top + this.days[idx].y;
 
-      this.cdr.detectChanges();
+      // this.cdr.detectChanges();
 
-      this.popperComp.update({
-        getBoundingClientRect: () => ({
-          width: 16,
-          height: 0,
-          right: x,
-          left: x,
-          top: y,
-          bottom: y,
-        }),
-      } as Element);
+      this.referenceRect = {
+        width: 16,
+        height: 0,
+        right: x,
+        left: x,
+        top: y,
+        bottom: y,
+      };
+      this.popperIdx = idx;
     } else {
       this.closePopper();
     }
@@ -151,6 +148,5 @@ export class StreamTime implements OnInit {
 
   closePopper() {
     this.popperIdx = -1;
-    this.popperComp.hide();
   }
 }

@@ -95,20 +95,26 @@
   </div>
 </div>
 
-<hs-popper
-  #popperComp
-  [arrow]="false"
-  [class]="'live-chat-popper mat-elevation-z3'"
-  [flip]="{ padding: 32 }"
-  [shift]="true"
-  [placement]="placement"
-  [offset]="offset"
+<div
+  *ngIf="0 <= dataIndex && dataIndex < rows.length"
+  class="live-chat-popper mat-elevation-z3"
+  tooltip
+  [tooltipFlip]="flip"
+  [tooltipShift]="true"
+  [tooltipPlacement]="placement"
+  [tooltipOffset]="offset"
+  [tooltipReferenceRect]="referenceRect"
+  [tooltipContextElement]="svg"
 >
-  <table *ngIf="0 <= dataIndex && dataIndex < rows.length">
-    <div class="title">
-      {{ rows[dataIndex][0] | date:'HH:mm:ss' }} - {{ rows[dataIndex][1] |
-      date:'HH:mm:ss' }}
-    </div>
+  <table>
+    <thead class="title">
+      <tr>
+        <td colspan="2">
+          {{ rows[dataIndex][0] | date:'HH:mm:ss' }} - {{ rows[dataIndex][1] |
+          date:'HH:mm:ss' }}
+        </td>
+      </tr>
+    </thead>
 
     <tbody>
       <tr>
@@ -134,11 +140,13 @@
       </tr>
     </tbody>
 
-    <div
+    <tfoot
       *ngIf="stream.status === 'ended' && rows[dataIndex][0] > stream.startTime"
       class="hint"
     >
-      Double click to jump to
-    </div>
+      <tr>
+        <td colspan="2">Double click to jump to</td>
+      </tr>
+    </tfoot>
   </table>
-</hs-popper>
+</div>

@@ -15,7 +15,6 @@ import { ScaleLinear, scaleLinear } from "d3-scale";
 import { flatRollup, sort, sum, max } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
-import { PopperComponent } from "../popper/popper";
 import { isTouchDevice, within } from "src/utils";
 
 const splitAmount = (amount: string): [string, number] => {
@@ -48,8 +47,6 @@ const splitAmount = (amount: string): [string, number] => {
 export class PaidLiveChat implements OnInit {
   @Input() stream: Stream;
 
-  @ViewChild("popperComp")
-  popperComp: PopperComponent;
   popper = {
     idx: -1,
     offset: ({ placement }) => {
@@ -64,6 +61,8 @@ export class PaidLiveChat implements OnInit {
       }
     },
     placement: isTouchDevice ? "top" : "bottom-start",
+    flip: isTouchDevice ? false : { padding: 32 },
+    referenceRect: null,
   };
 
   @ViewChild("svg")
@@ -202,16 +201,14 @@ export class PaidLiveChat implements OnInit {
       within(offsetX, this.leftMargin, this.width - this.rightMargin)
     ) {
       this.popper.idx = idx;
-      this.popperComp.update({
-        getBoundingClientRect: () => ({
-          width: 0,
-          height: 0,
-          top: clientY,
-          right: clientX,
-          bottom: clientY,
-          left: clientX,
-        }),
-      } as Element);
+      this.popper.referenceRect = {
+        width: 0,
+        height: 0,
+        top: clientY,
+        right: clientX,
+        bottom: clientY,
+        left: clientX,
+      };
     } else {
       this.closePopper();
     }
@@ -219,7 +216,6 @@ export class PaidLiveChat implements OnInit {
 
   closePopper() {
     this.popper.idx = -1;
-    this.popperComp.hide();
   }
 
   trackBy(idx, item) {
