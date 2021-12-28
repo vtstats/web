@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { fromEvent, Subscription } from "rxjs";
+import { animationFrameScheduler, fromEvent, Subscription } from "rxjs";
 import {
   debounceTime,
   filter,
@@ -18,6 +18,7 @@ import {
 import { ScaleLinear, scaleLinear } from "d3-scale";
 import { bisectCenter, extent, max, range } from "d3-array";
 import { area, curveLinear, line } from "d3-shape";
+import { easeBackOut } from "d3-ease";
 
 import { Stream } from "src/app/models";
 import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
@@ -64,7 +65,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   step = 3;
   unit: number | "fit" = "fit";
 
-  sub: Subscription;
+  sub: Subscription | null;
+  animation: Subscription | null;
 
   ngOnInit() {
     this._render();
@@ -83,9 +85,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.sub?.unsubscribe();
+    this.animation?.unsubscribe();
   }
 
   formatTimeUnit(unit: number | "fit"): string {
@@ -124,26 +125,42 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       .domain(extent(this.rows, (row) => row[0]))
       .range([this.leftMargin, this.width - this.rightMargin]);
 
-    this.yScale
-      .domain([0, max(this.rows, (row) => row[1])])
-      .range([this.height + this.topMargin, this.topMargin]);
-
-    this.areaPath = area()
-      .curve(curveLinear)
-      .x((d) => this.xScale(d[0]))
-      .y0(this.yScale(0))
-      .y1((d) => this.yScale(d[1]))(this.rows);
-
-    this.linePath = line()
-      .curve(curveLinear)
-      .x((d) => this.xScale(d[0]))
-      .y((d) => this.yScale(d[1]))(this.rows);
-
     const step = Math.ceil(60 / (this.width / this.rows.length));
 
     this.xTicks = range(0, this.rows.length - 1, step);
 
+    this.yScale
+      .domain([0, max(this.rows, (row) => row[1])])
+      .range([this.height + this.topMargin, this.topMargin]);
+
     this.yTicks = this.yScale.ticks(6);
+
+    const self = this;
+    const start = new Date().getTime();
+    const ms = 400;
+    const ease = easeBackOut.overshoot(0.4);
+
+    this.animation?.unsubscribe();
+
+    this.animation = animationFrameScheduler.schedule(function (t) {
+      const curr = new Date().getTime();
+
+      const p = Math.min(1, (curr - start) / ms);
+      const e = ease(p);
+
+      self.areaPath = area()
+        .curve(curveLinear)
+        .x((d) => self.xScale(d[0]))
+        .y0(self.yScale(0))
+        .y1((d) => self.yScale(d[1] * e))(self.rows);
+
+      self.linePath = line()
+        .curve(curveLinear)
+        .x((d) => self.xScale(d[0]))
+        .y((d) => self.yScale(d[1] * e))(self.rows);
+
+      if (p < 1) this.schedule();
+    }, 0);
   }
 
   tryOpenTooltip(e: MouseEvent | TouchEvent) {
