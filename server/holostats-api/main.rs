@@ -2,7 +2,6 @@ pub mod filters;
 pub mod pubsub;
 pub mod reject;
 pub mod sitemap;
-pub mod v3;
 pub mod v4;
 
 use anyhow::Result;
@@ -27,7 +26,6 @@ async fn main() -> Result<()> {
     let routes = warp::path("api")
         .and(
             v4::api(db.clone())
-                .or(v3::api(db.clone()))
                 .or(sitemap::sitemap(db.clone()))
                 .or(pubsub::pubsub(db, hub)),
         )
