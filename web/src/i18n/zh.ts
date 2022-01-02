@@ -40,6 +40,8 @@ const translations: Translations = {
 
   // VTubers
   hololive: "ホロライブ公式",
+  hololive_en: "Hololive English",
+  hololive_id: "Hololive Indonesia",
   yagoo: "YAGOO",
   sora: "ときのそら",
   roboco: "ロボ子さん",

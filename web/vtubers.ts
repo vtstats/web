@@ -9,6 +9,8 @@ type VTuber = {
 
 export type VTuberIds =
   | "hololive"
+  | "hololive_en"
+  | "hololive_id"
   | "yagoo"
   | "sora"
   | "roboco"
@@ -89,6 +91,20 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "hololivetv",
     youtube: "UCJFZiqLMntJufDCHc6bQixg",
     bilibili: 286700005,
+    default: true,
+    image: "e36068cc-9bfb-4f9b-dcbe-549e81f7db00",
+  },
+  hololive_en: {
+    id: "hololive_en",
+    twitter: "hololive_En",
+    youtube: "UCotXwY6s8pWmuWd_snKYjhg",
+    default: true,
+    image: "e36068cc-9bfb-4f9b-dcbe-549e81f7db00",
+  },
+  hololive_id: {
+    id: "hololive_id",
+    twitter: "hololive_Id",
+    youtube: "UCfrWoRGlawPQDQxxeIDRP0Q",
     default: true,
     image: "e36068cc-9bfb-4f9b-dcbe-549e81f7db00",
   },
@@ -660,7 +676,7 @@ export type BatchIds =
 type Batch = VTuberIds[];
 
 export const batches: Record<BatchIds, Batch> = {
-  hololive: null,
+  hololive: ["hololive", "hololive_en", "hololive_id"],
   yagoo: null,
   hololive_og: ["sora", "roboco", "miko", "suisei"],
   hololive_1st: ["fubuki", "matsuri", "haato", "aki", "mel"],

@@ -1,5 +1,7 @@
 insert into youtube_channels (vtuber_id)
      values ('hololive'),        -- ホロライブ公式
+            ('hololive_en'),     -- Hololive English
+            ('hololive_id'),     -- Hololive Indonesia
             ('sora'),            -- ときのそら
             ('roboco'),          -- ロボ子さん
             ('miko'),            -- さくらみこ
