@@ -721,7 +721,7 @@ dependencies = [
  "tracing",
  "tracing-futures",
  "tracing-newrelic",
- "tracing-subscriber",
+ "tracing-subscriber 0.3.5",
 ]
 
 [[package]]
@@ -1890,7 +1890,7 @@ source = "git+https://github.com/PoiScript/tracing-newrelic.git?rev=838560a4acd3
 dependencies = [
  "newrelic-telemetry",
  "tracing-core",
- "tracing-subscriber",
+ "tracing-subscriber 0.2.25",
  "uuid",
 ]
 
@@ -1899,6 +1899,17 @@ name = "tracing-subscriber"
 version = "0.2.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e0d2eaa99c3c2e41547cfa109e910a68ea03823cccad4a0525dcbc9b01e8c71"
+dependencies = [
+ "sharded-slab",
+ "thread_local",
+ "tracing-core",
+]
+
+[[package]]
+name = "tracing-subscriber"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d81bfa81424cc98cb034b837c985b7a290f592e5b4322f353f94a0ab0f9f594"
 dependencies = [
  "sharded-slab",
  "thread_local",
