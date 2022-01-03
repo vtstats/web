@@ -3,14 +3,14 @@
     <hs-sub-menu-title i18n="@@streamTimes"> Stream Times </hs-sub-menu-title>
   </hs-sub-menu>
 
-  <div class="stream-time-chart" (scroll)="closePopper()">
+  <div class="stream-time-chart" cdkScrollable>
     <svg
       #svg
       [attr.width]="920"
       [attr.height]="160"
       holdGesture
-      (hold)="tryOpenPopper($event)"
-      (release)="closePopper()"
+      (hold)="tryOpenTooltip($event)"
+      (release)="closeTooltip()"
     >
       <text
         *ngFor="let tick of yTicks"

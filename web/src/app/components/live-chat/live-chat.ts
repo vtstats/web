@@ -1,4 +1,5 @@
 import { animate, style, transition, trigger } from "@angular/animations";
+import { CdkScrollable } from "@angular/cdk/scrolling";
 import {
   Component,
   ElementRef,
@@ -72,7 +73,10 @@ export class LiveChat implements OnInit, OnDestroy {
   @Input("rows") _raw: [number, number, number][];
   @Input() stream: Stream;
 
+  @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
+
   sub: Subscription;
+  scrollSub: Subscription;
   rows: [number, number, number, number][] = [];
   xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
   yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
@@ -99,6 +103,7 @@ export class LiveChat implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.sub) this.sub.unsubscribe();
+    if (this.scrollSub) this.scrollSub.unsubscribe();
   }
 
   changeTimeUnit(unit: number | "fit") {
@@ -163,6 +168,12 @@ export class LiveChat implements OnInit, OnDestroy {
     );
 
     this.yTicks = this.yScale.ticks(6);
+
+    if (!this.scrollSub) {
+      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+        this.closeTooltip();
+      });
+    }
   }
 
   private _agg(unit: number) {

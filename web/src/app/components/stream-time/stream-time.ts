@@ -18,6 +18,8 @@ import {
 } from "date-fns";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { Subscription } from "rxjs";
 
 import type { VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
@@ -59,6 +61,9 @@ export class StreamTime implements OnInit {
 
   @ViewChild("svg")
   svg: ElementRef<HTMLElement>;
+  @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
+
+  scrollSub: Subscription;
 
   loading: boolean;
 
@@ -105,10 +110,14 @@ export class StreamTime implements OnInit {
           this.days[idx].c = getFill(this.days[idx].v);
         }
       }
+
+      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+        this.closeTooltip();
+      });
     });
   }
 
-  tryOpenPopper(e: MouseEvent | TouchEvent) {
+  tryOpenTooltip(e: MouseEvent | TouchEvent) {
     if (this.loading) return;
 
     const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
@@ -139,11 +148,11 @@ export class StreamTime implements OnInit {
       };
       this.popperIdx = idx;
     } else {
-      this.closePopper();
+      this.closeTooltip();
     }
   }
 
-  closePopper() {
+  closeTooltip() {
     this.popperIdx = -1;
   }
 }

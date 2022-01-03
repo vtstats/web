@@ -35,7 +35,7 @@
     </ng-container>
   </svg>
 
-  <div class="scroll" (scroll)="closeTooltip()">
+  <div class="scroll" cdkScrollable>
     <svg
       #svg
       [attr.width]="width"

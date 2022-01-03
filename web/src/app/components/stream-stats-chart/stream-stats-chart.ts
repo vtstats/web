@@ -19,6 +19,7 @@ import { ScaleLinear, scaleLinear } from "d3-scale";
 import { bisectCenter, extent, max, range } from "d3-array";
 import { area, curveLinear, line } from "d3-shape";
 import { easeBackOut } from "d3-ease";
+import { CdkScrollable } from "@angular/cdk/scrolling";
 
 import { Stream } from "src/app/models";
 import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
@@ -67,6 +68,9 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
   sub: Subscription | null;
   animation: Subscription | null;
+  scrollSub: Subscription | null;
+
+  @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
 
   ngOnInit() {
     this._render();
@@ -87,6 +91,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub?.unsubscribe();
     this.animation?.unsubscribe();
+    this.scrollSub?.unsubscribe();
   }
 
   formatTimeUnit(unit: number | "fit"): string {
@@ -161,6 +166,12 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
       if (p < 1) this.schedule();
     }, 0);
+
+    if (!this.scrollSub) {
+      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+        this.closeTooltip();
+      });
+    }
   }
 
   tryOpenTooltip(e: MouseEvent | TouchEvent) {
@@ -195,6 +206,10 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     }
   }
 
+  closeTooltip() {
+    this.dataPointIdx = -1;
+  }
+
   jumpTo(e: MouseEvent) {
     if (this.stream.status !== "ended") return;
 
@@ -217,10 +232,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
       window.open(`https://youtu.be/${this.stream.streamId}?t=${t}s`, "_blank");
     }
-  }
-
-  closeTooltip() {
-    this.dataPointIdx = -1;
   }
 }
 
