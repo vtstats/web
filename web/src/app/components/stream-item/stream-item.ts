@@ -9,7 +9,7 @@ import type { Stream } from "src/app/models";
 import { TickService } from "src/app/shared";
 
 @Component({
-  selector: "hs-stream-item",
+  selector: "hls-stream-item",
   templateUrl: "stream-item.html",
   styleUrls: ["stream-item.scss"],
   encapsulation: ViewEncapsulation.None,
@@ -26,7 +26,7 @@ export class StreamItem {
 }
 
 @Component({
-  selector: "hs-stream-item-shimmer",
+  selector: "hls-stream-item-shimmer",
   templateUrl: "stream-item-shimmer.html",
   styleUrls: ["stream-item.scss"],
   encapsulation: ViewEncapsulation.None,

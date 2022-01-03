@@ -33,7 +33,7 @@
 // FIXME
 mat.$theme-ignore-duplication-warnings: true;
 
-@mixin hs-theme($theme) {
+@mixin hls-theme($theme) {
   @include global-theme($theme);
   @include material-theme($theme);
   @include stream-item-theme($theme);
@@ -55,7 +55,7 @@ mat.$theme-ignore-duplication-warnings: true;
   @include paid-chat-chart-theme($theme);
 }
 
-@mixin hs-typography($config) {
+@mixin hls-typography($config) {
   @include material-typography($config);
   @include not-found-typography($config);
   @include stream-item-typography($config);
@@ -73,10 +73,10 @@ mat.$theme-ignore-duplication-warnings: true;
   @include paid-chat-chart-typography($config);
 }
 
-@include hs-typography($hs-typography-config);
+@include hls-typography($hls-typography-config);
 
-@include hs-theme($hs-light-theme);
+@include hls-theme($hls-light-theme);
 
 .dark {
-  @include hs-theme($hs-dark-theme);
+  @include hls-theme($hls-dark-theme);
 }

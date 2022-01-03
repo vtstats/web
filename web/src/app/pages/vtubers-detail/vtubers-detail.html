@@ -1,23 +1,23 @@
 <div class="mx-auto max-w-960">
-  <hs-channel-stats [vtuber]="vtuber"> </hs-channel-stats>
+  <hls-channel-stats [vtuber]="vtuber"> </hls-channel-stats>
 
-  <hs-stream-time [vtuber]="vtuber"></hs-stream-time>
+  <hls-stream-time [vtuber]="vtuber"></hls-stream-time>
 
   <ng-container *ngIf="vtuber.youtube">
     <div class="recent-streams" *ngIf="data$ | async as list">
-      <hs-sub-menu>
-        <hs-sub-menu-title>
+      <hls-sub-menu>
+        <hls-sub-menu-title>
           <span i18n="@@recentStreams">Recent Streams</span>
 
-          <hs-filter-group
+          <hls-filter-group
             [displayVTuber]="false"
             (clear)="onClear()"
             (dateRangeChanged)="onDateRangeChange($event)"
           >
-          </hs-filter-group>
-        </hs-sub-menu-title>
+          </hls-filter-group>
+        </hls-sub-menu-title>
 
-        <hs-sub-menu-extra>
+        <hls-sub-menu-extra>
           <time
             *ngIf="!list.loading; else shimmer"
             i18n="@@updatedAt"
@@ -29,32 +29,32 @@
           <ng-template #shimmer>
             <span class="shimmer text" [style.width.px]="120"></span>
           </ng-template>
-        </hs-sub-menu-extra>
-      </hs-sub-menu>
+        </hls-sub-menu-extra>
+      </hls-sub-menu>
 
       <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
-        <hs-stream-list>
-          <hs-stream-item
+        <hls-stream-list>
+          <hls-stream-item
             *ngFor="let stream of list.streams; trackBy: trackBy"
             [stream]="stream"
-          ></hs-stream-item>
-        </hs-stream-list>
+          ></hls-stream-item>
+        </hls-stream-list>
       </ng-container>
 
       <ng-template #shimmerList>
-        <hs-stream-list>
-          <hs-stream-item-shimmer
+        <hls-stream-list>
+          <hls-stream-item-shimmer
             *ngFor="let stream of [1, 2, 3, 4, 5]"
-          ></hs-stream-item-shimmer>
-        </hs-stream-list>
+          ></hls-stream-item-shimmer>
+        </hls-stream-list>
       </ng-template>
 
-      <hs-loading-spinner
+      <hls-loading-spinner
         [hidden]="(list.loading && list.refresh) || list.reachedEnd"
         (reach)="
           list.loading ? null : this.onRechedEnd(list.streams[list.streams.length - 1])
         "
-      ></hs-loading-spinner>
+      ></hls-loading-spinner>
     </div>
   </ng-container>
 </div>

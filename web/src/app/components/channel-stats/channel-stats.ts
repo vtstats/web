@@ -5,7 +5,7 @@ import { Channel, ChannelReportKind, Report, VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
 
 @Component({
-  selector: "hs-channel-stats",
+  selector: "hls-channel-stats",
   templateUrl: "channel-stats.html",
   styleUrls: ["channel-stats.scss"],
   encapsulation: ViewEncapsulation.None,

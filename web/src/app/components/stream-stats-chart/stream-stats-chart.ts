@@ -25,7 +25,7 @@ import { Stream } from "src/app/models";
 import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
 
 @Component({
-  selector: "hs-stream-stats-chart",
+  selector: "hls-stream-stats-chart",
   templateUrl: "stream-stats-chart.html",
   styleUrls: ["stream-stats-chart.scss"],
   encapsulation: ViewEncapsulation.None,
@@ -236,17 +236,17 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: "hs-stream-stats-chart-shimmer",
+  selector: "hls-stream-stats-chart-shimmer",
   template: `
-    <hs-sub-menu>
-      <hs-sub-menu-title>
+    <hls-sub-menu>
+      <hls-sub-menu-title>
         <span class="text shimmer" [style.width.px]="90"></span>
-      </hs-sub-menu-title>
+      </hls-sub-menu-title>
 
-      <hs-sub-menu-extra>
+      <hls-sub-menu-extra>
         <span class="shimmer text" [style.width.px]="120"></span>
-      </hs-sub-menu-extra>
-    </hs-sub-menu>
+      </hls-sub-menu-extra>
+    </hls-sub-menu>
     <div class="shimmer" [style.height.px]="350"></div>
   `,
   encapsulation: ViewEncapsulation.None,

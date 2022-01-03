@@ -9,7 +9,7 @@ import {
 import { environment } from "src/environments/environment";
 
 @Component({
-  selector: "hs-sidenav",
+  selector: "hls-sidenav",
   templateUrl: "sidenav.html",
   styleUrls: ["sidenav.scss"],
   encapsulation: ViewEncapsulation.None,

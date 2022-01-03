@@ -18,7 +18,7 @@ type Option = {
 };
 
 @Component({
-  selector: "hs-bilibili-channel",
+  selector: "hls-bilibili-channel",
   templateUrl: "bilibili-channel.html",
   styleUrls: ["bilibili-channel.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

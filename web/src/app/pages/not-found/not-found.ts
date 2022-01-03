@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 @Component({
-  selector: "hs-not-found",
+  selector: "hls-not-found",
   templateUrl: "not-found.html",
   styleUrls: ["not-found.scss"],
   encapsulation: ViewEncapsulation.None,

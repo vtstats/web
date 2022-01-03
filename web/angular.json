@@ -29,7 +29,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "hs",
+      "prefix": "hls",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

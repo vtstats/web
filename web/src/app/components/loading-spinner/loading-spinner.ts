@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 
 @Component({
-  selector: "hs-loading-spinner",
+  selector: "hls-loading-spinner",
   templateUrl: "loading-spinner.html",
   styleUrls: ["loading-spinner.scss"],
   encapsulation: ViewEncapsulation.None,

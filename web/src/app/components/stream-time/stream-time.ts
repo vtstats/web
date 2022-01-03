@@ -47,7 +47,7 @@ const relativeInWeek = (date: Date, base: Date): number => {
 };
 
 @Component({
-  selector: "hs-stream-time",
+  selector: "hls-stream-time",
   templateUrl: "stream-time.html",
   styleUrls: ["stream-time.scss"],
   encapsulation: ViewEncapsulation.None,

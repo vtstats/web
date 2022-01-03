@@ -20,7 +20,7 @@ type Option = {
 };
 
 @Component({
-  selector: "hs-youtube-schedule-stream",
+  selector: "hls-youtube-schedule-stream",
   templateUrl: "youtube-schedule-stream.html",
   styleUrls: ["youtube-schedule-stream.scss"],
   encapsulation: ViewEncapsulation.None,

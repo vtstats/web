@@ -14,7 +14,7 @@ import { ApxChart } from "../apx-chart/apx-chart";
 import { ChannelReportKind, Report } from "src/app/models";
 
 @Component({
-  selector: "hs-channel-stats-chart",
+  selector: "hls-channel-stats-chart",
   template: `
     <div class="channel-stats-chart">
       <div class="container">
@@ -144,7 +144,7 @@ export class ChannelStatsChart implements OnChanges {
 }
 
 @Component({
-  selector: "hs-channel-stats-chart-shimmer",
+  selector: "hls-channel-stats-chart-shimmer",
   template: `
     <div class="channel-stats-chart">
       <div class="container">

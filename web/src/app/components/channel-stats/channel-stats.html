@@ -36,17 +36,17 @@
 
 <ng-container *ngIf="!loading; else shimmer">
   <div class="chart-container">
-    <hs-channel-stats-chart
+    <hls-channel-stats-chart
       *ngFor="let report of reports"
       [report]="report"
-    ></hs-channel-stats-chart>
+    ></hls-channel-stats-chart>
   </div>
 </ng-container>
 
 <ng-template #shimmer>
   <div class="chart-container">
     <ng-container *ngFor="let i of shimmers">
-      <hs-channel-stats-chart-shimmer></hs-channel-stats-chart-shimmer>
+      <hls-channel-stats-chart-shimmer></hls-channel-stats-chart-shimmer>
     </ng-container>
   </div>
 </ng-template>

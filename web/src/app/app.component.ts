@@ -80,7 +80,7 @@ const icons: Array<[string, string]> = [
 ];
 
 @Component({
-  selector: "hs-root",
+  selector: "hls-root",
   templateUrl: "app.component.html",
 })
 export class AppComponent implements OnInit {

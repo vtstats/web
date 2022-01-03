@@ -19,7 +19,7 @@ type Option = {
 };
 
 @Component({
-  selector: "hs-vtubers-detail",
+  selector: "hls-vtubers-detail",
   templateUrl: "vtubers-detail.html",
   styleUrls: ["vtubers-detail.scss"],
   encapsulation: ViewEncapsulation.None,

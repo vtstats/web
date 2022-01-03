@@ -6,7 +6,7 @@ import { Report, Stream, StreamReportKind } from "src/app/models";
 import { ApiService, TickService } from "src/app/shared";
 
 @Component({
-  selector: "hs-streams-detail",
+  selector: "hls-streams-detail",
   templateUrl: "streams-detail.html",
   styleUrls: ["streams-detail.scss"],
   encapsulation: ViewEncapsulation.None,

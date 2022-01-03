@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 
 @Component({
-  selector: "hs-big-number",
+  selector: "hls-big-number",
   template: `
     <div class="value">{{ value }}</div>
     <div class="label">{{ label }}</div>
@@ -22,7 +22,7 @@ export class BigNumber {
 }
 
 @Component({
-  selector: "hs-big-number-shimmer",
+  selector: "hls-big-number-shimmer",
   template: `
     <div class="value">
       <span class="shimmer text" [style.width.px]="100"></span>

@@ -15,7 +15,7 @@ type Option = {
 };
 
 @Component({
-  selector: "hs-youtube-stream",
+  selector: "hls-youtube-stream",
   templateUrl: "youtube-stream.html",
   styleUrls: ["youtube-stream.scss"],
   encapsulation: ViewEncapsulation.None,

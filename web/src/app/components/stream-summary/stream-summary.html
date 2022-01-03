@@ -15,14 +15,14 @@
       <span class="name">{{ stream.vtuberId | name }}</span>
     </a>
 
-    <hs-number-row>
-      <hs-big-number
+    <hls-number-row>
+      <hls-big-number
         [value]="stream.startTime | date: 'HH:mm:ss'"
         i18n-label="@@streamStartTime"
         label="Start Time"
-      ></hs-big-number>
+      ></hls-big-number>
 
-      <hs-big-number
+      <hls-big-number
         [value]="
           stream.status === 'ended'
           ? (stream.startTime | duration: stream.endTime)
@@ -30,21 +30,21 @@
         "
         i18n-label="@@streamDuration"
         label="Duration"
-      ></hs-big-number>
-    </hs-number-row>
+      ></hls-big-number>
+    </hls-number-row>
 
-    <hs-number-row>
-      <hs-big-number
+    <hls-number-row>
+      <hls-big-number
         [value]="(stream.averageViewerCount | number) || '-----'"
         i18n-label="@@averageViewers"
         label="Average Viewers"
-      ></hs-big-number>
+      ></hls-big-number>
 
-      <hs-big-number
+      <hls-big-number
         [value]="(stream.maxViewerCount | number) || '-----'"
         i18n-label="@@maximumViewers"
         label="Maximum Viewers"
-      ></hs-big-number>
-    </hs-number-row>
+      ></hls-big-number>
+    </hls-number-row>
   </div>
 </div>

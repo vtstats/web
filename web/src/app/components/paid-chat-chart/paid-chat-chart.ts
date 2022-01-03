@@ -27,7 +27,7 @@ const splitAmount = (amount: string): [string, number] => {
 };
 
 @Component({
-  selector: "hs-paid-chat-chart",
+  selector: "hls-paid-chat-chart",
   templateUrl: "paid-chat-chart.html",
   styleUrls: ["paid-chat-chart.scss"],
   encapsulation: ViewEncapsulation.None,

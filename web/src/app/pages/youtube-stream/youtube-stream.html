@@ -1,14 +1,14 @@
 <div class="youtube-stream" *ngIf="data$ | async as list">
-  <hs-sub-menu>
-    <hs-sub-menu-title>
-      <hs-filter-group
+  <hls-sub-menu>
+    <hls-sub-menu-title>
+      <hls-filter-group
         (clear)="onClear()"
         (dateRangeChanged)="onDateRangeChange($event)"
         (vtuberChanged)="onVTuberChange($event)"
       >
-      </hs-filter-group>
-    </hs-sub-menu-title>
-    <hs-sub-menu-extra>
+      </hls-filter-group>
+    </hls-sub-menu-title>
+    <hls-sub-menu-extra>
       <time
         *ngIf="!list.loading; else shimmer"
         i18n="@@updatedAt"
@@ -20,36 +20,36 @@
       <ng-template #shimmer>
         <span class="shimmer text" [style.width.px]="120"></span>
       </ng-template>
-    </hs-sub-menu-extra>
-  </hs-sub-menu>
+    </hls-sub-menu-extra>
+  </hls-sub-menu>
 
   <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
-    <hs-stream-group
+    <hls-stream-group
       *ngFor="let group of list.streams | groupBy:'startTime'; trackBy: trackBy"
       [group]="group"
-    ></hs-stream-group>
+    ></hls-stream-group>
   </ng-container>
 
   <ng-template #shimmerList>
     <ng-container *ngFor="let x of [1, 2]">
-      <hs-sub-menu>
-        <hs-sub-menu-title>
+      <hls-sub-menu>
+        <hls-sub-menu-title>
           <span class="shimmer text" [style.width.px]="42"></span>
-        </hs-sub-menu-title>
-      </hs-sub-menu>
+        </hls-sub-menu-title>
+      </hls-sub-menu>
 
-      <hs-stream-list>
-        <hs-stream-item-shimmer
+      <hls-stream-list>
+        <hls-stream-item-shimmer
           *ngFor="let stream of [1, 2, 3, 4, 5]"
-        ></hs-stream-item-shimmer>
-      </hs-stream-list>
+        ></hls-stream-item-shimmer>
+      </hls-stream-list>
     </ng-container>
   </ng-template>
 
-  <hs-loading-spinner
+  <hls-loading-spinner
     [hidden]="(list.loading && list.refresh) || list.reachedEnd"
     (reach)="
       list.loading ? null : this.onRechedEnd(list.streams[list.streams.length - 1])
     "
-  ></hs-loading-spinner>
+  ></hls-loading-spinner>
 </div>

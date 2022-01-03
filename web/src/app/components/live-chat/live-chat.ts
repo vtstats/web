@@ -23,7 +23,7 @@ import { Stream } from "src/app/models";
 import { isTouchDevice, within } from "src/utils";
 
 @Component({
-  selector: "hs-live-chat",
+  selector: "hls-live-chat",
   templateUrl: "live-chat.html",
   styleUrls: ["live-chat.scss"],
   encapsulation: ViewEncapsulation.None,

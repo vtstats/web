@@ -1,14 +1,14 @@
 <div class="table-sub-menu">
-  <hs-sub-menu>
-    <hs-sub-menu-title>
-      <hs-filter-group
+  <hls-sub-menu>
+    <hls-sub-menu-title>
+      <hls-filter-group
         (clear)="onClear()"
         [displayDateRange]="false"
         (vtuberChanged)="onVTuberChange($event)"
       >
-      </hs-filter-group>
-    </hs-sub-menu-title>
-    <hs-sub-menu-extra>
+      </hls-filter-group>
+    </hls-sub-menu-title>
+    <hls-sub-menu-extra>
       <time
         *ngIf="!loading; else shimmer"
         i18n="@@updatedAt"
@@ -20,14 +20,14 @@
       <ng-template #shimmer>
         <span class="shimmer text" [style.width.px]="120"></span>
       </ng-template>
-    </hs-sub-menu-extra>
-  </hs-sub-menu>
+    </hls-sub-menu-extra>
+  </hls-sub-menu>
 </div>
 
 <ng-container *ngIf="!loading; else shimmerTable">
-  <hs-channel-table [dataSouce]="dataSource"></hs-channel-table>
+  <hls-channel-table [dataSouce]="dataSource"></hls-channel-table>
 </ng-container>
 
 <ng-template #shimmerTable>
-  <hs-channel-table-shimmer></hs-channel-table-shimmer>
+  <hls-channel-table-shimmer></hls-channel-table-shimmer>
 </ng-template>

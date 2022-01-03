@@ -12,7 +12,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import type { Channel } from "src/app/models";
 
 @Component({
-  selector: "hs-channel-table",
+  selector: "hls-channel-table",
   templateUrl: "channel-table.html",
   styleUrls: ["channel-table.scss"],
   encapsulation: ViewEncapsulation.None,
@@ -55,7 +55,7 @@ export class ChannelTable implements AfterViewInit {
 }
 
 @Component({
-  selector: "hs-channel-table-shimmer",
+  selector: "hls-channel-table-shimmer",
   templateUrl: "channel-table-shimmer.html",
   styleUrls: ["channel-table.scss"],
   encapsulation: ViewEncapsulation.None,

@@ -9,7 +9,7 @@ import { isAfter, isSameDay, isThisYear, format } from "date-fns";
 import animations from "./date-filter-animations";
 
 @Component({
-  selector: "hs-date-filter",
+  selector: "hls-date-filter",
   templateUrl: "./date-filter.html",
   styleUrls: ["./date-filter.scss"],
   providers: [MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER],

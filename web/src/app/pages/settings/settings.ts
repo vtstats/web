@@ -22,7 +22,7 @@ interface VTuberFlatNode {
 }
 
 @Component({
-  selector: "hs-settings",
+  selector: "hls-settings",
   templateUrl: "settings.html",
   styleUrls: ["settings.scss"],
   encapsulation: ViewEncapsulation.None,

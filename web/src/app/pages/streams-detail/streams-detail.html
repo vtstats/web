@@ -1,24 +1,24 @@
 <div class="mx-auto max-w-960" [style.margin-bottom.px]="60">
   <ng-container *ngIf="!loading; else shimmer">
-    <hs-stream-summary [stream]="stream"></hs-stream-summary>
+    <hls-stream-summary [stream]="stream"></hls-stream-summary>
 
     <ng-container *ngFor="let report of reports" [ngSwitch]="report.kind">
       <ng-container *ngSwitchCase="'youtube_live_chat'">
-        <hs-live-chat [rows]="report.rows" [stream]="stream"></hs-live-chat>
+        <hls-live-chat [rows]="report.rows" [stream]="stream"></hls-live-chat>
       </ng-container>
 
       <ng-container *ngSwitchCase="'youtube_stream_viewer'">
-        <hs-stream-stats-chart [rows]="report.rows" [stream]="stream">
-        </hs-stream-stats-chart>
+        <hls-stream-stats-chart [rows]="report.rows" [stream]="stream">
+        </hls-stream-stats-chart>
       </ng-container>
     </ng-container>
   </ng-container>
 
   <ng-template #shimmer>
-    <hs-stream-summary-shimmer></hs-stream-summary-shimmer>
+    <hls-stream-summary-shimmer></hls-stream-summary-shimmer>
 
-    <hs-stream-stats-chart-shimmer></hs-stream-stats-chart-shimmer>
+    <hls-stream-stats-chart-shimmer></hls-stream-stats-chart-shimmer>
   </ng-template>
 
-  <hs-paid-chat-chart [stream]="{ streamId }"></hs-paid-chat-chart>
+  <hls-paid-chat-chart [stream]="{ streamId }"></hls-paid-chat-chart>
 </div>

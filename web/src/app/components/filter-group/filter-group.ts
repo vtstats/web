@@ -10,7 +10,7 @@ import { DateFilter } from "../date-filter/date-filter";
 import { VTuberFilter } from "../vtuber-filter/vtuber-filter";
 
 @Component({
-  selector: "hs-filter-group",
+  selector: "hls-filter-group",
   templateUrl: "filter-group.html",
 })
 export class FilterGroup {

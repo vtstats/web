@@ -18,7 +18,7 @@ type Option = {
 };
 
 @Component({
-  selector: "hs-youtube-channel",
+  selector: "hls-youtube-channel",
   templateUrl: "youtube-channel.html",
   styleUrls: ["youtube-channel.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

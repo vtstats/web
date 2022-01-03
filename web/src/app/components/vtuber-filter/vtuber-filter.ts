@@ -10,7 +10,7 @@ import { ConfigService } from "src/app/shared";
 import animations from "./vtuber-filter-animations";
 
 @Component({
-  selector: "hs-vtuber-filter",
+  selector: "hls-vtuber-filter",
   templateUrl: "vtuber-filter.html",
   styleUrls: ["vtuber-filter.scss"],
   encapsulation: ViewEncapsulation.None,

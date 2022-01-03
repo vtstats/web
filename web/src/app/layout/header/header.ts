@@ -10,7 +10,7 @@ import {
 import { ConfigService } from "src/app/shared";
 
 @Component({
-  selector: "hs-header",
+  selector: "hls-header",
   templateUrl: "header.html",
   styleUrls: ["header.scss"],
   encapsulation: ViewEncapsulation.None,

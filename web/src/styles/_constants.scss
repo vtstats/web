@@ -1,9 +1,9 @@
 @use "@angular/material" as mat;
 @use "sass:map";
 
-$hs-typography-config: mat.define-typography-config();
+$hls-typography-config: mat.define-typography-config();
 
-$hs-light-theme: map.deep-merge(
+$hls-light-theme: map.deep-merge(
   mat.define-light-theme(
     (
       color: (
@@ -24,7 +24,7 @@ $hs-light-theme: map.deep-merge(
   )
 );
 
-$hs-dark-theme: map.deep-merge(
+$hls-dark-theme: map.deep-merge(
   mat.define-dark-theme(
     (
       color: (
