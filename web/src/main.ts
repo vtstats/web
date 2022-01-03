@@ -14,7 +14,8 @@ if (environment.production) {
 
   Sentry.init({
     dsn: "https://64c25f8bfc9e45ffa532ed5ab1dc989f@o488466.ingest.sentry.io/6113288",
-    release: environment.commit_sha.slice(0, 7),
+    release: environment.commit_sha,
+    environment: environment.branch,
   });
 }
 
