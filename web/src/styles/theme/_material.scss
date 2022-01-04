@@ -11,6 +11,7 @@
   @include mat.progress-spinner-theme($theme);
   @include mat.sidenav-theme($theme);
   @include mat.card-theme($theme);
+  @include mat.snack-bar-theme($theme);
 
   @include mat.datepicker-theme($theme);
 
@@ -46,4 +47,5 @@
   @include mat.tooltip-typography($config);
   @include mat.tree-typography($config);
   @include mat.datepicker-typography($config);
+  @include mat.snack-bar-typography($config);
 }

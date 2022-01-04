@@ -1,0 +1,23 @@
+<h4 class="title">YouTube Account</h4>
+<div [style.padding-bottom.px]="16">
+  <mat-list *ngIf="gapi.user$ | async as user; else login">
+    <mat-list-item>
+      <img matListAvatar [attr.src]="user.imageUrl" [attr.alt]="user.name" />
+      <h3 matLine>{{ user.name }}</h3>
+      <p matLine>{{ user.email }}</p>
+      <button mat-button (click)="gapi.signOut()">Sign Out</button>
+    </mat-list-item>
+
+    <mat-list-item>
+      <h3 matLine>Saved to playlist</h3>
+      <hls-playlist-selector></hls-playlist-selector>
+    </mat-list-item>
+  </mat-list>
+
+  <ng-template #login>
+    <button mat-raised-button (click)="gapi.signIn()">
+      <mat-icon svgIcon="youtube"></mat-icon>
+      Sign in with Google
+    </button>
+  </ng-template>
+</div>

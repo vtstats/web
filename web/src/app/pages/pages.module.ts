@@ -11,6 +11,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatTableModule } from "@angular/material/table";
 import { MatTreeModule } from "@angular/material/tree";
+import { MatListModule } from "@angular/material/list";
 
 import { SharedModule } from "../shared";
 import { ComponentsModule } from "../components/components.module";
@@ -23,11 +24,11 @@ import { YoutubeStream } from "./youtube-stream/youtube-stream";
 import { VTubersDetail } from "./vtubers-detail/vtubers-detail";
 import { StreamsDetail } from "./streams-detail/streams-detail";
 import { NotFound } from "./not-found/not-found";
+import { SettingsModule } from "./settings/settings-module";
 
 @NgModule({
   declarations: [
     BilibiliChannel,
-    Settings,
     YoutubeChannel,
     YoutubeScheduleStream,
     YoutubeStream,
@@ -36,6 +37,7 @@ import { NotFound } from "./not-found/not-found";
     NotFound,
   ],
   imports: [
+    SettingsModule,
     CommonModule,
     RouterModule,
     MatButtonModule,
@@ -45,6 +47,7 @@ import { NotFound } from "./not-found/not-found";
     MatSortModule,
     MatTableModule,
     MatTreeModule,
+    MatListModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatDividerModule,

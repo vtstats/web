@@ -21,13 +21,21 @@
   </div>
 
   <a
-    class="icon"
+    class="icon open"
     href="https://youtu.be/{{ stream.streamId }}"
     target="_blank"
     (click)="$event.stopPropagation()"
   >
     <mat-icon svgIcon="open_in_new"></mat-icon>
   </a>
+
+  <span
+    *ngIf="showPlaylistIcon"
+    class="icon playlist"
+    (click)="addToPlaylist($event)"
+  >
+    <mat-icon svgIcon="playlist_add"></mat-icon>
+  </span>
 </a>
 
 <a

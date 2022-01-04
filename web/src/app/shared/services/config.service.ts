@@ -7,6 +7,7 @@ import { vtubers } from "vtubers";
 export class ConfigService {
   vtuber: Set<string>;
   theme: string;
+  playlist: string;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     if (window.localStorage.getItem("vtuber")) {
@@ -25,6 +26,8 @@ export class ConfigService {
         .filter((v) => v.default)
         .map((v) => v.id)
     );
+
+    this.playlist = window.localStorage.getItem("yt_playlist");
   }
 
   addVtubers(ids: string[]) {
@@ -51,6 +54,10 @@ export class ConfigService {
   setLang(newLang: string) {
     this.setItem("lang", newLang);
     location.reload();
+  }
+
+  setPlaylist(item: string) {
+    this.setItem("yt_playlist", item);
   }
 
   private setItem(key: string, value: string) {

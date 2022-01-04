@@ -67,8 +67,8 @@
     .icon {
       display: none;
       position: absolute;
-      top: 4px;
-      right: 4px;
+      cursor: pointer;
+
       color: #ffffff;
       background-color: rgba(0, 0, 0, 0.5);
       height: 28px;
@@ -77,6 +77,16 @@
       mat-icon {
         padding: 2px;
         margin: 0px;
+      }
+
+      &.open {
+        top: 4px;
+        right: 4px;
+      }
+
+      &.playlist {
+        top: 36px;
+        right: 4px;
       }
     }
   }

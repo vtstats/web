@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   commit_sha: "",
   branch: "",
+  yt_client_id:
+    "458340445465-acoedftrhhqtj80phmelq8pfco00laba.apps.googleusercontent.com",
 };
 
 /*

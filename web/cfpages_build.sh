@@ -4,6 +4,8 @@ echo "export const environment = {
   production: true,
   commit_sha: '$CF_PAGES_COMMIT_SHA',
   branch: '$CF_PAGES_BRANCH',
+  yt_client_id:
+    '458340445465-acoedftrhhqtj80phmelq8pfco00laba.apps.googleusercontent.com',
 };" > src/environments/environment.prod.ts
 
 yarn build --configuration production

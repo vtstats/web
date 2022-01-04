@@ -156,3 +156,39 @@ export type MemberLiveChatMessage = {
   time: number;
   type: "milestone" | "new";
 };
+
+export type YouTubePlayListItem = {
+  id: string;
+  snippet: {
+    localized: { title: string };
+  };
+  contentDetails: { itemCount: number };
+};
+
+export type YouTubePlaylistResponse = {
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+  items: Array<YouTubePlayListItem>;
+};
+
+export type YouTubeAddPlaylistItemResponse = {
+  kind: string;
+  etag: string;
+  id: string;
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    channelTitle: string;
+    playlistId: string;
+    position: 0;
+    resourceId: {
+      kind: string;
+      videoId: string;
+    };
+    videoOwnerChannelTitle: string;
+    videoOwnerChannelId: string;
+  };
+};

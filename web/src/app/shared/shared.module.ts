@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import { MatTableModule } from "@angular/material/table";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { ColoredNumberDirective } from "./directives/colored-number.directive";
 import { HoldGestureDirective } from "./directives/hold-gesture.directive";
@@ -17,6 +18,7 @@ import { GroupByPipe } from "./pipes/group-by.pipe";
 import { NamePipe } from "./pipes/name.pipe";
 
 import { ApiService } from "./services/api.service";
+import { GoogleApiService } from "./services/gapi.service";
 import { TickService } from "./services/tick.service";
 
 @NgModule({
@@ -37,6 +39,7 @@ import { TickService } from "./services/tick.service";
     MatTableModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   exports: [
     DistancePipe,
@@ -49,6 +52,6 @@ import { TickService } from "./services/tick.service";
     HoldGestureDirective,
     TooltipDirective,
   ],
-  providers: [ApiService, TickService],
+  providers: [ApiService, GoogleApiService, TickService],
 })
 export class SharedModule {}

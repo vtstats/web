@@ -13,6 +13,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { OverlayModule } from "@angular/cdk/overlay";
 
 import { ApxChart } from "./apx-chart/apx-chart";
@@ -97,6 +98,7 @@ import { SharedModule } from "src/app/shared";
     MatMenuModule,
     MatTooltipModule,
     MatDividerModule,
+    MatSnackBarModule,
     SharedModule,
   ],
   exports: [
