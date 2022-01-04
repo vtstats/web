@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -70,7 +69,7 @@ export class StreamTime implements OnInit {
 
   days: { x: number; y: number; d: number; v: number; c: string }[] = [];
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService) {}
 
   ngOnInit() {
     const end = new Date();
@@ -124,13 +123,11 @@ export class StreamTime implements OnInit {
         within(offsetX, day.x, day.x + 20) && within(offsetY, day.y, day.y + 20)
     );
 
-    if (idx > 0) {
+    if (idx >= 0) {
       if (this.popperIdx === idx) return;
 
       const x = left + this.days[idx].x;
       const y = top + this.days[idx].y;
-
-      // this.cdr.detectChanges();
 
       this.referenceRect = {
         width: 16,
