@@ -16,7 +16,7 @@
 
 <div class="live-chat-chart" (dblclick)="jumpTo($event)">
   <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
-    <ng-container *ngFor="let v of yScale ? yScale.ticks(6) : []">
+    <ng-container *ngFor="let v of yTicks">
       <line
         class="line"
         [attr.x1]="0"
@@ -72,7 +72,7 @@
         ></rect>
       </g>
 
-      <ng-container *ngFor="let i of ticks">
+      <ng-container *ngFor="let i of xTicks">
         <line
           class="line"
           [attr.x1]="xScale(i) + (barWidth) / 2"

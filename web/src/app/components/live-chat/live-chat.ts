@@ -45,15 +45,13 @@ export class LiveChat implements OnInit, OnDestroy {
 
   dataIndex = -1;
   offset = ({ placement }) => {
-    switch (placement) {
-      default:
-      case "bottom-start":
-        return { mainAxis: 16, crossAxis: 16 };
-      case "bottom-end":
-        return { mainAxis: 16, crossAxis: -16 };
-      case "top":
-        return { mainAxis: 32 };
+    if (placement.endsWith("-start")) {
+      return { mainAxis: 16, crossAxis: 16 };
+    } else if (placement.endsWith("-end")) {
+      return { mainAxis: 16, crossAxis: -16 };
     }
+
+    return { mainAxis: 32 };
   };
   placement = isTouchDevice ? "top" : "bottom-start";
   flip = isTouchDevice ? false : { padding: 32 };
@@ -78,7 +76,8 @@ export class LiveChat implements OnInit, OnDestroy {
   rows: [number, number, number, number][] = [];
   xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
   yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
-  ticks: number[] = [];
+  yTicks: number[] = [];
+  xTicks: number[] = [];
 
   unit: number | "fit" = "fit";
 
@@ -157,11 +156,13 @@ export class LiveChat implements OnInit, OnDestroy {
       .domain([0, max(this.rows, (row) => row[2])])
       .range([this.height + this.topMargin, this.topMargin]);
 
-    this.ticks = range(
+    this.xTicks = range(
       this.rows.findIndex((r) => r[0] % 60000 === 0),
       this.rows.length,
       8
     );
+
+    this.yTicks = this.yScale.ticks(6);
   }
 
   private _agg(unit: number) {
