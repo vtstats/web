@@ -52,10 +52,11 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   @Input() stream: Stream;
   @Input("rows") _raw: [number, number][] = [];
 
-  rows: [number, number][] = this._raw;
-  xScale: ScaleLinear<number, number> = scaleLinear();
-  yScale: ScaleLinear<number, number> = scaleLinear();
-  ticks: number[] = [];
+  rows: [number, number][] = [];
+  xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  xTicks: number[] = [];
+  yTicks: number[] = [];
   areaPath: string;
   linePath: string;
   width: number = 0;
@@ -138,7 +139,11 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       .x((d) => this.xScale(d[0]))
       .y((d) => this.yScale(d[1]))(this.rows);
 
-    this.ticks = range(1, this.rows.length - 1, 32);
+    const step = Math.ceil(60 / (this.width / this.rows.length));
+
+    this.xTicks = range(0, this.rows.length - 1, step);
+
+    this.yTicks = this.yScale.ticks(6);
   }
 
   tryOpenTooltip(e: MouseEvent | TouchEvent) {
