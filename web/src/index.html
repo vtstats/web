@@ -31,5 +31,9 @@
     <noscript>
       Please enable JavaScript to continue using this application.
     </noscript>
+    <script>
+      var theme = window.localStorage.getItem("theme") || "default";
+      document.body.classList.add(theme);
+    </script>
   </body>
 </html>

@@ -25,8 +25,6 @@ export class ConfigService {
         .filter((v) => v.default)
         .map((v) => v.id)
     );
-
-    this.document.body.classList.add(this.theme);
   }
 
   addVtubers(ids: string[]) {
