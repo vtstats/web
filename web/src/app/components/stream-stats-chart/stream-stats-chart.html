@@ -17,7 +17,11 @@
 </hls-sub-menu>
 
 <div class="stream-stats-chart" (dblclick)="jumpTo($event)">
-  <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
+  <svg
+    class="axis"
+    [attr.width]="960"
+    [attr.height]="topMargin + height + bottomMargin"
+  >
     <ng-container *ngFor="let value of yTicks">
       <line
         class="line"
@@ -46,16 +50,6 @@
       (hold)="tryOpenTooltip($event)"
       (release)="closeTooltip()"
     >
-      <ng-container *ngFor="let value of yTicks">
-        <line
-          class="line"
-          [attr.x1]="0"
-          [attr.y1]="yScale(value)"
-          [attr.x2]="'100%'"
-          [attr.y2]="yScale(value)"
-        ></line>
-      </ng-container>
-
       <defs>
         <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
           <stop stop-opacity="0.38" stop-color="#ea4335" offset="0"></stop>
@@ -79,8 +73,6 @@
           [attr.y1]="yScale(0)"
           [attr.x2]="xScale(rows[tick][0])"
           [attr.y2]="yScale(0) + 8"
-          stroke-width="1px"
-          stroke="#E6E6E6"
         ></line>
 
         <text

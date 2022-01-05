@@ -15,7 +15,11 @@
 </hls-sub-menu>
 
 <div class="live-chat-chart" (dblclick)="jumpTo($event)">
-  <svg class="axis" [attr.width]="960" [attr.height]="height + topMargin">
+  <svg
+    class="axis"
+    [attr.width]="960"
+    [attr.height]="topMargin + height + bottomMargin"
+  >
     <ng-container *ngFor="let v of yTicks">
       <line
         class="line"
