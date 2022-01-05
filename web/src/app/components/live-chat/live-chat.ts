@@ -136,7 +136,15 @@ export class LiveChat implements OnInit, OnDestroy {
           (this.barWidth + this.innerPadding)
       );
 
-      const [min, max] = extent(this._raw, (row) => row[0]);
+      const [min, max] = extent(
+        this._raw
+          .map(([t]) => t)
+          .filter(
+            (t) =>
+              (!this.stream.startTime || t >= this.stream.startTime) &&
+              (!this.stream.endTime || t <= this.stream.endTime)
+          )
+      );
 
       const unit = Math.ceil((max - min) / n / 15000) * 15000;
 
@@ -182,8 +190,16 @@ export class LiveChat implements OnInit, OnDestroy {
     this.rows = [];
 
     for (const row of this._raw) {
-      const l = this.rows[this.rows.length - 1];
       const t = row[0];
+
+      if (
+        (this.stream.startTime && t < this.stream.startTime) ||
+        (this.stream.endTime && t > this.stream.endTime)
+      ) {
+        continue;
+      }
+
+      const l = this.rows[this.rows.length - 1];
 
       if (!l || !(t < l[1])) {
         const s = t - (t % unit);
