@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Title } from "@angular/platform-browser";
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -27,7 +26,7 @@ interface VTuberFlatNode {
   styleUrls: ["settings.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class Settings implements OnInit {
+export class Settings {
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     (node) => node.level,
     (node) => node.expandable
@@ -48,15 +47,11 @@ export class Settings implements OnInit {
 
   count = Object.keys(vtubers).length;
 
-  constructor(public config: ConfigService, private title: Title) {
+  constructor(public config: ConfigService) {
     this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
       id,
       members: batch?.map((id) => vtubers[id]),
     }));
-  }
-
-  ngOnInit() {
-    this.title.setTitle(`${$localize`:@@settings:`} | HoloStats`);
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;

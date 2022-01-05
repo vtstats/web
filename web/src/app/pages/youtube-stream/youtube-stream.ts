@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { Title } from "@angular/platform-browser";
+import { Component, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { startWith, tap, map, scan, switchMap } from "rxjs/operators";
 import { startOfDay, endOfDay } from "date-fns";
@@ -20,12 +19,8 @@ type Option = {
   styleUrls: ["youtube-stream.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class YoutubeStream implements OnInit, OnDestroy {
-  constructor(
-    private api: ApiService,
-    private title: Title,
-    private config: ConfigService
-  ) {}
+export class YoutubeStream implements OnDestroy {
+  constructor(private api: ApiService, private config: ConfigService) {}
 
   option$ = new Subject<Option>();
 
@@ -62,10 +57,6 @@ export class YoutubeStream implements OnInit, OnDestroy {
     })),
     tap(console.log)
   );
-
-  ngOnInit() {
-    this.title.setTitle(`${$localize`:@@youtubeStream:`} | HoloStats`);
-  }
 
   ngOnDestroy() {
     this.option$.complete();

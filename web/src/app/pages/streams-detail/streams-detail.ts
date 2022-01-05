@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Report, Stream, StreamReportKind } from "src/app/models";
@@ -16,8 +15,7 @@ export class StreamsDetail implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
-    private tick: TickService,
-    private title: Title
+    private tick: TickService
   ) {}
 
   streamId = this.route.snapshot.paramMap.get("id");
@@ -48,7 +46,6 @@ export class StreamsDetail implements OnInit {
 
         this.stream = res.streams[0];
         this.reports = res.reports;
-        this.title.setTitle(`${this.stream.title} | HoloStats`);
       });
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
@@ -10,7 +9,6 @@ import { vtubers } from "vtubers";
 
 import { Stream, StreamList, StreamStatus, VTuber } from "src/app/models";
 import { ApiService } from "src/app/shared";
-import { translate } from "src/i18n";
 
 type Option = {
   startAt?: number;
@@ -28,8 +26,7 @@ export class VTubersDetail implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private api: ApiService,
-    private title: Title
+    private api: ApiService
   ) {}
 
   vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
@@ -75,8 +72,6 @@ export class VTubersDetail implements OnInit, OnDestroy {
       this.router.navigateByUrl("/404");
       return;
     }
-
-    this.title.setTitle(`${translate(this.vtuber.id)} | HoloStats`);
   }
 
   onRechedEnd(lastStream: Stream) {

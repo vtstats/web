@@ -1,12 +1,10 @@
 import {
   Component,
   OnDestroy,
-  OnInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from "@angular/core";
-import { Title } from "@angular/platform-browser";
 import { Subject } from "rxjs";
 import { startWith, switchMap, tap } from "rxjs/operators";
 
@@ -24,10 +22,9 @@ type Option = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class YoutubeChannel implements OnInit, OnDestroy {
+export class YoutubeChannel implements OnDestroy {
   constructor(
     private api: ApiService,
-    private title: Title,
     private config: ConfigService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -39,8 +36,6 @@ export class YoutubeChannel implements OnInit, OnDestroy {
   option$ = new Subject<Option>();
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@youtubeChannel:`} | HoloStats`);
-
     this.option$
       .pipe(
         startWith({ ids: [] }),

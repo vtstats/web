@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Title } from "@angular/platform-browser";
+import { Component, ViewEncapsulation } from "@angular/core";
 
 @Component({
   selector: "hls-not-found",
@@ -7,10 +6,4 @@ import { Title } from "@angular/platform-browser";
   styleUrls: ["not-found.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class NotFound implements OnInit {
-  constructor(private title: Title) {}
-
-  ngOnInit() {
-    this.title.setTitle("Not Found | HoloStats");
-  }
-}
+export class NotFound {}

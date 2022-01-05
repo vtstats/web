@@ -3,10 +3,12 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { PrivacyPolicy } from "./privacy-policy";
+import { ComponentsModule } from "../../components/components.module";
 
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     RouterModule.forChild([
       {
         path: "",

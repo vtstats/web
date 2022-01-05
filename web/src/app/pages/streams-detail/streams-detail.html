@@ -1,3 +1,5 @@
+<hls-helmet [title]="stream?.title"></hls-helmet>
+
 <div class="mx-auto max-w-960" [style.margin-bottom.px]="60">
   <ng-container *ngIf="!loading; else shimmer">
     <hls-stream-summary [stream]="stream"></hls-stream-summary>

@@ -6,7 +6,6 @@ import {
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from "@angular/core";
-import { Title } from "@angular/platform-browser";
 import { Subject } from "rxjs";
 import { startWith, switchMap, tap } from "rxjs/operators";
 
@@ -27,7 +26,6 @@ type Option = {
 export class BilibiliChannel implements OnInit, OnDestroy {
   constructor(
     private api: ApiService,
-    private title: Title,
     private config: ConfigService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -39,8 +37,6 @@ export class BilibiliChannel implements OnInit, OnDestroy {
   option$ = new Subject<Option>();
 
   ngOnInit() {
-    this.title.setTitle(`${$localize`:@@bilibiliChannel:`} | HoloStats`);
-
     this.option$
       .pipe(
         startWith({ ids: [] }),
