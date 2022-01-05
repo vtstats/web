@@ -12,7 +12,7 @@ import { ApiService } from "src/app/shared";
 import { fromEvent, Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 import { ScaleLinear, scaleLinear } from "d3-scale";
-import { flatRollup, sort, sum, max } from "d3-array";
+import { flatRollup, sort, sum, max, range } from "d3-array";
 
 import { hexToColorName, symbolToCurrency } from "./mapping";
 import { isTouchDevice, within } from "src/utils";
@@ -101,6 +101,7 @@ export class PaidLiveChat implements OnInit {
   width: number = 0;
   xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
   yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  xTicks: number[] = [];
 
   constructor(private api: ApiService, private host: ElementRef<HTMLElement>) {}
 
@@ -160,8 +161,10 @@ export class PaidLiveChat implements OnInit {
         );
         this.sum = sum(this.items, (item) => item[1].total);
 
+        const xMax = max(this.items, (item) => item[1].total);
+
         this.xScale
-          .domain([0, max(this.items, (item) => item[1].total)])
+          .domain([0, xMax])
           .range([0, this.width - this.leftMargin - this.rightMargin]);
 
         this.yScale
@@ -171,6 +174,8 @@ export class PaidLiveChat implements OnInit {
             this.topMargin +
               this.items.length * (this.barHeight + this.innerPadding),
           ]);
+
+        this.xTicks = xMax < 8 ? range(0, xMax + 1) : this.xScale.ticks(8);
       });
 
     // TODO: switch to resize observer

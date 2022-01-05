@@ -16,7 +16,7 @@
     (hold)="tryOpenPopper($event)"
     (release)="closePopper()"
   >
-    <ng-container *ngFor="let value of xScale.ticks(8)">
+    <ng-container *ngFor="let value of xTicks">
       <line
         class="line"
         [attr.x1]="leftMargin + xScale(value) || 0"
