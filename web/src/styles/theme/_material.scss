@@ -33,6 +33,7 @@
 }
 
 @mixin material-typography($config) {
+  @include mat.typography-hierarchy($config);
   @include mat.button-typography($config);
   @include mat.checkbox-typography($config);
   @include mat.icon-typography($config);

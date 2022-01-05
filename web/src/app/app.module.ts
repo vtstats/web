@@ -34,6 +34,13 @@ const ROUTES: Routes = [
   { path: "settings", component: Settings },
   { path: "stream/:id", component: StreamsDetail },
   { path: "vtuber/:id", component: VTubersDetail },
+  {
+    path: "privacy-policy",
+    loadChildren: () =>
+      import("./pages/privacy-policy/privacy-policy-module").then(
+        (m) => m.PrivacyPolicyModule
+      ),
+  },
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
