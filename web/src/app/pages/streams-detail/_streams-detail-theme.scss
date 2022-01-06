@@ -1,0 +1,21 @@
+@import "./stream-stats-chart/stream-stats-chart-theme";
+@import "./stream-summary/stream-summary-theme";
+@import "./big-number/big-number-theme";
+@import "./live-chat/live-chat-theme";
+@import "./paid-chat-chart/paid-chat-chart-theme";
+
+@mixin stream-details-theme($theme) {
+  @include live-chat-theme($theme);
+  @include stream-summary-theme($theme);
+  @include big-number-theme($theme);
+  @include stream-stats-chart-theme($theme);
+  @include paid-chat-chart-theme($theme);
+}
+
+@mixin stream-details-typography($config) {
+  @include stream-summary-typography($config);
+  @include live-chat-typography($config);
+  @include stream-stats-chart-typography($config);
+  @include paid-chat-chart-typography($config);
+  @include big-number-typography($config);
+}

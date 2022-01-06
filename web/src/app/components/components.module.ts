@@ -17,36 +17,18 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { OverlayModule } from "@angular/cdk/overlay";
 
 import { ApxChart } from "./apx-chart/apx-chart";
-import { ChannelStats } from "./channel-stats/channel-stats";
-import {
-  ChannelStatsChart,
-  ChannelStatsChartShimmer,
-} from "./channel-stats-chart/channel-stats-chart";
-import { BigNumber, BigNumberShimmer } from "./big-number/big-number";
 import {
   ChannelTable,
   ChannelTableShimmer,
 } from "./channel-table/channel-table";
-import { LiveChat } from "./live-chat/live-chat";
 import { LoadingSpinner } from "./loading-spinner/loading-spinner";
-import { NumberRow } from "./number-row/number-row";
 import { StreamItem, StreamItemShimmer } from "./stream-item/stream-item";
 import { StreamGroup } from "./stream-group/stream-group";
 import { StreamsList } from "./stream-list/stream-list";
-import {
-  StreamStatsChart,
-  StreamStatsChartShimmer,
-} from "./stream-stats-chart/stream-stats-chart";
-import {
-  StreamsSummary,
-  StreamsSummaryShimmer,
-} from "./stream-summary/stream-summary";
 import { SubMenu, SubMenuTitle, SubMenuExtra } from "./sub-menu/sub-menu";
 import { DateFilter } from "./date-filter/date-filter";
 import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 import { FilterGroup } from "./filter-group/filter-group";
-import { StreamTime } from "./stream-time/stream-time";
-import { PaidLiveChat } from "./paid-chat-chart/paid-chat-chart";
 import { Helmet } from "./helmet/helmet.component";
 
 import { SharedModule } from "src/app/shared";
@@ -54,26 +36,13 @@ import { SharedModule } from "src/app/shared";
 @NgModule({
   declarations: [
     ApxChart,
-    ChannelStats,
-    ChannelStatsChart,
-    ChannelStatsChartShimmer,
-    BigNumber,
-    BigNumberShimmer,
     ChannelTable,
     ChannelTableShimmer,
-    LiveChat,
-    PaidLiveChat,
     LoadingSpinner,
-    NumberRow,
     StreamGroup,
     StreamItem,
     StreamItemShimmer,
     StreamsList,
-    StreamStatsChart,
-    StreamStatsChartShimmer,
-    StreamsSummary,
-    StreamsSummaryShimmer,
-    StreamTime,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,
@@ -102,23 +71,14 @@ import { SharedModule } from "src/app/shared";
     SharedModule,
   ],
   exports: [
-    BigNumber,
-    ChannelStats,
+    ApxChart,
     ChannelTable,
     ChannelTableShimmer,
     LoadingSpinner,
-    NumberRow,
-    LiveChat,
-    PaidLiveChat,
     StreamGroup,
     StreamItem,
     StreamItemShimmer,
     StreamsList,
-    StreamStatsChart,
-    StreamStatsChartShimmer,
-    StreamsSummary,
-    StreamsSummaryShimmer,
-    StreamTime,
     SubMenu,
     SubMenuTitle,
     SubMenuExtra,

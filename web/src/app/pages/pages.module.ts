@@ -17,12 +17,11 @@ import { SharedModule } from "../shared";
 import { ComponentsModule } from "../components/components.module";
 
 import { BilibiliChannel } from "./bilibili-channel/bilibili-channel";
-import { Settings } from "./settings/settings";
 import { YoutubeChannel } from "./youtube-channel/youtube-channel";
 import { YoutubeScheduleStream } from "./youtube-schedule-stream/youtube-schedule-stream";
 import { YoutubeStream } from "./youtube-stream/youtube-stream";
-import { VTubersDetail } from "./vtubers-detail/vtubers-detail";
-import { StreamsDetail } from "./streams-detail/streams-detail";
+import { VTubersDetailModule } from "./vtubers-detail/vtubers-detail-module";
+import { StreamsDetailModule } from "./streams-detail/streams-detail-module";
 import { NotFound } from "./not-found/not-found";
 import { SettingsModule } from "./settings/settings-module";
 
@@ -32,12 +31,12 @@ import { SettingsModule } from "./settings/settings-module";
     YoutubeChannel,
     YoutubeScheduleStream,
     YoutubeStream,
-    VTubersDetail,
-    StreamsDetail,
     NotFound,
   ],
   imports: [
     SettingsModule,
+    StreamsDetailModule,
+    VTubersDetailModule,
     CommonModule,
     RouterModule,
     MatButtonModule,

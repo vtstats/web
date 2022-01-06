@@ -7,23 +7,17 @@
 
 // components
 @import "src/app/components/apx-chart/apx-chart-theme";
-@import "src/app/components/big-number/big-number-theme";
 @import "src/app/components/date-filter/date-filter-theme";
-@import "src/app/components/stream-summary/stream-summary-theme";
 @import "src/app/components/stream-item/stream-item-theme";
 @import "src/app/components/channel-table/channel-table-theme";
 @import "src/app/components/sub-menu/sub-menu-theme";
-@import "src/app/components/channel-stats/channel-stats-theme";
-@import "src/app/components/channel-stats-chart/channel-stats-chart-theme";
 @import "src/app/components/vtuber-filter/vtuber-filter-theme";
-@import "src/app/components/stream-time/stream-time-theme";
-@import "src/app/components/live-chat/live-chat-theme";
-@import "src/app/components/stream-stats-chart/stream-stats-chart-theme";
-@import "src/app/components/paid-chat-chart/paid-chat-chart-theme";
 
 // pages
 @import "src/app/pages/not-found/not-found-theme";
 @import "src/app/pages/settings/settings-theme";
+@import "src/app/pages/streams-detail/streams-detail-theme";
+@import "src/app/pages/vtubers-detail/vutbers-detail-theme";
 
 @include mat.ripple();
 @include cdk.a11y-visually-hidden();
@@ -37,40 +31,29 @@ mat.$theme-ignore-duplication-warnings: true;
   @include global-theme($theme);
   @include material-theme($theme);
   @include stream-item-theme($theme);
-  @include stream-summary-theme($theme);
   @include channel-table-theme($theme);
   @include sub-menu-theme($theme);
   @include sidenav-theme($theme);
   @include header-theme($theme);
   @include not-found-theme($theme);
-  @include big-number-theme($theme);
-  @include channel-stats-theme($theme);
-  @include channel-stats-chart-theme($theme);
   @include apx-chart-theme($theme);
   @include date-filter-theme($theme);
   @include vtuber-filter-theme($theme);
-  @include stream-time-theme($theme);
-  @include live-chat-theme($theme);
-  @include stream-stats-chart-theme($theme);
-  @include paid-chat-chart-theme($theme);
+  @include stream-details-theme($theme);
+  @include vtubers-details-theme($theme);
 }
 
 @mixin hls-typography($config) {
   @include material-typography($config);
   @include not-found-typography($config);
   @include stream-item-typography($config);
-  @include stream-summary-typography($config);
   @include sub-menu-typography($config);
   @include sidenav-typography($config);
   @include settings-typography($config);
-  @include big-number-typography($config);
-  @include channel-stats-typography($config);
   @include apx-chart-typography($config);
   @include vtuber-filter-typography($config);
-  @include stream-time-typography($config);
-  @include live-chat-typography($config);
-  @include stream-stats-chart-typography($config);
-  @include paid-chat-chart-typography($config);
+  @include stream-details-typography($config);
+  @include vtubers-details-typography($config);
 }
 
 @include hls-typography($hls-typography-config);

@@ -8,8 +8,7 @@ import {
   ChangeDetectorRef,
 } from "@angular/core";
 import { format } from "date-fns";
-
-import { ApxChart } from "../apx-chart/apx-chart";
+import { ApxChart } from "src/app/components/apx-chart/apx-chart";
 
 import { ChannelReportKind, Report } from "src/app/models";
 
