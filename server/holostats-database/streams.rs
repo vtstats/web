@@ -31,7 +31,6 @@ pub struct Stream {
     #[serde(with = "ts_milliseconds")]
     pub updated_at: UtcTime,
     pub status: StreamStatus,
-    pub cf_images_id: Option<String>,
 }
 
 #[derive(Debug, sqlx::Type, Serialize)]
@@ -100,8 +99,7 @@ impl Database {
              average_viewer_count,
              max_viewer_count,
              updated_at,
-             status as "status: _",
-             cf_images_id
+             status as "status: _"
         from youtube_streams
        where vtuber_id = any($1)
          and status::text = any($5)
@@ -172,8 +170,7 @@ impl Database {
            average_viewer_count,
            max_viewer_count,
            updated_at,
-           status as "status: _",
-           cf_images_id
+           status as "status: _"
       from youtube_streams
      where stream_id = any($1)
             "#,
