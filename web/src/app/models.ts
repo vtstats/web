@@ -38,7 +38,6 @@ export type Stream = {
   title: string;
   vtuberId: string;
   thumbnailUrl: string;
-  cfImagesId?: string;
 
   status: StreamStatus;
 

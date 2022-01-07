@@ -13,7 +13,7 @@
     <td mat-cell *matCellDef="let row">
       <img
         class="profile"
-        [src]="row.vtuberId | image | cfImages:'88x88'"
+        [cfImage]="[row.vtuberId | image, 'thumbnail']"
         [routerLink]="['/vtuber', row.vtuberId]"
       />
     </td>

@@ -1,10 +1,7 @@
 <div class="stream-summary">
   <div class="cover">
     <a class="link">
-      <img
-        class="img"
-        [src]="(stream.cfImagesId | cfImages:'960x540') || stream.thumbnailUrl + '?ngsw-bypass'"
-      />
+      <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
     </a>
   </div>
 
@@ -14,10 +11,7 @@
     </a>
 
     <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
-      <img
-        class="profile"
-        [src]="stream.vtuberId | image | cfImages:'88x88'"
-      />
+      <img class="profile" [cfImage]="[stream.vtuberId | image, 'thumbnail']" />
       <span class="name">{{ stream.vtuberId | name }}</span>
     </a>
 

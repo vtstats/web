@@ -3,10 +3,7 @@
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
   <div class="cover">
-    <img
-      class="img"
-      [src]="(stream.cfImagesId | cfImages:'480x270') || stream.thumbnailUrl + '?ngsw-bypass'"
-    />
+    <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
   </div>
 
   <div class="duration" [ngSwitch]="stream.status">
@@ -82,7 +79,7 @@
 </ng-container>
 
 <div class="meta">
-  <img class="profile" [src]="stream.vtuberId | image | cfImages:'88x88'" />
+  <img class="profile" [cfImage]="[stream.vtuberId | image, 'thumbnail']" />
   <span class="name">{{ stream.vtuberId | name }}</span>
   <span class="dot">•</span>
 
