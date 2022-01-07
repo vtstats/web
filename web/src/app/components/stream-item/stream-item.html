@@ -79,7 +79,7 @@
 </ng-container>
 
 <div class="meta">
-  <img class="profile" [cfImage]="[stream.vtuberId | image, 'thumbnail']" />
+  <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
   <span class="name">{{ stream.vtuberId | name }}</span>
   <span class="dot">•</span>
 
