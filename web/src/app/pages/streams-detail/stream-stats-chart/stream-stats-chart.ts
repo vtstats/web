@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -31,7 +32,10 @@ import { isTouchDevice, truncateTo15Seconds, within } from "src/utils";
   encapsulation: ViewEncapsulation.None,
 })
 export class StreamStatsChart implements OnInit, OnDestroy {
-  constructor(private host: ElementRef<HTMLElement>) {}
+  constructor(
+    private host: ElementRef<HTMLElement>,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   @Input() streamId: string;
 
@@ -66,9 +70,9 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   step = 3;
   unit: number | "fit" = "fit";
 
-  sub: Subscription | null;
-  animation: Subscription | null;
-  scrollSub: Subscription | null;
+  animate$: Subscription | null;
+  resize$: Subscription | null;
+  scroll$: Subscription | null;
 
   @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
 
@@ -76,7 +80,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     this._render();
 
     // TODO: switch to resize observer
-    this.sub = fromEvent(window, "resize")
+    this.resize$ = fromEvent(window, "resize")
       .pipe(
         filter(() => this.unit == "fit"),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
@@ -89,9 +93,9 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub?.unsubscribe();
-    this.animation?.unsubscribe();
-    this.scrollSub?.unsubscribe();
+    this.resize$?.unsubscribe();
+    this.animate$?.unsubscribe();
+    this.scroll$?.unsubscribe();
   }
 
   formatTimeUnit(unit: number | "fit"): string {
@@ -145,9 +149,9 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     const ms = 400;
     const ease = easeBackOut.overshoot(0.4);
 
-    this.animation?.unsubscribe();
+    this.animate$?.unsubscribe();
 
-    this.animation = animationFrameScheduler.schedule(function (t) {
+    this.animate$ = animationFrameScheduler.schedule(function (t) {
       const curr = new Date().getTime();
 
       const p = Math.min(1, (curr - start) / ms);
@@ -167,9 +171,10 @@ export class StreamStatsChart implements OnInit, OnDestroy {
       if (p < 1) this.schedule();
     }, 0);
 
-    if (!this.scrollSub) {
-      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+    if (!this.scroll$) {
+      this.scroll$ = this.scrollable.elementScrolled().subscribe((event) => {
         this.closeTooltip();
+        this.cdr.detectChanges();
       });
     }
   }

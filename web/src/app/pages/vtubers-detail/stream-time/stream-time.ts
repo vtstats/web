@@ -63,7 +63,7 @@ export class StreamTime implements OnInit {
   svg: ElementRef<HTMLElement>;
   @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
 
-  scrollSub: Subscription;
+  scroll$: Subscription | null;
 
   loading: boolean;
 
@@ -111,7 +111,7 @@ export class StreamTime implements OnInit {
         }
       }
 
-      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+      this.scroll$ = this.scrollable.elementScrolled().subscribe((event) => {
         this.closeTooltip();
       });
     });

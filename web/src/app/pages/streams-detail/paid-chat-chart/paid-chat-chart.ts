@@ -6,6 +6,7 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
 import { PaidLiveChatMessage, Stream } from "src/app/models";
 import { ApiService } from "src/app/shared";
@@ -44,7 +45,7 @@ const splitAmount = (amount: string): [string, number] => {
     ]),
   ],
 })
-export class PaidLiveChat implements OnInit {
+export class PaidLiveChat implements OnInit, OnDestroy {
   @Input() stream: Stream;
 
   popper = {
@@ -96,7 +97,7 @@ export class PaidLiveChat implements OnInit {
     }
   ][] = [];
 
-  sub: Subscription;
+  resize$: Subscription | null;
 
   width: number = 0;
   xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
@@ -179,7 +180,7 @@ export class PaidLiveChat implements OnInit {
       });
 
     // TODO: switch to resize observer
-    this.sub = fromEvent(window, "resize")
+    this.resize$ = fromEvent(window, "resize")
       .pipe(
         map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
@@ -189,6 +190,10 @@ export class PaidLiveChat implements OnInit {
         this.width = w;
         this.xScale.range([0, this.width - this.leftMargin - this.rightMargin]);
       });
+  }
+
+  ngOnDestroy() {
+    this.resize$?.unsubscribe();
   }
 
   tryOpenPopper(e: MouseEvent | TouchEvent) {

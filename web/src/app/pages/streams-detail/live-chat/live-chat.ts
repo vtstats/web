@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { CdkScrollable } from "@angular/cdk/scrolling";
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -40,7 +41,10 @@ import { isTouchDevice, within } from "src/utils";
   ],
 })
 export class LiveChat implements OnInit, OnDestroy {
-  constructor(private host: ElementRef<HTMLElement>) {}
+  constructor(
+    private host: ElementRef<HTMLElement>,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   loading = false;
 
@@ -75,8 +79,8 @@ export class LiveChat implements OnInit, OnDestroy {
 
   @ViewChild(CdkScrollable, { static: true }) scrollable: CdkScrollable;
 
-  sub: Subscription;
-  scrollSub: Subscription;
+  resize$: Subscription | null;
+  scroll$: Subscription | null;
   rows: [number, number, number, number][] = [];
   xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
   yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
@@ -91,7 +95,7 @@ export class LiveChat implements OnInit, OnDestroy {
     this._render();
 
     // TODO: switch to resize observer
-    this.sub = fromEvent(window, "resize")
+    this.resize$ = fromEvent(window, "resize")
       .pipe(
         filter(() => this.unit === "fit"),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
@@ -102,8 +106,8 @@ export class LiveChat implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.sub) this.sub.unsubscribe();
-    if (this.scrollSub) this.scrollSub.unsubscribe();
+    this.resize$?.unsubscribe();
+    this.scroll$?.unsubscribe();
   }
 
   changeTimeUnit(unit: number | "fit") {
@@ -177,9 +181,10 @@ export class LiveChat implements OnInit, OnDestroy {
 
     this.yTicks = this.yScale.ticks(6);
 
-    if (!this.scrollSub) {
-      this.scrollSub = this.scrollable.elementScrolled().subscribe((event) => {
+    if (!this.scroll$) {
+      this.scroll$ = this.scrollable.elementScrolled().subscribe((event) => {
         this.closeTooltip();
+        this.cdr.detectChanges();
       });
     }
   }
