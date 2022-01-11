@@ -37,6 +37,7 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {}
 
+  @Input() name: string;
   @Input() streamId: string;
 
   loading = false;
@@ -104,6 +105,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
   }
 
   _render() {
+    if (this._raw.length === 0) return;
+
     const hostWidth = this.host.nativeElement.getBoundingClientRect().width;
 
     if (typeof this.unit === "number") {

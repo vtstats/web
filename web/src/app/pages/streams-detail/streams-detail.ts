@@ -33,6 +33,7 @@ export class StreamsDetail implements OnInit {
         ids: [this.streamId],
         metrics: [
           StreamReportKind.youtubeStreamViewer,
+          StreamReportKind.youtubeStreamLike,
           StreamReportKind.youtubeLiveChatMessage,
         ],
       })

@@ -103,11 +103,25 @@
     color: inherit;
   }
 
-  .viewers {
+  .statistics {
     margin-bottom: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    span {
+    .likes {
+      padding-left: 12px;
+    }
+
+    .separator {
+      padding: 0 3px;
+    }
+
+    mat-icon {
+      height: 18px;
+      width: 18px;
       vertical-align: middle;
+      padding: 0 3px;
     }
   }
 
@@ -131,13 +145,6 @@
     height: 24px;
     border-radius: 50%;
     vertical-align: middle;
-  }
-
-  .view-icon {
-    height: 18px;
-    width: 18px;
-    vertical-align: middle;
-    padding: 0 3px;
   }
 
   .meta {

@@ -46,6 +46,7 @@ export type Stream = {
 
   averageViewerCount?: number;
   maxViewerCount?: number;
+  maxLikeCount?: number;
 };
 
 export type StreamGroup = {
@@ -90,6 +91,7 @@ export type Report<K> = {
 export const enum StreamReportKind {
   youtubeStreamViewer = "youtube_stream_viewer",
   youtubeLiveChatMessage = "youtube_live_chat_message",
+  youtubeStreamLike = "youtube_stream_like",
 }
 
 export type StreamReportOption = {

@@ -10,7 +10,21 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="'youtube_stream_viewer'">
-        <hls-stream-stats-chart [rows]="report.rows" [stream]="stream">
+        <hls-stream-stats-chart
+          [rows]="report.rows"
+          [stream]="stream"
+          i18n-name="@@streamViewers"
+          name="Stream viewers"
+        >
+        </hls-stream-stats-chart>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'youtube_stream_like'">
+        <hls-stream-stats-chart
+          [rows]="report.rows"
+          [stream]="stream"
+          name="Stream likes"
+        >
         </hls-stream-stats-chart>
       </ng-container>
     </ng-container>

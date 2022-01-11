@@ -47,9 +47,8 @@
 </a>
 
 <ng-container [ngSwitch]="stream.status">
-  <div class="viewers current" *ngSwitchCase="'live'">
+  <div class="statistics current" *ngSwitchCase="'live'">
     <mat-icon
-      class="view-icon"
       svgIcon="eye"
       i18n-title="@@streaming"
       title="Streaming"
@@ -64,11 +63,14 @@
     <span i18n-title="@@maximumViewers" title="Maximum Viewers">
       {{ (stream.maxViewerCount | number) || "----" }}
     </span>
+
+    <mat-icon class="likes" svgIcon="thumb_up" title="Like"></mat-icon>
+
+    <span>{{ (stream.maxLikeCount | number) || "----" }}</span>
   </div>
 
-  <div class="viewers" *ngSwitchCase="'ended'">
+  <div class="statistics" *ngSwitchCase="'ended'">
     <mat-icon
-      class="view-icon"
       svgIcon="eye"
       i18n-title="@@streamHasEnded"
       title="Stream has ended"
@@ -83,6 +85,10 @@
     <span i18n-title="@@maximumViewers" title="Maximum Viewers">
       {{ (stream.maxViewerCount | number) || "----" }}
     </span>
+
+    <mat-icon class="likes" svgIcon="thumb_up" title="Like"></mat-icon>
+
+    <span>{{ (stream.maxLikeCount | number) || "----" }}</span>
   </div>
 </ng-container>
 
