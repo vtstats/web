@@ -308,26 +308,58 @@ impl Database {
         start_time: Option<UtcTime>,
         end_time: Option<UtcTime>,
         viewers: Option<i32>,
+        likes: Option<i32>,
     ) -> Result<()> {
         let mut tx = self.pool.begin().await?;
 
         let _ = sqlx::query!(
             r#"
     update youtube_streams
-       set (title, updated_at, status, schedule_time, start_time, end_time)
-         = ($1, $2, $3, $4, $5, $6)
-     where stream_id = $7
+       set (
+             title,
+             updated_at,
+             status,
+             schedule_time,
+             start_time,
+             end_time,
+             max_like_count
+           )
+         = (
+             $1,
+             $2,
+             $3,
+             $4,
+             $5,
+             $6,
+             greatest(youtube_streams.max_like_count, $7)
+           )
+     where stream_id = $8
             "#,
-            title,
-            datetime,
-            status: _,
-            schedule_time,
-            start_time,
-            end_time,
-            id,
+            title,         // $1
+            datetime,      // $2
+            status: _,     // $3
+            schedule_time, // $4
+            start_time,    // $5
+            end_time,      // $6
+            likes,         // $7
+            id,            // $8
         )
         .execute(&mut tx)
         .await?;
+
+        if let Some(likes) = likes {
+            let _ = sqlx::query!(
+                r#"
+    insert into youtube_stream_like_statistic (stream_id, time, value)
+         values ($1, $2, $3)
+                "#,
+                id,       // $1
+                datetime, // $2
+                likes,    // $3
+            )
+            .execute(&mut tx)
+            .await?;
+        }
 
         if let Some(viewers) = viewers {
             let _ = sqlx::query!(
@@ -335,9 +367,9 @@ impl Database {
     insert into youtube_stream_viewer_statistic (stream_id, time, value)
          values ($1, $2, $3)
                 "#,
-                id,
-                datetime,
-                viewers,
+                id,       // $1
+                datetime, // $2
+                viewers,  // $3
             )
             .execute(&mut tx)
             .await?;

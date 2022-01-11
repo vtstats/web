@@ -39,6 +39,7 @@ CREATE TABLE youtube_streams (
   status stream_status NOT NULL,
   average_viewer_count INTEGER,
   max_viewer_count INTEGER,
+  max_like_count INTEGER,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -67,6 +68,12 @@ CREATE TABLE bilibili_channel_view_statistic (
 );
 
 CREATE TABLE youtube_stream_viewer_statistic (
+  stream_id TEXT NOT NULL REFERENCES youtube_streams,
+  time TIMESTAMPTZ NOT NULL,
+  value INTEGER NOT NULL
+);
+
+CREATE TABLE youtube_stream_like_statistic (
   stream_id TEXT NOT NULL REFERENCES youtube_streams,
   time TIMESTAMPTZ NOT NULL,
   value INTEGER NOT NULL

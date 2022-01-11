@@ -20,6 +20,7 @@ pub struct Stream {
     pub end_time: Option<DateTime<Utc>>,
     pub schedule_time: Option<DateTime<Utc>>,
     pub viewers: Option<i32>,
+    pub likes: Option<i32>,
 }
 
 #[derive(Debug)]
@@ -40,6 +41,7 @@ pub struct Video {
     pub id: String,
     pub snippet: Option<Snippet>,
     pub live_streaming_details: Option<LiveStreamingDetails>,
+    pub statistics: Option<Statistics>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -57,6 +59,12 @@ pub struct LiveStreamingDetails {
     pub actual_end_time: Option<DateTime<Utc>>,
     pub scheduled_start_time: Option<DateTime<Utc>>,
     pub concurrent_viewers: Option<String>,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct Statistics {
+    pub like_count: Option<String>,
 }
 
 impl RequestHub {
@@ -87,6 +95,10 @@ impl RequestHub {
                         viewers: detail
                             .concurrent_viewers
                             .and_then(|v| i32::from_str(&v).ok()),
+                        likes: video
+                            .statistics
+                            .and_then(|s| s.like_count)
+                            .and_then(|v| i32::from_str(&v).ok()),
                     }),
                     _ => None,
                 }
@@ -105,8 +117,8 @@ impl RequestHub {
         let url = Url::parse_with_params(
             "https://www.googleapis.com/youtube/v3/videos",
             &[
-                ("part", "id,liveStreamingDetails,snippet"),
-                ("fields", "items(id,liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers),snippet(title,channelId))"),
+                ("part", "id,statistics,liveStreamingDetails,snippet"),
+                ("fields", "items(id,statistics(likeCount),liveStreamingDetails(actualStartTime,actualEndTime,scheduledStartTime,concurrentViewers),snippet(title,channelId))"),
                 ("maxResults", "50"),
                 ("key", self.youtube_api_key()),
                 ("id", id),

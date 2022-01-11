@@ -68,6 +68,7 @@ async fn real_main() -> Result<()> {
             stream.start_time,
             stream.end_time,
             stream.viewers,
+            stream.likes,
         )
         .await?;
     }
