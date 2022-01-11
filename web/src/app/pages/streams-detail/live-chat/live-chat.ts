@@ -69,8 +69,8 @@ export class LiveChat implements OnInit, OnDestroy {
   readonly innerPadding: number = 3;
   readonly height: number = 300;
 
-  readonly leftMargin: number = 20;
-  readonly rightMargin: number = 20;
+  leftMargin: number = 20;
+  rightMargin: number = 20;
   readonly topMargin: number = 10;
   readonly bottomMargin: number = 30;
 
@@ -97,7 +97,6 @@ export class LiveChat implements OnInit, OnDestroy {
     // TODO: switch to resize observer
     this.resize$ = fromEvent(window, "resize")
       .pipe(
-        filter(() => this.unit === "fit"),
         map(() => this.host.nativeElement.getBoundingClientRect().width),
         distinctUntilChanged(),
         debounceTime(500)
@@ -122,23 +121,20 @@ export class LiveChat implements OnInit, OnDestroy {
   }
 
   _render() {
-    const hostWidth = this.host.nativeElement.getBoundingClientRect().width;
+    this.leftMargin = this.rightMargin = 20;
+    const hostWidth =
+      this.host.nativeElement.getBoundingClientRect().width -
+      this.leftMargin -
+      this.rightMargin;
 
     if (typeof this.unit === "number") {
       this._agg(this.unit);
-      this.width = Math.max(
-        this.rows.length * (this.barWidth + this.innerPadding),
-        hostWidth
-      );
 
       console.log(
         `[live-chat] unit: ${this.unit} raw: ${this._raw.length} rows: ${this.rows.length}`
       );
     } else {
-      const n = Math.floor(
-        (hostWidth - this.leftMargin - this.rightMargin) /
-          (this.barWidth + this.innerPadding)
-      );
+      const n = Math.floor(hostWidth / (this.barWidth + this.innerPadding));
 
       const [min, max] = extent(
         this._raw
@@ -153,21 +149,20 @@ export class LiveChat implements OnInit, OnDestroy {
       const unit = Math.ceil((max - min) / n / 15000) * 15000;
 
       this._agg(unit);
-      this.width = hostWidth;
 
       console.log(
         `[live-chat] unit: ${unit}(fit) raw: ${this._raw.length} rows: ${this.rows.length}`
       );
     }
 
-    const m = Math.max(
-      0,
-      (hostWidth - this.rows.length * (this.barWidth + this.innerPadding)) / 2
-    );
+    this.width = this.rows.length * (this.barWidth + this.innerPadding);
+
+    this.leftMargin += Math.max(0, (hostWidth - this.width) / 2);
+    this.rightMargin += Math.max(0, (hostWidth - this.width) / 2);
 
     this.xScale
       .domain([0, this.rows.length]) // n+1
-      .range([this.leftMargin + m, this.width - this.rightMargin - m]);
+      .range([this.leftMargin, this.leftMargin + this.width]);
 
     this.yScale
       .domain([0, max(this.rows, (row) => row[2])])

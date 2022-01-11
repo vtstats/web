@@ -42,7 +42,7 @@
   <div class="scroll" cdkScrollable>
     <svg
       #svg
-      [attr.width]="width"
+      [attr.width]="leftMargin + width + rightMargin"
       [attr.height]="topMargin + height + bottomMargin"
       holdGesture
       (hold)="tryOpenTooltip($event)"
