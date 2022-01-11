@@ -1,5 +1,18 @@
 If you like this project, consider [buying me a superchat](https://www.buymeacoffee.com/holostats). ;)
 
+2022 01 11
+----
+
+Add hololive english & hololive indonesia channels:
+
+![image](https://user-images.githubusercontent.com/17513314/148928148-76c6d368-0fbb-4d09-94ea-c2ec5b59e8c8.png)
+
+HoloStats now support stream like count:
+
+![image](https://user-images.githubusercontent.com/17513314/148928344-ee28406f-f0e3-4524-ae3c-a5a89ababdf1.png)
+
+![image](https://user-images.githubusercontent.com/17513314/148928304-8654ff75-53d9-452c-8801-fa68f0ca5b96.png)
+
 2021 12 19
 ----
 
