@@ -84,26 +84,24 @@
         </text>
       </ng-container>
 
-      <ng-container *ngIf="0 <= dataPointIdx && dataPointIdx < rows.length">
-        <line
-          class="guideline"
-          fill="none"
-          [attr.x1]="xScale(rows[dataPointIdx][0])"
-          [attr.y1]="0"
-          [attr.x2]="xScale(rows[dataPointIdx][0])"
-          [attr.y2]="yScale(0)"
-          stroke-dasharray="1.5, 6"
-          stroke-linecap="round"
-          stroke-width="2"
-        ></line>
+      <line
+        class="guideline"
+        fill="none"
+        [attr.x1]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.y1]="0"
+        [attr.x2]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.y2]="yScale(0)"
+        stroke-dasharray="1.5, 6"
+        stroke-linecap="round"
+        stroke-width="2"
+      ></line>
 
-        <circle
-          [attr.r]="dataPointSize"
-          [attr.cx]="xScale(rows[dataPointIdx][0])"
-          [attr.cy]="yScale(rows[dataPointIdx][1])"
-          fill="#ea4335"
-        ></circle>
-      </ng-container>
+      <circle
+        [attr.r]="dataPointSize"
+        [attr.cx]="xScale(rows[dataPointIdx]?.[0] || 0)"
+        [attr.cy]="yScale(rows[dataPointIdx]?.[1] || 0)"
+        fill="#ea4335"
+      ></circle>
     </svg>
   </div>
 </div>

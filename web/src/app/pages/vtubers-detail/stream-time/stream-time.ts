@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -74,7 +75,7 @@ export class StreamTime implements OnInit {
 
   days: { x: number; y: number; d: number; v: number; c: string }[] = [];
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     const end = new Date();
@@ -111,8 +112,9 @@ export class StreamTime implements OnInit {
         }
       }
 
-      this.scroll$ = this.scrollable.elementScrolled().subscribe((event) => {
+      this.scroll$ = this.scrollable.elementScrolled().subscribe(() => {
         this.closeTooltip();
+        this.cdr.detectChanges();
       });
     });
   }
