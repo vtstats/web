@@ -46,6 +46,14 @@ youtube = "UCJFZiqLMntJufDCHc6bQixg"
 bilibili = "286700005"
 
 [[vtubers]]
+id = "hololive_en"
+youtube = "UCotXwY6s8pWmuWd_snKYjhg"
+
+[[vtubers]]
+id = "hololive_id"
+youtube = "UCfrWoRGlawPQDQxxeIDRP0Q"
+
+[[vtubers]]
 id = "yagoo"
 youtube = "UCu2DMOGLeR_DSStCyeQpi5Q"
 
