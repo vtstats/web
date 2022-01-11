@@ -28,6 +28,7 @@ pub struct Stream {
     pub end_time: Option<UtcTime>,
     pub average_viewer_count: Option<i32>,
     pub max_viewer_count: Option<i32>,
+    pub max_like_count: Option<i32>,
     #[serde(with = "ts_milliseconds")]
     pub updated_at: UtcTime,
     pub status: StreamStatus,
@@ -98,6 +99,7 @@ impl Database {
              end_time,
              average_viewer_count,
              max_viewer_count,
+             max_like_count,
              updated_at,
              status as "status: _"
         from youtube_streams
@@ -169,6 +171,7 @@ impl Database {
            end_time,
            average_viewer_count,
            max_viewer_count,
+           max_like_count,
            updated_at,
            status as "status: _"
       from youtube_streams
