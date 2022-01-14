@@ -125,19 +125,12 @@
     }
   }
 
-  .name {
-    margin-left: 4px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
+  .meta {
+    margin-bottom: 12px;
 
-  .dot {
-    margin: 0 4px;
-  }
-
-  .time {
-    white-space: nowrap;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
   }
 
   .profile {
@@ -145,13 +138,30 @@
     height: 24px;
     border-radius: 50%;
     vertical-align: middle;
+    flex-grow: 0;
+    flex-shrink: 0;
+    cursor: pointer;
   }
 
-  .meta {
-    margin-bottom: 12px;
+  .name {
+    margin-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 1;
+    cursor: pointer;
+  }
 
-    flex-direction: row;
-    display: flex;
-    align-items: center;
+  .dot {
+    margin: 0 4px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  .time {
+    white-space: nowrap;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
 }

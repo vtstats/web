@@ -3,7 +3,11 @@
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
   <div class="cover">
-    <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
+    <img
+      class="img"
+      loading="lazy"
+      [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+    />
   </div>
 
   <div class="duration" [ngSwitch]="stream.status">
@@ -22,7 +26,7 @@
 
   <a
     class="icon open"
-    href="https://youtu.be/{{ stream.streamId }}"
+    [attr.href]="'https://youtu.be/' + stream.streamId"
     target="_blank"
     (click)="$event.stopPropagation()"
   >
@@ -40,10 +44,10 @@
 
 <a
   class="title"
-  title="{{ stream.title }}"
+  [attr.title]="stream.title"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
-  {{stream.title}}
+  {{ stream.title }}
 </a>
 
 <ng-container [ngSwitch]="stream.status">
@@ -93,15 +97,23 @@
 </ng-container>
 
 <div class="meta">
-  <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
-  <span class="name">{{ stream.vtuberId | name }}</span>
+  <img
+    class="profile"
+    [routerLink]="['/vtuber', stream.vtuberId]"
+    [attr.src]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
+  />
+
+  <span class="name" role="link" [routerLink]="['/vtuber', stream.vtuberId]">
+    {{ stream.vtuberId | name }}
+  </span>
+
   <span class="dot">•</span>
 
   <ng-container [ngSwitch]="stream.status">
     <ng-container *ngSwitchCase="'scheduled'">
       <span
         class="time"
-        title="{{ stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+        [attr.title]="stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss'"
       >
         {{ stream.scheduleTime | distance: (everyMinute$ | async) }}
       </span>
@@ -110,7 +122,7 @@
     <ng-container *ngSwitchCase="'live'">
       <span
         class="time"
-        title="{{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+        [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
       >
         {{ stream.startTime | distance: (everyMinute$ | async) }}
       </span>
@@ -119,7 +131,7 @@
     <ng-container *ngSwitchCase="'ended'">
       <span
         class="time"
-        title="{{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}"
+        [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
       >
         {{ stream.startTime | distance: (everyMinute$ | async) }}
       </span>
