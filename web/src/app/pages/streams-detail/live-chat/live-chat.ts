@@ -13,12 +13,7 @@ import {
 import { range, max, extent } from "d3-array";
 import { ScaleLinear, scaleLinear } from "d3-scale";
 import { fromEvent, Subscription } from "rxjs";
-import {
-  debounceTime,
-  filter,
-  map,
-  distinctUntilChanged,
-} from "rxjs/operators";
+import { debounceTime, map, distinctUntilChanged } from "rxjs/operators";
 
 import { Stream } from "src/app/models";
 import { isTouchDevice, within } from "src/utils";
@@ -154,6 +149,8 @@ export class LiveChat implements OnInit, OnDestroy {
         `[live-chat] unit: ${unit}(fit) raw: ${this._raw.length} rows: ${this.rows.length}`
       );
     }
+
+    if (this.rows.length === 0) return;
 
     this.width = this.rows.length * (this.barWidth + this.innerPadding);
 
