@@ -1,5 +1,16 @@
 If you like this project, consider [buying me a superchat](https://www.buymeacoffee.com/holostats). ;)
 
+2022 01 16
+----
+
+New translation: japanese
+
+![image](https://user-images.githubusercontent.com/17513314/149666164-827294ae-7e0b-4d19-9438-2967a6860e49.png)
+
+Timezone settings: you can now change the default timezone in settings page.
+
+![image](https://user-images.githubusercontent.com/17513314/149666238-813ebfce-2e64-49a8-9978-f81aa371d1d8.png)
+
 2022 01 11
 ----
 
