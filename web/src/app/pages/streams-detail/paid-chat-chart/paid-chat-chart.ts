@@ -7,6 +7,7 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy,
+  Inject,
 } from "@angular/core";
 import { PaidLiveChatMessage, Stream } from "src/app/models";
 import { ApiService } from "src/app/shared";
@@ -15,8 +16,8 @@ import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 import { ScaleLinear, scaleLinear } from "d3-scale";
 import { flatRollup, sort, sum, max, range } from "d3-array";
 
-import { hexToColorName, symbolToCurrency } from "./mapping";
 import { isTouchDevice, within } from "src/utils";
+import { CHAT_COLORS, CHAT_CURRENCIES } from "./tokens";
 
 const splitAmount = (amount: string): [string, number] => {
   const idx = amount.split("").findIndex((c) => "0" <= c && c <= "9");
@@ -104,7 +105,13 @@ export class PaidLiveChat implements OnInit, OnDestroy {
   yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
   xTicks: number[] = [];
 
-  constructor(private api: ApiService, private host: ElementRef<HTMLElement>) {}
+  constructor(
+    private api: ApiService,
+    private host: ElementRef<HTMLElement>,
+    @Inject(CHAT_COLORS) private chatColors: { [key: string]: string },
+    @Inject(CHAT_CURRENCIES)
+    private chatCurrencies: { [key: string]: [string, string] }
+  ) {}
 
   ngOnInit() {
     this.width = this.host.nativeElement.getBoundingClientRect().width;
@@ -115,7 +122,7 @@ export class PaidLiveChat implements OnInit, OnDestroy {
         map((res) =>
           res.paid.map((msg) => {
             const [symbol, value] = splitAmount(msg.amount);
-            const [currencyCode, currency] = symbolToCurrency[symbol] || [
+            const [currencyCode, currency] = this.chatCurrencies[symbol] || [
               symbol,
               symbol,
             ];
@@ -146,7 +153,7 @@ export class PaidLiveChat implements OnInit, OnDestroy {
                 flatRollup(
                   items,
                   (items) => ({
-                    name: hexToColorName[items[0].color],
+                    name: this.chatColors[items[0].color],
                     total: items.length,
                     totalValue: sum(items, (item) => item.value),
                   }),

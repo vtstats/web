@@ -1,5 +1,5 @@
 <hls-sub-menu>
-  <hls-sub-menu-title>Live Chat</hls-sub-menu-title>
+  <hls-sub-menu-title i18n="@@liveChat">Live Chat</hls-sub-menu-title>
 
   <hls-sub-menu-extra>
     <span
@@ -122,7 +122,7 @@
 
     <tbody>
       <tr>
-        <td class="label">Normal</td>
+        <td class="label" i18n="@@normal">Normal</td>
         <td class="count">
           {{ (rows[dataIndex][2] - rows[dataIndex][3]) | number }} ({{
           (rows[dataIndex][2] - rows[dataIndex][3]) / rows[dataIndex][2] |
@@ -131,7 +131,7 @@
       </tr>
 
       <tr>
-        <td class="label">Member</td>
+        <td class="label" i18n="@@member">Member</td>
         <td class="count">
           {{ rows[dataIndex][3] | number }} ({{ rows[dataIndex][3] /
           rows[dataIndex][2] | percent:'.1' }})
