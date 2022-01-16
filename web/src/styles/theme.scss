@@ -6,15 +6,14 @@
 @import "src/app/layout/sidenav/sidenav-theme";
 
 // components
-@import "src/app/components/apx-chart/apx-chart-theme";
 @import "src/app/components/date-filter/date-filter-theme";
 @import "src/app/components/stream-item/stream-item-theme";
-@import "src/app/components/channel-table/channel-table-theme";
 @import "src/app/components/sub-menu/sub-menu-theme";
 @import "src/app/components/vtuber-filter/vtuber-filter-theme";
 
 // pages
 @import "src/app/pages/not-found/not-found-theme";
+@import "src/app/pages/channels-list/channels-list-theme";
 @import "src/app/pages/settings/settings-theme";
 @import "src/app/pages/streams-detail/streams-detail-theme";
 @import "src/app/pages/vtubers-detail/vutbers-detail-theme";
@@ -31,12 +30,11 @@ mat.$theme-ignore-duplication-warnings: true;
   @include global-theme($theme);
   @include material-theme($theme);
   @include stream-item-theme($theme);
-  @include channel-table-theme($theme);
+  @include channels-list-theme($theme);
   @include sub-menu-theme($theme);
   @include sidenav-theme($theme);
   @include header-theme($theme);
   @include not-found-theme($theme);
-  @include apx-chart-theme($theme);
   @include date-filter-theme($theme);
   @include vtuber-filter-theme($theme);
   @include stream-details-theme($theme);
@@ -50,7 +48,6 @@ mat.$theme-ignore-duplication-warnings: true;
   @include sub-menu-typography($config);
   @include sidenav-typography($config);
   @include settings-typography($config);
-  @include apx-chart-typography($config);
   @include vtuber-filter-typography($config);
   @include stream-details-typography($config);
   @include vtubers-details-typography($config);

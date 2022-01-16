@@ -23,11 +23,16 @@ import { FormatUnitPipe } from "./format-unit-pipe/format-unit-pipe";
 
 @NgModule({
   imports: [
-    RouterModule,
     CommonModule,
     ComponentsModule,
     SharedModule,
     ScrollingModule,
+    RouterModule.forChild([
+      {
+        path: "",
+        component: StreamsDetail,
+      },
+    ]),
   ],
   declarations: [
     StreamsDetail,

@@ -2,9 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { PortalModule } from "@angular/cdk/portal";
-import { MatTableModule } from "@angular/material/table";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -16,11 +14,6 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { OverlayModule } from "@angular/cdk/overlay";
 
-import { ApxChart } from "./apx-chart/apx-chart";
-import {
-  ChannelTable,
-  ChannelTableShimmer,
-} from "./channel-table/channel-table";
 import { LoadingSpinner } from "./loading-spinner/loading-spinner";
 import { StreamItem, StreamItemShimmer } from "./stream-item/stream-item";
 import { StreamGroup } from "./stream-group/stream-group";
@@ -35,9 +28,6 @@ import { SharedModule } from "src/app/shared";
 
 @NgModule({
   declarations: [
-    ApxChart,
-    ChannelTable,
-    ChannelTableShimmer,
     LoadingSpinner,
     StreamGroup,
     StreamItem,
@@ -60,9 +50,7 @@ import { SharedModule } from "src/app/shared";
     MatNativeDateModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatTableModule,
     MatIconModule,
-    MatSortModule,
     MatListModule,
     MatMenuModule,
     MatTooltipModule,
@@ -71,9 +59,6 @@ import { SharedModule } from "src/app/shared";
     SharedModule,
   ],
   exports: [
-    ApxChart,
-    ChannelTable,
-    ChannelTableShimmer,
     LoadingSpinner,
     StreamGroup,
     StreamItem,

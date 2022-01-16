@@ -7,7 +7,8 @@ import {
   OnChanges,
   ChangeDetectorRef,
 } from "@angular/core";
-import { ApxChart } from "src/app/components/apx-chart/apx-chart";
+
+import { ApxChart } from "../apx-chart/apx-chart";
 
 import { ChannelReportKind, Report } from "src/app/models";
 

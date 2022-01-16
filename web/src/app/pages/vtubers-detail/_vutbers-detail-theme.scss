@@ -1,14 +1,17 @@
 @import "./channel-stats/channel-stats-theme";
 @import "./channel-stats-chart/channel-stats-chart-theme";
 @import "./stream-time/stream-time-theme";
+@import "./apx-chart/apx-chart-theme";
 
 @mixin vtubers-details-theme($theme) {
   @include channel-stats-theme($theme);
   @include channel-stats-chart-theme($theme);
   @include stream-time-theme($theme);
+  @include apx-chart-theme($theme);
 }
 
 @mixin vtubers-details-typography($config) {
   @include stream-time-typography($config);
   @include channel-stats-typography($config);
+  @include apx-chart-typography($config);
 }

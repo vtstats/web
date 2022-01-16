@@ -17,6 +17,7 @@ import { PlaylistSelector } from "./playlist-selector/playlist-selector";
 import { TimezoneSettings } from "./timezone-settings/timezone-settings";
 import { YouTubeSettings } from "./youtube-settings/youtube-settings";
 import { VTubersSettings } from "./vtubers-settings/vtubers-settings";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
@@ -31,6 +32,12 @@ import { VTubersSettings } from "./vtubers-settings/vtubers-settings";
     MatSelectModule,
     SharedModule,
     ComponentsModule,
+    RouterModule.forChild([
+      {
+        path: "",
+        component: Settings,
+      },
+    ]),
   ],
   declarations: [
     Settings,
