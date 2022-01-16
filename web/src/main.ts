@@ -1,7 +1,10 @@
 import { enableProdMode, LOCALE_ID } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { loadTranslations } from "@angular/localize";
-import { registerLocaleData } from "@angular/common";
+import {
+  DATE_PIPE_DEFAULT_TIMEZONE,
+  registerLocaleData,
+} from "@angular/common";
 import * as Sentry from "@sentry/browser";
 
 import { environment } from "./environments/environment";
@@ -35,6 +38,10 @@ import(
     platformBrowserDynamic([
       { provide: DATE_FNS_LOCALE, useValue: mod.dateFnsLocale },
       { provide: LOCALE_ID, useValue: lang },
+      {
+        provide: DATE_PIPE_DEFAULT_TIMEZONE,
+        useValue: window.localStorage.getItem("timezone"),
+      },
     ]).bootstrapModule(AppModule, {
       ngZoneEventCoalescing: true,
     });

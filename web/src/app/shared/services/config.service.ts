@@ -1,5 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BehaviorSubject } from "rxjs";
 
 import { vtubers } from "vtubers";
 
@@ -8,8 +10,14 @@ export class ConfigService {
   vtuber: Set<string>;
   theme: string;
   playlist: string;
+  timezone$ = new BehaviorSubject(window.localStorage.getItem("timezone"));
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  snackBar$ = null;
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private snackBar: MatSnackBar
+  ) {
     if (window.localStorage.getItem("vtuber")) {
       this.vtuber = new Set(
         window.localStorage
@@ -56,7 +64,25 @@ export class ConfigService {
     location.reload();
   }
 
+  setTimezone(item: string) {
+    this.timezone$.next(item);
+
+    if (!this.snackBar$) {
+      this.snackBar$ = this.snackBar
+        .open("Reload page to take effect", "RELOAD")
+        .onAction()
+        .subscribe(() => location.reload());
+    }
+
+    if (item) {
+      this.setItem("timezone", item);
+    } else {
+      window.localStorage.removeItem("timezone");
+    }
+  }
+
   setPlaylist(item: string) {
+    this.playlist = item;
     this.setItem("yt_playlist", item);
   }
 

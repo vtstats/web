@@ -1,0 +1,16 @@
+<div class="channel-stats-chart">
+  <div class="container">
+    <div class="desc">
+      <span class="title"> {{ title }} </span>
+      <div class="row">
+        <span class="number"> {{ dataPoint?.[1] | number }} </span>
+        <span class="spacer"></span>
+        <span>{{ dataPoint?.[0] | date: "yyyy-MM-dd HH:mm" }}</span>
+      </div>
+    </div>
+    <div class="chart" (mouseleave)="resetDataPointIndex()">
+      <apx-chart #chart [height]="120" [marginBottom]="15"></apx-chart>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+</div>

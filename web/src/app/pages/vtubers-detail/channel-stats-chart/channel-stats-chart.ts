@@ -7,35 +7,13 @@ import {
   OnChanges,
   ChangeDetectorRef,
 } from "@angular/core";
-import { format } from "date-fns";
 import { ApxChart } from "src/app/components/apx-chart/apx-chart";
 
 import { ChannelReportKind, Report } from "src/app/models";
 
 @Component({
   selector: "hls-channel-stats-chart",
-  template: `
-    <div class="channel-stats-chart">
-      <div class="container">
-        <div class="desc">
-          <span class="title">
-            {{ title }}
-          </span>
-          <div class="row">
-            <span class="number">
-              {{ value | number }}
-            </span>
-            <span class="spacer"></span>
-            <span>{{ date }}</span>
-          </div>
-        </div>
-        <div class="chart" (mouseleave)="resetDataPointIndex()">
-          <apx-chart #chart [height]="120" [marginBottom]="15"></apx-chart>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
-    </div>
-  `,
+  templateUrl: "channel-stats-chart.html",
   styleUrls: ["channel-stats-chart.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -70,16 +48,11 @@ export class ChannelStatsChart implements OnChanges {
     }
   }
 
-  get dataPoint(): [number, number] {
-    return this.report.rows[this.dataPointIndex || this.report.rows.length - 1];
-  }
-
-  get date(): string {
-    return format(this.dataPoint[0], "yyyy-MM-dd HH:mm");
-  }
-
-  get value(): number {
-    return this.dataPoint[1];
+  get dataPoint(): [number, number] | null {
+    return (
+      this.report.rows[this.dataPointIndex] ||
+      this.report.rows[this.report.rows.length - 1]
+    );
   }
 
   resetDataPointIndex() {

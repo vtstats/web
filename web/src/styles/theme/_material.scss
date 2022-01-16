@@ -12,6 +12,8 @@
   @include mat.sidenav-theme($theme);
   @include mat.card-theme($theme);
   @include mat.snack-bar-theme($theme);
+  @include mat.select-theme($theme);
+  @include mat.form-field-theme($theme);
 
   @include mat.datepicker-theme($theme);
 

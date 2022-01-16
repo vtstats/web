@@ -1,12 +1,9 @@
-<button mat-button [matMenuTriggerFor]="menu">
-  {{ loading ? 'Loading...' : selected ? selected.snippet.localized.title : 'Not
-  Found' }}
+<mat-form-field appearance="none">
+  <mat-label *ngIf="loading">Loading...</mat-label>
 
-  <span class="playlist-selector-arrow"></span>
-</button>
-
-<mat-menu #menu="matMenu">
-  <button mat-menu-item *ngFor="let item of items" (click)="select(item)">
-    {{ item.snippet.localized.title }}
-  </button>
-</mat-menu>
+  <mat-select [value]="selected">
+    <mat-option *ngFor="let item of items" [value]="item.id">
+      {{ item.snippet.localized.title }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

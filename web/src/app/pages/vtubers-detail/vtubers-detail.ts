@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
-import { startOfDay } from "date-fns";
-import endOfDay from "date-fns/endOfDay";
+import { startOfDay, endOfDay } from "date-fns";
 
 import { vtubers } from "vtubers";
 
