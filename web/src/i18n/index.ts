@@ -1,7 +1,7 @@
 import { InjectionToken } from "@angular/core";
 import type { Locale } from "date-fns";
 
-const supportedLanguages = ["en", "ms", "zh", "es"];
+const supportedLanguages = ["en", "es", "ja", "ms", "zh"];
 
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("DATE_FNS_LOCALE");
 
