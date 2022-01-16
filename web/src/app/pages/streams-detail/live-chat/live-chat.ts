@@ -110,11 +110,6 @@ export class LiveChat implements OnInit, OnDestroy {
     this._render();
   }
 
-  formatTimeUnit(unit: number | "fit"): string {
-    if (unit === "fit") return "Fit";
-    return unit >= 60000 ? `${unit / 60000}m` : `${unit / 1000}s`;
-  }
-
   _render() {
     this.leftMargin = this.rightMargin = 20;
     const hostWidth =

@@ -99,11 +99,6 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     this.scroll$?.unsubscribe();
   }
 
-  formatTimeUnit(unit: number | "fit"): string {
-    if (unit === "fit") return "Fit";
-    return unit >= 60000 ? `${unit / 60000}m` : `${unit / 1000}s`;
-  }
-
   _render() {
     if (this._raw.length === 0) return;
 

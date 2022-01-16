@@ -19,6 +19,7 @@ import {
   StreamsSummary,
   StreamsSummaryShimmer,
 } from "./stream-summary/stream-summary";
+import { FormatUnitPipe } from "./format-unit-pipe/format-unit-pipe";
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import {
     StreamStatsChartShimmer,
     StreamsSummary,
     StreamsSummaryShimmer,
+    FormatUnitPipe,
   ],
 })
 export class StreamsDetailModule {}

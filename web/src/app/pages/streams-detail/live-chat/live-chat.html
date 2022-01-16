@@ -9,7 +9,7 @@
       [ngClass]="{ selected: unit === u }"
       (click)="changeTimeUnit(u)"
     >
-      {{formatTimeUnit(u)}}
+      {{ u | formatUnit }}
     </span>
   </hls-sub-menu-extra>
 </hls-sub-menu>
