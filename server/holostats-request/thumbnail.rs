@@ -1,9 +1,7 @@
 use anyhow::Result;
 use bytes::Bytes;
 use futures::{FutureExt, TryFutureExt};
-use holostats_config::CONFIG;
 use reqwest::{Response, Url};
-use sha2::{Digest, Sha256};
 use tracing::instrument;
 
 use super::RequestHub;
@@ -19,12 +17,10 @@ impl RequestHub {
             }
         };
 
-        let content_sha256 = Sha256::digest(data.as_ref());
-
-        let filename = format!("{}.{}.jpg", stream_id, hex::encode(content_sha256));
+        let filename = format!("{}.jpg", stream_id);
 
         match self.upload_file(&filename, data, "image/jpg").await {
-            Ok(_) => Some(format!("{}/{}", CONFIG.s3.public_url, filename)),
+            Ok(url) => Some(url),
             Err(e) => {
                 tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
                 None

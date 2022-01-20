@@ -51,6 +51,7 @@ pub struct S3Config {
     pub access_key: String,
     pub region: String,
     pub public_url: String,
+    pub bucket: String,
 }
 
 #[derive(Deserialize, Default)]

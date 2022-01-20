@@ -24,7 +24,12 @@ impl RequestHub {
             http.method = "PUT",
         )
     )]
-    pub async fn upload_file<T>(&self, filename: &str, data: T, content_type: &str) -> Result<()>
+    pub async fn upload_file<T>(
+        &self,
+        filename: &str,
+        data: T,
+        content_type: &str,
+    ) -> Result<String>
     where
         T: Into<Body> + AsRef<[u8]>,
     {
@@ -38,7 +43,7 @@ impl RequestHub {
         // task1
         let canonical_req = format!(
             r#"PUT
-/{filename}
+/{bucket}/{filename}
 
 host:{host}
 x-amz-content-sha256:{content_sha256}
@@ -46,6 +51,7 @@ x-amz-date:{date}
 
 host;x-amz-content-sha256;x-amz-date
 {content_sha256}"#,
+            bucket = CONFIG.s3.bucket,
             filename = filename,
             host = CONFIG.s3.host,
             date = date,
@@ -104,7 +110,8 @@ host;x-amz-content-sha256;x-amz-date
         );
 
         let s3_url = format!(
-            "https://{host}/{filename}",
+            "https://{host}/{bucket}/{filename}",
+            bucket = CONFIG.s3.bucket,
             host = CONFIG.s3.host,
             filename = filename
         );
@@ -123,6 +130,6 @@ host;x-amz-content-sha256;x-amz-date
             .map(|res| res.and_then(Response::error_for_status))
             .await?;
 
-        Ok(())
+        Ok(format!("{}/{}", CONFIG.s3.public_url, filename))
     }
 }
