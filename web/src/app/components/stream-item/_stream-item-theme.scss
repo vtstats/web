@@ -24,11 +24,8 @@
       );
     }
 
-    .profile {
-      background-color: $background-shadow;
-    }
-
-    .thumbnail:before {
+    .profile,
+    .thumbnail {
       background-color: $background-shadow;
     }
   }

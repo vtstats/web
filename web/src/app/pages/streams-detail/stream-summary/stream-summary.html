@@ -1,12 +1,18 @@
 <div class="stream-summary">
-  <div class="cover">
-    <a class="link">
-      <img class="img" src="{{ stream.thumbnailUrl }}?ngsw-bypass" />
-    </a>
-  </div>
+  <a
+    class="cover"
+    [attr.href]="'https://youtu.be/' + stream.streamId"
+    target="_blank"
+  >
+    <img class="img" [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'" />
+  </a>
 
   <div class="meta">
-    <a class="title" href="https://youtu.be/{{ stream.streamId }}">
+    <a
+      class="title"
+      [attr.href]="'https://youtu.be/' + stream.streamId"
+      target="_blank"
+    >
       {{ stream.title }}
     </a>
 

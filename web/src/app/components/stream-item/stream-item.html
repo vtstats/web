@@ -2,13 +2,11 @@
   class="thumbnail"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
-  <div class="cover">
-    <img
-      class="img"
-      loading="lazy"
-      [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
-    />
-  </div>
+  <img
+    class="img"
+    loading="lazy"
+    [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+  />
 
   <div class="duration" [ngSwitch]="stream.status">
     <ng-container *ngSwitchCase="'scheduled'">
@@ -98,6 +96,7 @@
 
 <div class="meta">
   <img
+    loading="lazy"
     class="profile"
     [routerLink]="['/vtuber', stream.vtuberId]"
     [attr.src]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
