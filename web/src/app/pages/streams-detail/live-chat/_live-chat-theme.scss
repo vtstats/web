@@ -3,6 +3,7 @@
 @mixin live-chat-theme($theme) {
   $is-dark-theme: map-get($theme, "is-dark");
   $foreground: map-get($theme, "foreground");
+  $background: map-get($theme, "background");
 
   .live-chat-chart {
     .label {
@@ -12,12 +13,18 @@
     .line {
       stroke: mat.get-color-from-palette($foreground, "divider");
     }
+
+    .stroke {
+      stroke: mat.get-color-from-palette($background, "card");
+      fill: mat.get-color-from-palette($background, "card");
+    }
   }
 }
 
 @mixin live-chat-typography($config) {
   .live-chat-chart {
-    .label {
+    .label,
+    .stroke {
       font-size: mat.font-size($config, "caption");
       font-weight: mat.font-weight($config, "body-2");
     }

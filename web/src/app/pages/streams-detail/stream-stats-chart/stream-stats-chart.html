@@ -17,30 +17,6 @@
 </hls-sub-menu>
 
 <div class="stream-stats-chart" (dblclick)="jumpTo($event)">
-  <svg
-    class="axis"
-    [attr.width]="960"
-    [attr.height]="topMargin + height + bottomMargin"
-  >
-    <ng-container *ngFor="let value of yTicks">
-      <line
-        class="line"
-        [attr.x1]="0"
-        [attr.y1]="yScale(value)"
-        [attr.x2]="960"
-        [attr.y2]="yScale(value)"
-      ></line>
-      <text
-        *ngIf="value !== 0"
-        class="y label"
-        [attr.x]="960 - 16"
-        [attr.dy]="yScale(value) + 16"
-      >
-        {{ value | number }}
-      </text>
-    </ng-container>
-  </svg>
-
   <div class="scroll" cdkScrollable>
     <svg
       #svg
@@ -66,23 +42,34 @@
         fill="none"
       ></path>
 
-      <ng-container *ngFor="let tick of xTicks">
-        <line
-          class="line"
-          [attr.x1]="xScale(rows[tick][0])"
-          [attr.y1]="yScale(0)"
-          [attr.x2]="xScale(rows[tick][0])"
-          [attr.y2]="yScale(0) + 8"
-        ></line>
+      <g class="x-axe">
+        <ng-container *ngFor="let tick of xTicks">
+          <line
+            class="line"
+            [attr.x1]="xScale(rows[tick][0])"
+            [attr.y1]="yScale(0)"
+            [attr.x2]="xScale(rows[tick][0])"
+            [attr.y2]="yScale(0) + 8"
+          ></line>
 
-        <text
-          class="x label"
-          [attr.x]="xScale(rows[tick][0])"
-          [attr.y]="yScale(0) + 24"
-        >
-          {{ rows[tick][0] | date:'HH:mm' }}
-        </text>
-      </ng-container>
+          <text
+            class="x label"
+            [attr.x]="xScale(rows[tick][0])"
+            [attr.y]="yScale(0) + 24"
+          >
+            {{ rows[tick][0] | date:'HH:mm' }}
+          </text>
+        </ng-container>
+      </g>
+
+      <line
+        *ngFor="let value of yTicks"
+        class="line"
+        [attr.x1]="0"
+        [attr.y1]="yScale(value)"
+        [attr.x2]="'100%'"
+        [attr.y2]="yScale(value)"
+      ></line>
 
       <line
         class="guideline"
@@ -104,6 +91,32 @@
       ></circle>
     </svg>
   </div>
+
+  <svg
+    class="y-axe"
+    [attr.width]="80"
+    [attr.height]="topMargin + height + bottomMargin"
+  >
+    <ng-container *ngFor="let v of yTicks">
+      <text
+        *ngIf="v !== 0"
+        class="stroke"
+        [attr.x]="76"
+        [attr.dy]="yScale(v) + 16"
+      >
+        {{ v | number }}
+      </text>
+
+      <text
+        *ngIf="v !== 0"
+        class="label"
+        [attr.x]="76"
+        [attr.dy]="yScale(v) + 16"
+      >
+        {{ v | number }}
+      </text>
+    </ng-container>
+  </svg>
 </div>
 
 <div

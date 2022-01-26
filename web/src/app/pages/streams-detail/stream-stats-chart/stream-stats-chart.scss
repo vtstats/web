@@ -3,6 +3,8 @@
 .stream-stats-chart {
   position: relative;
   height: 360px;
+  font-family: "Fira Code", monospace;
+  user-select: none;
 
   .scroll {
     position: absolute;
@@ -15,27 +17,28 @@
     user-select: none;
   }
 
-  .axis {
-    right: 0;
-    overflow: hidden;
-    position: absolute;
-  }
-
   .line {
     stroke-width: 1px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  .label {
-    user-select: none;
-    font-family: "Fira Code", monospace;
+  .x-axe {
+    text-anchor: middle;
   }
 
-  .y.label {
+  .y-axe {
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+    right: 16px;
     text-anchor: end;
   }
 
-  .x.label {
-    text-anchor: middle;
+  .stroke {
+    stroke-width: 5px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
   }
 }
 

@@ -15,30 +15,6 @@
 </hls-sub-menu>
 
 <div class="live-chat-chart" (dblclick)="jumpTo($event)">
-  <svg
-    class="axis"
-    [attr.width]="960"
-    [attr.height]="topMargin + height + bottomMargin"
-  >
-    <ng-container *ngFor="let v of yTicks">
-      <line
-        class="line"
-        [attr.x1]="0"
-        [attr.y1]="yScale(v)"
-        [attr.x2]="960"
-        [attr.y2]="yScale(v)"
-      ></line>
-      <text
-        *ngIf="v !== 0"
-        class="y label"
-        [attr.x]="960 - 16"
-        [attr.dy]="yScale(v) + 16"
-      >
-        {{ v | number }}
-      </text>
-    </ng-container>
-  </svg>
-
   <div class="scroll" cdkScrollable>
     <svg
       #svg
@@ -76,27 +52,65 @@
         ></rect>
       </g>
 
-      <ng-container *ngFor="let i of xTicks">
+      <ng-container *ngFor="let v of yTicks">
         <line
           class="line"
-          [attr.x1]="xScale(i) + (barWidth) / 2"
-          [attr.y1]="topMargin + height"
-          [attr.x2]="xScale(i) + (barWidth) / 2"
-          [attr.y2]="topMargin + height + 6"
-          stroke-width="1px"
-          stroke="#E6E6E6"
+          [attr.x1]="0"
+          [attr.y1]="yScale(v)"
+          [attr.x2]="'100%'"
+          [attr.y2]="yScale(v)"
         ></line>
-
-        <text
-          class="x label"
-          [attr.x]="xScale(i) + (barWidth) / 2"
-          [attr.y]="topMargin + height + 16"
-        >
-          {{ rows[i][0] | date:'HH:mm' }}
-        </text>
       </ng-container>
+
+      <g class="x-axe">
+        <ng-container *ngFor="let i of xTicks">
+          <line
+            class="line"
+            [attr.x1]="xScale(i) + (barWidth) / 2"
+            [attr.y1]="topMargin + height"
+            [attr.x2]="xScale(i) + (barWidth) / 2"
+            [attr.y2]="topMargin + height + 6"
+            stroke-width="1px"
+            stroke="#E6E6E6"
+          ></line>
+
+          <text
+            class="x label"
+            [attr.x]="xScale(i) + (barWidth) / 2"
+            [attr.y]="topMargin + height + 16"
+          >
+            {{ rows[i][0] | date:'HH:mm' }}
+          </text>
+        </ng-container>
+      </g>
     </svg>
   </div>
+
+  <svg
+    class="y-axe"
+    [attr.width]="80"
+    [attr.height]="topMargin + height + bottomMargin"
+  >
+    <ng-container *ngFor="let v of yTicks">
+      <text
+        *ngIf="v !== 0"
+        class="stroke"
+        [attr.x]="76"
+        [attr.dy]="yScale(v) + 16"
+      >
+        {{ v | number }}
+      </text>
+
+      <text
+        *ngIf="v !== 0"
+        class="label"
+        [attr.x]="76"
+        [attr.dy]="yScale(v) + 16"
+      >
+        {{ v | number }}
+      </text>
+    </ng-container>
+  </svg>
 </div>
 
 <div

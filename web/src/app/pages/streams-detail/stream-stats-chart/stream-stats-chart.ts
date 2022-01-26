@@ -51,8 +51,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
 
   readonly dataPointSize: number = 5;
   readonly height: number = 300;
-  readonly leftMargin: number = 20;
-  readonly rightMargin: number = 50;
+  readonly leftMargin: number = 16;
+  readonly rightMargin: number = 16;
   readonly topMargin: number = 10;
   readonly bottomMargin: number = 30;
 

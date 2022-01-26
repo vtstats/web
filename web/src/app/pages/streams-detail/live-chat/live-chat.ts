@@ -64,8 +64,8 @@ export class LiveChat implements OnInit, OnDestroy {
   readonly innerPadding: number = 3;
   readonly height: number = 300;
 
-  leftMargin: number = 20;
-  rightMargin: number = 20;
+  leftMargin: number = 16;
+  rightMargin: number = 16;
   readonly topMargin: number = 10;
   readonly bottomMargin: number = 30;
 
@@ -111,7 +111,8 @@ export class LiveChat implements OnInit, OnDestroy {
   }
 
   _render() {
-    this.leftMargin = this.rightMargin = 20;
+    this.leftMargin = this.rightMargin = 16;
+
     const hostWidth =
       this.host.nativeElement.getBoundingClientRect().width -
       this.leftMargin -
