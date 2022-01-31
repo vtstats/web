@@ -721,7 +721,7 @@ dependencies = [
  "tracing",
  "tracing-futures",
  "tracing-newrelic",
- "tracing-subscriber",
+ "tracing-subscriber 0.3.7",
 ]
 
 [[package]]
@@ -1717,9 +1717,9 @@ dependencies = [
 
 [[package]]
 name = "thread_local"
-version = "1.1.3"
+version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8018d24e04c95ac8790716a5987d0fec4f8b27249ffa0f7d33f1369bdfb88cbd"
+checksum = "5516c27b78311c50bf42c071425c560ac799b11c30b31f87e3081965fe5e0180"
 dependencies = [
  "once_cell",
 ]
@@ -1890,7 +1890,7 @@ source = "git+https://github.com/PoiScript/tracing-newrelic.git?rev=838560a4acd3
 dependencies = [
  "newrelic-telemetry",
  "tracing-core",
- "tracing-subscriber",
+ "tracing-subscriber 0.2.25",
  "uuid",
 ]
 
@@ -1899,6 +1899,17 @@ name = "tracing-subscriber"
 version = "0.2.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e0d2eaa99c3c2e41547cfa109e910a68ea03823cccad4a0525dcbc9b01e8c71"
+dependencies = [
+ "sharded-slab",
+ "thread_local",
+ "tracing-core",
+]
+
+[[package]]
+name = "tracing-subscriber"
+version = "0.3.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5312f325fe3588e277415f5a6cca1f4ccad0f248c4cd5a4bd33032d7286abc22"
 dependencies = [
  "sharded-slab",
  "thread_local",
