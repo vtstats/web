@@ -25,4 +25,4 @@ tracing = "0.1.26"
 tracing-futures = "0.2.5"
 
 [dev-dependencies]
-pretty_assertions = "1.0.0"
+pretty_assertions = "1.1.0"
