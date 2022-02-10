@@ -34,7 +34,7 @@ pub struct Stream {
     pub status: StreamStatus,
 }
 
-#[derive(Debug, sqlx::Type, Serialize)]
+#[derive(Debug, sqlx::Type, Serialize, PartialEq, Eq)]
 #[sqlx(type_name = "stream_status", rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum StreamStatus {
@@ -285,18 +285,43 @@ impl Database {
         fields(db.table = "youtube_streams"),
     )]
     pub async fn terminate_stream(&self, ids: &[String], now: DateTime<Utc>) -> Result<()> {
-        let _ = sqlx::query!(
-            r#"
-    update youtube_streams
-       set (end_time, updated_at, status)
-         = ($1, $1, 'ended'::stream_status)
-     where stream_id = any($2)
-            "#,
-            now,
-            ids,
-        )
-        .execute(&self.pool)
-        .await?;
+        let streams = self.youtube_streams_by_ids(ids).await?;
+
+        {
+            let ids = streams
+                .iter()
+                .filter(|stream| stream.status == StreamStatus::Scheduled)
+                .map(|stream| stream.stream_id.clone())
+                .collect::<Vec<_>>();
+
+            let _ = sqlx::query!(
+                r#"delete from youtube_streams where stream_id = any($1)"#,
+                &ids, // $1
+            )
+            .execute(&self.pool)
+            .await?;
+        }
+
+        {
+            let ids = streams
+                .iter()
+                .filter(|stream| stream.status == StreamStatus::Live)
+                .map(|stream| stream.stream_id.clone())
+                .collect::<Vec<_>>();
+
+            let _ = sqlx::query!(
+                r#"
+         update youtube_streams
+            set (end_time, updated_at, status)
+              = ($1, $1, 'ended'::stream_status)
+          where stream_id = any($2)
+                "#,
+                now,  // $1
+                &ids, // $2
+            )
+            .execute(&self.pool)
+            .await?;
+        }
 
         Ok(())
     }

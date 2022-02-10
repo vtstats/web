@@ -40,8 +40,6 @@ async fn real_main() -> Result<()> {
         .filter(|id| !streams.iter().any(|stream| stream.id.eq(id)))
         .collect::<Vec<_>>();
 
-    db.terminate_stream(&offline_ids, now).await?;
-
     for stream in streams {
         if let Some(vtb) = CONFIG.find_by_youtube_channel_id(&stream.channel_id) {
             let payload = &format!("{},{}", vtb.id, stream.id);
@@ -72,6 +70,8 @@ async fn real_main() -> Result<()> {
         )
         .await?;
     }
+
+    db.terminate_stream(&offline_ids, now).await?;
 
     Ok(())
 }
