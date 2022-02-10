@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { Placement } from "@floating-ui/core";
-import type { Offset } from "@floating-ui/core/src/middleware/offset";
+import type { Options as Offset } from "@floating-ui/core/src/middleware/offset";
 import {
   arrow,
   computePosition,
