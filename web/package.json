@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "~13.2.2",
     "@angular/router": "~13.2.2",
     "@angular/service-worker": "~13.2.2",
-    "@cloudflare/kv-asset-handler": "^0.1.0",
+    "@cloudflare/kv-asset-handler": "^0.2.0",
     "@floating-ui/dom": "^0.1.7",
     "@sentry/browser": "^6.16.1",
     "apexcharts": "^3.25.0",
