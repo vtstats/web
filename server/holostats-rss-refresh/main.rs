@@ -63,7 +63,7 @@ async fn real_main() -> Result<()> {
     let streams = hub.youtube_streams(&missing_video_ids).await?;
 
     if streams.is_empty() {
-        tracing::error!("Stream not found, ids={:?}", missing_video_ids);
+        tracing::debug!("Stream not found, ids={:?}", missing_video_ids);
         return Ok(());
     }
 
