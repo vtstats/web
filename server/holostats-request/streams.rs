@@ -132,7 +132,7 @@ impl RequestHub {
             .and_then(|res| res.json::<VideosListResponse>())
             .await?;
 
-        tracing::info!(videos = json(&res.items));
+        tracing::debug!(videos = json(&res.items));
 
         Ok(res.items)
     }

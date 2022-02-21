@@ -60,9 +60,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by vtuber_id
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -96,9 +96,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by vtuber_id
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -132,9 +132,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by vtuber_id
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -168,9 +168,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by vtuber_id
             "#,
-            ids,
-            *start_at,
-            *end_at,
+            ids,       // $1
+            *start_at, // $2
+            *end_at,   // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -204,9 +204,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by stream_id
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -240,9 +240,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by stream_id
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
@@ -276,9 +276,9 @@ impl Database {
          and (time <= $3 or $3 is null)
     order by stream_id, time asc
             "#,
-            ids,
-            *start_at,
-            *end_at
+            ids,       // $1
+            *start_at, // $2
+            *end_at    // $3
         )
         .fetch(&self.pool)
         .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {

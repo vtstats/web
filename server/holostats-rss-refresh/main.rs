@@ -4,23 +4,31 @@ use futures::{stream, StreamExt, TryStreamExt};
 use holostats_config::CONFIG;
 use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
-use holostats_tracing::init;
-use tracing::instrument;
+use tracing::{field::Empty, Instrument, Span};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = init("rss_refresh", false);
+    let _guard = holostats_tracing::init("rss_refresh", false);
 
-    real_main().await
+    let fut = async {
+        if let Err(err) = real_main().await {
+            Span::current().record("otel.status_code", &"ERROR");
+            tracing::error!("Failed to refresh rss: {:?}", err);
+        }
+    };
+
+    let span = tracing::info_span!(
+        "rss_refresh",
+        service.name = "holostats-cron",
+        span.kind = "consumer",
+        otel.status_code = Empty
+    );
+
+    fut.instrument(span).await;
+
+    Ok(())
 }
 
-#[instrument(
-    name = "rss_refresh"
-    fields(
-        service.name = "holostats-cron",
-        span.kind = "consumer"
-    )
-)]
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 
@@ -50,10 +58,12 @@ async fn real_main() -> Result<()> {
         return Ok(());
     }
 
+    tracing::debug!("Missing video ids: {:?}", missing_video_ids);
+
     let streams = hub.youtube_streams(&missing_video_ids).await?;
 
     if streams.is_empty() {
-        tracing::error!(err.msg = "stream not found");
+        tracing::error!("Stream not found, ids={:?}", missing_video_ids);
         return Ok(());
     }
 

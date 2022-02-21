@@ -143,11 +143,11 @@ impl Database {
              end desc
        limit 24
             "#,
-            ids,
-            *start_at,
-            *end_at,
-            order_by.as_str(),
-            status,
+            ids,               // $1
+            *start_at,         // $2
+            *end_at,           // $3
+            order_by.as_str(), // $4
+            status,            // $5
         )
         .fetch_all(&self.pool)
         .await
@@ -177,7 +177,7 @@ impl Database {
       from youtube_streams
      where stream_id = any($1)
             "#,
-            ids
+            ids, // $1
         )
         .fetch_all(&self.pool)
         .await
@@ -207,14 +207,14 @@ impl Database {
             set (title, status, thumbnail_url, schedule_time, start_time, end_time)
               = ($3, $4, coalesce($5, youtube_streams.thumbnail_url), $6, $7, $8)
             "#,
-            id,
-            vtuber_id,
-            title,
-            status: _,
-            thumbnail_url,
-            schedule_time,
-            start_time,
-            end_time,
+            id,            // $1
+            vtuber_id,     // $2
+            title,         // $3
+            status: _,     // $4
+            thumbnail_url, // $5
+            schedule_time, // $6
+            start_time,    // $7
+            end_time,      // $8
         )
         .execute(&self.pool)
         .await?;
@@ -235,8 +235,8 @@ impl Database {
             and vtuber_id = $2
             and status = 'scheduled'::stream_status
             "#,
-            stream_id,
-            vtuber_id,
+            stream_id, // $1
+            vtuber_id, // $2
         )
         .execute(&self.pool)
         .await;
@@ -425,13 +425,13 @@ impl Database {
              where stream_id = id
            )
             "#,
-            video_ids
+            video_ids, // $1
         )
         .map(|row| row.id)
         .fetch_all(&self.pool)
         .await?;
 
-        tracing::info!(video_ids = ?ids);
+        tracing::debug!("video_ids={:?}", video_ids);
 
         Ok(ids)
     }
@@ -451,7 +451,7 @@ impl Database {
        and end_time is not null
   order by start_time desc
             "#,
-            vtuber_id
+            vtuber_id, // $1
         )
         .fetch_all(&self.pool)
         .await?;

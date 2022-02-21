@@ -8,14 +8,13 @@ use anyhow::Result;
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::RequestHub;
-use holostats_tracing::init;
 use std::net::SocketAddr;
 use tracing::field::Empty;
 use warp::Filter;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    init("api", true);
+    holostats_tracing::init("api", true);
 
     let hub = RequestHub::new();
 
@@ -34,13 +33,18 @@ async fn main() -> Result<()> {
         .with(warp::trace(|info| {
             let span = tracing::info_span!(
                 "request",
+                name = Empty,
                 span.kind = "server",
                 service.name = "holostats-api",
-                referer = Empty
+                req.path = info.path(),
+                req.method = info.method().as_str(),
+                req.referer = Empty,
+                otel.status_code = Empty,
+                otel.status_description = Empty,
             );
 
             if let Some(referer) = info.referer() {
-                span.record("referer", &referer);
+                span.record("req.referer", &referer);
             }
 
             span

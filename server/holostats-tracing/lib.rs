@@ -1,14 +1,19 @@
-use log::{LevelFilter, Log};
+use log::Log;
 use serde::Serialize;
 use serde_json::to_string;
 use std::fmt::Debug;
 use tracing::dispatcher::DefaultGuard;
 use tracing::field::{display, DisplayValue};
 use tracing::{Metadata, Subscriber};
-use tracing_newrelic::{BlockingReporter, NewRelicLayer, WithEvent};
-use tracing_subscriber::layer::{Context, SubscriberExt};
-use tracing_subscriber::registry::LookupSpan;
-use tracing_subscriber::{Layer, Registry};
+use tracing_subscriber::{
+    filter::LevelFilter,
+    fmt,
+    fmt::format::FmtSpan,
+    layer::{Context, SubscriberExt},
+    registry,
+    registry::LookupSpan,
+    Layer,
+};
 
 use holostats_config::CONFIG;
 
@@ -17,12 +22,12 @@ struct TelemetryLogger;
 
 impl Log for TelemetryLogger {
     fn enabled(&self, metadata: &log::Metadata) -> bool {
-        metadata.target().starts_with("newrelic_telemetry")
+        metadata.target().starts_with("tracing_newrelic")
     }
 
     fn log(&self, record: &log::Record) {
         if self.enabled(record.metadata()) {
-            println!("[NewRelic] {:<5} {}", record.level(), record.args());
+            println!("[NewRelic] {}", record.args());
         }
     }
 
@@ -31,7 +36,7 @@ impl Log for TelemetryLogger {
 
 static LOGGER: TelemetryLogger = TelemetryLogger;
 
-// tracing filter
+// target filter
 struct TargetFilter(&'static str);
 
 impl<S> Layer<S> for TargetFilter
@@ -39,32 +44,56 @@ where
     S: Subscriber + for<'span> LookupSpan<'span>,
 {
     fn enabled(&self, metadata: &Metadata<'_>, _: Context<'_, S>) -> bool {
-        metadata.target().starts_with(self.0)
+        let target = metadata.target();
+        target.starts_with(self.0) || target.starts_with("holostats")
     }
 }
 
 pub fn init(target: &'static str, is_global: bool) -> Option<DefaultGuard> {
-    let reporter = match &CONFIG.newrelic.api_key {
-        Some(api_key) => BlockingReporter::new(&api_key),
-        _ => return None,
-    };
-
     // initilize logger
-    log::set_max_level(LevelFilter::Debug);
+    log::set_max_level(log::LevelFilter::Info);
     log::set_logger(&LOGGER).expect("failed to initilize telemetry logger");
 
-    let filter = TargetFilter(target);
+    match &CONFIG.newrelic.api_key {
+        Some(api_key) => {
+            let subscriber = registry()
+                .with(
+                    fmt::layer()
+                        .with_target(false)
+                        .with_span_events(FmtSpan::CLOSE)
+                        .with_filter(LevelFilter::INFO),
+                )
+                .with(tracing_newrelic::layer(api_key.as_str()))
+                .with(TargetFilter(target));
 
-    let layer = NewRelicLayer::new(reporter).with_event(WithEvent::Flatten);
+            if is_global {
+                tracing::subscriber::set_global_default(subscriber)
+                    .expect("failed to initilize tracing subscriber");
+                None
+            } else {
+                Some(tracing::subscriber::set_default(subscriber))
+            }
+        }
 
-    let subscriber = Registry::default().with(filter).with(layer);
+        None => {
+            println!("NewRelic API key not found");
 
-    if is_global {
-        tracing::subscriber::set_global_default(subscriber)
-            .expect("failed to initilize tracing subscriber");
-        None
-    } else {
-        Some(tracing::subscriber::set_default(subscriber))
+            let subscriber = registry()
+                .with(
+                    fmt::layer()
+                        .with_target(false)
+                        .with_span_events(FmtSpan::CLOSE),
+                )
+                .with(TargetFilter(target));
+
+            if is_global {
+                tracing::subscriber::set_global_default(subscriber)
+                    .expect("failed to initilize tracing subscriber");
+                None
+            } else {
+                Some(tracing::subscriber::set_default(subscriber))
+            }
+        }
     }
 }
 

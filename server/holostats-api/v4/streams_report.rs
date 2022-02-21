@@ -7,6 +7,7 @@ use holostats_database::{
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
 use std::str::FromStr;
+use tracing::Span;
 use warp::Rejection;
 
 use crate::reject::WarpError;
@@ -59,19 +60,15 @@ pub struct ResBody {
 }
 
 pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::Reply, Rejection> {
+    Span::current().record("name", &"GET /api/v4/streams_report");
+
     tracing::info!(
-        name = "GET /api/v4/streams_report",
-        ids = ?query.ids.as_slice(),
-        metrics = ?query.metrics.as_slice(),
+        "ids={:?} metrics={:?} start_at={:?} end_at={:?}",
+        query.ids,
+        query.metrics,
+        query.start_at,
+        query.end_at,
     );
-
-    if let Some(start_at) = query.start_at {
-        tracing::info!(?start_at);
-    }
-
-    if let Some(end_at) = query.end_at {
-        tracing::info!(?end_at);
-    }
 
     let mut streams = Vec::with_capacity(query.ids.len());
     let mut reports = Vec::with_capacity(query.ids.len());

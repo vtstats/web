@@ -10,12 +10,15 @@ path = "lib.rs"
 
 [dependencies]
 log = "0.4.14"
-serde = "1.0.130"
-serde_json = "1.0.72"
-tracing = "0.1.26"
+serde = "1.0.136"
+serde_json = "1.0.79"
+tracing = "0.1.30"
 tracing-futures = "0.2.5"
-tracing-newrelic = { git = "https://github.com/PoiScript/tracing-newrelic.git", rev = "838560a4acd346db2a9cfd1ca109518e5125ae5d" }
-tracing-subscriber = { version = "0.2.20", default-features = false, features = [
-    "registry"
+tracing-newrelic = { version = "0.1.1", default-features = false, features = [
+    "rustls-tls"
+] }
+tracing-subscriber = { version = "0.3.8", default-features = false, features = [
+    "fmt",
+    "registry",
 ] }
 holostats-config = { path = "../holostats-config" }

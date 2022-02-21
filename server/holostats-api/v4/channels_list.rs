@@ -2,6 +2,7 @@ use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
 use holostats_database::{channels::Channel, Database};
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
+use tracing::Span;
 use warp::Rejection;
 
 use crate::reject::WarpError;
@@ -24,10 +25,9 @@ pub async fn youtube_channels_list(
     query: ReqQuery,
     db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
-    tracing::info!(
-        name = "GET /api/v4/youtube_channels",
-        ids = ?query.ids.as_slice(),
-    );
+    Span::current().record("name", &"GET /api/v4/youtube_channels");
+
+    tracing::info!("ids={:?}", query.ids);
 
     let updated_at = db
         .youtube_channel_last_updated()
@@ -49,10 +49,9 @@ pub async fn bilibili_channels_list(
     query: ReqQuery,
     db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
-    tracing::info!(
-        name = "GET /api/v4/bilibili_channels",
-        ids = ?query.ids.as_slice(),
-    );
+    Span::current().record("name", &"GET /api/v4/bilibili_channels");
+
+    tracing::info!("ids={:?}", query.ids);
 
     let updated_at = db
         .bilibili_channel_last_updated()

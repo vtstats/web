@@ -58,10 +58,10 @@ impl Database {
                t.message_from_member_count + excluded.message_from_member_count
               )
             "#,
-            stream_id,
-            &times,
-            &message_counts,
-            &message_from_member_counts
+            stream_id,                   // $1
+            &times,                      // $2
+            &message_counts,             // $3
+            &message_from_member_counts  // $4
         )
         .execute(&self.pool)
         .await?;
@@ -110,15 +110,15 @@ impl Database {
              unnest($8::TEXT[]),
              unnest($9::TEXT[])
             "#,
-            stream_id,
-            &types,
-            &amounts,
-            &author_names,
-            &author_channel_ids,
-            &times,
-            &texts,
-            &badges,
-            &colors
+            stream_id,           // $1
+            &types,              // $2
+            &amounts,            // $3
+            &author_names,       // $4
+            &author_channel_ids, // $5
+            &times,              // $6
+            &texts,              // $7
+            &badges,             // $8
+            &colors              // $9
         )
         .execute(&self.pool)
         .await?;
@@ -161,13 +161,13 @@ impl Database {
              unnest($6::TEXT[]),
              unnest($7::TEXT[])
             "#,
-            stream_id,
-            &types,
-            &author_names,
-            &author_channel_ids,
-            &times,
-            &texts,
-            &badges
+            stream_id,           // $1
+            &types,              // $2
+            &author_names,       // $3
+            &author_channel_ids, // $4
+            &times,              // $5
+            &texts,              // $6
+            &badges              // $7
         )
         .execute(&self.pool)
         .await?;

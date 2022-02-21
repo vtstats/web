@@ -1,10 +1,11 @@
-use hmac::{Hmac, Mac, NewMac};
+use hmac::{Hmac, Mac};
 use holostats_config::CONFIG;
 use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
 use roxmltree::Document;
 use sha1::Sha1;
 use std::convert::Into;
+use tracing::Span;
 use warp::{http::StatusCode, Rejection};
 
 use crate::reject::WarpError;
@@ -15,26 +16,32 @@ pub async fn publish_content(
     db: Database,
     hub: RequestHub,
 ) -> Result<StatusCode, Rejection> {
-    tracing::info!(name = "POST /api/pubsub", text = &body.as_str());
+    Span::current().record("name", &"POST /api/pubsub");
+
+    tracing::debug!("body={}", body.as_str());
 
     let expected = generate_signature(&body);
     let found = signature.trim_start_matches("sha1=");
 
     if expected != found {
-        eprintln!("Bad signature, expected: {}, found: {}", expected, found);
+        tracing::error!("Bad signature, expected={}, found={}", expected, found);
         return Ok(StatusCode::BAD_REQUEST);
     }
 
     let doc = match Document::parse(&body) {
         Ok(doc) => doc,
-        Err(_) => {
-            tracing::error!(err.msg = "failed to parse xml");
+        Err(err) => {
+            tracing::error!("failed to parse xml: {:?}", err);
             return Ok(StatusCode::BAD_REQUEST);
         }
     };
 
     if let Some((vtuber_id, video_id)) = parse_modification(&doc) {
-        tracing::info!(action = "Update video", vtuber_id, video_id);
+        tracing::info!(
+            "update stream: vtuber_id={}, video_id={}",
+            vtuber_id,
+            video_id
+        );
 
         let streams = hub
             .youtube_streams(&[video_id.to_string()])
@@ -42,7 +49,7 @@ pub async fn publish_content(
             .map_err(WarpError)?;
 
         if streams.is_empty() {
-            tracing::error!(err.msg = "stream not found");
+            tracing::error!("Stream not found, stream_id={}", video_id);
             return Ok(StatusCode::BAD_REQUEST);
         }
 
@@ -71,7 +78,11 @@ pub async fn publish_content(
     }
 
     if let Some((video_id, vtuber_id)) = parse_deletion(&doc) {
-        tracing::info!(action = "Delete video", vtuber_id, video_id);
+        tracing::info!(
+            "Delete stream: vtuber_id={}, video_id={}",
+            vtuber_id,
+            video_id
+        );
 
         db.delete_schedule_stream(video_id, vtuber_id)
             .await
@@ -80,7 +91,7 @@ pub async fn publish_content(
         return Ok(StatusCode::OK);
     }
 
-    tracing::error!(err.msg = "unkown xml schema");
+    tracing::error!("Unkown xml schema");
 
     Ok(StatusCode::BAD_REQUEST)
 }

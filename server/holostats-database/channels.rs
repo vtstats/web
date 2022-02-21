@@ -49,7 +49,7 @@ impl Database {
       from youtube_channels
      where vtuber_id = any($1)
             "#,
-            &ids
+            &ids // $1
         )
         .fetch_all(&self.pool)
         .await
@@ -90,7 +90,7 @@ impl Database {
       from bilibili_channels
      where vtuber_id = any($1)
             "#,
-            &ids
+            &ids // $1
         )
         .fetch_all(&self.pool)
         .await
@@ -124,10 +124,10 @@ impl Database {
          = ($1, $2, $3)
      where vtuber_id = $4
             "#,
-            subscriber_count,
-            view_count,
-            datetime,
-            vtuber_id,
+            subscriber_count, // $1
+            view_count,       // $2
+            datetime,         // $3
+            vtuber_id,        // $4
         )
         .execute(&mut tx)
         .await?;
@@ -137,9 +137,9 @@ impl Database {
     insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)
          values ($1, $2, $3)
             "#,
-            vtuber_id,
-            datetime,
-            subscriber_count,
+            vtuber_id,        // $1
+            datetime,         // $2
+            subscriber_count, // $3
         )
         .execute(&mut tx)
         .await?;
@@ -149,9 +149,9 @@ impl Database {
     insert into bilibili_channel_view_statistic (vtuber_id, time, value)
          values ($1, $2, $3)
             "#,
-            vtuber_id,
-            datetime,
-            view_count,
+            vtuber_id,  // $1
+            datetime,   // $2
+            view_count, // $3
         )
         .execute(&mut tx)
         .await?;
@@ -177,10 +177,10 @@ impl Database {
          = ($1, $2, $3)
      where vtuber_id = $4
             "#,
-            subscriber_count,
-            view_count,
-            datetime,
-            vtuber_id,
+            subscriber_count, // $1
+            view_count,       // $2
+            datetime,         // $3
+            vtuber_id,        // $4
         )
         .execute(&mut tx)
         .await?;
@@ -190,9 +190,9 @@ impl Database {
     insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)
          values ($1, $2, $3)
             "#,
-            vtuber_id,
-            datetime,
-            subscriber_count,
+            vtuber_id,        // $1
+            datetime,         // $2
+            subscriber_count, // $3
         )
         .execute(&mut tx)
         .await?;
@@ -202,9 +202,9 @@ impl Database {
     insert into youtube_channel_view_statistic (vtuber_id, time, value)
          values ($1, $2, $3)
             "#,
-            vtuber_id,
-            datetime,
-            view_count,
+            vtuber_id,  // $1
+            datetime,   // $2
+            view_count, // $3
         )
         .execute(&mut tx)
         .await?;

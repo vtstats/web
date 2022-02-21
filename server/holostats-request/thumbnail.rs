@@ -11,8 +11,8 @@ impl RequestHub {
     pub async fn upload_thumbnail(&self, stream_id: &str) -> Option<String> {
         let data = match self.youtube_thumbnail(stream_id).await {
             Ok(x) => x,
-            Err(e) => {
-                tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
+            Err(err) => {
+                tracing::error!("Failed to upload thumbnail: {:?}", err);
                 return None;
             }
         };
@@ -21,8 +21,8 @@ impl RequestHub {
 
         match self.upload_file(&filename, data, "image/jpg").await {
             Ok(url) => Some(url),
-            Err(e) => {
-                tracing::warn!(err = ?e, err.msg = "failed to upload thumbnail");
+            Err(err) => {
+                tracing::error!("Failed to upload thumbnail: {:?}", err);
                 None
             }
         }

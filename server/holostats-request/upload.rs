@@ -1,7 +1,7 @@
 use anyhow::Result;
 use chrono::Utc;
 use futures::future::FutureExt;
-use hmac::{Hmac, Mac, NewMac};
+use hmac::{Hmac, Mac};
 use holostats_config::CONFIG;
 use reqwest::{
     header::{AUTHORIZATION, CONTENT_TYPE},

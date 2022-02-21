@@ -1,5 +1,6 @@
 use holostats_database::Database;
 use std::convert::Into;
+use tracing::Span;
 use warp::Rejection;
 
 use crate::reject::WarpError;
@@ -17,7 +18,9 @@ pub struct ResBody {
 }
 
 pub async fn stream_times(query: ReqQuery, db: Database) -> Result<impl warp::Reply, Rejection> {
-    tracing::info!(name = "GET /api/v4/stream_times", id = query.id.as_str());
+    Span::current().record("name", &"GET /api/v4/stream_times");
+
+    tracing::info!("id={}", query.id);
 
     let times = db
         .stream_times(&query.id)

@@ -2,6 +2,7 @@ use holostats_config::CONFIG;
 use holostats_database::Database;
 use std::convert::Into;
 use std::fmt::Write;
+use tracing::Span;
 use warp::{Filter, Rejection};
 
 use crate::filters::with_db;
@@ -23,7 +24,9 @@ pub struct Query {
 
 // Returns a sitemap for crawler like google search
 async fn sitemap_get(query: Query, db: Database) -> Result<impl warp::Reply, Rejection> {
-    tracing::info!(name = "GET /api/sitemap");
+    Span::current().record("name", &"GET /api/sitemap");
+
+    tracing::debug!("base_url={}", query.base_url);
 
     let ids = db.stream_ids().await.map_err(Into::<WarpError>::into)?;
 

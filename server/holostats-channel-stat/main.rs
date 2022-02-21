@@ -3,23 +3,31 @@ use chrono::Utc;
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::RequestHub;
-use holostats_tracing::init;
-use tracing::instrument;
+use tracing::{field::Empty, Instrument, Span};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = init("channel_stat", false);
+    let _guard = holostats_tracing::init("channel_stat", false);
 
-    real_main().await
+    let fut = async {
+        if let Err(err) = real_main().await {
+            Span::current().record("otel.status_code", &"ERROR");
+            tracing::error!("Failed to fetch channel stats, {:?}", err);
+        }
+    };
+
+    let span = tracing::info_span!(
+        "channel_stat",
+        service.name = "holostats-cron",
+        span.kind = "consumer",
+        otel.status_code = Empty
+    );
+
+    fut.instrument(span).await;
+
+    Ok(())
 }
 
-#[instrument(
-    name = "channel_stat"
-    fields(
-        service.name = "holostats-cron",
-        span.kind = "consumer"
-    )
-)]
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 

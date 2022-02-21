@@ -1,3 +1,5 @@
+use tracing::Span;
+
 #[derive(serde::Deserialize)]
 pub struct VerifyIntentRequestQuery {
     #[serde(rename = "hub.challenge")]
@@ -5,10 +7,9 @@ pub struct VerifyIntentRequestQuery {
 }
 
 pub fn verify_intent(query: VerifyIntentRequestQuery) -> String {
-    tracing::info!(
-        name = "GET /api/pubsub",
-        challenge = &query.challenge.as_str()
-    );
+    Span::current().record("name", &"GET /api/pubsub");
+
+    tracing::debug!("challenge={}", query.challenge);
 
     query.challenge
 }

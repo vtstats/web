@@ -3,6 +3,7 @@ use holostats_database::{streams::OrderBy as OrderBy_, streams::Stream, Database
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use std::convert::Into;
 use std::default::Default;
+use tracing::Span;
 use warp::Rejection;
 
 use crate::reject::WarpError;
@@ -69,20 +70,16 @@ pub async fn youtube_streams_list(
     query: ReqQuery,
     db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
+    Span::current().record("name", &"GET /api/v4/youtube_streams");
+
     tracing::info!(
-        name = "GET /api/v4/youtube_streams",
-        ids = ?query.ids.as_slice(),
-        status = ?query.status,
-        order_by = ?query.order_by,
+        "ids={:?} status={:?} order_by={:?} start_at={:?} end_at={:?}",
+        query.ids,
+        query.status,
+        query.order_by,
+        query.start_at,
+        query.end_at
     );
-
-    if let Some(start_at) = query.start_at {
-        tracing::info!(?start_at);
-    }
-
-    if let Some(end_at) = query.end_at {
-        tracing::info!(?end_at);
-    }
 
     let updated_at = db
         .youtube_stream_last_updated()

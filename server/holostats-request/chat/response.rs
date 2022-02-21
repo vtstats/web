@@ -1,6 +1,7 @@
-use std::{collections::HashMap, fmt, time::Duration};
+#![allow(dead_code)]
 
 use serde::{de::Visitor, Deserialize};
+use std::{collections::HashMap, fmt, time::Duration};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -515,13 +516,14 @@ impl LiveChatMessage {
                 })
             } else {
                 for (k, _) in unknown {
-                    eprintln!("Unknown add chat action item: {}", k);
+                    tracing::warn!("Unknown AddChatItemAction item: {}", k);
                 }
+
                 None
             }
         } else {
             for (k, _) in unknown {
-                eprintln!("Unknown action: {}", k);
+                tracing::warn!("Unknown action: {}", k);
             }
 
             None

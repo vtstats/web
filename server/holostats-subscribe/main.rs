@@ -2,23 +2,32 @@ use anyhow::{Error, Result};
 use futures::{stream, StreamExt, TryStreamExt};
 use holostats_config::CONFIG;
 use holostats_request::RequestHub;
-use holostats_tracing::init;
-use tracing::instrument;
+use tracing::{field::Empty, Instrument, Span};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let _guard = init("subscribe", false);
+    let _guard = holostats_tracing::init("subscribe", false);
 
-    real_main().await
+    let fut = async {
+        if let Err(err) = real_main().await {
+            Span::current().record("otel.status_code", &"ERROR");
+            tracing::error!("Failed to subscribe YT pubsusb: {:?}", err);
+        }
+    };
+
+    let span = tracing::info_span!(
+        "subscribe-feed",
+        service.name = "holostats-cron",
+        span.kind = "consumer",
+        otel.status_code = Empty,
+        otel.status_description = Empty,
+    );
+
+    fut.instrument(span).await;
+
+    Ok(())
 }
 
-#[instrument(
-    name = "subscribe-feed"
-    fields(
-        service.name = "holostats-cron",
-        span.kind = "consumer"
-    )
-)]
 async fn real_main() -> Result<()> {
     let hub = RequestHub::new();
 

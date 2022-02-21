@@ -107,7 +107,7 @@ impl RequestHub {
             .and_then(|res| res.json::<YouTubeChannelsListResponse>())
             .await?;
 
-        tracing::info!(channels = json(&res.items));
+        tracing::debug!(channels = json(&res.items));
 
         Ok(res.items)
     }
@@ -146,7 +146,11 @@ impl RequestHub {
             .and_then(|res| res.json::<BilibiliStatResponse>())
             .await?;
 
-        tracing::info!(subscriber_count = res.data.follower);
+        tracing::debug!(
+            "Bilibili channel_id={}, subscriber_count={}",
+            id,
+            res.data.follower
+        );
 
         Ok(res.data)
     }
@@ -167,7 +171,11 @@ impl RequestHub {
             .and_then(|res| res.json::<BilibiliUpstatResponse>())
             .await?;
 
-        tracing::info!(view_count = res.data.archive.view);
+        tracing::debug!(
+            "Bilibili channel_id={}, view_cout={}",
+            id,
+            res.data.archive.view
+        );
 
         Ok(res.data)
     }

@@ -2,8 +2,8 @@ use holostats_database::{
     live_chat::{MemberMessage, PaidMessage},
     Database,
 };
-
 use std::convert::Into;
+use tracing::Span;
 use warp::Rejection;
 
 use crate::reject::WarpError;
@@ -25,10 +25,9 @@ pub async fn live_chat_highlight(
     query: ReqQuery,
     db: Database,
 ) -> Result<impl warp::Reply, Rejection> {
-    tracing::info!(
-        name = "GET /api/v4/live_chat/highlight",
-        id = query.id.as_str()
-    );
+    Span::current().record("name", &"GET /api/v4/live_chat/highlight");
+
+    tracing::info!("id={}", query.id);
 
     let paid = db
         .select_paid_messages(&query.id)
