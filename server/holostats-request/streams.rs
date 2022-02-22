@@ -1,7 +1,6 @@
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use futures::future::TryFutureExt;
-use holostats_tracing::json;
 use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
@@ -131,8 +130,6 @@ impl RequestHub {
             .send()
             .and_then(|res| res.json::<VideosListResponse>())
             .await?;
-
-        tracing::debug!(videos = json(&res.items));
 
         Ok(res.items)
     }

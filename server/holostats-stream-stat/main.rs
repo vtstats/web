@@ -60,6 +60,17 @@ async fn real_main() -> Result<()> {
                     err
                 );
             }
+
+            tracing::debug!(
+                vtuber_id = vtb.id.as_str(),
+                stream_id = stream.id.as_str(),
+                "YouTube Stream {}, viewer={}, like={}",
+                &stream.id,
+                stream.viewers.unwrap_or_default(),
+                stream.likes.unwrap_or_default(),
+            );
+        } else {
+            tracing::warn!("Unkown youtube channel id {}", &stream.channel_id);
         }
 
         db.update_youtube_stream_statistic(

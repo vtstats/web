@@ -1,10 +1,5 @@
 use log::Log;
-use serde::Serialize;
-use serde_json::to_string;
-use std::fmt::Debug;
-use tracing::dispatcher::DefaultGuard;
-use tracing::field::{display, DisplayValue};
-use tracing::{Metadata, Subscriber};
+use tracing::{dispatcher::DefaultGuard, Metadata, Subscriber};
 use tracing_subscriber::{
     filter::LevelFilter,
     fmt,
@@ -95,8 +90,4 @@ pub fn init(target: &'static str, is_global: bool) -> Option<DefaultGuard> {
             }
         }
     }
-}
-
-pub fn json<T: Serialize + Debug>(t: &T) -> DisplayValue<String> {
-    display(to_string(t).unwrap_or_else(|_| format!("{:?}", t)))
 }

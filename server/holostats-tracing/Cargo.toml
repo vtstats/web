@@ -10,10 +10,7 @@ path = "lib.rs"
 
 [dependencies]
 log = "0.4.14"
-serde = "1.0.136"
-serde_json = "1.0.79"
 tracing = "0.1.30"
-tracing-futures = "0.2.5"
 tracing-newrelic = { version = "0.1.1", default-features = false, features = [
     "rustls-tls"
 ] }

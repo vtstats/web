@@ -47,8 +47,19 @@ async fn real_main() -> Result<()> {
     for channel in channels {
         let vtuber_id = match CONFIG.find_by_bilibili_channel_id(&channel.id) {
             Some(vtb) => &vtb.id,
-            _ => continue,
+            _ => {
+                tracing::warn!("Unkown bilibili channel id {}", channel.id.as_str());
+                continue;
+            }
         };
+
+        tracing::debug!(
+            vtuber_id = vtuber_id.as_str(),
+            "Bilibili channel {}, subscriber={} view={}",
+            &vtuber_id,
+            channel.subscriber_count,
+            channel.view_count,
+        );
 
         db.update_bilibili_channel_statistic(
             vtuber_id,
@@ -71,8 +82,19 @@ async fn real_main() -> Result<()> {
     for channel in channels {
         let vtuber_id = match CONFIG.find_by_youtube_channel_id(&channel.id) {
             Some(vtb) => &vtb.id,
-            _ => continue,
+            _ => {
+                tracing::warn!("Unkown youtube channel id {}", channel.id.as_str());
+                continue;
+            }
         };
+
+        tracing::debug!(
+            vtuber_id = vtuber_id.as_str(),
+            "YouTube channel {}, subscriber={} view={}",
+            vtuber_id.as_str(),
+            channel.subscriber_count,
+            channel.view_count,
+        );
 
         db.update_youtube_channel_statistic(
             vtuber_id,

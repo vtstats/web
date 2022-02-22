@@ -2,7 +2,6 @@ use anyhow::Result;
 use futures::future::{try_join, TryFutureExt};
 use futures::{stream, StreamExt};
 use holostats_config::CONFIG;
-use holostats_tracing::json;
 use reqwest::{header::COOKIE, Url};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
@@ -107,8 +106,6 @@ impl RequestHub {
             .and_then(|res| res.json::<YouTubeChannelsListResponse>())
             .await?;
 
-        tracing::debug!(channels = json(&res.items));
-
         Ok(res.items)
     }
 
@@ -146,12 +143,6 @@ impl RequestHub {
             .and_then(|res| res.json::<BilibiliStatResponse>())
             .await?;
 
-        tracing::debug!(
-            "Bilibili channel_id={}, subscriber_count={}",
-            id,
-            res.data.follower
-        );
-
         Ok(res.data)
     }
 
@@ -170,12 +161,6 @@ impl RequestHub {
             .send()
             .and_then(|res| res.json::<BilibiliUpstatResponse>())
             .await?;
-
-        tracing::debug!(
-            "Bilibili channel_id={}, view_cout={}",
-            id,
-            res.data.archive.view
-        );
 
         Ok(res.data)
     }

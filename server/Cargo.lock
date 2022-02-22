@@ -725,10 +725,7 @@ version = "0.1.0"
 dependencies = [
  "holostats-config",
  "log",
- "serde",
- "serde_json",
  "tracing",
- "tracing-futures",
  "tracing-newrelic",
  "tracing-subscriber",
 ]

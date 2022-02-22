@@ -176,6 +176,9 @@ async fn get_live_chat(
                 }
             }
 
+            let mem_msgs_len = mem_types.len();
+            let paid_msgs_len = paid_types.len();
+
             db.insert_live_chat_statistic(stream_id.clone(), times, msg_cnt, member_msg_cnt)
                 .await?;
 
@@ -204,10 +207,13 @@ async fn get_live_chat(
             .await?;
 
             tracing::info!(
-                "vtb_id={}, stream_id={}, messages={}",
-                vtb_id,
+                vtuber_id = vtb_id.as_str(),
+                stream_id = stream_id.as_str(),
+                "YouTube Stream {}, live_chat={}, member_live_chat={}, paid_live_chat={}",
                 stream_id,
-                msgs_len
+                msgs_len,
+                mem_msgs_len,
+                paid_msgs_len
             );
 
             return Result::<Option<Continuation>>::Ok(cont);
