@@ -74,13 +74,13 @@ impl Config {
     pub fn find_by_youtube_channel_id(&self, channel_id: &str) -> Option<&VTuber> {
         self.vtubers
             .iter()
-            .find(|vtb| vtb.youtube.as_ref().map(|id| id.as_str()) == Some(channel_id))
+            .find(|vtb| vtb.youtube.as_deref() == Some(channel_id))
     }
 
     pub fn find_by_bilibili_channel_id(&self, channel_id: &str) -> Option<&VTuber> {
         self.vtubers
             .iter()
-            .find(|vtb| vtb.bilibili.as_ref().map(|id| id.as_str()) == Some(channel_id))
+            .find(|vtb| vtb.bilibili.as_deref() == Some(channel_id))
     }
 }
 

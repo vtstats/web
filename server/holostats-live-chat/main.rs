@@ -85,7 +85,7 @@ async fn get_live_chat(
 
     println!("[{:>15}/{}]: started", vtb_id, stream_id);
 
-    let mut continuation = get_continuation(&channel_id, &stream_id).unwrap();
+    let mut continuation = get_continuation(channel_id, &stream_id).unwrap();
 
     loop {
         let fetch = async {
@@ -216,7 +216,7 @@ async fn get_live_chat(
                 paid_msgs_len
             );
 
-            return Result::<Option<Continuation>>::Ok(cont);
+            Result::<Option<Continuation>>::Ok(cont)
         };
 
         let fut = async {
@@ -227,7 +227,7 @@ async fn get_live_chat(
                         sleep(timeout).await;
                     }
 
-                    return cont.and_then(|c| c.get_next_continuation());
+                    cont.and_then(|c| c.get_next_continuation())
                 }
                 Err(err) => {
                     Span::current().record("otel.status_code", &"ERROR");

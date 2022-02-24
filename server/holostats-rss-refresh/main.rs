@@ -38,7 +38,7 @@ async fn real_main() -> Result<()> {
         .vtubers
         .iter()
         .filter_map(|vtb| vtb.youtube.as_ref())
-        .map(|id| hub.fetch_rss_feed(&id, &now_str));
+        .map(|id| hub.fetch_rss_feed(id, &now_str));
 
     let db = Database::new().await?;
 
@@ -77,7 +77,7 @@ async fn real_main() -> Result<()> {
 
         db.upsert_youtube_stream(
             stream.id,
-            &vtuber_id,
+            vtuber_id,
             stream.title,
             match stream.status {
                 StreamStatus::Ended => StreamStatus_::Ended,

@@ -35,7 +35,7 @@ async fn real_main() -> Result<()> {
         .vtubers
         .iter()
         .filter_map(|v| v.youtube.as_ref())
-        .map(|channel_id| hub.subscribe_youtube_pubsub(&channel_id));
+        .map(|channel_id| hub.subscribe_youtube_pubsub(channel_id));
 
     stream::iter(subscribe_stream)
         .buffer_unordered(10)
