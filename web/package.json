@@ -50,7 +50,7 @@
     "@types/d3-shape": "^3.0.2",
     "@types/gapi.auth2": "^0.0.55",
     "codeceptjs": "^3.0.5",
-    "playwright": "^1.9.1",
+    "playwright": "^1.19.2",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
     "tslint": "~6.1.0",
