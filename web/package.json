@@ -26,7 +26,7 @@
     "@angular/service-worker": "~13.2.2",
     "@cloudflare/kv-asset-handler": "^0.1.0",
     "@floating-ui/dom": "^0.1.7",
-    "@sentry/browser": "^6.16.1",
+    "@sentry/browser": "^6.18.0",
     "apexcharts": "^3.25.0",
     "aws4fetch": "^1.0.13",
     "d3-array": "^3.1.1",
