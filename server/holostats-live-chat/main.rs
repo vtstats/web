@@ -239,7 +239,7 @@ async fn get_live_chat(
 
         let span = tracing::info_span!(
             "Fetch live chat data",
-            service.name = "holostats-cron",
+            service.name = "holostats-live-chat",
             span.kind = "consumer",
             vtb_id = vtb_id.as_str(),
             stream_id = stream_id.as_str(),
