@@ -1834,9 +1834,9 @@ dependencies = [
 
 [[package]]
 name = "tracing-newrelic"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "007a433225c356f31cb60cc51d6ad0efd894ed8ab661dd6f726b15f30299966d"
+checksum = "5b3b1f2965972fa12beabe7ff7306a4754469e155d8a7246d1de93bbb8c9ccdd"
 dependencies = [
  "flate2",
  "futures-util",

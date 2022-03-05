@@ -11,7 +11,7 @@ path = "lib.rs"
 [dependencies]
 log = "0.4.14"
 tracing = "0.1.30"
-tracing-newrelic = { version = "0.1.1", default-features = false, features = [
+tracing-newrelic = { version = "0.1.2", default-features = false, features = [
     "rustls-tls"
 ] }
 tracing-subscriber = { version = "0.3.8", default-features = false, features = [
