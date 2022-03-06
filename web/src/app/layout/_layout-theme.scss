@@ -1,0 +1,13 @@
+@import "./header/header-theme";
+@import "./sidenav/sidenav-theme";
+@import "./update-indicator/update-indicator-theme";
+
+@mixin layout-theme($theme) {
+  @include header-theme($theme);
+  @include sidenav-theme($theme);
+  @include update-indicator-theme($theme);
+}
+
+@mixin layout-typography($config) {
+  @include sidenav-typography($config);
+}

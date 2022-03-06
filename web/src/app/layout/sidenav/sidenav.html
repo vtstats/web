@@ -55,7 +55,6 @@
         class="link"
         href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
         target="_blank"
-        [style.marginRight.px]="4"
       >
         News
       </a>
@@ -64,13 +63,18 @@
         class="link"
         href="https://www.buymeacoffee.com/holostats"
         target="_blank"
+        [style.marginLeft.px]="4"
       >
         Donate
       </a>
-    </div>
 
-    <div class="row">
-      <a class="link" [routerLink]="['/privacy-policy']"> Privacy policy </a>
+      <a
+        class="link"
+        [routerLink]="['/privacy-policy']"
+        [style.marginLeft.px]="4"
+      >
+        Privacy
+      </a>
     </div>
 
     <div class="row">
@@ -87,6 +91,8 @@
       >
         Commit: {{ commitId }}
       </a>
+
+      <hls-update-indicator></hls-update-indicator>
     </div>
   </div>
   <div class="copyright">&copy; 2019-2022 PoiScript</div>

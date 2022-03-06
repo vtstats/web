@@ -12,9 +12,10 @@ import { SharedModule } from "../shared";
 
 import { Header } from "./header";
 import { Sidenav } from "./sidenav";
+import { UpdateIndicator } from "./update-indicator/update-indicator";
 
 @NgModule({
-  declarations: [Header, Sidenav],
+  declarations: [Header, Sidenav, UpdateIndicator],
   imports: [
     CommonModule,
     RouterModule,

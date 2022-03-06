@@ -2,8 +2,7 @@
 @use "@angular/cdk" as cdk;
 
 // layout
-@import "src/app/layout/header/header-theme";
-@import "src/app/layout/sidenav/sidenav-theme";
+@import "src/app/layout/layout-theme";
 
 // components
 @import "src/app/components/date-filter/date-filter-theme";
@@ -32,8 +31,7 @@ mat.$theme-ignore-duplication-warnings: true;
   @include stream-item-theme($theme);
   @include channels-list-theme($theme);
   @include sub-menu-theme($theme);
-  @include sidenav-theme($theme);
-  @include header-theme($theme);
+  @include layout-theme($theme);
   @include not-found-theme($theme);
   @include date-filter-theme($theme);
   @include vtuber-filter-theme($theme);
@@ -46,7 +44,7 @@ mat.$theme-ignore-duplication-warnings: true;
   @include not-found-typography($config);
   @include stream-item-typography($config);
   @include sub-menu-typography($config);
-  @include sidenav-typography($config);
+  @include layout-typography($config);
   @include settings-typography($config);
   @include vtuber-filter-typography($config);
   @include stream-details-typography($config);
