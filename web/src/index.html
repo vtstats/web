@@ -34,6 +34,9 @@
     <script>
       var theme = window.localStorage.getItem("theme") || "default";
       document.body.classList.add(theme);
+
+      window.cfPagesCommitSha = "CF_PAGES_COMMIT_SHA";
+      window.cfPagesBranch = "CF_PAGES_BRANCH";
     </script>
   </body>
 </html>

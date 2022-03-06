@@ -1,12 +1,13 @@
+set -e
+
 export PATH="$PATH:$(yarn global bin)"
 
-echo "export const environment = {
-  production: true,
-  commit_sha: '$CF_PAGES_COMMIT_SHA',
-  branch: '$CF_PAGES_BRANCH',
-  yt_client_id:
-    '458340445465-acoedftrhhqtj80phmelq8pfco00laba.apps.googleusercontent.com',
-};" > src/environments/environment.prod.ts
+node -e "const fs = require('fs');
+const path = 'src/index.html';
+const html = fs.readFileSync(path, 'utf-8')
+  .replace('CF_PAGES_BRANCH',     '$CF_PAGES_BRANCH')
+  .replace('CF_PAGES_COMMIT_SHA', '$CF_PAGES_COMMIT_SHA');
+fs.writeFileSync(path, html);"
 
 yarn build --configuration production
 

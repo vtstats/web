@@ -17,8 +17,9 @@ if (environment.production) {
 
   Sentry.init({
     dsn: "https://64c25f8bfc9e45ffa532ed5ab1dc989f@o488466.ingest.sentry.io/6113288",
-    release: environment.commit_sha,
-    environment: environment.branch,
+    // use global variable here, so we can get the same content hash
+    release: (window as any).cfPagesCommitSha,
+    environment: (window as any).cfPagesBranch,
   });
 }
 

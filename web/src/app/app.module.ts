@@ -102,7 +102,7 @@ const ROUTES: Routes = [
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: environment.production && environment.branch === "production",
+      enabled: (window as any).cfPagesBranch === "production",
     }),
     MatSidenavModule,
     LayoutModule,
