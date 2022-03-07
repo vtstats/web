@@ -7,14 +7,20 @@
 .stream-time-chart {
   overflow-x: auto;
   padding: 12px 0;
-  direction: rtl;
   user-select: none;
+  text-align: center;
+
+  .line {
+    stroke-width: 1px;
+  }
 
   .label {
-    text-anchor: middle;
     font-size: 12px;
     font-weight: 400;
-    font-family: "Fira Code";
+  }
+
+  .mono {
+    font-family: "Fira Code", monospace;
   }
 
   .x.label {

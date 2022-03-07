@@ -1,71 +1,47 @@
 <hls-sub-menu>
-  <hls-sub-menu-title i18n="@@streamTimes"> Stream Times </hls-sub-menu-title>
+  <hls-sub-menu-title i18n="@@streamTimes">Stream Times</hls-sub-menu-title>
+
+  <hls-sub-menu-extra>
+    <span
+      class="time-unit"
+      tabindex="0"
+      *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
+      (click)="precision = p"
+      [class.selected]="precision === p"
+      role="button"
+    >
+      {{ p | titlecase }}
+    </span>
+  </hls-sub-menu-extra>
 </hls-sub-menu>
 
 <div class="stream-time">
-  <div class="stream-time-chart" cdkScrollable>
-    <svg
-      #svg
-      [attr.width]="920"
-      [attr.height]="160"
-      holdGesture
-      (hold)="tryOpenTooltip($event)"
-      (release)="closeTooltip()"
+  <ng-container [ngSwitch]="precision">
+    <hls-stream-time-by-month
+      *ngSwitchCase="'month'"
+      [loading]="loading"
+      [times]="times"
     >
-      <text
-        *ngFor="let tick of yTicks"
-        class="y label"
-        [attr.x]="12"
-        [attr.y]="tick.y"
-      >
-        {{ tick.d | date:'EEEEE' }}
-      </text>
-
-      <rect
-        *ngFor="let day of days"
-        rx="2"
-        ry="2"
-        [attr.width]="16"
-        [attr.height]="16"
-        [attr.x]="day.x"
-        [attr.y]="day.y"
-        [attr.x-date]="day.d"
-        [attr.x-value]="day.v"
-        [attr.fill]="day.c"
-      ></rect>
-
-      <text
-        *ngFor="let tick of xTicks"
-        class="x label"
-        [attr.x]="tick.x"
-        [attr.y]="150"
-      >
-        {{ tick.d | date:'MMM' }}
-      </text>
-    </svg>
-  </div>
-</div>
-
-<div
-  *ngIf="0 <= popperIdx && popperIdx < days.length"
-  class="stream-time-chart-tooltip"
-  tooltip
-  tooltipPlacement="top"
-  [tooltipShift]="true"
-  [tooltipFlip]="false"
-  [tooltipOffset]="offset"
-  [tooltipArrow]="arrow"
-  [tooltipReferenceRect]="referenceRect"
-  [tooltipContextElement]="svg"
->
-  <div class="arrow" #arrow></div>
-
-  <ng-container *ngIf="days[popperIdx].v; else noStream" i18n="@@streamTimeOn">
-    Stream {{ days[popperIdx].v | formatDuration }} on {{ days[popperIdx].d |
-    date:'mediumDate' }}
+    </hls-stream-time-by-month>
+    <hls-stream-time-by-hour
+      *ngSwitchCase="'hour'"
+      [loading]="loading"
+      [times]="times"
+    >
+    </hls-stream-time-by-hour>
+    <hls-stream-time-by-day
+      *ngSwitchCase="'day'"
+      [loading]="loading"
+      [times]="times"
+    >
+    </hls-stream-time-by-day>
+    <hls-stream-time-by-weekday
+      *ngSwitchCase="'weekday'"
+      [loading]="loading"
+      [times]="times"
+    >
+    </hls-stream-time-by-weekday>
   </ng-container>
 
-  <ng-template #noStream i18n="@@noStream">
-    No stream on {{ days[popperIdx].d | date:'mediumDate' }}
-  </ng-template>
+  <mat-divider></mat-divider>
 </div>

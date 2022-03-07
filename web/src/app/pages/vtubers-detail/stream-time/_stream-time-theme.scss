@@ -8,6 +8,10 @@
     .label {
       fill: mat.get-color-from-palette($foreground, "secondary-text");
     }
+
+    .line {
+      stroke: mat.get-color-from-palette($foreground, "divider");
+    }
   }
 }
 

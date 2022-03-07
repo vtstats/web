@@ -1,0 +1,86 @@
+<div class="stream-time-chart" cdkScrollable>
+  <svg
+    #svg
+    [attr.width]="920"
+    [attr.height]="180"
+    holdGesture
+    (hold)="tryOpenTooltip($event)"
+    (release)="closeTooltip()"
+  >
+    <text
+      *ngFor="let tick of yTicks"
+      class="y label mono"
+      [attr.x]="4"
+      [attr.y]="tick.y"
+    >
+      {{ tick.d | date:'EEEEE' }}
+    </text>
+
+    <rect
+      *ngFor="let day of days"
+      rx="2"
+      ry="2"
+      [attr.width]="16"
+      [attr.height]="16"
+      [attr.x]="day.x"
+      [attr.y]="day.y"
+      [attr.x-date]="day.d"
+      [attr.x-value]="day.v"
+      [attr.fill]="day.c"
+    ></rect>
+
+    <text
+      *ngFor="let tick of xTicks"
+      class="x label mono"
+      [attr.x]="tick.x"
+      [attr.y]="150"
+    >
+      {{ tick.d | date:'MMM' }}
+    </text>
+
+    <g>
+      <text class="label" [attr.x]="8" [attr.y]="174">
+        {{ total | formatDuration }} ({{ min | date: 'mediumDate' }} - {{ max |
+        date: 'mediumDate'}})
+      </text>
+
+      <text
+        [attr.x]="796"
+        [attr.y]="174"
+        class="label"
+        text-anchor="end"
+        dominant-baseline="central"
+      >
+        Less
+      </text>
+      <rect
+        *ngFor="let color of ['#00bfa510', '#00bfa544', '#00bfa588', '#00bfa5CC', '#00bfa5FF']; index as i"
+        rx="2"
+        ry="2"
+        [attr.x]="800 + i * 16"
+        [attr.y]="168"
+        [attr.width]="12"
+        [attr.height]="12"
+        [attr.fill]="color"
+      ></rect>
+      <text
+        [attr.x]="880"
+        [attr.y]="174"
+        class="label"
+        text-anchor="start"
+        dominant-baseline="central"
+      >
+        More
+      </text>
+    </g>
+  </svg>
+</div>
+
+<hls-stream-time-chart-tooltip
+  *ngIf="popperIdx !== -1"
+  [value]="days[popperIdx].v"
+  [date]="days[popperIdx].d | date: 'mediumDate'"
+  [contextElement]="svg"
+  [referenceRect]="referenceRect"
+>
+</hls-stream-time-chart-tooltip>
