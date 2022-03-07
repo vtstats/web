@@ -1,6 +1,6 @@
 @use "@angular/material" as mat;
 
-@mixin channel-stats-theme($theme) {
+@mixin vtuber-summary-theme($theme) {
   $background: map-get($theme, "background");
   $foreground: map-get($theme, "foreground");
   $is-dark-theme: map-get($theme, "is-dark");
@@ -22,7 +22,7 @@
   }
 }
 
-@mixin channel-stats-typography($config) {
+@mixin vtuber-summary-typography($config) {
   .vtuber-summary {
     .name {
       font-size: mat.font-size($config, "title");

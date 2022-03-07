@@ -1,7 +1,9 @@
 <hls-helmet [title]="vtuber?.id | name"></hls-helmet>
 
 <div class="mx-auto max-w-960">
-  <hls-channel-stats [vtuber]="vtuber"> </hls-channel-stats>
+  <hls-vtuber-summary [vtuber]="vtuber"></hls-vtuber-summary>
+
+  <hls-channel-overview [vtuber]="vtuber"></hls-channel-overview>
 
   <hls-stream-time [vtuber]="vtuber"></hls-stream-time>
 

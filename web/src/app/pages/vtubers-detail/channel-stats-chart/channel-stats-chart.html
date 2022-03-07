@@ -1,16 +1,81 @@
-<div class="channel-stats-chart">
-  <div class="container">
-    <div class="desc">
-      <span class="title"> {{ title }} </span>
-      <div class="row">
-        <span class="number"> {{ dataPoint?.[1] | number }} </span>
-        <span class="spacer"></span>
-        <span>{{ dataPoint?.[0] | date: "yyyy-MM-dd HH:mm" }}</span>
-      </div>
-    </div>
-    <div class="chart" (mouseleave)="resetDataPointIndex()">
-      <apx-chart #chart [height]="120" [marginBottom]="15"></apx-chart>
+<div class="channel-stats-chart" [ngClass]="schame">
+  <div class="desc">
+    <div class="label">{{ name | titlecase }}</div>
+    <div class="row">
+      <span class="value"> {{ rows[rows.length - 1]?.[1] | number }} </span>
+
+      <span class="delta">
+        <hls-chart-compare [rows]="rows"></hls-chart-compare>
+      </span>
     </div>
   </div>
-  <mat-divider></mat-divider>
+
+  <svg
+    #svg
+    class="chart"
+    [attr.width]="'100%'"
+    [attr.height]="topMargin + height + bottomMargin"
+    holdGesture
+    (hold)="tryOpenTooltip($event)"
+    (release)="closeTooltip()"
+  >
+    <line
+      *ngFor="let row of rows"
+      class="grid-line"
+      [attr.x1]="xScale(row[0])"
+      [attr.y1]="0"
+      [attr.x2]="xScale(row[0])"
+      [attr.y2]="'100%'"
+    ></line>
+
+    <g *ngIf="!loading">
+      <path class="area" [attr.d]="areaPath"></path>
+
+      <path
+        class="line"
+        [attr.d]="linePath"
+        stroke-width="2"
+        fill="none"
+      ></path>
+
+      <circle
+        class="point"
+        *ngFor="let row of rows"
+        [attr.r]="dataPointSize"
+        [attr.cx]="xScale(row[0])"
+        [attr.cy]="yScale(row[1])"
+      ></circle>
+
+      <circle
+        *ngIf="!!rows[_dataPointIdx]"
+        class="data-point"
+        [attr.r]="dataPointSize"
+        [attr.cx]="xScale(rows[_dataPointIdx][0])"
+        [attr.cy]="yScale(rows[_dataPointIdx][1])"
+      ></circle>
+    </g>
+  </svg>
+</div>
+
+<div
+  *ngIf="!loading && 0 <= _dataPointIdx && _dataPointIdx < rows.length"
+  class="channel-stats-chart-tooltip"
+  tooltip
+  [tooltipOffset]="0"
+  [tooltipFlip]="{ padding: 0 }"
+  [tooltipPlacement]="'top'"
+  [tooltipReferenceRect]="referenceRect"
+  [tooltipContextElement]="svg"
+>
+  <svg [attr.height]="24" [attr.width]="200">
+    <text
+      *ngFor="let class of ['border', 'text']"
+      x="100"
+      y="20"
+      [attr.class]="class"
+    >
+      {{ rows[_dataPointIdx][0] | date:( showTime ? 'MM/dd H:mm': 'MM/dd' )
+      }}&nbsp;&nbsp;{{ rows[_dataPointIdx][1] | number }}
+    </text>
+  </svg>
 </div>

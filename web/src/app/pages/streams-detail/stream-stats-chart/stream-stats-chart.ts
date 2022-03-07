@@ -17,7 +17,7 @@ import {
   distinctUntilChanged,
 } from "rxjs/operators";
 import { ScaleLinear, scaleLinear } from "d3-scale";
-import { bisectCenter, extent, max, range } from "d3-array";
+import { bisectCenter, extent, max, range, sort } from "d3-array";
 import { area, curveLinear, line } from "d3-shape";
 import { easeBackOut } from "d3-ease";
 import { CdkScrollable } from "@angular/cdk/scrolling";
@@ -103,6 +103,8 @@ export class StreamStatsChart implements OnInit, OnDestroy {
     if (this._raw.length === 0) return;
 
     const hostWidth = this.host.nativeElement.getBoundingClientRect().width;
+
+    this._raw = sort(this._raw, (row) => row[0]);
 
     if (typeof this.unit === "number") {
       this.rows = this._raw.filter(

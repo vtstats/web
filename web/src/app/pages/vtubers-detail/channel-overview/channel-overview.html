@@ -1,0 +1,73 @@
+<hls-sub-menu>
+  <hls-sub-menu-title>Overview</hls-sub-menu-title>
+  <hls-sub-menu-extra>
+    <span
+      class="time-unit"
+      tabindex="0"
+      *ngFor="let days of [7, 30, 90]"
+      (click)="precision$.next(days)"
+      [class.selected]="(precision$ | async) === days"
+      role="button"
+    >
+      {{ { days } | formatDayDuration }}
+    </span>
+  </hls-sub-menu-extra>
+</hls-sub-menu>
+
+<ng-container *ngIf="res$ | async as res">
+  <div class="channel-overview">
+    <ng-container *ngFor="let report of res.reports">
+      <ng-container [ngSwitch]="report.kind">
+        <hls-channel-stats-chart
+          *ngSwitchCase="'youtube_channel_subscriber'"
+          [schame]="'youtube'"
+          [rows]="report.rows"
+          [(dataPointIdx)]="dataPointIdx"
+          [loading]="res.loading"
+          [showTime]="res.precision === 7"
+          i18n-name="@@youtubeSubscribers"
+          name="YouTube Subscribers"
+        ></hls-channel-stats-chart>
+
+        <hls-channel-stats-chart
+          *ngSwitchCase="'youtube_channel_view'"
+          [schame]="'youtube'"
+          [rows]="report.rows"
+          [(dataPointIdx)]="dataPointIdx"
+          [loading]="res.loading"
+          [showTime]="res.precision === 7"
+          i18n-name="@@youtubeViews"
+          name="YouTube Views"
+        ></hls-channel-stats-chart>
+
+        <hls-channel-stats-chart
+          *ngSwitchCase="'bilibili_channel_subscriber'"
+          [schame]="'bilibili'"
+          [rows]="report.rows"
+          [(dataPointIdx)]="dataPointIdx"
+          [loading]="res.loading"
+          [showTime]="res.precision === 7"
+          i18n-name="@@bilibiliSubscribers"
+          name="Bilibili Subscribers"
+        ></hls-channel-stats-chart>
+
+        <hls-channel-stats-chart
+          *ngSwitchCase="'bilibili_channel_view'"
+          [schame]="'bilibili'"
+          [rows]="report.rows"
+          [(dataPointIdx)]="dataPointIdx"
+          [loading]="res.loading"
+          [showTime]="res.precision === 7"
+          i18n-name="@@bilibiliViews"
+          name="Bilibili Views"
+        ></hls-channel-stats-chart>
+      </ng-container>
+
+      <mat-divider></mat-divider>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #shimmer>
+  <div class="channel-overview"></div>
+</ng-template>

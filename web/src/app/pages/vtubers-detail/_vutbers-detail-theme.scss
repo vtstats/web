@@ -1,17 +1,17 @@
-@import "./channel-stats/channel-stats-theme";
 @import "./channel-stats-chart/channel-stats-chart-theme";
 @import "./stream-time/stream-time-theme";
-@import "./apx-chart/apx-chart-theme";
+@import "./vtuber-summary/vtuber-summary-theme";
+@import "./chart-compare/chart-compare-theme";
 
 @mixin vtubers-details-theme($theme) {
-  @include channel-stats-theme($theme);
   @include channel-stats-chart-theme($theme);
   @include stream-time-theme($theme);
-  @include apx-chart-theme($theme);
+  @include vtuber-summary-theme($theme);
+  @include chart-compare-theme($theme);
 }
 
 @mixin vtubers-details-typography($config) {
+  @include channel-stats-chart-typography($config);
   @include stream-time-typography($config);
-  @include channel-stats-typography($config);
-  @include apx-chart-typography($config);
+  @include vtuber-summary-typography($config);
 }

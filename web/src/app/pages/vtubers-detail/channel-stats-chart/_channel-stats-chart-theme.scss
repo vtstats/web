@@ -1,12 +1,46 @@
 @use "@angular/material" as mat;
 
 @mixin channel-stats-chart-theme($theme) {
-  $background: map-get($theme, "background");
   $foreground: map-get($theme, "foreground");
+  $background: map-get($theme, "background");
 
   .channel-stats-chart {
-    .title {
+    .grid-line {
+      stroke: mat.get-color-from-palette($foreground, "divider");
+    }
+
+    .label {
       color: mat.get-color-from-palette($foreground, "secondary-text");
+    }
+  }
+
+  .channel-stats-chart-tooltip {
+    .border {
+      stroke: mat.get-color-from-palette($background, "card");
+      fill: mat.get-color-from-palette($background, "card");
+    }
+
+    .text {
+      fill: mat.get-color-from-palette($foreground, "secondary-text");
+    }
+  }
+}
+
+@mixin channel-stats-chart-typography($config) {
+  .channel-stats-chart {
+    .label {
+      font-size: mat.font-size($config, "subheading-1");
+      font-weight: mat.font-weight($config, "subheading-1");
+    }
+
+    .delta {
+      font-size: mat.font-size($config, "subheading-2");
+      font-weight: mat.font-weight($config, "subheading-2");
+    }
+
+    .value {
+      font-size: mat.font-size($config, "headline");
+      font-weight: mat.font-weight($config, "subheading-1");
     }
   }
 }

@@ -1,145 +1,193 @@
 import {
-  Input,
-  Component,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
   ViewChild,
-  OnChanges,
-  ChangeDetectorRef,
+  ViewEncapsulation,
 } from "@angular/core";
-
-import { ApxChart } from "../apx-chart/apx-chart";
-
-import { ChannelReportKind, Report } from "src/app/models";
+import { bisectCenter, extent } from "d3-array";
+import { easeBackOut } from "d3-ease";
+import { ScaleLinear, scaleLinear } from "d3-scale";
+import { area, curveLinear, line } from "d3-shape";
+import {
+  animationFrameScheduler,
+  fromEvent,
+  interval,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  takeWhile,
+} from "rxjs";
+import { within } from "src/utils";
 
 @Component({
   selector: "hls-channel-stats-chart",
   templateUrl: "channel-stats-chart.html",
   styleUrls: ["channel-stats-chart.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChannelStatsChart implements OnChanges {
-  @Input() report: Report<ChannelReportKind>;
+export class ChannelStatsChart implements OnInit, OnDestroy {
+  @Input() schame: "youtube" | "bilibili";
+  @Input() name: string;
+  @Input() loading: boolean;
+  @Input() showTime: boolean;
 
-  @ViewChild("chart", { static: true })
-  private chart: ApxChart;
+  _dataPointIdx: number;
 
-  constructor(private cdf: ChangeDetectorRef) {}
+  @Input() set dataPointIdx(idx: number) {
+    this._dataPointIdx = idx;
 
-  private dataPointIndex: number = null;
+    if (within(idx, 0, this.rows.length - 1)) {
+      const { top, left } = this.svg.nativeElement.getBoundingClientRect();
 
-  get title(): string {
-    return {
-      [ChannelReportKind.youtubeChannelSubscriber]: $localize`:@@youtubeSubscribers:`,
-      [ChannelReportKind.youtubeChannelView]: $localize`:@@youtubeViews:`,
-      [ChannelReportKind.bilibiliChannelSubscriber]: $localize`:@@bilibiliSubscribers:`,
-      [ChannelReportKind.bilibiliChannelView]: $localize`:@@bilibiliViews:`,
-    }[this.report.kind];
+      const x = left + this.xScale(this.rows[idx][0]);
+      const y = top + this.yScale(this.rows[idx][1]);
+      this.referenceRect = {
+        width: 0,
+        height: 0,
+        right: x,
+        left: x,
+        top: y,
+        bottom: y,
+      };
+    }
+  }
+  @Output() dataPointIdxChange = new EventEmitter<number>();
+
+  referenceRect = null;
+
+  @ViewChild("svg", { static: true })
+  svg: ElementRef<HTMLElement>;
+
+  readonly dataPointSize: number = 3;
+  readonly height: number = 64;
+  readonly leftMargin: number = 8;
+  readonly rightMargin: number = 8;
+  readonly topMargin: number = 8;
+  readonly bottomMargin: number = 8;
+
+  @Input() rows: [number, number][] = [];
+
+  xScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  yScale: ScaleLinear<number, number> = scaleLinear().domain([0, 0]);
+  areaPath: string;
+  linePath: string;
+
+  animate$: Subscription | null;
+  resize$: Subscription | null;
+
+  ngOnInit() {
+    // TODO: switch to resize observer
+    this.resize$ = fromEvent(window, "resize")
+      .pipe(
+        debounceTime(500),
+        startWith(null),
+        map(() => this.svg.nativeElement.getBoundingClientRect().width),
+        distinctUntilChanged()
+      )
+      .subscribe((w) => {
+        this._render(w);
+      });
   }
 
-  get colors(): string[] {
-    switch (this.report.kind) {
-      case ChannelReportKind.youtubeChannelSubscriber:
-      case ChannelReportKind.youtubeChannelView:
-        return ["#e00404"];
-      case ChannelReportKind.bilibiliChannelSubscriber:
-      case ChannelReportKind.bilibiliChannelView:
-        return ["#00a1d6"];
+  ngOnDestroy() {
+    this.resize$?.unsubscribe();
+    this.animate$?.unsubscribe();
+  }
+
+  private _render(width: number) {
+    if (this.rows.length === 0) return;
+
+    this.xScale
+      .domain(extent(this.rows, (row) => row[0]))
+      .range([this.leftMargin, width - this.rightMargin]);
+
+    if (this.loading) return;
+
+    this.yScale
+      .domain(extent(this.rows, (row) => row[1]))
+      .range([this.height + this.topMargin, this.topMargin]);
+
+    const start = animationFrameScheduler.now();
+    const ms = 600;
+    const ease = easeBackOut.overshoot(0.4);
+
+    this.animate$?.unsubscribe();
+
+    this.animate$ = interval(10, animationFrameScheduler)
+      .pipe(
+        map(() => (animationFrameScheduler.now() - start) / ms),
+        takeWhile((progress) => progress <= 1, true),
+        map((progress) => {
+          const e = ease(Math.min(progress, 1));
+
+          this.areaPath = area()
+            .curve(curveLinear)
+            .x((d) => this.xScale(d[0]))
+            .y0(this.topMargin + this.height + this.bottomMargin)
+            .y1((d) => this.yScale(d[1] * e))(this.rows);
+
+          this.linePath = line()
+            .curve(curveLinear)
+            .x((d) => this.xScale(d[0]))
+            .y((d) => this.yScale(d[1] * e))(this.rows);
+        })
+      )
+      .subscribe();
+  }
+
+  tryOpenTooltip(e: MouseEvent | TouchEvent) {
+    if (this.loading) return;
+
+    const { clientX, clientY } = "touches" in e ? e.touches[0] : e;
+    const { x, y } = this.svg.nativeElement.getBoundingClientRect();
+
+    const offsetX = clientX - x;
+    const offsetY = clientY - y;
+
+    const idx = bisectCenter(
+      this.rows.map((x) => x[0]),
+      this.xScale.invert(offsetX)
+    );
+
+    if (
+      within(idx, 0, this.rows.length - 1) &&
+      within(offsetY, this.topMargin, this.topMargin + this.height)
+    ) {
+      this.dataPointIdxChange.emit(idx);
+    } else {
+      this.closeTooltip();
     }
   }
 
-  get dataPoint(): [number, number] | null {
-    return (
-      this.report.rows[this.dataPointIndex] ||
-      this.report.rows[this.report.rows.length - 1]
-    );
-  }
-
-  resetDataPointIndex() {
-    this.dataPointIndex = null;
-    this.cdf.markForCheck();
-  }
-
-  ngOnChanges() {
-    this.chart.createChart({
-      series: [{ data: this.report.rows }],
-      stroke: { width: 3 },
-      tooltip: {
-        custom: () => "",
-      },
-      xaxis: {
-        type: "datetime",
-        floating: true,
-        labels: { show: false },
-        tooltip: { enabled: false },
-        axisTicks: { show: false },
-      },
-      yaxis: {
-        floating: true,
-        axisTicks: { show: false },
-        labels: { show: false },
-      },
-      markers: { size: 0 },
-      dataLabels: { enabled: false },
-      chart: {
-        id: this.report.kind,
-        type: "area",
-        height: 120,
-        toolbar: { show: false },
-        zoom: { enabled: false },
-        events: {
-          mouseMove: (_a, _b, config) => {
-            this.dataPointIndex = config.dataPointIndex;
-            this.cdf.markForCheck();
-          },
-        },
-      },
-      grid: {
-        yaxis: { lines: { show: false } },
-        xaxis: { lines: { show: true } },
-        padding: {
-          left: -20,
-          right: 0,
-          bottom: 0,
-          top: -20,
-        },
-      },
-      colors: this.colors,
-      responsive: [
-        {
-          breakpoint: 600,
-          options: { chart: { height: 80 } },
-        },
-      ],
-    });
+  closeTooltip() {
+    this.dataPointIdxChange.emit(-1);
   }
 }
 
 @Component({
-  selector: "hls-channel-stats-chart-shimmer",
+  selector: "hls-stream-stats-chart-shimmer",
   template: `
-    <div class="channel-stats-chart">
-      <div class="container">
-        <div class="desc">
-          <span class="title text shimmer" [style.width.px]="150"></span>
-          <div class="row">
-            <span class="number text shimmer" [style.width.px]="100"></span>
-            <span class="spacer"></span>
-            <span class="text shimmer" [style.width.px]="130"></span>
-          </div>
-        </div>
-        <div
-          class="chart shimmer"
-          [style.height.px]="120"
-          [style.marginBottom.px]="15"
-        ></div>
-      </div>
-      <mat-divider></mat-divider>
-    </div>
+    <!-- <hls-sub-menu>
+      <hls-sub-menu-title>
+        <span class="text shimmer" [style.width.px]="90"></span>
+      </hls-sub-menu-title>
+
+      <hls-sub-menu-extra>
+        <span class="shimmer text" [style.width.px]="120"></span>
+      </hls-sub-menu-extra>
+    </hls-sub-menu>
+    <div class="shimmer" [style.height.px]="350"></div> -->
   `,
-  styleUrls: ["channel-stats-chart.scss"],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChannelStatsChartShimmer {}
+export class StreamStatsChartShimmer {}

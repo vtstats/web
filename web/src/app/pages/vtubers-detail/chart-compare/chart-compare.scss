@@ -1,0 +1,13 @@
+.chart-compare {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    overflow: hidden;
+    margin-right: 4px;
+  }
+}

@@ -1,39 +1,31 @@
 .channel-stats-chart {
-  width: 100%;
   margin-bottom: 8px;
-
-  .chart {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 16px;
-  }
+  margin-top: 8px;
 
   .row {
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .label,
+  .value,
+  .delta {
     margin-bottom: 4px;
   }
 
-  .spacer {
-    flex: 1;
+  .value {
+    margin-right: 8px;
   }
 
-  .date {
-    font-size: 16px;
-  }
-
-  .number {
-    font-size: 16px;
+  .chart {
+    width: 100%;
   }
 
   @media (min-width: 755px) {
-    .container {
-      display: flex;
-      flex-direction: row;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     .row {
       flex-direction: column;
@@ -41,23 +33,64 @@
     }
 
     .desc {
-      margin-top: 16px;
       flex: 1;
-    }
-
-    .number {
-      font-size: 24px;
-      margin-bottom: 4px;
     }
 
     .chart {
       width: 75%;
     }
   }
+}
 
-  .apx-chart {
-    .apexcharts-tooltip.apexcharts-theme-light {
-      display: none;
-    }
+.channel-stats-chart.youtube {
+  .area {
+    fill: #ff525255;
+  }
+
+  .point {
+    fill: #f44336;
+  }
+
+  .line {
+    stroke: #f44336;
+  }
+
+  .data-point {
+    fill: #ff0400;
+  }
+}
+
+.channel-stats-chart.bilibili {
+  .area {
+    fill: #64b5f655;
+  }
+
+  .point {
+    fill: #03a9f4;
+  }
+
+  .line {
+    stroke: #03a9f4;
+  }
+
+  .data-point {
+    fill: #1976d2;
+  }
+}
+
+.channel-stats-chart-tooltip {
+  user-select: none;
+  border: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+
+  font-size: 14px;
+  text-anchor: middle;
+  font-weight: 600;
+
+  .border {
+    stroke-width: 4px;
   }
 }

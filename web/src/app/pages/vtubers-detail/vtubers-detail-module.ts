@@ -8,14 +8,13 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { SharedModule } from "src/app/shared";
 import { ComponentsModule } from "src/app/components/components.module";
 
-import { ApxChart } from "./apx-chart/apx-chart";
 import { VTubersDetail } from "./vtubers-detail";
-import { ChannelStats } from "./channel-stats/channel-stats";
-import {
-  ChannelStatsChart,
-  ChannelStatsChartShimmer,
-} from "./channel-stats-chart/channel-stats-chart";
 import { StreamTime } from "./stream-time/stream-time";
+import { ChannelStatsChart } from "./channel-stats-chart/channel-stats-chart";
+import { FormatDayDurationPipe } from "./format-day-duration-pipe/format-day-duration-pipe";
+import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
+import { ChannelOverview } from "./channel-overview/channel-overview";
+import { ChartCompare } from "./chart-compare/chart-compare";
 
 @NgModule({
   imports: [
@@ -33,12 +32,14 @@ import { StreamTime } from "./stream-time/stream-time";
     ]),
   ],
   declarations: [
-    ApxChart,
+    ChannelOverview,
     VTubersDetail,
-    ChannelStats,
     ChannelStatsChart,
-    ChannelStatsChartShimmer,
     StreamTime,
+    ChannelStatsChart,
+    FormatDayDurationPipe,
+    VtuberSummary,
+    ChartCompare,
   ],
 })
 export class VTubersDetailModule {}
