@@ -39,7 +39,7 @@
 
     <g
       *ngFor="let item of items; index as i; trackBy: trackBy"
-      [ngStyle]="{ opacity: (popper.idx === -1 || popper.idx === i) ? 1 : 0.4 }"
+      [style.opacity]="popper.idx === -1 || popper.idx === i ? 1 : 0.4"
     >
       <text
         class="y label"
