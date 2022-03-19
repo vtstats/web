@@ -11,6 +11,8 @@ fs.writeFileSync(path, html);"
 
 yarn build --configuration production
 
+mv dist/safety-worker.js dist/ngsw-worker.js
+
 yarn global add @sentry/cli
 sentry-cli releases new $CF_PAGES_COMMIT_SHA
 sentry-cli releases set-commits $CF_PAGES_COMMIT_SHA --commit "PoiScript/HoloStats@$CF_PAGES_COMMIT_SHA"
