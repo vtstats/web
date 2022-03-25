@@ -55,6 +55,9 @@ export type VTuberIds =
   | "ollie"
   | "melfissa"
   | "reine"
+  | "vestia"
+  | "kaela"
+  | "kobo"
   | "amelia"
   | "calliope"
   | "gura"
@@ -405,6 +408,24 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     youtube: "UChgTyjG-pdNvxxhdsXfHQ5Q",
     default: true,
   },
+  vestia: {
+    id: "vestia",
+    twitter: "vestiazeta",
+    youtube: "UCTvHWSfBZgtxE4sILOaurIQ",
+    default: true,
+  },
+  kaela: {
+    id: "kaela",
+    twitter: "kaelakovalskia",
+    youtube: "UCZLZ8Jjx_RN2CXloOmgTHVg",
+    default: true,
+  },
+  kobo: {
+    id: "kobo",
+    twitter: "kobokanaeru",
+    youtube: "UCjLEmnpCNeisMxy134KPwWw",
+    default: true,
+  },
   amelia: {
     id: "amelia",
     twitter: "watsonameliaEN",
@@ -590,6 +611,7 @@ export type BatchIds =
   | "innk_music"
   | "hololive_id_1st"
   | "hololive_id_2nd"
+  | "hololive_id_3rd"
   | "hololive_en_myth"
   | "hololive_en_council"
   | "hololive_en_vsinger"
@@ -614,6 +636,7 @@ export const batches: Record<BatchIds, Batch> = {
   innk_music: ["azki"],
   hololive_id_1st: ["risu", "moona", "iofi"],
   hololive_id_2nd: ["ollie", "melfissa", "reine"],
+  hololive_id_3rd: ["vestia", "kaela", "kobo"],
   hololive_en_myth: ["amelia", "calliope", "gura", "inanis", "kiara"],
   hololive_en_vsinger: ["irys"],
   hololive_en_council: ["sana", "ceres", "ouro", "mumei", "hakos"],

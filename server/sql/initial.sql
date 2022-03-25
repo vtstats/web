@@ -46,6 +46,9 @@ insert into youtube_channels (vtuber_id)
             ('ollie'),           -- Kureiji Ollie
             ('melfissa'),        -- Anya Melfissa
             ('reine'),           -- Pavolia Reine
+            ('vestia'),          -- Vestia Zeta
+            ('kaela'),           -- Kaela Kovalskia
+            ('kobo'),            -- Kobo Kanaeru
             ('amelia'),          -- Watson Amelia
             ('calliope'),        -- Mori Calliope
             ('gura'),            -- Gawr Gura
