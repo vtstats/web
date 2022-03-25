@@ -375,32 +375,34 @@ impl Database {
         .execute(&mut tx)
         .await?;
 
-        if let Some(likes) = likes {
-            let _ = sqlx::query!(
-                r#"
-    insert into youtube_stream_like_statistic (stream_id, time, value)
-         values ($1, $2, $3)
-                "#,
-                id,       // $1
-                datetime, // $2
-                likes,    // $3
-            )
-            .execute(&mut tx)
-            .await?;
-        }
+        if (status != StreamStatus::Scheduled) {
+            if let Some(likes) = likes {
+                let _ = sqlx::query!(
+                    r#"
+        insert into youtube_stream_like_statistic (stream_id, time, value)
+             values ($1, $2, $3)
+                    "#,
+                    id,       // $1
+                    datetime, // $2
+                    likes,    // $3
+                )
+                .execute(&mut tx)
+                .await?;
+            }
 
-        if let Some(viewers) = viewers {
-            let _ = sqlx::query!(
-                r#"
-    insert into youtube_stream_viewer_statistic (stream_id, time, value)
-         values ($1, $2, $3)
-                "#,
-                id,       // $1
-                datetime, // $2
-                viewers,  // $3
-            )
-            .execute(&mut tx)
-            .await?;
+            if let Some(viewers) = viewers {
+                let _ = sqlx::query!(
+                    r#"
+        insert into youtube_stream_viewer_statistic (stream_id, time, value)
+             values ($1, $2, $3)
+                    "#,
+                    id,       // $1
+                    datetime, // $2
+                    viewers,  // $3
+                )
+                .execute(&mut tx)
+                .await?;
+            }
         }
 
         tx.commit().await?;
