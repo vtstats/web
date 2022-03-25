@@ -70,7 +70,11 @@ insert into youtube_channels (vtuber_id)
             ('temma'),           -- 岸堂天真
             ('roberu'),          -- 夕刻ロベル
             ('shien'),           -- 影山シエン
-            ('oga');             -- 荒咬オウガ
+            ('oga'),             -- 荒咬オウガ
+            ('fuma'),            -- 夜十神封魔
+            ('uyu'),             -- 羽継烏有
+            ('gamma'),           -- 緋崎ガンマ
+            ('rio');             -- 水無世燐央
 
 insert into bilibili_channels (vtuber_id)
      values ('hololive'),        -- ホロライブ公式

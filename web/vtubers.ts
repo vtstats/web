@@ -85,7 +85,11 @@ export type VTuberIds =
   | "temma"
   | "roberu"
   | "shien"
-  | "oga";
+  | "oga"
+  | "fuma"
+  | "uyu"
+  | "gamma"
+  | "rio";
 
 export const vtubers: Record<VTuberIds, VTuber> = {
   hololive: {
@@ -595,6 +599,26 @@ export const vtubers: Record<VTuberIds, VTuber> = {
     twitter: "aragamioga",
     youtube: "UCwL7dgTxKo8Y4RFIKWaf8gA",
   },
+  fuma: {
+    id: "fuma",
+    twitter: "yatogamifuma",
+    youtube: "UCc88OV45ICgHbn3ZqLLb52w",
+  },
+  uyu: {
+    id: "uyu",
+    twitter: "utsugiuyu",
+    youtube: "UCgRqGV1gBf2Esxh0Tz1vxzw",
+  },
+  gamma: {
+    id: "gamma",
+    twitter: "hizakigamma",
+    youtube: "UCkT1u65YS49ca_LsFwcTakw",
+  },
+  rio: {
+    id: "rio",
+    twitter: "minaserioch",
+    youtube: "UCdfMHxjcCc2HSd9qFvfJgjg",
+  },
 };
 
 export type BatchIds =
@@ -618,6 +642,7 @@ export type BatchIds =
   | "holostars_1st"
   | "holostars_2nd"
   | "holostars_3rd"
+  | "holostars_uproar"
   | "others";
 
 type Batch = VTuberIds[];
@@ -643,6 +668,7 @@ export const batches: Record<BatchIds, Batch> = {
   holostars_1st: ["miyabi", "izuru", "aruran", "rikka"],
   holostars_2nd: ["astel", "temma", "roberu"],
   holostars_3rd: ["shien", "oga"],
+  holostars_uproar: ["fuma", "uyu", "gamma", "rio"],
   others: [
     "luna",
     "nekomiya",
