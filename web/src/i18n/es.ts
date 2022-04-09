@@ -139,7 +139,6 @@ const translations: Translations = {
   hololive_5th: "Hololive 5th Gen",
   hololive_6th: "Hololive 6th Gen",
   hololive_gamers: "Hololive Gamers",
-  innk_music: "Innk Music",
   hololive_id_1st: "Hololive Indonesia 1st Gen",
   hololive_id_2nd: "Hololive Indonesia 2nd Gen",
   hololive_id_3rd: "Hololive Indonesia 3rd Gen",

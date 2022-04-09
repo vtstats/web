@@ -632,7 +632,6 @@ export type BatchIds =
   | "hololive_5th"
   | "hololive_6th"
   | "hololive_gamers"
-  | "innk_music"
   | "hololive_id_1st"
   | "hololive_id_2nd"
   | "hololive_id_3rd"
@@ -650,7 +649,7 @@ type Batch = VTuberIds[];
 export const batches: Record<BatchIds, Batch> = {
   hololive: ["hololive", "hololive_en", "hololive_id"],
   yagoo: null,
-  hololive_og: ["sora", "roboco", "miko", "suisei"],
+  hololive_og: ["sora", "roboco", "miko", "suisei", "azki"],
   hololive_1st: ["fubuki", "matsuri", "haato", "aki", "mel"],
   hololive_2nd: ["choco", "choco_alt", "shion", "aqua", "subaru", "ayame"],
   hololive_3rd: ["pekora", "rushia", "flare", "marine", "noel"],
@@ -658,7 +657,6 @@ export const batches: Record<BatchIds, Batch> = {
   hololive_5th: ["lamy", "nene", "botan", "polka"],
   hololive_6th: ["chloe", "iroha", "koyori", "laplus", "lui"],
   hololive_gamers: ["fubuki", "mio", "okayu", "korone"],
-  innk_music: ["azki"],
   hololive_id_1st: ["risu", "moona", "iofi"],
   hololive_id_2nd: ["ollie", "melfissa", "reine"],
   hololive_id_3rd: ["vestia", "kaela", "kobo"],

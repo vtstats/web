@@ -139,7 +139,6 @@ const translations: Translations = {
   hololive_5th: "Pelapis Kelima hololive",
   hololive_6th: "Pelapis Keenam hololive",
   hololive_gamers: "Pemain Hololive",
-  innk_music: "INNK Music",
   hololive_id_1st: "Pelapis Pertama hololive Indonesia",
   hololive_id_2nd: "Pelapis Kedua hololive Indonesia",
   hololive_id_3rd: "Pelapis Ketiga hololive Indonesia",

@@ -139,7 +139,6 @@ const translations: Translations = {
   hololive_5th: "ホロライブ5期生",
   hololive_6th: "ホロライブ6期生",
   hololive_gamers: "ホロライブゲーマーズ",
-  innk_music: "イノナカミュージック",
   hololive_id_1st: "ホロライブインドネシア1期生",
   hololive_id_2nd: "ホロライブインドネシア2期生",
   hololive_id_3rd: "ホロライブインドネシア3期生",
