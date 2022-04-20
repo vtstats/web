@@ -27,7 +27,6 @@
     "@cloudflare/kv-asset-handler": "^0.1.0",
     "@floating-ui/dom": "^0.1.7",
     "@sentry/browser": "^6.16.1",
-    "apexcharts": "^3.25.0",
     "aws4fetch": "^1.0.13",
     "d3-array": "^3.1.1",
     "d3-ease": "^3.0.1",

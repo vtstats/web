@@ -47,7 +47,7 @@
             ],
             "styles": ["src/styles/main.scss"],
             "i18nMissingTranslation": "error",
-            "allowedCommonJsDependencies": ["apexcharts", "date-fns"],
+            "allowedCommonJsDependencies": [],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
