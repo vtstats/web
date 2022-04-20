@@ -11,8 +11,6 @@ fs.writeFileSync(path, html);"
 
 yarn build --configuration production
 
-mv dist/safety-worker.js dist/ngsw-worker.js
-
 # create a deploy in sentry
 if [ "$CF_PAGES_BRANCH" = "master" ] || [ "$CF_PAGES_BRANCH" = "dev" ]; then
   yarn global add @sentry/cli

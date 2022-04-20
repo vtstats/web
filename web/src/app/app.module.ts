@@ -12,6 +12,7 @@ import { AppComponent } from "./app.component";
 
 import { ComponentsModule } from "./components/components.module";
 import { ShareTarget } from "./components/share-target/share-target";
+import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
@@ -102,7 +103,8 @@ const ROUTES: Routes = [
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: false,
+      enabled: environment.production,
+      registrationStrategy: "registerImmediately",
     }),
     MatSidenavModule,
     LayoutModule,

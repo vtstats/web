@@ -12,7 +12,8 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js",
-          "/i18n/*.js"
+          "/i18n/*.js",
+          "/pages/*.js"
         ]
       }
     },
