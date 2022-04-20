@@ -6,16 +6,16 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 
-import { environment } from "../environments/environment";
-
 import { LayoutModule } from "./layout";
 
 import { AppComponent } from "./app.component";
 
 import { ComponentsModule } from "./components/components.module";
+import { ShareTarget } from "./components/share-target/share-target";
 
 const ROUTES: Routes = [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },
+  { path: "share-target", component: ShareTarget },
   {
     path: "youtube-channel",
     loadChildren: () =>
@@ -94,7 +94,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ShareTarget],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
