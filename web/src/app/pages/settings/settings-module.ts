@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
@@ -17,7 +18,7 @@ import { PlaylistSelector } from "./playlist-selector/playlist-selector";
 import { TimezoneSettings } from "./timezone-settings/timezone-settings";
 import { YouTubeSettings } from "./youtube-settings/youtube-settings";
 import { VTubersSettings } from "./vtubers-settings/vtubers-settings";
-import { RouterModule } from "@angular/router";
+import { ThemeSettings } from "./theme-settings/theme-settings";
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { RouterModule } from "@angular/router";
   ],
   declarations: [
     Settings,
+    ThemeSettings,
     TimezoneSettings,
     PlaylistSelector,
     VTubersSettings,

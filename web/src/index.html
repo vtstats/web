@@ -6,7 +6,7 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#2d353d" />
+    <meta name="theme-color" content="#FFFFFF" />
     <link rel="icon" sizes="72x72" href="/assets/icons/icon-72x72.png" />
     <link rel="icon" sizes="96x96" href="/assets/icons/icon-96x96.png" />
     <link rel="icon" sizes="128x128" href="/assets/icons/icon-128x128.png" />
@@ -27,8 +27,15 @@
       Please enable JavaScript to continue using this application.
     </noscript>
     <script>
-      var theme = window.localStorage.getItem("theme") || "default";
-      document.body.classList.add(theme);
+      const theme = window.localStorage.getItem("theme");
+      const isDarkMode =
+        "dark" === theme ||
+        ((!theme || "system" === theme) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.body.setAttribute("class", isDarkMode ? "dark" : "light");
+      document.head
+        .querySelector('meta[name="theme-color"]')
+        .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
 
       window.cfPagesCommitSha = "CF_PAGES_COMMIT_SHA";
       window.cfPagesBranch = "CF_PAGES_BRANCH";

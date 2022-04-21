@@ -2,7 +2,7 @@
   "name": "HoloStats",
   "short_name": "HoloStats",
   "description": "VTubers Statistics and Data Visualization.",
-  "theme_color": "#2d353d",
+  "theme_color": "#e2e2e2",
   "background_color": "#e2e2e2",
   "display": "standalone",
   "scope": "/",

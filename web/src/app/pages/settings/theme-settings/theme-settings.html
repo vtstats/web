@@ -1,0 +1,14 @@
+<mat-list-item>
+  <h3 matLine>Theme</h3>
+
+  <mat-form-field appearance="none">
+    <mat-select
+      [value]="config.theme$ | async"
+      (selectionChange)="config.theme$.next($event.value)"
+    >
+      <mat-option *ngFor="let theme of themes" [value]="theme.value">
+        {{ theme.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-list-item>

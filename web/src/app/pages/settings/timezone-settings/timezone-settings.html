@@ -1,20 +1,16 @@
-<h4 class="title">General</h4>
+<mat-list-item>
+  <h3 matLine>Timezone</h3>
 
-<mat-list>
-  <mat-list-item>
-    <h3 matLine>Timezone</h3>
-
-    <mat-form-field appearance="none">
-      <mat-label *ngIf="!(config.timezone$ | async)">None</mat-label>
-      <mat-select
-        [value]="config.timezone$ | async"
-        (selectionChange)="config.setTimezone($event.value)"
-      >
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let timezone of timezones" [value]="timezone">
-          {{ 0 | date:'OOOO':timezone }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-list-item>
-</mat-list>
+  <mat-form-field appearance="none">
+    <mat-label *ngIf="!(config.timezone$ | async)">None</mat-label>
+    <mat-select
+      [value]="config.timezone$ | async"
+      (selectionChange)="config.setTimezone($event.value)"
+    >
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+        {{ 0 | date:'OOOO':timezone }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-list-item>

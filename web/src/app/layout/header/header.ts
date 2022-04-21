@@ -1,3 +1,4 @@
+import { DOCUMENT } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -20,14 +21,15 @@ export class Header {
 
   constructor(
     private config: ConfigService,
-    @Inject(LOCALE_ID) private localeId: string
+    @Inject(LOCALE_ID) private localeId: string,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   toggleDarkMode() {
-    if (this.config.theme === "dark") {
-      this.config.setTheme("default");
+    if (this.document.body.classList.contains("dark")) {
+      this.config.theme$.next("light");
     } else {
-      this.config.setTheme("dark");
+      this.config.theme$.next("dark");
     }
   }
 
