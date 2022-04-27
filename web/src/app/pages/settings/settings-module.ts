@@ -19,6 +19,7 @@ import { TimezoneSettings } from "./timezone-settings/timezone-settings";
 import { YouTubeSettings } from "./youtube-settings/youtube-settings";
 import { VTubersSettings } from "./vtubers-settings/vtubers-settings";
 import { ThemeSettings } from "./theme-settings/theme-settings";
+import { NgswSettings } from "./ngsw-settings/ngsw-settings";
 
 @NgModule({
   imports: [
@@ -37,6 +38,11 @@ import { ThemeSettings } from "./theme-settings/theme-settings";
       {
         path: "",
         component: Settings,
+        pathMatch: "full",
+      },
+      {
+        path: "ngsw",
+        component: NgswSettings,
       },
     ]),
   ],
@@ -47,6 +53,7 @@ import { ThemeSettings } from "./theme-settings/theme-settings";
     PlaylistSelector,
     VTubersSettings,
     YouTubeSettings,
+    NgswSettings,
   ],
 })
 export class SettingsModule {}
