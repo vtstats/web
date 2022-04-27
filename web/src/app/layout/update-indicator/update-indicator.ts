@@ -17,7 +17,7 @@ import { first, switchMap, tap } from "rxjs/operators";
   host: { class: "update-indicator" },
 })
 export class UpdateIndicator implements OnInit {
-  status: "checking" | "failed" | "updated" | "outdated" = "checking";
+  status: "checking" | "failed" | "updated" | "outdated" | undefined;
 
   constructor(
     private appRef: ApplicationRef,
@@ -26,10 +26,7 @@ export class UpdateIndicator implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.swUpdates.isEnabled) {
-      this.status = "updated";
-      return;
-    }
+    if (!this.swUpdates.isEnabled) return;
 
     const appIsStable$ = this.appRef.isStable.pipe(
       first((isStable) => isStable === true)
