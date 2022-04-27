@@ -8,7 +8,6 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/index.html",
           "/manifest.webmanifest",
           "/*.css",
           "/*.js",
