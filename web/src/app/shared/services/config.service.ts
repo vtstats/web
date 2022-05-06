@@ -1,5 +1,11 @@
-import { Injectable, Inject, NgZone, OnDestroy } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import {
+  Injectable,
+  Inject,
+  NgZone,
+  OnDestroy,
+  PLATFORM_ID,
+} from "@angular/core";
+import { DOCUMENT, isPlatformBrowser } from "@angular/common";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {
   BehaviorSubject,
@@ -20,7 +26,7 @@ import { MediaMatcher } from "@angular/cdk/layout";
 export class ConfigService implements OnDestroy {
   vtuber: Set<string>;
   playlist: string;
-  timezone$ = new BehaviorSubject(window.localStorage.getItem("timezone"));
+  timezone$ = new BehaviorSubject(this.getItem("timezone"));
 
   snackBar$ = null;
 
@@ -30,11 +36,12 @@ export class ConfigService implements OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: object,
     private snackBar: MatSnackBar,
     private mediaMatcher: MediaMatcher,
     private _zone: NgZone
   ) {
-    const vtbString = window.localStorage.getItem("vtuber");
+    const vtbString = this.getItem("vtuber");
     if (vtbString) {
       this.vtuber = new Set(vtbString.split(",").filter((id) => id in vtubers));
     } else {
@@ -57,10 +64,12 @@ export class ConfigService implements OnDestroy {
         (observer: Observer<MediaQueryListEvent>) => {
           const handler = (e: MediaQueryListEvent) =>
             this._zone.run(() => observer.next(e));
-          query.addEventListener("change", handler);
-          return () => {
-            query.removeEventListener("change", handler);
-          };
+          if (typeof window !== "undefined") {
+            query.addEventListener("change", handler);
+            return () => {
+              query.removeEventListener("change", handler);
+            };
+          }
         }
       ).pipe(
         takeUntil(this.onDestroy),
@@ -68,7 +77,7 @@ export class ConfigService implements OnDestroy {
         startWith(query.matches)
       );
 
-      const theme = window.localStorage.getItem(storeKey);
+      const theme = this.getItem(storeKey);
       this.theme$ = new BehaviorSubject(
         // prettier-ignore
         (!theme || theme === "system")
@@ -87,11 +96,11 @@ export class ConfigService implements OnDestroy {
         this.document.head
           .querySelector('meta[name="theme-color"]')
           .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
-        window.localStorage.setItem(storeKey, theme);
+        this.setItem(storeKey, theme);
       });
     }
 
-    this.playlist = window.localStorage.getItem("yt_playlist");
+    this.playlist = this.getItem("yt_playlist");
   }
 
   ngOnDestroy() {
@@ -130,7 +139,7 @@ export class ConfigService implements OnDestroy {
     if (item) {
       this.setItem("timezone", item);
     } else {
-      window.localStorage.removeItem("timezone");
+      this.removeItem("timezone");
     }
   }
 
@@ -139,7 +148,21 @@ export class ConfigService implements OnDestroy {
     this.setItem("yt_playlist", item);
   }
 
+  private removeItem(key: string) {
+    if (isPlatformBrowser(this.platformId)) {
+      return window.localStorage.removeItem(key);
+    }
+  }
+
+  private getItem(key: string) {
+    if (isPlatformBrowser(this.platformId) && typeof window !== "undefined") {
+      return window.localStorage.getItem(key);
+    }
+  }
+
   private setItem(key: string, value: string) {
-    window.localStorage.setItem(key, value);
+    if (isPlatformBrowser(this.platformId) && typeof window !== "undefined") {
+      return window.localStorage.setItem(key, value);
+    }
   }
 }

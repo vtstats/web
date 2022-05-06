@@ -11,7 +11,7 @@ export class HoldGestureDirective {
   initialX = 0;
   initialY = 0;
 
-  timeout: number;
+  timeout: any;
 
   readonly timeoutMs = 500;
   readonly delta = 50;

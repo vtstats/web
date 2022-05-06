@@ -11,7 +11,7 @@ import { LayoutModule } from "./layout";
 import { AppComponent } from "./app.component";
 
 import { ComponentsModule } from "./components/components.module";
-import { ShareTarget } from "./components/share-target/share-target";
+import { ShareTarget } from "./pages/share-target/share-target";
 import { environment } from "../environments/environment";
 
 const ROUTES: Routes = [
@@ -98,7 +98,7 @@ const ROUTES: Routes = [
   declarations: [AppComponent, ShareTarget],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: "holostats" }),
     ComponentsModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { scrollPositionRestoration: "enabled" }),

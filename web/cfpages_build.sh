@@ -2,14 +2,11 @@ set -e
 
 export PATH="$PATH:$(yarn global bin)"
 
-node -e "const fs = require('fs');
-const path = 'src/index.html';
-const html = fs.readFileSync(path, 'utf-8')
-  .replace('CF_PAGES_BRANCH',     '$CF_PAGES_BRANCH')
-  .replace('CF_PAGES_COMMIT_SHA', '$CF_PAGES_COMMIT_SHA');
-fs.writeFileSync(path, html);"
+rm -rf dist/
 
-yarn build --configuration production
+yarn ng run holostats:app-shell:production
+
+node postbuild.mjs
 
 # create a deploy in sentry
 if [ "$CF_PAGES_BRANCH" = "master" ] || [ "$CF_PAGES_BRANCH" = "dev" ]; then

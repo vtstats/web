@@ -23,28 +23,36 @@ if (environment.production) {
   });
 }
 
-const lang = getLang();
+const bootstrap = async () => {
+  const lang = getLang();
 
-import(
-  /* webpackChunkName: "i18n/[request]" */
-  /* webpackExclude: /(index|\.d)\.ts$/ */
-  `./i18n/${lang}`
-)
-  .then((mod) => {
-    // locale
-    registerLocaleData(mod.locale, lang);
+  import(
+    /* webpackChunkName: "i18n/[request]" */
+    /* webpackExclude: /(index|\.d)\.ts$/ */
+    `./i18n/${lang}`
+  )
+    .then((mod) => {
+      // locale
+      registerLocaleData(mod.locale, lang);
 
-    loadTranslations(mod.translations);
+      loadTranslations(mod.translations);
 
-    platformBrowserDynamic([
-      { provide: DATE_FNS_LOCALE, useValue: mod.dateFnsLocale },
-      { provide: LOCALE_ID, useValue: lang },
-      {
-        provide: DATE_PIPE_DEFAULT_TIMEZONE,
-        useValue: window.localStorage.getItem("timezone"),
-      },
-    ]).bootstrapModule(AppModule, {
-      ngZoneEventCoalescing: true,
-    });
-  })
-  .catch((err) => console.error(err));
+      platformBrowserDynamic([
+        { provide: DATE_FNS_LOCALE, useValue: mod.dateFnsLocale },
+        { provide: LOCALE_ID, useValue: lang },
+        {
+          provide: DATE_PIPE_DEFAULT_TIMEZONE,
+          useValue: window.localStorage.getItem("timezone"),
+        },
+      ]).bootstrapModule(AppModule, {
+        ngZoneEventCoalescing: true,
+      });
+    })
+    .catch((err) => console.error(err));
+};
+
+if (document.readyState === "complete") {
+  bootstrap();
+} else {
+  document.addEventListener("DOMContentLoaded", bootstrap);
+}

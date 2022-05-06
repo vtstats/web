@@ -124,13 +124,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    fromEvent(window, "resize")
-      .pipe(
-        throttleTime(500),
-        startWith(window.innerWidth),
-        map(() => window.innerWidth)
-      )
-      .subscribe((width) => this.updateSidenav(width));
+    if (typeof window !== "undefined") {
+      fromEvent(window, "resize")
+        .pipe(
+          throttleTime(500),
+          startWith(window.innerWidth),
+          map(() => window.innerWidth)
+        )
+        .subscribe((width) => this.updateSidenav(width));
+    }
   }
 
   updateSidenav(width: number) {

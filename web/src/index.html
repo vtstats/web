@@ -25,7 +25,7 @@
     <meta property="og:image" content="/assets/open-graph.jpg" />
     <meta property="og:url" content="https://holo.poi.cat" />
   </head>
-  <body>
+  <body class="dark">
     <hls-root></hls-root>
     <noscript>
       Please enable JavaScript to continue using this application.
@@ -41,6 +41,7 @@
         .querySelector('meta[name="theme-color"]')
         .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
 
+      window.buildTime = "BUILD_TIME";
       window.cfPagesCommitSha = "CF_PAGES_COMMIT_SHA";
       window.cfPagesBranch = "CF_PAGES_BRANCH";
     </script>
