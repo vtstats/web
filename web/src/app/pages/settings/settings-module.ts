@@ -20,6 +20,8 @@ import { YouTubeSettings } from "./youtube-settings/youtube-settings";
 import { VTubersSettings } from "./vtubers-settings/vtubers-settings";
 import { ThemeSettings } from "./theme-settings/theme-settings";
 import { NgswSettings } from "./ngsw-settings/ngsw-settings";
+import { Licenses } from "./licenses/licenses";
+import { PrivacyPolicy } from "./privacy-policy/privacy-policy";
 
 @NgModule({
   imports: [
@@ -44,6 +46,14 @@ import { NgswSettings } from "./ngsw-settings/ngsw-settings";
         path: "ngsw",
         component: NgswSettings,
       },
+      {
+        path: "licenses",
+        component: Licenses,
+      },
+      {
+        path: "privacy",
+        component: PrivacyPolicy,
+      },
     ]),
   ],
   declarations: [
@@ -54,6 +64,8 @@ import { NgswSettings } from "./ngsw-settings/ngsw-settings";
     VTubersSettings,
     YouTubeSettings,
     NgswSettings,
+    Licenses,
+    PrivacyPolicy,
   ],
 })
 export class SettingsModule {}

@@ -1,9 +1,9 @@
 <hls-helmet title="Service worker"></hls-helmet>
 
-<div class="ngsw-settings mx-auto max-w-960">
-  <div [style.padding-bottom.px]="20">
-    Service worker {{ swUpdate.isEnabled ? 'is' : 'is not' }} enabled
-  </div>
+<div class="ngsw-settings mx-auto max-w-960 mat-typography">
+  <h1>Service worker</h1>
 
-  <div *ngIf="swUpdate.isEnabled">{{ state$ | async }}</div>
+  <p>Service worker {{ swUpdate.isEnabled ? 'is' : 'is not' }} enabled</p>
+
+  <pre *ngIf="swUpdate.isEnabled">{{ state$ | async }}</pre>
 </div>

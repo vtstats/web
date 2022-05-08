@@ -73,14 +73,6 @@ const ROUTES: Routes = [
         "./pages/vtubers-detail/vtubers-detail-module"
       ).then((m) => m.VTubersDetailModule),
   },
-  {
-    path: "privacy-policy",
-    loadChildren: () =>
-      import(
-        /* webpackChunkName: "pages/privacy-policy" */
-        "./pages/privacy-policy/privacy-policy-module"
-      ).then((m) => m.PrivacyPolicyModule),
-  },
   // redirect old link
   { path: "vtuber", redirectTo: "/youtube-channel", pathMatch: "full" },
   { path: "stream", redirectTo: "/youtube-stream", pathMatch: "full" },
