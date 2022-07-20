@@ -79,6 +79,11 @@ youtube = "UC5CwaMl1eIgY8h02uZw7u8A"
 bilibili = "9034870"
 
 [[vtubers]]
+id = "azki"
+youtube = "UC0TXe_LYZ4scaW2XMyi5_kw"
+bilibili = "389056211"
+
+[[vtubers]]
 id = "fubuki"
 youtube = "UCdn5BQ06XqgXoAxIhbqw5Rg"
 bilibili = "332704117"
@@ -238,11 +243,6 @@ youtube = "UChAnqc_AY5_I3Px5dig3X1Q"
 bilibili = "412135619"
 
 [[vtubers]]
-id = "azki"
-youtube = "UC0TXe_LYZ4scaW2XMyi5_kw"
-bilibili = "389056211"
-
-[[vtubers]]
 id = "risu"
 youtube = "UCOyYb1c43VlX9rc_lT6NKQw"
 
@@ -380,6 +380,45 @@ id = "rio"
 youtube = "UCdfMHxjcCc2HSd9qFvfJgjg"
 
 [[vtubers]]
+id = "regis_altare"
+youtube = "UCyxtGMdWlURZ30WSnEjDOQw"
+
+[[vtubers]]
+id = "magni_dezmond"
+youtube = "UC7MMNHR-kf9EN1rXiesMTMw"
+
+[[vtubers]]
+id = "axel_syrios"
+youtube = "UC2hx0xVkMoHGWijwr_lA01w"
+
+[[vtubers]]
+id = "noir_vesper"
+youtube = "UCDRWSO281bIHYVi-OV3iFYA"
+
+[[vtubers]]
+id = "ayamy"
+youtube = "UCr9p1ZjLKgfaoqNorY7PiWQ"
+bilibili = "521070071"
+
+[[vtubers]]
+id = "nabi"
+youtube = "UCzKkwB84Y0ql0EvyOWRSkEw"
+
+[[vtubers]]
+id = "pochimaru"
+youtube = "UC22BVlBsZc6ta3Dqz75NU6Q"
+
+[[vtubers]]
+id = "nana"
+youtube = "UCbfv8uuUXt3RSJGEwxny5Rw"
+bilibili = "386900246"
+
+[[vtubers]]
+id = "ui"
+youtube = "UCt30jJgChL8qeT9VPadidSw"
+bilibili = "2601367"
+
+[[vtubers]]
 id = "luna"
 youtube = "UCQYADFw7xEJ9oZSM5ZbqyBw"
 bilibili = "265224956"
@@ -393,26 +432,3 @@ bilibili = "291296062"
 id = "tamaki"
 youtube = "UC8NZiqKx6fsDT3AVcMiVFyA"
 bilibili = "12362451"
-
-[[vtubers]]
-id = "nana"
-youtube = "UCbfv8uuUXt3RSJGEwxny5Rw"
-bilibili = "386900246"
-
-[[vtubers]]
-id = "ui"
-youtube = "UCt30jJgChL8qeT9VPadidSw"
-bilibili = "2601367"
-
-[[vtubers]]
-id = "pochimaru"
-youtube = "UC22BVlBsZc6ta3Dqz75NU6Q"
-
-[[vtubers]]
-id = "ayamy"
-youtube = "UCr9p1ZjLKgfaoqNorY7PiWQ"
-bilibili = "521070071"
-
-[[vtubers]]
-id = "nabi"
-youtube = "UCzKkwB84Y0ql0EvyOWRSkEw"

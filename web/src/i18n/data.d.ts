@@ -1,6 +1,6 @@
 import { VTuberIds, BatchIds } from "vtubers";
 
-export type MessageIds =
+export type UIMessageIds =
   | "updatedAt"
   | "name"
   | "total"
@@ -44,7 +44,9 @@ export type MessageIds =
   | "yellow"
   | "orange"
   | "magenta"
-  | "red"
+  | "red";
+
+export type CurrencyMessageIds =
   | "GBP"
   | "JPY"
   | "KRW"
@@ -90,7 +92,11 @@ export type MessageIds =
   | "SEK"
   | "SGD"
   | "TRY"
-  | "ZAR"
+  | "ZAR";
+
+export type MessageIds =
+  | UIMessageIds
+  | CurrencyMessageIds
   | VTuberIds
   | BatchIds;
 

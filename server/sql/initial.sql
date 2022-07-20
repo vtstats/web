@@ -74,7 +74,11 @@ insert into youtube_channels (vtuber_id)
             ('fuma'),            -- 夜十神封魔
             ('uyu'),             -- 羽継烏有
             ('gamma'),           -- 緋崎ガンマ
-            ('rio');             -- 水無世燐央
+            ('rio'),             -- 水無世燐央
+            ('axel_syrios'),
+            ('magni_dezmond'),
+            ('noir_vesper'),
+            ('regis_altare');
 
 insert into bilibili_channels (vtuber_id)
      values ('hololive'),        -- ホロライブ公式
