@@ -1,11 +1,5 @@
-import {
-  Injectable,
-  Inject,
-  NgZone,
-  OnDestroy,
-  PLATFORM_ID,
-} from "@angular/core";
-import { DOCUMENT, isPlatformBrowser } from "@angular/common";
+import { Injectable, Inject, NgZone, OnDestroy } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {
   BehaviorSubject,
@@ -21,6 +15,11 @@ import {
 
 import { vtubers } from "vtubers";
 import { MediaMatcher } from "@angular/cdk/layout";
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from "src/utils";
 
 @Injectable({ providedIn: "root" })
 export class ConfigService implements OnDestroy {
@@ -36,7 +35,6 @@ export class ConfigService implements OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: object,
     private snackBar: MatSnackBar,
     private mediaMatcher: MediaMatcher,
     private _zone: NgZone
@@ -149,20 +147,14 @@ export class ConfigService implements OnDestroy {
   }
 
   private removeItem(key: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      return window.localStorage.removeItem(key);
-    }
+    return removeLocalStorage(key);
   }
 
   private getItem(key: string) {
-    if (isPlatformBrowser(this.platformId) && typeof window !== "undefined") {
-      return window.localStorage.getItem(key);
-    }
+    return getLocalStorage(key);
   }
 
   private setItem(key: string, value: string) {
-    if (isPlatformBrowser(this.platformId) && typeof window !== "undefined") {
-      return window.localStorage.setItem(key, value);
-    }
+    return setLocalStorage(key, value);
   }
 }

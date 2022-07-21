@@ -1,5 +1,6 @@
 import { InjectionToken } from "@angular/core";
 import type { Locale } from "date-fns";
+import { getLocalStorage } from "src/utils";
 
 const supportedLanguages = ["en", "es", "ja", "ms", "zh"];
 
@@ -16,9 +17,7 @@ export const translate = (id: string): string => {
 };
 
 export const getLang = (): string => {
-  let lang =
-    window.localStorage.getItem("lang") ||
-    window.navigator.language.slice(0, 2);
+  let lang = getLocalStorage("lang") || window.navigator.language.slice(0, 2);
 
   // fallback to default language
   if (!supportedLanguages.includes(lang)) {

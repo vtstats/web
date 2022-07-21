@@ -11,6 +11,7 @@ import { environment } from "./environments/environment";
 
 import { DATE_FNS_LOCALE, getLang } from "./i18n";
 import { AppModule } from "./app/app.module";
+import { getLocalStorage } from "./utils";
 
 if (environment.production) {
   enableProdMode();
@@ -42,7 +43,7 @@ const bootstrap = async () => {
         { provide: LOCALE_ID, useValue: lang },
         {
           provide: DATE_PIPE_DEFAULT_TIMEZONE,
-          useValue: window.localStorage.getItem("timezone"),
+          useValue: getLocalStorage("timezone"),
         },
       ]).bootstrapModule(AppModule, {
         ngZoneEventCoalescing: true,

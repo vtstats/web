@@ -31,7 +31,10 @@
       Please enable JavaScript to continue using this application.
     </noscript>
     <script>
-      const theme = window.localStorage.getItem("theme");
+      let theme;
+      try {
+        theme = window.localStorage.getItem("theme");
+      } catch (e) {}
       const isDarkMode =
         "dark" === theme ||
         ((!theme || "system" === theme) &&
