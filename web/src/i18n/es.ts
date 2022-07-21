@@ -1,9 +1,11 @@
+// Spanish (es)
+
+export { default as locale } from "@angular/common/locales/es";
+export { default as dateFnsLocale } from "date-fns/locale/es";
+
 import type { Translations } from "./data";
 
-import locale from "@angular/common/locales/en";
-import dateFnsLocale from "date-fns/locale/en-US";
-
-const translations: Translations = {
+export const translations: Translations = {
   updatedAt: "Última vez actualizado {$INTERPOLATION}",
   name: "Nombre",
   total: "Total",
@@ -205,5 +207,3 @@ const translations: Translations = {
   TRY: "Lira turca",
   ZAR: "Rand sudafricano",
 };
-
-export { locale, dateFnsLocale, translations };

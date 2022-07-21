@@ -1,9 +1,11 @@
+// Chinese (zh)
+
+export { default as locale } from "@angular/common/locales/zh-Hant";
+export { default as dateFnsLocale } from "date-fns/locale/zh-TW";
+
 import type { Translations } from "./data";
 
-import locale from "@angular/common/locales/zh-Hant";
-import dateFnsLocale from "date-fns/locale/zh-TW";
-
-const translations: Translations = {
+export const translations: Translations = {
   updatedAt: "更新于 {$INTERPOLATION}",
   name: "名稱",
   total: "總計",
@@ -205,7 +207,3 @@ const translations: Translations = {
   TRY: "土耳其里拉",
   ZAR: "南非蘭特",
 };
-
-export default translations;
-
-export { locale, dateFnsLocale, translations };

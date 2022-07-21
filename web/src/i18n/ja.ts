@@ -1,9 +1,11 @@
+// Japanese (ja)
+
+export { default as locale } from "@angular/common/locales/ja";
+export { default as dateFnsLocale } from "date-fns/locale/ja";
+
 import type { Translations } from "./data";
 
-import locale from "@angular/common/locales/ja";
-import dateFnsLocale from "date-fns/locale/ja";
-
-const translations: Translations = {
+export const translations: Translations = {
   updatedAt: "更新時間: {$ INTERPOLATION}",
   name: "名前",
   total: "合計",
@@ -205,7 +207,3 @@ const translations: Translations = {
   TRY: "トルコリラ",
   ZAR: "ランド",
 };
-
-export default translations;
-
-export { locale, dateFnsLocale, translations };

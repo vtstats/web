@@ -1,9 +1,11 @@
+/// Malay (ms)
+
+export { default as locale } from "@angular/common/locales/ms";
+export { default as dateFnsLocale } from "date-fns/locale/ms";
+
 import type { Translations } from "./data";
 
-import locale from "@angular/common/locales/ms";
-import dateFnsLocale from "date-fns/locale/ms";
-
-const translations: Translations = {
+export const translations: Translations = {
   updatedAt: "Kemas kini terakhir pada {$INTERPOLATION}",
   name: "Nama",
   total: "Jumlah",
@@ -205,5 +207,3 @@ const translations: Translations = {
   TRY: "Turkey Lira",
   ZAR: "South Africa Rand",
 };
-
-export { locale, dateFnsLocale, translations };
