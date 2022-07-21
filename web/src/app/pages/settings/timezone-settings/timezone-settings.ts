@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { ConfigService } from "src/app/shared";
+import { ConfigService, TickService } from "src/app/shared";
 
 @Component({
   selector: "hls-timezone-settings",
@@ -44,5 +44,5 @@ export class TimezoneSettings {
     "+13:00",
   ];
 
-  constructor(public config: ConfigService) {}
+  constructor(public config: ConfigService, public tick: TickService) {}
 }
