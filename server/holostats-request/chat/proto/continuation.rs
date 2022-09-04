@@ -49,7 +49,7 @@ impl MessageWrite for A {
 pub struct B<'a> {
     pub video: Cow<'a, str>,
     pub f6: i32,
-    pub a: Option<A>,
+    pub a: Option<continuation::A>,
 }
 
 impl<'a> MessageRead<'a> for B<'a> {
@@ -59,7 +59,7 @@ impl<'a> MessageRead<'a> for B<'a> {
             match r.next_tag(bytes) {
                 Ok(26) => msg.video = r.read_string(bytes).map(Cow::Borrowed)?,
                 Ok(48) => msg.f6 = r.read_int32(bytes)?,
-                Ok(130) => msg.a = Some(r.read_message::<A>(bytes)?),
+                Ok(130) => msg.a = Some(r.read_message::<continuation::A>(bytes)?),
                 Ok(t) => { r.read_unknown(bytes, t)?; }
                 Err(e) => return Err(e),
             }
@@ -86,7 +86,7 @@ impl<'a> MessageWrite for B<'a> {
 
 #[derive(Debug, Default, PartialEq, Clone)]
 pub struct Continuation<'a> {
-    pub b: Option<B<'a>>,
+    pub b: Option<continuation::B<'a>>,
 }
 
 impl<'a> MessageRead<'a> for Continuation<'a> {
@@ -94,7 +94,7 @@ impl<'a> MessageRead<'a> for Continuation<'a> {
         let mut msg = Self::default();
         while !r.is_eof() {
             match r.next_tag(bytes) {
-                Ok(957547474) => msg.b = Some(r.read_message::<B>(bytes)?),
+                Ok(957547474) => msg.b = Some(r.read_message::<continuation::B>(bytes)?),
                 Ok(t) => { r.read_unknown(bytes, t)?; }
                 Err(e) => return Err(e),
             }
@@ -152,7 +152,7 @@ impl<'a> MessageWrite for C<'a> {
 
 #[derive(Debug, Default, PartialEq, Clone)]
 pub struct D<'a> {
-    pub c: Option<C<'a>>,
+    pub c: Option<continuation::C<'a>>,
 }
 
 impl<'a> MessageRead<'a> for D<'a> {
@@ -160,7 +160,7 @@ impl<'a> MessageRead<'a> for D<'a> {
         let mut msg = Self::default();
         while !r.is_eof() {
             match r.next_tag(bytes) {
-                Ok(42) => msg.c = Some(r.read_message::<C>(bytes)?),
+                Ok(42) => msg.c = Some(r.read_message::<continuation::C>(bytes)?),
                 Ok(t) => { r.read_unknown(bytes, t)?; }
                 Err(e) => return Err(e),
             }
@@ -214,7 +214,7 @@ impl<'a> MessageWrite for E<'a> {
 
 #[derive(Debug, Default, PartialEq, Clone)]
 pub struct F<'a> {
-    pub e: Option<E<'a>>,
+    pub e: Option<continuation::E<'a>>,
 }
 
 impl<'a> MessageRead<'a> for F<'a> {
@@ -222,7 +222,7 @@ impl<'a> MessageRead<'a> for F<'a> {
         let mut msg = Self::default();
         while !r.is_eof() {
             match r.next_tag(bytes) {
-                Ok(389502058) => msg.e = Some(r.read_message::<E>(bytes)?),
+                Ok(389502058) => msg.e = Some(r.read_message::<continuation::E>(bytes)?),
                 Ok(t) => { r.read_unknown(bytes, t)?; }
                 Err(e) => return Err(e),
             }
@@ -245,8 +245,8 @@ impl<'a> MessageWrite for F<'a> {
 
 #[derive(Debug, Default, PartialEq, Clone)]
 pub struct Video<'a> {
-    pub d: Option<D<'a>>,
-    pub f: Option<F<'a>>,
+    pub d: Option<continuation::D<'a>>,
+    pub f: Option<continuation::F<'a>>,
     pub s4: i64,
 }
 
@@ -255,8 +255,8 @@ impl<'a> MessageRead<'a> for Video<'a> {
         let mut msg = Self::default();
         while !r.is_eof() {
             match r.next_tag(bytes) {
-                Ok(10) => msg.d = Some(r.read_message::<D>(bytes)?),
-                Ok(26) => msg.f = Some(r.read_message::<F>(bytes)?),
+                Ok(10) => msg.d = Some(r.read_message::<continuation::D>(bytes)?),
+                Ok(26) => msg.f = Some(r.read_message::<continuation::F>(bytes)?),
                 Ok(32) => msg.s4 = r.read_int64(bytes)?,
                 Ok(t) => { r.read_unknown(bytes, t)?; }
                 Err(e) => return Err(e),

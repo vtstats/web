@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
-use serde::{de::Visitor, Deserialize};
-use std::{collections::HashMap, fmt, time::Duration};
+use serde::{de::IgnoredAny, Deserialize};
+use std::{collections::HashMap, time::Duration};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -88,36 +88,37 @@ pub struct TimedContinuationData {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Action {
+    #[serde(default)]
     pub add_chat_item_action: Option<AddChatItemAction>,
 
     #[serde(default)]
-    pub replay_chat_item_action: Ignored,
+    pub replay_chat_item_action: IgnoredAny,
     #[serde(default)]
-    pub add_live_chat_ticker_item_action: Ignored,
+    pub add_live_chat_ticker_item_action: IgnoredAny,
     #[serde(default)]
-    pub mark_chat_item_as_deleted_action: Ignored,
+    pub mark_chat_item_as_deleted_action: IgnoredAny,
     #[serde(default)]
-    pub mark_chat_items_by_author_as_deleted_action: Ignored,
+    pub mark_chat_items_by_author_as_deleted_action: IgnoredAny,
     #[serde(default)]
-    pub show_live_chat_tooltip_command: Ignored,
+    pub show_live_chat_tooltip_command: IgnoredAny,
     #[serde(default)]
-    pub add_banner_to_live_chat_command: Ignored,
+    pub add_banner_to_live_chat_command: IgnoredAny,
     #[serde(default)]
-    pub remove_banner_for_live_chat_command: Ignored,
+    pub remove_banner_for_live_chat_command: IgnoredAny,
     #[serde(default)]
-    pub show_live_chat_action_panel_action: Ignored,
+    pub show_live_chat_action_panel_action: IgnoredAny,
     #[serde(default)]
-    pub close_live_chat_action_panel_action: Ignored,
+    pub close_live_chat_action_panel_action: IgnoredAny,
     #[serde(default)]
-    pub update_live_chat_poll_action: Ignored,
+    pub update_live_chat_poll_action: IgnoredAny,
     #[serde(default)]
-    pub replace_chat_item_action: Ignored,
+    pub replace_chat_item_action: IgnoredAny,
 
     #[serde(default)]
-    pub click_tracking_params: Ignored,
+    pub click_tracking_params: IgnoredAny,
 
     #[serde(flatten)]
-    pub unknown: HashMap<String, Ignored>,
+    pub unknown: HashMap<String, IgnoredAny>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -129,23 +130,27 @@ pub struct AddChatItemAction {
 #[serde(rename_all = "camelCase")]
 pub struct ChatItem {
     // simple text
+    #[serde(default)]
     pub live_chat_text_message_renderer: Option<LiveChatTextMessageRenderer>,
     // new member / member milestone
+    #[serde(default)]
     pub live_chat_membership_item_renderer: Option<LiveChatMembershipItemRenderer>,
     // paid super sticker
+    #[serde(default)]
     pub live_chat_paid_sticker_renderer: Option<LiveChatPaidStickerRenderer>,
     // paid super chat
+    #[serde(default)]
     pub live_chat_paid_message_renderer: Option<LiveChatPaidMessageRenderer>,
 
     #[serde(default)]
-    pub live_chat_viewer_engagement_message_renderer: Ignored,
+    pub live_chat_viewer_engagement_message_renderer: IgnoredAny,
     #[serde(default)]
-    pub live_chat_placeholder_item_renderer: Ignored,
+    pub live_chat_placeholder_item_renderer: IgnoredAny,
     #[serde(default)]
-    pub live_chat_mode_change_message_renderer: Ignored,
+    pub live_chat_mode_change_message_renderer: IgnoredAny,
 
     #[serde(flatten)]
-    pub unknown: HashMap<String, Ignored>,
+    pub unknown: HashMap<String, IgnoredAny>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -340,34 +345,6 @@ pub enum LiveChatMessage {
     },
 }
 
-#[derive(Debug, Default)]
-pub struct Ignored;
-
-impl<'de> Deserialize<'de> for Ignored {
-    #[inline]
-    fn deserialize<D>(deserializer: D) -> Result<Ignored, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        struct IgnoredVisitor;
-
-        impl<'de> Visitor<'de> for IgnoredVisitor {
-            type Value = Ignored;
-
-            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("any value")
-            }
-
-            #[inline]
-            fn visit_unit<E>(self) -> Result<Ignored, E> {
-                Ok(Ignored)
-            }
-        }
-
-        deserializer.deserialize_ignored_any(IgnoredVisitor)
-    }
-}
-
 fn concat_message(message: Option<Message>) -> String {
     if let Some(message) = message {
         message.runs.iter().fold(String::new(), |acc, run| {
@@ -431,19 +408,8 @@ impl LiveChatMessage {
     pub fn from_action(action: Action) -> Option<LiveChatMessage> {
         let Action {
             add_chat_item_action,
-            add_live_chat_ticker_item_action: _,
-            mark_chat_item_as_deleted_action: _,
-            mark_chat_items_by_author_as_deleted_action: _,
-            replay_chat_item_action: _,
-            show_live_chat_tooltip_command: _,
-            add_banner_to_live_chat_command: _,
-            remove_banner_for_live_chat_command: _,
-            show_live_chat_action_panel_action: _,
-            close_live_chat_action_panel_action: _,
-            update_live_chat_poll_action: _,
-            click_tracking_params: _,
-            replace_chat_item_action: _,
             unknown,
+            ..
         } = action;
 
         if let Some(AddChatItemAction {
@@ -453,10 +419,8 @@ impl LiveChatMessage {
                     live_chat_paid_message_renderer,
                     live_chat_membership_item_renderer,
                     live_chat_paid_sticker_renderer,
-                    live_chat_viewer_engagement_message_renderer: _,
-                    live_chat_placeholder_item_renderer: _,
-                    live_chat_mode_change_message_renderer: _,
                     unknown,
+                    ..
                 },
         }) = add_chat_item_action
         {

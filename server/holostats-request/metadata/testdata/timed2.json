@@ -1,0 +1,66 @@
+{
+  "continuation": {
+    "timedContinuationData": {
+      "timeoutMs": 5000,
+      "continuation": "-of5rQMXGgtRWi1DZzR1cFI5ayCM89CYBjgBQAE%3D"
+    }
+  },
+  "actions": [
+    {
+      "updateViewershipAction": {
+        "viewCount": {
+          "videoViewCountRenderer": {
+            "viewCount": {
+              "simpleText": "2,465 watching now"
+            },
+            "isLive": true,
+            "extraShortViewCount": {
+              "accessibility": {
+                "accessibilityData": {
+                  "label": "2.4K"
+                }
+              },
+              "simpleText": "2.4K"
+            }
+          }
+        }
+      }
+    },
+    {
+      "updateToggleButtonTextAction": {
+        "defaultText": {
+          "simpleText": "3.3K"
+        },
+        "toggledText": {
+          "simpleText": "3.3K"
+        },
+        "buttonId": "TOGGLE_BUTTON_ID_TYPE_LIKE"
+      }
+    },
+    {
+      "updateDateTextAction": {
+        "dateText": {
+          "simpleText": "Started streaming 3 hours ago"
+        }
+      }
+    },
+    {
+      "updateTitleAction": {
+        "title": {
+          "runs": [
+            {
+              "text": "【WATCHALONG】 The Lord of the Rings: film 3 extended edition 【NIJISANJI EN | Elira Pendora】"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "updateDescriptionAction": {
+        "description": {
+          "runs": []
+        }
+      }
+    }
+  ]
+}

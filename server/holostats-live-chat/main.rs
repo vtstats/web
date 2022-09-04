@@ -1,9 +1,6 @@
-mod continuation;
-
 use anyhow::Result;
 use chrono::NaiveDateTime;
 use chrono::{DateTime, Utc};
-use continuation::get_continuation;
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::{Continuation, LiveChatMessage, RequestHub};
@@ -85,11 +82,14 @@ async fn get_live_chat(
 
     println!("[{:>15}/{}]: started", vtb_id, stream_id);
 
-    let mut continuation = get_continuation(channel_id, &stream_id).unwrap();
+    let mut continuation: Option<String> = None;
 
     loop {
         let fetch = async {
-            let (msgs, cont) = hub.youtube_live_chat(continuation).await?;
+            let (msgs, cont) = match continuation {
+                Some(c) => hub.youtube_live_chat_with_continuation(c).await,
+                None => hub.youtube_live_chat(channel_id, &stream_id).await,
+            }?;
 
             let msgs_len = msgs.len();
 
@@ -247,7 +247,7 @@ async fn get_live_chat(
         );
 
         if let Some(next_continuation) = fut.instrument(span).await {
-            continuation = next_continuation;
+            continuation = Some(next_continuation);
         } else {
             break;
         }

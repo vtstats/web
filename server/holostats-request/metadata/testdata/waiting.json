@@ -1,0 +1,66 @@
+{
+  "continuation": {
+    "timedContinuationData": {
+      "timeoutMs": 60000,
+      "continuation": "-of5rQMXGgs2RU5pVEcwNTBBOCC5hNGYBjgBQAA%3D"
+    }
+  },
+  "actions": [
+    {
+      "updateViewershipAction": {
+        "viewCount": {
+          "videoViewCountRenderer": {
+            "viewCount": {
+              "simpleText": "9 waiting"
+            },
+            "isLive": true,
+            "extraShortViewCount": {
+              "accessibility": {
+                "accessibilityData": {
+                  "label": "9"
+                }
+              },
+              "simpleText": "9"
+            }
+          }
+        }
+      }
+    },
+    {
+      "updateToggleButtonTextAction": {
+        "defaultText": {
+          "simpleText": "5"
+        },
+        "toggledText": {
+          "simpleText": "6"
+        },
+        "buttonId": "TOGGLE_BUTTON_ID_TYPE_LIKE"
+      }
+    },
+    {
+      "updateDateTextAction": {
+        "dateText": {
+          "simpleText": "Scheduled for Sep 4, 2022"
+        }
+      }
+    },
+    {
+      "updateTitleAction": {
+        "title": {
+          "runs": [
+            {
+              "text": "【星のカービィ ディスカバリー】バカのプレイ！3rd play!!!"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "updateDescriptionAction": {
+        "description": {
+          "runs": []
+        }
+      }
+    }
+  ]
+}

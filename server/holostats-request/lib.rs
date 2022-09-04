@@ -1,5 +1,6 @@
 mod channels;
 mod chat;
+mod metadata;
 mod pubsub;
 mod rss;
 mod streams;

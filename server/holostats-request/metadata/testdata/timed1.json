@@ -1,0 +1,41 @@
+{
+  "continuation": {
+    "timedContinuationData": {
+      "timeoutMs": 5000,
+      "continuation": "-of5rQMXGgtzUmVqME9KdFZMNCCq0s6YBjgBQAE%3D"
+    }
+  },
+  "actions": [
+    {
+      "updateViewershipAction": {
+        "viewCount": {
+          "videoViewCountRenderer": {
+            "viewCount": {
+              "simpleText": "3,647 watching now"
+            },
+            "isLive": true,
+            "extraShortViewCount": {
+              "accessibility": {
+                "accessibilityData": {
+                  "label": "3.6K"
+                }
+              },
+              "simpleText": "3.6K"
+            }
+          }
+        }
+      }
+    },
+    {
+      "updateToggleButtonTextAction": {
+        "defaultText": {
+          "simpleText": "7.1K"
+        },
+        "toggledText": {
+          "simpleText": "7.1K"
+        },
+        "buttonId": "TOGGLE_BUTTON_ID_TYPE_LIKE"
+      }
+    }
+  ]
+}

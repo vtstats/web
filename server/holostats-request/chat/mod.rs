@@ -1,38 +1,30 @@
+mod proto;
+mod request;
 mod response;
 
-pub use response::{Continuation, LiveChatMessage, Response};
+use self::proto::get_continuation;
+use self::request::{Client, Context, Request};
+pub use self::response::{Continuation, LiveChatMessage, Response};
 
 use super::RequestHub;
 use anyhow::Result;
 use futures::TryFutureExt;
 use reqwest::Url;
-use serde::{Deserialize, Serialize};
 
 use holostats_config::CONFIG;
 
-#[derive(Deserialize, Serialize, Debug)]
-struct LiveChatRequest {
-    context: LiveChatContext,
-    continuation: String,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-struct LiveChatContext {
-    client: LiveChatContextClient,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-struct LiveChatContextClient {
-    #[serde(rename = "hl")]
-    language: String,
-    #[serde(rename = "clientName")]
-    name: String,
-    #[serde(rename = "clientVersion")]
-    version: String,
-}
-
 impl RequestHub {
     pub async fn youtube_live_chat(
+        &self,
+        channel_id: &str,
+        stream_id: &str,
+    ) -> Result<(Vec<LiveChatMessage>, Option<Continuation>)> {
+        let continuation = get_continuation(channel_id, stream_id)?;
+
+        self.youtube_live_chat_with_continuation(continuation).await
+    }
+
+    pub async fn youtube_live_chat_with_continuation(
         &self,
         continuation: String,
     ) -> Result<(Vec<LiveChatMessage>, Option<Continuation>)> {
@@ -44,15 +36,15 @@ impl RequestHub {
         let res = self
             .client
             .post(url.clone())
-            .json(&LiveChatRequest {
-                context: LiveChatContext {
-                    client: LiveChatContextClient {
-                        language: "en".into(),
-                        name: CONFIG.youtube.innertube_client_name.clone(),
-                        version: CONFIG.youtube.innertube_client_version.clone(),
+            .json(&Request {
+                context: Context {
+                    client: Client {
+                        language: "en",
+                        client_name: &CONFIG.youtube.innertube_client_name,
+                        client_version: &CONFIG.youtube.innertube_client_version,
                     },
                 },
-                continuation,
+                continuation: &continuation,
             })
             .send()
             .and_then(|res| res.json::<Response>())

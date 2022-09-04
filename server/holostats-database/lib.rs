@@ -2,6 +2,7 @@ pub mod channels;
 pub mod live_chat;
 pub mod notify;
 pub mod statistic;
+pub mod stream;
 pub mod streams;
 
 use holostats_config::CONFIG;

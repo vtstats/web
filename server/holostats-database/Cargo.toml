@@ -16,7 +16,8 @@ sqlx = { version = "0.5.10", default-features = false, features = [
     "runtime-tokio-rustls",
     "macros",
     "postgres",
-    "chrono"
+    "chrono",
+    "migrate"
 ] }
 tokio = { version = "1.16.1", features = ["macros"] }
 tracing = "0.1.30"

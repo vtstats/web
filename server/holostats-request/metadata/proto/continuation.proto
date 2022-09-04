@@ -1,0 +1,28 @@
+// Run `pb-rs continuation.proto` to generate rust code
+
+// youtube use protobuf to encode continuation,
+// there're no way for me to knowing each fields means,
+// so i simply name them with A, B, C ¯\_(ツ)_/¯
+
+// continuation: -of5rQMXGgtISS1DazNUZ21pNCDh2s2YBjgBQAE=
+// 112707711 {          <- A
+//  3: "HI-Ck3Tgmi4"    <- video
+//  4: 1662217569       <- timestamp
+//  7: 1                <- f7
+//  8: 1                <- f8
+// }
+
+syntax = "proto3";
+
+package continuation;
+
+message Continuation {
+    A a = 112707711;
+}
+
+message A {
+    string  video       = 3;
+    int64   timestamp   = 4;
+    int32   f7          = 7;
+    int32   f8          = 8;
+}
