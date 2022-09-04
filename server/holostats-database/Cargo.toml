@@ -12,7 +12,7 @@ path = "lib.rs"
 chrono = { version = "0.4.19", features = ["serde"] }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_with = "1.12.0"
-sqlx = { version = "0.5.10", default-features = false, features = [
+sqlx = { version = "0.6.1", default-features = false, features = [
     "runtime-tokio-rustls",
     "macros",
     "postgres",
@@ -21,6 +21,6 @@ sqlx = { version = "0.5.10", default-features = false, features = [
 ] }
 tokio = { version = "1.16.1", features = ["macros"] }
 tracing = "0.1.30"
-sqlx-core = "0.5.10"
+sqlx-core = "0.6.1"
 holostats-config = { path = "../holostats-config" }
 futures-util = "0.3.21"

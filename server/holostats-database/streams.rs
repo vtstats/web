@@ -8,12 +8,14 @@ use sqlx::Result;
 use std::cmp::{max, min};
 use tracing::instrument;
 
+use crate::query_builder::YouTubeStreamListQueryBuilder;
+
 use super::Database;
 
 type UtcTime = DateTime<Utc>;
 
 #[skip_serializing_none]
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, sqlx::FromRow)]
 #[serde(rename_all = "camelCase")]
 pub struct Stream {
     pub stream_id: String,
@@ -53,19 +55,6 @@ pub enum OrderBy {
     ScheduleTimeDesc,
 }
 
-impl OrderBy {
-    fn as_str(&self) -> &'static str {
-        match self {
-            OrderBy::StartTimeAsc => "start_time:asc",
-            OrderBy::EndTimeAsc => "end_time:asc",
-            OrderBy::ScheduleTimeAsc => "schedule_time:asc",
-            OrderBy::StartTimeDesc => "start_time:desc",
-            OrderBy::EndTimeDesc => "end_time:desc",
-            OrderBy::ScheduleTimeDesc => "schedule_time:desc",
-        }
-    }
-}
-
 impl Database {
     pub async fn stream_ids(&self) -> Result<Vec<String>> {
         sqlx::query!(r#"select stream_id from youtube_streams"#)
@@ -87,68 +76,17 @@ impl Database {
         start_at: &Option<UtcTime>,
         end_at: &Option<UtcTime>,
     ) -> Result<Vec<Stream>> {
-        sqlx::query_as!(
-            Stream,
-            r#"
-      select stream_id,
-             title,
-             vtuber_id,
-             thumbnail_url,
-             schedule_time,
-             start_time,
-             end_time,
-             average_viewer_count,
-             max_viewer_count,
-             max_like_count,
-             updated_at,
-             status as "status: _"
-        from youtube_streams
-       where vtuber_id = any($1)
-         and status::text = any($5)
-         and (
-               -- start_at
-               case $4
-                 when 'schedule_time:asc'  then schedule_time > $2
-                 when 'schedule_time:desc' then schedule_time > $2
-                 when 'end_time:asc'       then end_time      > $2
-                 when 'end_time:desc'      then end_time      > $2
-                 when 'start_time:asc'     then start_time    > $2
-                 when 'start_time:desc'    then start_time    > $2
-               end
-               or $2 is null
-             )
-         and (
-               -- end_at
-               case $4
-                 when 'schedule_time:asc'  then schedule_time < $3
-                 when 'schedule_time:desc' then schedule_time < $3
-                 when 'end_time:asc'       then end_time      < $3
-                 when 'end_time:desc'      then end_time      < $3
-                 when 'start_time:asc'     then start_time    < $3
-                 when 'start_time:desc'    then start_time    < $3
-               end
-               or $3 is null
-             )
-    order by case $4
-               when 'start_time:asc'     then start_time
-               when 'end_time:asc'       then end_time
-               when 'schedule_time:asc'  then schedule_time
-               else null
-             end asc,
-             case $4
-               when 'start_time:desc'    then start_time
-               when 'end_time:desc'      then end_time
-               when 'schedule_time:desc' then schedule_time
-               else null
-             end desc
-       limit 24
-            "#,
-            ids,               // $1
-            *start_at,         // $2
-            *end_at,           // $3
-            order_by.as_str(), // $4
-            status,            // $5
-        )
+        YouTubeStreamListQueryBuilder {
+            ids,
+            status,
+            order_by,
+            start_at: start_at.as_ref(),
+            end_at: end_at.as_ref(),
+            keyword: None,
+            limit: 24,
+        }
+        .to_builder()
+        .build_query_as::<Stream>()
         .fetch_all(&self.pool)
         .await
     }
@@ -375,7 +313,7 @@ impl Database {
         .execute(&mut tx)
         .await?;
 
-        if (status != StreamStatus::Scheduled) {
+        if status != StreamStatus::Scheduled {
             if let Some(likes) = likes {
                 let _ = sqlx::query!(
                     r#"

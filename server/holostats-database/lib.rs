@@ -1,6 +1,7 @@
 pub mod channels;
 pub mod live_chat;
 pub mod notify;
+pub(crate) mod query_builder;
 pub mod statistic;
 pub mod stream;
 pub mod streams;
