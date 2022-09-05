@@ -684,20 +684,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "holostats-stream-stat"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "chrono",
- "holostats-config",
- "holostats-database",
- "holostats-request",
- "holostats-tracing",
- "tokio",
- "tracing",
-]
-
-[[package]]
 name = "holostats-subscribe"
 version = "0.1.0"
 dependencies = [

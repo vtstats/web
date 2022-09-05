@@ -8,7 +8,6 @@ members = [
     "holostats-request",
     "holostats-rss-refresh",
     "holostats-stream-metadata",
-    "holostats-stream-stat",
     "holostats-subscribe",
     "holostats-tracing",
 ]
