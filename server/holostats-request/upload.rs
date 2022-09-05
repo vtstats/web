@@ -1,29 +1,16 @@
 use anyhow::Result;
 use chrono::Utc;
-use futures::future::FutureExt;
 use hmac::{Hmac, Mac};
 use holostats_config::CONFIG;
 use reqwest::{
     header::{AUTHORIZATION, CONTENT_TYPE},
-    Body, Response, Url,
+    Body,
 };
 use sha2::{Digest, Sha256};
-use std::str::FromStr;
-use tracing::instrument;
 
 use super::RequestHub;
 
 impl RequestHub {
-    #[instrument(
-        name = "Update file to S3",
-        skip(self, data),
-        fields(
-            filename,
-            content_type,
-            content_length = data.as_ref().len(),
-            http.method = "PUT",
-        )
-    )]
     pub async fn upload_file<T>(
         &self,
         filename: &str,
@@ -97,7 +84,7 @@ host;x-amz-content-sha256;x-amz-date
         let k_service = hmac_sha256!(k_region.as_slice(), b"s3");
         // kSigning = HMAC(kService, "aws4_request")
         let k_signing = hmac_sha256!(k_service.as_slice(), b"aws4_request");
-        // signature = HexEncode(HMAC(derived signing key, string to sign))s
+        // signature = HexEncode(HMAC(derived signing key, string to sign))
         let signature = hmac_sha256!(k_signing.as_slice(), string_to_sign.as_bytes());
         let signature = hex::encode(signature);
 
@@ -116,19 +103,15 @@ host;x-amz-content-sha256;x-amz-date
             filename = filename
         );
 
-        let url = Url::from_str(&s3_url)?;
-
-        let _ = self
-            .client
-            .put(url.clone())
+        let req = (&self.client)
+            .put(s3_url)
             .header(CONTENT_TYPE, content_type)
             .header("x-amz-date", date.to_string())
             .header("x-amz-content-sha256", content_sha256)
             .header(AUTHORIZATION, authorization)
-            .body(data)
-            .send()
-            .map(|res| res.and_then(Response::error_for_status))
-            .await?;
+            .body(data);
+
+        let _res = crate::otel::send(&self.client, req).await?;
 
         Ok(format!("{}/{}", CONFIG.s3.public_url, filename))
     }

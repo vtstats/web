@@ -1,6 +1,5 @@
 use anyhow::Result;
 use chrono::{DateTime, Utc};
-use futures::future::TryFutureExt;
 use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
@@ -107,11 +106,6 @@ impl RequestHub {
         Ok(streams)
     }
 
-    #[instrument(
-        name = "Call YouTube vidoes API",
-        skip(self),
-        fields(http.method = "GET", id),
-    )]
     async fn youtube_videos_api(&self, id: &str) -> Result<Vec<Video>> {
         let url = Url::parse_with_params(
             "https://www.googleapis.com/youtube/v3/videos",
@@ -124,13 +118,12 @@ impl RequestHub {
             ],
         )?;
 
-        let res = self
-            .client
-            .get(url.clone())
-            .send()
-            .and_then(|res| res.json::<VideosListResponse>())
-            .await?;
+        let req = (&self.client).get(url);
 
-        Ok(res.items)
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: VideosListResponse = res.json().await?;
+
+        Ok(json.items)
     }
 }

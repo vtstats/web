@@ -82,11 +82,6 @@ impl RequestHub {
         Ok(res)
     }
 
-    #[instrument(
-        name = "Call YouTube channels API",
-        skip(self),
-        fields(http.method = "GET", id),
-    )]
     async fn youtube_channels_api(&self, id: &str) -> Result<Vec<YouTubeChannel>> {
         let url = Url::parse_with_params(
             "https://www.googleapis.com/youtube/v3/channels",
@@ -99,14 +94,13 @@ impl RequestHub {
             ],
         )?;
 
-        let res = self
-            .client
-            .get(url.clone())
-            .send()
-            .and_then(|res| res.json::<YouTubeChannelsListResponse>())
-            .await?;
+        let req = (&self.client).get(url);
 
-        Ok(res.items)
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: YouTubeChannelsListResponse = res.json().await?;
+
+        Ok(json.items)
     }
 
     #[instrument(name = "Fetch Bilibili Channels Stats", skip(self, ids))]
@@ -127,41 +121,30 @@ impl RequestHub {
         res.into_iter().collect()
     }
 
-    #[instrument(
-        name = "Call Bilibili channel stat API",
-        skip(self),
-        fields(http.method = "GET", id)
-    )]
     async fn bilibili_stat_api(&self, id: &str) -> Result<BilibiliStatData> {
         let url =
             Url::parse_with_params("http://api.bilibili.com/x/relation/stat", &[("vmid", id)])?;
 
-        let res = self
-            .client
-            .get(url.clone())
-            .send()
-            .and_then(|res| res.json::<BilibiliStatResponse>())
-            .await?;
+        let req = (&self.client).get(url);
 
-        Ok(res.data)
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: BilibiliStatResponse = res.json().await?;
+
+        Ok(json.data)
     }
 
-    #[instrument(
-        name = "Call Bilibili channel upstat API",
-        skip(self),
-        fields(http.method = "GET", id)
-    )]
     async fn bilibili_upstat_api(&self, id: &str) -> Result<BilibiliUpstatData> {
         let url = Url::parse_with_params("http://api.bilibili.com/x/space/upstat", &[("mid", id)])?;
 
-        let res = self
-            .client
-            .get(url.clone())
-            .header(COOKIE, &CONFIG.bilibili.cookie)
-            .send()
-            .and_then(|res| res.json::<BilibiliUpstatResponse>())
-            .await?;
+        let req = (&self.client)
+            .get(url)
+            .header(COOKIE, &CONFIG.bilibili.cookie);
 
-        Ok(res.data)
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: BilibiliUpstatResponse = res.json().await?;
+
+        Ok(json.data)
     }
 }

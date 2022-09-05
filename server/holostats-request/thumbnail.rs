@@ -1,7 +1,6 @@
 use anyhow::Result;
 use bytes::Bytes;
-use futures::{FutureExt, TryFutureExt};
-use reqwest::{Response, Url};
+use futures::TryFutureExt;
 use tracing::instrument;
 
 use super::RequestHub;
@@ -28,7 +27,6 @@ impl RequestHub {
         }
     }
 
-    #[instrument(name = "Get YouTube video thumbnail", skip(self))]
     async fn youtube_thumbnail(&self, id: &str) -> Result<Bytes> {
         self.youtube_thumbnail_by_res(id, "maxresdefault")
             .or_else(|_| self.youtube_thumbnail_by_res(id, "sddefault"))
@@ -37,22 +35,15 @@ impl RequestHub {
             .await
     }
 
-    #[instrument(
-        name = "Get YouTube video thumbnail by res",
-        skip(self),
-        fields(http.method = "GET", id, res)
-    )]
     async fn youtube_thumbnail_by_res(&self, id: &str, res: &str) -> Result<Bytes> {
-        let url = Url::parse(&format!("https://img.youtube.com/vi/{}/{}.jpg", id, res))?;
+        let url = format!("https://img.youtube.com/vi/{}/{}.jpg", id, res);
 
-        let res = self
-            .client
-            .get(url.clone())
-            .send()
-            .map(|res| res.and_then(Response::error_for_status))
-            .and_then(|res| res.bytes())
-            .await?;
+        let req = (&self.client).get(url);
 
-        Ok(res)
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let bytes = res.bytes().await?;
+
+        Ok(bytes)
     }
 }

@@ -2,16 +2,15 @@ mod proto;
 mod request;
 mod response;
 
+use anyhow::Result;
+use holostats_config::CONFIG;
+use reqwest::Url;
+
 use self::proto::get_continuation;
 use self::request::{Client, Context, Request};
 pub use self::response::{Continuation, LiveChatMessage, Response};
 
 use super::RequestHub;
-use anyhow::Result;
-use futures::TryFutureExt;
-use reqwest::Url;
-
-use holostats_config::CONFIG;
 
 impl RequestHub {
     pub async fn youtube_live_chat(
@@ -36,24 +35,22 @@ impl RequestHub {
             ],
         )?;
 
-        let res = self
-            .client
-            .post(url.clone())
-            .json(&Request {
-                context: Context {
-                    client: Client {
-                        language: "en",
-                        client_name: &CONFIG.youtube.innertube_client_name,
-                        client_version: &CONFIG.youtube.innertube_client_version,
-                    },
+        let req = (&self.client).post(url).json(&Request {
+            context: Context {
+                client: Client {
+                    language: "en",
+                    client_name: &CONFIG.youtube.innertube_client_name,
+                    client_version: &CONFIG.youtube.innertube_client_version,
                 },
-                continuation: &continuation,
-            })
-            .send()
-            .and_then(|res| res.json::<Response>())
-            .await?;
+            },
+            continuation: &continuation,
+        });
 
-        if let Some(contents) = res.continuation_contents {
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: Response = res.json().await?;
+
+        if let Some(contents) = json.continuation_contents {
             Ok((
                 contents
                     .live_chat_continuation

@@ -4,14 +4,11 @@ mod response;
 
 use anyhow;
 use chrono::Utc;
-use futures::TryFutureExt;
 use holostats_config::CONFIG;
 use reqwest::Url;
 
-use crate::metadata::request::Client;
-
 use self::proto::get_continuation;
-use self::request::{Context, Request};
+use self::request::{Client, Context, Request};
 use self::response::Response;
 
 use super::RequestHub;
@@ -37,22 +34,20 @@ impl RequestHub {
             ],
         )?;
 
-        let json = self
-            .client
-            .post(url)
-            .json(&Request {
-                context: Context {
-                    client: Client {
-                        language: "en",
-                        client_name: &CONFIG.youtube.innertube_client_name,
-                        client_version: &CONFIG.youtube.innertube_client_version,
-                    },
+        let req = (&self.client).post(url).json(&Request {
+            context: Context {
+                client: Client {
+                    language: "en",
+                    client_name: &CONFIG.youtube.innertube_client_name,
+                    client_version: &CONFIG.youtube.innertube_client_version,
                 },
-                continuation: &continuation,
-            })
-            .send()
-            .and_then(|res| res.json::<Response>())
-            .await?;
+            },
+            continuation: &continuation,
+        });
+
+        let res = crate::otel::send(&self.client, req).await?;
+
+        let json: Response = res.json().await?;
 
         Ok(json)
     }
