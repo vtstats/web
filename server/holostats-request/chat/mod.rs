@@ -30,7 +30,10 @@ impl RequestHub {
     ) -> Result<(Vec<LiveChatMessage>, Option<Continuation>)> {
         let url = Url::parse_with_params(
             "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat",
-            &[("key", &CONFIG.youtube.innertube_api_key)],
+            &[
+                ("prettyPrint", "false"),
+                ("key", &CONFIG.youtube.innertube_api_key),
+            ],
         )?;
 
         let res = self
