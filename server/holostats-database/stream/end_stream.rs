@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 use sqlx::{PgPool, Result};
-use tracing::instrument;
+use tracing::{instrument, Instrument};
 
 type UtcTime = DateTime<Utc>;
 
@@ -10,11 +10,7 @@ pub struct EndStreamQuery<'q> {
 }
 
 impl<'q> EndStreamQuery<'q> {
-    #[instrument(
-        name = "End YouTube stream",
-        skip(self, pool),
-        fields(db.table = "youtube_streams"),
-    )]
+    #[instrument(name = "End YouTube stream", skip(self, pool))]
     pub async fn execute(&self, pool: &PgPool) -> Result<()> {
         let record = sqlx::query!(
             r#"
@@ -25,6 +21,7 @@ impl<'q> EndStreamQuery<'q> {
             self.id
         )
         .fetch_optional(pool)
+        .instrument(crate::otel_span!("SELECT", "youtube_streams"))
         .await?;
 
         if let Some(record) = record {
@@ -35,6 +32,7 @@ impl<'q> EndStreamQuery<'q> {
                         self.id, // $1
                     )
                     .execute(pool)
+                    .instrument(crate::otel_span!("DELETE", "youtube_streams"))
                     .await?;
                 }
                 "live" => {
@@ -50,6 +48,7 @@ impl<'q> EndStreamQuery<'q> {
                         self.id,   // $2
                     )
                     .execute(pool)
+                    .instrument(crate::otel_span!("UPDATE", "youtube_streams"))
                     .await?;
                 }
                 _ => {}

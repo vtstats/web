@@ -1,23 +1,19 @@
 use sqlx::{PgPool, Result};
-use tracing::instrument;
+use tracing::{instrument, Instrument};
 
 pub struct GetUpcomingStreamsQuery;
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct Stream {
+pub struct UpcomingStream {
     pub stream_id: String,
     pub vtuber_id: String,
 }
 
 impl GetUpcomingStreamsQuery {
-    #[instrument(
-        name = "Get youtube upcoming streams",
-        skip(self, pool),
-        fields(db.table = "youtube_streams")
-    )]
-    pub async fn execute(self, pool: &PgPool) -> Result<Vec<Stream>> {
+    #[instrument(name = "Get youtube upcoming streams", skip(self, pool))]
+    pub async fn execute(self, pool: &PgPool) -> Result<Vec<UpcomingStream>> {
         sqlx::query_as!(
-            Stream,
+            UpcomingStream,
             r#"
      SELECT stream_id, vtuber_id
        FROM youtube_streams
@@ -31,6 +27,7 @@ impl GetUpcomingStreamsQuery {
             "#
         )
         .fetch_all(pool)
+        .instrument(crate::otel_span!("SELECT", "youtube_streams"))
         .await
     }
 }
@@ -62,15 +59,15 @@ async fn test(pool: PgPool) -> Result<()> {
     assert_eq!(
         streams,
         vec![
-            Stream {
+            UpcomingStream {
                 stream_id: "id1".into(),
                 vtuber_id: "vtuber1".into()
             },
-            Stream {
+            UpcomingStream {
                 stream_id: "id3".into(),
                 vtuber_id: "vtuber3".into()
             },
-            Stream {
+            UpcomingStream {
                 stream_id: "id5".into(),
                 vtuber_id: "vtuber5".into()
             },

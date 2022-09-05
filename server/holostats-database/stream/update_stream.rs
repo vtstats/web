@@ -1,7 +1,7 @@
 use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Serialize;
 use sqlx::{PgPool, Result};
-use tracing::instrument;
+use tracing::{instrument, Instrument};
 
 type UtcTime = DateTime<Utc>;
 
@@ -43,11 +43,7 @@ impl<'q> Default for UpdateYouTubeStreamQuery<'q> {
 }
 
 impl<'q> UpdateYouTubeStreamQuery<'q> {
-    #[instrument(
-        name = "Update youtube streams",
-        skip(self, pool),
-        fields(db.table = "youtube_streams")
-    )]
+    #[instrument(name = "Update youtube streams", skip(self, pool))]
     pub async fn execute(self, pool: &PgPool) -> Result<()> {
         let mut tx = pool.begin().await?;
 
@@ -70,9 +66,10 @@ impl<'q> UpdateYouTubeStreamQuery<'q> {
             self.start_time,    // $5
             self.end_time,      // $6
             self.likes,         // $7
-            self.id,            // $7
+            self.id,            // $8
         )
         .execute(&mut tx)
+        .instrument(crate::otel_span!("UPDATE", "youtube_streams"))
         .await?;
 
         if let Some(viewers) = self.viewers {
@@ -97,6 +94,10 @@ impl<'q> UpdateYouTubeStreamQuery<'q> {
                 viewers, // $3
             )
             .execute(&mut tx)
+            .instrument(crate::otel_span!(
+                "INSERT",
+                "youtube_stream_viewer_statistic"
+            ))
             .await?;
         }
 
