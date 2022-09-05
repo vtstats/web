@@ -6,10 +6,11 @@ use std::time::Duration;
 use tokio::time::sleep;
 use tracing::{field::Empty, Instrument, Span};
 
-use holostats_database::stream::{
-    EndStreamQuery, GetUpcomingStreamsQuery, StreamStatus, UpdateYouTubeStreamQuery,
+use holostats_database::{
+    notify::GetLiveChatNotify,
+    stream::{EndStreamQuery, GetUpcomingStreamsQuery, StreamStatus, UpdateYouTubeStreamQuery},
+    Database,
 };
-use holostats_database::Database;
 use holostats_request::RequestHub;
 
 #[tokio::main]
@@ -95,7 +96,7 @@ async fn update_stream_metadata(
 
                     if let Some(stream) = streams.first() {
                         UpdateYouTubeStreamQuery {
-                            id: &stream_id,
+                            stream_id: &stream_id,
                             date: Utc::now(),
                             title: Some(&stream.title),
                             end_time: stream.end_time,
@@ -125,7 +126,7 @@ async fn update_stream_metadata(
                     let now = Utc::now();
 
                     UpdateYouTubeStreamQuery {
-                        id: &stream_id,
+                        stream_id: &stream_id,
                         date: now,
                         title: response.title().as_deref(),
                         status: Some(StreamStatus::Live),
@@ -138,17 +139,12 @@ async fn update_stream_metadata(
                     .await?;
 
                     // sends a notification to other clients
-                    let payload = &format!("{},{}", vtuber_id, stream_id);
-                    if let Err(err) = db
-                        .notify("get_live_chat", &format!("{},{}", vtuber_id, stream_id))
-                        .await
-                    {
-                        tracing::error!(
-                            payload = payload.as_str(),
-                            "Failed to notify `get_live_chat` channel: {:?}",
-                            err
-                        );
+                    GetLiveChatNotify {
+                        vtuber_id,
+                        stream_id,
                     }
+                    .execute(&db.pool)
+                    .await;
 
                     is_live = true;
 

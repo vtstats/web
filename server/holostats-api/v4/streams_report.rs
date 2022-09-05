@@ -1,7 +1,7 @@
 use chrono::{serde::ts_milliseconds_option, DateTime, Utc};
 use holostats_database::{
     statistic::{Report, Timestamp},
-    streams::Stream,
+    stream::{ListYouTubeStreamsQuery, Stream},
     Database,
 };
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
@@ -70,14 +70,15 @@ pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::
         query.end_at,
     );
 
-    let mut streams = Vec::with_capacity(query.ids.len());
-    let mut reports = Vec::with_capacity(query.ids.len());
+    let streams = ListYouTubeStreamsQuery {
+        ids: &query.ids,
+        ..Default::default()
+    }
+    .execute(&db.pool)
+    .await
+    .map_err(Into::<WarpError>::into)?;
 
-    streams.extend(
-        db.youtube_streams_by_ids(&query.ids)
-            .await
-            .map_err(Into::<WarpError>::into)?,
-    );
+    let mut reports = Vec::with_capacity(query.ids.len());
 
     for metric in &query.metrics {
         match metric {

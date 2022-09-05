@@ -2,7 +2,10 @@ use anyhow::Result;
 use chrono::Utc;
 use futures::{stream, StreamExt, TryStreamExt};
 use holostats_config::CONFIG;
-use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
+use holostats_database::{
+    stream::{StreamStatus as StreamStatus_, UpsertYouTubeStreamQuery},
+    Database,
+};
 use holostats_request::{RequestHub, StreamStatus};
 use tracing::{field::Empty, Instrument, Span};
 
@@ -75,20 +78,21 @@ async fn real_main() -> Result<()> {
 
         let thumbnail_url = hub.upload_thumbnail(&stream.id).await;
 
-        db.upsert_youtube_stream(
-            stream.id,
+        UpsertYouTubeStreamQuery {
+            stream_id: &stream.id,
             vtuber_id,
-            stream.title,
-            match stream.status {
+            title: &stream.title,
+            status: match stream.status {
                 StreamStatus::Ended => StreamStatus_::Ended,
                 StreamStatus::Live => StreamStatus_::Live,
                 StreamStatus::Scheduled => StreamStatus_::Scheduled,
             },
             thumbnail_url,
-            stream.schedule_time,
-            stream.start_time,
-            stream.end_time,
-        )
+            schedule_time: stream.schedule_time,
+            start_time: stream.start_time,
+            end_time: stream.end_time,
+        }
+        .execute(&db.pool)
         .await?;
     }
 

@@ -1,21 +1,13 @@
 use chrono::{DateTime, NaiveDateTime, Utc};
-use serde::Serialize;
 use sqlx::{PgPool, Result};
 use tracing::{instrument, Instrument};
 
 type UtcTime = DateTime<Utc>;
 
-#[derive(Debug, sqlx::Type, Serialize, PartialEq, Eq)]
-#[sqlx(type_name = "stream_status", rename_all = "lowercase")]
-#[serde(rename_all = "lowercase")]
-pub enum StreamStatus {
-    Scheduled,
-    Live,
-    Ended,
-}
+use super::StreamStatus;
 
 pub struct UpdateYouTubeStreamQuery<'q> {
-    pub id: &'q str,
+    pub stream_id: &'q str,
     pub title: Option<&'q str>,
     pub status: Option<StreamStatus>,
     pub date: UtcTime,
@@ -29,7 +21,7 @@ pub struct UpdateYouTubeStreamQuery<'q> {
 impl<'q> Default for UpdateYouTubeStreamQuery<'q> {
     fn default() -> Self {
         UpdateYouTubeStreamQuery {
-            id: "",
+            stream_id: "",
             title: None,
             status: None,
             date: Utc::now(),
@@ -45,8 +37,6 @@ impl<'q> Default for UpdateYouTubeStreamQuery<'q> {
 impl<'q> UpdateYouTubeStreamQuery<'q> {
     #[instrument(name = "Update youtube streams", skip(self, pool))]
     pub async fn execute(self, pool: &PgPool) -> Result<()> {
-        let mut tx = pool.begin().await?;
-
         let _ = sqlx::query!(
             r#"
      UPDATE youtube_streams
@@ -66,9 +56,9 @@ impl<'q> UpdateYouTubeStreamQuery<'q> {
             self.start_time,    // $5
             self.end_time,      // $6
             self.likes,         // $7
-            self.id,            // $8
+            self.stream_id,     // $8
         )
-        .execute(&mut tx)
+        .execute(pool)
         .instrument(crate::otel_span!("UPDATE", "youtube_streams"))
         .await?;
 
@@ -87,13 +77,13 @@ impl<'q> UpdateYouTubeStreamQuery<'q> {
     INSERT INTO youtube_stream_viewer_statistic (stream_id, time, value)
          VALUES ($1, $2, $3)
     ON CONFLICT (stream_id, time) DO UPDATE
-            SET value = GREATEST($3, excluded.value)
+            SET value = GREATEST($3, youtube_stream_viewer_statistic.value)
                 "#,
-                self.id, // $1
-                time,    // $2
-                viewers, // $3
+                self.stream_id, // $1
+                time,           // $2
+                viewers,        // $3
             )
-            .execute(&mut tx)
+            .execute(pool)
             .instrument(crate::otel_span!(
                 "INSERT",
                 "youtube_stream_viewer_statistic"
@@ -101,10 +91,127 @@ impl<'q> UpdateYouTubeStreamQuery<'q> {
             .await?;
         }
 
-        tx.commit().await?;
-
         Ok(())
     }
 }
 
 // TODO: unit test with `sqlx::test`
+
+#[cfg(test)]
+#[sqlx::test(fixtures("../../../sql/schema"))]
+async fn test(pool: PgPool) -> Result<()> {
+    use chrono::NaiveDateTime;
+
+    let sql1 = r#"INSERT INTO youtube_channels (vtuber_id) VALUES ('vtuber1');"#;
+
+    let sql2 = r#"
+    INSERT INTO youtube_streams (stream_id, title, vtuber_id, schedule_time, start_time, end_time, status)
+         VALUES ('id1', 'title1', 'vtuber1', to_timestamp(3000), NULL, NULL, 'ended');
+    "#;
+
+    sqlx::query(sql1).execute(&pool).await?;
+    sqlx::query(sql2).execute(&pool).await?;
+
+    {
+        let dt = UtcTime::from_utc(NaiveDateTime::from_timestamp(3000, 0), Utc);
+
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            title: Some("title2"),
+            status: Some(StreamStatus::Live),
+            start_time: Some(dt),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        let row = sqlx::query!(
+            r#"SELECT title, status::TEXT, schedule_time, start_time, end_time FROM youtube_streams WHERE vtuber_id = 'vtuber1'"#
+        )
+        .fetch_one(&pool)
+        .await?;
+
+        assert_eq!(row.title, "title2");
+        assert_eq!(row.status, Some("live".into()));
+        assert_eq!(row.start_time, Some(dt));
+        assert_eq!(row.end_time, None);
+        assert_eq!(row.schedule_time, Some(dt));
+    }
+
+    {
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            likes: Some(200),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            likes: Some(100),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        let row = sqlx::query!(
+            r#"SELECT max_like_count FROM youtube_streams WHERE vtuber_id = 'vtuber1'"#
+        )
+        .fetch_one(&pool)
+        .await?;
+
+        assert_eq!(row.max_like_count, Some(200));
+    }
+
+    {
+        let rows = sqlx::query!(
+            r#"SELECT value, time FROM youtube_stream_viewer_statistic WHERE stream_id = 'id1'"#
+        )
+        .fetch_all(&pool)
+        .await?;
+
+        assert_eq!(rows.len(), 0);
+
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            date: UtcTime::from_utc(NaiveDateTime::from_timestamp(5, 0), Utc),
+            viewers: Some(5000),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            date: UtcTime::from_utc(NaiveDateTime::from_timestamp(10, 0), Utc),
+            viewers: Some(2000),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        UpdateYouTubeStreamQuery {
+            stream_id: "id1",
+            date: UtcTime::from_utc(NaiveDateTime::from_timestamp(20, 0), Utc),
+            viewers: Some(1000),
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        let rows = sqlx::query!(
+            r#"SELECT value, time FROM youtube_stream_viewer_statistic WHERE stream_id = 'id1' ORDER BY time ASC"#
+        )
+        .fetch_all(&pool)
+        .await?;
+
+        assert_eq!(rows.len(), 2);
+        assert_eq!(rows[0].value, 5000);
+        assert_eq!(rows[0].time.timestamp(), 0);
+        assert_eq!(rows[1].value, 1000);
+        assert_eq!(rows[1].time.timestamp(), 15);
+    }
+
+    Ok(())
+}

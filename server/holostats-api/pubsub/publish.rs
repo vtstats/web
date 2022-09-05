@@ -1,12 +1,16 @@
 use hmac::{Hmac, Mac};
 use holostats_config::CONFIG;
-use holostats_database::{streams::StreamStatus as StreamStatus_, Database};
 use holostats_request::{RequestHub, StreamStatus};
 use roxmltree::Document;
 use sha1::Sha1;
 use std::convert::Into;
 use tracing::Span;
 use warp::{http::StatusCode, Rejection};
+
+use holostats_database::{
+    stream::{EndStreamQuery, StreamStatus as StreamStatus_, UpsertYouTubeStreamQuery},
+    Database,
+};
 
 use crate::reject::WarpError;
 
@@ -56,20 +60,21 @@ pub async fn publish_content(
         for stream in streams {
             let thumbnail_url = hub.upload_thumbnail(&stream.id).await;
 
-            db.upsert_youtube_stream(
-                stream.id,
+            UpsertYouTubeStreamQuery {
+                stream_id: &stream.id,
                 vtuber_id,
-                stream.title,
-                match stream.status {
+                title: &stream.title,
+                status: match stream.status {
                     StreamStatus::Ended => StreamStatus_::Ended,
                     StreamStatus::Live => StreamStatus_::Live,
                     StreamStatus::Scheduled => StreamStatus_::Scheduled,
                 },
                 thumbnail_url,
-                stream.schedule_time,
-                stream.start_time,
-                stream.end_time,
-            )
+                schedule_time: stream.schedule_time,
+                start_time: stream.start_time,
+                end_time: stream.end_time,
+            }
+            .execute(&db.pool)
             .await
             .map_err(Into::<WarpError>::into)?;
         }
@@ -84,9 +89,13 @@ pub async fn publish_content(
             video_id
         );
 
-        db.delete_schedule_stream(video_id, vtuber_id)
-            .await
-            .map_err(Into::<WarpError>::into)?;
+        EndStreamQuery {
+            id: video_id,
+            ..Default::default()
+        }
+        .execute(&db.pool)
+        .await
+        .map_err(Into::<WarpError>::into)?;
 
         return Ok(StatusCode::OK);
     }

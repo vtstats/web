@@ -238,3 +238,8 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_youtube_streams_viewer_count_trigger
 AFTER INSERT ON youtube_stream_viewer_statistic
 FOR EACH ROW EXECUTE PROCEDURE update_youtube_streams_viewer_count();
+
+
+CREATE UNIQUE INDEX youtube_stream_viewer_statistic_pkey
+                 ON youtube_stream_viewer_statistic
+              USING btree ("stream_id", "time")

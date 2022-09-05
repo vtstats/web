@@ -1,7 +1,8 @@
-use holostats_database::Database;
 use std::convert::Into;
 use tracing::Span;
 use warp::Rejection;
+
+use holostats_database::{stream::StreamTimesQuery, Database};
 
 use crate::reject::WarpError;
 
@@ -22,10 +23,13 @@ pub async fn stream_times(query: ReqQuery, db: Database) -> Result<impl warp::Re
 
     tracing::info!("id={}", query.id);
 
-    let times = db
-        .stream_times(&query.id)
-        .await
-        .map_err(Into::<WarpError>::into)?;
+    let times = StreamTimesQuery {
+        vtuber_id: &query.id,
+        ..Default::default()
+    }
+    .execute(&db.pool)
+    .await
+    .map_err(Into::<WarpError>::into)?;
 
     Ok(warp::reply::json(&ResBody { times }))
 }

@@ -9,6 +9,15 @@ pub struct EndStreamQuery<'q> {
     pub date: UtcTime,
 }
 
+impl<'q> Default for EndStreamQuery<'q> {
+    fn default() -> Self {
+        EndStreamQuery {
+            id: "",
+            date: Utc::now(),
+        }
+    }
+}
+
 impl<'q> EndStreamQuery<'q> {
     #[instrument(name = "End YouTube stream", skip(self, pool))]
     pub async fn execute(&self, pool: &PgPool) -> Result<()> {
@@ -59,4 +68,78 @@ impl<'q> EndStreamQuery<'q> {
     }
 }
 
-// TODO: unit test with `sqlx::test`
+#[cfg(test)]
+#[sqlx::test(fixtures("../../../sql/schema"))]
+async fn test(pool: PgPool) -> Result<()> {
+    use chrono::NaiveDateTime;
+
+    let sql1 = r#"INSERT INTO youtube_channels (vtuber_id) VALUES ('vtuber1');"#;
+
+    let sql2 = r#"
+    INSERT INTO youtube_streams (stream_id, title, vtuber_id, schedule_time, start_time, end_time, status)
+         VALUES ('id1', 'title1', 'vtuber1', NULL, NULL, NULL, 'live'),
+                ('id2', 'title2', 'vtuber1', NULL, NULL, NULL, 'scheduled'),
+                ('id3', 'title3', 'vtuber1', NULL, NULL, NULL, 'ended');
+    "#;
+
+    sqlx::query(sql1).execute(&pool).await?;
+    sqlx::query(sql2).execute(&pool).await?;
+
+    {
+        let dt = UtcTime::from_utc(NaiveDateTime::from_timestamp(9000, 0), Utc);
+
+        EndStreamQuery {
+            id: "id1",
+            date: dt,
+        }
+        .execute(&pool)
+        .await?;
+
+        let row = sqlx::query!(
+            r#"SELECT updated_at, status::TEXT, end_time FROM youtube_streams WHERE stream_id = 'id1'"#
+        )
+        .fetch_one(&pool)
+        .await?;
+
+        assert_eq!(row.status, Some("ended".into()));
+        assert_eq!(row.end_time, Some(dt));
+        assert_eq!(row.updated_at, dt);
+    }
+
+    {
+        EndStreamQuery {
+            id: "id2",
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        let row = sqlx::query!(
+            r#"SELECT updated_at, status::TEXT, end_time FROM youtube_streams WHERE stream_id = 'id2'"#
+        )
+        .fetch_optional(&pool)
+        .await?;
+
+        assert!(row.is_none());
+    }
+
+    {
+        EndStreamQuery {
+            id: "id3",
+            ..Default::default()
+        }
+        .execute(&pool)
+        .await?;
+
+        let row = sqlx::query!(
+            r#"SELECT status::TEXT, end_time FROM youtube_streams WHERE stream_id = 'id3'"#
+        )
+        .fetch_one(&pool)
+        .await?;
+
+        assert_eq!(row.status, Some("ended".into()));
+        assert_eq!(row.end_time, None);
+    }
+
+    Ok(())
+}
