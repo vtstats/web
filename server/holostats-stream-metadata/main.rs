@@ -63,6 +63,7 @@ async fn update_stream_metadata(
     println!("[{}]: started", &stream_id);
 
     let mut next_continuation: Option<String> = None;
+    let mut is_live = false;
 
     loop {
         let update = async {
@@ -121,12 +122,16 @@ async fn update_stream_metadata(
 
                 // stream is on air
                 (Some(timeout), Some(continuation), false) => {
+                    let now = Utc::now();
+
                     UpdateYouTubeStreamQuery {
                         id: &stream_id,
-                        date: Utc::now(),
-                        title: response.title().as_ref().map(|t| t.as_str()),
+                        date: now,
+                        title: response.title().as_deref(),
                         status: Some(StreamStatus::Live),
-                        viewers: response.view_count().map(|c| c as i32),
+                        viewers: response.view_count(),
+                        likes: response.like_count(),
+                        start_time: if is_live { None } else { Some(now) },
                         ..Default::default()
                     }
                     .execute(&db.pool)
@@ -144,6 +149,8 @@ async fn update_stream_metadata(
                             err
                         );
                     }
+
+                    is_live = true;
 
                     tracing::info!("sleep {}ms", timeout.as_millis());
                     sleep(timeout).await;
