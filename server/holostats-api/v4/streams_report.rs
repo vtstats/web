@@ -71,7 +71,7 @@ pub async fn streams_report(query: ReqQuery, db: Database) -> Result<impl warp::
     );
 
     let streams = ListYouTubeStreamsQuery {
-        ids: &query.ids,
+        stream_ids: &query.ids,
         ..Default::default()
     }
     .execute(&db.pool)

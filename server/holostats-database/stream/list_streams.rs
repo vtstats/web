@@ -74,7 +74,8 @@ impl Ordering {
 }
 
 pub struct ListYouTubeStreamsQuery<'q> {
-    pub ids: &'q [String],
+    pub vtuber_ids: &'q [String],
+    pub stream_ids: &'q [String],
     pub status: &'q [String],
     pub order_by: Option<(Column, Ordering)>,
     pub start_at: Option<(Column, &'q UtcTime)>,
@@ -86,7 +87,8 @@ pub struct ListYouTubeStreamsQuery<'q> {
 impl<'q> Default for ListYouTubeStreamsQuery<'q> {
     fn default() -> Self {
         ListYouTubeStreamsQuery {
-            ids: &[],
+            vtuber_ids: &[],
+            stream_ids: &[],
             status: &[],
             order_by: None,
             end_at: None,
@@ -126,11 +128,19 @@ impl<'q> ListYouTubeStreamsQuery<'q> {
 
         let mut word = " WHERE ";
 
-        if !self.ids.is_empty() {
+        if !self.vtuber_ids.is_empty() {
             qb.push(word);
             word = " AND ";
             qb.push("vtuber_id = ANY(");
-            qb.push_bind(self.ids);
+            qb.push_bind(self.vtuber_ids);
+            qb.push(")");
+        }
+
+        if !self.stream_ids.is_empty() {
+            qb.push(word);
+            word = " AND ";
+            qb.push("stream_id = ANY(");
+            qb.push_bind(self.stream_ids);
             qb.push(")");
         }
 
@@ -178,7 +188,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["poi".into()],
+            vtuber_ids: &["poi".into()],
             order_by: Some((Column::StartTime, Ordering::Asc)),
             ..Default::default()
         }
@@ -193,7 +203,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["poi".into()],
+            vtuber_ids: &["poi".into()],
             order_by: Some((Column::StartTime, Ordering::Asc)),
             ..Default::default()
         }
@@ -208,7 +218,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["poi".into()],
+            vtuber_ids: &["poi".into()],
             order_by: Some((Column::EndTime, Ordering::Asc)),
             start_at: Some((Column::EndTime, &Utc::now())),
             ..Default::default()
@@ -225,7 +235,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["poi".into()],
+            vtuber_ids: &["poi".into()],
             order_by: Some((Column::ScheduleTime, Ordering::Desc)),
             start_at: Some((Column::ScheduleTime, &Utc::now())),
             end_at: Some((Column::ScheduleTime, &Utc::now())),
@@ -245,7 +255,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["poi".into()],
+            vtuber_ids: &["poi".into()],
             limit: None,
             ..Default::default()
         }
@@ -254,6 +264,19 @@ async fn test(pool: PgPool) -> Result<()> {
         "SELECT stream_id, title, vtuber_id, thumbnail_url, schedule_time, start_time, end_time, average_viewer_count, max_viewer_count, max_like_count, updated_at, status \
         FROM youtube_streams \
         WHERE vtuber_id = ANY($1)"
+    );
+
+    assert_eq!(
+        ListYouTubeStreamsQuery {
+            stream_ids: &["poi".into()],
+            ..Default::default()
+        }
+        .into_query_builder()
+        .sql(),
+        "SELECT stream_id, title, vtuber_id, thumbnail_url, schedule_time, start_time, end_time, average_viewer_count, max_viewer_count, max_like_count, updated_at, status \
+        FROM youtube_streams \
+        WHERE stream_id = ANY($1) \
+        LIMIT 24"
     );
 
     let sql1 = r#"INSERT INTO youtube_channels (vtuber_id) VALUES ('vtuber1'), ('vtuber2');"#;
@@ -270,7 +293,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            ids: &["vtuber2".into()],
+            vtuber_ids: &["vtuber2".into(), "vtuber3".into()],
             ..Default::default()
         }
         .execute(&pool)
@@ -292,7 +315,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            status: &["live".into()],
+            status: &["live".into(), "scheduled".into()],
             ..Default::default()
         }
         .execute(&pool)
@@ -303,7 +326,7 @@ async fn test(pool: PgPool) -> Result<()> {
 
     assert_eq!(
         ListYouTubeStreamsQuery {
-            status: &["live".into()],
+            stream_ids: &["id1".into(), "id2".into(), "id4".into()],
             ..Default::default()
         }
         .execute(&pool)

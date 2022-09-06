@@ -105,7 +105,7 @@ pub async fn youtube_streams_list(
         .map_err(Into::<WarpError>::into)?;
 
     let streams = ListYouTubeStreamsQuery {
-        ids: &ids,
+        vtuber_ids: &ids,
         status: &status,
         start_at: start_at.as_ref().map(|date| (order_by.column(), date)),
         end_at: end_at.as_ref().map(|date| (order_by.column(), date)),
