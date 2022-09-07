@@ -1,0 +1,892 @@
+{
+  "db": "PostgreSQL",
+  "0c36f3e484d78ff085eac399c4ef5e56852e6c160808427c04a825ab328b9ef9": {
+    "describe": {
+      "columns": [
+        {
+          "name": "stream_id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "vtuber_id",
+          "ordinal": 1,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "\n     SELECT stream_id, vtuber_id\n       FROM youtube_streams\n      WHERE end_time IS NULL\n        AND (\n              start_time IS NOT NULL OR (\n                schedule_time > NOW() - INTERVAL '6 hours'\n                and schedule_time < NOW() + INTERVAL '5 minutes'\n              )\n            )\n            "
+  },
+  "16471206f8cebba445f63127dca7aa9defe471a8e49b44d32aa490f84f6ef788": {
+    "describe": {
+      "columns": [
+        {
+          "name": "status!",
+          "ordinal": 0,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "\n     SELECT status::TEXT as \"status!\" \n       FROM youtube_streams\n      WHERE stream_id = $1\n            "
+  },
+  "1bd899195677fc25cc6e2dfbbfa447f40221d81c9fc24487711faa559b872274": {
+    "describe": {
+      "columns": [
+        {
+          "name": "kind!",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "vtuber_id",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "subscriber_count",
+          "ordinal": 2,
+          "type_info": "Int4"
+        },
+        {
+          "name": "daily_subscriber_count",
+          "ordinal": 3,
+          "type_info": "Int4"
+        },
+        {
+          "name": "weekly_subscriber_count",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "monthly_subscriber_count",
+          "ordinal": 5,
+          "type_info": "Int4"
+        },
+        {
+          "name": "view_count",
+          "ordinal": 6,
+          "type_info": "Int4"
+        },
+        {
+          "name": "daily_view_count",
+          "ordinal": 7,
+          "type_info": "Int4"
+        },
+        {
+          "name": "weekly_view_count",
+          "ordinal": 8,
+          "type_info": "Int4"
+        },
+        {
+          "name": "monthly_view_count",
+          "ordinal": 9,
+          "type_info": "Int4"
+        },
+        {
+          "name": "updated_at",
+          "ordinal": 10,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray"
+        ]
+      }
+    },
+    "query": "\n    select 'youtube' as \"kind!\",\n           vtuber_id,\n           subscriber_count,\n           daily_subscriber_count,\n           weekly_subscriber_count,\n           monthly_subscriber_count,\n           view_count,\n           daily_view_count,\n           weekly_view_count,\n           monthly_view_count,\n           updated_at\n      from youtube_channels\n     where vtuber_id = any($1)\n            "
+  },
+  "2a152c68e33878f37391abacd93c7d9ff38324e2544787105106593e3c20e205": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "TimestamptzArray",
+          "Int4Array",
+          "Int4Array"
+        ]
+      }
+    },
+    "query": "\n insert into youtube_live_chat_statistic as t\n             (\n               stream_id,\n               time,\n               message_count,\n               message_from_member_count\n             )\n      select $1,\n             unnest($2::TIMESTAMPTZ[]),\n             unnest($3::INTEGER[]),\n             unnest($4::INTEGER[])\n on conflict (stream_id, time) do update\n         set (message_count, message_from_member_count)\n           = (\n               t.message_count + excluded.message_count,\n               t.message_from_member_count + excluded.message_from_member_count\n              )\n            "
+  },
+  "2b9b06c97155fe51132c75755be30fe831b451d2c9bfa78ced1dab55121b265b": {
+    "describe": {
+      "columns": [
+        {
+          "name": "max",
+          "ordinal": 0,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "SELECT MAX(updated_at) from youtube_streams"
+  },
+  "4011830de71dae46d6d3382490afe866efe94d21287f2bb85f2b543904a9d6ee": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select stream_id as id, time, value\n        from youtube_stream_viewer_statistic\n       where stream_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by stream_id\n            "
+  },
+  "40f699c85c6d14d562f7e21e71679ef20a5040978cc98a14d24bdd08ef67ff41": {
+    "describe": {
+      "columns": [
+        {
+          "name": "ty",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "amount",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "color",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 3,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "\n      select type::TEXT as ty,\n             amount,\n             color,\n             time\n        from youtube_live_chat_paid_messages\n       where stream_id = $1\n            "
+  },
+  "434038b9382229920d43b1fe2d08c5d5117278dccbea90ddfd665c30c12ee069": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id!",
+          "ordinal": 0,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray"
+        ]
+      }
+    },
+    "query": "\n    select id as \"id!\"\n      from unnest($1::text[]) as id\n     where not exists\n           (\n             select stream_id\n             from youtube_streams\n             where stream_id = id\n           )\n            "
+  },
+  "45a1b00e1c506797e43eff499a76c7c2d17b4aacca07ec45d07824a2c4c567d2": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n    insert into youtube_channel_view_statistic (vtuber_id, time, value)\n         values ($1, $2, $3)\n            "
+  },
+  "495b96f34beeba53466feaf6ea53ca5e945e490d93c35c06eae61cb9e81ebca2": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n    INSERT INTO youtube_stream_viewer_statistic (stream_id, time, value)\n         VALUES ($1, $2, $3)\n    ON CONFLICT (stream_id, time) DO UPDATE\n            SET value = GREATEST($3, youtube_stream_viewer_statistic.value)\n                "
+  },
+  "49842bc84116e822b4444a4633c8f129e3a8f052f9655cd473f3e35116b0c697": {
+    "describe": {
+      "columns": [
+        {
+          "name": "ty",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "\n      select type::TEXT as ty, time\n        from youtube_live_chat_member_messages\n       where stream_id = $1\n            "
+  },
+  "5bdc969f092ded9156a983101602fc6f0ed1a26f1e9378b7b0f799c1b46c8646": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n    insert into bilibili_channel_subscriber_statistic (vtuber_id, time, value)\n         values ($1, $2, $3)\n            "
+  },
+  "5da23cafe4a6b7cc353e6b55c5d0644bb956564d13f3e7183f94dbd1a14aed4a": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "Timestamptz",
+          "Text"
+        ]
+      }
+    },
+    "query": "\n    update youtube_channels\n       set (subscriber_count, view_count, updated_at)\n         = ($1, $2, $3)\n     where vtuber_id = $4\n            "
+  },
+  "6d060aaf913968f9f4f508fe717d3ef5013e96ef59ac5a383715b410138d621f": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n    insert into bilibili_channel_view_statistic (vtuber_id, time, value)\n         values ($1, $2, $3)\n            "
+  },
+  "736493a3b8f6f60c44c696b583426564c57c80cdacb7a442d4e93941afe1ae8e": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "Timestamptz",
+          "Text"
+        ]
+      }
+    },
+    "query": "\n    update bilibili_channels\n       set (subscriber_count, view_count, updated_at)\n         = ($1, $2, $3)\n     where vtuber_id = $4\n            "
+  },
+  "7e4cee7318c884f270249d5acd5dd701473e6353e088dc5232a368122a03f243": {
+    "describe": {
+      "columns": [
+        {
+          "name": "stream_id",
+          "ordinal": 0,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "select stream_id from youtube_streams"
+  },
+  "7f5e906da85eb6978a3eca008541a4f895783e045b6030f22ccc1fdb3f5f7654": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "TextArray",
+          "TextArray",
+          "TextArray",
+          "TimestamptzArray",
+          "TextArray",
+          "TextArray"
+        ]
+      }
+    },
+    "query": "\n insert into youtube_live_chat_member_messages\n             (\n               stream_id,\n               type,\n               author_name,\n               author_channel_id,\n               time,\n               text,\n               badges\n             )\n      select $1,\n             unnest($2::TEXT[]::member_message_type[]),\n             unnest($3::TEXT[]),\n             unnest($4::TEXT[]),\n             unnest($5::TIMESTAMPTZ[]),\n             unnest($6::TEXT[]),\n             unnest($7::TEXT[])\n            "
+  },
+  "9446f17c72b69b8a9e72247d30314a8f6fbdd739640e35f866205edce4212a3c": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select vtuber_id as id, time, value\n        from youtube_channel_view_statistic\n       where vtuber_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by vtuber_id\n            "
+  },
+  "a3e6cf29e0dd993541fcfa8cf9c35eecee3627bb19d46d46c640f55fb94e5414": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select stream_id as id, time, value\n        from youtube_stream_like_statistic\n       where stream_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by stream_id\n            "
+  },
+  "a7e5c53205fe81d553cce8e95a0965f151a82f4a9bc72bea95579e5a25ed2e5e": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n    insert into youtube_channel_subscriber_statistic (vtuber_id, time, value)\n         values ($1, $2, $3)\n            "
+  },
+  "ab6feecc8b97cb7a875ccd9212c2a7eac46f43ac266bd469764273634079588f": {
+    "describe": {
+      "columns": [
+        {
+          "name": "max",
+          "ordinal": 0,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "select max(updated_at) from youtube_channels"
+  },
+  "b3e575a62fa502e103585992a01ab50278a7f871b348339e12874a834bd87489": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select vtuber_id as id, time, value\n        from bilibili_channel_view_statistic\n       where vtuber_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by vtuber_id\n            "
+  },
+  "b3eb04ca78ffd097c32d77964b9817314efea955ecafdc4e4a64b35a588ee390": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select vtuber_id as id, time, value\n        from youtube_channel_subscriber_statistic\n       where vtuber_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by vtuber_id\n            "
+  },
+  "bfd0989d579b07b4c70673c70f16583ae72b6c0cce5e964fb7366d6e7ea2155e": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "TextArray",
+          "TextArray",
+          "TextArray",
+          "TextArray",
+          "TimestamptzArray",
+          "TextArray",
+          "TextArray",
+          "TextArray"
+        ]
+      }
+    },
+    "query": "\n insert into youtube_live_chat_paid_messages\n             (\n               stream_id,\n               type,\n               amount,\n               author_name,\n               author_channel_id,\n               time,\n               text,\n               badges,\n               color\n             )\n      select $1,\n             unnest($2::TEXT[]::paid_message_type[]),\n             unnest($3::TEXT[]),\n             unnest($4::TEXT[]),\n             unnest($5::TEXT[]),\n             unnest($6::TIMESTAMPTZ[]),\n             unnest($7::TEXT[]),\n             unnest($8::TEXT[]),\n             unnest($9::TEXT[])\n            "
+  },
+  "c91e32ab52967933bbe21a05758cda6283afabb0d1c6016d7fc964a660e55aef": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Timestamptz",
+          "Text"
+        ]
+      }
+    },
+    "query": "\n                 UPDATE youtube_streams\n                    SET end_time   = $1,\n                        updated_at = $1,\n                        status     = 'ended'::stream_status\n                  WHERE stream_id  = $2\n                        "
+  },
+  "c967810a5ffc705a298ef9548676619e3334882b62de7ac5e8805156b767eb27": {
+    "describe": {
+      "columns": [
+        {
+          "name": "kind!",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "vtuber_id",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "subscriber_count",
+          "ordinal": 2,
+          "type_info": "Int4"
+        },
+        {
+          "name": "daily_subscriber_count",
+          "ordinal": 3,
+          "type_info": "Int4"
+        },
+        {
+          "name": "weekly_subscriber_count",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "monthly_subscriber_count",
+          "ordinal": 5,
+          "type_info": "Int4"
+        },
+        {
+          "name": "view_count",
+          "ordinal": 6,
+          "type_info": "Int4"
+        },
+        {
+          "name": "daily_view_count",
+          "ordinal": 7,
+          "type_info": "Int4"
+        },
+        {
+          "name": "weekly_view_count",
+          "ordinal": 8,
+          "type_info": "Int4"
+        },
+        {
+          "name": "monthly_view_count",
+          "ordinal": 9,
+          "type_info": "Int4"
+        },
+        {
+          "name": "updated_at",
+          "ordinal": 10,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray"
+        ]
+      }
+    },
+    "query": "\n    select 'bilibili' as \"kind!\",\n           vtuber_id,\n           subscriber_count,\n           daily_subscriber_count,\n           weekly_subscriber_count,\n           monthly_subscriber_count,\n           view_count,\n           daily_view_count,\n           weekly_view_count,\n           monthly_view_count,\n           updated_at\n      from bilibili_channels\n     where vtuber_id = any($1)\n            "
+  },
+  "ccb30ab89bfa63c5fb5a1af637136439d7b495839c55703231f8e7d71febbc4a": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Text",
+          "Text",
+          {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "scheduled",
+                  "live",
+                  "ended"
+                ]
+              },
+              "name": "stream_status"
+            }
+          },
+          "Text",
+          "Timestamptz",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\nINSERT INTO youtube_streams AS t (stream_id, vtuber_id, title, status, thumbnail_url, schedule_time, start_time, end_time)\n     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\nON CONFLICT (stream_id) DO UPDATE\n        SET title          = COALESCE($3, t.title),\n            status         = COALESCE($4, t.status),\n            thumbnail_url  = COALESCE($5, t.thumbnail_url),\n            schedule_time  = COALESCE($6, t.schedule_time),\n            start_time     = COALESCE($7, t.start_time),\n            end_time       = COALESCE($8, t.end_time)\n            "
+  },
+  "e049d83942dc27772a25737263e745523ba5cd3c63a75959dff214839c2392e0": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "scheduled",
+                  "live",
+                  "ended"
+                ]
+              },
+              "name": "stream_status"
+            }
+          },
+          "Timestamptz",
+          "Timestamptz",
+          "Timestamptz",
+          "Int4",
+          "Text"
+        ]
+      }
+    },
+    "query": "\n     UPDATE youtube_streams\n        SET title          = COALESCE($1, title),\n            updated_at     = COALESCE($2, updated_at),\n            status         = COALESCE($3, status),\n            schedule_time  = COALESCE($4, schedule_time),\n            start_time     = COALESCE($5, start_time),\n            end_time       = COALESCE($6, end_time),\n            max_like_count = GREATEST($7, max_like_count)\n      WHERE stream_id      = $8\n            "
+  },
+  "e19537f9dd3f3c602175ad7451eff85166b0bf5eca73ce2c48893e029f393372": {
+    "describe": {
+      "columns": [
+        {
+          "name": "start!",
+          "ordinal": 0,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "end!",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        true,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n     SELECT start_time AS \"start!\", end_time AS \"end!\"\n       FROM youtube_streams\n      WHERE vtuber_id = $1\n        AND start_time > $2\n        AND end_time IS NOT NULL\n   ORDER BY start_time DESC\n            "
+  },
+  "e86a4294b6829cade30e0b92db72785fb6ed8073480cc68b61531fb67bcf7c1d": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select vtuber_id as id, time, value\n        from bilibili_channel_subscriber_statistic\n       where vtuber_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by vtuber_id\n            "
+  },
+  "e9567787b93a38f65e50300579bd158ca39df5504ce9146c63dd3206fb7d8350": {
+    "describe": {
+      "columns": [
+        {
+          "name": "pg_notify",
+          "ordinal": 0,
+          "type_info": "Void"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "SELECT pg_notify('get_live_chat', $1)"
+  },
+  "e9ff4e31372d7eff143ea02f34aefe808201f435e571a8ad5a0571371e590150": {
+    "describe": {
+      "columns": [
+        {
+          "name": "max",
+          "ordinal": 0,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        null
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "select max(updated_at) from bilibili_channels"
+  },
+  "fba20b9c676ab38cdd510c44a7352302f1d687b9d4c0ec875328df9854ce4737": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "DELETE FROM youtube_streams WHERE stream_id = $1"
+  },
+  "fedff2938c2c98ce7ae611e63bc7693da25bf9a116098d2d6d4e6071400267e2": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "time",
+          "ordinal": 1,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "message_count",
+          "ordinal": 2,
+          "type_info": "Int4"
+        },
+        {
+          "name": "message_from_member_count",
+          "ordinal": 3,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "TextArray",
+          "Timestamptz",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n      select stream_id as id, time, message_count, message_from_member_count\n        from youtube_live_chat_statistic\n       where stream_id = any($1)\n         and (time >= $2 or $2 is null)\n         and (time <= $3 or $3 is null)\n    order by stream_id, time asc\n            "
+  }
+}

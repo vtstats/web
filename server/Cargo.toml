@@ -14,3 +14,4 @@ members = [
 
 [profile.release]
 lto = true
+strip = true
