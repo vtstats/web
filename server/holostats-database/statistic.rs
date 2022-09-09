@@ -221,42 +221,6 @@ impl Database {
     }
 
     #[instrument(
-        name = "Select youtube_stream_like_statistic",
-        skip(self),
-        fields(db.table = "youtube_stream_like_statistic"),
-    )]
-    pub async fn youtube_stream_like(
-        &self,
-        ids: &[String],
-        start_at: &Option<UtcTime>,
-        end_at: &Option<UtcTime>,
-    ) -> Result<Reports<(Timestamp, i32)>> {
-        sqlx::query!(
-            r#"
-      select stream_id as id, time, value
-        from youtube_stream_like_statistic
-       where stream_id = any($1)
-         and (time >= $2 or $2 is null)
-         and (time <= $3 or $3 is null)
-    order by stream_id
-            "#,
-            ids,       // $1
-            *start_at, // $2
-            *end_at    // $3
-        )
-        .fetch(&self.pool)
-        .try_fold(Vec::<Report<_>>::new(), |mut acc, row| {
-            collect_report!(
-                "youtube_stream_like",
-                acc,
-                row.id,
-                (Timestamp(row.time), row.value)
-            )
-        })
-        .await
-    }
-
-    #[instrument(
         name = "Select youtube_live_chat_statistic",
         skip(self),
         fields(db.table = "youtube_live_chat_statistic"),
