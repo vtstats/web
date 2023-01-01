@@ -2,20 +2,20 @@
 @use "@angular/cdk" as cdk;
 
 // layout
-@import "src/app/layout/layout-theme";
+@import "../app/layout/layout-theme";
 
 // components
-@import "src/app/components/date-filter/date-filter-theme";
-@import "src/app/components/stream-item/stream-item-theme";
-@import "src/app/components/sub-menu/sub-menu-theme";
-@import "src/app/components/vtuber-filter/vtuber-filter-theme";
+@import "../app/components/date-filter/date-filter-theme";
+@import "../app/components/stream-item/stream-item-theme";
+@import "../app/components/sub-menu/sub-menu-theme";
+@import "../app/components/vtuber-filter/vtuber-filter-theme";
 
 // pages
-@import "src/app/pages/not-found/not-found-theme";
-@import "src/app/pages/channels-list/channels-list-theme";
-@import "src/app/pages/settings/settings-theme";
-@import "src/app/pages/streams-detail/streams-detail-theme";
-@import "src/app/pages/vtubers-detail/vutbers-detail-theme";
+@import "../app/pages/not-found/not-found-theme";
+@import "../app/pages/channels-list/channels-list-theme";
+@import "../app/pages/settings/settings-theme";
+@import "../app/pages/streams-detail/streams-detail-theme";
+@import "../app/pages/vtubers-detail/vutbers-detail-theme";
 
 @include mat.ripple();
 @include cdk.a11y-visually-hidden();

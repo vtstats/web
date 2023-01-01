@@ -31,7 +31,9 @@
   }
 }
 
-@mixin sidenav-typography($config) {
+@mixin sidenav-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .sidenav {
     .info {
       font-size: mat.font-size($config, "button");

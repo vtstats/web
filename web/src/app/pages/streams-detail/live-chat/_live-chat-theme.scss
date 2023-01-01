@@ -21,7 +21,9 @@
   }
 }
 
-@mixin live-chat-typography($config) {
+@mixin live-chat-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .live-chat-chart {
     .label,
     .stroke {

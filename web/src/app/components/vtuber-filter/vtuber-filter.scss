@@ -54,7 +54,7 @@
   padding: 0;
   @include mat.elevation(4);
 
-  .mat-list-option .mat-list-avatar {
+  .mat-mdc-list-option .mat-mdc-list-item-avatar {
     height: 32px;
     width: 32px;
   }

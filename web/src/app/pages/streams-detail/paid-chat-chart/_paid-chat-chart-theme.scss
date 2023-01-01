@@ -23,7 +23,9 @@
   }
 }
 
-@mixin paid-chat-chart-typography($config) {
+@mixin paid-chat-chart-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .paid-chat-chart {
     .label {
       font-size: mat.font-size($config, "caption");

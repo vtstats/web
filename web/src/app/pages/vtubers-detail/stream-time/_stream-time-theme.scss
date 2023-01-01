@@ -15,7 +15,9 @@
   }
 }
 
-@mixin stream-time-typography($config) {
+@mixin stream-time-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .stream-time-chart-tooltip {
     font-size: mat.font-size($config, "caption");
     font-weight: mat.font-weight($config, "body-2");

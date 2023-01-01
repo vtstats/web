@@ -36,7 +36,7 @@
             *ngFor="let vtb of _vtubers | slice:6"
             [selected]="hasVTuber(vtb)"
           >
-            <img matListAvatar src="/assets/thumbnail/{{vtb}}.jpg" />
+            <img matListItemAvatar src="/assets/thumbnail/{{vtb}}.jpg" />
             {{vtb | name}}
           </mat-list-option>
         </mat-selection-list>

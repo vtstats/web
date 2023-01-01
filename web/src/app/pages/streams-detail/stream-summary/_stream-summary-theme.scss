@@ -23,7 +23,9 @@
   }
 }
 
-@mixin stream-summary-typography($config) {
+@mixin stream-summary-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .stream-summary {
     .name {
       font-size: mat.font-size($config, "body-2");
@@ -31,8 +33,8 @@
     }
 
     .title {
-      font-size: mat.font-size($config, "title");
-      font-weight: mat.font-weight($config, "title");
+      font-size: mat.font-size($config, "subtitle-1");
+      font-weight: mat.font-weight($config, "subtitle-1");
     }
   }
 }
