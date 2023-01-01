@@ -1,10 +1,12 @@
 @use "@angular/material" as mat;
 
-@mixin settings-typography($config) {
+@mixin settings-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .settings {
     .title {
-      font-size: mat.font-size($config, "subheading-2");
-      font-weight: mat.font-weight($config, "subheading-2");
+      font-size: mat.font-size($config, "headline-3");
+      font-weight: mat.font-weight($config, "headline-3");
     }
   }
 }

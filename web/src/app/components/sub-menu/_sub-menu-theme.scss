@@ -10,11 +10,13 @@
   }
 }
 
-@mixin sub-menu-typography($config) {
+@mixin sub-menu-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .sub-menu {
     .title {
-      font-size: mat.font-size($config, "subheading-2");
-      font-weight: mat.font-weight($config, "subheading-2");
+      font-size: mat.font-size($config, "subtitle-1");
+      font-weight: mat.font-weight($config, "subtitle-1");
     }
 
     .extra {

@@ -1,9 +1,13 @@
-<h4 class="title">
+<h3 class="mat-h3">
   <ng-container i18n="@@vtuberSelected">VTuber Selected</ng-container>
   <span> ({{ config.vtuber.size }}/{{ count }})</span>:
-</h4>
+</h3>
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+<mat-tree
+  [dataSource]="dataSource"
+  [treeControl]="treeControl"
+  [style.padding-bottom.px]="16"
+>
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <button mat-icon-button disabled></button>
     <mat-checkbox

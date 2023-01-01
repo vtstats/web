@@ -27,7 +27,9 @@
   }
 }
 
-@mixin vtuber-filter-typography($config) {
+@mixin vtuber-filter-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .vtuber-filter-row {
     .more {
       font-size: mat.font-size($config, "body-2");

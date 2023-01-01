@@ -29,7 +29,9 @@
   }
 }
 
-@mixin stream-stats-chart-typography($config) {
+@mixin stream-stats-chart-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .stream-stats-chart {
     .label,
     .stroke {

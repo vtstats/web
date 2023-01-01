@@ -1,17 +1,18 @@
-<mat-list-item>
-  <h3 matLine>Timezone</h3>
-  <p mat-line>{{ tick.everySecond$ | async | date: 'yyyy/MM/dd HH:mm:ss' }}</p>
+<mat-form-field appearance="outline" [style.width.%]="100">
+  <mat-label>Timezone</mat-label>
 
-  <mat-form-field appearance="none">
-    <mat-label *ngIf="!(config.timezone$ | async)">None</mat-label>
-    <mat-select
-      [value]="config.timezone$ | async"
-      (selectionChange)="config.setTimezone($event.value)"
-    >
-      <mat-option>None</mat-option>
-      <mat-option *ngFor="let timezone of timezones" [value]="timezone">
-        GMT{{ timezone }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-list-item>
+  <mat-label *ngIf="!(config.timezone$ | async)">None</mat-label>
+  <mat-select
+    [value]="config.timezone$ | async"
+    (selectionChange)="config.setTimezone($event.value)"
+  >
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+      GMT{{ timezone }}
+    </mat-option>
+  </mat-select>
+
+  <mat-hint>
+    {{ tick.everySecond$ | async | date: 'yyyy/MM/dd HH:mm:ss' }}
+  </mat-hint>
+</mat-form-field>

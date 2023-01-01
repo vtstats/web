@@ -11,11 +11,13 @@
   }
 }
 
-@mixin not-found-typography($config) {
+@mixin not-found-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .not-found {
     .title {
-      font-size: mat.font-size($config, "display-1");
-      font-weight: mat.font-weight($config, "display-1");
+      font-size: mat.font-size($config, "headline-1");
+      font-weight: mat.font-weight($config, "headline-1");
     }
 
     .watame {

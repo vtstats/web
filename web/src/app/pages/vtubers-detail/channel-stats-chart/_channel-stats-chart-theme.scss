@@ -26,21 +26,23 @@
   }
 }
 
-@mixin channel-stats-chart-typography($config) {
+@mixin channel-stats-chart-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .channel-stats-chart {
     .label {
-      font-size: mat.font-size($config, "subheading-1");
-      font-weight: mat.font-weight($config, "subheading-1");
+      font-size: mat.font-size($config, "subtitle-2");
+      font-weight: mat.font-weight($config, "subtitle-2");
     }
 
     .delta {
-      font-size: mat.font-size($config, "subheading-2");
-      font-weight: mat.font-weight($config, "subheading-2");
+      font-size: mat.font-size($config, "subtitle-2");
+      font-weight: mat.font-weight($config, "subtitle-2");
     }
 
     .value {
-      font-size: mat.font-size($config, "headline");
-      font-weight: mat.font-weight($config, "subheading-1");
+      font-size: mat.font-size($config, "headline-5");
+      font-weight: mat.font-weight($config, "subtitle-2");
     }
   }
 }

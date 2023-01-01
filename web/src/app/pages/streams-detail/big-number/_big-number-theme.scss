@@ -10,11 +10,13 @@
   }
 }
 
-@mixin big-number-typography($config) {
+@mixin big-number-typography($theme) {
+  $config: mat.get-typography-config($theme);
+
   .big-number {
     .value {
-      font-size: mat.font-size($config, "headline");
-      font-weight: mat.font-weight($config, "display-1");
+      font-size: mat.font-size($config, "headline-3");
+      font-weight: mat.font-weight($config, "headline-1");
     }
 
     .label {

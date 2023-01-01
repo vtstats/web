@@ -3,7 +3,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/server",
-    "target": "es2019",
     "types": ["node", "gapi", "gapi.auth2"]
   },
   "files": ["src/main.server.ts"],

@@ -1,11 +1,4 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { FlatTreeControl } from "@angular/cdk/tree";
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-} from "@angular/material/tree";
-
-import { vtubers, batches } from "vtubers";
 
 import { GoogleApiService } from "src/app/shared";
 
