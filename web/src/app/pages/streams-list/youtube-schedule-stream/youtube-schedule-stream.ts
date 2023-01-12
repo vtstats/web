@@ -38,7 +38,7 @@ export class YoutubeScheduleStream implements OnDestroy {
           ids: ids.length === 0 ? [...this.config.vtuber] : ids,
           status: [StreamStatus.scheduled],
           orderBy: StreamListOrderBy.scheduleTimeAsc,
-          startAt,
+          startAt: startAt === 0 ? Date.now() : startAt,
           endAt,
         })
         .pipe(
