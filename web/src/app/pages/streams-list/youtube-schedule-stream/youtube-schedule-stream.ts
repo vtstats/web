@@ -1,4 +1,5 @@
 import { Component, OnDestroy, ViewEncapsulation } from "@angular/core";
+import { max, subHours } from "date-fns";
 import { Observable, Subject } from "rxjs";
 import { map, scan, startWith, switchMap, tap } from "rxjs/operators";
 
@@ -38,7 +39,8 @@ export class YoutubeScheduleStream implements OnDestroy {
           ids: ids.length === 0 ? [...this.config.vtuber] : ids,
           status: [StreamStatus.scheduled],
           orderBy: StreamListOrderBy.scheduleTimeAsc,
-          startAt,
+          // filter out old streams
+          startAt: max([startAt || 0, subHours(Date.now(), 6)]),
           endAt,
         })
         .pipe(
