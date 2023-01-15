@@ -1,0 +1,39 @@
+<hls-helmet [title]="title"></hls-helmet>
+
+<div class="mx-auto max-w-4xl p-4" *ngIf="channelsQry | useQry as result">
+  <div class="flex flex-row items-center mb-4">
+    <div class="flex-1">
+      <hls-filter-group
+        (clear)="onClear()"
+        [displayDateRange]="false"
+        (vtuberChanged)="onVTuberChange($event)"
+      >
+      </hls-filter-group>
+    </div>
+
+    <button
+      mat-icon-button
+      [disabled]="result.isFetching"
+      (click)="result.refetch()"
+      [matTooltip]="
+        result.isFetching ? 'Loading...' :
+        'Updated at ' + (result.data.updatedAt | date: 'MM/dd HH:mm')
+      "
+      aria-label="Refresh"
+    >
+      <mat-icon
+        [class.animate-spin]="result.isFetching"
+        svgIcon="sync"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <hls-channel-table
+    *ngIf="result.isSuccess"
+    [dataSource]="result.data.channels"
+  ></hls-channel-table>
+
+  <hls-channel-table-shimmer
+    *ngIf="result.isFetching"
+  ></hls-channel-table-shimmer>
+</div>

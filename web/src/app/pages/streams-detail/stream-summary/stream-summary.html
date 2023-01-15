@@ -1,56 +1,83 @@
-<div class="stream-summary">
-  <a
-    class="cover"
-    [attr.href]="'https://youtu.be/' + stream.streamId"
-    target="_blank"
-  >
-    <img class="img" [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'" />
-  </a>
-
-  <div class="meta">
+<div class="stream-summary flex flex-wrap items-end">
+  <div class="w-full sm:w-7/12">
     <a
-      class="title"
+      class="cover aspect-ratio-16-9"
+      [attr.href]="'https://youtu.be/' + stream.streamId"
+      target="_blank"
+    >
+      <img
+        class="img rounded absolute w-full h-full object-center object-cover"
+        [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+      />
+    </a>
+  </div>
+
+  <div class="box-border p-4 w-full sm:w-5/12">
+    <a
+      class="text-inherit no-underline block mb-4 break-words mat-h3"
       [attr.href]="'https://youtu.be/' + stream.streamId"
       target="_blank"
     >
       {{ stream.title }}
     </a>
 
-    <a class="liver" [routerLink]="['/vtuber', stream.vtuberId]">
-      <img class="profile" src="/assets/thumbnail/{{ stream.vtuberId }}.jpg" />
-      <span class="name">{{ stream.vtuberId | name }}</span>
+    <a
+      class="text-inherit no-underline block mb-2 mat-body"
+      [routerLink]="['/vtuber', stream.vtuberId]"
+    >
+      <img
+        class="rounded-full w-8 h-8 align-middle"
+        src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+      />
+      <span class="ml-2 align-middle">{{ stream.vtuberId | name }}</span>
     </a>
 
-    <hls-number-row>
-      <hls-big-number
-        [value]="stream.startTime | date: 'HH:mm:ss'"
-        i18n-label="@@streamStartTime"
-        label="Start Time"
-      ></hls-big-number>
+    <div class="mb-2">
+      <span class="mat-small">Stream Time: </span>
+      <span class="mat-body-1">
+        {{ stream.startTime | date: 'HH:mm:ss' }} - {{ stream.status === 'ended'
+        ? (stream.endTime | date: 'HH:mm:ss') : '' }}
+      </span>
+    </div>
 
-      <hls-big-number
-        [value]="
-          stream.status === 'ended'
-          ? (stream.startTime | duration: stream.endTime)
-          : (stream.startTime | duration: (everySecond$ | async))
-        "
-        i18n-label="@@streamDuration"
-        label="Duration"
-      ></hls-big-number>
-    </hls-number-row>
+    <div class="mb-2">
+      <span class="mat-small">Duration: </span>
+      <span class="mat-body-1">
+        {{ stream.status === 'ended' ? (stream.startTime | duration:
+        stream.endTime) : (stream.startTime | duration: (everySecond$ |
+        async))}}
+      </span>
+    </div>
+  </div>
+</div>
 
-    <hls-number-row>
-      <hls-big-number
-        [value]="(stream.averageViewerCount | number) || '-----'"
-        i18n-label="@@averageViewers"
-        label="Average Viewers"
-      ></hls-big-number>
-
-      <hls-big-number
-        [value]="(stream.maxViewerCount | number) || '-----'"
-        i18n-label="@@maximumViewers"
-        label="Maximum Viewers"
-      ></hls-big-number>
-    </hls-number-row>
+<div class="flex flex-wrap mt-8">
+  <div class="w-1/2 sm:w-3/12 text-center">
+    <div class="mat-small">Avg./max viewers</div>
+    <div class="mat-headline-5">
+      {{ avg ? (avg | number) : '---' }}
+      <span class="mat-body">/</span>
+      {{ max ? (max | number) : '---' }}
+    </div>
+  </div>
+  <div class="w-1/2 sm:w-3/12 text-center">
+    <div class="mat-small">Likes / dislikes</div>
+    <div class="mat-headline-5" *ngIf="ratesQry | useQry as result">
+      {{ result?.data?.likes | number }}
+      <span class="mat-body">/</span>
+      {{ result?.data?.dislikes | number }}
+    </div>
+  </div>
+  <div class="w-1/2 sm:w-3/12 text-center">
+    <div class="mat-small">Live chat</div>
+    <div class="mat-headline-5">
+      {{ liveChatCount ? (liveChatCount | number) : '---' }}
+    </div>
+  </div>
+  <div class="w-1/2 sm:w-3/12 text-center">
+    <div class="mat-small">Paid chat</div>
+    <div class="mat-headline-5" *ngIf="liveChatQry | useQry as result">
+      {{ result?.data | number }}
+    </div>
   </div>
 </div>

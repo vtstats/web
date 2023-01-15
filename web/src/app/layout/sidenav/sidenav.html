@@ -1,91 +1,62 @@
-<div class="sidenav">
-  <mat-nav-list class="list">
+<div class="sidenav mat-bg-card w-64 min-h-full flex flex-col">
+  <mat-nav-list class="flex-1">
     <a
+      *ngFor="let item of menuItems"
       mat-list-item
-      routerLink="/youtube-channel"
+      [routerLink]="item.link"
       routerLinkActive="active"
       (click)="buttonClick.emit()"
     >
-      <mat-icon matListItemIcon svgIcon="youtube"></mat-icon>
-      <p matListItemTitle i18n="@@youtubeChannel">YouTube Channel</p>
-    </a>
-    <a
-      mat-list-item
-      routerLink="/bilibili-channel"
-      routerLinkActive="active"
-      (click)="buttonClick.emit()"
-    >
-      <mat-icon matListItemIcon svgIcon="bilibili"></mat-icon>
-      <p matListItemTitle i18n="@@bilibiliChannel">Bilibili Channel</p>
-    </a>
-    <a
-      mat-list-item
-      routerLink="/youtube-stream"
-      routerLinkActive="active"
-      (click)="buttonClick.emit()"
-    >
-      <mat-icon matListItemIcon svgIcon="stream"></mat-icon>
-      <p matListItemTitle i18n="@@youtubeStream">YouTube Stream</p>
-    </a>
-    <a
-      mat-list-item
-      routerLink="/youtube-schedule-stream"
-      routerLinkActive="active"
-      (click)="buttonClick.emit()"
-    >
-      <mat-icon matListItemIcon svgIcon="calendar"></mat-icon>
-      <p matListItemTitle i18n="@@youtubeSchedule">YouTube Schedule</p>
-    </a>
-    <a
-      mat-list-item
-      routerLink="/settings"
-      routerLinkActive="active"
-      (click)="buttonClick.emit()"
-    >
-      <mat-icon matListItemIcon svgIcon="tune"></mat-icon>
-      <p matListItemTitle i18n="@@settings">Settings</p>
+      <mat-icon matListItemIcon [svgIcon]="item.icon"></mat-icon>
+      <p matListItemTitle>{{ item.title }}</p>
     </a>
   </mat-nav-list>
 
   <mat-divider></mat-divider>
 
-  <div class="info">
-    <div>
-      <a
-        class="link"
-        href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
-        target="_blank"
-      >
-        News
-      </a>
+  <div class="p-4">
+    <div class="mat-body select-none mb-2">
+      <div>
+        <a
+          class="text-inherit leading-5 no-underline"
+          href="https://github.com/PoiScript/HoloStats/blob/master/NEWS.md"
+          target="_blank"
+        >
+          News
+        </a>
 
-      <a
-        class="link"
-        href="https://www.buymeacoffee.com/holostats"
-        target="_blank"
-        [style.marginLeft.px]="4"
-      >
-        Donate
-      </a>
+        <a
+          class="text-inherit leading-5 no-underline ml-1"
+          href="https://www.buymeacoffee.com/holostats"
+          target="_blank"
+        >
+          Donate
+        </a>
+      </div>
+
+      <div>
+        <a
+          class="text-inherit leading-5 no-underline"
+          href="https://angular.io/"
+          target="_blank"
+        >
+          Angular: v{{ angularVer }}
+        </a>
+      </div>
+
+      <div>
+        <a
+          class="text-inherit leading-5 no-underline"
+          href="https://github.com/PoiScript/HoloStats/commit/{{ commitId }}"
+          target="_blank"
+        >
+          Commit: {{ commitId }}
+        </a>
+
+        <hls-update-indicator></hls-update-indicator>
+      </div>
     </div>
 
-    <div class="row">
-      <a class="link" href="https://angular.io/" target="_blank">
-        Angular: v{{ angularVer }}
-      </a>
-    </div>
-
-    <div class="row">
-      <a
-        class="link"
-        href="https://github.com/PoiScript/HoloStats/commit/{{ commitId }}"
-        target="_blank"
-      >
-        Commit: {{ commitId }}
-      </a>
-
-      <hls-update-indicator></hls-update-indicator>
-    </div>
+    <div class="mat-small mat-secondary-text">&copy; 2019-2022 PoiScript</div>
   </div>
-  <div class="copyright">&copy; 2019-2022 PoiScript</div>
 </div>

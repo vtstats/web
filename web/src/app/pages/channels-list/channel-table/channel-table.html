@@ -12,7 +12,7 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
       <img
-        class="profile"
+        class="profile w-8 h-8 cursor-pointer align-middle rounded-full"
         src="/assets/thumbnail/{{ row.vtuberId }}.jpg"
         [routerLink]="['/vtuber', row.vtuberId]"
       />
@@ -26,131 +26,23 @@
     <td mat-footer-cell *matFooterCellDef i18n="@@total">Total</td>
   </ng-container>
 
-  <ng-container matColumnDef="subscriberCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@subscribers">
-      Subscribers
-    </th>
-    <td mat-cell *matCellDef="let row">{{ row.subscriberCount | number }}</td>
-    <td mat-footer-cell *matFooterCellDef>
-      {{ getTotal("subscriberCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="dailySubscriberCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@lastDay">
-      Last Day
-    </th>
+  <ng-container *ngFor="let column of dataColumns" [matColumnDef]="column[0]">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column[1]}}</th>
     <td
       mat-cell
       *matCellDef="let row"
-      [coloredNumber]="row.dailySubscriberCount"
+      [class.up-color]="column[2] && row[column[0]] > 0"
+      [class.down-color]="column[2] && row[column[0]] < 0"
     >
-      {{ row.dailySubscriberCount | number }}
+      {{ row[column[0]] | number }}
     </td>
     <td
       mat-footer-cell
       *matFooterCellDef
-      [coloredNumber]="getTotal('dailySubscriberCount')"
+      [class.up-color]="column[2] && getTotal(column[0]) > 0"
+      [class.down-color]="column[2] && getTotal(column[0]) < 0"
     >
-      {{ getTotal("dailySubscriberCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="weeklySubscriberCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@last7Days">
-      Last 7 Days
-    </th>
-    <td
-      mat-cell
-      *matCellDef="let row"
-      [coloredNumber]="row.weeklySubscriberCount"
-    >
-      {{ row.weeklySubscriberCount | number }}
-    </td>
-    <td
-      mat-footer-cell
-      *matFooterCellDef
-      [coloredNumber]="getTotal('weeklySubscriberCount')"
-    >
-      {{ getTotal("weeklySubscriberCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="monthlySubscriberCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@last30Days">
-      Last 30 Days
-    </th>
-    <td
-      mat-cell
-      *matCellDef="let row"
-      [coloredNumber]="row.monthlySubscriberCount"
-    >
-      {{ row.monthlySubscriberCount | number }}
-    </td>
-    <td
-      mat-footer-cell
-      *matFooterCellDef
-      [coloredNumber]="getTotal('monthlySubscriberCount')"
-    >
-      {{ getTotal("monthlySubscriberCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="viewCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@views">
-      Views
-    </th>
-    <td mat-cell *matCellDef="let row">{{ row.viewCount | number }}</td>
-    <td mat-footer-cell *matFooterCellDef>
-      {{ getTotal("viewCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="dailyViewCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@lastDay">
-      Last Day
-    </th>
-    <td mat-cell *matCellDef="let row" [coloredNumber]="row.dailyViewCount">
-      {{ row.dailyViewCount | number }}
-    </td>
-    <td
-      mat-footer-cell
-      *matFooterCellDef
-      [coloredNumber]="getTotal('dailyViewCount')"
-    >
-      {{ getTotal("dailyViewCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="weeklyViewCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@last7Days">
-      Last 7 Days
-    </th>
-    <td mat-cell *matCellDef="let row" [coloredNumber]="row.weeklyViewCount">
-      {{ row.weeklyViewCount | number }}
-    </td>
-    <td
-      mat-footer-cell
-      *matFooterCellDef
-      [coloredNumber]="getTotal('weeklyViewCount')"
-    >
-      {{ getTotal("weeklyViewCount") | number }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="monthlyViewCount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@last30Days">
-      Last 30 Days
-    </th>
-    <td mat-cell *matCellDef="let row" [coloredNumber]="row.monthlyViewCount">
-      {{ row.monthlyViewCount | number }}
-    </td>
-    <td
-      mat-footer-cell
-      *matFooterCellDef
-      [coloredNumber]="getTotal('monthlyViewCount')"
-    >
-      {{ getTotal("monthlyViewCount") | number }}
+      {{ getTotal(column[0]) | number }}
     </td>
   </ng-container>
 

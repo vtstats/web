@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>Title Language</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let lang of languages" [value]="lang.value">
+      {{ lang.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

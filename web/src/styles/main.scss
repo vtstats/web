@@ -5,3 +5,7 @@
 @import "theme/theme-dir";
 
 @import "theme";
+@import "utils";
+
+@tailwind base;
+@tailwind utilities;

@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
+import { MatSidenavModule } from "@angular/material/sidenav";
 import { DomSanitizer } from "@angular/platform-browser";
+import { RouterModule } from "@angular/router";
 import { fromEvent } from "rxjs";
-import { map, throttleTime, startWith } from "rxjs/operators";
+import { map, startWith, throttleTime } from "rxjs/operators";
+
+import { Header } from "./layout/header/header";
+import { Sidenav } from "./layout/sidenav/sidenav";
 
 const icons: Array<[string, string]> = [
   [
@@ -104,6 +109,8 @@ const icons: Array<[string, string]> = [
 ];
 
 @Component({
+  standalone: true,
+  imports: [Header, Sidenav, RouterModule, MatSidenavModule],
   selector: "hls-root",
   templateUrl: "app.component.html",
 })

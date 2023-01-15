@@ -16,8 +16,10 @@
     <link rel="icon" sizes="384x384" href="/assets/icons/icon-384x384.png" />
     <link rel="icon" sizes="512x512" href="/assets/icons/icon-512x512.png" />
     <link rel="apple-touch-icon" href="/assets/icons/touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <meta property="og:title" content="HoloStats" />
@@ -27,22 +29,25 @@
   </head>
   <body class="dark">
     <hls-root></hls-root>
+    <div id="react-root"></div>
     <noscript>
       Please enable JavaScript to continue using this application.
     </noscript>
     <script>
-      let theme;
       try {
-        theme = window.localStorage.getItem("theme");
+        const setting = window.localStorage.getItem("vts:themeSetting");
+        const prefersDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const isDarkMode =
+          setting === "dark" ||
+          (setting === "follow-system" && prefersDarkMode);
+
+        document.body.setAttribute("class", isDarkMode ? "dark" : "light");
+        document.head
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
       } catch (e) {}
-      const isDarkMode =
-        "dark" === theme ||
-        ((!theme || "system" === theme) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
-      document.body.setAttribute("class", isDarkMode ? "dark" : "light");
-      document.head
-        .querySelector('meta[name="theme-color"]')
-        .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
 
       window.buildTime = "BUILD_TIME";
       window.cfPagesCommitSha = "CF_PAGES_COMMIT_SHA";

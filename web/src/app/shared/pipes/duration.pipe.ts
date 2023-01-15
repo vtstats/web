@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { differenceInSeconds } from "date-fns";
 
-@Pipe({ name: "duration" })
+@Pipe({ standalone: true, name: "duration" })
 export class DurationPipe implements PipeTransform {
   transform(start: number | Date, end: Date | number): string {
     const seconds = differenceInSeconds(end, start);

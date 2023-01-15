@@ -1,0 +1,42 @@
+<ng-container *ngIf="streamsQry | useQry as result">
+  <div class="flex flex-row items-center mb-4">
+    <div class="flex-1">
+      <span i18n="@@recentStreams">Recent Streams</span>
+
+      <hls-filter-group
+        [displayVTuber]="false"
+        (clear)="onClear()"
+        (dateRangeChanged)="onDateRangeChange($event)"
+      >
+      </hls-filter-group>
+    </div>
+
+    <button
+      mat-icon-button
+      [disabled]="result.isFetching"
+      (click)="result.refetch()"
+      [matTooltip]="
+        result.isFetching
+          ? 'Loading...'
+          : 'Updated at ' +
+            (result.data.pages[0].updatedAt | date : 'MM/dd HH:mm')
+      "
+      aria-label="Refresh"
+    >
+      <mat-icon
+        [class.animate-spin]="result.isFetching"
+        svgIcon="sync"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <hls-stream-list
+    *ngIf="!result.isError"
+    type="array"
+    [loading]="result.isLoading"
+    [dataSource]="result.data?.pages[0].dataSource"
+    [hideSpinner]="!result.hasNextPage"
+    (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
+  >
+  </hls-stream-list>
+</ng-container>

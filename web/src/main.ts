@@ -1,16 +1,23 @@
-import { enableProdMode, LOCALE_ID } from "@angular/core";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { loadTranslations } from "@angular/localize";
 import {
   DATE_PIPE_DEFAULT_TIMEZONE,
   registerLocaleData,
 } from "@angular/common";
+import { provideHttpClient } from "@angular/common/http";
+import { enableProdMode, importProvidersFrom, LOCALE_ID } from "@angular/core";
+import { loadTranslations } from "@angular/localize";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { bootstrapApplication } from "@angular/platform-browser";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideRouter, withInMemoryScrolling } from "@angular/router";
+import { ServiceWorkerModule } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
+import { NGX_ECHARTS_CONFIG } from "ngx-echarts";
 
 import { environment } from "./environments/environment";
 
+import { AppComponent } from "./app/app.component";
+import { ROUTES } from "./app/routes";
 import { DATE_FNS_LOCALE, getLang } from "./i18n";
-import { AppModule } from "./app/app.module";
 import { getLocalStorage } from "./utils";
 
 if (environment.production) {
@@ -27,33 +34,53 @@ if (environment.production) {
 const bootstrap = async () => {
   const lang = getLang();
 
-  import(
+  const i18n = await import(
     /* webpackChunkName: "i18n/[request]" */
     /* webpackExclude: /(index|\.d)\.ts$/ */
     `./i18n/${lang}`
-  )
-    .then((mod) => {
-      // locale
-      registerLocaleData(mod.locale, lang);
+  );
 
-      loadTranslations(mod.translations);
+  // locale
+  registerLocaleData(i18n.locale, lang);
 
-      platformBrowserDynamic([
-        { provide: DATE_FNS_LOCALE, useValue: mod.dateFnsLocale },
-        { provide: LOCALE_ID, useValue: lang },
-        {
-          provide: DATE_PIPE_DEFAULT_TIMEZONE,
-          useValue: getLocalStorage("timezone"),
+  loadTranslations(i18n.translations);
+
+  const appRef = await bootstrapApplication(AppComponent, {
+    providers: [
+      { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
+      { provide: LOCALE_ID, useValue: lang },
+      {
+        provide: DATE_PIPE_DEFAULT_TIMEZONE,
+        useValue: getLocalStorage("timezone"),
+      },
+      {
+        provide: NGX_ECHARTS_CONFIG,
+        useValue: {
+          echarts: () =>
+            import(/* webpackChunkName: "charts" */ "./app/shared/charts").then(
+              (mod) => mod.default
+            ),
         },
-      ]).bootstrapModule(AppModule, {
-        ngZoneEventCoalescing: true,
-      });
-    })
-    .catch((err) => console.error(err));
+      },
+      provideRouter(
+        ROUTES,
+        withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
+      ),
+      provideHttpClient(),
+      provideAnimations(),
+      importProvidersFrom(
+        ServiceWorkerModule.register("ngsw-worker.js", {
+          enabled: environment.production,
+          registrationStrategy: "registerImmediately",
+        })
+      ),
+      importProvidersFrom(MatSnackBarModule),
+    ],
+  });
 };
 
 if (document.readyState === "complete") {
-  bootstrap();
+  bootstrap().catch(console.error);
 } else {
   document.addEventListener("DOMContentLoaded", bootstrap);
 }

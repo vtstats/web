@@ -1,41 +1,38 @@
-<hls-helmet [title]="stream?.title"></hls-helmet>
+<div
+  class="mx-auto max-w-4xl p-4 mb-15"
+  *ngIf="streamDetailQry | useQry as result"
+>
+  <ng-container *ngIf="result.isSuccess">
+    <hls-helmet [title]="result.data.streams[0].title"></hls-helmet>
 
-<div class="mx-auto max-w-960" [style.margin-bottom.px]="60">
-  <ng-container *ngIf="!loading; else shimmer">
-    <hls-stream-summary [stream]="stream"></hls-stream-summary>
+    <hls-stream-summary
+      [stream]="result.data.streams[0]"
+      [reports]="result.data.reports"
+    ></hls-stream-summary>
 
-    <ng-container *ngFor="let report of reports" [ngSwitch]="report.kind">
+    <ng-container
+      *ngFor="let report of result.data.reports"
+      [ngSwitch]="report.kind"
+    >
       <ng-container *ngSwitchCase="'youtube_live_chat'">
-        <hls-live-chat [rows]="report.rows" [stream]="stream"></hls-live-chat>
+        <hls-stream-live-chat-chart
+          [rows]="report.rows"
+          [stream]="result.data.streams[0]"
+        ></hls-stream-live-chat-chart>
       </ng-container>
 
       <ng-container *ngSwitchCase="'youtube_stream_viewer'">
-        <hls-stream-stats-chart
+        <hls-stream-viewers-chart
           [rows]="report.rows"
-          [stream]="stream"
-          i18n-name="@@streamViewers"
-          name="Stream viewers"
-        >
-        </hls-stream-stats-chart>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'youtube_stream_like'">
-        <hls-stream-stats-chart
-          [rows]="report.rows"
-          [stream]="stream"
-          i18n-name="@@streamLikes"
-          name="Stream likes"
-        >
-        </hls-stream-stats-chart>
+          [stream]="result.data.streams[0]"
+        ></hls-stream-viewers-chart>
       </ng-container>
     </ng-container>
+
+    <hls-stream-paid-chat-chart
+      [stream]="result.data.streams[0]"
+    ></hls-stream-paid-chat-chart>
   </ng-container>
 
-  <ng-template #shimmer>
-    <hls-stream-summary-shimmer></hls-stream-summary-shimmer>
-
-    <hls-stream-stats-chart-shimmer></hls-stream-stats-chart-shimmer>
-  </ng-template>
-
-  <hls-paid-chat-chart [stream]="{ streamId }"></hls-paid-chat-chart>
+  <ng-template *ngIf="result.isLoading"> </ng-template>
 </div>

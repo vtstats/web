@@ -1,14 +1,21 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { Meta, Title } from "@angular/platform-browser";
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
+import { Title } from "@angular/platform-browser";
 
 @Component({
+  standalone: true,
   selector: "hls-helmet",
   template: "",
 })
 export class Helmet implements OnChanges {
-  @Input() title: string;
+  private _title = inject(Title);
 
-  constructor(private _title: Title, private _meta: Meta) {}
+  @Input("title") title: string;
 
   ngOnChanges(changes: SimpleChanges) {
     if (

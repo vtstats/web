@@ -7,11 +7,12 @@ const { CF_PAGES_BRANCH = "", CF_PAGES_COMMIT_SHA = "" } = process.env;
   const path = "dist/browser/index.html";
   let html = await fs.readFile("dist/browser/index.html", "utf-8");
 
+  // TODO(v15): support ssr
   // inline critical css
-  html = await new Critters({
-    mergeStylesheets: false,
-    external: false,
-  }).process(html);
+  // html = await new Critters({
+  //   mergeStylesheets: false,
+  //   external: false,
+  // }).process(html);
 
   // set environment variables
   html = html

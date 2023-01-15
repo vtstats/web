@@ -1,73 +1,41 @@
-<hls-sub-menu>
-  <hls-sub-menu-title>Overview</hls-sub-menu-title>
-  <hls-sub-menu-extra>
-    <span
-      class="time-unit"
-      tabindex="0"
-      *ngFor="let days of [7, 30, 90]"
-      (click)="precision$.next(days)"
-      [class.selected]="(precision$ | async) === days"
-      role="button"
-    >
-      {{ { days } | formatDayDuration }}
-    </span>
-  </hls-sub-menu-extra>
-</hls-sub-menu>
+<div class="flex flex-row items-center mb-4">
+  <div class="flex-1 mat-h3 m-0">Overview</div>
 
-<ng-container *ngIf="res$ | async as res">
-  <div class="channel-overview">
-    <ng-container *ngFor="let report of res.reports">
-      <ng-container [ngSwitch]="report.kind">
-        <hls-channel-stats-chart
-          *ngSwitchCase="'youtube_channel_subscriber'"
-          [schame]="'youtube'"
+  <span
+    class="mat-text-caption ml-2 cursor-pointer"
+    tabindex="0"
+    *ngFor="let days of [7, 30, 90]"
+    (click)="precision = days"
+    [class.font-semibold]="_precision === days"
+    role="button"
+  >
+    {{ { days } | formatDayDuration }}
+  </span>
+</div>
+
+<ng-container *ngIf="streamReportsQry | useQry as result">
+  <ng-container *ngFor="let report of result.data.reports; trackBy:trackBy">
+    <div class="flex flex-row flex-wrap items-center mb-2">
+      <div class="w-full sm:w-4/12">
+        <hls-stats-comparison
+          [kind]="report.kind"
           [rows]="report.rows"
-          [(dataPointIdx)]="dataPointIdx"
-          [loading]="res.loading"
-          [showTime]="res.precision === 7"
-          i18n-name="@@youtubeSubscribers"
-          name="YouTube Subscribers"
-        ></hls-channel-stats-chart>
+        ></hls-stats-comparison>
+      </div>
 
-        <hls-channel-stats-chart
-          *ngSwitchCase="'youtube_channel_view'"
-          [schame]="'youtube'"
+      <div class="w-full sm:w-8/12">
+        <hls-stats-chart
+          [loading]="result.isFetching"
+          [kind]="report.kind"
           [rows]="report.rows"
-          [(dataPointIdx)]="dataPointIdx"
-          [loading]="res.loading"
-          [showTime]="res.precision === 7"
-          i18n-name="@@youtubeViews"
-          name="YouTube Views"
-        ></hls-channel-stats-chart>
+          [precision]="_precision"
+          (chartInit)="onChartInit($event)"
+        ></hls-stats-chart>
+      </div>
+    </div>
 
-        <hls-channel-stats-chart
-          *ngSwitchCase="'bilibili_channel_subscriber'"
-          [schame]="'bilibili'"
-          [rows]="report.rows"
-          [(dataPointIdx)]="dataPointIdx"
-          [loading]="res.loading"
-          [showTime]="res.precision === 7"
-          i18n-name="@@bilibiliSubscribers"
-          name="Bilibili Subscribers"
-        ></hls-channel-stats-chart>
+    <mat-divider></mat-divider>
 
-        <hls-channel-stats-chart
-          *ngSwitchCase="'bilibili_channel_view'"
-          [schame]="'bilibili'"
-          [rows]="report.rows"
-          [(dataPointIdx)]="dataPointIdx"
-          [loading]="res.loading"
-          [showTime]="res.precision === 7"
-          i18n-name="@@bilibiliViews"
-          name="Bilibili Views"
-        ></hls-channel-stats-chart>
-      </ng-container>
-
-      <mat-divider></mat-divider>
-    </ng-container>
-  </div>
+    <div class="w-full mb-4"></div>
+  </ng-container>
 </ng-container>
-
-<ng-template #shimmer>
-  <div class="channel-overview"></div>
-</ng-template>

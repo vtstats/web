@@ -1,4 +1,6 @@
-<div [style.padding-bottom.px]="16">
+<h3 class="mat-h3">YouTube Account</h3>
+
+<div class="pb-4">
   <mat-list *ngIf="gapi.user$ | async as user; else login">
     <mat-list-item>
       <img
@@ -18,7 +20,7 @@
   </mat-list>
 
   <ng-template #login>
-    <button mat-raised-button (click)="gapi.signIn()">
+    <button mat-stroked-button (click)="gapi.signIn()">
       <mat-icon svgIcon="youtube"></mat-icon>
       Sign in with Google
     </button>

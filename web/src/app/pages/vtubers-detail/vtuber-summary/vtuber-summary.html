@@ -1,37 +1,22 @@
-<div class="vtuber-summary">
-  <div class="info">
+<div class="flex flex-row items-center justify-center pb-4">
+  <div class="mr-6">
     <img
-      class="profile"
+      class="w-20 h-20 rounded-full"
       [attr.src]="'/assets/profiles/' + vtuber.id + '.jpg?ngsw-bypass'"
     />
   </div>
 
-  <div class="meta">
-    <div class="name">{{ vtuber.id | name }}</div>
+  <div class="text-center">
+    <div class="mat-h3">{{ vtuber.id | name }}</div>
 
     <div class="icons">
       <a
-        *ngIf="vtuber.youtube"
+        *ngFor="let link of links"
+        class="mat-secondary-text"
         target="_blank"
-        [attr.href]="'https://www.youtube.com/channel/' + vtuber.youtube"
+        [attr.href]="link.href"
       >
-        <mat-icon svgIcon="youtube"></mat-icon>
-      </a>
-
-      <a
-        *ngIf="vtuber.twitter"
-        target="_blank"
-        [attr.href]="'https://twitter.com/' + vtuber.twitter"
-      >
-        <mat-icon svgIcon="twitter"></mat-icon>
-      </a>
-
-      <a
-        *ngIf="vtuber.bilibili"
-        target="_blank"
-        [attr.href]="'https://space.bilibili.com/' + vtuber.bilibili"
-      >
-        <mat-icon svgIcon="bilibili"></mat-icon>
+        <mat-icon class="!h-5 !w-5 mr-2" [svgIcon]="link.icon"></mat-icon>
       </a>
     </div>
   </div>
