@@ -1,22 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { lastValueFrom } from "rxjs";
-import { ApiService } from "src/app/shared";
 
+import { ApiService } from "src/app/shared";
 import { vtubers } from "vtubers";
 
-@Component({
-  selector: "hls-share-traget",
-  templateUrl: "share-traget.html",
-})
+@Component({ standalone: true, selector: "hls-share-target", template: "" })
 export class ShareTarget implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+  private route = inject(ActivatedRoute);
+  private api = inject(ApiService);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
 
   async ngOnInit() {
     const map = this.route.snapshot.queryParamMap;

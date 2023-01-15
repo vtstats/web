@@ -1,0 +1,16 @@
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>Timezone</mat-label>
+
+  <mat-select
+    [value]="(config.timezone$ | async) || 'none'"
+    (selectionChange)="config.setTimezone($event.value)"
+  >
+    <mat-option value="none">
+      None ({{ everyMinute$ | async | date:'MM/dd HH:mm' }})
+    </mat-option>
+    <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+      GMT{{ timezone }} ({{ everyMinute$ | async | date:'MM/dd HH:mm':timezone
+      }})
+    </mat-option>
+  </mat-select>
+</mat-form-field>

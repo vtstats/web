@@ -1,13 +1,17 @@
-import { Component, ViewEncapsulation } from "@angular/core";
 import { FlatTreeControl } from "@angular/cdk/tree";
+import { Component, ViewEncapsulation } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
+  MatTreeModule,
 } from "@angular/material/tree";
 
-import { vtubers, batches } from "vtubers";
+import { batches, vtubers } from "vtubers";
 
-import { ConfigService } from "src/app/shared";
+import { ConfigService, NamePipe } from "src/app/shared";
 
 interface VTuberNode {
   id: string;
@@ -21,9 +25,16 @@ interface VTuberFlatNode {
 }
 
 @Component({
+  standalone: true,
+  imports: [
+    MatTreeModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    NamePipe,
+  ],
   selector: "hls-vtubers-settings",
   templateUrl: "vtubers-settings.html",
-  encapsulation: ViewEncapsulation.None,
 })
 export class VTubersSettings {
   treeControl = new FlatTreeControl<VTuberFlatNode>(

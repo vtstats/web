@@ -1,47 +1,41 @@
-<hls-sub-menu>
-  <hls-sub-menu-title i18n="@@streamTimes">Stream Times</hls-sub-menu-title>
+<div class="flex flex-row items-center mb-4">
+  <div class="flex-1 mat-h3 m-0" i18n="@@streamTimes">Stream Times</div>
 
-  <hls-sub-menu-extra>
-    <span
-      class="time-unit"
-      tabindex="0"
-      *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
-      (click)="precision = p"
-      [class.selected]="precision === p"
-      role="button"
-    >
-      {{ p | titlecase }}
-    </span>
-  </hls-sub-menu-extra>
-</hls-sub-menu>
-
-<div class="stream-time">
-  <ng-container [ngSwitch]="precision">
-    <hls-stream-time-by-month
-      *ngSwitchCase="'month'"
-      [loading]="loading"
-      [times]="times"
-    >
-    </hls-stream-time-by-month>
-    <hls-stream-time-by-hour
-      *ngSwitchCase="'hour'"
-      [loading]="loading"
-      [times]="times"
-    >
-    </hls-stream-time-by-hour>
-    <hls-stream-time-by-day
-      *ngSwitchCase="'day'"
-      [loading]="loading"
-      [times]="times"
-    >
-    </hls-stream-time-by-day>
-    <hls-stream-time-by-weekday
-      *ngSwitchCase="'weekday'"
-      [loading]="loading"
-      [times]="times"
-    >
-    </hls-stream-time-by-weekday>
-  </ng-container>
-
-  <mat-divider></mat-divider>
+  <span
+    class="mat-text-caption ml-2 cursor-pointer"
+    tabindex="0"
+    *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
+    (click)="precision = p"
+    [class.font-semibold]="precision === p"
+    role="button"
+  >
+    {{ p | titlecase }}
+  </span>
 </div>
+
+<div class="mb-4" *ngIf="streamTimesQry | useQry as result">
+  <ng-container [ngSwitch]="precision">
+    <hls-stream-time-calendar *ngSwitchCase="'day'" [times]="result?.data">
+    </hls-stream-time-calendar>
+
+    <hls-stream-time-bar-chart
+      *ngSwitchCase="'hour'"
+      [times]="result?.data"
+      groupBy="hour"
+    ></hls-stream-time-bar-chart>
+
+    <hls-stream-time-bar-chart
+      *ngSwitchCase="'month'"
+      [times]="result?.data"
+      groupBy="month"
+    ></hls-stream-time-bar-chart>
+
+    <hls-stream-time-bar-chart
+      *ngSwitchCase="'weekday'"
+      [times]="result?.data"
+      groupBy="weekday"
+    ></hls-stream-time-bar-chart>
+  </ng-container>
+</div>
+
+<mat-divider></mat-divider>

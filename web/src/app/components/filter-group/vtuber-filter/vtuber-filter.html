@@ -1,0 +1,53 @@
+<span class="inline-flex align-middle mr-2">
+  <span
+    *ngFor="let vtb of _vtubers | slice:0:6; index as i"
+    class="group h-8 w-8 select-none cursor-pointer"
+    [class.-ml-2]="i !== 0"
+    [style.zIndex]="i"
+    [matTooltip]="vtb | name"
+    (click)="onClick(vtb)"
+  >
+    <img
+      class="w-full h-full border-2 border-solid border-transparent rounded-full inline-block group-hover:-translate-y-4 ease-in-out duration-300"
+      src="/assets/thumbnail/{{vtb}}.jpg"
+      [class.mat-border-primary]="hasVTuber(vtb)"
+    />
+  </span>
+
+  <ng-container *ngIf="_vtubers.length > 6">
+    <span
+      class="rounded-full mat-body-2 h-8 w-8 -ml-2 border-2 border-solid border-transparent inline-block select-none cursor-pointer text-center mat-bg-unselected-chip"
+      [style.zIndex]="9"
+      [class.mat-border-primary]="_listSelected"
+      (click)="this._isOpen = !this._isOpen"
+      type="button"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
+      +{{ _vtubers.length - 6 }}
+    </span>
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="_isOpen"
+      (overlayOutsideClick)="onClickOutside($event)"
+    >
+      <div
+        class="vtuber-filter-overlay mat-elevation-z4 mat-bg-card max-h-80 overflow-y-auto rounded m-0 p-0"
+        [@transform]="_isOpen"
+      >
+        <mat-selection-list (selectionChange)="onListChange($event)">
+          <mat-list-option
+            [value]="vtb"
+            *ngFor="let vtb of _vtubers | slice:6"
+            [selected]="hasVTuber(vtb)"
+          >
+            <img matListItemAvatar src="/assets/thumbnail/{{vtb}}.jpg" />
+            {{vtb | name}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </ng-template>
+  </ng-container>
+</span>

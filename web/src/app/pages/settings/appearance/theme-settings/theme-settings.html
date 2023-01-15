@@ -1,0 +1,11 @@
+<mat-form-field class="w-full" appearance="outline">
+  <mat-label>Theme</mat-label>
+  <mat-select
+    [value]="settings$ | async"
+    (selectionChange)="settings$.next($event.value)"
+  >
+    <mat-option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

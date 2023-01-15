@@ -1,9 +1,11 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component } from "@angular/core";
+
+import { Helmet } from "src/app/components/helmet/helmet.component";
 
 @Component({
+  standalone: true,
+  imports: [Helmet],
   selector: "hls-not-found",
   templateUrl: "not-found.html",
-  styleUrls: ["not-found.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class NotFound {}

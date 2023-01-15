@@ -1,31 +1,42 @@
+import { CommonModule } from "@angular/common";
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   Input,
-  AfterViewInit,
   ViewChild,
   ViewEncapsulation,
-  ChangeDetectionStrategy,
 } from "@angular/core";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatSort, MatSortModule } from "@angular/material/sort";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { RouterModule } from "@angular/router";
 
 import type { Channel } from "src/app/models";
+import { NamePipe } from "src/app/shared";
 
 @Component({
+  standalone: true,
   selector: "hls-channel-table",
   templateUrl: "channel-table.html",
   styleUrls: ["channel-table.scss"],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: "channel-table" },
+  imports: [
+    MatTableModule,
+    MatSortModule,
+    RouterModule,
+    CommonModule,
+    NamePipe,
+  ],
 })
 export class ChannelTable implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   data = new MatTableDataSource<Channel>([]);
 
-  @Input() set dataSouce(dataSouce: Array<Channel>) {
-    this.data.data = dataSouce;
+  @Input() set dataSource(dataSource: Array<Channel>) {
+    this.data.data = dataSource;
   }
 
   displayedColumns: string[] = [
@@ -41,6 +52,17 @@ export class ChannelTable implements AfterViewInit {
     "monthlyViewCount",
   ];
 
+  dataColumns: [string, string, boolean][] = [
+    ["subscriberCount", $localize`:@@subscribers:Subscribers`, false],
+    ["dailySubscriberCount", $localize`:@@lastDay:Last Day`, true],
+    ["weeklySubscriberCount", $localize`:@@last7Days:Last 7 Days`, true],
+    ["monthlySubscriberCount", $localize`:@@last30Days:Last 30 Days`, true],
+    ["viewCount", $localize`:@@views:Views`, false],
+    ["dailyViewCount", $localize`:@@lastDay:Last Day`, true],
+    ["weeklyViewCount", $localize`:@@last7Days:Last 7 Days`, true],
+    ["monthlyViewCount", $localize`:@@last30Days:Last 30 Days`, true],
+  ];
+
   ngAfterViewInit() {
     this.data.sort = this.sort;
   }
@@ -52,30 +74,4 @@ export class ChannelTable implements AfterViewInit {
   getTotal(path: Exclude<keyof Channel, "vtuberId" | "kind">): number {
     return this.data.data.reduce((acc, item) => acc + item[path], 0);
   }
-}
-
-@Component({
-  selector: "hls-channel-table-shimmer",
-  templateUrl: "channel-table-shimmer.html",
-  styleUrls: ["channel-table.scss"],
-  encapsulation: ViewEncapsulation.None,
-  host: { class: "channel-table" },
-})
-export class ChannelTableShimmer {
-  @ViewChild(MatSort) sort: MatSort;
-
-  data = new Array(7);
-
-  displayedColumns: string[] = [
-    "shimmerProfile",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-    "shimmerText",
-  ];
 }

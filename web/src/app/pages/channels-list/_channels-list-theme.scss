@@ -1,5 +1,0 @@
-@import "./channel-table/channel-table-theme";
-
-@mixin channels-list-theme($theme) {
-  @include channel-table-theme($theme);
-}

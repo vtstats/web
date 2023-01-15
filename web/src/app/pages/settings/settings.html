@@ -1,29 +1,25 @@
 <hls-helmet i18n-title="@@settings" title="Settings"></hls-helmet>
 
-<div class="settings mx-auto max-w-960">
-  <h3 class="mat-h3">General</h3>
+<div class="mx-auto max-w-4xl p-4">
+  <hls-appearance></hls-appearance>
 
-  <div [style.padding-bottom.px]="16">
-    <div>
-      <hls-theme-settings></hls-theme-settings>
-    </div>
+  <mat-divider class="!mb-4"></mat-divider>
 
-    <div>
-      <hls-timezone-settings></hls-timezone-settings>
-    </div>
-  </div>
+  <hls-language></hls-language>
 
-  <h3 class="mat-h3">YouTube Account</h3>
+  <mat-divider class="!mb-4"></mat-divider>
+
+  <hls-region></hls-region>
+
+  <mat-divider class="!mb-4"></mat-divider>
 
   <hls-youtube-settings></hls-youtube-settings>
 
+  <mat-divider class="!mb-4"></mat-divider>
+
   <hls-vtubers-settings></hls-vtubers-settings>
 
-  <h3 class="mat-h3">Miscellaneous</h3>
+  <mat-divider class="!mb-4"></mat-divider>
 
-  <mat-nav-list>
-    <a mat-list-item routerLink="/settings/ngsw">Service Worker</a>
-    <a mat-list-item routerLink="/settings/privacy">Privacy Policy</a>
-    <a mat-list-item routerLink="/settings/licenses">Third Party Licenses</a>
-  </mat-nav-list>
+  <hls-miscellaneous></hls-miscellaneous>
 </div>

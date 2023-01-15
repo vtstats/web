@@ -1,77 +1,14 @@
-import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
-import {
-  ChannelListOption,
-  ChannelListResponse,
-  ChannelReportOption,
-  ChannelReportResponse,
-  LiveChatHighlightResponse,
-  StreamListOption,
-  StreamListResponse,
-  StreamReportOption,
-  StreamReportResponse,
-  StreamTimesResponse,
-} from "src/app/models";
+import { StreamReportOption, StreamReportResponse } from "src/app/models";
 
 const BASE_URL = "https://holoapi.poi.cat/api/v4";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
   constructor(private http: HttpClient) {}
-
-  youtubeChannels(opts: ChannelListOption): Observable<ChannelListResponse> {
-    return this.http.get<ChannelListResponse>(`${BASE_URL}/youtube_channels`, {
-      params: new HttpParams().set("ids", opts.ids.join(",")),
-    });
-  }
-
-  bilibiliChannels(opts: ChannelListOption): Observable<ChannelListResponse> {
-    return this.http.get<ChannelListResponse>(`${BASE_URL}/bilibili_channels`, {
-      params: new HttpParams().set("ids", opts.ids.join(",")),
-    });
-  }
-
-  youtubeStreams(opts: StreamListOption): Observable<StreamListResponse> {
-    let params = new HttpParams()
-      .set("ids", opts.ids.join(","))
-      .set("status", opts.status.join(","));
-
-    if (opts.orderBy) {
-      params = params.set("orderBy", opts.orderBy);
-    }
-
-    if (opts.startAt) {
-      params = params.set("startAt", Number(opts.startAt).toString());
-    }
-
-    if (opts.endAt) {
-      params = params.set("endAt", Number(opts.endAt).toString());
-    }
-
-    return this.http.get<StreamListResponse>(`${BASE_URL}/youtube_streams`, {
-      params,
-    });
-  }
-
-  channelReports(opts: ChannelReportOption): Observable<ChannelReportResponse> {
-    let params = new HttpParams()
-      .set("ids", opts.ids.join(","))
-      .set("metrics", opts.metrics.join(","));
-
-    if (opts.startAt) {
-      params = params.set("startAt", Number(opts.startAt).toString());
-    }
-
-    if (opts.endAt) {
-      params = params.set("endAt", Number(opts.endAt).toString());
-    }
-
-    return this.http.get<ChannelReportResponse>(`${BASE_URL}/channels_report`, {
-      params,
-    });
-  }
 
   streamReports(opts: StreamReportOption): Observable<StreamReportResponse> {
     let params = new HttpParams()
@@ -89,18 +26,5 @@ export class ApiService {
     return this.http.get<StreamReportResponse>(`${BASE_URL}/streams_report`, {
       params,
     });
-  }
-
-  streamTimes(id: string): Observable<StreamTimesResponse> {
-    return this.http.get<StreamTimesResponse>(`${BASE_URL}/stream_times`, {
-      params: new HttpParams().set("id", id),
-    });
-  }
-
-  liveChatHighlight(id: string): Observable<LiveChatHighlightResponse> {
-    return this.http.get<LiveChatHighlightResponse>(
-      `${BASE_URL}/live_chat/highlight`,
-      { params: new HttpParams().set("id", id) }
-    );
   }
 }

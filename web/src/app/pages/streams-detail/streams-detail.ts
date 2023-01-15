@@ -1,52 +1,71 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import qs from "query-string";
 
-import { Report, Stream, StreamReportKind } from "src/app/models";
-import { ApiService, TickService } from "src/app/shared";
+import { Helmet } from "src/app/components/helmet/helmet.component";
+import { StreamReportKind, StreamReportResponse } from "src/app/models";
+import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+
+import { StreamLiveChatChart } from "./stream-live-chat-chart/stream-live-chat-chart";
+import { StreamPaidChatChart } from "./stream-paid-chat-chart/stream-paid-chat-chart";
+import { StreamsSummary } from "./stream-summary/stream-summary";
+import { StreamViewersChart } from "./stream-viewers-chart/stream-viewers-chart";
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    Helmet,
+    StreamLiveChatChart,
+    StreamPaidChatChart,
+    StreamsSummary,
+    StreamViewersChart,
+    UseQryPipe,
+  ],
   selector: "hls-streams-detail",
   templateUrl: "streams-detail.html",
-  styleUrls: ["streams-detail.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class StreamsDetail implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private api: ApiService,
-    private tick: TickService
-  ) {}
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private qry = inject(QryService);
 
-  streamId = this.route.snapshot.paramMap.get("id");
-  everySecond$ = this.tick.everySecond$;
-
-  loading = false;
-  stream: Stream;
-  reports: Report<StreamReportKind>[];
+  streamDetailQry: Qry<
+    StreamReportResponse,
+    unknown,
+    StreamReportResponse,
+    unknown,
+    string[]
+  >;
 
   ngOnInit() {
-    this.loading = true;
+    const streamId = this.route.snapshot.paramMap.get("id");
 
-    this.api
-      .streamReports({
-        ids: [this.streamId],
-        metrics: [
-          StreamReportKind.youtubeStreamViewer,
-          StreamReportKind.youtubeStreamLike,
-          StreamReportKind.youtubeLiveChatMessage,
-        ],
-      })
-      .subscribe((res) => {
-        this.loading = false;
-
-        if (res.streams.length == 0) {
+    this.streamDetailQry = this.qry.create({
+      queryKey: ["stream", streamId],
+      queryFn: ({ queryKey: [_, id] }) =>
+        fetch(
+          qs.stringifyUrl(
+            {
+              url: "https://holoapi.poi.cat/api/v4/streams_report",
+              query: {
+                ids: [id],
+                metrics: [
+                  StreamReportKind.youtubeStreamViewer,
+                  StreamReportKind.youtubeStreamLike,
+                  StreamReportKind.youtubeLiveChatMessage,
+                ],
+              },
+            },
+            { arrayFormat: "comma" }
+          )
+        ).then((res) => res.json()),
+      onSuccess: (res) => {
+        if (res.streams.length === 0) {
           this.router.navigateByUrl("/404");
-          return;
         }
-
-        this.stream = res.streams[0];
-        this.reports = res.reports;
-      });
+      },
+    });
   }
 }

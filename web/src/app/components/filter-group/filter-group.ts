@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -5,11 +6,21 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDividerModule } from "@angular/material/divider";
 
-import { DateFilter } from "../date-filter/date-filter";
-import { VTuberFilter } from "../vtuber-filter/vtuber-filter";
+import { DateFilter } from "./date-filter/date-filter";
+import { VTuberFilter } from "./vtuber-filter/vtuber-filter";
 
 @Component({
+  standalone: true,
+  imports: [
+    MatDividerModule,
+    CommonModule,
+    MatButtonModule,
+    DateFilter,
+    VTuberFilter,
+  ],
   selector: "hls-filter-group",
   templateUrl: "filter-group.html",
 })

@@ -1,0 +1,126 @@
+<a
+  class="group aspect-ratio-16-9 mb-2"
+  [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
+>
+  <img
+    class="absolute block w-full h-full object-center object-cover rounded"
+    loading="lazy"
+    [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+  />
+
+  <ng-container [ngSwitch]="stream.status">
+    <div
+      *ngSwitchCase="'scheduled'"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+    >
+      {{ stream.scheduleTime | date: "HH:mm" }}
+    </div>
+
+    <div
+      *ngSwitchCase="'live'"
+      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+    >
+      Live
+    </div>
+
+    <div
+      *ngSwitchCase="'ended'"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+    >
+      {{ stream.startTime | duration: stream.endTime }}
+    </div>
+  </ng-container>
+
+  <span class="hidden group-hover:block absolute right-1 top-1">
+    <a
+      class="bg-[#00000080] text-[0] block cursor-pointer text-white"
+      [attr.href]="'https://youtu.be/' + stream.streamId"
+      target="_blank"
+      (click)="$event.stopPropagation()"
+    >
+      <mat-icon class="p-0.5 m-0" svgIcon="open_in_new"></mat-icon>
+    </a>
+
+    <a
+      *ngIf="showPlaylistIcon"
+      class="bg-[#00000080] text-[0] block cursor-pointer text-white mt-1"
+      (click)="addToPlaylist($event)"
+    >
+      <mat-icon class="p-0.5 m-0" svgIcon="playlist_add"></mat-icon>
+    </a>
+  </span>
+</a>
+
+<a
+  class="mat-subtitle-2 text-inherit mb-2 leading-4 no-underline line-clamp-2"
+  [attr.title]="stream.title"
+  [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
+>
+  {{ stream.title }}
+</a>
+
+<div
+  *ngIf="stream.status === 'live' || stream.status === 'ended'"
+  class="mat-secondary-text mat-small mb-1 flex flex-row items-center"
+>
+  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="eye"></mat-icon>
+
+  <span class="mr-1" i18n-title="@@averageViewers" title="Average Viewers">
+    {{ (stream.averageViewerCount | number) || "----" }}
+  </span>
+
+  <span class="mr-1 select-none">/</span>
+
+  <span class="mr-2" i18n-title="@@maximumViewers" title="Maximum Viewers">
+    {{ (stream.maxViewerCount | number) || "----" }}
+  </span>
+
+  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up"></mat-icon>
+
+  <span title="Like">{{ (stream.maxLikeCount | number) || "----" }}</span>
+</div>
+
+<div class="mat-small flex-row flex items-center">
+  <img
+    loading="lazy"
+    class="rounded-full w-6 h-6 align-middle flex-grow-0 flex-shrink-0 cursor-pointer mr-1"
+    [routerLink]="['/vtuber', stream.vtuberId]"
+    [attr.src]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
+  />
+
+  <span
+    class="text-ellipsis whitespace-nowrap mr-1 overflow-hidden flex-grow-0 flex-shrink cursor-pointer"
+    role="link"
+    [routerLink]="['/vtuber', stream.vtuberId]"
+  >
+    {{ stream.vtuberId | name }}
+  </span>
+
+  <span class="flex-grow-0 flex-shrink-0 mr-1 select-none">•</span>
+
+  <ng-container [ngSwitch]="stream.status">
+    <span
+      *ngSwitchCase="'scheduled'"
+      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+      [attr.title]="stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss'"
+    >
+      {{ stream.scheduleTime | distance: (tick.everyMinute$ | async) }}
+    </span>
+
+    <span
+      *ngSwitchCase="'live'"
+      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+      [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
+    >
+      {{ stream.startTime | distance: (tick.everyMinute$ | async) }}
+    </span>
+
+    <span
+      *ngSwitchCase="'ended'"
+      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+      [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
+    >
+      {{ stream.startTime | distance: (tick.everyMinute$ | async) }}
+    </span>
+  </ng-container>
+</div>

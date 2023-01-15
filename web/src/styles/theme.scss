@@ -1,22 +1,6 @@
 @use "@angular/material" as mat;
 @use "@angular/cdk" as cdk;
 
-// layout
-@import "../app/layout/layout-theme";
-
-// components
-@import "../app/components/date-filter/date-filter-theme";
-@import "../app/components/stream-item/stream-item-theme";
-@import "../app/components/sub-menu/sub-menu-theme";
-@import "../app/components/vtuber-filter/vtuber-filter-theme";
-
-// pages
-@import "../app/pages/not-found/not-found-theme";
-@import "../app/pages/channels-list/channels-list-theme";
-@import "../app/pages/settings/settings-theme";
-@import "../app/pages/streams-detail/streams-detail-theme";
-@import "../app/pages/vtubers-detail/vutbers-detail-theme";
-
 @include mat.ripple();
 @include cdk.a11y-visually-hidden();
 @include cdk.overlay();
@@ -28,27 +12,10 @@ mat.$theme-ignore-duplication-warnings: true;
 @mixin hls-theme($theme) {
   @include global-theme($theme);
   @include material-theme($theme);
-  @include stream-item-theme($theme);
-  @include channels-list-theme($theme);
-  @include sub-menu-theme($theme);
-  @include layout-theme($theme);
-  @include not-found-theme($theme);
-  @include date-filter-theme($theme);
-  @include vtuber-filter-theme($theme);
-  @include stream-details-theme($theme);
-  @include vtubers-details-theme($theme);
 }
 
 @mixin hls-typography($config) {
   @include material-typography($config);
-  @include not-found-typography($config);
-  @include stream-item-typography($config);
-  @include sub-menu-typography($config);
-  @include layout-typography($config);
-  @include settings-typography($config);
-  @include vtuber-filter-typography($config);
-  @include stream-details-typography($config);
-  @include vtubers-details-typography($config);
 }
 
 @include hls-typography($hls-typography-config);

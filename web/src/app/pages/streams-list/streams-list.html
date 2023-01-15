@@ -1,0 +1,39 @@
+<hls-helmet [title]="title"></hls-helmet>
+
+<div class="mx-auto max-w-4xl p-4" *ngIf="streamsQry | useQry as result">
+  <div class="flex flex-row items-center mb-4">
+    <div class="flex-1">
+      <hls-filter-group
+        (clear)="onClear()"
+        (dateRangeChanged)="onDateRangeChange($event)"
+        (vtuberChanged)="onVTuberChange($event)"
+      >
+      </hls-filter-group>
+    </div>
+
+    <button
+      mat-icon-button
+      [disabled]="result.isFetching"
+      (click)="result.refetch()"
+      [matTooltip]="
+          result.isFetching ? 'Loading...' :
+          'Updated at ' + (result.data.pages[0].updatedAt | date: 'MM/dd HH:mm')
+        "
+      aria-label="Refresh"
+    >
+      <mat-icon
+        [class.animate-spin]="result.isFetching"
+        svgIcon="sync"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <hls-stream-list
+    *ngIf="!result.isError"
+    type="group"
+    [loading]="result.isLoading"
+    [dataSource]="result.data?.pages[0].dataSource"
+    [hideSpinner]="!result.hasNextPage"
+    (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
+  ></hls-stream-list>
+</div>

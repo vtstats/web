@@ -1,64 +1,14 @@
 <hls-helmet [title]="vtuber?.id | name"></hls-helmet>
 
-<div class="mx-auto max-w-960">
+<div class="mx-auto max-w-4xl p-4">
   <hls-vtuber-summary [vtuber]="vtuber"></hls-vtuber-summary>
 
   <hls-channel-overview [vtuber]="vtuber"></hls-channel-overview>
 
   <hls-stream-time [vtuber]="vtuber"></hls-stream-time>
 
-  <ng-container *ngIf="vtuber.youtube">
-    <div class="recent-streams" *ngIf="data$ | async as list">
-      <hls-sub-menu>
-        <hls-sub-menu-title>
-          <span i18n="@@recentStreams">Recent Streams</span>
-
-          <hls-filter-group
-            [displayVTuber]="false"
-            (clear)="onClear()"
-            (dateRangeChanged)="onDateRangeChange($event)"
-          >
-          </hls-filter-group>
-        </hls-sub-menu-title>
-
-        <hls-sub-menu-extra>
-          <time
-            *ngIf="!list.loading; else shimmer"
-            i18n="@@updatedAt"
-            [attr.datetime]="list.updatedAt | formatISO"
-          >
-            Updated at {{ list.updatedAt | date: "MM/dd HH:mm" }}
-          </time>
-
-          <ng-template #shimmer>
-            <span class="shimmer text" [style.width.px]="120"></span>
-          </ng-template>
-        </hls-sub-menu-extra>
-      </hls-sub-menu>
-
-      <ng-container *ngIf="!(list.refresh && list.loading); else shimmerList">
-        <hls-stream-list>
-          <hls-stream-item
-            *ngFor="let stream of list.streams; trackBy: trackBy"
-            [stream]="stream"
-          ></hls-stream-item>
-        </hls-stream-list>
-      </ng-container>
-
-      <ng-template #shimmerList>
-        <hls-stream-list>
-          <hls-stream-item-shimmer
-            *ngFor="let stream of [1, 2, 3, 4, 5]"
-          ></hls-stream-item-shimmer>
-        </hls-stream-list>
-      </ng-template>
-
-      <hls-loading-spinner
-        [hidden]="(list.loading && list.refresh) || list.reachedEnd"
-        (reach)="
-          list.loading ? null : this.onRechedEnd(list.streams[list.streams.length - 1])
-        "
-      ></hls-loading-spinner>
-    </div>
-  </ng-container>
+  <hls-vtuber-streams
+    *ngIf="vtuber.youtube"
+    [vtuber]="vtuber"
+  ></hls-vtuber-streams>
 </div>

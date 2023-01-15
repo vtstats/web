@@ -1,21 +1,41 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Component, inject, Input, NgZone, OnInit } from "@angular/core";
+import { MatDividerModule } from "@angular/material/divider";
 import { startOfHour, subDays } from "date-fns";
-import { BehaviorSubject, map, Observable, startWith, switchMap } from "rxjs";
-import { flatRollup, max, range } from "d3-array";
+import { type ECharts } from "echarts";
+import qs from "query-string";
 
-import { ChannelReportKind, Report, VTuber } from "src/app/models";
-import { ApiService } from "src/app/shared";
+import {
+  ChannelReportKind,
+  ChannelReportResponse,
+  Report,
+  VTuber,
+} from "src/app/models";
+import { ThemeService } from "src/app/shared/config/theme.service";
+import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+
+import { FormatDayDurationPipe } from "./format-day-duration-pipe/format-day-duration-pipe";
+import { StatsChartComponent } from "./stats-chart/stats-chart.component";
+import { StatsComparisonComponent } from "./stats-comparison/stats-comparison.component";
 
 @Component({
+  standalone: true,
+  imports: [
+    FormatDayDurationPipe,
+    CommonModule,
+    MatDividerModule,
+    StatsChartComponent,
+    StatsComparisonComponent,
+    UseQryPipe,
+  ],
   selector: "hls-channel-overview",
   templateUrl: "channel-overview.html",
-  styleUrls: ["channel-overview.scss"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ChannelOverview implements OnInit {
-  constructor(private api: ApiService) {}
+  private qry = inject(QryService);
+  private ngZone = inject(NgZone);
 
-  dataPointIdx = -1;
+  theme$ = inject(ThemeService).theme$;
 
   @Input() vtuber: VTuber;
 
@@ -23,22 +43,26 @@ export class ChannelOverview implements OnInit {
     return this.vtuber.youtube && this.vtuber.bilibili ? Array(4) : Array(2);
   }
 
-  loading = false;
+  streamReportsQry: Qry<
+    ChannelReportResponse,
+    unknown,
+    ChannelReportResponse,
+    ChannelReportResponse,
+    [string, { startAt: number; endAt: number }, string]
+  >;
 
-  reports: Report<ChannelReportKind>[];
+  _precision: number = 7;
 
-  precision$ = new BehaviorSubject<7 | 30 | 90>(30);
-  res$: Observable<{
-    precision: number;
-    reports: Report<ChannelReportKind>[];
-    loading: boolean;
-  }>;
+  set precision(p: number) {
+    this._precision = p;
+    this.streamReportsQry.updateQueryKey([
+      "channelReports",
+      this._getDateRange(),
+      this.vtuber.id,
+    ]);
+  }
 
   ngOnInit() {
-    this.loading = true;
-
-    const now = startOfHour(Date.now());
-
     const metrics: ChannelReportKind[] = [];
 
     if (this.vtuber.youtube) {
@@ -55,51 +79,78 @@ export class ChannelOverview implements OnInit {
       );
     }
 
-    this.res$ = this.precision$.pipe(
-      switchMap((precision) =>
-        this.api
-          .channelReports({
-            ids: [this.vtuber.id],
-            metrics,
-            startAt: subDays(now, precision),
-            endAt: now,
-          })
-          .pipe(
-            map((res) =>
-              res.reports.map((report) => {
-                const step = {
-                  7: 43200 * 1000, // 12 hours
-                  30: 2 * 86400 * 1000, // 2 days
-                  90: 6 * 86400 * 1000, // 6 days
-                }[precision];
-
-                report.rows = flatRollup(
-                  report.rows,
-                  (rows) => max(rows, (row) => row[1]),
-                  (row) => row[0] - (row[0] % step)
-                );
-
-                return report;
-              })
-            ),
-            map((reports) => ({
-              precision,
-              loading: false,
-              reports,
-            })),
-            startWith({
-              precision,
-              loading: true,
-              reports: metrics.map((m) => ({
-                id: "",
-                kind: m,
-                rows: range(0, { 7: 14, 30: 16, 90: 16 }[precision]).map(
-                  (i) => [i, 0] as [number, number]
-                ),
-              })),
-            })
+    this.streamReportsQry = this.qry.create({
+      placeholderData: {
+        channels: [],
+        reports: metrics.map((m) => ({ id: "", kind: m, rows: [] })),
+      },
+      queryKey: ["channelReports", this._getDateRange(), this.vtuber.id],
+      queryFn: ({ queryKey: [_, { startAt, endAt }, id] }) =>
+        fetch(
+          qs.stringifyUrl(
+            {
+              url: "https://holoapi.poi.cat/api/v4/channels_report",
+              query: {
+                ids: [id],
+                metrics,
+                startAt,
+                endAt,
+              },
+            },
+            { arrayFormat: "comma" }
           )
-      )
-    );
+        ).then((res) => res.json()),
+    });
+  }
+
+  _getDateRange(): { startAt: number; endAt: number } {
+    const now = startOfHour(Date.now());
+
+    const endAt = +now;
+    const startAt = +subDays(now, this._precision);
+
+    return { startAt, endAt };
+  }
+
+  trackBy(_: number, report: Report<ChannelReportKind>): string {
+    return report.kind;
+  }
+
+  charts: ECharts[] = [];
+  currentIndex: number = -1;
+
+  onChartInit(ec: ECharts) {
+    this.ngZone.runOutsideAngular(() => {
+      this.charts.push(ec);
+
+      ec.getZr().on("mouseout", () => {
+        if (this.currentIndex != -1) {
+          this.currentIndex = -1;
+          this.charts.forEach((c) => {
+            c.dispatchAction({ type: "hideTip" });
+          });
+        }
+      });
+
+      ec.getZr().on("mousemove", (params: any) => {
+        const pointerData = ec.convertFromPixel("grid", [
+          params.event.offsetX,
+          params.event.offsetY,
+        ]);
+
+        const dataIndex = pointerData[0];
+
+        if (dataIndex !== this.currentIndex) {
+          this.currentIndex = dataIndex;
+          this.charts.forEach((c) => {
+            c.dispatchAction({
+              type: "showTip",
+              seriesIndex: 0,
+              dataIndex: pointerData[0],
+            });
+          });
+        }
+      });
+    });
   }
 }

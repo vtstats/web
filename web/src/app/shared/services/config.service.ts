@@ -1,25 +1,13 @@
-import { Injectable, Inject, NgZone, OnDestroy } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import { Injectable, OnDestroy } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {
-  BehaviorSubject,
-  combineLatest,
-  map,
-  Observable,
-  Observer,
-  skip,
-  startWith,
-  Subject,
-  takeUntil,
-} from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 
-import { vtubers } from "vtubers";
-import { MediaMatcher } from "@angular/cdk/layout";
 import {
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
 } from "src/utils";
+import { vtubers } from "vtubers";
 
 @Injectable({ providedIn: "root" })
 export class ConfigService implements OnDestroy {
@@ -29,16 +17,9 @@ export class ConfigService implements OnDestroy {
 
   snackBar$ = null;
 
-  public theme$: BehaviorSubject<"light" | "dark" | "system">;
-
   private onDestroy = new Subject<void>();
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private snackBar: MatSnackBar,
-    private mediaMatcher: MediaMatcher,
-    private _zone: NgZone
-  ) {
+  constructor(private snackBar: MatSnackBar) {
     const vtbString = this.getItem("vtuber");
     if (vtbString) {
       this.vtuber = new Set(vtbString.split(",").filter((id) => id in vtubers));
@@ -48,54 +29,6 @@ export class ConfigService implements OnDestroy {
           .filter((v) => v.default)
           .map((v) => v.id)
       );
-    }
-
-    // theme settings
-    {
-      const storeKey = "theme";
-
-      const query = this.mediaMatcher.matchMedia(
-        "(prefers-color-scheme: dark)"
-      );
-
-      const prefersDarkMode$ = new Observable(
-        (observer: Observer<MediaQueryListEvent>) => {
-          const handler = (e: MediaQueryListEvent) =>
-            this._zone.run(() => observer.next(e));
-          if (typeof window !== "undefined") {
-            query.addEventListener("change", handler);
-            return () => {
-              query.removeEventListener("change", handler);
-            };
-          }
-        }
-      ).pipe(
-        takeUntil(this.onDestroy),
-        map((ev) => ev.matches),
-        startWith(query.matches)
-      );
-
-      const theme = this.getItem(storeKey);
-      this.theme$ = new BehaviorSubject(
-        // prettier-ignore
-        (!theme || theme === "system")
-          ? "system"
-          : (theme === "dark" ? "dark" : "light")
-      );
-
-      combineLatest([
-        // BehaviorSubject emits immediately
-        this.theme$.pipe(takeUntil(this.onDestroy), skip(1)),
-        prefersDarkMode$,
-      ]).subscribe(([theme, prefersDarkMode]) => {
-        const isDarkMode =
-          theme === "dark" || (theme === "system" && prefersDarkMode);
-        this.document.body.setAttribute("class", isDarkMode ? "dark" : "light");
-        this.document.head
-          .querySelector('meta[name="theme-color"]')
-          .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
-        this.setItem(storeKey, theme);
-      });
     }
 
     this.playlist = this.getItem("yt_playlist");

@@ -1,0 +1,31 @@
+<button
+  class="mr-2"
+  mat-stroked-button
+  (click)="_isOpen = !_isOpen"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  {{ text }}
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="_isOpen"
+  (overlayOutsideClick)="onClickOutside($event)"
+>
+  <div
+    class="mat-elevation-z4 w-72 mat-bg-card rounded m-0 p-0"
+    [@transform]="_isOpen"
+  >
+    <mat-calendar
+      [selected]="_range"
+      [comparisonStart]="_range.start"
+      [comparisonStart]="_range.end"
+      (selectedChange)="onChange($event)"
+      [minDate]="_min"
+      [maxDate]="_max"
+    ></mat-calendar>
+  </div>
+</ng-template>

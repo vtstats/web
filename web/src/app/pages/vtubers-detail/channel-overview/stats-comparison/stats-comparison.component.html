@@ -1,0 +1,54 @@
+<div class="mat-h4 mb-1 mat-secondary-text">{{ title | titlecase }}</div>
+
+<div class="flex flex-row items-center sm:block">
+  <div class="mb-1 mat-h1 mr-1">{{ rows[rows.length - 1]?.[1] | number }}</div>
+
+  <ng-container
+    [ngTemplateOutlet]="delta > 0 ? up : delta < 0 ? down : even"
+  ></ng-container>
+</div>
+
+<ng-template #up>
+  <div class="mat-h4 mb-1 inline-flex flex-row items-center up-color">
+    <svg
+      class="fill-current overflow-hidden mr-1 w-4 h-4"
+      aria-hidden="true"
+      viewBox="0 0 800 800"
+    >
+      <path
+        d="m101.33331,638.50665l451.84,-451.84l-281.17333,0l0,-85.33334l426.66667,0l0,426.66667l-85.33334,0l0,-281.17333l-451.84,451.84l-60.16,-60.16z"
+      />
+    </svg>
+
+    {{ delta | number }}
+  </div>
+</ng-template>
+
+<ng-template #down>
+  <div class="mat-h4 mb-1 inline-flex flex-row items-center down-color">
+    <svg
+      class="fill-current overflow-hidden mr-1 w-4 h-4"
+      aria-hidden="true"
+      viewBox="0 0 800 800"
+    >
+      <path
+        d="m101.33334,161.49334l60.16,-60.16l451.84,451.84l0,-281.17333l85.33334,0l0,426.66667l-426.66667,0l0,-85.33334l281.17333,0l-451.84,-451.84z"
+      />
+    </svg>
+
+    {{ delta | number }}
+  </div>
+</ng-template>
+
+<ng-template #even>
+  <div class="mat-h4 mb-1 inline-flex flex-row items-center">
+    <svg
+      class="fill-current overflow-hidden mr-1 w-4 h-4"
+      aria-hidden="true"
+      viewBox="0 0 800 800"
+    >
+      <path d="M305 357h393v86H102v-86z" />
+    </svg>
+    -----
+  </div>
+</ng-template>
