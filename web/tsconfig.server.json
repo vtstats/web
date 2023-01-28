@@ -5,8 +5,5 @@
     "outDir": "./out-tsc/server",
     "types": ["node", "gapi", "gapi.auth2"]
   },
-  "files": ["src/main.server.ts"],
-  "angularCompilerOptions": {
-    "entryModule": "./src/app/app.server.module#AppServerModule"
-  }
+  "files": ["src/main.server.ts"]
 }

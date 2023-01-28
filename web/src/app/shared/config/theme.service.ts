@@ -36,7 +36,10 @@ export class ThemeService implements OnDestroy {
       "follow-system"
     );
 
-    this.prefersDarkMode$ = fromMediaMatch("(prefers-color-scheme: dark)");
+    this.prefersDarkMode$ = fromMediaMatch(
+      "(prefers-color-scheme: dark)",
+      true
+    );
 
     this.theme$ = combineLatest({
       themeSetting: this.themeSetting$,

@@ -15,6 +15,7 @@ import { Helmet } from "src/app/components/helmet/helmet.component";
 import { ChannelListResponse } from "src/app/models";
 import { TITLE } from "src/app/routes";
 import { ConfigService } from "src/app/shared";
+import { listChannels } from "src/app/shared/api/entrypoint";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { ChannelTable } from "./channel-table/channel-table";
@@ -42,17 +43,17 @@ export class ChannelList implements OnInit {
   private route = inject(ActivatedRoute);
   title = inject(TITLE);
 
-  platform: string = this.route.snapshot.data.platform;
-
   channelsQry: Qry<
     ChannelListResponse,
     unknown,
     ChannelListResponse,
     ChannelListResponse,
-    [string, string[]]
+    [string, { platform: string; ids: string[] }]
   >;
 
   ngOnInit() {
+    const platform: string = this.route.snapshot.data.platform;
+
     this.channelsQry = this.qry.create({
       placeholderData: {
         updatedAt: 0,
@@ -60,12 +61,9 @@ export class ChannelList implements OnInit {
           (id) => ({ vtuberId: id } as any)
         ),
       },
-      queryKey: [`${this.platform}_channels`, [...this.config.vtuber]],
-      queryFn: ({ queryKey: [_, ids] }) =>
-        fetch(
-          `https://holoapi.poi.cat/api/v4/${this.platform}_channels?ids=` +
-            ids.join(",")
-        ).then((res) => res.json()),
+      queryKey: ["listChannels", { platform, ids: [...this.config.vtuber] }],
+      queryFn: ({ queryKey: [_, { platform, ids }] }) =>
+        listChannels(platform, ids),
     });
   }
 

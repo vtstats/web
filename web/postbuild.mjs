@@ -1,18 +1,22 @@
 import Critters from "critters";
 import fs from "fs/promises";
 
+import server from "./dist/server/main.js";
+
 const { CF_PAGES_BRANCH = "", CF_PAGES_COMMIT_SHA = "" } = process.env;
 
 {
   const path = "dist/browser/index.html";
-  let html = await fs.readFile("dist/browser/index.html", "utf-8");
+  const document = await fs.readFile("dist/browser/index.html", "utf-8");
 
-  // TODO(v15): support ssr
+  let html = await server.renderAppShell(document);
+
   // inline critical css
-  // html = await new Critters({
-  //   mergeStylesheets: false,
-  //   external: false,
-  // }).process(html);
+  html = await new Critters({
+    mergeStylesheets: false,
+    external: true,
+    path: "dist/browser",
+  }).process(html);
 
   // set environment variables
   html = html

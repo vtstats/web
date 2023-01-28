@@ -1,19 +1,16 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
-import { lastValueFrom } from "rxjs";
 
-import { ApiService } from "src/app/shared";
 import { vtubers } from "vtubers";
 
 @Component({ standalone: true, selector: "hls-share-target", template: "" })
 export class ShareTarget implements OnInit {
   private route = inject(ActivatedRoute);
-  private api = inject(ApiService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  async ngOnInit() {
+  ngOnInit() {
     const map = this.route.snapshot.queryParamMap;
 
     const shareParams = [map.get("title"), map.get("text"), map.get("url")]
@@ -30,25 +27,16 @@ export class ShareTarget implements OnInit {
       const id = match?.slice(1).find(Boolean);
 
       if (id) {
-        const res = await lastValueFrom(
-          this.api.streamReports({
-            ids: [id],
-            metrics: [],
-          })
-        );
+        this.router.navigate(["stream", id], {
+          replaceUrl: true,
+        });
 
-        if (res.streams.length) {
-          this.router.navigate(["stream", res.streams[0].streamId], {
-            replaceUrl: true,
-          });
-        } else {
-          this.snackBar.open("Stream not found", undefined, {
-            duration: 2_000,
-          });
-          this.router.navigate([""], {
-            replaceUrl: true,
-          });
-        }
+        // this.snackBar.open("Stream not found", undefined, {
+        //   duration: 2_000,
+        // });
+        // this.router.navigate([""], {
+        //   replaceUrl: true,
+        // });
       }
     }
 

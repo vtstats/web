@@ -1,4 +1,9 @@
 import qs from "query-string";
+import {
+  ChannelListResponse,
+  StreamReportOption,
+  StreamReportResponse,
+} from "src/app/models";
 
 import { LiveChatHighlightResponse } from "./model";
 
@@ -87,4 +92,40 @@ export const streamPaidChats = async (id: string): Promise<PaidChat[]> => {
   }
 
   return chats;
+};
+
+export const listChannels = async (
+  platform: string,
+  ids: string[]
+): Promise<ChannelListResponse> => {
+  const res = await fetch(
+    qs.stringifyUrl(
+      {
+        url: `https://holoapi.poi.cat/api/v4/${platform}_channels`,
+        query: { ids },
+      },
+      { arrayFormat: "comma" }
+    )
+  );
+
+  return res.json();
+};
+
+export const streamReports = async (
+  opts: StreamReportOption
+): Promise<StreamReportResponse> => {
+  const res = await fetch(
+    qs.stringifyUrl(
+      {
+        url: `https://holoapi.poi.cat/api/v4/streams_report`,
+        query: {
+          ids: opts.ids,
+          metrics: opts.metrics,
+        },
+      },
+      { arrayFormat: "comma" }
+    )
+  );
+
+  return res.json();
 };

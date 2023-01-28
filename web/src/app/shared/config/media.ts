@@ -1,7 +1,14 @@
-import { fromEvent, Observable } from "rxjs";
-import { startWith, map } from "rxjs/operators";
+import { fromEvent, Observable, of } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
-export function fromMediaMatch(query: string): Observable<boolean> {
+export function fromMediaMatch(
+  query: string,
+  ssr?: boolean
+): Observable<boolean> {
+  if (typeof window === "undefined") {
+    return of(ssr);
+  }
+
   const mediaQuery = window.matchMedia(query);
 
   return fromEvent<MediaQueryList>(mediaQuery, "change").pipe(

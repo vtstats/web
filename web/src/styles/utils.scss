@@ -86,3 +86,12 @@
   $foreground: map-get($hls-dark-theme, "foreground");
   border-color: mat.get-color-from-palette($foreground, "divider");
 }
+
+.mat-border-card {
+  $background: map-get($hls-light-theme, "background");
+  border-color: mat.get-color-from-palette($background, "card");
+}
+.dark .mat-border-card {
+  $background: map-get($hls-dark-theme, "background");
+  border-color: mat.get-color-from-palette($background, "card");
+}
