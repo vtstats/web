@@ -7,15 +7,20 @@ const { CF_PAGES_BRANCH = "", CF_PAGES_COMMIT_SHA = "" } = process.env;
 
 {
   const path = "dist/browser/index.html";
-  const document = await fs.readFile("dist/browser/index.html", "utf-8");
+  const document = await fs.readFile(path, "utf-8");
 
   let html = await server.renderAppShell(document);
 
   // inline critical css
+  // https://github.com/angular/angular-cli/blob/8da926966e9f414ceecf60b89acd475ce1b55fc5/packages/angular_devkit/build_angular/src/utils/index-file/inline-critical-css.ts#L41
   html = await new Critters({
-    mergeStylesheets: false,
-    external: true,
     path: "dist/browser",
+    pruneSource: false,
+    reduceInlineStyles: false,
+    mergeStylesheets: false,
+    preload: "media",
+    noscriptFallback: true,
+    inlineFonts: true,
   }).process(html);
 
   // set environment variables
