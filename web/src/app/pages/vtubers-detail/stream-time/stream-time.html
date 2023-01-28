@@ -1,19 +1,27 @@
-<div class="flex flex-row items-center mb-4">
-  <div class="flex-1 mat-h3 m-0" i18n="@@streamTimes">Stream Times</div>
+<div
+  class="mat-border-divider mat-bg-card rounded border-solid p-4 mb-4"
+  *ngIf="streamTimesQry | useQry as result"
+>
+  <div class="flex flex-row items-center mb-4">
+    <div class="flex-1">
+      <div class="mat-h3 m-0" i18n="@@streamTimes">Stream Times</div>
+      <div class="mat-text-caption mat-secondary-text">
+        {{ getTotal(result?.data) | formatDuration }} in 45 weeks
+      </div>
+    </div>
 
-  <span
-    class="mat-text-caption ml-2 cursor-pointer"
-    tabindex="0"
-    *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
-    (click)="precision = p"
-    [class.font-semibold]="precision === p"
-    role="button"
-  >
-    {{ p | titlecase }}
-  </span>
-</div>
+    <span
+      class="mat-text-caption ml-2 cursor-pointer"
+      tabindex="0"
+      *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
+      (click)="precision = p"
+      [class.font-semibold]="precision === p"
+      role="button"
+    >
+      {{ p | titlecase }}
+    </span>
+  </div>
 
-<div class="mb-4" *ngIf="streamTimesQry | useQry as result">
   <ng-container [ngSwitch]="precision">
     <hls-stream-time-calendar *ngSwitchCase="'day'" [times]="result?.data">
     </hls-stream-time-calendar>
@@ -37,5 +45,3 @@
     ></hls-stream-time-bar-chart>
   </ng-container>
 </div>
-
-<mat-divider></mat-divider>

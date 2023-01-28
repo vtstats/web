@@ -1,4 +1,4 @@
-<div class="stream-summary flex flex-wrap items-end">
+<div class="mb-0 sm:mb-4 flex flex-wrap items-end">
   <div class="w-full sm:w-7/12">
     <a
       class="cover aspect-ratio-16-9"
@@ -12,7 +12,7 @@
     </a>
   </div>
 
-  <div class="box-border p-4 w-full sm:w-5/12">
+  <div class="box-border py-4 pl-0 sm:pl-4 w-full sm:w-5/12">
     <a
       class="text-inherit no-underline block mb-4 break-words mat-h3"
       [attr.href]="'https://youtu.be/' + stream.streamId"
@@ -22,7 +22,7 @@
     </a>
 
     <a
-      class="text-inherit no-underline block mb-2 mat-body"
+      class="text-inherit no-underline inline-block mb-2 mat-body"
       [routerLink]="['/vtuber', stream.vtuberId]"
     >
       <img
@@ -40,7 +40,7 @@
       </span>
     </div>
 
-    <div class="mb-2">
+    <div>
       <span class="mat-small">Duration: </span>
       <span class="mat-body-1">
         {{ stream.status === 'ended' ? (stream.startTime | duration:
@@ -51,33 +51,35 @@
   </div>
 </div>
 
-<div class="flex flex-wrap mt-8">
-  <div class="w-1/2 sm:w-3/12 text-center">
-    <div class="mat-small">Avg./max viewers</div>
-    <div class="mat-headline-5">
+<div
+  class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 mat-border-divider mat-bg-card rounded border-solid mb-4"
+>
+  <div>
+    <div class="mat-small mat-secondary-text">Avg./max viewers</div>
+    <div class="mat-headline-5 m-0">
       {{ avg ? (avg | number) : '---' }}
       <span class="mat-body">/</span>
       {{ max ? (max | number) : '---' }}
     </div>
   </div>
-  <div class="w-1/2 sm:w-3/12 text-center">
-    <div class="mat-small">Likes / dislikes</div>
-    <div class="mat-headline-5" *ngIf="ratesQry | useQry as result">
+  <div>
+    <div class="mat-small mat-secondary-text">Likes / dislikes</div>
+    <div class="mat-headline-5 m-0" *ngIf="ratesQry | useQry as result">
       {{ result?.data?.likes | number }}
       <span class="mat-body">/</span>
       {{ result?.data?.dislikes | number }}
     </div>
   </div>
-  <div class="w-1/2 sm:w-3/12 text-center">
-    <div class="mat-small">Live chat</div>
-    <div class="mat-headline-5">
+  <div>
+    <div class="mat-small mat-secondary-text">Live chat</div>
+    <div class="mat-headline-5 m-0">
       {{ liveChatCount ? (liveChatCount | number) : '---' }}
     </div>
   </div>
-  <div class="w-1/2 sm:w-3/12 text-center">
-    <div class="mat-small">Paid chat</div>
-    <div class="mat-headline-5" *ngIf="liveChatQry | useQry as result">
-      {{ result?.data | number }}
+  <div>
+    <div class="mat-small mat-secondary-text">Paid chat</div>
+    <div class="mat-headline-5 m-0" *ngIf="liveChatQry | useQry as result">
+      {{ (result?.data) ? (result?.data | useCurrency | async) : '---' }}
     </div>
   </div>
 </div>

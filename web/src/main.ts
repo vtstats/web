@@ -11,7 +11,6 @@ import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
-import { NGX_ECHARTS_CONFIG } from "ngx-echarts";
 
 import { environment } from "./environments/environment";
 
@@ -52,15 +51,6 @@ const bootstrap = async () => {
       {
         provide: DATE_PIPE_DEFAULT_TIMEZONE,
         useValue: getLocalStorage("timezone"),
-      },
-      {
-        provide: NGX_ECHARTS_CONFIG,
-        useValue: {
-          echarts: () =>
-            import(/* webpackChunkName: "charts" */ "./app/shared/charts").then(
-              (mod) => mod.default
-            ),
-        },
       },
       provideRouter(
         ROUTES,

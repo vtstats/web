@@ -9,13 +9,13 @@ import {
 import { flatRollup, range, sort } from "d3-array";
 import { fromUnixTime } from "date-fns";
 import type { EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
-import { ThemeService } from "src/app/shared/config/theme.service";
+
+import { Chart } from "src/app/components/chart/chart";
 
 @Component({
   selector: "hls-stream-time-bar-chart",
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule],
+  imports: [CommonModule, Chart],
   templateUrl: "./stream-time-bar-chart.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,7 +23,6 @@ export class StreamTimeBarChart {
   @Input() times: [number, number][] | undefined = [];
   @Input() groupBy: "hour" | "weekday" | "month";
 
-  theme$ = inject(ThemeService).theme$;
   private locale = inject(LOCALE_ID);
 
   get options(): EChartsOption {

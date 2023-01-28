@@ -2,46 +2,34 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  inject,
   Input,
   Output,
 } from "@angular/core";
 import { type ECharts, type EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
 
 import { CommonModule } from "@angular/common";
+import { Chart } from "src/app/components/chart/chart";
 import { ChannelReportKind } from "src/app/models";
-import { ThemeService } from "src/app/shared/config/theme.service";
 import { sampling } from "src/utils";
 
 @Component({
   standalone: true,
-  imports: [NgxEchartsModule, CommonModule],
+  imports: [Chart, CommonModule],
   selector: "hls-stats-chart",
-  template: `<div
-    echarts
-    class="h-20"
+  template: `<hls-chart
     [loading]="loading"
+    [height]="80"
     [options]="options"
-    [autoResize]="true"
-    [theme]="theme$ | async"
-    (chartInit)="onChartInit($event)"
-  ></div>`,
+    (chartInit)="chartInit.emit($event)"
+  ></hls-chart>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsChartComponent {
-  theme$ = inject(ThemeService).theme$;
-
   @Input() rows: [number, number][] = [];
   @Input() kind: ChannelReportKind;
   @Input() precision: number;
   @Input() loading: boolean;
   @Output() chartInit = new EventEmitter<ECharts>();
-
-  onChartInit(ec: ECharts) {
-    if (this.loading) ec.showLoading();
-    this.chartInit.emit(ec);
-  }
 
   get colors() {
     switch (this.kind) {
@@ -88,8 +76,8 @@ export class StatsChartComponent {
         },
       },
       grid: {
-        left: 16,
-        right: 16,
+        left: 3,
+        right: 3,
         top: 0,
         bottom: 0,
       },

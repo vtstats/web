@@ -1,38 +1,41 @@
-<div
-  class="mx-auto max-w-4xl p-4 mb-15"
-  *ngIf="streamDetailQry | useQry as result"
->
-  <ng-container *ngIf="result.isSuccess">
-    <hls-helmet [title]="result.data.streams[0].title"></hls-helmet>
+<div class="mx-auto max-w-4xl p-4 mb-15">
+  <ng-container *ngIf="streamDetailQry | useQry as result">
+    <ng-container *ngIf="result.isSuccess">
+      <hls-helmet [title]="result.data.streams[0].title"></hls-helmet>
 
-    <hls-stream-summary
-      [stream]="result.data.streams[0]"
-      [reports]="result.data.reports"
-    ></hls-stream-summary>
+      <hls-stream-summary
+        [stream]="result.data.streams[0]"
+        [reports]="result.data.reports"
+      ></hls-stream-summary>
 
-    <ng-container
-      *ngFor="let report of result.data.reports"
-      [ngSwitch]="report.kind"
-    >
-      <ng-container *ngSwitchCase="'youtube_live_chat'">
-        <hls-stream-live-chat-chart
-          [rows]="report.rows"
-          [stream]="result.data.streams[0]"
-        ></hls-stream-live-chat-chart>
+      <ng-container
+        *ngFor="let report of result.data.reports"
+        [ngSwitch]="report.kind"
+      >
+        <ng-container *ngSwitchCase="'youtube_live_chat'">
+          <hls-stream-live-chat-chart
+            [rows]="report.rows"
+            [stream]="result.data.streams[0]"
+          ></hls-stream-live-chat-chart>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'youtube_stream_viewer'">
+          <hls-stream-viewers-chart
+            [rows]="report.rows"
+            [stream]="result.data.streams[0]"
+          ></hls-stream-viewers-chart>
+        </ng-container>
       </ng-container>
 
-      <ng-container *ngSwitchCase="'youtube_stream_viewer'">
-        <hls-stream-viewers-chart
-          [rows]="report.rows"
-          [stream]="result.data.streams[0]"
-        ></hls-stream-viewers-chart>
-      </ng-container>
+      <ng-template *ngIf="result.isLoading"> </ng-template>
     </ng-container>
 
-    <hls-stream-paid-chat-chart
-      [stream]="result.data.streams[0]"
-    ></hls-stream-paid-chat-chart>
-  </ng-container>
+    <ng-container *ngIf="paidChatQry | useQry as result">
+      <hls-stream-paid-chat-chart
+        [chats]="result.data"
+      ></hls-stream-paid-chat-chart>
 
-  <ng-template *ngIf="result.isLoading"> </ng-template>
+      <ng-template *ngIf="result.isLoading"> </ng-template>
+    </ng-container>
+  </ng-container>
 </div>

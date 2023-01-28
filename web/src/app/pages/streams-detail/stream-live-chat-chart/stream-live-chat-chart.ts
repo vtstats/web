@@ -1,28 +1,37 @@
 import { CommonModule, formatDate, formatNumber } from "@angular/common";
-import { Component, inject, Input, LOCALE_ID, OnChanges } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  LOCALE_ID,
+  OnChanges,
+} from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { differenceInMinutes } from "date-fns";
 import { type EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
 
+import { Chart } from "src/app/components/chart/chart";
 import { Stream } from "src/app/models";
-import { ThemeService } from "src/app/shared/config/theme.service";
 import { sampling } from "src/utils";
 
 @Component({
   standalone: true,
-  imports: [NgxEchartsModule, CommonModule, MatCheckboxModule],
+  imports: [Chart, CommonModule, MatCheckboxModule],
   selector: "hls-stream-live-chat-chart",
   templateUrl: "stream-live-chat-chart.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StreamLiveChatChart implements OnChanges {
   private locale = inject(LOCALE_ID);
-  theme$ = inject(ThemeService).theme$;
 
   @Input() rows: [number, number, number][];
   @Input() stream: Stream;
 
   sample: boolean = true;
   option: EChartsOption;
+  total: number;
+  perMin: number;
 
   ngOnChanges() {
     let total = [];
@@ -53,10 +62,11 @@ export class StreamLiveChatChart implements OnChanges {
         trigger: "axis",
       },
       grid: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 32,
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: 16,
+        containLabel: true,
       },
       xAxis: {
         type: "time",
@@ -125,9 +135,16 @@ export class StreamLiveChatChart implements OnChanges {
         },
       ],
     };
-  }
 
-  ngOnInit() {}
+    this.total = total.reduce((acc, cur) => acc + cur[1], 0);
+
+    this.perMin =
+      this.total /
+      differenceInMinutes(
+        this.stream.endTime || Date.now(),
+        this.stream.startTime
+      );
+  }
 
   jumpTo(e: MouseEvent) {
     // const { x, y } = this.svg.nativeElement.getBoundingClientRect();

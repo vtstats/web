@@ -2,6 +2,7 @@ import { formatCurrency } from "@angular/common";
 import { inject, LOCALE_ID, Pipe, PipeTransform } from "@angular/core";
 import { combineLatest, map, Observable } from "rxjs";
 
+import { PaidChat, codeToSymbol } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "./currency.service";
 
 @Pipe({
@@ -13,56 +14,65 @@ export class UseCurrencyPipe implements PipeTransform {
   private currencyService = inject(CurrencyService);
 
   transform(
-    fromValue: number,
-    fromCurrency: string,
-    toCurrency?: string
+    chat: PaidChat | PaidChat[],
+    currency?: string
   ): Observable<string> {
-    if (toCurrency) {
+    if (currency) {
       return this.currencyService.exchangeRate$.pipe(
-        map((quotes) => {
-          return formatCurrency(
-            this._convert(fromValue, fromCurrency, toCurrency, quotes),
-            this.locale,
-            toCurrency
-          );
-        })
+        map((quotes) => this._sum(chat, currency, quotes))
       );
     }
 
     return combineLatest({
       settings: this.currencyService.currencySettings$,
       quotes: this.currencyService.exchangeRate$,
-    }).pipe(
-      map(({ quotes, settings }) => {
-        return formatCurrency(
-          this._convert(fromValue, fromCurrency, settings, quotes),
-          this.locale,
-          settings
-        );
-      })
-    );
+    }).pipe(map(({ quotes, settings }) => this._sum(chat, settings, quotes)));
+  }
+
+  _sum(
+    chats: PaidChat | PaidChat[],
+    currency: string,
+    quotes: Record<string, number>
+  ): string {
+    let value = 0;
+
+    if (Array.isArray(chats)) {
+      value = chats.reduce(
+        (acc, chat) => acc + this._convert(chat, currency, quotes),
+        0
+      );
+    } else {
+      value = this._convert(chats, currency, quotes);
+    }
+
+    let symbol = codeToSymbol[currency];
+
+    return formatCurrency(value, this.locale, symbol || currency);
   }
 
   _convert(
-    fromValue: number,
-    fromCurrency: string,
-    toCurrency: string,
-    quotes: { [quote: string]: number }
+    chat: PaidChat,
+    currency: string,
+    quotes: Record<string, number>
   ): number {
-    if (fromCurrency === toCurrency) {
-      return fromValue;
+    if (!chat.code || !(`USD-${chat.code}` in quotes)) {
+      return 0;
     }
 
-    if (fromCurrency === "USD") {
-      return fromValue * quotes[`USD-${toCurrency}`];
+    if (chat.code === currency) {
+      return chat.value;
     }
 
-    if (toCurrency === "USD") {
-      return fromValue / quotes[`USD-${fromCurrency}`];
+    if (chat.code === "USD") {
+      return chat.value * quotes[`USD-${currency}`];
+    }
+
+    if (currency === "USD") {
+      return chat.value / quotes[`USD-${chat.code}`];
     }
 
     return (
-      (fromValue / quotes[`USD-${fromCurrency}`]) * quotes[`USD-${toCurrency}`]
+      (chat.value / quotes[`USD-${chat.code}`]) * quotes[`USD-${currency}`]
     );
   }
 }

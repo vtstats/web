@@ -1,41 +1,43 @@
-<div class="flex flex-row items-center mb-4">
-  <div class="flex-1 mat-h3 m-0">Overview</div>
+<div class="mat-border-divider mat-bg-card rounded border-solid p-4 mb-4">
+  <div class="flex flex-row items-center mb-4">
+    <div class="flex-1 mat-h3 m-0">Overview</div>
 
-  <span
-    class="mat-text-caption ml-2 cursor-pointer"
-    tabindex="0"
-    *ngFor="let days of [7, 30, 90]"
-    (click)="precision = days"
-    [class.font-semibold]="_precision === days"
-    role="button"
-  >
-    {{ { days } | formatDayDuration }}
-  </span>
-</div>
+    <span
+      class="mat-text-caption ml-2 cursor-pointer"
+      tabindex="0"
+      *ngFor="let days of [7, 30, 90]"
+      (click)="precision = days"
+      [class.font-semibold]="_precision === days"
+      role="button"
+    >
+      {{ { days } | formatDayDuration }}
+    </span>
+  </div>
 
-<ng-container *ngIf="streamReportsQry | useQry as result">
-  <ng-container *ngFor="let report of result.data.reports; trackBy:trackBy">
-    <div class="flex flex-row flex-wrap items-center mb-2">
-      <div class="w-full sm:w-4/12">
-        <hls-stats-comparison
-          [kind]="report.kind"
-          [rows]="report.rows"
-        ></hls-stats-comparison>
+  <ng-container *ngIf="streamReportsQry | useQry as result">
+    <ng-container
+      *ngFor="let report of result.data.reports; trackBy:trackBy; first as first"
+    >
+      <mat-divider *ngIf="!first" class="!my-2"></mat-divider>
+
+      <div class="flex flex-row flex-wrap items-center">
+        <div class="w-full sm:w-4/12">
+          <hls-stats-comparison
+            [kind]="report.kind"
+            [rows]="report.rows"
+          ></hls-stats-comparison>
+        </div>
+
+        <div class="w-full sm:w-8/12">
+          <hls-stats-chart
+            [loading]="result.isFetching"
+            [kind]="report.kind"
+            [rows]="report.rows"
+            [precision]="_precision"
+            (chartInit)="onChartInit($event)"
+          ></hls-stats-chart>
+        </div>
       </div>
-
-      <div class="w-full sm:w-8/12">
-        <hls-stats-chart
-          [loading]="result.isFetching"
-          [kind]="report.kind"
-          [rows]="report.rows"
-          [precision]="_precision"
-          (chartInit)="onChartInit($event)"
-        ></hls-stats-chart>
-      </div>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="w-full mb-4"></div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>

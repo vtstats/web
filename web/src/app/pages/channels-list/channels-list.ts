@@ -18,7 +18,6 @@ import { ConfigService } from "src/app/shared";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { ChannelTable } from "./channel-table/channel-table";
-import { ChannelTableShimmer } from "./channel-table/channel-table-shimmer";
 
 @Component({
   standalone: true,
@@ -33,7 +32,6 @@ import { ChannelTableShimmer } from "./channel-table/channel-table-shimmer";
     FilterGroup,
     RouterModule,
     ChannelTable,
-    ChannelTableShimmer,
     UseQryPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,6 +54,12 @@ export class ChannelList implements OnInit {
 
   ngOnInit() {
     this.channelsQry = this.qry.create({
+      placeholderData: {
+        updatedAt: 0,
+        channels: [...this.config.vtuber].map(
+          (id) => ({ vtuberId: id } as any)
+        ),
+      },
       queryKey: [`${this.platform}_channels`, [...this.config.vtuber]],
       queryFn: ({ queryKey: [_, ids] }) =>
         fetch(

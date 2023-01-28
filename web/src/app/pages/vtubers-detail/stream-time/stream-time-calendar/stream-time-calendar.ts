@@ -10,15 +10,13 @@ import {
 import { range } from "d3-array";
 import { addDays, differenceInDays, fromUnixTime, subWeeks } from "date-fns";
 import { EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
 
-import { ThemeService } from "src/app/shared/config/theme.service";
-import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
+import { Chart } from "src/app/components/chart/chart";
 import { within } from "src/utils";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule, FormatDurationPipe],
+  imports: [CommonModule, Chart],
   selector: "hls-stream-time-calendar",
   templateUrl: "stream-time-calendar.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,17 +24,11 @@ import { within } from "src/utils";
 export class StreamTimeCalendar implements OnChanges {
   @Input() times: [number, number][] | undefined = [];
   private locale = inject(LOCALE_ID);
-  theme$ = inject(ThemeService).theme$;
 
   option: EChartsOption;
 
   end = new Date();
   start = subWeeks(this.end, 44);
-
-  get total(): number {
-    if (!this.times) return 0;
-    return this.times.reduce((acc, cur) => acc + cur[1], 0);
-  }
 
   ngOnChanges() {
     if (!this.times) return;

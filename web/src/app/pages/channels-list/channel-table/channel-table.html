@@ -2,7 +2,7 @@
   class="mx-auto"
   mat-table
   [dataSource]="data"
-  [trackBy]="trackBy"
+  [trackBy]="rowTrackBy"
   matSort
   matSortActive="subscriberCount"
   matSortDirection="desc"
@@ -21,29 +21,48 @@
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef i18n="@@name">Name</th>
-    <td mat-cell *matCellDef="let row" lang="jp">{{ row.vtuberId | name }}</td>
-    <td mat-footer-cell *matFooterCellDef i18n="@@total">Total</td>
+    <th class="!text-center" mat-header-cell *matHeaderCellDef i18n="@@name">
+      Name
+    </th>
+    <td class="!text-center" mat-cell *matCellDef="let row" lang="jp">
+      {{ row.vtuberId | name }}
+    </td>
+    <td class="!text-center" mat-footer-cell *matFooterCellDef i18n="@@total">
+      Total
+    </td>
   </ng-container>
 
-  <ng-container *ngFor="let column of dataColumns" [matColumnDef]="column[0]">
+  <ng-container
+    *ngFor="let column of dataColumns; trackBy:columnTrackBy"
+    [matColumnDef]="column[0]"
+  >
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column[1]}}</th>
+    <ng-container *ngIf="!loading; else shimmer"> </ng-container>
+
     <td
       mat-cell
       *matCellDef="let row"
-      [class.up-color]="column[2] && row[column[0]] > 0"
-      [class.down-color]="column[2] && row[column[0]] < 0"
+      class="!text-right font-mono"
+      [ngClass]="column[2] && { 'up-color': row[column[0]] > 0, 'down-color': row[column[0]] < 0 }"
     >
-      {{ row[column[0]] | number }}
+      <ng-container *ngIf="!loading; else shimmer">
+        {{ row[column[0]] | number }}
+      </ng-container>
     </td>
     <td
       mat-footer-cell
       *matFooterCellDef
-      [class.up-color]="column[2] && getTotal(column[0]) > 0"
-      [class.down-color]="column[2] && getTotal(column[0]) < 0"
+      class="!text-right font-mono"
+      [ngClass]="column[2] && { 'up-color': getTotal(column[0]) > 0, 'down-color': getTotal(column[0]) < 0 }"
     >
-      {{ getTotal(column[0]) | number }}
+      <ng-container *ngIf="!loading; else shimmer">
+        {{ getTotal(column[0]) | number }}
+      </ng-container>
     </td>
+
+    <ng-template #shimmer>
+      <span class="animate-pulse shimmer text w-20"></span>
+    </ng-template>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

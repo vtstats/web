@@ -36,10 +36,12 @@ export class ChannelTable implements AfterViewInit {
   data = new MatTableDataSource<Channel>([]);
 
   @Input() set dataSource(dataSource: Array<Channel>) {
-    this.data.data = dataSource;
+    if (dataSource) this.data.data = dataSource;
   }
 
-  displayedColumns: string[] = [
+  @Input() loading: boolean;
+
+  readonly displayedColumns: string[] = [
     "profile",
     "name",
     "subscriberCount",
@@ -52,7 +54,7 @@ export class ChannelTable implements AfterViewInit {
     "monthlyViewCount",
   ];
 
-  dataColumns: [string, string, boolean][] = [
+  readonly dataColumns: [key: string, title: string, showColor: boolean][] = [
     ["subscriberCount", $localize`:@@subscribers:Subscribers`, false],
     ["dailySubscriberCount", $localize`:@@lastDay:Last Day`, true],
     ["weeklySubscriberCount", $localize`:@@last7Days:Last 7 Days`, true],
@@ -67,8 +69,15 @@ export class ChannelTable implements AfterViewInit {
     this.data.sort = this.sort;
   }
 
-  trackBy(_: number, channel: Channel): string {
+  rowTrackBy(_: number, channel: Channel): string {
     return channel?.vtuberId;
+  }
+
+  columnTrackBy(
+    _: number,
+    column: [key: string, title: string, showColor: boolean]
+  ): string {
+    return column[0];
   }
 
   getTotal(path: Exclude<keyof Channel, "vtuberId" | "kind">): number {

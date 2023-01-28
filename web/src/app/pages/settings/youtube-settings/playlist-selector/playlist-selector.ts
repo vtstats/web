@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -7,7 +8,7 @@ import { ConfigService, GoogleApiService } from "src/app/shared";
 
 @Component({
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule],
   selector: "hls-playlist-selector",
   templateUrl: "playlist-selector.html",
 })

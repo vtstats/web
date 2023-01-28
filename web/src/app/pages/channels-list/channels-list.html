@@ -1,7 +1,7 @@
 <hls-helmet [title]="title"></hls-helmet>
 
-<div class="mx-auto max-w-4xl p-4" *ngIf="channelsQry | useQry as result">
-  <div class="flex flex-row items-center mb-4">
+<div class="mx-auto max-w-4xl" *ngIf="channelsQry | useQry as result">
+  <div class="flex flex-row items-center p-4">
     <div class="flex-1">
       <hls-filter-group
         (clear)="onClear()"
@@ -29,11 +29,10 @@
   </div>
 
   <hls-channel-table
-    *ngIf="result.isSuccess"
-    [dataSource]="result.data.channels"
+    *ngIf="!result.isError"
+    [dataSource]="result.data?.channels"
+    [loading]="result.isFetching"
   ></hls-channel-table>
 
-  <hls-channel-table-shimmer
-    *ngIf="result.isFetching"
-  ></hls-channel-table-shimmer>
+  <!-- TODO: display error -->
 </div>
