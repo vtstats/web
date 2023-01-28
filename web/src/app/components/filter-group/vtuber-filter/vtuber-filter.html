@@ -8,7 +8,7 @@
     (click)="onClick(vtb)"
   >
     <img
-      class="w-full h-full border-2 border-solid border-transparent rounded-full inline-block group-hover:-translate-y-4 ease-in-out duration-300"
+      class="w-full h-full border-2 border-solid mat-border-card rounded-full inline-block group-hover:-translate-y-4 ease-in-out duration-300"
       src="/assets/thumbnail/{{vtb}}.jpg"
       [class.mat-border-primary]="hasVTuber(vtb)"
     />
@@ -16,7 +16,7 @@
 
   <ng-container *ngIf="_vtubers.length > 6">
     <span
-      class="rounded-full mat-body-2 h-8 w-8 leading-8 -ml-2 border-2 border-solid border-transparent inline-block select-none cursor-pointer text-center mat-bg-unselected-chip"
+      class="rounded-full mat-body-2 h-8 w-8 leading-8 -ml-2 border-2 border-solid mat-border-card inline-block select-none cursor-pointer text-center mat-bg-unselected-chip"
       [style.zIndex]="9"
       [class.mat-border-primary]="_listSelected"
       (click)="this._isOpen = !this._isOpen"

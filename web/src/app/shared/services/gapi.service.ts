@@ -1,7 +1,9 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, NgZone } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import qs from "query-string";
 import { BehaviorSubject, Observable } from "rxjs";
+import { fromFetch } from "rxjs/fetch";
+
 import {
   YouTubeAddPlaylistItemResponse,
   YouTubePlaylistResponse,
@@ -51,11 +53,7 @@ type SignedInUser = {
 export class GoogleApiService {
   user$ = new BehaviorSubject<SignedInUser | null>(null);
 
-  constructor(
-    private ngZone: NgZone,
-    private http: HttpClient,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(private ngZone: NgZone, private snackBar: MatSnackBar) {
     init().then((auth: gapi.auth2.GoogleAuth) => {
       this.updateSignInStatus(auth.currentUser.get());
       auth.currentUser.listen((user) => this.updateSignInStatus(user));
@@ -93,41 +91,62 @@ export class GoogleApiService {
   }
 
   listPlaylist(): Observable<YouTubePlaylistResponse> {
-    return this.http.get<YouTubePlaylistResponse>(
-      "https://youtube.googleapis.com/youtube/v3/playlists",
+    return fromFetch(
+      qs.stringifyUrl(
+        {
+          url: "https://youtube.googleapis.com/youtube/v3/playlists",
+          query: {
+            mine: "true",
+            part: [
+              "snippet",
+              "contentDetails",
+              "id",
+              "localizations",
+              "status",
+            ],
+            maxResults: "50",
+          },
+        },
+        { arrayFormat: "comma" }
+      ),
       {
+        selector: (res) => res.json(),
         headers: {
           Authorization:
             "Bearer " +
             gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true)
               .access_token,
         },
-        params: new HttpParams()
-          .set("mine", "true")
-          .set("part", "snippet,contentDetails,id,localizations,status")
-          .set("maxResults", "50"),
       }
     );
   }
 
-  addToPlaylist(playlistId: string, videoId: string) {
-    return this.http.post<YouTubeAddPlaylistItemResponse>(
-      "https://youtube.googleapis.com/youtube/v3/playlistItems",
+  addToPlaylist(
+    playlistId: string,
+    videoId: string
+  ): Observable<YouTubeAddPlaylistItemResponse> {
+    return fromFetch(
+      qs.stringifyUrl({
+        url: "https://youtube.googleapis.com/youtube/v3/playlistItems",
+        query: { part: "snippet" },
+      }),
       {
-        snippet: {
-          playlistId,
-          position: 0,
-          resourceId: { kind: "youtube#video", videoId },
-        },
-      },
-      {
+        method: "POST",
+        selector: (res) => res.json(),
         headers: {
+          "Content-Type": "application/json",
           Authorization:
             "Bearer " +
             gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true)
               .access_token,
         },
-        params: new HttpParams().set("part", "snippet"),
+        body: JSON.stringify({
+          snippet: {
+            playlistId,
+            position: 0,
+            resourceId: { kind: "youtube#video", videoId },
+          },
+        }),
       }
     );
   }

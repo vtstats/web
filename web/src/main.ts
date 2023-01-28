@@ -2,11 +2,10 @@ import {
   DATE_PIPE_DEFAULT_TIMEZONE,
   registerLocaleData,
 } from "@angular/common";
-import { provideHttpClient } from "@angular/common/http";
 import { enableProdMode, importProvidersFrom, LOCALE_ID } from "@angular/core";
 import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { bootstrapApplication } from "@angular/platform-browser";
+import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -56,7 +55,6 @@ const bootstrap = async () => {
         ROUTES,
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
       ),
-      provideHttpClient(),
       provideAnimations(),
       importProvidersFrom(
         ServiceWorkerModule.register("ngsw-worker.js", {
@@ -64,6 +62,7 @@ const bootstrap = async () => {
           registrationStrategy: "registerImmediately",
         })
       ),
+      importProvidersFrom(BrowserModule.withServerTransition({ appId: "hls" })),
       importProvidersFrom(MatSnackBarModule),
     ],
   });

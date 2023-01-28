@@ -4,7 +4,7 @@ export PATH="$PATH:$(yarn global bin)"
 
 rm -rf dist/
 
-# TODO(v15): suppport ssr
+yarn ng run holostats:server:production
 yarn ng run holostats:build:production --stats-json=false
 
 node postbuild.mjs

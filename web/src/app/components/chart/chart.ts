@@ -95,7 +95,6 @@ export class Chart
       }
 
       this.chart = this.ngZone.runOutsideAngular(() => {
-        console.log(this.container.nativeElement.outerHTML);
         return init(this.container.nativeElement, theme, {
           height: this._height,
         });

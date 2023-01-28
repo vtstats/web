@@ -12,12 +12,23 @@ import "@angular/platform-server/init";
  */
 import "@angular/localize/init";
 
-import { enableProdMode } from "@angular/core";
+import "zone.js";
 
+import { enableProdMode, importProvidersFrom } from "@angular/core";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { renderApplication } from "@angular/platform-server";
+
+import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
 
 if (environment.production) {
   enableProdMode();
 }
 
-export { AppServerModule } from "./app/app.server.module";
+export const renderAppShell = (document: string): Promise<string> =>
+  renderApplication(AppComponent, {
+    appId: "hls",
+    url: "/",
+    document,
+    providers: [importProvidersFrom(MatSnackBarModule)],
+  });

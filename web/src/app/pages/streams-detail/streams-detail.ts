@@ -1,11 +1,14 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import qs from "query-string";
 
 import { Helmet } from "src/app/components/helmet/helmet.component";
 import { StreamReportKind, StreamReportResponse } from "src/app/models";
-import { PaidChat, streamPaidChats } from "src/app/shared/api/entrypoint";
+import {
+  PaidChat,
+  streamPaidChats,
+  streamReports,
+} from "src/app/shared/api/entrypoint";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { StreamLiveChatChart } from "./stream-live-chat-chart/stream-live-chat-chart";
@@ -54,22 +57,14 @@ export class StreamsDetail implements OnInit {
     this.streamDetailQry = this.qry.create({
       queryKey: ["stream", streamId],
       queryFn: ({ queryKey: [_, id] }) =>
-        fetch(
-          qs.stringifyUrl(
-            {
-              url: "https://holoapi.poi.cat/api/v4/streams_report",
-              query: {
-                ids: [id],
-                metrics: [
-                  StreamReportKind.youtubeStreamViewer,
-                  StreamReportKind.youtubeStreamLike,
-                  StreamReportKind.youtubeLiveChatMessage,
-                ],
-              },
-            },
-            { arrayFormat: "comma" }
-          )
-        ).then((res) => res.json()),
+        streamReports({
+          ids: [id],
+          metrics: [
+            StreamReportKind.youtubeStreamViewer,
+            StreamReportKind.youtubeStreamLike,
+            StreamReportKind.youtubeLiveChatMessage,
+          ],
+        }),
       onSuccess: (res) => {
         if (res.streams.length === 0) {
           this.router.navigateByUrl("/404");
