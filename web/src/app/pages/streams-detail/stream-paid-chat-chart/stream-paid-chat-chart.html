@@ -1,14 +1,15 @@
-<div class="mat-h3" i18n="@@paidLiveChat">Super Chat & Super Stickers</div>
-
 <!-- TODO: group by (color|currency|time) -->
 
-<ng-container *ngIf="highlightQry | useQry as result">
-  <div
-    *ngIf="result.isSuccess"
-    echarts
-    [theme]="theme$ | async"
-    [options]="result.data.options"
-    [style.height.px]="result.data.height"
-    [autoResize]="true"
-  ></div>
-</ng-container>
+<div class="mat-border-divider mat-bg-card rounded border-solid mb-4">
+  <div class="mx-4 mt-4">
+    <div class="mat-h3 m-0" i18n="@@paidLiveChat">
+      Super Chat & Super Stickers
+    </div>
+    <div class="mat-secondary-text mat-small">
+      Count: {{ items | number }} / Total: {{ chats ? (chats | useCurrency |
+      async) : '---' }}
+    </div>
+  </div>
+
+  <hls-chart [options]="options" [height]="height"></hls-chart>
+</div>

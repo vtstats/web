@@ -2,21 +2,19 @@ import { CommonModule, formatDate, formatNumber } from "@angular/common";
 import { Component, inject, Input, LOCALE_ID, OnChanges } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { type EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
 
+import { Chart } from "src/app/components/chart/chart";
 import { Stream } from "src/app/models";
-import { ThemeService } from "src/app/shared/config/theme.service";
 import { sampling } from "src/utils";
 
 @Component({
   standalone: true,
-  imports: [NgxEchartsModule, CommonModule, MatCheckboxModule],
+  imports: [Chart, CommonModule, MatCheckboxModule],
   selector: "hls-stream-viewers-chart",
   templateUrl: "stream-viewers-chart.html",
 })
 export class StreamViewersChart implements OnChanges {
   private locale = inject(LOCALE_ID);
-  theme$ = inject(ThemeService).theme$;
 
   @Input() stream: Stream;
   @Input() rows: [number, number][] = [];
@@ -44,10 +42,11 @@ export class StreamViewersChart implements OnChanges {
         trigger: "axis",
       },
       grid: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 32,
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: 16,
+        containLabel: true,
       },
       xAxis: {
         type: "time",

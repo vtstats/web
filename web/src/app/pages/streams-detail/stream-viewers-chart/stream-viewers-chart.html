@@ -1,3 +1,11 @@
-<div class="mat-h3" i18n="@@streamViewers">Stream viewers</div>
+<div class="mat-border-divider mat-bg-card rounded border-solid mb-4">
+  <div class="mx-4 mt-4">
+    <div class="mat-h3 m-0" i18n="@@streamViewers">Stream viewers</div>
+    <div class="mat-secondary-text mat-small">
+      Avg: {{ stream.averageViewerCount | number }} / Max: {{
+      stream.maxViewerCount | number }}
+    </div>
+  </div>
 
-<div echarts [options]="options" [theme]="theme$ | async"></div>
+  <hls-chart [options]="options"></hls-chart>
+</div>

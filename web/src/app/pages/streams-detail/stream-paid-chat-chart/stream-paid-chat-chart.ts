@@ -1,69 +1,51 @@
 import { CommonModule, formatCurrency, formatNumber } from "@angular/common";
-import { Component, inject, Input, LOCALE_ID, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  LOCALE_ID,
+  OnChanges,
+} from "@angular/core";
 import { type EChartsOption } from "echarts";
-import { NgxEchartsModule } from "ngx-echarts";
 
-import { LiveChatHighlightResponse, Stream } from "src/app/models";
-import { ThemeService } from "src/app/shared/config/theme.service";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+import { Chart } from "src/app/components/chart/chart";
+import { PaidChat } from "src/app/shared/api/entrypoint";
+import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
 
 import { CHAT_CURRENCIES } from "./tokens";
 
-const splitAmount = (amount: string): [string, number] => {
-  const idx = amount.split("").findIndex((c) => "0" <= c && c <= "9");
-
-  return [
-    amount.slice(0, idx).trim(),
-    parseFloat(amount.slice(idx).replace(",", "")),
-  ];
-};
-
 @Component({
   standalone: true,
-  imports: [NgxEchartsModule, CommonModule, CommonModule, UseQryPipe],
+  imports: [CommonModule, CommonModule, UseCurrencyPipe, Chart],
   selector: "hls-stream-paid-chat-chart",
   templateUrl: "stream-paid-chat-chart.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StreamPaidChatChart implements OnInit {
+export class StreamPaidChatChart implements OnChanges {
   private chatCurrencies = inject(CHAT_CURRENCIES);
-  private qry = inject(QryService);
   private locale = inject(LOCALE_ID);
-  theme$ = inject(ThemeService).theme$;
 
-  @Input() stream: Stream;
+  @Input() chats: PaidChat[];
 
-  highlightQry: Qry<
-    LiveChatHighlightResponse,
-    unknown,
-    { options: EChartsOption },
-    LiveChatHighlightResponse,
-    [string, string]
-  >;
+  options: EChartsOption;
+  height: number;
+  items: number;
 
-  ngOnInit() {
-    this.highlightQry = this.qry.create({
-      queryKey: ["streams_paid_chat", this.stream.streamId],
-      queryFn: ({ queryKey: [_, id] }) =>
-        fetch(
-          `https://holoapi.poi.cat/api/v4/live_chat/highlight?id=${id}`
-        ).then((res) => res.json()),
-      select: (res) => this.transformToOptions(res),
-    });
-  }
+  ngOnChanges() {
+    if (!this.chats) {
+      return;
+    }
 
-  transformToOptions(res: LiveChatHighlightResponse): {
-    options: EChartsOption;
-    height: number;
-  } {
     const dataset = [
       /* currencies */ [],
-      /* 1DE9B6FF */ [],
-      /* FFCA28FF */ [],
-      /* 1E88E5FF */ [],
-      /* 00E5FFFF */ [],
-      /* F57C00FF */ [],
-      /* E91E63FF */ [],
-      /* E62117FF */ [],
+      /* Green */ [],
+      /* Yellow */ [],
+      /* Blue */ [],
+      /* LightBlue */ [],
+      /* Orange */ [],
+      /* Magenta */ [],
+      /* Red */ [],
     ];
 
     const series: EChartsOption["series"] = [
@@ -86,50 +68,40 @@ export class StreamPaidChatChart implements OnInit {
       barCategoryGap: 25,
     }));
 
-    for (const msg of res.paid) {
-      // $100
-      const [symbol, value] = splitAmount(msg.amount);
-      const [currencyCode, currency] = this.chatCurrencies[symbol] || [
-        symbol,
-        symbol,
-      ];
-
-      // value // 100
-      // currency // United States Dollar
-      // currencyCode // USD
-      // symbol // $
-
-      let x = dataset[0].findIndex((c) => c.code === currencyCode);
+    for (const chat of this.chats) {
+      let x = dataset[0].findIndex((c) => c.code === chat.code);
 
       if (x === -1) {
         x = dataset[0].length;
+
         dataset[0].push({
           index: x,
-          code: currencyCode,
+          code: chat.code,
           count: 0,
           value: 0,
-          name: currency,
-          symbol,
+          name: this.chatCurrencies.find((i) => i[0] === chat.code)[1],
+          symbol: chat.symbol,
         });
       }
 
-      let y =
-        {
-          "1DE9B6FF": 1,
-          FFCA28FF: 2,
-          "1E88E5FF": 3,
-          "00E5FFFF": 4,
-          F57C00FF: 5,
-          E91E63FF: 6,
-          E62117FF: 7,
-        }[msg.color] || -1;
+      let y = {
+        Green: 1,
+        Yellow: 2,
+        Blue: 3,
+        LightBlue: 4,
+        Orange: 5,
+        Magenta: 6,
+        Red: 7,
+      }[chat.color];
 
-      dataset[0][x].count += 1;
-      dataset[0][x].value += value;
+      if (y) {
+        dataset[0][x].count += 1;
+        dataset[0][x].value += chat.value;
 
-      dataset[y][x] ||= { count: 0, value: 0 };
-      dataset[y][x].count += 1;
-      dataset[y][x].value += value;
+        dataset[y][x] ||= { count: 0, value: 0 };
+        dataset[y][x].count += 1;
+        dataset[y][x].value += chat.value;
+      }
     }
 
     const sorted = dataset[0]
@@ -146,10 +118,14 @@ export class StreamPaidChatChart implements OnInit {
       (series[6].data as number[]).push(dataset[7][i]?.count || 0);
     }
 
-    const height =
-      sorted.length * 45 /* barWidth + barCategoryGap */ + 20; /* grid */
+    this.height =
+      /* barWidth + barCategoryGap */ sorted.length * 45 +
+      /* label */ 20 +
+      /* grid */ 32;
 
-    const options: EChartsOption = {
+    this.items = this.chats.length;
+
+    this.options = {
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -157,10 +133,11 @@ export class StreamPaidChatChart implements OnInit {
         },
       },
       grid: {
-        left: 0,
+        left: 16,
         right: 16,
-        top: 20,
-        bottom: 0,
+        top: 16,
+        bottom: 16,
+        containLabel: true,
       },
       xAxis: {
         type: "value",
@@ -170,8 +147,7 @@ export class StreamPaidChatChart implements OnInit {
         },
         max: "dataMax",
         axisLabel: {
-          formatter: (value) =>
-            value <= 0 ? "" : formatNumber(value, this.locale),
+          formatter: (value) => formatNumber(value, this.locale),
         },
       },
       yAxis: {
@@ -204,7 +180,5 @@ export class StreamPaidChatChart implements OnInit {
       },
       series,
     };
-
-    return { height, options };
   }
 }

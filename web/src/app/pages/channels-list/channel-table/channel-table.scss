@@ -14,27 +14,6 @@
     }
   }
 
-  .mat-column-name.mat-mdc-cell,
-  .mat-column-name.mat-mdc-header-cell,
-  .mat-column-name.mat-mdc-footer-cell {
-    padding: 0 12px;
-    word-break: keep-all;
-    text-align: center;
-  }
-
-  $columns: subscriberCount, dailySubscriberCount, weeklySubscriberCount,
-    monthlySubscriberCount, viewCount, dailyViewCount, weeklyViewCount,
-    monthlyViewCount;
-
-  @each $columns in $columns {
-    .mat-mdc-footer-cell.mat-column-#{$columns},
-    .mat-mdc-cell.mat-column-#{$columns} {
-      font-family: "Fira Code", monospace;
-      text-align: right;
-      padding-right: 18px;
-    }
-  }
-
   .mat-mdc-row .mat-mdc-cell:last-child {
     padding-right: 42px;
   }
@@ -45,10 +24,5 @@
 
   .mat-sort-header-container {
     justify-content: flex-end;
-  }
-
-  .mat-column-shimmerText {
-    padding-left: 12px;
-    padding-right: 12px;
   }
 }

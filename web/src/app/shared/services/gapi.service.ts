@@ -10,13 +10,26 @@ import { environment } from "src/environments/environment";
 
 const init = () =>
   new Promise((resolve, reject) => {
+    if (window.gapi) {
+      return window.gapi.load("auth2", {
+        callback: () =>
+          window.gapi.auth2
+            .init({
+              client_id: environment.yt_client_id,
+              scope: "profile email https://www.googleapis.com/auth/youtube",
+            })
+            .then(resolve, reject),
+        onerror: reject,
+      });
+    }
+
     const s = document.createElement("script");
     s.src = "https://apis.google.com/js/api.js";
     s.async = true;
     s.onload = () =>
-      gapi.load("auth2", {
+      window.gapi.load("auth2", {
         callback: () =>
-          gapi.auth2
+          window.gapi.auth2
             .init({
               client_id: environment.yt_client_id,
               scope: "profile email https://www.googleapis.com/auth/youtube",

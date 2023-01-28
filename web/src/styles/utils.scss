@@ -72,8 +72,17 @@
 .mat-border-primary {
   $primary: map-get($hls-light-theme, "primary");
   border-color: mat.get-color-from-palette($primary) !important;
-  .dark & {
-    $primary: map-get($hls-dark-theme, "primary");
-    border-color: mat.get-color-from-palette($primary) !important;
-  }
+}
+.dark .mat-border-primary {
+  $primary: map-get($hls-dark-theme, "primary");
+  border-color: mat.get-color-from-palette($primary) !important;
+}
+
+.mat-border-divider {
+  $foreground: map-get($hls-light-theme, "foreground");
+  border-color: mat.get-color-from-palette($foreground, "divider");
+}
+.dark .mat-border-divider {
+  $foreground: map-get($hls-dark-theme, "foreground");
+  border-color: mat.get-color-from-palette($foreground, "divider");
 }

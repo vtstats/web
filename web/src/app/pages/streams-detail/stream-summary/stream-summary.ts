@@ -9,14 +9,11 @@ import {
 import { MatGridListModule } from "@angular/material/grid-list";
 import { RouterModule } from "@angular/router";
 
-import type {
-  LiveChatHighlightResponse,
-  Report,
-  Stream,
-  StreamReportKind,
-} from "src/app/models";
+import type { Report, Stream, StreamReportKind } from "src/app/models";
 import { DurationPipe, NamePipe, TickService } from "src/app/shared";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+import { streamPaidChats, PaidChat } from "src/app/shared/api/entrypoint";
+import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
 
 @Component({
   standalone: true,
@@ -27,6 +24,7 @@ import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
     UseQryPipe,
     DurationPipe,
     NamePipe,
+    UseCurrencyPipe,
   ],
   selector: "hls-stream-summary",
   templateUrl: "stream-summary.html",
@@ -39,13 +37,7 @@ export class StreamsSummary implements OnInit {
   @Input() stream: Stream;
   @Input() reports: Report<StreamReportKind>[] = [];
 
-  liveChatQry: Qry<
-    LiveChatHighlightResponse,
-    unknown,
-    number,
-    LiveChatHighlightResponse,
-    [string, string]
-  >;
+  liveChatQry: Qry<PaidChat[], unknown, number, PaidChat[], [string, string]>;
 
   ratesQry: Qry<
     { likes: number; dislikes: number },
@@ -58,11 +50,7 @@ export class StreamsSummary implements OnInit {
   ngOnInit() {
     this.liveChatQry = this.qry.create({
       queryKey: ["streams_paid_chat", this.stream.streamId],
-      queryFn: ({ queryKey: [_, id] }) =>
-        fetch(
-          `https://holoapi.poi.cat/api/v4/live_chat/highlight?id=${id}`
-        ).then((res) => res.json()),
-      select: (res) => res.paid.length,
+      queryFn: ({ queryKey: [_, id] }) => streamPaidChats(id),
     });
 
     this.ratesQry = this.qry.create({

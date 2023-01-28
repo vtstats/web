@@ -5,6 +5,7 @@ import qs from "query-string";
 
 import { StreamTimesResponse, VTuber } from "src/app/models";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
 
 import { StreamTimeBarChart } from "./stream-time-bar-chart/stream-time-bar-chart";
 import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar";
@@ -17,6 +18,7 @@ import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar"
     StreamTimeBarChart,
     StreamTimeCalendar,
     UseQryPipe,
+    FormatDurationPipe,
   ],
   selector: "hls-stream-time",
   templateUrl: "stream-time.html",
@@ -53,5 +55,10 @@ export class StreamTime implements OnInit {
         ).then((res) => res.json()),
       select: (res) => res.times,
     });
+  }
+
+  getTotal(times: [number, number][]): number {
+    if (!times) return 0;
+    return times.reduce((acc, cur) => acc + cur[1], 0);
   }
 }

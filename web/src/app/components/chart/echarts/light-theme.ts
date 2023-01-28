@@ -34,7 +34,7 @@ export default {
   },
   calendar: {
     itemStyle: {
-      color: backgroundColor,
+      color: "transparent",
     },
     dayLabel: {
       color: labelColor,

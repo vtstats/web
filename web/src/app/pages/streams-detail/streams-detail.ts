@@ -5,6 +5,7 @@ import qs from "query-string";
 
 import { Helmet } from "src/app/components/helmet/helmet.component";
 import { StreamReportKind, StreamReportResponse } from "src/app/models";
+import { PaidChat, streamPaidChats } from "src/app/shared/api/entrypoint";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { StreamLiveChatChart } from "./stream-live-chat-chart/stream-live-chat-chart";
@@ -36,7 +37,15 @@ export class StreamsDetail implements OnInit {
     unknown,
     StreamReportResponse,
     unknown,
-    string[]
+    [string, string]
+  >;
+
+  paidChatQry: Qry<
+    PaidChat[],
+    unknown,
+    PaidChat[],
+    PaidChat[],
+    [string, string]
   >;
 
   ngOnInit() {
@@ -66,6 +75,11 @@ export class StreamsDetail implements OnInit {
           this.router.navigateByUrl("/404");
         }
       },
+    });
+
+    this.paidChatQry = this.qry.create({
+      queryKey: ["streams_paid_chat", streamId],
+      queryFn: ({ queryKey: [_, id] }) => streamPaidChats(id),
     });
   }
 }

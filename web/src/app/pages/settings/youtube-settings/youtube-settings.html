@@ -1,28 +1,31 @@
 <h3 class="mat-h3">YouTube Account</h3>
 
-<div class="pb-4">
-  <mat-list *ngIf="gapi.user$ | async as user; else login">
-    <mat-list-item>
+<div *ngIf="gapi.user$ | async as user; else login">
+  <div class="flex items-center space-x-2 mb-5">
+    <div class="flex-shrink-0">
       <img
-        matListItemAvatar
+        class="w-10 h-10 rounded-full select-none"
         [attr.src]="user.imageUrl"
         [attr.alt]="user.name"
       />
-      <h3 matLine>{{ user.name }}</h3>
-      <p matLine>{{ user.email }}</p>
-      <button mat-button (click)="gapi.signOut()">Sign Out</button>
-    </mat-list-item>
+    </div>
 
-    <mat-list-item>
-      <h3 matLine>Saved to playlist</h3>
-      <hls-playlist-selector></hls-playlist-selector>
-    </mat-list-item>
-  </mat-list>
+    <div class="flex-1 min-w-0">
+      <div class="mat-body-2">{{ user.name }}</div>
+      <div class="mat-small mat-secondary-text">{{ user.email }}</div>
+    </div>
 
-  <ng-template #login>
+    <button mat-stroked-button (click)="gapi.signOut()">Sign Out</button>
+  </div>
+
+  <hls-playlist-selector></hls-playlist-selector>
+</div>
+
+<ng-template #login>
+  <div class="pb-4">
     <button mat-stroked-button (click)="gapi.signIn()">
       <mat-icon svgIcon="youtube"></mat-icon>
       Sign in with Google
     </button>
-  </ng-template>
-</div>
+  </div>
+</ng-template>
