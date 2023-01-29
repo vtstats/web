@@ -6,7 +6,7 @@ import { enableProdMode, importProvidersFrom, LOCALE_ID } from "@angular/core";
 import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
-import { provideAnimations } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
@@ -55,7 +55,6 @@ const bootstrap = async () => {
         ROUTES,
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
       ),
-      provideAnimations(),
       importProvidersFrom(
         ServiceWorkerModule.register("ngsw-worker.js", {
           enabled: environment.production,
@@ -63,6 +62,7 @@ const bootstrap = async () => {
         })
       ),
       importProvidersFrom(BrowserModule.withServerTransition({ appId: "hls" })),
+      importProvidersFrom(BrowserAnimationsModule),
       importProvidersFrom(MatSnackBarModule),
     ],
   });
