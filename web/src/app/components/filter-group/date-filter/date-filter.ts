@@ -1,5 +1,5 @@
 import { OverlayModule } from "@angular/cdk/overlay";
-import { CommonModule, DATE_PIPE_DEFAULT_TIMEZONE } from "@angular/common";
+import { CommonModule, DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -42,7 +42,7 @@ import animations from "../_animations";
   encapsulation: ViewEncapsulation.None,
 })
 export class DateFilter {
-  private defaultTz = inject(DATE_PIPE_DEFAULT_TIMEZONE);
+  private defaultTz = inject(DATE_PIPE_DEFAULT_OPTIONS).timezone;
 
   @Output() selectedChange = new EventEmitter<[Date, Date]>();
 

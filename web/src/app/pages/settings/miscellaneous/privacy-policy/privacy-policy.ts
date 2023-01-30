@@ -1,11 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 
-import { Helmet } from "src/app/components/helmet/helmet.component";
-
 @Component({
   standalone: true,
-  imports: [CommonModule, Helmet],
+  imports: [CommonModule],
   selector: "hls-privacy-policy",
   templateUrl: "privacy-policy.html",
 })

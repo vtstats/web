@@ -9,13 +9,11 @@ import { endOfDay, isSameDay, startOfDay } from "date-fns";
 import qs from "query-string";
 
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
-import { Helmet } from "src/app/components/helmet/helmet.component";
 import {
   StreamListDataSource,
   StreamsList as StreamsList_,
 } from "src/app/components/stream-list/stream-list";
 import { StreamListResponse } from "src/app/models";
-import { TITLE } from "src/app/routes";
 import { ConfigService } from "src/app/shared";
 import { InfQry, QryService, UseQryPipe } from "src/app/shared/qry";
 
@@ -32,7 +30,6 @@ type QueryKey = ["youtube_streams", StreamsListPageData, string[]];
   standalone: true,
   imports: [
     CommonModule,
-    Helmet,
     FilterGroup,
     UseQryPipe,
     StreamsList_,
@@ -47,7 +44,6 @@ export class StreamsList implements OnInit {
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
   private config = inject(ConfigService);
-  title = inject(TITLE);
 
   streamsQry: InfQry<
     StreamListResponse,

@@ -1,12 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 
-import { Helmet } from "src/app/components/helmet/helmet.component";
 import { QryService, UseQryPipe } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, Helmet, UseQryPipe],
+  imports: [CommonModule, UseQryPipe],
   selector: "hls-licenses",
   templateUrl: "licenses.html",
 })
