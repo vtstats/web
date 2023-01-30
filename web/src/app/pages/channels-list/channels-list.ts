@@ -11,9 +11,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
-import { Helmet } from "src/app/components/helmet/helmet.component";
 import { ChannelListResponse } from "src/app/models";
-import { TITLE } from "src/app/routes";
 import { ConfigService } from "src/app/shared";
 import { listChannels } from "src/app/shared/api/entrypoint";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
@@ -29,7 +27,6 @@ import { ChannelTable } from "./channel-table/channel-table";
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    Helmet,
     FilterGroup,
     RouterModule,
     ChannelTable,
@@ -41,7 +38,6 @@ export class ChannelList implements OnInit {
   private config = inject(ConfigService);
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
-  title = inject(TITLE);
 
   channelsQry: Qry<
     ChannelListResponse,

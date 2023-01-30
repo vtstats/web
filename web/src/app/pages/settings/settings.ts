@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
 
-import { Helmet } from "src/app/components/helmet/helmet.component";
-
 import { AppearanceComponent } from "./appearance/appearance.component";
 import { LanguageComponent } from "./language/language.component";
 import { MiscellaneousComponent } from "./miscellaneous/miscellaneous.component";
@@ -13,7 +11,6 @@ import { YouTubeSettings } from "./youtube-settings/youtube-settings";
 @Component({
   standalone: true,
   imports: [
-    Helmet,
     YouTubeSettings,
     MiscellaneousComponent,
     AppearanceComponent,

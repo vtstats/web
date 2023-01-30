@@ -1,8 +1,6 @@
 <div class="mx-auto max-w-4xl p-4 mb-15">
   <ng-container *ngIf="streamDetailQry | useQry as result">
     <ng-container *ngIf="result.isSuccess">
-      <hls-helmet [title]="result.data.streams[0].title"></hls-helmet>
-
       <hls-stream-summary
         [stream]="result.data.streams[0]"
         [reports]="result.data.reports"

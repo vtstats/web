@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Helmet } from "src/app/components/helmet/helmet.component";
 import { StreamReportKind, StreamReportResponse } from "src/app/models";
 import {
   PaidChat,
@@ -20,7 +20,6 @@ import { StreamViewersChart } from "./stream-viewers-chart/stream-viewers-chart"
   standalone: true,
   imports: [
     CommonModule,
-    Helmet,
     StreamLiveChatChart,
     StreamPaidChatChart,
     StreamsSummary,
@@ -34,6 +33,7 @@ export class StreamsDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private qry = inject(QryService);
+  private title = inject(Title);
 
   streamDetailQry: Qry<
     StreamReportResponse,
@@ -68,6 +68,8 @@ export class StreamsDetail implements OnInit {
       onSuccess: (res) => {
         if (res.streams.length === 0) {
           this.router.navigateByUrl("/404");
+        } else {
+          this.title.setTitle(res.streams[0].title + " | HoloStats");
         }
       },
     });

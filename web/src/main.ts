@@ -1,22 +1,24 @@
-import {
-  DATE_PIPE_DEFAULT_TIMEZONE,
-  registerLocaleData,
-} from "@angular/common";
+import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from "@angular/common";
 import { enableProdMode, importProvidersFrom, LOCALE_ID } from "@angular/core";
 import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { provideRouter, withInMemoryScrolling } from "@angular/router";
+import {
+  provideRouter,
+  TitleStrategy,
+  withInMemoryScrolling,
+} from "@angular/router";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
 
 import { environment } from "./environments/environment";
 
 import { AppComponent } from "./app/app.component";
-import { ROUTES } from "./app/routes";
+import { getRoutes } from "./app/routes";
 import { DATE_FNS_LOCALE, getLang } from "./i18n";
 import { getLocalStorage } from "./utils";
+import { HoloStatsTitleStrategy } from "./app/shared/title";
 
 if (environment.production) {
   enableProdMode();
@@ -48,11 +50,15 @@ const bootstrap = async () => {
       { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
       { provide: LOCALE_ID, useValue: lang },
       {
-        provide: DATE_PIPE_DEFAULT_TIMEZONE,
-        useValue: getLocalStorage("timezone"),
+        provide: DATE_PIPE_DEFAULT_OPTIONS,
+        useValue: { timezone: getLocalStorage("timezone") },
+      },
+      {
+        provide: TitleStrategy,
+        useClass: HoloStatsTitleStrategy,
       },
       provideRouter(
-        ROUTES,
+        getRoutes(),
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
       ),
       importProvidersFrom(
