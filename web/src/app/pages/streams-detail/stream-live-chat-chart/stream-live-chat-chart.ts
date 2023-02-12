@@ -98,7 +98,7 @@ export class StreamLiveChatChart implements OnChanges {
           </tbody>\
           ${
             this.stream.status === "ended"
-              ? `<tfoot><tr><td colspan="2">Double click to jump to</td></tr></tfoot>`
+              ? `<tfoot><tr class="text-xs text-[#737373]"><td colspan="2">Double click to jump to</td></tr></tfoot>`
               : ""
           }
           </table>`;
