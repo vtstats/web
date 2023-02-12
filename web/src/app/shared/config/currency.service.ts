@@ -10,7 +10,7 @@ export class CurrencyService {
   exchangeRate$ = new BehaviorSubject<Record<string, number>>({});
 
   async initialize() {
-    const mod = await import("./exchangeRate");
-    this.exchangeRate$.next(mod.default.data);
+    const { data } = await import("./exchangeRate.json");
+    this.exchangeRate$.next(data);
   }
 }

@@ -1,6 +1,6 @@
-export default {
-  updatedAt: 1645438070635,
-  data: {
+{
+  "updatedAt": 1645438070635,
+  "data": {
     "USD-AED": 3.6731,
     "USD-ARS": 106.7902,
     "USD-AUD": 1.385953,
@@ -49,6 +49,6 @@ export default {
     "USD-TRY": 13.630400000000002,
     "USD-TWD": 27.821500000000004,
     "USD-ZAR": 15.144020000000001,
-    "USD-USD": 1,
-  },
-};
+    "USD-USD": 1
+  }
+}
