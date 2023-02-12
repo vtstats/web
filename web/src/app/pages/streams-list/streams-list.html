@@ -28,9 +28,9 @@
 
   <hls-stream-list
     *ngIf="!result.isError"
-    type="group"
+    [groupBy]="key"
     [loading]="result.isLoading"
-    [dataSource]="result.data?.pages[0].dataSource"
+    [items]="result.data?.pages[0].items"
     [hideSpinner]="!result.hasNextPage"
     (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
   ></hls-stream-list>

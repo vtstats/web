@@ -1,5 +1,5 @@
 <button
-  class="mr-2"
+  class="mr-2 !rounded-full"
   mat-stroked-button
   (click)="_isOpen = !_isOpen"
   type="button"
@@ -7,6 +7,15 @@
   #trigger="cdkOverlayOrigin"
 >
   {{ text }}
+
+  <svg
+    viewBox="0 0 10 5"
+    focusable="false"
+    aria-hidden="true"
+    class="inline-block w-2 h-1 ml-1 align-middle fill-current"
+  >
+    <polygon points="0,0 5,5 10,0"></polygon>
+  </svg>
 </button>
 
 <ng-template

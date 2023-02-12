@@ -15,9 +15,11 @@ export class TitleLanguageComponent {
   config = inject(ConfigService);
 
   readonly languages = [
-    { value: "native", label: "Native (白上フブキ, Mori Calliope)" },
-    { value: "romaji", label: "Romaji (Shirakami Fubuki, Mori Calliope)" },
-    { value: "english", label: "English (Shirakami Fubuki, Mori Calliope)" },
-    { value: "japanese", label: "Japanese (白上フブキ, 森カリオペ)" },
+    { value: "native", label: "Native (e.g. 白上フブキ, Mori Calliope)" },
+    {
+      value: "english",
+      label: "English (e.g. Shirakami Fubuki, Mori Calliope)",
+    },
+    { value: "japanese", label: "Japanese (e.g. 白上フブキ, 森カリオペ)" },
   ];
 }

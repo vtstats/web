@@ -5,20 +5,17 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ActivatedRoute } from "@angular/router";
 import { max, min } from "d3-array";
-import { endOfDay, isSameDay, startOfDay } from "date-fns";
-import qs from "query-string";
+import { endOfDay, startOfDay } from "date-fns";
 
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
-import {
-  StreamListDataSource,
-  StreamsList as StreamsList_,
-} from "src/app/components/stream-list/stream-list";
-import { StreamListResponse } from "src/app/models";
+import { StreamsList as StreamsList_ } from "src/app/components/stream-list/stream-list";
+import { Stream, StreamListResponse, StreamStatus } from "src/app/models";
 import { ConfigService } from "src/app/shared";
+import { listStreams } from "src/app/shared/api/entrypoint";
 import { InfQry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 export type StreamsListPageData = {
-  status: string[];
+  status: StreamStatus[];
   orderBy: [string, string];
   startAt?: number;
   endAt?: number;
@@ -48,53 +45,35 @@ export class StreamsList implements OnInit {
   streamsQry: InfQry<
     StreamListResponse,
     unknown,
-    { dataSource: StreamListDataSource; updatedAt: number },
+    { items: Stream[]; updatedAt: number },
     StreamListResponse,
     QueryKey
   >;
 
+  key: "startTime" | "scheduleTime";
+
   ngOnInit() {
     const data = this.route.snapshot.data;
 
-    const key = data.orderBy[0] === "start_time" ? "startTime" : "scheduleTime";
+    this.key = data.orderBy[0] === "start_time" ? "startTime" : "scheduleTime";
 
     this.streamsQry = this.qry.createInf({
       queryKey: this._queryKey(),
       queryFn: ({ pageParam = {}, queryKey: [_, data, ids] }) =>
-        fetch(
-          qs.stringifyUrl(
-            {
-              url: "https://holoapi.poi.cat/api/v4/youtube_streams",
-              query: {
-                ids,
-                status: data.status,
-                orderBy: data.orderBy.join(":"),
-                startAt: max([pageParam.startAt, data.startAt]),
-                endAt: min([pageParam.endAt, data.endAt]),
-              },
-            },
-            {
-              arrayFormat: "comma",
-            }
-          )
-        ).then((res) => res.json()),
+        listStreams({
+          ids,
+          status: data.status,
+          orderBy: data.orderBy.join(":") as any,
+          startAt: max([pageParam.startAt, data.startAt]),
+          endAt: min([pageParam.endAt, data.endAt]),
+        }),
       select: ({ pages }) => {
-        const groups = [];
-
-        let last: number | undefined;
+        let items: Stream[] = [];
         let updatedAt: number;
 
         // group stream in same day
         for (const page of pages) {
-          for (const stream of page.streams) {
-            if (last && isSameDay(last, stream[key])) {
-              groups[groups.length - 1].streams.push(stream);
-            } else {
-              groups.push({ name: stream[key], streams: [stream] });
-            }
-
-            last = stream[key];
-          }
+          items.push(...page.streams);
 
           if (updatedAt) {
             updatedAt = Math.max(updatedAt, page.updatedAt);
@@ -103,14 +82,11 @@ export class StreamsList implements OnInit {
           }
         }
 
-        return {
-          pages: [{ dataSource: { groups }, updatedAt }],
-          pageParams: [],
-        };
+        return { pages: [{ items, updatedAt }], pageParams: [] };
       },
       getNextPageParam: (lastPage) => {
         // the limit is 24 by default
-        const time = lastPage.streams[23]?.[key];
+        const time = lastPage.streams[23]?.[this.key];
 
         if (!time) return undefined;
 

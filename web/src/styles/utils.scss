@@ -95,3 +95,10 @@
   $background: map-get($hls-dark-theme, "background");
   border-color: mat.get-color-from-palette($background, "card");
 }
+
+.dense-menu .mat-mdc-menu-item {
+  height: 32px;
+  line-height: 32px;
+  min-height: 0;
+  padding-right: 8px;
+}

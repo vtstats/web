@@ -1,5 +1,5 @@
 <div
-  class="mat-border-divider mat-bg-card rounded border-solid p-4 mb-4"
+  class="mat-border-divider mat-bg-card rounded border border-solid p-4 mb-4"
   *ngIf="streamTimesQry | useQry as result"
 >
   <div class="flex flex-row items-center mb-4">
@@ -10,16 +10,16 @@
       </div>
     </div>
 
-    <span
-      class="mat-text-caption ml-2 cursor-pointer"
-      tabindex="0"
-      *ngFor="let p of ['hour', 'day', 'weekday', 'month']"
-      (click)="precision = p"
-      [class.font-semibold]="precision === p"
-      role="button"
-    >
-      {{ p | titlecase }}
-    </span>
+    <hls-menu
+      [value]="precision"
+      (change)="precision = $event"
+      [options]="[
+        {value:'hour', label:'Hour'},
+        {value:'day', label:'Day'},
+        {value:'weekday', label:'Weekday'},
+        {value:'month', label:'Month'},
+      ]"
+    ></hls-menu>
   </div>
 
   <ng-container [ngSwitch]="precision">

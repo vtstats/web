@@ -2,15 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  inject,
   Input,
+  LOCALE_ID,
   Output,
 } from "@angular/core";
 import { type ECharts, type EChartsOption } from "echarts";
 
-import { CommonModule } from "@angular/common";
+import { CommonModule, formatDate, formatNumber } from "@angular/common";
 import { Chart } from "src/app/components/chart/chart";
 import { ChannelReportKind } from "src/app/models";
 import { sampling } from "src/utils";
+import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 @Component({
   standalone: true,
@@ -30,6 +33,8 @@ export class StatsChartComponent {
   @Input() precision: number;
   @Input() loading: boolean;
   @Output() chartInit = new EventEmitter<ECharts>();
+
+  private locale = inject(LOCALE_ID);
 
   get colors() {
     switch (this.kind) {
@@ -60,19 +65,23 @@ export class StatsChartComponent {
 
     return <EChartsOption>{
       tooltip: {
-        triggerOn: "none",
-        position: "top",
-        backgroundColor: "rgb(97,97,97)",
-        padding: [6, 8],
+        trigger: "axis",
         borderRadius: 4,
+        backgroundColor: "white",
         borderWidth: 0,
-        shadowOffsetX: 0,
-        shadowOffsetY: 0,
         textStyle: {
-          color: "#fff",
-          fontSize: 12,
+          color: "#0F0F0F",
+          fontSize: "14px",
           fontWeight: 500,
-          fontFamily: "Roboto,Helvetica Neue,sans-serif",
+        },
+        padding: [6, 8],
+        formatter: (p: TopLevelFormatterParams) => {
+          const d = Array.isArray(p) ? p[0] : p;
+          const h = d.value[0] as number;
+          const t = formatDate(h, "yyyy/MM/dd", this.locale);
+          const v = d.value[1] as number;
+          const s = formatNumber(v, this.locale);
+          return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
         },
       },
       grid: {

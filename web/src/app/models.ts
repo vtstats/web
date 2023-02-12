@@ -58,8 +58,8 @@ export type StreamListOption = {
   ids: Array<string>;
   status: Array<StreamStatus>;
   orderBy?: StreamListOrderBy;
-  startAt?: Date | number;
-  endAt?: Date | number;
+  startAt?: number;
+  endAt?: number;
 };
 
 export const enum StreamListOrderBy {

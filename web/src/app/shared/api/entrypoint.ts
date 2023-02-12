@@ -3,6 +3,8 @@ import {
   ChannelListResponse,
   StreamReportOption,
   StreamReportResponse,
+  StreamListOption,
+  StreamListResponse,
 } from "src/app/models";
 
 import { LiveChatHighlightResponse } from "./model";
@@ -124,6 +126,30 @@ export const streamReports = async (
         },
       },
       { arrayFormat: "comma" }
+    )
+  );
+
+  return res.json();
+};
+
+export const listStreams = async (
+  opts: StreamListOption
+): Promise<StreamListResponse> => {
+  const res = await fetch(
+    qs.stringifyUrl(
+      {
+        url: "https://holoapi.poi.cat/api/v4/youtube_streams",
+        query: {
+          ids: opts.ids,
+          status: opts.status,
+          orderBy: opts.orderBy,
+          startAt: opts.startAt,
+          endAt: opts.endAt,
+        },
+      },
+      {
+        arrayFormat: "comma",
+      }
     )
   );
 

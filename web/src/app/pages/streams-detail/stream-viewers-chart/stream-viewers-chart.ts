@@ -1,7 +1,14 @@
 import { CommonModule, formatDate, formatNumber } from "@angular/common";
-import { Component, inject, Input, LOCALE_ID, OnChanges } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  LOCALE_ID,
+} from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { type EChartsOption } from "echarts";
+import { EChartsOption } from "echarts";
+import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream } from "src/app/models";
@@ -12,34 +19,46 @@ import { sampling } from "src/utils";
   imports: [Chart, CommonModule, MatCheckboxModule],
   selector: "hls-stream-viewers-chart",
   templateUrl: "stream-viewers-chart.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StreamViewersChart implements OnChanges {
+export class StreamViewersChart {
   private locale = inject(LOCALE_ID);
 
   @Input() stream: Stream;
-  @Input() rows: [number, number][] = [];
 
-  sample: boolean = true;
-  options: EChartsOption;
+  @Input() rows: [number, number][];
 
-  ngOnChanges() {
+  get options(): EChartsOption {
     let data = [];
 
-    if (this.sample) {
-      data = sampling(
-        this.rows,
-        { count: 50 },
-        (row) => row[0],
-        (row) => row[1],
-        Math.max
-      );
-    } else {
-      data = this.rows;
-    }
+    data = sampling(
+      this.rows,
+      { count: 50 },
+      (row) => row[0],
+      (row) => row[1],
+      Math.max
+    );
 
-    this.options = {
+    return {
       tooltip: {
         trigger: "axis",
+        borderRadius: 4,
+        backgroundColor: "white",
+        borderWidth: 0,
+        textStyle: {
+          color: "#0F0F0F",
+          fontSize: "14px",
+          fontWeight: 500,
+        },
+        padding: [6, 8],
+        formatter: (p: TopLevelFormatterParams) => {
+          const d = Array.isArray(p) ? p[0] : p;
+          const h = d.value[0] as number;
+          const t = formatDate(h, "yyyy/MM/dd HH:mm", this.locale);
+          const v = d.value[1] as number;
+          const s = formatNumber(v, this.locale);
+          return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
+        },
       },
       grid: {
         left: 16,
@@ -65,31 +84,29 @@ export class StreamViewersChart implements OnChanges {
             value == 0 ? "" : formatNumber(value, this.locale),
         },
       },
-      series: [
-        {
-          name: "Viewers",
-          type: "line",
-          showSymbol: false,
-          sampling: "max",
-          smooth: true,
-          areaStyle: {
-            opacity: 0.8,
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: "#EA4335FF" },
-                { offset: 1, color: "#EA433500" },
-              ],
-            },
+      series: {
+        name: "Viewers",
+        type: "line",
+        showSymbol: false,
+        sampling: "max",
+        smooth: true,
+        areaStyle: {
+          opacity: 0.8,
+          color: {
+            type: "linear",
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: "#EA4335FF" },
+              { offset: 1, color: "#EA433500" },
+            ],
           },
-          itemStyle: { color: "#EA4335FF" },
-          data: data,
         },
-      ],
+        itemStyle: { color: "#EA4335FF" },
+        data: data,
+      },
     };
   }
 }

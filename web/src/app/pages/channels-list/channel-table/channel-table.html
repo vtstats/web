@@ -12,7 +12,7 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
       <img
-        class="profile w-8 h-8 cursor-pointer align-middle rounded-full"
+        class="profile w-8 h-8 max-w-none cursor-pointer align-middle rounded-full"
         src="/assets/thumbnail/{{ row.vtuberId }}.jpg"
         [routerLink]="['/vtuber', row.vtuberId]"
       />
@@ -24,7 +24,7 @@
     <th class="!text-center" mat-header-cell *matHeaderCellDef i18n="@@name">
       Name
     </th>
-    <td class="!text-center" mat-cell *matCellDef="let row" lang="jp">
+    <td class="!text-center whitespace-nowrap" mat-cell *matCellDef="let row">
       {{ row.vtuberId | name }}
     </td>
     <td class="!text-center" mat-footer-cell *matFooterCellDef i18n="@@total">
@@ -36,7 +36,14 @@
     *ngFor="let column of dataColumns; trackBy:columnTrackBy"
     [matColumnDef]="column[0]"
   >
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column[1]}}</th>
+    <th
+      class="whitespace-nowrap"
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+    >
+      {{column[1]}}
+    </th>
     <ng-container *ngIf="!loading; else shimmer"> </ng-container>
 
     <td

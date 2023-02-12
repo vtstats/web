@@ -1,7 +1,7 @@
 <ng-container *ngIf="streamsQry | useQry as result">
   <div class="flex flex-row items-center mb-4">
     <div class="flex-1">
-      <span i18n="@@recentStreams">Recent Streams</span>
+      <span class="mr-1" i18n="@@recentStreams">Recent Streams</span>
 
       <hls-filter-group
         [displayVTuber]="false"
@@ -32,9 +32,8 @@
 
   <hls-stream-list
     *ngIf="!result.isError"
-    type="array"
     [loading]="result.isLoading"
-    [dataSource]="result.data?.pages[0].dataSource"
+    [items]="result.data?.pages[0].items"
     [hideSpinner]="!result.hasNextPage"
     (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
   >

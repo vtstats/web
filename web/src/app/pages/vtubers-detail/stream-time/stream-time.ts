@@ -3,9 +3,10 @@ import { Component, inject, Input, OnInit } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
 import qs from "query-string";
 
+import { Menu } from "src/app/components/menu/menu";
 import { StreamTimesResponse, VTuber } from "src/app/models";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
+import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { StreamTimeBarChart } from "./stream-time-bar-chart/stream-time-bar-chart";
 import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar";
@@ -19,6 +20,7 @@ import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar"
     StreamTimeCalendar,
     UseQryPipe,
     FormatDurationPipe,
+    Menu,
   ],
   selector: "hls-stream-time",
   templateUrl: "stream-time.html",

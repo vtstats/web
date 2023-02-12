@@ -8,10 +8,18 @@ import {
   OnChanges,
 } from "@angular/core";
 import { range } from "d3-array";
-import { addDays, differenceInDays, fromUnixTime, subWeeks } from "date-fns";
+import {
+  addDays,
+  differenceInDays,
+  formatDuration,
+  fromUnixTime,
+  subWeeks,
+} from "date-fns";
 import { EChartsOption } from "echarts";
+import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
+import { DATE_FNS_LOCALE } from "src/i18n";
 import { within } from "src/utils";
 
 @Component({
@@ -22,11 +30,12 @@ import { within } from "src/utils";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StreamTimeCalendar implements OnChanges {
-  @Input() times: [number, number][] | undefined = [];
   private locale = inject(LOCALE_ID);
+  private dateFnsLocale = inject(DATE_FNS_LOCALE);
+
+  @Input() times: [number, number][] | undefined = [];
 
   option: EChartsOption;
-
   end = new Date();
   start = subWeeks(this.end, 44);
 
@@ -49,6 +58,43 @@ export class StreamTimeCalendar implements OnChanges {
     this.option = {
       tooltip: {
         position: "top",
+        appendToBody: true,
+        borderRadius: 4,
+        backgroundColor: "#424242",
+        borderWidth: 0,
+        textStyle: {
+          align: "center",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: 500,
+        },
+        padding: [6, 8],
+        formatter: (p: TopLevelFormatterParams) => {
+          const _formatDuration = (value: number) => {
+            if (value == 0) {
+              return $localize`No stream`;
+            }
+
+            if (value >= 3600) {
+              return formatDuration(
+                { hours: ((value / 360) | 0) / 10 },
+                { locale: this.dateFnsLocale }
+              );
+            }
+
+            return formatDuration(
+              { minutes: (value / 60) | 0 },
+              { locale: this.dateFnsLocale }
+            );
+          };
+
+          const d = Array.isArray(p) ? p[0] : p;
+          const h = d.value[0] as number;
+          const t = formatDate(h, "longDate", this.locale);
+          const v = d.value[1] as number;
+          const s = _formatDuration(v);
+          return `<div class="text-xs text-[#ffffffb3]">${t}<br/></div><div class="text-sm">${s}</div>`;
+        },
       },
       visualMap: {
         show: false,

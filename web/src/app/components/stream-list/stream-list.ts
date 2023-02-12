@@ -11,16 +11,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { Stream } from "src/app/models";
 
-import { FormatGroupNamePipe } from "./format-group-name.pipe";
+import { GroupStreamsPipe, StreamGroup } from "./group-stream.pipe";
 import { StreamItem } from "./stream-item/stream-item";
 import { StreamItemShimmer } from "./stream-item/stream-item-shimmer";
-
-type StreamGroup = { name: string | Date; streams: Stream[] };
-
-export type StreamListDataSource = {
-  groups?: StreamGroup[];
-  streams?: Stream[];
-};
 
 @Component({
   standalone: true,
@@ -29,7 +22,7 @@ export type StreamListDataSource = {
     StreamItem,
     StreamItemShimmer,
     CommonModule,
-    FormatGroupNamePipe,
+    GroupStreamsPipe,
   ],
   selector: "hls-stream-list",
   templateUrl: "stream-list.html",
@@ -37,11 +30,10 @@ export type StreamListDataSource = {
 export class StreamsList {
   @ViewChild("spinner", { static: true, read: ElementRef }) spinner: ElementRef;
 
-  @Input() type: string;
-  @Input() dataSource: StreamListDataSource;
+  @Input() items: Stream[];
+  @Input() groupBy: "startTime" | "scheduleTime";
   @Input() loading: boolean;
   @Input() hideSpinner: boolean;
-  @Input() fetchNext: VoidFunction;
   @Output() reachedEnd = new EventEmitter();
 
   obs = new IntersectionObserver((entries) => {

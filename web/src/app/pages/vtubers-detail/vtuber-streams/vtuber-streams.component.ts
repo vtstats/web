@@ -8,10 +8,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import qs from "query-string";
 
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
-import {
-  StreamListDataSource,
-  StreamsList,
-} from "src/app/components/stream-list/stream-list";
+import { StreamsList } from "src/app/components/stream-list/stream-list";
 import { Stream, StreamListResponse } from "src/app/models";
 import { InfQry, QryService, UseQryPipe } from "src/app/shared/qry";
 import { VTuber } from "vtubers";
@@ -50,7 +47,7 @@ export class VtuberStreamsComponent implements OnInit {
   streamsQry: InfQry<
     StreamListResponse,
     unknown,
-    { dataSource: StreamListDataSource; updatedAt: number },
+    { items: Stream[]; updatedAt: number },
     StreamListResponse,
     QueryKey
   >;
@@ -75,15 +72,13 @@ export class VtuberStreamsComponent implements OnInit {
           )
         ).then((res) => res.json()),
       select: ({ pages }) => {
-        const streams = [];
+        const items = [];
 
         let updatedAt: number;
 
         // group stream in same day
         for (const page of pages) {
-          for (const stream of page.streams) {
-            streams.push(stream);
-          }
+          items.push(...page.streams);
 
           if (updatedAt) {
             updatedAt = Math.max(updatedAt, page.updatedAt);
@@ -93,7 +88,7 @@ export class VtuberStreamsComponent implements OnInit {
         }
 
         return {
-          pages: [{ dataSource: { streams }, updatedAt }],
+          pages: [{ items, updatedAt }],
           pageParams: [],
         };
       },

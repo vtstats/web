@@ -8,6 +8,7 @@ import {
   OnChanges,
 } from "@angular/core";
 import { type EChartsOption } from "echarts";
+import { CallbackDataParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { PaidChat } from "src/app/shared/api/entrypoint";
@@ -104,7 +105,7 @@ export class StreamPaidChatChart implements OnChanges {
       }
     }
 
-    const sorted = dataset[0]
+    const sorted = [...dataset[0]]
       .sort((a, b) => b.count - a.count)
       .map((i) => i.index);
 
@@ -128,8 +129,57 @@ export class StreamPaidChatChart implements OnChanges {
     this.options = {
       tooltip: {
         trigger: "axis",
-        axisPointer: {
-          type: "none",
+        borderRadius: 4,
+        backgroundColor: "white",
+        borderWidth: 0,
+        textStyle: {
+          color: "#0F0F0F",
+          fontSize: "14px",
+          fontWeight: 500,
+        },
+        padding: [6, 8],
+        formatter: (p: CallbackDataParams[]) => {
+          const currencyIndex = sorted[p[0].dataIndex];
+          const currency = dataset[0][currencyIndex];
+
+          let html = `<table>\
+          <thead><tr><td colspan="3" class="text-xs text-[#737373]">${currency.name}</td></tr></thead>\
+          <tbody class="text-sm">`;
+
+          for (const i of p) {
+            const data = dataset[i.componentIndex + 1][currencyIndex];
+            if (!data || !data.count) continue;
+
+            html += `<tr><td class="text-[#737373]">${
+              i.seriesName
+            }</td><td class="pl-4 text-right">${formatNumber(
+              data.count,
+              this.locale
+            )}</td>\
+            <td class="pl-4 text-right">${formatCurrency(
+              data.value,
+              this.locale,
+              currency.symbol,
+              currency.code
+            )}</td>\
+            </tr>`;
+          }
+
+          html += `<tr><td class="text-[#737373]">${"Total"}</td><td class="pl-4 text-right">${formatNumber(
+            currency.count,
+            this.locale
+          )}</td>\
+          <td class="pl-4 text-right">${formatCurrency(
+            currency.value,
+            this.locale,
+            currency.symbol,
+            currency.code
+          )}</td>\
+          </tr>`;
+
+          html += `</tbody></table>`;
+
+          return html;
         },
       },
       grid: {
