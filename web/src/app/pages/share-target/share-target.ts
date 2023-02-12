@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
-
-import { vtubers } from "vtubers";
+import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 @Component({ standalone: true, selector: "hls-share-target", template: "" })
 export class ShareTarget implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private vtuberSrv = inject(VTuberService);
 
   ngOnInit() {
     const map = this.route.snapshot.queryParamMap;
@@ -49,7 +49,9 @@ export class ShareTarget implements OnInit {
       const id = match?.[1];
 
       if (id) {
-        const vtuber = Object.values(vtubers).find((v) => v.youtube === id);
+        const vtuber = Object.values(this.vtuberSrv).find(
+          (v) => v.youtube === id
+        );
 
         if (vtuber) {
           this.router.navigate(["vtuber", vtuber.id], {

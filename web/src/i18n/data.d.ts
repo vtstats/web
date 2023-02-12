@@ -1,5 +1,3 @@
-import { VTuberIds, BatchIds } from "vtubers";
-
 export type UIMessageIds =
   | "updatedAt"
   | "name"
@@ -101,10 +99,6 @@ export type CurrencyMessageIds =
   | "TRY"
   | "ZAR";
 
-export type MessageIds =
-  | UIMessageIds
-  | CurrencyMessageIds
-  | VTuberIds
-  | BatchIds;
+export type MessageIds = UIMessageIds | CurrencyMessageIds;
 
 export type Translations = Record<MessageIds, string>;

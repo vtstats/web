@@ -3,11 +3,7 @@ import { Component, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { vtubers } from "vtubers";
-
-import { VTuber } from "src/app/models";
-import { translate } from "src/i18n";
-
+import { VTuber, VTuberService } from "src/app/shared/config/vtuber.service";
 import { ChannelOverview } from "./channel-overview/channel-overview";
 import { StreamTime } from "./stream-time/stream-time";
 import { VtuberStreamsComponent } from "./vtuber-streams/vtuber-streams.component";
@@ -29,15 +25,20 @@ export class VTubersDetail {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private title = inject(Title);
+  private vtuberSrv = inject(VTuberService);
 
-  vtuber: VTuber = vtubers[this.route.snapshot.paramMap.get("id")];
+  vtuber: VTuber | null;
 
   ngOnInit() {
+    this.vtuber =
+      this.vtuberSrv.vtubers[this.route.snapshot.paramMap.get("id")];
     if (!this.vtuber) {
       this.router.navigateByUrl("/404");
       return;
     } else {
-      this.title.setTitle(translate(this.vtuber.id) + " | HoloStats");
+      this.title.setTitle(
+        this.vtuberSrv.getName(this.vtuber.id) + " | HoloStats"
+      );
     }
   }
 }

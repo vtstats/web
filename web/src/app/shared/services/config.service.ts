@@ -7,11 +7,9 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "src/utils";
-import { vtubers } from "vtubers";
 
 @Injectable({ providedIn: "root" })
 export class ConfigService implements OnDestroy {
-  vtuber: Set<string>;
   playlist: string;
   timezone$ = new BehaviorSubject(this.getItem("timezone"));
 
@@ -20,36 +18,11 @@ export class ConfigService implements OnDestroy {
   private onDestroy = new Subject<void>();
 
   constructor(private snackBar: MatSnackBar) {
-    const vtbString = this.getItem("vtuber");
-    if (vtbString) {
-      this.vtuber = new Set(vtbString.split(",").filter((id) => id in vtubers));
-    } else {
-      this.vtuber = new Set(
-        Object.values(vtubers)
-          .filter((v) => v.default)
-          .map((v) => v.id)
-      );
-    }
-
     this.playlist = this.getItem("yt_playlist");
   }
 
   ngOnDestroy() {
     this.onDestroy.next();
-  }
-
-  addVtubers(ids: string[]) {
-    for (const id of ids) {
-      this.vtuber.add(id);
-    }
-    this.setItem("vtuber", [...this.vtuber].join(","));
-  }
-
-  deleteVTubers(ids: string[]) {
-    for (const id of ids) {
-      this.vtuber.delete(id);
-    }
-    this.setItem("vtuber", [...this.vtuber].join(","));
   }
 
   setLang(newLang: string) {

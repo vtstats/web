@@ -1,12 +1,3 @@
-export type VTuber = {
-  id: string;
-  name: string;
-  twitter: string;
-  youtube: string | null;
-  bilibili: number | null;
-  default: boolean;
-};
-
 export type Channel = {
   kind: "youtube" | "bilibili";
 

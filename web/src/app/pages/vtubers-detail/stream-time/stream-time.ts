@@ -4,7 +4,8 @@ import { MatDividerModule } from "@angular/material/divider";
 import qs from "query-string";
 
 import { Menu } from "src/app/components/menu/menu";
-import { StreamTimesResponse, VTuber } from "src/app/models";
+import { StreamTimesResponse } from "src/app/models";
+import { VTuber } from "src/app/shared/config/vtuber.service";
 import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 

@@ -1,783 +1,972 @@
-export type VTuberIds =
-  | "hololive"
-  | "hololive_en"
-  | "hololive_id"
-  | "yagoo"
-  | "sora"
-  | "roboco"
-  | "miko"
-  | "suisei"
-  | "fubuki"
-  | "matsuri"
-  | "haato"
-  | "aki"
-  | "mel"
-  | "choco"
-  | "choco_alt"
-  | "shion"
-  | "aqua"
-  | "subaru"
-  | "ayame"
-  | "pekora"
-  | "rushia"
-  | "flare"
-  | "marine"
-  | "noel"
-  | "kanata"
-  | "coco"
-  | "watame"
-  | "towa"
-  | "himemoriluna"
-  | "lamy"
-  | "nene"
-  | "botan"
-  | "polka"
-  | "laplus"
-  | "lui"
-  | "koyori"
-  | "chloe"
-  | "iroha"
-  | "mio"
-  | "okayu"
-  | "korone"
-  | "azki"
-  | "risu"
-  | "moona"
-  | "iofi"
-  | "ollie"
-  | "melfissa"
-  | "reine"
-  | "vestia"
-  | "kaela"
-  | "kobo"
-  | "amelia"
-  | "calliope"
-  | "gura"
-  | "inanis"
-  | "kiara"
-  | "irys"
-  | "sana"
-  | "ceres"
-  | "ouro"
-  | "mumei"
-  | "hakos"
-  | "luna"
-  | "nekomiya"
-  | "tamaki"
-  | "nana"
-  | "ui"
-  | "pochimaru"
-  | "ayamy"
-  | "nabi"
-  | "miyabi"
-  | "izuru"
-  | "aruran"
-  | "rikka"
-  | "astel"
-  | "temma"
-  | "roberu"
-  | "shien"
-  | "oga"
-  | "fuma"
-  | "uyu"
-  | "gamma"
-  | "rio"
-  | "regis_altare"
-  | "magni_dezmond"
-  | "axel_syrios"
-  | "noir_vesper";
-
-export type BatchIds =
-  | "hololive_offical"
-  | "hololive_staff"
-  | "hololive_og"
-  | "hololive_1st"
-  | "hololive_2nd"
-  | "hololive_3rd"
-  | "hololive_4th"
-  | "hololive_5th"
-  | "hololive_6th"
-  | "hololive_gamers"
-  | "hololive_id_1st"
-  | "hololive_id_2nd"
-  | "hololive_id_3rd"
-  | "hololive_en_myth"
-  | "hololive_en_council"
-  | "hololive_en_vsinger"
-  | "holostars_1st"
-  | "holostars_2nd"
-  | "holostars_3rd"
-  | "holostars_uproar"
-  | "holostars_en_tempus"
-  | "hololive_affiliated"
-  | "others";
-
-export type VTuber = {
-  id: VTuberIds;
-  batch: BatchIds | BatchIds[];
-  twitter?: string;
-  youtube?: string;
-  bilibili?: number;
-  default?: true;
-};
-
-const v: VTuber[] = [
+export const vtubers = [
   {
     id: "hololive",
-    batch: "hololive_offical",
     twitter: "hololivetv",
     youtube: "UCJFZiqLMntJufDCHc6bQixg",
     bilibili: 286700005,
     default: true,
+    native_name: "ホロライブ公式",
+    japanese_name: "ホロライブ公式",
+    english_name: "Hololive Official",
   },
   {
     id: "hololive_en",
-    batch: "hololive_offical",
     twitter: "hololive_En",
     youtube: "UCotXwY6s8pWmuWd_snKYjhg",
     default: true,
+    native_name: "ホロライブEnglish公式",
+    japanese_name: "ホロライブEnglish公式",
+    english_name: "Hololive English Official",
   },
   {
     id: "hololive_id",
-    batch: "hololive_offical",
     twitter: "hololive_Id",
     youtube: "UCfrWoRGlawPQDQxxeIDRP0Q",
     default: true,
+    native_name: "ホロライブインドネシア公式",
+    japanese_name: "ホロライブインドネシア公式",
+    english_name: "Hololive Indonesia Official",
   },
   {
     id: "yagoo",
-    batch: "hololive_staff",
     twitter: "tanigox",
     youtube: "UCu2DMOGLeR_DSStCyeQpi5Q",
+    native_name: "YAGOO",
+    japanese_name: "YAGOO",
+    english_name: "YAGOO",
   },
   {
     id: "sora",
-    batch: "hololive_og",
     twitter: "tokino_sora",
     youtube: "UCp6993wxpyDPHUpavwDFqgg",
     bilibili: 286179206,
     default: true,
+    native_name: "ときのそら",
+    japanese_name: "ときのそら",
+    english_name: "Tokino Sora",
   },
   {
     id: "roboco",
-    batch: "hololive_og",
     twitter: "robocosan",
     youtube: "UCDqI2jOz0weumE8s7paEk6g",
     bilibili: 20813493,
     default: true,
+    native_name: "ロボ子さん",
+    japanese_name: "ロボ子さん",
+    english_name: "Roboco",
   },
   {
     id: "miko",
-    batch: "hololive_og",
     twitter: "sakuramiko35",
     youtube: "UC-hM6YJuNYVAmUWxeIr9FeA",
     bilibili: 366690056,
     default: true,
+    native_name: "さくらみこ",
+    japanese_name: "さくらみこ",
+    english_name: "Sakura Miko",
   },
   {
     id: "suisei",
-    batch: "hololive_og",
     twitter: "suisei_hosimati",
     youtube: "UC5CwaMl1eIgY8h02uZw7u8A",
     bilibili: 9034870,
     default: true,
+    native_name: "星街すいせい",
+    japanese_name: "星街すいせい",
+    english_name: "Hoshimachi Suisei",
   },
   {
     id: "azki",
-    batch: "hololive_og",
     twitter: "AZKi_VDiVA",
     youtube: "UC0TXe_LYZ4scaW2XMyi5_kw",
     bilibili: 389056211,
     default: true,
+    native_name: "AZKi",
+    japanese_name: "AZKi",
+    english_name: "AZKi",
   },
   {
     id: "fubuki",
-    batch: ["hololive_1st", "hololive_gamers"],
     twitter: "shirakamifubuki",
     youtube: "UCdn5BQ06XqgXoAxIhbqw5Rg",
     bilibili: 332704117,
     default: true,
+    native_name: "白上フブキ",
+    japanese_name: "白上フブキ",
+    english_name: "Shirakami Fubuki",
   },
   {
     id: "matsuri",
-    batch: "hololive_1st",
     twitter: "natsuiromatsuri",
     youtube: "UCQ0UDLQCjY0rmuxCDE38FGg",
     bilibili: 336731767,
     default: true,
+    native_name: "夏色まつり",
+    japanese_name: "夏色まつり",
+    english_name: "Natsuiro Matsuri",
   },
   {
     id: "haato",
-    batch: "hololive_1st",
     twitter: "akaihaato",
     youtube: "UC1CfXB_kRs3C-zaeTG3oGyg",
     bilibili: 339567211,
     default: true,
+    native_name: "赤井はあと",
+    japanese_name: "赤井はあと",
+    english_name: "Akai Haato",
   },
   {
     id: "aki",
-    batch: "hololive_1st",
     twitter: "akirosenthal",
     youtube: "UCFTLzh12_nrtzqBPsTCqenA",
     bilibili: 389857131,
     default: true,
+    native_name: "アキロゼ",
+    japanese_name: "アキロゼ",
+    english_name: "Aki Rosenthal",
   },
   {
     id: "mel",
-    batch: "hololive_1st",
     twitter: "yozoramel",
     youtube: "UCD8HOxPs4Xvsm8H0ZxXGiBw",
     bilibili: 389856447,
     default: true,
+    native_name: "夜空メル",
+    japanese_name: "夜空メル",
+    english_name: "Yozora Mel",
   },
   {
     id: "choco",
-    batch: "hololive_2nd",
     twitter: "yuzukichococh",
     youtube: "UC1suqwovbL1kzsoaZgFZLKg",
     bilibili: 389858754,
     default: true,
+    native_name: "癒月ちょこ",
+    japanese_name: "癒月ちょこ",
+    english_name: "Yuzuki Choco",
   },
   {
     id: "choco_alt",
-    batch: "hololive_2nd",
     twitter: "yuzukichococh",
     youtube: "UCp3tgHXw_HI0QMk1K8qh3gQ",
     default: true,
+    native_name: "癒月ちょこ Sub",
+    japanese_name: "癒月ちょこ Sub",
+    english_name: "Yuzuki Choco Sub",
   },
   {
     id: "shion",
-    batch: "hololive_2nd",
     twitter: "murasakishionch",
     youtube: "UCXTpFs_3PqI41qX2d9tL2Rw",
     bilibili: 389857640,
     default: true,
+    native_name: "紫咲シオン",
+    japanese_name: "紫咲シオン",
+    english_name: "Murasaki Shion",
   },
   {
     id: "aqua",
-    batch: "hololive_2nd",
     twitter: "minatoaqua",
     youtube: "UC1opHUrw8rvnsadT-iGp7Cg",
     bilibili: 375504219,
     default: true,
+    native_name: "湊あくあ",
+    japanese_name: "湊あくあ",
+    english_name: "Minato Aqua",
   },
   {
     id: "subaru",
-    batch: "hololive_2nd",
     twitter: "oozorasubaru",
     youtube: "UCvzGlP9oQwU--Y0r9id_jnA",
     bilibili: 389859190,
     default: true,
+    native_name: "大空スバル",
+    japanese_name: "大空スバル",
+    english_name: "Oozora Subaru",
   },
   {
     id: "ayame",
-    batch: "hololive_2nd",
     twitter: "nakiriayame",
     youtube: "UC7fk0CB07ly8oSl0aqKkqFg",
     bilibili: 389858027,
     default: true,
+    native_name: "百鬼あやめ",
+    japanese_name: "百鬼あやめ",
+    english_name: "Nakiri Ayame",
   },
   {
     id: "pekora",
-    batch: "hololive_3rd",
     twitter: "usadapekora",
     youtube: "UC1DCedRgGHBdm81E1llLhOQ",
     bilibili: 443305053,
     default: true,
+    native_name: "兎田ぺこら",
+    japanese_name: "兎田ぺこら",
+    english_name: "Usada Pekora",
   },
   {
     id: "rushia",
-    batch: "hololive_3rd",
     twitter: "uruharushia",
     youtube: "UCl_gCybOJRIgOXw6Qb4qJzQ",
     bilibili: 443300418,
     default: true,
+    native_name: "潤羽るしあ",
+    japanese_name: "潤羽るしあ",
+    english_name: "Uruha Rushia",
   },
   {
     id: "flare",
-    batch: "hololive_3rd",
     twitter: "shiranuiflare",
     youtube: "UCvInZx9h3jC2JzsIzoOebWg",
     bilibili: 454737600,
     default: true,
+    native_name: "不知火フレア",
+    japanese_name: "不知火フレア",
+    english_name: "Shiranui Flare",
   },
   {
     id: "marine",
-    batch: "hololive_3rd",
     twitter: "houshoumarine",
     youtube: "UCCzUftO8KOVkV4wQG1vkUvg",
     bilibili: 454955503,
     default: true,
+    native_name: "宝鐘マリン",
+    japanese_name: "宝鐘マリン",
+    english_name: "Houshou Marine",
   },
   {
     id: "noel",
-    batch: "hololive_3rd",
     twitter: "shiroganenoel",
     youtube: "UCdyqAaZDKHXg4Ahi7VENThQ",
     bilibili: 454733056,
     default: true,
+    native_name: "白銀ノエル",
+    japanese_name: "白銀ノエル",
+    english_name: "Shirogane Noel",
   },
   {
     id: "kanata",
-    batch: "hololive_4th",
     twitter: "amanekanatach",
     youtube: "UCZlDXzGoo7d44bwdNObFacg",
     bilibili: 491474048,
     default: true,
+    native_name: "天音かなた",
+    japanese_name: "天音かなた",
+    english_name: "Amane Kanata",
   },
   {
     id: "coco",
-    batch: "hololive_4th",
     twitter: "kiryucoco",
     youtube: "UCS9uQI-jC3DE0L4IpXyvr6w",
     bilibili: 491474049,
     default: true,
+    native_name: "桐生ココ",
+    japanese_name: "桐生ココ",
+    english_name: "Kiryu Coco",
   },
   {
     id: "watame",
-    batch: "hololive_4th",
     twitter: "tsunomakiwatame",
     youtube: "UCqm3BQLlJfvkTsX_hvm0UmA",
     bilibili: 491474050,
     default: true,
+    native_name: "角巻わため",
+    japanese_name: "角巻わため",
+    english_name: "Tsunomaki Watame",
   },
   {
     id: "towa",
-    batch: "hololive_4th",
     twitter: "tokoyamitowa",
     youtube: "UC1uv2Oq6kNxgATlCiez59hw",
     bilibili: 491474051,
     default: true,
+    native_name: "常闇トワ",
+    japanese_name: "常闇トワ",
+    english_name: "Tokoyami Towa",
   },
   {
     id: "himemoriluna",
-    batch: "hololive_4th",
     twitter: "himemoriluna",
     youtube: "UCa9Y57gfeY0Zro_noHRVrnw",
     bilibili: 491474052,
     default: true,
+    native_name: "姫森ルーナ",
+    japanese_name: "姫森ルーナ",
+    english_name: "Himemori Luna",
   },
   {
     id: "lamy",
-    batch: "hololive_5th",
     twitter: "yukihanalamy",
     youtube: "UCFKOVgVbGmX65RxO3EtH3iw",
     bilibili: 624252706,
     default: true,
+    native_name: "雪花ラミィ",
+    japanese_name: "雪花ラミィ",
+    english_name: "Yukihana Lamy",
   },
   {
     id: "nene",
-    batch: "hololive_5th",
     twitter: "momosuzunene",
     youtube: "UCAWSyEs_Io8MtpY3m-zqILA",
     bilibili: 624252709,
     default: true,
+    native_name: "桃鈴ねね",
+    japanese_name: "桃鈴ねね",
+    english_name: "Momosuzu Nene",
   },
   {
     id: "botan",
-    batch: "hololive_5th",
     twitter: "shishirobotan",
     youtube: "UCUKD-uaobj9jiqB-VXt71mA",
     bilibili: 624252710,
     default: true,
+    native_name: "獅白ぼたん",
+    japanese_name: "獅白ぼたん",
+    english_name: "Shishiro Botan",
   },
   {
     id: "polka",
-    batch: "hololive_5th",
     twitter: "omarupolka",
     youtube: "UCK9V2B22uJYu3N7eR_BT9QA",
     bilibili: 624252712,
     default: true,
+    native_name: "尾丸ポルカ",
+    japanese_name: "尾丸ポルカ",
+    english_name: "Omaru Polka",
   },
   {
     id: "laplus",
-    batch: "hololive_6th",
     twitter: "LaplusDarknesss",
     youtube: "UCENwRMx5Yh42zWpzURebzTw",
     default: true,
+    native_name: "ラプラス・ダークネス",
+    japanese_name: "ラプラス・ダークネス",
+    english_name: "La+ Darknesss",
   },
   {
     id: "lui",
-    batch: "hololive_6th",
     twitter: "takanelui",
     youtube: "UCs9_O1tRPMQTHQ-N_L6FU2g",
     default: true,
+    native_name: "鷹嶺ルイ",
+    japanese_name: "鷹嶺ルイ",
+    english_name: "Takane Lui",
   },
   {
     id: "koyori",
-    batch: "hololive_6th",
     twitter: "hakuikoyori",
     youtube: "UC6eWCld0KwmyHFbAqK3V-Rw",
     default: true,
+    native_name: "博衣こより",
+    japanese_name: "博衣こより",
+    english_name: "Hakui Koyori",
   },
   {
     id: "chloe",
-    batch: "hololive_6th",
     twitter: "sakamatachloe",
     youtube: "UCIBY1ollUsauvVi4hW4cumw",
     default: true,
+    native_name: "沙花叉クロヱ",
+    japanese_name: "沙花叉クロヱ",
+    english_name: "Sakamata Chloe",
   },
   {
     id: "iroha",
-    batch: "hololive_6th",
     twitter: "kazamairohach",
     youtube: "UC_vMYWcDjmfdpH6r4TTn1MQ",
     default: true,
+    native_name: "風真いろは",
+    japanese_name: "風真いろは",
+    english_name: "Kazama Iroha",
   },
   {
     id: "mio",
-    batch: "hololive_gamers",
     twitter: "ookamimio",
     youtube: "UCp-5t9SrOQwXMU7iIjQfARg",
     bilibili: 389862071,
     default: true,
+    native_name: "大神ミオ",
+    japanese_name: "大神ミオ",
+    english_name: "Ookami Mio",
   },
   {
     id: "okayu",
-    batch: "hololive_gamers",
     twitter: "nekomataokayu",
     youtube: "UCvaTdHTWBGv3MKj3KVqJVCw",
     bilibili: 412135222,
     default: true,
+    native_name: "猫又おかゆ",
+    japanese_name: "猫又おかゆ",
+    english_name: "Nekomata Okayu",
   },
   {
     id: "korone",
-    batch: "hololive_gamers",
     twitter: "inugamikorone",
     youtube: "UChAnqc_AY5_I3Px5dig3X1Q",
     bilibili: 412135619,
     default: true,
+    native_name: "戌神ころね",
+    japanese_name: "戌神ころね",
+    english_name: "Inugami Korone",
   },
   {
     id: "risu",
-    batch: "hololive_id_1st",
     twitter: "ayunda_risu",
     youtube: "UCOyYb1c43VlX9rc_lT6NKQw",
     default: true,
+    native_name: "Ayunda Risu",
+    japanese_name: "アユンダ・リス",
+    english_name: "Ayunda Risu",
   },
   {
     id: "moona",
-    batch: "hololive_id_1st",
     twitter: "moonahoshinova",
     youtube: "UCP0BspO_AMEe3aQqqpo89Dg",
     default: true,
+    native_name: "Moona Hoshinova",
+    japanese_name: "ムーナ・ホシノヴァ",
+    english_name: "Moona Hoshinova",
   },
   {
     id: "iofi",
-    batch: "hololive_id_1st",
     twitter: "airaniiofifteen",
     youtube: "UCAoy6rzhSf4ydcYjJw3WoVg",
     default: true,
+    native_name: "Airani Iofifteen",
+    japanese_name: "アイラニ・イオフィフティーン",
+    english_name: "Airani Iofifteen",
   },
   {
     id: "ollie",
-    batch: "hololive_id_2nd",
     twitter: "kureijiollie",
     youtube: "UCYz_5n-uDuChHtLo7My1HnQ",
     default: true,
+    native_name: "Kureiji Ollie",
+    japanese_name: "クレイジー・オリー",
+    english_name: "Kureiji Ollie",
   },
   {
     id: "melfissa",
-    batch: "hololive_id_2nd",
     twitter: "anyamelfissa",
     youtube: "UC727SQYUvx5pDDGQpTICNWg",
     default: true,
+    native_name: "Anya Melfissa",
+    japanese_name: "アーニャ・メルフィッサ",
+    english_name: "Anya Melfissa",
   },
   {
     id: "reine",
-    batch: "hololive_id_2nd",
     twitter: "pavoliareine",
     youtube: "UChgTyjG-pdNvxxhdsXfHQ5Q",
     default: true,
+    native_name: "Pavolia Reine",
+    japanese_name: "パヴォリア・レイネ",
+    english_name: "Pavolia Reine",
   },
   {
     id: "vestia",
-    batch: "hololive_id_3rd",
     twitter: "vestiazeta",
     youtube: "UCTvHWSfBZgtxE4sILOaurIQ",
     default: true,
+    native_name: "Vestia Zeta",
+    japanese_name: "ベスティア・ゼータ",
+    english_name: "Vestia Zeta",
   },
   {
     id: "kaela",
-    batch: "hololive_id_3rd",
     twitter: "kaelakovalskia",
     youtube: "UCZLZ8Jjx_RN2CXloOmgTHVg",
     default: true,
+    native_name: "Kaela Kovalskia",
+    japanese_name: "カエラ・コヴァルスキア",
+    english_name: "Kaela Kovalskia",
   },
   {
     id: "kobo",
-    batch: "hololive_id_3rd",
     twitter: "kobokanaeru",
     youtube: "UCjLEmnpCNeisMxy134KPwWw",
     default: true,
+    native_name: "Kobo Kanaeru",
+    japanese_name: "こぼ・かなえる",
+    english_name: "Kobo Kanaeru",
   },
   {
     id: "amelia",
-    batch: "hololive_en_myth",
     twitter: "watsonameliaEN",
     youtube: "UCyl1z3jo3XHR1riLFKG5UAg",
     bilibili: 674600649,
     default: true,
+    native_name: "Watson Amelia",
+    japanese_name: "ワトソン・アメリア",
+    english_name: "Watson Amelia",
   },
   {
     id: "calliope",
-    batch: "hololive_en_myth",
     twitter: "moricalliope",
     youtube: "UCL_qhgtOy0dy1Agp8vkySQg",
     bilibili: 674600645,
     default: true,
+    native_name: "Mori Calliope",
+    japanese_name: "森カリオペ",
+    english_name: "Mori Calliope",
   },
   {
     id: "gura",
-    batch: "hololive_en_myth",
     twitter: "gawrgura",
     youtube: "UCoSrY_IQQVpmIRZ9Xf-y93g",
     bilibili: 674600648,
     default: true,
+    native_name: "Gawr Gura",
+    japanese_name: "がうる・ぐら",
+    english_name: "Gawr Gura",
   },
   {
     id: "inanis",
-    batch: "hololive_en_myth",
     twitter: "ninomaeinanis",
     youtube: "UCMwGHR0BTZuLsmjY_NT5Pwg",
     bilibili: 674600647,
     default: true,
+    native_name: "Ninomae Ina'nis",
+    japanese_name: "一伊那尓栖",
+    english_name: "Ninomae Ina'nis",
   },
   {
     id: "kiara",
-    batch: "hololive_en_myth",
     twitter: "takanashikiara",
     youtube: "UCHsx4Hqa-1ORjQTh9TYDhww",
     bilibili: 674600646,
     default: true,
+    native_name: "Takanashi Kiara",
+    japanese_name: "小鳥遊キアラ",
+    english_name: "Takanashi Kiara",
   },
   {
     id: "irys",
-    batch: "hololive_en_vsinger",
     twitter: "irys_en",
     youtube: "UC8rcEBzJSleTkf_-agPM20g",
     default: true,
+    native_name: "IRyS",
+    japanese_name: "IRyS",
+    english_name: "IRyS",
   },
   {
     id: "sana",
-    batch: "hololive_en_council",
     twitter: "tsukumosana",
     youtube: "UCsUj0dszADCGbF3gNrQEuSQ",
     default: true,
+    native_name: "Tsukumo Sana",
+    japanese_name: "九十九佐命",
+    english_name: "Tsukumo Sana",
   },
   {
     id: "ceres",
-    batch: "hololive_en_council",
     twitter: "ceresfauna",
     youtube: "UCO_aKKYxn4tvrqPjcTzZ6EQ",
     default: true,
+    native_name: "Ceres Fauna",
+    japanese_name: "セレス・ファウナ",
+    english_name: "Ceres Fauna",
   },
   {
     id: "ouro",
-    batch: "hololive_en_council",
     twitter: "ourokronii",
     youtube: "UCmbs8T6MWqUHP1tIQvSgKrg",
     default: true,
+    native_name: "Ouro Kronii",
+    japanese_name: "オーロ・クロニー",
+    english_name: "Ouro Kronii",
   },
   {
     id: "mumei",
-    batch: "hololive_en_council",
     twitter: "nanashimumei_en",
     youtube: "UC3n5uGu18FoCy23ggWWp8tA",
     default: true,
+    native_name: "Nanashi Mumei",
+    japanese_name: "七詩ムメイ",
+    english_name: "Nanashi Mumei",
   },
   {
     id: "hakos",
-    batch: "hololive_en_council",
     twitter: "hakosbaelz",
     youtube: "UCgmPnx-EEeOrZSg5Tiw7ZRQ",
     default: true,
+    native_name: "Hakos Baelz",
+    japanese_name: "ハコス・ベールズ",
+    english_name: "Hakos Baelz",
   },
   {
     id: "miyabi",
-    batch: "holostars_1st",
     twitter: "miyabihanasaki",
     youtube: "UC6t3-_N8A6ME1JShZHHqOMw",
+    native_name: "花咲みやび",
+    japanese_name: "花咲みやび",
+    english_name: "Hanasaki Miyabi",
   },
   {
     id: "izuru",
-    batch: "holostars_1st",
     twitter: "kanadeizuru",
     youtube: "UCZgOv3YDEs-ZnZWDYVwJdmA",
+    native_name: "奏手イヅル",
+    japanese_name: "奏手イヅル",
+    english_name: "Kanade Izuru",
   },
   {
     id: "aruran",
-    batch: "holostars_1st",
     twitter: "arurandeisu",
     youtube: "UCKeAhJvy8zgXWbh9duVjIaQ",
+    native_name: "アルランディス",
+    japanese_name: "アルランディス",
+    english_name: "Arurandeisu",
   },
   {
     id: "rikka",
-    batch: "holostars_1st",
     twitter: "rikkaroid",
     youtube: "UC9mf_ZVpouoILRY9NUIaK-w",
+    native_name: "律可",
+    japanese_name: "律可",
+    english_name: "Rikka",
   },
   {
     id: "astel",
-    batch: "holostars_2nd",
     twitter: "astelleda",
     youtube: "UCNVEsYbiZjH5QLmGeSgTSzg",
+    native_name: "アステル・レダ",
+    japanese_name: "アステル・レダ",
+    english_name: "Astel Leda",
   },
   {
     id: "temma",
-    batch: "holostars_2nd",
     twitter: "kishidotemma",
     youtube: "UCGNI4MENvnsymYjKiZwv9eg",
+    native_name: "岸堂天真",
+    japanese_name: "岸堂天真",
+    english_name: "Kishido Temma",
   },
   {
     id: "roberu",
-    batch: "holostars_2nd",
     twitter: "yukokuroberu",
     youtube: "UCANDOlYTJT7N5jlRC3zfzVA",
+    native_name: "夕刻ロベル",
+    japanese_name: "夕刻ロベル",
+    english_name: "Yukoku Roberu",
   },
   {
     id: "shien",
-    batch: "holostars_3rd",
     twitter: "kageyamashien",
     youtube: "UChSvpZYRPh0FvG4SJGSga3g",
+    native_name: "影山シエン",
+    japanese_name: "影山シエン",
+    english_name: "Kageyama Shien",
   },
   {
     id: "oga",
-    batch: "holostars_3rd",
     twitter: "aragamioga",
     youtube: "UCwL7dgTxKo8Y4RFIKWaf8gA",
+    native_name: "荒咬オウガ",
+    japanese_name: "荒咬オウガ",
+    english_name: "Aragami Oga",
   },
   {
     id: "fuma",
-    batch: "holostars_uproar",
     twitter: "yatogamifuma",
     youtube: "UCc88OV45ICgHbn3ZqLLb52w",
+    native_name: "夜十神封魔",
+    japanese_name: "夜十神封魔",
+    english_name: "Yatogami Fuma",
   },
   {
     id: "uyu",
-    batch: "holostars_uproar",
     twitter: "utsugiuyu",
     youtube: "UCgRqGV1gBf2Esxh0Tz1vxzw",
+    native_name: "羽継烏有",
+    japanese_name: "羽継烏有",
+    english_name: "Utsugi Uyu",
   },
   {
     id: "gamma",
-    batch: "holostars_uproar",
     twitter: "hizakigamma",
     youtube: "UCkT1u65YS49ca_LsFwcTakw",
+    native_name: "緋崎ガンマ",
+    japanese_name: "緋崎ガンマ",
+    english_name: "Hizaki Gamma",
   },
   {
     id: "rio",
-    batch: "holostars_uproar",
     twitter: "minaserioch",
     youtube: "UCdfMHxjcCc2HSd9qFvfJgjg",
+    native_name: "水無世燐央",
+    japanese_name: "水無世燐央",
+    english_name: "Minase Rio",
   },
   {
     id: "regis_altare",
-    batch: "holostars_en_tempus",
     twitter: "regisaltare",
     youtube: "UCyxtGMdWlURZ30WSnEjDOQw",
+    native_name: "Regis Altare",
+    japanese_name: "リージス・アルテア",
+    english_name: "Regis Altare",
   },
   {
     id: "magni_dezmond",
-    batch: "holostars_en_tempus",
     twitter: "magnidezmond",
     youtube: "UC7MMNHR-kf9EN1rXiesMTMw",
+    native_name: "Magni Dezmond",
+    japanese_name: "マグニ・デズモンド",
+    english_name: "Magni Dezmond",
   },
   {
     id: "axel_syrios",
-    batch: "holostars_en_tempus",
     twitter: "axelsyrios",
     youtube: "UC2hx0xVkMoHGWijwr_lA01w",
+    native_name: "Axel Syrios",
+    japanese_name: "アクセル・シリオス",
+    english_name: "Axel Syrios",
   },
   {
     id: "noir_vesper",
-    batch: "holostars_en_tempus",
     twitter: "noirvesper_en",
     youtube: "UCDRWSO281bIHYVi-OV3iFYA",
+    native_name: "Noir Vesper",
+    japanese_name: "ノワール・ヴェスパー",
+    english_name: "Noir Vesper",
   },
   {
     id: "ayamy",
-    batch: "hololive_affiliated",
     twitter: "ayamy_garubinu",
     youtube: "UCr9p1ZjLKgfaoqNorY7PiWQ",
     bilibili: 521070071,
     default: true,
+    native_name: "あやみ",
+    japanese_name: "あやみ",
+    english_name: "Ayamy",
   },
   {
     id: "nabi",
-    batch: "hololive_affiliated",
     twitter: "nab0i",
     youtube: "UCzKkwB84Y0ql0EvyOWRSkEw",
     default: true,
+    native_name: "蒼彩なび",
+    japanese_name: "蒼彩なび",
+    english_name: "Aoi Nabi",
   },
   {
     id: "pochimaru",
-    batch: "hololive_affiliated",
     twitter: "lizhi3",
     youtube: "UC22BVlBsZc6ta3Dqz75NU6Q",
     default: true,
+    native_name: "ぽちまる",
+    japanese_name: "ぽちまる",
+    english_name: "Pochimaru",
   },
   {
     id: "nana",
-    batch: "hololive_affiliated",
     twitter: "nana_kaguraaa",
     youtube: "UCbfv8uuUXt3RSJGEwxny5Rw",
     bilibili: 386900246,
     default: true,
+    native_name: "カグラナナ",
+    japanese_name: "カグラナナ",
+    english_name: "Kagura Nana",
   },
   {
     id: "ui",
-    batch: "hololive_affiliated",
     twitter: "ui_shig",
     youtube: "UCt30jJgChL8qeT9VPadidSw",
     bilibili: 2601367,
     default: true,
+    native_name: "しぐれうい",
+    japanese_name: "しぐれうい",
+    english_name: "Shigure Ui",
   },
   {
     id: "luna",
-    batch: "others",
     twitter: "_KaguyaLuna",
     youtube: "UCQYADFw7xEJ9oZSM5ZbqyBw",
     bilibili: 265224956,
+    native_name: "輝夜月",
+    japanese_name: "輝夜月",
+    english_name: "Kaguya Luna",
   },
   {
     id: "nekomiya",
-    batch: "others",
     twitter: "Nekomiya_Hinata",
     youtube: "UCevD0wKzJFpfIkvHOiQsfLQ",
     bilibili: 291296062,
+    native_name: "猫宮ひなた",
+    japanese_name: "猫宮ひなた",
+    english_name: "Nekomiya Hinata",
   },
   {
     id: "tamaki",
-    batch: "others",
     twitter: "norioo_",
     youtube: "UC8NZiqKx6fsDT3AVcMiVFyA",
     bilibili: 12362451,
+    native_name: "犬山たまき",
+    japanese_name: "犬山たまき",
+    english_name: "Inuyama Tamaki",
   },
 ];
 
-export const vtubers = v.reduce((acc, v) => {
-  acc[v.id] = {
-    id: v.id,
-    batch: v.batch,
-    twitter: v.twitter,
-    youtube: v.youtube,
-    bilibili: v.bilibili,
-    default: v.default,
-  };
-  return acc;
-}, {} as Record<VTuberIds, VTuber>);
-
-export const batches = v.reduce((acc, v) => {
-  const ids = Array.isArray(v.batch) ? v.batch : [v.batch];
-
-  for (const id of ids) {
-    if (acc[id]) {
-      acc[id].push(v.id);
-    } else {
-      acc[id] = [v.id];
-    }
-  }
-
-  return acc;
-}, {} as Record<BatchIds, VTuberIds[]>);
+export const batches = [
+  {
+    id: "hololive_offical",
+    native_name: "ホロライブ公式",
+    japanese_name: "ホロライブ公式",
+    english_name: "Hololive Offical",
+    children: ["hololive", "hololive_en", "hololive_id"],
+  },
+  {
+    id: "hololive_staff",
+    native_name: "ホロライブスタッフ",
+    japanese_name: "ホロライブスタッフ",
+    english_name: "Hololive Staff",
+    children: ["yagoo"],
+  },
+  {
+    id: "hololive_og",
+    native_name: "ホロライブ無印",
+    japanese_name: "ホロライブ無印",
+    english_name: "Hololive Talents",
+    children: ["sora", "roboco", "miko", "suisei", "azki"],
+  },
+  {
+    id: "hololive_1st",
+    native_name: "ホロライブ1期生",
+    japanese_name: "ホロライブ1期生",
+    english_name: "Hololive 1st Gen",
+    children: ["fubuki", "matsuri", "haato", "aki", "mel"],
+  },
+  {
+    id: "hololive_gamers",
+    native_name: "ホロライブゲーマーズ",
+    japanese_name: "ホロライブゲーマーズ",
+    english_name: "Hololive Gamers",
+    children: ["fubuki", "mio", "okayu", "korone"],
+  },
+  {
+    id: "hololive_2nd",
+    native_name: "ホロライブ2期生",
+    japanese_name: "ホロライブ2期生",
+    english_name: "Hololive 2nd Gen",
+    children: ["choco", "choco_alt", "shion", "aqua", "subaru", "ayame"],
+  },
+  {
+    id: "hololive_3rd",
+    native_name: "ホロライブ3期生",
+    japanese_name: "ホロライブ3期生",
+    english_name: "Hololive 3rd Gen",
+    children: ["pekora", "rushia", "flare", "marine", "noel"],
+  },
+  {
+    id: "hololive_4th",
+    native_name: "ホロライブ4期生",
+    japanese_name: "ホロライブ4期生",
+    english_name: "Hololive 4th Gen",
+    children: ["kanata", "coco", "watame", "towa", "himemoriluna"],
+  },
+  {
+    id: "hololive_5th",
+    native_name: "ホロライブ5期生",
+    japanese_name: "ホロライブ5期生",
+    english_name: "Hololive 5th Gen",
+    children: ["lamy", "nene", "botan", "polka"],
+  },
+  {
+    id: "hololive_6th",
+    native_name: "ホロライブ6期生",
+    japanese_name: "ホロライブ6期生",
+    english_name: "Hololive 6th Gen",
+    children: ["laplus", "lui", "koyori", "chloe", "iroha"],
+  },
+  {
+    id: "hololive_id_1st",
+    native_name: "ホロライブインドネシア1期生",
+    japanese_name: "ホロライブインドネシア1期生",
+    english_name: "Hololive Indonesia 1st Gen",
+    children: ["risu", "moona", "iofi"],
+  },
+  {
+    id: "hololive_id_2nd",
+    native_name: "ホロライブインドネシア2期生",
+    japanese_name: "ホロライブインドネシア2期生",
+    english_name: "Hololive Indonesia 2nd Gen",
+    children: ["ollie", "melfissa", "reine"],
+  },
+  {
+    id: "hololive_id_3rd",
+    native_name: "ホロライブインドネシア3期生",
+    japanese_name: "ホロライブインドネシア3期生",
+    english_name: "Hololive Indonesia 3rd Gen",
+    children: ["vestia", "kaela", "kobo"],
+  },
+  {
+    id: "hololive_en_myth",
+    native_name: "ホロライブEnglish -Myth-",
+    japanese_name: "ホロライブEnglish -Myth-",
+    english_name: "Hololive English -Myth-",
+    children: ["amelia", "calliope", "gura", "inanis", "kiara"],
+  },
+  {
+    id: "hololive_en_vsinger",
+    native_name: "ホロライブ English VSinger",
+    japanese_name: "ホロライブ English VSinger",
+    english_name: "Hololive English VSinger",
+    children: ["irys"],
+  },
+  {
+    id: "hololive_en_council",
+    native_name: "ホロライブEnglish -議会-",
+    japanese_name: "ホロライブEnglish -議会-",
+    english_name: "Hololive English -Council-",
+    children: ["sana", "ceres", "ouro", "mumei", "hakos"],
+  },
+  {
+    id: "holostars_1st",
+    native_name: "ホロスターズ1期生",
+    japanese_name: "ホロスターズ1期生",
+    english_name: "Holostars 1st Gen",
+    children: ["miyabi", "izuru", "aruran", "rikka"],
+  },
+  {
+    id: "holostars_2nd",
+    native_name: "ホロスターズ2期生",
+    japanese_name: "ホロスターズ2期生",
+    english_name: "Holostars 2nd Gen",
+    children: ["astel", "temma", "roberu"],
+  },
+  {
+    id: "holostars_3rd",
+    native_name: "ホロスターズ3期生",
+    japanese_name: "ホロスターズ3期生",
+    english_name: "Holostars 3rd Gen",
+    children: ["shien", "oga"],
+  },
+  {
+    id: "holostars_uproar",
+    native_name: "ホロスターズ UPROAR!!",
+    japanese_name: "ホロスターズ UPROAR!!",
+    english_name: "Holostars UPROAR!!",
+    children: ["fuma", "uyu", "gamma", "rio"],
+  },
+  {
+    id: "holostars_en_tempus",
+    native_name: "Holostars English -Tempus-",
+    japanese_name: "Holostars English -Tempus-",
+    english_name: "Holostars English -Tempus-",
+    children: ["regis_altare", "magni_dezmond", "axel_syrios", "noir_vesper"],
+  },
+  {
+    id: "hololive_affiliated",
+    native_name: "Hololive Affiliated",
+    japanese_name: "Hololive Affiliated",
+    english_name: "Hololive Affiliated",
+    children: ["ayamy", "nabi", "pochimaru", "nana", "ui"],
+  },
+  {
+    id: "others",
+    native_name: "その他",
+    japanese_name: "その他",
+    english_name: "Others",
+    children: ["luna", "nekomiya", "tamaki"],
+  },
+];

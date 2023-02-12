@@ -12,8 +12,8 @@ import { ActivatedRoute, RouterModule } from "@angular/router";
 
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
 import { ChannelListResponse } from "src/app/models";
-import { ConfigService } from "src/app/shared";
 import { listChannels } from "src/app/shared/api/entrypoint";
+import { VTuberService } from "src/app/shared/config/vtuber.service";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { ChannelTable } from "./channel-table/channel-table";
@@ -35,9 +35,9 @@ import { ChannelTable } from "./channel-table/channel-table";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelList implements OnInit {
-  private config = inject(ConfigService);
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
+  private vtubers = inject(VTuberService);
 
   channelsQry: Qry<
     ChannelListResponse,
@@ -53,11 +53,11 @@ export class ChannelList implements OnInit {
     this.channelsQry = this.qry.create({
       placeholderData: {
         updatedAt: 0,
-        channels: [...this.config.vtuber].map(
+        channels: [...this.vtubers.selected].map(
           (id) => ({ vtuberId: id } as any)
         ),
       },
-      queryKey: ["listChannels", { platform, ids: [...this.config.vtuber] }],
+      queryKey: ["listChannels", { platform, ids: [...this.vtubers.selected] }],
       queryFn: ({ queryKey: [_, { platform, ids }] }) =>
         listChannels(platform, ids),
     });
