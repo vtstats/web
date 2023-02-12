@@ -89,7 +89,7 @@ export class StreamTimeBarChart {
   private _tooltipFormatter() {
     const _formatDuration = (value: number) => {
       if (value == 0) {
-        return $localize`No stream`;
+        return $localize`:@@No Stream:No stream`;
       }
 
       if (value >= 3600) {
