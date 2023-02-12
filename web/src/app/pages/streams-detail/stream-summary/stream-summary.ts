@@ -6,21 +6,23 @@ import {
   Input,
   OnInit,
 } from "@angular/core";
-import { MatGridListModule } from "@angular/material/grid-list";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { RouterModule } from "@angular/router";
 
 import type { Report, Stream, StreamReportKind } from "src/app/models";
 import { DurationPipe, NamePipe, TickService } from "src/app/shared";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
-import { streamPaidChats, PaidChat } from "src/app/shared/api/entrypoint";
+import { PaidChat, streamPaidChats } from "src/app/shared/api/entrypoint";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
+import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
     CommonModule,
-    MatGridListModule,
+    MatTooltipModule,
+    MatIconModule,
     UseQryPipe,
     DurationPipe,
     NamePipe,
