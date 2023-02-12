@@ -63,7 +63,15 @@
     </div>
   </div>
   <div>
-    <div class="mat-small mat-secondary-text">Likes / dislikes</div>
+    <div class="mat-small mat-secondary-text">
+      <span class="align-middle"> Likes / dislikes </span>
+      <mat-icon
+        class="!h-[12px] !w-[12px] leading-[12px] align-middle"
+        svgIcon="information_outline"
+        matTooltip="Provided by Return YouTube Dislike"
+        matTooltipPosition="above"
+      ></mat-icon>
+    </div>
     <div class="mat-headline-5 m-0" *ngIf="ratesQry | useQry as result">
       {{ result?.data?.likes | number }}
       <span class="mat-body">/</span>
