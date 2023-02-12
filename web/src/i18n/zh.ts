@@ -6,7 +6,7 @@ export { default as dateFnsLocale } from "date-fns/locale/zh-TW";
 import type { Translations } from "./data";
 
 export const translations: Translations = {
-  updatedAt: "更新于 {$INTERPOLATION}",
+  updatedAt: "更新於 {$INTERPOLATION}",
   name: "名稱",
   total: "總計",
   subscribers: "訂閱",
