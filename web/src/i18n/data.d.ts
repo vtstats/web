@@ -30,7 +30,7 @@ export type UIMessageIds =
   | "recentStreams"
   | "streamViewers"
   | "selectDate"
-  | "noStream"
+  | "No Stream"
   | "streamTimeOn"
   | "streamTimes"
   | "liveChat"
@@ -44,7 +44,14 @@ export type UIMessageIds =
   | "yellow"
   | "orange"
   | "magenta"
-  | "red";
+  | "red"
+  | "Today"
+  | "Yesterday"
+  | "Tomorrow"
+  | "This week"
+  | "This month"
+  | "This year"
+  | "Future";
 
 export type CurrencyMessageIds =
   | "GBP"
