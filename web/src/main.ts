@@ -1,5 +1,10 @@
 import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from "@angular/common";
-import { enableProdMode, importProvidersFrom, LOCALE_ID } from "@angular/core";
+import {
+  APP_INITIALIZER,
+  enableProdMode,
+  importProvidersFrom,
+  LOCALE_ID,
+} from "@angular/core";
 import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
@@ -16,9 +21,10 @@ import { environment } from "./environments/environment";
 
 import { AppComponent } from "./app/app.component";
 import { getRoutes } from "./app/routes";
+import { CurrencyService } from "./app/shared/config/currency.service";
+import { HoloStatsTitleStrategy } from "./app/shared/title";
 import { DATE_FNS_LOCALE, getLang } from "./i18n";
 import { getLocalStorage } from "./utils";
-import { HoloStatsTitleStrategy } from "./app/shared/title";
 
 if (environment.production) {
   enableProdMode();
@@ -56,6 +62,12 @@ const bootstrap = async () => {
       {
         provide: TitleStrategy,
         useClass: HoloStatsTitleStrategy,
+      },
+      {
+        provide: APP_INITIALIZER,
+        multi: true,
+        deps: [CurrencyService],
+        useFactory: (srv: CurrencyService) => () => srv.initialize(),
       },
       provideRouter(
         getRoutes(),
