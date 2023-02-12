@@ -78,7 +78,11 @@ insert into youtube_channels (vtuber_id)
             ('axel_syrios'),
             ('magni_dezmond'),
             ('noir_vesper'),
-            ('regis_altare');
+            ('regis_altare'),
+            ('gavis_bettel'),
+            ('machina_x_flayon'),
+            ('banzoin_hakka'),
+            ('josuiji_shinri');
 
 insert into bilibili_channels (vtuber_id)
      values ('hololive'),        -- ホロライブ公式
