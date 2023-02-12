@@ -1,7 +1,9 @@
-<ng-container [ngSwitch]="type">
-  <ng-container *ngSwitchCase="!loading && 'group'">
-    <ng-container *ngFor="let group of dataSource.groups; trackBy:trackByGroup">
-      <div class="mat-h3">{{ group.name | formatGroupName }}</div>
+<ng-container [ngSwitch]="true">
+  <ng-container *ngSwitchCase="!loading && !!groupBy">
+    <ng-container
+      *ngFor="let group of items | groupStreams:groupBy; trackBy:trackByGroup"
+    >
+      <div class="mat-h3">{{ group.name }}</div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
         <hls-stream-item
@@ -14,15 +16,15 @@
 
   <div
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-    *ngSwitchCase="!loading && 'array'"
+    *ngSwitchCase="!loading && !groupBy"
   >
     <hls-stream-item
-      *ngFor="let stream of dataSource.streams; trackBy:trackBy"
+      *ngFor="let stream of items; trackBy:trackBy"
       [stream]="stream"
     ></hls-stream-item>
   </div>
 
-  <ng-container *ngSwitchCase="loading && 'group'">
+  <ng-container *ngSwitchCase="loading && !!groupBy">
     <ng-container *ngFor="let _ of  [1, 2]">
       <div class="mat-h3">
         <span class="shimmer text w-10"></span>
@@ -38,7 +40,7 @@
 
   <div
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-    *ngSwitchCase="loading && 'array'"
+    *ngSwitchCase="loading && !groupBy"
   >
     <hls-stream-item-shimmer
       *ngFor="let _ of [1, 2, 3, 4, 5]"

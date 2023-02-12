@@ -1,6 +1,8 @@
-<h3 class="mat-h3">
-  <ng-container i18n="@@vtuberSelected">VTuber Selected</ng-container>
-  <span> ({{ config.vtuber.size }}/{{ count }})</span>:
+<h3 class="my-4">
+  <div class="mat-h3 m-0">VTuber</div>
+  <div class="mat-text-caption mat-secondary-text">
+    Selected {{ config.vtuber.size }} out of {{count}}
+  </div>
 </h3>
 
 <mat-tree class="pb-4" [dataSource]="dataSource" [treeControl]="treeControl">

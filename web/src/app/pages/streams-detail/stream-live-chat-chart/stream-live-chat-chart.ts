@@ -10,6 +10,7 @@ import {
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { differenceInMinutes } from "date-fns";
 import { type EChartsOption } from "echarts";
+import { CallbackDataParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream } from "src/app/models";
@@ -60,6 +61,44 @@ export class StreamLiveChatChart implements OnChanges {
     this.option = {
       tooltip: {
         trigger: "axis",
+        borderRadius: 4,
+        backgroundColor: "white",
+        borderWidth: 0,
+        textStyle: {
+          color: "#0F0F0F",
+          fontSize: "14px",
+          fontWeight: 500,
+        },
+        padding: [6, 8],
+        formatter: (p: CallbackDataParams[]) => {
+          const d = p[0].value[0] as number;
+          const v1 = p[0].value[1] as number;
+          const v2 = p[1].value[1] as number;
+
+          return `<table class="w-32">\
+          <thead><tr><td colspan="2" class="text-xs text-[#737373]">${formatDate(
+            d,
+            "yyyy/MM/dd HH:mm",
+            this.locale
+          )}</td></tr>\
+          </thead>\
+          <tbody class="text-sm">\
+          ${
+            v1 > 0
+              ? `<tr><td class="text-[#737373]">Member</td><td class="text-right">${formatNumber(
+                  v1,
+                  this.locale
+                )}</td></tr>`
+              : ""
+          }
+          <tr><td class="text-[#737373]">Total</td><td class="text-right">${formatNumber(
+            v2,
+            this.locale
+          )}</td></tr>
+          </tbody>\
+          </table>`;
+          // <tfoot><tr><td colspan="2">Double click to jump to</td></tr></tfoot>\
+        },
       },
       grid: {
         left: 16,
@@ -93,20 +132,7 @@ export class StreamLiveChatChart implements OnChanges {
           sampling: "sum",
           smooth: true,
           z: 50,
-          areaStyle: {
-            opacity: 0.8,
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: "#855CF8FF" },
-                { offset: 1, color: "#855CF800" },
-              ],
-            },
-          },
+          areaStyle: { opacity: 1, color: "#855CF8" },
           color: "#855CF8",
           data: member,
         },
@@ -116,20 +142,7 @@ export class StreamLiveChatChart implements OnChanges {
           showSymbol: false,
           sampling: "sum",
           smooth: true,
-          areaStyle: {
-            opacity: 0.8,
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: "#B7A8F4FF" },
-                { offset: 1, color: "#B7A8F400" },
-              ],
-            },
-          },
+          areaStyle: { opacity: 1, color: "#B7A8F4" },
           color: "#B7A8F4",
           data: total,
         },

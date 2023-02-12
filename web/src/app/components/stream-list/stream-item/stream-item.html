@@ -1,5 +1,5 @@
 <a
-  class="group aspect-ratio-16-9 mb-2"
+  class="group aspect-ratio-16-9 mb-2 select-none"
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
   <img
@@ -11,21 +11,21 @@
   <ng-container [ngSwitch]="stream.status">
     <div
       *ngSwitchCase="'scheduled'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
     >
       {{ stream.scheduleTime | date: "HH:mm" }}
     </div>
 
     <div
       *ngSwitchCase="'live'"
-      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
     >
       Live
     </div>
 
     <div
       *ngSwitchCase="'ended'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 h-3 leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
     >
       {{ stream.startTime | duration: stream.endTime }}
     </div>
@@ -33,7 +33,7 @@
 
   <span class="hidden group-hover:block absolute right-1 top-1">
     <a
-      class="bg-[#00000080] text-[0] block cursor-pointer text-white"
+      class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white"
       [attr.href]="'https://youtu.be/' + stream.streamId"
       target="_blank"
       (click)="$event.stopPropagation()"
@@ -43,7 +43,7 @@
 
     <a
       *ngIf="showPlaylistIcon"
-      class="bg-[#00000080] text-[0] block cursor-pointer text-white mt-1"
+      class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white mt-1"
       (click)="addToPlaylist($event)"
     >
       <mat-icon class="p-0.5 m-0" svgIcon="playlist_add"></mat-icon>

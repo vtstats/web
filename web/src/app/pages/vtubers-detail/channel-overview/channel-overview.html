@@ -1,17 +1,18 @@
-<div class="mat-border-divider mat-bg-card rounded border-solid p-4 mb-4">
+<div
+  class="mat-border-divider mat-bg-card rounded border border-solid p-4 mb-4"
+>
   <div class="flex flex-row items-center mb-4">
     <div class="flex-1 mat-h3 m-0">Overview</div>
 
-    <span
-      class="mat-text-caption ml-2 cursor-pointer"
-      tabindex="0"
-      *ngFor="let days of [7, 30, 90]"
-      (click)="precision = days"
-      [class.font-semibold]="_precision === days"
-      role="button"
-    >
-      {{ { days } | formatDayDuration }}
-    </span>
+    <hls-menu
+      [value]="precision"
+      (change)="precision = $event"
+      [options]="[
+        {value:7, label: {days: 7} | formatDayDuration},
+        {value:30, label: {days: 30} | formatDayDuration},
+        {value:90, label: {days: 90} | formatDayDuration}
+      ]"
+    ></hls-menu>
   </div>
 
   <ng-container *ngIf="streamReportsQry | useQry as result">
@@ -33,8 +34,7 @@
             [loading]="result.isFetching"
             [kind]="report.kind"
             [rows]="report.rows"
-            [precision]="_precision"
-            (chartInit)="onChartInit($event)"
+            [precision]="precision"
           ></hls-stats-chart>
         </div>
       </div>
