@@ -7,7 +7,7 @@ import {
   LOCALE_ID,
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { EChartsOption } from "echarts";
+import type { ECharts, EChartsOption } from "echarts";
 import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
@@ -57,7 +57,11 @@ export class StreamViewersChart {
           const t = formatDate(h, "yyyy/MM/dd HH:mm", this.locale);
           const v = d.value[1] as number;
           const s = formatNumber(v, this.locale);
-          return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
+          return `<div class="text-xs text-[#737373]">${t}</div>\
+          <div class="text-sm">${s}</div>\
+          <div class="text-xs text-[#737373]">${
+            this.stream.status === "ended" ? `Double click to jump to` : ""
+          }</div>`;
         },
       },
       grid: {
@@ -108,5 +112,26 @@ export class StreamViewersChart {
         data: data,
       },
     };
+  }
+
+  onChartInit(chart: ECharts) {
+    chart.getZr().on("dblclick", (params) => {
+      const [x] = chart.convertFromPixel("grid", [
+        params.offsetX,
+        params.offsetY,
+      ]);
+
+      if (
+        this.stream.status === "ended" &&
+        this.stream.startTime <= x &&
+        x <= this.stream.endTime
+      ) {
+        const t = ((x - this.stream.startTime) / 1000) | 0;
+        window.open(
+          `https://youtu.be/${this.stream.streamId}?t=${t}s`,
+          "_blank"
+        );
+      }
+    });
   }
 }
