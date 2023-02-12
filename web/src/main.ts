@@ -22,6 +22,7 @@ import { environment } from "./environments/environment";
 import { AppComponent } from "./app/app.component";
 import { getRoutes } from "./app/routes";
 import { CurrencyService } from "./app/shared/config/currency.service";
+import { VTuberService } from "./app/shared/config/vtuber.service";
 import { HoloStatsTitleStrategy } from "./app/shared/title";
 import { DATE_FNS_LOCALE, getLang } from "./i18n";
 import { getLocalStorage } from "./utils";
@@ -68,6 +69,12 @@ const bootstrap = async () => {
         multi: true,
         deps: [CurrencyService],
         useFactory: (srv: CurrencyService) => () => srv.initialize(),
+      },
+      {
+        provide: APP_INITIALIZER,
+        multi: true,
+        deps: [VTuberService],
+        useFactory: (srv: VTuberService) => () => srv.initialize(),
       },
       provideRouter(
         getRoutes(),

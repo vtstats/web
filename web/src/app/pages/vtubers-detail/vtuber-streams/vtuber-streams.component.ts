@@ -10,8 +10,8 @@ import qs from "query-string";
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
 import { StreamsList } from "src/app/components/stream-list/stream-list";
 import { Stream, StreamListResponse } from "src/app/models";
+import { VTuber } from "src/app/shared/config/vtuber.service";
 import { InfQry, QryService, UseQryPipe } from "src/app/shared/qry";
-import { VTuber } from "vtubers";
 
 type QueryKey = [
   "youtube_streams",

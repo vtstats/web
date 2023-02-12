@@ -10,8 +10,8 @@ import { endOfDay, startOfDay } from "date-fns";
 import { FilterGroup } from "src/app/components/filter-group/filter-group";
 import { StreamsList as StreamsList_ } from "src/app/components/stream-list/stream-list";
 import { Stream, StreamListResponse, StreamStatus } from "src/app/models";
-import { ConfigService } from "src/app/shared";
 import { listStreams } from "src/app/shared/api/entrypoint";
+import { VTuberService } from "src/app/shared/config/vtuber.service";
 import { InfQry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 export type StreamsListPageData = {
@@ -40,7 +40,7 @@ type QueryKey = ["youtube_streams", StreamsListPageData, string[]];
 export class StreamsList implements OnInit {
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
-  private config = inject(ConfigService);
+  private vtubers = inject(VTuberService);
 
   streamsQry: InfQry<
     StreamListResponse,
@@ -125,6 +125,6 @@ export class StreamsList implements OnInit {
     if (startAt) data.startAt = startAt;
     if (endAt) data.endAt = endAt;
 
-    return ["youtube_streams", data as any, ids || [...this.config.vtuber]];
+    return ["youtube_streams", data as any, ids || [...this.vtubers.selected]];
   }
 }

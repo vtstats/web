@@ -9,9 +9,8 @@ import {
   ChannelReportKind,
   ChannelReportResponse,
   Report,
-  VTuber,
 } from "src/app/models";
-import { ThemeService } from "src/app/shared/config/theme.service";
+import { VTuber } from "src/app/shared/config/vtuber.service";
 import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import { FormatDayDurationPipe } from "./format-day-duration-pipe/format-day-duration-pipe";
@@ -34,8 +33,6 @@ import { StatsComparisonComponent } from "./stats-comparison/stats-comparison.co
 })
 export class ChannelOverview implements OnInit {
   private qry = inject(QryService);
-
-  theme$ = inject(ThemeService).theme$;
 
   @Input() vtuber: VTuber;
 

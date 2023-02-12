@@ -6,16 +6,6 @@ const supportedLanguages = ["en", "es", "ja", "ms", "zh"];
 
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("DATE_FNS_LOCALE");
 
-export const translate = (id: string): string => {
-  const temp = `:@@${id}:`;
-
-  const array: any = [temp];
-  array.raw = [temp];
-
-  // HACK
-  return $localize(array);
-};
-
 export const getLang = (): string => {
   let lang = getLocalStorage("lang") || window.navigator.language.slice(0, 2);
 

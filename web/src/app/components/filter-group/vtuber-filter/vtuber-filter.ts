@@ -9,7 +9,8 @@ import {
 } from "@angular/core";
 import { MatListModule, MatSelectionListChange } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { ConfigService, NamePipe } from "src/app/shared";
+import { NamePipe } from "src/app/shared";
+import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 import animations from "../_animations";
 
@@ -29,13 +30,13 @@ import animations from "../_animations";
   encapsulation: ViewEncapsulation.None,
 })
 export class VTuberFilter {
-  private config = inject(ConfigService);
+  private vtubers = inject(VTuberService);
 
   selected: Set<string> = new Set();
 
   _isOpen = false;
 
-  _vtubers = [...this.config.vtuber];
+  _vtubers = [...this.vtubers.selected];
 
   _listSelected = false;
 

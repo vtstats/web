@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
-import { ConfigService } from "src/app/shared";
 import { ThemeService } from "src/app/shared/config/theme.service";
 
 @Component({

@@ -1,5 +1,5 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
@@ -9,9 +9,8 @@ import {
   MatTreeModule,
 } from "@angular/material/tree";
 
-import { batches, vtubers } from "vtubers";
-
 import { ConfigService, NamePipe } from "src/app/shared";
+import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 interface VTuberNode {
   id: string;
@@ -37,6 +36,8 @@ interface VTuberFlatNode {
   templateUrl: "vtubers-settings.html",
 })
 export class VTubersSettings {
+  vtuberSrv = inject(VTuberService);
+
   treeControl = new FlatTreeControl<VTuberFlatNode>(
     (node) => node.level,
     (node) => node.expandable
@@ -55,26 +56,28 @@ export class VTubersSettings {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  count = Object.keys(vtubers).length;
+  count = Object.keys(this.vtuberSrv.vtubers).length;
 
   constructor(public config: ConfigService) {
-    this.dataSource.data = Object.entries(batches).map(([id, batch]) => ({
-      id,
-      members: batch?.map((id) => vtubers[id]),
-    }));
+    this.dataSource.data = Object.entries(this.vtuberSrv.batches).map(
+      ([id, batch]) => ({
+        id,
+        members: batch.children.map((id) => this.vtuberSrv.vtubers[id]),
+      })
+    );
   }
 
   hasChild = (_: number, node: VTuberFlatNode) => node.expandable;
 
-  isSelected = (id: string): boolean => this.config.vtuber.has(id);
+  isSelected = (id: string): boolean => this.vtuberSrv.selected.has(id);
 
-  getMemberIds = (id: string): string[] => batches[id];
+  getMemberIds = (id: string): string[] => this.vtuberSrv.batches[id].children;
 
   toggleVTuber(id: string) {
     if (this.isSelected(id)) {
-      this.config.deleteVTubers([id]);
+      this.vtuberSrv.deleteVTubers([id]);
     } else {
-      this.config.addVtubers([id]);
+      this.vtuberSrv.addVtubers([id]);
     }
   }
 
@@ -82,9 +85,9 @@ export class VTubersSettings {
     const ids = this.getMemberIds(id);
 
     if (ids.every(this.isSelected)) {
-      this.config.deleteVTubers(ids);
+      this.vtuberSrv.deleteVTubers(ids);
     } else {
-      this.config.addVtubers(ids);
+      this.vtuberSrv.addVtubers(ids);
     }
   }
 

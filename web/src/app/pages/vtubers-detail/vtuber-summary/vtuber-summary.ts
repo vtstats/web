@@ -2,8 +2,8 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
-import { VTuber } from "src/app/models";
 import { NamePipe } from "src/app/shared";
+import { VTuber } from "src/app/shared/config/vtuber.service";
 
 @Component({
   standalone: true,
