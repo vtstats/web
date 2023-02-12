@@ -12,6 +12,8 @@ import { InfQry, Qry } from "./qry";
 export class QryService implements OnDestroy {
   client: QueryClient;
 
+  private devToolsMounted = false;
+
   constructor() {
     this.client = new QueryClient({
       defaultOptions: {
@@ -24,47 +26,8 @@ export class QryService implements OnDestroy {
     this.client.mount();
 
     if (isDevMode()) {
-      this.loadQueryDevTools();
+      this.mountQueryDevTools();
     }
-  }
-
-  private loadQueryDevTools() {
-    Promise.all([
-      import(
-        //@ts-ignore
-        /* webpackIgnore: true */ "https://esm.sh/@tanstack/react-query-devtools/production?deps=react@17.0.2"
-      ),
-      import(
-        //@ts-ignore
-        /* webpackIgnore: true */ "https://esm.sh/react@17.0.2"
-      ),
-      import(
-        //@ts-ignore
-        /* webpackIgnore: true */ "https://esm.sh/react-dom@17.0.2"
-      ),
-      import(
-        //@ts-ignore
-        /* webpackIgnore: true */ "https://esm.sh/@tanstack/react-query?deps=react@17.0.2"
-      ),
-    ])
-      .then(
-        ([
-          { ReactQueryDevtools },
-          { createElement },
-          { render },
-          { QueryClientProvider },
-        ]) => {
-          render(
-            createElement(
-              QueryClientProvider,
-              { client: this.client },
-              createElement(ReactQueryDevtools, { initialIsOpen: false })
-            ),
-            document.getElementById("react-root")
-          );
-        }
-      )
-      .catch(console.error);
   }
 
   ngOnDestroy(): void {
@@ -105,5 +68,59 @@ export class QryService implements OnDestroy {
     >
   ): Qry<TQueryFnData, TError, TData, TQueryData, TQueryKey> {
     return new Qry(this.client, options);
+  }
+
+  private _reactModule = "https://esm.sh/react@17.0.2";
+  private _reactDomModule = "https://esm.sh/react-dom@17.0.2";
+  private _reactQueryModule =
+    "https://esm.sh/@tanstack/react-query?deps=react@17.0.2";
+  private _reactQueryDevToolsModule =
+    "https://esm.sh/@tanstack/react-query-devtools/production?deps=react@17.0.2";
+
+  toggleQueryDevTools() {
+    if (this.devToolsMounted) {
+      return this.unmountQueryDevTools();
+    } else {
+      return this.mountQueryDevTools();
+    }
+  }
+
+  private unmountQueryDevTools() {
+    return import(/* webpackIgnore: true */ this._reactDomModule).then(
+      (ReactDOM) => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("react-root"));
+        this.devToolsMounted = false;
+      }
+    );
+  }
+
+  private mountQueryDevTools() {
+    return Promise.all(
+      [
+        this._reactModule,
+        this._reactDomModule,
+        this._reactQueryModule,
+        this._reactQueryDevToolsModule,
+      ].map((url) => import(/* webpackIgnore: true */ url))
+    )
+      .then(
+        ([
+          React,
+          ReactDOM,
+          { QueryClientProvider },
+          { ReactQueryDevtools },
+        ]) => {
+          ReactDOM.render(
+            React.createElement(
+              QueryClientProvider,
+              { client: this.client },
+              React.createElement(ReactQueryDevtools, { initialIsOpen: false })
+            ),
+            document.getElementById("react-root")
+          );
+          this.devToolsMounted = true;
+        }
+      )
+      .catch(console.error);
   }
 }

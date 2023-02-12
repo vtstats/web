@@ -1,6 +1,9 @@
 <h3 class="mat-h3 my-4">Miscellaneous</h3>
 
 <mat-nav-list>
+  <a mat-list-item (click)="qry.toggleQueryDevTools()">
+    Toggle Query DevTools
+  </a>
   <a mat-list-item routerLink="/settings/ngsw">Service Worker</a>
   <a mat-list-item routerLink="/settings/privacy">Privacy Policy</a>
   <a mat-list-item routerLink="/settings/licenses">Third Party Licenses</a>
