@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { from, shareReplay } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 import { StorageSubject } from "./storage";
 
@@ -7,7 +7,10 @@ import { StorageSubject } from "./storage";
 export class CurrencyService {
   currencySettings$ = new StorageSubject<string>("vts:currencySetting", "JPY");
 
-  exchangeRate$ = from(
-    import("./exchangeRate").then((mod) => mod.default.data)
-  ).pipe(shareReplay(1));
+  exchangeRate$ = new BehaviorSubject<Record<string, number>>({});
+
+  async initialize() {
+    const mod = await import("./exchangeRate");
+    this.exchangeRate$.next(mod.default.data);
+  }
 }
