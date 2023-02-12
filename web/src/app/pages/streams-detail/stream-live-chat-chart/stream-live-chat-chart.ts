@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { differenceInMinutes } from "date-fns";
-import { type EChartsOption } from "echarts";
+import type { ECharts, EChartsOption } from "echarts";
 import { CallbackDataParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
@@ -96,8 +96,12 @@ export class StreamLiveChatChart implements OnChanges {
             this.locale
           )}</td></tr>
           </tbody>\
+          ${
+            this.stream.status === "ended"
+              ? `<tfoot><tr><td colspan="2">Double click to jump to</td></tr></tfoot>`
+              : ""
+          }
           </table>`;
-          // <tfoot><tr><td colspan="2">Double click to jump to</td></tr></tfoot>\
         },
       },
       grid: {
@@ -159,20 +163,24 @@ export class StreamLiveChatChart implements OnChanges {
       );
   }
 
-  jumpTo(e: MouseEvent) {
-    // const { x, y } = this.svg.nativeElement.getBoundingClientRect();
-    // const offsetX = e.clientX - x;
-    // const offsetY = e.clientY - y;
-    // const idx = Math.floor(this.xScale.invert(offsetX));
-    // if (
-    //   !this.loading &&
-    //   this.stream.status === "ended" &&
-    //   within(idx, 0, this.rows.length - 1) &&
-    //   within(offsetY, this.topMargin, this.topMargin + this.height) &&
-    //   this.rows[idx][0] > this.stream.startTime
-    // ) {
-    //   const t = Math.round((this.rows[idx][0] - this.stream.startTime) / 1000);
-    //   window.open(`https://youtu.be/${this.stream.streamId}?t=${t}s`, "_blank");
-    // }
+  onChartInit(chart: ECharts) {
+    chart.getZr().on("dblclick", (params) => {
+      const [x] = chart.convertFromPixel("grid", [
+        params.offsetX,
+        params.offsetY,
+      ]);
+
+      if (
+        this.stream.status === "ended" &&
+        this.stream.startTime <= x &&
+        x <= this.stream.endTime
+      ) {
+        const t = ((x - this.stream.startTime) / 1000) | 0;
+        window.open(
+          `https://youtu.be/${this.stream.streamId}?t=${t}s`,
+          "_blank"
+        );
+      }
+    });
   }
 }

@@ -90,8 +90,7 @@ export class Chart
 
     this.theme.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       if (this.chart) {
-        this.chart.dispose();
-        this.chart = null;
+        this._dispose();
       }
 
       this.chart = this.ngZone.runOutsideAngular(() => {
@@ -117,6 +116,11 @@ export class Chart
     });
   }
 
+  _dispose() {
+    this.chart.dispose();
+    this.chart = null;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if ("height" in changes && this.chart) {
       this.chart.resize({ height: this._height });
@@ -127,8 +131,7 @@ export class Chart
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
     if (this.chart) {
-      this.chart.dispose();
-      this.chart = null;
+      this._dispose();
     }
   }
 }
