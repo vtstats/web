@@ -16,9 +16,6 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["ESNext", "dom"],
     "allowSyntheticDefaultImports": true,
-    "paths": {
-      "vtubers": ["./vtubers.ts"]
-    },
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {

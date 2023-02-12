@@ -30,12 +30,12 @@ export class VTuberService {
   nameSettings$ = new StorageSubject<string>("vts:nameSetting", "english_name");
 
   async initialize() {
-    const mod = await import("../../../../vtubers");
-    this.vtubers = mod.vtubers.reduce((acc, v) => {
+    const { vtubers, batches } = await import("../../../../vtubers.json");
+    this.vtubers = vtubers.reduce((acc, v) => {
       acc[v.id] = v;
       return acc;
     }, {});
-    this.batches = mod.batches.reduce((acc, v) => {
+    this.batches = batches.reduce((acc, v) => {
       acc[v.id] = v;
       return acc;
     }, {});
