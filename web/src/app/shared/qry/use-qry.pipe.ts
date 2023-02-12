@@ -49,6 +49,7 @@ export class UseQryPipe implements PipeTransform, OnDestroy {
   >(
     obs: QueryObserver<TQueryFnData, TError, TData, TQueryData, TQueryKey>
   ): QueryObserverResult;
+  transform(obj: null | undefined): null;
   transform<
     TQueryFnData,
     TError,
@@ -65,7 +66,9 @@ export class UseQryPipe implements PipeTransform, OnDestroy {
     >
   ): InfiniteQueryObserverResult {
     if (!this._obs) {
-      this._subscribe(obs);
+      if (obs) {
+        this._subscribe(obs);
+      }
       return this._latest;
     }
 
