@@ -19,7 +19,7 @@ import { EChartsOption } from "echarts";
 import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
-import { DATE_FNS_LOCALE } from "src/i18n";
+import { LocaleService } from "src/app/shared/config/locale.service";
 import { within } from "src/utils";
 
 @Component({
@@ -31,7 +31,7 @@ import { within } from "src/utils";
 })
 export class StreamTimeCalendar implements OnChanges {
   private locale = inject(LOCALE_ID);
-  private dateFnsLocale = inject(DATE_FNS_LOCALE);
+  private locale_ = inject(LocaleService);
 
   @Input() times: [number, number][] | undefined = [];
 
@@ -78,13 +78,13 @@ export class StreamTimeCalendar implements OnChanges {
             if (value >= 3600) {
               return formatDuration(
                 { hours: ((value / 360) | 0) / 10 },
-                { locale: this.dateFnsLocale }
+                { locale: this.locale_.dateFns }
               );
             }
 
             return formatDuration(
               { minutes: (value / 60) | 0 },
-              { locale: this.dateFnsLocale }
+              { locale: this.locale_.dateFns }
             );
           };
 

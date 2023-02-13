@@ -1,16 +1,12 @@
 import { inject, Pipe, PipeTransform } from "@angular/core";
 import { Duration, formatDuration } from "date-fns";
+import { LocaleService } from "src/app/shared/config/locale.service";
 
-import { DATE_FNS_LOCALE } from "src/i18n";
-
-@Pipe({
-  standalone: true,
-  name: "formatDayDuration",
-})
+@Pipe({ standalone: true, name: "formatDayDuration" })
 export class FormatDayDurationPipe implements PipeTransform {
-  private dateFnsLocale = inject(DATE_FNS_LOCALE);
+  private locale = inject(LocaleService);
 
   transform(value: Duration): string {
-    return formatDuration(value, { locale: this.dateFnsLocale });
+    return formatDuration(value, { locale: this.locale.dateFns });
   }
 }

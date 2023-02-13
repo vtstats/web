@@ -1,11 +1,10 @@
-import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from "@angular/common";
+import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 import {
   APP_INITIALIZER,
   enableProdMode,
   importProvidersFrom,
   LOCALE_ID,
 } from "@angular/core";
-import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -22,9 +21,9 @@ import { environment } from "./environments/environment";
 import { AppComponent } from "./app/app.component";
 import { getRoutes } from "./app/routes";
 import { CurrencyService } from "./app/shared/config/currency.service";
+import { LocaleService } from "./app/shared/config/locale.service";
 import { VTuberService } from "./app/shared/config/vtuber.service";
 import { HoloStatsTitleStrategy } from "./app/shared/title";
-import { DATE_FNS_LOCALE, getLang } from "./i18n";
 import { getLocalStorage } from "./utils";
 
 if (environment.production) {
@@ -38,24 +37,14 @@ if (environment.production) {
   });
 }
 
-const bootstrap = async () => {
-  const lang = getLang();
-
-  const i18n = await import(
-    /* webpackChunkName: "i18n/[request]" */
-    /* webpackExclude: /(index|\.d)\.ts$/ */
-    `./i18n/${lang}`
-  );
-
-  // locale
-  registerLocaleData(i18n.locale, lang);
-
-  loadTranslations(i18n.translations);
-
-  const appRef = await bootstrapApplication(AppComponent, {
+const bootstrap = () => {
+  return bootstrapApplication(AppComponent, {
     providers: [
-      { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
-      { provide: LOCALE_ID, useValue: lang },
+      {
+        provide: LOCALE_ID,
+        deps: [LocaleService],
+        useFactory: (srv: LocaleService) => srv.getLocaleId(),
+      },
       {
         provide: DATE_PIPE_DEFAULT_OPTIONS,
         useValue: { timezone: getLocalStorage("timezone") },
@@ -63,6 +52,13 @@ const bootstrap = async () => {
       {
         provide: TitleStrategy,
         useClass: HoloStatsTitleStrategy,
+      },
+      {
+        provide: APP_INITIALIZER,
+        multi: true,
+        deps: [LOCALE_ID, LocaleService],
+        useFactory: (id: string, srv: LocaleService) => () =>
+          srv.initialize(id),
       },
       {
         provide: APP_INITIALIZER,
