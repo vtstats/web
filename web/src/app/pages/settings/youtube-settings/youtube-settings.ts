@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -8,7 +8,13 @@ import { PlaylistSelector } from "./playlist-selector/playlist-selector";
 
 @Component({
   standalone: true,
-  imports: [PlaylistSelector, MatIconModule, CommonModule, MatButtonModule],
+  imports: [
+    PlaylistSelector,
+    MatIconModule,
+    CommonModule,
+    MatButtonModule,
+    NgOptimizedImage,
+  ],
   selector: "hls-youtube-settings",
   templateUrl: "youtube-settings.html",
 })

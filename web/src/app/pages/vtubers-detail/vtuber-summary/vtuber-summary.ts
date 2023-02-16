@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
@@ -7,7 +7,7 @@ import { VTuber } from "src/app/shared/config/vtuber.service";
 
 @Component({
   standalone: true,
-  imports: [MatIconModule, CommonModule, NamePipe],
+  imports: [MatIconModule, CommonModule, NamePipe, NgOptimizedImage],
   selector: "hls-vtuber-summary",
   templateUrl: "vtuber-summary.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

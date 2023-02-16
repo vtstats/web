@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -29,6 +29,7 @@ import {
     DistancePipe,
     DurationPipe,
     NamePipe,
+    NgOptimizedImage,
   ],
   selector: "hls-stream-item",
   templateUrl: "stream-item.html",

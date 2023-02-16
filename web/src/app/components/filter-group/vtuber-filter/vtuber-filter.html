@@ -1,16 +1,18 @@
 <span class="inline-flex align-middle mr-2">
   <span
     *ngFor="let vtb of _vtubers | slice:0:6; index as i"
-    class="group h-9 w-9 select-none cursor-pointer"
+    class="group select-none cursor-pointer"
     [class.-ml-2]="i !== 0"
     [style.zIndex]="i"
     [matTooltip]="vtb | name"
     (click)="onClick(vtb)"
   >
     <img
-      class="w-full h-full border-2 border-solid mat-border-card rounded-full inline-block group-hover:-translate-y-4 ease-in-out duration-300"
-      src="/assets/thumbnail/{{vtb}}.jpg"
+      class="border-2 border-solid mat-border-card rounded-full inline-block group-hover:-translate-y-4 ease-in-out duration-300"
       [class.mat-border-primary]="hasVTuber(vtb)"
+      [ngSrc]="'/assets/thumbnail/' + vtb + '.jpg'"
+      height="36"
+      width="36"
     />
   </span>
 
@@ -43,7 +45,12 @@
             *ngFor="let vtb of _vtubers | slice:6"
             [selected]="hasVTuber(vtb)"
           >
-            <img matListItemAvatar src="/assets/thumbnail/{{vtb}}.jpg" />
+            <img
+              height="32"
+              width="32"
+              matListItemAvatar
+              [ngSrc]="'/assets/thumbnail/' + vtb + '.jpg'"
+            />
             {{vtb | name}}
           </mat-list-option>
         </mat-selection-list>

@@ -3,9 +3,10 @@
   [routerLink]="stream.status === 'scheduled' ? null : ['/stream', stream.streamId]"
 >
   <img
-    class="absolute block w-full h-full object-center object-cover rounded"
+    class="rounded"
     loading="lazy"
-    [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+    fill
+    [ngSrc]="stream.thumbnailUrl + '?ngsw-bypass'"
   />
 
   <ng-container [ngSwitch]="stream.status">
@@ -83,9 +84,11 @@
 <div class="mat-small flex-row flex items-center">
   <img
     loading="lazy"
-    class="rounded-full w-6 h-6 align-middle flex-grow-0 flex-shrink-0 cursor-pointer mr-1"
+    class="rounded-full align-middle flex-grow-0 flex-shrink-0 cursor-pointer mr-1"
     [routerLink]="['/vtuber', stream.vtuberId]"
-    [attr.src]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
+    height="24"
+    width="24"
+    [ngSrc]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
   />
 
   <span

@@ -7,7 +7,8 @@
     >
       <img
         class="img rounded absolute w-full h-full object-center object-cover"
-        [attr.src]="stream.thumbnailUrl + '?ngsw-bypass'"
+        fill
+        [ngSrc]="stream.thumbnailUrl + '?ngsw-bypass'"
       />
     </a>
   </div>
@@ -26,8 +27,10 @@
       [routerLink]="['/vtuber', stream.vtuberId]"
     >
       <img
-        class="rounded-full w-8 h-8 align-middle"
-        src="/assets/thumbnail/{{ stream.vtuberId }}.jpg"
+        class="rounded-full align-middle"
+        height="24"
+        width="24"
+        [ngSrc]="'/assets/thumbnail/' + stream.vtuberId + '.jpg'"
       />
       <span class="ml-2 align-middle">{{ stream.vtuberId | name }}</span>
     </a>

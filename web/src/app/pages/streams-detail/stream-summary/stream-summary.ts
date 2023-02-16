@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -27,6 +27,7 @@ import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
     DurationPipe,
     NamePipe,
     UseCurrencyPipe,
+    NgOptimizedImage,
   ],
   selector: "hls-stream-summary",
   templateUrl: "stream-summary.html",

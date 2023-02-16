@@ -1,5 +1,5 @@
 import { OverlayModule } from "@angular/cdk/overlay";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -22,6 +22,7 @@ import animations from "../_animations";
     MatListModule,
     OverlayModule,
     NamePipe,
+    NgOptimizedImage,
   ],
   selector: "hls-vtuber-filter",
   templateUrl: "vtuber-filter.html",

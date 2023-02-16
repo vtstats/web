@@ -1,8 +1,10 @@
 <div class="flex flex-row items-center justify-center pb-4">
   <div class="mr-6">
     <img
-      class="w-20 h-20 rounded-full"
-      [attr.src]="'/assets/profiles/' + vtuber.id + '.jpg?ngsw-bypass'"
+      class="rounded-full"
+      height="80"
+      width="80"
+      [ngSrc]="'/assets/profiles/' + vtuber.id + '.jpg'"
     />
   </div>
 

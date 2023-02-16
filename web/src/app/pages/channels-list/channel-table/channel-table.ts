@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -28,6 +28,7 @@ import { NamePipe } from "src/app/shared";
     RouterModule,
     CommonModule,
     NamePipe,
+    NgOptimizedImage,
   ],
 })
 export class ChannelTable implements AfterViewInit {
