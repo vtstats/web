@@ -1,5 +1,4 @@
-import { fromEvent, Observable, of } from "rxjs";
-import { map, startWith } from "rxjs/operators";
+import { fromEvent, map, Observable, of, startWith } from "rxjs";
 
 export function fromMediaMatch(
   query: string,

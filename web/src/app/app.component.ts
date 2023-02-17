@@ -3,8 +3,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { fromEvent } from "rxjs";
-import { map, startWith, throttleTime } from "rxjs/operators";
+import { fromEvent, map, startWith, throttleTime } from "rxjs";
 
 import { Header } from "./layout/header/header";
 import { Sidenav } from "./layout/sidenav/sidenav";
