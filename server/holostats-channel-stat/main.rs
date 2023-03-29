@@ -1,5 +1,5 @@
 use anyhow::Result;
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use holostats_config::CONFIG;
 use holostats_database::Database;
 use holostats_request::RequestHub;
@@ -9,8 +9,19 @@ use tracing::{field::Empty, Instrument, Span};
 async fn main() -> Result<()> {
     let _guard = holostats_tracing::init("channel_stat", false);
 
+    let hub = RequestHub::new();
+
+    let db = Database::new().await?;
+
+    let now = Utc::now();
+
     let fut = async {
-        if let Err(err) = real_main().await {
+        if let Err(err) = bilibili_channels_stats(&hub, &db, now).await {
+            Span::current().record("otel.status_code", &"ERROR");
+            tracing::error!("Failed to fetch channel stats, {:?}", err);
+        }
+
+        if let Err(err) = youtube_channels_stats(&hub, &db, now).await {
             Span::current().record("otel.status_code", &"ERROR");
             tracing::error!("Failed to fetch channel stats, {:?}", err);
         }
@@ -28,18 +39,15 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn real_main() -> Result<()> {
-    let hub = RequestHub::new();
-
-    let db = Database::new().await?;
-
-    let now = Utc::now();
-
+async fn bilibili_channels_stats(
+    hub: &RequestHub,
+    db: &Database,
+    now: DateTime<Utc>,
+) -> Result<()> {
     let ids = CONFIG
         .vtubers
         .iter()
-        .filter_map(|v| v.bilibili.as_ref())
-        .map(|id| id.as_str())
+        .filter_map(|v| v.bilibili.as_deref())
         .collect::<Vec<_>>();
 
     let channels = hub.bilibili_channels(ids).await?;
@@ -70,11 +78,14 @@ async fn real_main() -> Result<()> {
         .await?;
     }
 
+    Ok(())
+}
+
+async fn youtube_channels_stats(hub: &RequestHub, db: &Database, now: DateTime<Utc>) -> Result<()> {
     let ids = CONFIG
         .vtubers
         .iter()
-        .filter_map(|v| v.youtube.as_ref())
-        .map(|id| id.as_str())
+        .filter_map(|v| v.bilibili.as_deref())
         .collect::<Vec<_>>();
 
     let channels = hub.youtube_channels(ids).await?;
