@@ -56,7 +56,7 @@ async fn bilibili_channels_stats(
         let vtuber_id = match CONFIG.find_by_bilibili_channel_id(&channel.id) {
             Some(vtb) => &vtb.id,
             _ => {
-                tracing::warn!("Unkown bilibili channel id {}", channel.id.as_str());
+                tracing::warn!("Unknown bilibili channel id {}", channel.id.as_str());
                 continue;
             }
         };
@@ -85,7 +85,7 @@ async fn youtube_channels_stats(hub: &RequestHub, db: &Database, now: DateTime<U
     let ids = CONFIG
         .vtubers
         .iter()
-        .filter_map(|v| v.bilibili.as_deref())
+        .filter_map(|v| v.youtube.as_deref())
         .collect::<Vec<_>>();
 
     let channels = hub.youtube_channels(ids).await?;
@@ -94,7 +94,7 @@ async fn youtube_channels_stats(hub: &RequestHub, db: &Database, now: DateTime<U
         let vtuber_id = match CONFIG.find_by_youtube_channel_id(&channel.id) {
             Some(vtb) => &vtb.id,
             _ => {
-                tracing::warn!("Unkown youtube channel id {}", channel.id.as_str());
+                tracing::warn!("Unknown youtube channel id {}", channel.id.as_str());
                 continue;
             }
         };
