@@ -54,3 +54,4 @@ jobs:
           accountId: f1c2ab938f91fa76af879185e872f215
           projectName: holostats
           directory: dist
+          workingDirectory: web
