@@ -27,10 +27,10 @@ jobs:
           path: web/node_modules
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Use Node 12
+      - name: Use Node 18
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 18
 
       - name: Install dependencies
         run: yarn install --prefer-offline
@@ -39,13 +39,18 @@ jobs:
         run: yarn prettier --check --ignore-path .gitignore 'src/**/*.{ts,js,json.html,scss}'
 
       - name: Build
-        run: yarn build --prod --outputHashing=none --serviceWorker=false
-
-      - name: Setup playwright
-        uses: microsoft/playwright-github-action@v1
-
-      - name: Run e2e
-        continue-on-error: true
         run: |
-          node e2e/server.js &
-          yarn e2e
+          rm -rf dist
+
+          yarn ng run holostats:server:production
+          yarn ng run holostats:build:production --stats-json=false
+
+          node postbuild.mjs
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: f1c2ab938f91fa76af879185e872f215
+          projectName: holostats
+          directory: dist
