@@ -1,5 +1,5 @@
-<div class="mx-auto max-w-4xl" *ngIf="channelsQry | useQry as result">
-  <div class="flex flex-row items-center p-4">
+<ng-container *ngIf="channelsQry | useQry as result">
+  <div class="mx-auto max-w-7xl overflow-x-auto flex flex-row items-center p-4">
     <div class="flex-1">
       <hls-filter-group
         (clear)="onClear()"
@@ -26,11 +26,13 @@
     </button>
   </div>
 
-  <hls-channel-table
-    *ngIf="!result.isError"
-    [dataSource]="result.data?.channels"
-    [loading]="result.isFetching"
-  ></hls-channel-table>
+  <div class="mx-auto overflow-x-auto max-w-7xl px-4">
+    <hls-channel-table
+      *ngIf="!result.isError"
+      [dataSource]="result.data?.channels"
+      [loading]="result.isFetching"
+    ></hls-channel-table>
+  </div>
 
   <!-- TODO: display error -->
-</div>
+</ng-container>
