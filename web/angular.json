@@ -41,7 +41,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -75,7 +75,6 @@
               },
               "outputHashing": "all",
               "statsJson": true,
-              "aot": true,
               "extractLicenses": true,
               "buildOptimizer": true,
               "budgets": [
