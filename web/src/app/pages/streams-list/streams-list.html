@@ -19,10 +19,7 @@
         "
       aria-label="Refresh"
     >
-      <mat-icon
-        [class.animate-spin]="result.isFetching"
-        svgIcon="sync"
-      ></mat-icon>
+      <mat-icon [class.animate-spin]="result.isFetching" svgIcon="sync" />
     </button>
   </div>
 
@@ -33,5 +30,5 @@
     [items]="result.data?.pages[0].items"
     [hideSpinner]="!result.hasNextPage"
     (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
-  ></hls-stream-list>
+  />
 </div>

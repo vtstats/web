@@ -1,13 +1,6 @@
 @use "@angular/material" as mat;
 @import "./theme/material";
 
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
 .aspect-ratio-16-9 {
   width: 100%;
   display: block;

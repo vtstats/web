@@ -19,7 +19,7 @@
         {value:'weekday', label:'Weekday'},
         {value:'month', label:'Month'},
       ]"
-    ></hls-menu>
+    />
   </div>
 
   <ng-container [ngSwitch]="precision">
@@ -30,18 +30,18 @@
       *ngSwitchCase="'hour'"
       [times]="result?.data"
       groupBy="hour"
-    ></hls-stream-time-bar-chart>
+    />
 
     <hls-stream-time-bar-chart
       *ngSwitchCase="'month'"
       [times]="result?.data"
       groupBy="month"
-    ></hls-stream-time-bar-chart>
+    />
 
     <hls-stream-time-bar-chart
       *ngSwitchCase="'weekday'"
       [times]="result?.data"
       groupBy="weekday"
-    ></hls-stream-time-bar-chart>
+    />
   </ng-container>
 </div>

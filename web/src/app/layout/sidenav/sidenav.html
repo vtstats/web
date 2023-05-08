@@ -7,12 +7,12 @@
       routerLinkActive="active"
       (click)="buttonClick.emit()"
     >
-      <mat-icon matListItemIcon [svgIcon]="item.icon"></mat-icon>
+      <mat-icon matListItemIcon [svgIcon]="item.icon" />
       <p matListItemTitle>{{ item.title }}</p>
     </a>
   </mat-nav-list>
 
-  <mat-divider></mat-divider>
+  <mat-divider />
 
   <div class="p-4">
     <div class="mat-body select-none mb-2">
@@ -53,7 +53,7 @@
           Commit: {{ commitId }}
         </a>
 
-        <hls-update-indicator></hls-update-indicator>
+        <hls-update-indicator />
       </div>
     </div>
 

@@ -4,7 +4,7 @@
       <hls-stream-summary
         [stream]="result.data.streams[0]"
         [reports]="result.data.reports"
-      ></hls-stream-summary>
+      />
 
       <ng-container
         *ngFor="let report of result.data.reports"
@@ -14,14 +14,14 @@
           <hls-stream-live-chat-chart
             [rows]="report.rows"
             [stream]="result.data.streams[0]"
-          ></hls-stream-live-chat-chart>
+          />
         </ng-container>
 
         <ng-container *ngSwitchCase="'youtube_stream_viewer'">
           <hls-stream-viewers-chart
             [rows]="report.rows"
             [stream]="result.data.streams[0]"
-          ></hls-stream-viewers-chart>
+          />
         </ng-container>
       </ng-container>
 
@@ -29,9 +29,7 @@
     </ng-container>
 
     <ng-container *ngIf="paidChatQry | useQry as result">
-      <hls-stream-paid-chat-chart
-        [chats]="result.data"
-      ></hls-stream-paid-chat-chart>
+      <hls-stream-paid-chat-chart [chats]="result.data" />
 
       <ng-template *ngIf="result.isLoading"> </ng-template>
     </ng-container>

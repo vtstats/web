@@ -4,16 +4,20 @@ import { loadTranslations } from "@angular/localize";
 import { Locale } from "date-fns";
 import { getLocalStorage } from "src/utils";
 
+const i18nMap = {
+  en: () => import("../../../i18n/en"),
+  es: () => import("../../../i18n/es"),
+  ja: () => import("../../../i18n/ja"),
+  ms: () => import("../../../i18n/ms"),
+  zh: () => import("../../../i18n/zh"),
+};
+
 @Injectable({ providedIn: "root" })
 export class LocaleService {
   dateFns: Locale;
 
   async initialize(localeId: string) {
-    const i18n = await import(
-      /* webpackChunkName: "i18n/[request]" */
-      /* webpackExclude: /(index|\.d)\.ts$/ */
-      `../../../i18n/${localeId}`
-    );
+    const i18n = await i18nMap[localeId]();
 
     registerLocaleData(i18n.locale, localeId);
 

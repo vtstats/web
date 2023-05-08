@@ -21,7 +21,7 @@ import { MatMenuModule } from "@angular/material/menu";
         aria-hidden="true"
         class="inline-block w-2 h-1 ml-0.5 align-middle fill-current"
       >
-        <polygon points="0,0 5,5 10,0"></polygon>
+        <polygon points="0,0 5,5 10,0" />
       </svg>
     </button>
 

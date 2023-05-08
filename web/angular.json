@@ -34,7 +34,7 @@
       "prefix": "hls",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "outputPath": "dist/browser",
             "index": "src/index.html",
@@ -47,7 +47,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles/main.scss"],
+            "styles": ["src/styles/main.scss", "src/styles/tailwind.css"],
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [],
             "vendorChunk": true,
@@ -111,24 +111,6 @@
           "options": {
             "browserTarget": "holostats:build"
           }
-        },
-        "workers": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "workers/dist",
-            "main": "workers/main.ts",
-            "tsConfig": "workers/tsconfig.json",
-            "sourceMap": true,
-            "optimization": false
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "sourceMap": false,
-              "optimization": true
-            }
-          },
-          "defaultConfiguration": ""
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",

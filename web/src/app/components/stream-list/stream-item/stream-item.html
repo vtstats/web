@@ -12,21 +12,21 @@
   <ng-container [ngSwitch]="stream.status">
     <div
       *ngSwitchCase="'scheduled'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
     >
       {{ stream.scheduleTime | date: "HH:mm" }}
     </div>
 
     <div
       *ngSwitchCase="'live'"
-      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
     >
       Live
     </div>
 
     <div
       *ngSwitchCase="'ended'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] leading-3 rounded font-medium text-xs py-[3px] px-1"
+      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
     >
       {{ stream.startTime | duration: stream.endTime }}
     </div>
@@ -39,7 +39,7 @@
       target="_blank"
       (click)="$event.stopPropagation()"
     >
-      <mat-icon class="p-0.5 m-0" svgIcon="open_in_new"></mat-icon>
+      <mat-icon class="p-0.5 m-0" svgIcon="open_in_new" />
     </a>
 
     <a
@@ -47,7 +47,7 @@
       class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white mt-1"
       (click)="addToPlaylist($event)"
     >
-      <mat-icon class="p-0.5 m-0" svgIcon="playlist_add"></mat-icon>
+      <mat-icon class="p-0.5 m-0" svgIcon="playlist_add" />
     </a>
   </span>
 </a>
@@ -64,7 +64,7 @@
   *ngIf="stream.status === 'live' || stream.status === 'ended'"
   class="mat-secondary-text mat-small mb-1 flex flex-row items-center"
 >
-  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="eye"></mat-icon>
+  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="eye" />
 
   <span class="mr-1" i18n-title="@@averageViewers" title="Average Viewers">
     {{ (stream.averageViewerCount | number) || "----" }}
@@ -76,7 +76,7 @@
     {{ (stream.maxViewerCount | number) || "----" }}
   </span>
 
-  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up"></mat-icon>
+  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up" />
 
   <span title="Like">{{ (stream.maxLikeCount | number) || "----" }}</span>
 </div>

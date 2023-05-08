@@ -13,7 +13,7 @@ import {
   TitleStrategy,
   withInMemoryScrolling,
 } from "@angular/router";
-import { ServiceWorkerModule } from "@angular/service-worker";
+import { provideServiceWorker } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
 
 import { environment } from "./environments/environment";
@@ -76,12 +76,10 @@ const bootstrap = () => {
         getRoutes(),
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
       ),
-      importProvidersFrom(
-        ServiceWorkerModule.register("ngsw-worker.js", {
-          enabled: environment.production,
-          registrationStrategy: "registerImmediately",
-        })
-      ),
+      provideServiceWorker("ngsw-worker.js", {
+        enabled: environment.production,
+        registrationStrategy: "registerImmediately",
+      }),
       importProvidersFrom(BrowserModule.withServerTransition({ appId: "hls" })),
       importProvidersFrom(BrowserAnimationsModule),
       importProvidersFrom(MatSnackBarModule),

@@ -1,12 +1,9 @@
 <div class="mx-auto max-w-4xl p-4">
-  <hls-vtuber-summary [vtuber]="vtuber"></hls-vtuber-summary>
+  <hls-vtuber-summary [vtuber]="vtuber" />
 
-  <hls-channel-overview [vtuber]="vtuber"></hls-channel-overview>
+  <hls-channel-overview [vtuber]="vtuber" />
 
-  <hls-stream-time [vtuber]="vtuber"></hls-stream-time>
+  <hls-stream-time [vtuber]="vtuber" />
 
-  <hls-vtuber-streams
-    *ngIf="vtuber.youtube"
-    [vtuber]="vtuber"
-  ></hls-vtuber-streams>
+  <hls-vtuber-streams *ngIf="vtuber.youtube" [vtuber]="vtuber" />
 </div>

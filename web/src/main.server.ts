@@ -15,8 +15,9 @@ import "@angular/localize/init";
 import "zone.js";
 
 import { enableProdMode, importProvidersFrom } from "@angular/core";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { bootstrapApplication } from "@angular/platform-browser";
 import { renderApplication } from "@angular/platform-server";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
@@ -26,9 +27,13 @@ if (environment.production) {
 }
 
 export const renderAppShell = (document: string): Promise<string> =>
-  renderApplication(AppComponent, {
-    appId: "hls",
-    url: "/",
-    document,
-    providers: [importProvidersFrom(MatSnackBarModule)],
-  });
+  renderApplication(
+    () =>
+      bootstrapApplication(AppComponent, {
+        providers: [importProvidersFrom(MatSnackBarModule)],
+      }),
+    {
+      url: "/",
+      document,
+    }
+  );

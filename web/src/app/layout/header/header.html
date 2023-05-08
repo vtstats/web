@@ -1,6 +1,6 @@
 <header class="px-2 h-full items-center flex-row flex">
   <button mat-icon-button (click)="menuClick.emit()">
-    <mat-icon svgIcon="menu"></mat-icon>
+    <mat-icon svgIcon="menu" />
   </button>
   <svg
     class="h-6 w-24 pl-3"
@@ -21,7 +21,7 @@
     i18n-matTooltip="@@selectLanguage"
     [matMenuTriggerFor]="menu"
   >
-    <mat-icon svgIcon="translate"></mat-icon>
+    <mat-icon svgIcon="translate" />
   </button>
 
   <mat-menu #menu="matMenu" class="dense-menu" xPosition="before">
@@ -39,8 +39,8 @@
     i18n-matTooltip="@@toggleDarkMode"
     (click)="nextTheme(r.isDarkTheme ? 'light' : 'dark')"
   >
-    <mat-icon svgIcon="theme"></mat-icon>
+    <mat-icon svgIcon="theme" />
   </button>
 </header>
 
-<mat-divider></mat-divider>
+<mat-divider />

@@ -19,10 +19,7 @@
       "
       aria-label="Refresh"
     >
-      <mat-icon
-        [class.animate-spin]="result.isFetching"
-        svgIcon="sync"
-      ></mat-icon>
+      <mat-icon [class.animate-spin]="result.isFetching" svgIcon="sync" />
     </button>
   </div>
 
@@ -31,7 +28,7 @@
       *ngIf="!result.isError"
       [dataSource]="result.data?.channels"
       [loading]="result.isFetching"
-    ></hls-channel-table>
+    />
   </div>
 
   <!-- TODO: display error -->

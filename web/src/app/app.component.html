@@ -1,4 +1,4 @@
-<hls-header (menuClick)="drawer.toggle()"></hls-header>
+<hls-header (menuClick)="drawer.toggle()" />
 
 <mat-sidenav-container>
   <mat-sidenav
@@ -8,11 +8,9 @@
     [fixedInViewport]="true"
     [fixedTopGap]="56"
   >
-    <hls-sidenav
-      (buttonClick)="sidenavShouldOpen ? null : drawer.toggle()"
-    ></hls-sidenav>
+    <hls-sidenav (buttonClick)="sidenavShouldOpen ? null : drawer.toggle()" />
   </mat-sidenav>
   <mat-sidenav-content class="pt-16 min-h-[calc(100vh-4rem)]">
-    <router-outlet></router-outlet>
+    <router-outlet />
   </mat-sidenav-content>
 </mat-sidenav-container>

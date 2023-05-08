@@ -3,9 +3,7 @@
 <div class="flex flex-row items-center sm:block">
   <div class="mb-1 mat-h1 mr-1">{{ rows[rows.length - 1]?.[1] | number }}</div>
 
-  <ng-container
-    [ngTemplateOutlet]="delta > 0 ? up : delta < 0 ? down : even"
-  ></ng-container>
+  <ng-container [ngTemplateOutlet]="delta > 0 ? up : delta < 0 ? down : even" />
 </div>
 
 <ng-template #up>

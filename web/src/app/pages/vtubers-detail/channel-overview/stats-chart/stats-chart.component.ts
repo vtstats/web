@@ -24,7 +24,7 @@ import { TopLevelFormatterParams } from "echarts/types/dist/shared";
     [height]="80"
     [options]="options"
     (chartInit)="chartInit.emit($event)"
-  ></hls-chart>`,
+  />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsChartComponent {

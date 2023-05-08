@@ -12,21 +12,18 @@
         {value:30, label: {days: 30} | formatDayDuration},
         {value:90, label: {days: 90} | formatDayDuration}
       ]"
-    ></hls-menu>
+    />
   </div>
 
   <ng-container *ngIf="streamReportsQry | useQry as result">
     <ng-container
       *ngFor="let report of result.data.reports; trackBy:trackBy; first as first"
     >
-      <mat-divider *ngIf="!first" class="!my-2"></mat-divider>
+      <mat-divider *ngIf="!first" class="!my-2" />
 
       <div class="flex flex-row flex-wrap items-center">
         <div class="w-full sm:w-4/12">
-          <hls-stats-comparison
-            [kind]="report.kind"
-            [rows]="report.rows"
-          ></hls-stats-comparison>
+          <hls-stats-comparison [kind]="report.kind" [rows]="report.rows" />
         </div>
 
         <div class="w-full sm:w-8/12">
@@ -35,7 +32,7 @@
             [kind]="report.kind"
             [rows]="report.rows"
             [precision]="precision"
-          ></hls-stats-chart>
+          />
         </div>
       </div>
     </ng-container>
