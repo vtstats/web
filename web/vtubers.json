@@ -596,6 +596,42 @@
       "english_name": "Hakos Baelz"
     },
     {
+      "id": "koseki_bijou",
+      "twitter": "kosekibijou",
+      "youtube": "UC9p_lqQ0FEDz327Vgf5JwqA",
+      "default": true,
+      "native_name": "Koseki Bijou",
+      "japanese_name": "古石ビジュ―",
+      "english_name": "Koseki Bijou"
+    },
+    {
+      "id": "shiori_novella",
+      "twitter": "shiorinovella",
+      "youtube": "UCgnfPPb9JI3e9A4cXHnWbyg",
+      "default": true,
+      "native_name": "Shiori Novella",
+      "japanese_name": "シオリ・ノヴェラ",
+      "english_name": "Shiori Novella"
+    },
+    {
+      "id": "fuwamoco",
+      "twitter": "fuwamoco_en",
+      "youtube": "UCt9H_RpQzhxzlyBxFqrdHqA",
+      "default": true,
+      "native_name": "Fuwamoco",
+      "japanese_name": "Fuwamoco",
+      "english_name": "Fuwamoco"
+    },
+    {
+      "id": "nerissa_ravencroft",
+      "twitter": "nerissa_en",
+      "youtube": "UC_sFNM0z0MWm9A6WlKPuMMg",
+      "default": true,
+      "native_name": "Nerissa Ravencroft",
+      "japanese_name": "ネリッサ・レイヴンクロフト",
+      "english_name": "Nerissa Ravencroft"
+    },
+    {
       "id": "miyabi",
       "twitter": "miyabihanasaki",
       "youtube": "UC6t3-_N8A6ME1JShZHHqOMw",
@@ -951,6 +987,18 @@
       "japanese_name": "ホロライブEnglish -議会-",
       "english_name": "Hololive English -Council-",
       "children": ["sana", "ceres", "ouro", "mumei", "hakos"]
+    },
+    {
+      "id": "hololive_en_advent",
+      "native_name": "Hololive English -Advent-",
+      "japanese_name": "Hololive English -Advent-",
+      "english_name": "Hololive English -Advent-",
+      "children": [
+        "koseki_bijou",
+        "shiori_novella",
+        "fuwamoco",
+        "nerissa_ravencroft"
+      ]
     },
     {
       "id": "holostars_1st",
