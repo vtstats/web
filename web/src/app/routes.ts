@@ -5,26 +5,12 @@ import { NotFound } from "./pages/not-found/not-found";
 import { ShareTarget } from "./pages/share-target/share-target";
 import type { StreamsListPageData } from "./pages/streams-list/streams-list";
 
-const ChannelList = () =>
-  import(
-    /* webpackChunkName: "pages/channels-list" */ "./pages/channels-list/channels-list"
-  ).then((m) => m.ChannelList);
-const StreamsList = () =>
-  import(
-    /* webpackChunkName: "pages/streams-list" */ "./pages/streams-list/streams-list"
-  ).then((m) => m.StreamsList);
-const StreamsDetail = () =>
-  import(
-    /* webpackChunkName: "pages/streams-detail" */ "./pages/streams-detail/streams-detail"
-  ).then((m) => m.StreamsDetail);
-const VTubersDetail = () =>
-  import(
-    /* webpackChunkName: "pages/vtubers-detail" */ "./pages/vtubers-detail/vtubers-detail"
-  ).then((m) => m.VTubersDetail);
+const ChannelList = () => import("./pages/channels-list/channels-list");
+const StreamsList = () => import("./pages/streams-list/streams-list");
+const StreamsDetail = () => import("./pages/streams-detail/streams-detail");
+const VTubersDetail = () => import("./pages/vtubers-detail/vtubers-detail");
 const Settings = () =>
-  import(
-    /* webpackChunkName: "pages/settings" */ "./pages/settings/routes"
-  ).then((m) => m.getRoutes());
+  import("./pages/settings/routes").then((m) => m.getRoutes());
 
 export const getRoutes = (): Routes => [
   { path: "", redirectTo: "/youtube-channel", pathMatch: "full" },

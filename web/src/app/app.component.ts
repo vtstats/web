@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -121,10 +121,10 @@ export class AppComponent implements OnInit {
   sidenavShouldOpen = false;
   sidenavMode: string = "side";
 
-  constructor(
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
-  ) {
+  private iconRegistry = inject(MatIconRegistry);
+  private sanitizer = inject(DomSanitizer);
+
+  constructor() {
     for (const [name, svg] of icons) {
       this.iconRegistry.addSvgIconLiteral(
         name,

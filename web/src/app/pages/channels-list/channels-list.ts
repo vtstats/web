@@ -34,7 +34,7 @@ import { ChannelTable } from "./channel-table/channel-table";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChannelList implements OnInit {
+export default class ChannelList implements OnInit {
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
   private vtubers = inject(VTuberService);

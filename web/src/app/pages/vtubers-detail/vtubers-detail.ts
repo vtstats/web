@@ -21,7 +21,7 @@ import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
   selector: "hls-vtubers-detail",
   templateUrl: "vtubers-detail.html",
 })
-export class VTubersDetail {
+export default class VTubersDetail {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private title = inject(Title);

@@ -37,7 +37,7 @@ type QueryKey = ["youtube_streams", StreamsListPageData, string[]];
   selector: "hls-streams-list",
   templateUrl: "streams-list.html",
 })
-export class StreamsList implements OnInit {
+export default class StreamsList implements OnInit {
   private qry = inject(QryService);
   private route = inject(ActivatedRoute);
   private vtubers = inject(VTuberService);

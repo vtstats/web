@@ -29,7 +29,7 @@ import { StreamViewersChart } from "./stream-viewers-chart/stream-viewers-chart"
   selector: "hls-streams-detail",
   templateUrl: "streams-detail.html",
 })
-export class StreamsDetail implements OnInit {
+export default class StreamsDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private qry = inject(QryService);
