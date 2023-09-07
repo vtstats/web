@@ -1,0 +1,112 @@
+@use "@angular/material" as mat;
+
+.aspect-ratio-16-9 {
+  width: 100%;
+  display: block;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.-mat-table-density-2 {
+  @include mat.table-density(-2);
+}
+
+.-mat-button-density-1 {
+  @include mat.button-density(-1);
+}
+
+.mat-secondary-text {
+  $foreground: map-get($hls-light-theme, "foreground");
+  color: mat.get-color-from-palette($foreground, "secondary-text");
+
+  .dark & {
+    $foreground: map-get($hls-dark-theme, "foreground");
+    color: mat.get-color-from-palette($foreground, "secondary-text");
+  }
+}
+
+.mat-text-caption {
+  $config: mat.get-typography-config($hls-typography-config);
+  font-size: mat.font-size($config, "caption");
+  font-weight: mat.font-weight($config, "caption");
+}
+
+.up-color {
+  color: map-get(mat.define-palette(mat.$green-palette), 800);
+  .dark & {
+    color: map-get(mat.define-palette(mat.$green-palette), 300);
+  }
+}
+
+.down-color {
+  color: map-get(mat.define-palette(mat.$red-palette), 800);
+  .dark & {
+    color: map-get(mat.define-palette(mat.$red-palette), 300);
+  }
+}
+
+.mat-bg-unselected-chip {
+  $background: map-get($hls-light-theme, "background");
+  background-color: mat.get-color-from-palette(
+    $background,
+    "unselected-chip"
+  ) !important;
+  .dark & {
+    $background: map-get($hls-dark-theme, "background");
+    background-color: mat.get-color-from-palette(
+      $background,
+      "unselected-chip"
+    ) !important;
+  }
+}
+
+.mat-color-primary {
+  $primary: map-get($hls-light-theme, "primary");
+  color: mat.get-color-from-palette($primary) !important;
+}
+.dark .mat-color-primary {
+  $primary: map-get($hls-dark-theme, "primary");
+  color: mat.get-color-from-palette($primary) !important;
+}
+
+.mat-border-primary {
+  $primary: map-get($hls-light-theme, "primary");
+  border-color: mat.get-color-from-palette($primary) !important;
+}
+.dark .mat-border-primary {
+  $primary: map-get($hls-dark-theme, "primary");
+  border-color: mat.get-color-from-palette($primary) !important;
+}
+
+.mat-border-divider {
+  $foreground: map-get($hls-light-theme, "foreground");
+  border-color: mat.get-color-from-palette($foreground, "divider");
+}
+.dark .mat-border-divider {
+  $foreground: map-get($hls-dark-theme, "foreground");
+  border-color: mat.get-color-from-palette($foreground, "divider");
+}
+
+.mat-border-card {
+  $background: map-get($hls-light-theme, "background");
+  border-color: mat.get-color-from-palette($background, "card");
+}
+.dark .mat-border-card {
+  $background: map-get($hls-dark-theme, "background");
+  border-color: mat.get-color-from-palette($background, "card");
+}
+
+.mat-bg-card {
+  $background: map-get($hls-light-theme, "background");
+  background-color: mat.get-color-from-palette($background, "card");
+}
+.dark .mat-bg-card {
+  $background: map-get($hls-dark-theme, "background");
+  background-color: mat.get-color-from-palette($background, "card");
+}
+
+.dense-menu .mat-mdc-menu-item {
+  height: 32px;
+  line-height: 32px;
+  min-height: 0;
+}

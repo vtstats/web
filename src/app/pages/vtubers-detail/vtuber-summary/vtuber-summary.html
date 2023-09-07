@@ -1,0 +1,25 @@
+<div class="flex flex-row items-center justify-center pb-4">
+  <div class="mr-6">
+    <img
+      class="rounded-full"
+      height="80"
+      width="80"
+      [ngSrc]="vtuber.vtuberId | avatar"
+    />
+  </div>
+
+  <div class="text-center">
+    <div class="mat-h3">{{ vtuber.vtuberId | name }}</div>
+
+    <div class="icons">
+      <a
+        *ngFor="let link of links"
+        class="mat-secondary-text"
+        target="_blank"
+        [attr.href]="link.href"
+      >
+        <mat-icon class="!h-5 !w-5 mr-2" [svgIcon]="link.icon" />
+      </a>
+    </div>
+  </div>
+</div>

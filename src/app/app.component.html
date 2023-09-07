@@ -1,0 +1,20 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    #drawer
+    [opened]="drawerService.sidenavOpen()"
+    [mode]="drawerService.sidenavMode()"
+    [fixedInViewport]="true"
+    [fixedTopGap]="drawerService.sidenavFixedTopGap()"
+  >
+    <hls-sidenav />
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <hls-header />
+    <div
+      class="pt-16 min-h-[calc(100vh-4rem)] mx-auto max-w-4xl overflow-x-auto"
+    >
+      <router-outlet />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

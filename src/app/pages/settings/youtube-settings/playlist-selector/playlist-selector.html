@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>Saved to playlist</mat-label>
+
+  <mat-select [value]="selected">
+    <mat-option *ngFor="let item of items" [value]="item.id">
+      {{ item.snippet.localized.title }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

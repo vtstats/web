@@ -1,0 +1,38 @@
+<ng-container *ngIf="channels().length == 0; else list">
+  <hls-select-vtuber-alert />
+</ng-container>
+
+<ng-template #list>
+  <div class="p-4" *ngIf="result() as result">
+    <div class="flex flex-row items-center mb-4 gap-2">
+      <div class="flex-1 whitespace-nowrap overflow-y-hidden overflow-x-auto">
+        <hls-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
+
+        <hls-date-filter
+          *ngIf="route.snapshot.data.status !== 'scheduled'"
+          (selectedChange)="selectedDateRange.set($event)"
+        />
+
+        <hls-keyword-input
+          *ngIf="route.snapshot.data.status !== 'scheduled'"
+          (onChange)="searchKeyword.set($event)"
+        />
+      </div>
+
+      <hls-refresh-button
+        [isLoading]="result.isFetching"
+        [refresh]="result.refetch"
+        [updatedAt]="result.data?.pages[0].updatedAt"
+      />
+    </div>
+
+    <hls-stream-list
+      *ngIf="!result.isError"
+      [groupBy]="true"
+      [loading]="result.isLoading"
+      [items]="result.data?.pages[0].items"
+      [hideSpinner]="!result.hasNextPage"
+      (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
+    />
+  </div>
+</ng-template>

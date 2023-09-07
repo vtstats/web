@@ -1,0 +1,11 @@
+<div class="p-4 mb-15" *ngIf="streamQry | useQry as result">
+  <ng-container *ngIf="result.isSuccess">
+    <hls-stream-summary [stream]="result.data" />
+
+    <hls-stream-viewer-stats [stream]="result.data" />
+
+    <hls-stream-chat-stats [stream]="result.data" />
+
+    <hls-stream-events [stream]="result.data" />
+  </ng-container>
+</div>

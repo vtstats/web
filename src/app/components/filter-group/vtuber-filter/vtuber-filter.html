@@ -1,0 +1,62 @@
+<button
+  class="mr-2 !rounded-full"
+  mat-stroked-button
+  (click)="_isOpen = !_isOpen"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  VTuber
+
+  <ng-container *ngIf="selected.size > 0"> +{{selected.size}}</ng-container>
+
+  <mat-icon
+    [color]="'primary'"
+    [class.rotate-180]="_isOpen"
+    iconPositionEnd
+    svgIcon="menu-down"
+  />
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayScrollStrategy]="closeScrollStrategy"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="_isOpen"
+  [cdkConnectedOverlayPositions]="positions"
+  (overlayOutsideClick)="$event.stopPropagation(); _isOpen = false"
+  (attach)="_isOpen = true"
+  (detach)="_isOpen = false"
+>
+  <div
+    class="vtuber-filter-overlay mat-bg-card mat-elevation-z4 rounded m-0 p-0"
+    [@transformPanel]="_isOpen"
+  >
+    <mat-selection-list
+      class="max-h-80 overflow-y-auto"
+      (selectionChange)="onListChange($event)"
+    >
+      <div
+        class="sticky text-sm flex top-[-8px] mat-bg-card px-4 pb-2 pt-4 z-50 mt-[-8px]"
+      >
+        <div class="flex-1">Filter by vtuber</div>
+        <div
+          tabindex="0"
+          role="button"
+          class="cursor-pointer"
+          (click)="_isOpen = false; clear()"
+        >
+          clear
+        </div>
+      </div>
+      <mat-list-option
+        *ngFor="let vtb of _vtubers"
+        [value]="vtb"
+        [selected]="selected.has(vtb)"
+      >
+        <img height="32" width="32" matListItemAvatar [src]="vtb | avatar" />
+        {{vtb | name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</ng-template>

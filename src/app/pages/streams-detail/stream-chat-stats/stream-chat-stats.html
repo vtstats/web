@@ -1,0 +1,20 @@
+<div class="mat-border-divider rounded border border-solid mb-4">
+  <div class="mx-4 mt-4">
+    <div class="mat-h3 m-0" i18n="@@liveChat">Live Chat</div>
+  </div>
+
+  <hls-chart
+    *ngIf="rows && rows.length > 0"
+    [height]="300"
+    [options]="option"
+    (chartInit)="onChartInit($event)"
+  />
+
+  <div
+    *ngIf="rows && rows.length === 0"
+    [style.height.px]="300"
+    class="items-center justify-center flex mat-secondary-text tracking-widest text-lg"
+  >
+    NO DATA
+  </div>
+</div>

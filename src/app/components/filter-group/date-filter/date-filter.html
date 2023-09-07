@@ -1,0 +1,51 @@
+<button
+  class="mr-2 !rounded-full"
+  mat-stroked-button
+  (click)="toggle()"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  color="secondary"
+>
+  {{ text() }}
+
+  <mat-icon
+    [color]="'primary'"
+    [class.rotate-180]="open()"
+    iconPositionEnd
+    svgIcon="menu-down"
+  />
+</button>
+
+<ng-template
+  #overlay
+  cdkConnectedOverlay
+  [cdkConnectedOverlayScrollStrategy]="closeScrollStrategy"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  (overlayOutsideClick)="onClickOutside($event)"
+  (detach)="open.set(false)"
+  (attach)="open.set(true)"
+>
+  <div
+    class="mat-elevation-z4 w-72 mat-bg-card rounded m-0 p-0"
+    [@transformPanel]="'showing'"
+  >
+    <div class="text-sm flex mat-bg-card px-4 pb-2 pt-4 mb-[-24px]">
+      <div class="flex-1">Filter by date</div>
+      <div tabindex="0" role="button" class="cursor-pointer" (click)="clear()">
+        clear
+      </div>
+    </div>
+
+    <mat-calendar
+      [selected]="range()"
+      [comparisonStart]="range().start"
+      [comparisonStart]="range().end"
+      (selectedChange)="onChange($event)"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+    />
+  </div>
+</ng-template>

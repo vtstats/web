@@ -1,0 +1,16 @@
+.shimmer {
+  background: rgba(0, 0, 0, 0.1);
+  fill: rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  .dark & {
+    background: rgba(255, 255, 255, 0.1);
+    fill: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.shimmer.text {
+  height: 1rem;
+  display: inline-block;
+  margin-bottom: 2px;
+}

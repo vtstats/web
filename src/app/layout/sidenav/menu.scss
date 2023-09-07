@@ -1,0 +1,43 @@
+@use "@angular/material" as mat;
+
+@import "src/styles/_constants.scss";
+
+hls-sidenav-menu .mat-mdc-list-item {
+  border-radius: 0 28px 28px 0 !important;
+
+  $primary: map-get($hls-light-theme, "primary");
+  $foreground: map-get($hls-light-theme, "foreground");
+
+  &.router-active {
+    background-color: #b2dfdb !important;
+
+    .mat-icon,
+    .mat-mdc-list-item-title {
+      color: mat.get-color-from-palette($primary) !important;
+    }
+  }
+
+  .mat-icon,
+  .mat-mdc-list-item-title {
+    color: mat.get-color-from-palette($foreground, "text") !important;
+  }
+}
+
+.dark hls-sidenav-menu .mat-mdc-list-item {
+  $primary: map-get($hls-dark-theme, "primary");
+  $foreground: map-get($hls-dark-theme, "foreground");
+
+  &.router-active {
+    background-color: #004d40 !important;
+
+    .mat-icon,
+    .mat-mdc-list-item-title {
+      color: mat.get-color-from-palette($primary) !important;
+    }
+  }
+
+  .mat-icon,
+  .mat-mdc-list-item-title {
+    color: mat.get-color-from-palette($foreground, "text") !important;
+  }
+}

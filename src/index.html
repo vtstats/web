@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>vtstats</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" sizes="72x72" href="/assets/icons/icon-72x72.png" />
+    <link rel="icon" sizes="96x96" href="/assets/icons/icon-96x96.png" />
+    <link rel="icon" sizes="128x128" href="/assets/icons/icon-128x128.png" />
+    <link rel="icon" sizes="144x144" href="/assets/icons/icon-144x144.png" />
+    <link rel="icon" sizes="152x152" href="/assets/icons/icon-152x152.png" />
+    <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png" />
+    <link rel="icon" sizes="384x384" href="/assets/icons/icon-384x384.png" />
+    <link rel="icon" sizes="512x512" href="/assets/icons/icon-512x512.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:title" content="vtstats" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/open-graph.jpg" />
+    <meta property="og:url" content="https://vt.poi.cat" />
+  </head>
+  <body class="dark">
+    <hls-root></hls-root>
+    <div id="react-root"></div>
+    <noscript>
+      Please enable JavaScript to continue using this application.
+    </noscript>
+    <script>
+      try {
+        const setting = window.localStorage.getItem("vts:themeSetting");
+        const prefersDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const isDarkMode =
+          setting === "dark" ||
+          (setting === "follow-system" && prefersDarkMode);
+
+        document.body.setAttribute("class", isDarkMode ? "dark" : "light");
+        document.head
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", isDarkMode ? "#282828" : "#FFFFFF");
+      } catch (e) {}
+
+      window.buildTime = "BUILD_TIME";
+      window.gitCommitSha = "GIT_COMMIT_SHA";
+      window.gitBranch = "GIT_BRANCH";
+    </script>
+  </body>
+</html>

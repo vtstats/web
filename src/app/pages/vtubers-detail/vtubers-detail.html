@@ -1,0 +1,9 @@
+<div class="p-4" *ngIf="vtuber">
+  <hls-vtuber-summary [vtuber]="vtuber" [channels]="channels" />
+
+  <hls-channel-overview [channels]="channels" />
+
+  <hls-stream-time [vtuber]="vtuber" />
+
+  <hls-vtuber-streams [vtuber]="vtuber" [channels]="channels" />
+</div>

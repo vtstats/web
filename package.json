@@ -1,0 +1,53 @@
+{
+  "name": "@vtstats/web",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "dev": "ng serve --hmr",
+    "start": "ng serve --hmr",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.4",
+    "@angular/cdk": "^16.2.3",
+    "@angular/common": "^16.2.4",
+    "@angular/compiler": "^16.2.4",
+    "@angular/core": "^16.2.4",
+    "@angular/forms": "^16.2.4",
+    "@angular/localize": "^16.2.4",
+    "@angular/material": "^16.2.3",
+    "@angular/platform-browser": "^16.2.4",
+    "@angular/platform-browser-dynamic": "^16.2.4",
+    "@angular/platform-server": "^16.2.4",
+    "@angular/router": "^16.2.4",
+    "@angular/service-worker": "^16.2.4",
+    "@sentry/browser": "^6.16.1",
+    "@tanstack/query-core": "^4.20.4",
+    "d3-array": "^3.1.1",
+    "date-fns": "^2.18.0",
+    "echarts": "^5.4.1",
+    "query-string": "^8.1.0",
+    "rxjs": "^7.4.0",
+    "tslib": "^2.5.0",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.1",
+    "@angular/cli": "^16.2.1",
+    "@angular/compiler-cli": "^16.2.4",
+    "@angular/language-service": "^16.2.4",
+    "@types/d3-array": "^3.0.2",
+    "@types/gapi.auth2": "^0.0.55",
+    "@types/google.accounts": "^0.0.6",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "prettier": "^2.2.1",
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^9.1.1",
+    "tslint": "~6.1.0",
+    "typescript": "~5.0.4"
+  }
+}

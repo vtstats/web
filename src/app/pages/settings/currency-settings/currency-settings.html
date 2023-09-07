@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>Currency</mat-label>
+
+  <mat-select
+    [value]="config.currencySetting()"
+    (selectionChange)="config.currencySetting.set($event.value)"
+  >
+    <mat-option *ngFor="let currency of currencies" [value]="currency[0]">
+      {{ currency[0] }}<ng-container *ngIf="currency[2]"
+        >({{ currency[2] }})</ng-container
+      >
+      - {{ currency[1] }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

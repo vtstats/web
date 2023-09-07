@@ -1,0 +1,30 @@
+<div *ngIf="google.initialized$ | async">
+  <div *ngIf="google.user$ | async as user; else login">
+    <div class="flex items-center space-x-2 mb-5">
+      <div class="flex-shrink-0">
+        <img
+          class="rounded-full select-none"
+          height="40"
+          width="40"
+          [ngSrc]="user.picture"
+          [attr.alt]="user.name"
+        />
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <div class="mat-body-2">{{ user.name }}</div>
+        <div class="mat-small mat-secondary-text">{{ user.email }}</div>
+      </div>
+
+      <button mat-stroked-button (click)="google.logout()">Sign Out</button>
+    </div>
+
+    <!-- <hls-playlist-selector /> -->
+  </div>
+
+  <ng-template #login>
+    <div class="mb-5">
+      <google-button />
+    </div>
+  </ng-template>
+</div>

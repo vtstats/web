@@ -1,0 +1,10 @@
+@use "@angular/material" as mat;
+
+.hls-menu-panel {
+  .mat-mdc-menu-item-text {
+    white-space: nowrap !important;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,9 @@
+<div class="mat-typography p-4">
+  <h1>Service worker</h1>
+
+  <p>Service worker {{ isEnabled ? 'is' : 'is not' }} enabled</p>
+
+  <pre class="font-mono p-0 m-0" *ngIf="isEnabled">
+{{ (ngswStateQry | useQry)?.data }}</pre
+  >
+</div>

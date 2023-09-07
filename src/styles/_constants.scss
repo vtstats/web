@@ -1,0 +1,40 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+
+$hls-typography-config: mat.define-typography-config();
+
+$hls-light-theme: map.deep-merge(
+  mat.define-light-theme(
+    (
+      color: (
+        primary: mat.define-palette(mat.$teal-palette),
+        accent: mat.define-palette(mat.$blue-gray-palette),
+      ),
+    )
+  ),
+  (
+    color: (
+      "background": (
+        "background": #fff,
+      ),
+    ),
+  )
+);
+
+$hls-dark-theme: map.deep-merge(
+  mat.define-dark-theme(
+    (
+      color: (
+        primary: mat.define-palette(mat.$teal-palette, 300),
+        accent: mat.define-palette(mat.$blue-gray-palette, 300),
+      ),
+    )
+  ),
+  (
+    "color": (
+      "background": (
+        "background": #202124,
+      ),
+    ),
+  )
+);

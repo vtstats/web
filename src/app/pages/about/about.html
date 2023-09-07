@@ -1,0 +1,65 @@
+<div class="p-4">
+  <div class="mat-border-divider rounded border border-solid mb-4">
+    <div class="mt-4 text-base font-medium px-4">About</div>
+
+    <div class="mat-typography p-4">
+      <p>
+        VTStats is a platform for VTubers Statistics and Data Visualization.
+      </p>
+
+      <p>
+        VTStats is an open source project, you can find the source code at
+        <a
+          class="text-inherit"
+          target="_blank"
+          href="https://github.com/PoiScript/vtstats"
+          >GitHub</a
+        >.
+      </p>
+
+      <p>
+        Join our discord server at
+        <a
+          class="text-inherit"
+          target="_blank"
+          href="https://discord.gg/wZCj9hrh"
+          >https://discord.gg/wZCj9hrh</a
+        >.
+      </p>
+
+      <p>
+        Credit to
+        <a
+          href="https://exchangerate.host/"
+          class="text-inherit"
+          target="_blank"
+          >Exchange Rate Host</a
+        >
+        and
+        <a
+          href="https://www.returnyoutubedislike.com/"
+          class="text-inherit"
+          target="_blank"
+          >Return YouTube Dislike</a
+        >
+        for providing exchange rate data and youtube like/dislike data.
+      </p>
+    </div>
+  </div>
+
+  <div class="mat-border-divider rounded border border-solid mb-4">
+    <div class="mt-4 text-base font-medium px-4">Miscellaneous</div>
+
+    <mat-nav-list>
+      <a mat-list-item href="https://angular.io/">
+        Angular Version: v{{ angularVer }}
+      </a>
+      <a mat-list-item (click)="qry.toggleQueryDevTools()">
+        Toggle Query DevTools
+      </a>
+      <a mat-list-item routerLink="/about/ngsw">Service Worker</a>
+      <a mat-list-item routerLink="/about/privacy">Privacy Policy</a>
+      <a mat-list-item routerLink="/about/licenses">Third Party Licenses</a>
+    </mat-nav-list>
+  </div>
+</div>

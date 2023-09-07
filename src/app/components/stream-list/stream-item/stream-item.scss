@@ -1,0 +1,13 @@
+hls-stream-item {
+  .keyword {
+    background-color: #fff8c5;
+  }
+}
+
+.dark {
+  hls-stream-item {
+    .keyword {
+      background-color: rgba(210, 153, 34, 0.4);
+    }
+  }
+}
