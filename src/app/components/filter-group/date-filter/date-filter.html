@@ -1,7 +1,8 @@
 <button
-  class="mr-2 !rounded-full"
+  class="!rounded-full"
   mat-stroked-button
   (click)="toggle()"
+  [color]="selected() && 'primary'"
   type="button"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
@@ -10,7 +11,7 @@
   {{ text() }}
 
   <mat-icon
-    [color]="'primary'"
+    [color]="selected() && 'primary'"
     [class.rotate-180]="open()"
     iconPositionEnd
     svgIcon="menu-down"

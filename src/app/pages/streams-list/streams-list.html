@@ -4,20 +4,22 @@
 
 <ng-template #list>
   <div class="p-4" *ngIf="result() as result">
-    <div class="flex flex-row items-center mb-4 gap-2">
-      <div class="flex-1 whitespace-nowrap overflow-y-hidden overflow-x-auto">
-        <hls-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
+    <div
+      class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
+    >
+      <hls-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
 
-        <hls-date-filter
-          *ngIf="route.snapshot.data.status !== 'scheduled'"
-          (selectedChange)="selectedDateRange.set($event)"
-        />
+      <hls-date-filter
+        *ngIf="route.snapshot.data.status !== 'scheduled'"
+        (selectedChange)="selectedDateRange.set($event)"
+      />
 
-        <hls-keyword-input
-          *ngIf="route.snapshot.data.status !== 'scheduled'"
-          (onChange)="searchKeyword.set($event)"
-        />
-      </div>
+      <hls-keyword-input
+        *ngIf="route.snapshot.data.status !== 'scheduled'"
+        (onChange)="searchKeyword.set($event)"
+      />
+
+      <div class="flex-1"></div>
 
       <hls-refresh-button
         [isLoading]="result.isFetching"

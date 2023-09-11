@@ -60,7 +60,7 @@ export const channelStatsSummary = (
 export const streamsByPlatformId = (
   platform: Platform,
   platformId: string
-): Promise<Array<Stream>> =>
+): Promise<Stream> =>
   fetch(
     qs.stringifyUrl({
       url: `${baseUrl}/streams`,

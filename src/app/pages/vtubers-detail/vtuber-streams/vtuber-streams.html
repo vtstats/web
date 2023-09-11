@@ -1,12 +1,14 @@
 <div class="mat-h3 font-medium" i18n="@@recentStreams">Recent Streams</div>
 
 <ng-container *ngIf="result() as result">
-  <div class="flex flex-row items-center mb-4">
-    <div class="flex-1">
-      <hls-date-filter (selectedChange)="selectedDateRange.set($event)" />
+  <div
+    class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
+  >
+    <hls-date-filter (selectedChange)="selectedDateRange.set($event)" />
 
-      <hls-keyword-filter (onChange)="keyword.set($event)" />
-    </div>
+    <hls-keyword-filter (onChange)="keyword.set($event)" />
+
+    <div class="flex-1"></div>
 
     <hls-refresh-button
       [isLoading]="result.isFetching"

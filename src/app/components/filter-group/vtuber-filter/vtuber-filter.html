@@ -1,7 +1,8 @@
 <button
-  class="mr-2 !rounded-full"
+  class="!rounded-full"
   mat-stroked-button
   (click)="_isOpen = !_isOpen"
+  [color]="selected.size > 0 && 'primary'"
   type="button"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
@@ -11,7 +12,7 @@
   <ng-container *ngIf="selected.size > 0"> +{{selected.size}}</ng-container>
 
   <mat-icon
-    [color]="'primary'"
+    [color]="selected.size > 0 && 'primary'"
     [class.rotate-180]="_isOpen"
     iconPositionEnd
     svgIcon="menu-down"

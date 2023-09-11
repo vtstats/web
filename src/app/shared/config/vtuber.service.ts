@@ -48,6 +48,6 @@ export class VTuberService {
 
     this.vtubers.set(vtubers);
     this.groups.set(groups);
-    this.channels.set(channels.filter((c) => c.platform === Platform.YOUTUBE));
+    this.channels.set(channels);
   }
 }

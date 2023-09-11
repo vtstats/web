@@ -10,6 +10,7 @@ import {
 import { QueryObserverOptions } from "@tanstack/query-core";
 
 import { SelectVtuberAlert } from "src/app/components/alert/select-vtuber-alert";
+import { PlatformFilter } from "src/app/components/filter-group/platform-filter/platform-filter";
 import { VTuberFilter } from "src/app/components/filter-group/vtuber-filter/vtuber-filter";
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
 import { Channel, ChannelStatsSummary, Platform } from "src/app/models";
@@ -26,6 +27,7 @@ import { ChannelStatsTable } from "../components/channel-stats-table/channel-sta
   imports: [
     NgIf,
     ChannelStatsTable,
+    PlatformFilter,
     VTuberFilter,
     SelectVtuberAlert,
     RefreshButton,
@@ -37,13 +39,15 @@ export default class ChannelRevenue {
   private vtubers = inject(VTuberService);
 
   vtuberSelected = signal(new Set<string>());
+  platform = signal(Platform.YOUTUBE as string);
 
   channels = computed<Channel[]>(() => {
     const vtuberSelected = this.vtuberSelected();
+    const platform = this.platform();
 
     let channels = this.vtubers
       .selectedChannels()
-      .filter((c) => c.platform === Platform.YOUTUBE);
+      .filter((c) => c.platform === platform);
 
     if (vtuberSelected.size > 0) {
       channels = channels.filter((c) => vtuberSelected.has(c.vtuberId));

@@ -2,8 +2,7 @@ import { Routes } from "@angular/router";
 
 import { NotFound } from "./pages/not-found/not-found";
 import { ShareTarget } from "./pages/share-target/share-target";
-
-import "./pages/channel-stats/channel-stats";
+import { Platform } from "./models";
 
 export const getRoutes = (): Routes => [
   {
@@ -47,7 +46,18 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "stream/:streamId",
+    redirectTo: "/youtube-stream/:streamId",
+    pathMatch: "full",
+  },
+  {
+    path: "youtube-stream/:streamId",
     loadComponent: () => import("./pages/streams-detail/streams-detail"),
+    data: { platform: Platform.YOUTUBE },
+  },
+  {
+    path: "twitch-stream/:streamId",
+    loadComponent: () => import("./pages/streams-detail/streams-detail"),
+    data: { platform: Platform.TWITCH },
   },
   {
     path: "vtuber/:vtuberId",

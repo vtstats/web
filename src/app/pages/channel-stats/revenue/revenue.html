@@ -4,10 +4,12 @@
 
 <ng-template #table>
   <ng-container *ngIf="result() as result">
-    <div class="flex flex-row items-center p-4">
-      <div class="flex-1">
-        <hls-vtuber-filter (selectedChange)="vtuberSelected.set($event)" />
-      </div>
+    <div
+      class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
+    >
+      <hls-vtuber-filter (selectedChange)="vtuberSelected.set($event)" />
+
+      <div class="flex-1"></div>
 
       <hls-menu
         [showLabel]="false"

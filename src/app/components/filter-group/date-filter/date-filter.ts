@@ -91,6 +91,11 @@ export class DateFilter {
     return text;
   });
 
+  selected = computed(() => {
+    const { start, end } = this.range();
+    return Boolean(start && end);
+  });
+
   onChange(date: Date) {
     const range = this.range();
 

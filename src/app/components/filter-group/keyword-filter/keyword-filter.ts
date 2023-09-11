@@ -11,7 +11,7 @@ import {
   template: `
     <input
       placeholder="Search"
-      class="keyword-filter mr-2 rounded-full tracking-wider"
+      class="keyword-filter rounded-full tracking-wider"
       (change)="handleChange($event)"
     />
   `,

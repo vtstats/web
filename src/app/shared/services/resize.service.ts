@@ -8,25 +8,21 @@ export class ResizeService {
       let timer = null;
 
       window.addEventListener("resize", () => {
-        if (!timer) this.windowWidth.set(window.innerWidth);
+        if (!timer) this.update();
 
         clearTimeout(timer);
 
         timer = setTimeout(() => {
-          this.windowWidth.set(window.innerWidth);
+          this.update();
           timer = null;
         }, 500);
       });
+
+      this.update();
     }
   }
 
+  update = () => this.windowWidth.set(window.innerWidth);
+
   windowWidth = signal(2434);
-
-  sidenavOpened = computed(() => this.windowWidth() > 1200);
-
-  sidenavMode = computed<MatDrawerMode>(() =>
-    this.windowWidth() > 1200 ? "side" : "over"
-  );
-
-  sidenavFixedTopGap = computed(() => (this.windowWidth() > 1200 ? 65 : 0));
 }

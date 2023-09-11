@@ -41,21 +41,19 @@ export default class StreamsDetail implements OnInit {
 
   ngOnInit() {
     const streamId = this.route.snapshot.paramMap.get("streamId");
-    const platform = Platform.YOUTUBE;
+    const platform = this.route.snapshot.data.platform;
 
     this.streamQry = this.qry.create<
       Stream,
       unknown,
       Stream,
       Stream,
-      ["stream", { platform: Platform.YOUTUBE; platformId: string }]
+      ["stream", { platform: Platform; platformId: string }]
     >({
       queryKey: ["stream", { platform, platformId: streamId }],
 
       queryFn: ({ queryKey: [_, { platform, platformId }] }) =>
-        api
-          .streamsByPlatformId(platform, platformId)
-          .then((streams) => streams?.[0]),
+        api.streamsByPlatformId(platform, platformId),
 
       onSuccess: (stream) => {
         if (!stream) {

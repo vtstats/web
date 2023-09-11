@@ -1,5 +1,6 @@
 export const enum Platform {
   YOUTUBE = "YOUTUBE",
+  TWITCH = "TWITCH",
   BILIBILI = "BILIBILI",
 }
 

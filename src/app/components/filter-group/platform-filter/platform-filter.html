@@ -1,0 +1,38 @@
+<button
+  class="!rounded-full"
+  mat-stroked-button
+  color="primary"
+  type="button"
+  [matMenuTriggerFor]="menu"
+  (menuClosed)="_isOpen = false"
+  (menuOpened)="_isOpen = true"
+>
+  {{text()}}
+
+  <mat-icon
+    color="primary"
+    [class.rotate-180]="_isOpen"
+    iconPositionEnd
+    svgIcon="menu-down"
+  />
+</button>
+
+<mat-menu
+  #menu="matMenu"
+  class="dense-menu hls-menu-panel max-h-80"
+  xPosition="before"
+>
+  <button *ngIf="!hideYouTube" mat-menu-item (click)="handleChange('YOUTUBE')">
+    YouTube
+  </button>
+  <button *ngIf="!hideTwitch" mat-menu-item (click)="handleChange('TWITCH')">
+    Twitch
+  </button>
+  <button
+    *ngIf="!hideBilibili"
+    mat-menu-item
+    (click)="handleChange('BILIBILI')"
+  >
+    Bilibili
+  </button>
+</mat-menu>
