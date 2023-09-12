@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,7 +25,6 @@ import { ThemeService } from "src/app/shared/config/theme.service";
 @Component({
   selector: "hls-chart",
   standalone: true,
-  imports: [CommonModule],
   template: `
     <div #container class="w-full" [style.height.px]="_height()"></div>
   `,

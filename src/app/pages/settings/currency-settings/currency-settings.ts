@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { NgFor, NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -8,7 +8,7 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 
 @Component({
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, CommonModule],
+  imports: [MatFormFieldModule, MatSelectModule, NgFor, NgIf],
   selector: "hls-currency-settings",
   templateUrl: "currency-settings.html",
 })

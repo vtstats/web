@@ -1,9 +1,14 @@
-import { CommonModule } from "@angular/common";
+import {
+  DecimalPipe,
+  NgSwitch,
+  NgSwitchCase,
+  NgSwitchDefault,
+} from "@angular/common";
 import { Component, Input } from "@angular/core";
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgSwitch, NgSwitchCase, NgSwitchDefault, DecimalPipe],
   selector: "hls-channel-stats-table-delta-cell",
   template: `
     <ng-container [ngSwitch]="true">

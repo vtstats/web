@@ -1,9 +1,9 @@
-import { CommonModule } from "@angular/common";
+import { NgFor } from "@angular/common";
 import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgFor],
   selector: "hls-privacy-policy",
   templateUrl: "privacy-policy.html",
 })

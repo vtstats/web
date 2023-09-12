@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { AsyncPipe, DatePipe, NgFor } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -7,7 +7,7 @@ import { ConfigService, TickService } from "src/app/shared";
 
 @Component({
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, CommonModule],
+  imports: [MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, DatePipe],
   selector: "hls-timezone-settings",
   templateUrl: "timezone-settings.html",
 })

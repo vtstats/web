@@ -1,5 +1,5 @@
-import { CommonModule } from "@angular/common";
-import { ApplicationRef, Component, inject, OnInit } from "@angular/core";
+import { NgSwitch, NgSwitchCase } from "@angular/common";
+import { ApplicationRef, Component, OnInit, inject } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { SwUpdate } from "@angular/service-worker";
@@ -7,7 +7,7 @@ import { concat, first, interval, switchMap, tap } from "rxjs";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatSnackBarModule],
+  imports: [NgSwitch, NgSwitchCase, MatIconModule, MatSnackBarModule],
   selector: "hls-update-indicator",
   templateUrl: "update-indicator.html",
   host: { class: "inline-block align-middle" },
