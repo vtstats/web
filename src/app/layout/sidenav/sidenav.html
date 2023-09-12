@@ -1,10 +1,10 @@
 <div class="w-64 min-h-full flex flex-col mr-4">
   <mat-nav-list class="flex-1">
-    <hls-sidenav-menu headline="CHANNEL" [items]="channelsItems" />
+    <vts-sidenav-menu headline="CHANNEL" [items]="channelsItems" />
     <mat-divider class="!mr-2 !my-2" />
-    <hls-sidenav-menu headline="STREAM" [items]="streamsItems" />
+    <vts-sidenav-menu headline="STREAM" [items]="streamsItems" />
     <mat-divider class="!mr-2 !my-2" />
-    <hls-sidenav-menu [items]="extraItems" />
+    <vts-sidenav-menu [items]="extraItems" />
   </mat-nav-list>
 
   <div class="p-4 mat-small mat-secondary-text">
@@ -15,7 +15,7 @@
     >
       {{ commitSha }}
     </a>
-    <hls-update-indicator />
+    <vts-update-indicator />
     <br />
     &copy; 2019-2023 PoiScript
   </div>

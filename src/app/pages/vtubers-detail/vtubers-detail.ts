@@ -13,7 +13,7 @@ import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
 @Component({
   standalone: true,
   imports: [NgIf, StreamTime, VtuberSummary, ChannelOverview, VtuberStreams],
-  selector: "hls-vtubers-detail",
+  selector: "vts-vtubers-detail",
   templateUrl: "vtubers-detail.html",
 })
 export default class VTubersDetail {

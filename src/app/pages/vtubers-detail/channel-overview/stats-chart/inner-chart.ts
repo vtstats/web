@@ -18,8 +18,8 @@ import { sampling } from "src/utils";
 @Component({
   standalone: true,
   imports: [Chart],
-  selector: "hls-channel-stats-inner-chart",
-  template: `<hls-chart [height]="80" [options]="options()" />`,
+  selector: "vts-channel-stats-inner-chart",
+  template: `<vts-chart [height]="80" [options]="options()" />`,
 })
 export class NameComponent implements OnInit {
   constructor() {}

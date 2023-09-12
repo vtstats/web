@@ -80,7 +80,7 @@ const bootstrap = () => {
         enabled: environment.production,
         registrationStrategy: "registerImmediately",
       }),
-      importProvidersFrom(BrowserModule.withServerTransition({ appId: "hls" })),
+      importProvidersFrom(BrowserModule.withServerTransition({ appId: "vts" })),
       importProvidersFrom(BrowserAnimationsModule),
       importProvidersFrom(MatSnackBarModule),
     ],

@@ -4,7 +4,7 @@ import { MatIconModule } from "@angular/material/icon";
 @Component({
   standalone: true,
   imports: [MatIconModule],
-  selector: "hls-alert",
+  selector: "vts-alert",
   template: `
     <mat-icon
       color="primary"

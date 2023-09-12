@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/models";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 
-@Component({ standalone: true, selector: "hls-share-target", template: "" })
+@Component({ standalone: true, selector: "vts-share-target", template: "" })
 export class ShareTarget implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);

@@ -10,8 +10,8 @@ import { StreamEventsGroup } from "./stream-events";
 @Component({
   standalone: true,
   imports: [Chart],
-  selector: "hls-stream-events-chart",
-  template: ` <hls-chart [options]="option" [height]="320" /> `,
+  selector: "vts-stream-events-chart",
+  template: ` <vts-chart [options]="option" [height]="320" /> `,
 })
 export class StreamEventsChart implements OnInit {
   @Input() group: StreamEventsGroup;

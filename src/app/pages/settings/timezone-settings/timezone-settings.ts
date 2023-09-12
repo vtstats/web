@@ -8,7 +8,7 @@ import { ConfigService, TickService } from "src/app/shared";
 @Component({
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, DatePipe],
-  selector: "hls-timezone-settings",
+  selector: "vts-timezone-settings",
   templateUrl: "timezone-settings.html",
 })
 export class TimezoneSettings {

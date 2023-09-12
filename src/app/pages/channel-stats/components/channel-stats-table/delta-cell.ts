@@ -9,7 +9,7 @@ import { Component, Input } from "@angular/core";
 @Component({
   standalone: true,
   imports: [NgSwitch, NgSwitchCase, NgSwitchDefault, DecimalPipe],
-  selector: "hls-channel-stats-table-delta-cell",
+  selector: "vts-channel-stats-table-delta-cell",
   template: `
     <ng-container [ngSwitch]="true">
       <span class="up-color" *ngSwitchCase="delta > 0">

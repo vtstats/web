@@ -21,7 +21,7 @@ import { YouTubeSettings } from "./youtube-settings/youtube-settings";
     VTubersSettings,
     MatDividerModule,
   ],
-  selector: "hls-settings",
+  selector: "vts-settings",
   templateUrl: "settings.html",
 })
 export default class Settings {}

@@ -34,7 +34,7 @@ import animations from "../_animations";
     MatButtonModule,
     MatIconModule,
   ],
-  selector: "hls-vtuber-filter",
+  selector: "vts-vtuber-filter",
   templateUrl: "vtuber-filter.html",
   animations,
   encapsulation: ViewEncapsulation.None,

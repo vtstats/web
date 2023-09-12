@@ -50,7 +50,7 @@ import { QryService } from "src/app/shared/qry";
     AvatarPipe,
     NgOptimizedImage,
   ],
-  selector: "hls-stream-item",
+  selector: "vts-stream-item",
   templateUrl: "stream-item.html",
   styleUrls: ["stream-item.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

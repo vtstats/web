@@ -2,11 +2,11 @@
 
 @import "src/styles/_constants.scss";
 
-hls-sidenav-menu .mat-mdc-list-item {
+vts-sidenav-menu .mat-mdc-list-item {
   border-radius: 0 28px 28px 0 !important;
 
-  $primary: map-get($hls-light-theme, "primary");
-  $foreground: map-get($hls-light-theme, "foreground");
+  $primary: map-get($vts-light-theme, "primary");
+  $foreground: map-get($vts-light-theme, "foreground");
 
   &.router-active {
     background-color: #b2dfdb !important;
@@ -23,9 +23,9 @@ hls-sidenav-menu .mat-mdc-list-item {
   }
 }
 
-.dark hls-sidenav-menu .mat-mdc-list-item {
-  $primary: map-get($hls-dark-theme, "primary");
-  $foreground: map-get($hls-dark-theme, "foreground");
+.dark vts-sidenav-menu .mat-mdc-list-item {
+  $primary: map-get($vts-dark-theme, "primary");
+  $foreground: map-get($vts-dark-theme, "foreground");
 
   &.router-active {
     background-color: #004d40 !important;

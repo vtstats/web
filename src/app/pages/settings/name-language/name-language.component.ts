@@ -6,7 +6,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 @Component({
-  selector: "hls-name-language",
+  selector: "vts-name-language",
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, NgFor],
   templateUrl: "./name-language.component.html",

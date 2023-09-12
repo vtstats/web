@@ -74,14 +74,14 @@
     </th>
 
     <td mat-cell *matCellDef="let row" class="!text-right font-mono">
-      <hls-channel-stats-table-delta-cell
+      <vts-channel-stats-table-delta-cell
         *ngIf="!loading; else shimmer"
         [delta]="row[column.f]"
       />
     </td>
 
     <td mat-footer-cell *matFooterCellDef class="!text-right font-mono">
-      <hls-channel-stats-table-delta-cell
+      <vts-channel-stats-table-delta-cell
         *ngIf="!loading; else shimmer"
         [delta]="getTotal(column.f)"
       />

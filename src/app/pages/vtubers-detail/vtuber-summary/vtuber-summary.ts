@@ -8,7 +8,7 @@ import { AvatarPipe, NamePipe } from "src/app/shared";
 @Component({
   standalone: true,
   imports: [MatIconModule, NgFor, AvatarPipe, NamePipe, NgOptimizedImage],
-  selector: "hls-vtuber-summary",
+  selector: "vts-vtuber-summary",
   templateUrl: "vtuber-summary.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

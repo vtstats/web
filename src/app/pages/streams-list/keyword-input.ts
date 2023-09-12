@@ -7,7 +7,7 @@ import {
 
 @Component({
   standalone: true,
-  selector: "hls-keyword-input",
+  selector: "vts-keyword-input",
   template: `
     <input
       placeholder="Search"

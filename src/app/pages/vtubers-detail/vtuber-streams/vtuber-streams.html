@@ -4,25 +4,25 @@
   <div
     class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
   >
-    <hls-date-filter (selectedChange)="selectedDateRange.set($event)" />
+    <vts-date-filter (selectedChange)="selectedDateRange.set($event)" />
 
-    <hls-keyword-filter (onChange)="keyword.set($event)" />
+    <vts-keyword-filter (onChange)="keyword.set($event)" />
 
     <div class="flex-1"></div>
 
-    <hls-refresh-button
+    <vts-refresh-button
       [isLoading]="result.isFetching"
       [refresh]="result.refetch"
       [updatedAt]="result.data?.pages[0].updatedAt"
     />
   </div>
 
-  <hls-stream-list
+  <vts-stream-list
     *ngIf="!result.isError"
     [loading]="result.isLoading"
     [items]="result.data?.pages[0].items"
     [hideSpinner]="!result.hasNextPage"
     (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
   >
-  </hls-stream-list>
+  </vts-stream-list>
 </ng-container>

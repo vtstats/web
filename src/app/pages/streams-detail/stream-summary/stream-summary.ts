@@ -55,7 +55,7 @@ import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
     NgSwitch,
     NgSwitchCase,
   ],
-  selector: "hls-stream-summary",
+  selector: "vts-stream-summary",
   templateUrl: "stream-summary.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

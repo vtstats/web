@@ -20,17 +20,17 @@
 }
 
 .mat-secondary-text {
-  $foreground: map-get($hls-light-theme, "foreground");
+  $foreground: map-get($vts-light-theme, "foreground");
   color: mat.get-color-from-palette($foreground, "secondary-text");
 
   .dark & {
-    $foreground: map-get($hls-dark-theme, "foreground");
+    $foreground: map-get($vts-dark-theme, "foreground");
     color: mat.get-color-from-palette($foreground, "secondary-text");
   }
 }
 
 .mat-text-caption {
-  $config: mat.get-typography-config($hls-typography-config);
+  $config: mat.get-typography-config($vts-typography-config);
   font-size: mat.font-size($config, "caption");
   font-weight: mat.font-weight($config, "caption");
 }
@@ -50,13 +50,13 @@
 }
 
 .mat-bg-unselected-chip {
-  $background: map-get($hls-light-theme, "background");
+  $background: map-get($vts-light-theme, "background");
   background-color: mat.get-color-from-palette(
     $background,
     "unselected-chip"
   ) !important;
   .dark & {
-    $background: map-get($hls-dark-theme, "background");
+    $background: map-get($vts-dark-theme, "background");
     background-color: mat.get-color-from-palette(
       $background,
       "unselected-chip"
@@ -65,47 +65,47 @@
 }
 
 .mat-color-primary {
-  $primary: map-get($hls-light-theme, "primary");
+  $primary: map-get($vts-light-theme, "primary");
   color: mat.get-color-from-palette($primary) !important;
 }
 .dark .mat-color-primary {
-  $primary: map-get($hls-dark-theme, "primary");
+  $primary: map-get($vts-dark-theme, "primary");
   color: mat.get-color-from-palette($primary) !important;
 }
 
 .mat-border-primary {
-  $primary: map-get($hls-light-theme, "primary");
+  $primary: map-get($vts-light-theme, "primary");
   border-color: mat.get-color-from-palette($primary) !important;
 }
 .dark .mat-border-primary {
-  $primary: map-get($hls-dark-theme, "primary");
+  $primary: map-get($vts-dark-theme, "primary");
   border-color: mat.get-color-from-palette($primary) !important;
 }
 
 .mat-border-divider {
-  $foreground: map-get($hls-light-theme, "foreground");
+  $foreground: map-get($vts-light-theme, "foreground");
   border-color: mat.get-color-from-palette($foreground, "divider");
 }
 .dark .mat-border-divider {
-  $foreground: map-get($hls-dark-theme, "foreground");
+  $foreground: map-get($vts-dark-theme, "foreground");
   border-color: mat.get-color-from-palette($foreground, "divider");
 }
 
 .mat-border-card {
-  $background: map-get($hls-light-theme, "background");
+  $background: map-get($vts-light-theme, "background");
   border-color: mat.get-color-from-palette($background, "card");
 }
 .dark .mat-border-card {
-  $background: map-get($hls-dark-theme, "background");
+  $background: map-get($vts-dark-theme, "background");
   border-color: mat.get-color-from-palette($background, "card");
 }
 
 .mat-bg-card {
-  $background: map-get($hls-light-theme, "background");
+  $background: map-get($vts-light-theme, "background");
   background-color: mat.get-color-from-palette($background, "card");
 }
 .dark .mat-bg-card {
-  $background: map-get($hls-dark-theme, "background");
+  $background: map-get($vts-dark-theme, "background");
   background-color: mat.get-color-from-palette($background, "card");
 }
 

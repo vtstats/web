@@ -25,7 +25,7 @@ import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar"
     FormatDurationPipe,
     Menu,
   ],
-  selector: "hls-stream-time",
+  selector: "vts-stream-time",
   templateUrl: "stream-time.html",
 })
 export class StreamTime implements OnInit {

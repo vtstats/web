@@ -3,8 +3,8 @@
 @import "../../../../styles/constants";
 
 .keyword-filter {
-  $foreground: map-get($hls-light-theme, "foreground");
-  $primary: map-get($hls-light-theme, "primary");
+  $foreground: map-get($vts-light-theme, "foreground");
+  $primary: map-get($vts-light-theme, "primary");
 
   border-color: var(--mdc-outlined-button-outline-color, rgba(0, 0, 0, 0.12));
   padding: 0 15px 0 15px;
@@ -27,8 +27,8 @@
 
 .dark {
   .keyword-filter {
-    $foreground: map-get($hls-dark-theme, "foreground");
-    $primary: map-get($hls-dark-theme, "primary");
+    $foreground: map-get($vts-dark-theme, "foreground");
+    $primary: map-get($vts-dark-theme, "primary");
 
     --mdc-outlined-button-outline-color: rgba(255, 255, 255, 0.12);
     color: mat.get-color-from-palette($foreground, "text");

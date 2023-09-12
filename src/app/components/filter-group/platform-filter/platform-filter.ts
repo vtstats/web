@@ -21,7 +21,7 @@ import { Platform } from "src/app/models";
 
 @Component({
   standalone: true,
-  selector: "hls-platform-filter",
+  selector: "vts-platform-filter",
   templateUrl: "platform-filter.html",
   imports: [NgIf, OverlayModule, MatButtonModule, MatMenuModule, MatIconModule],
 })

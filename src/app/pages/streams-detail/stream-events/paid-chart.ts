@@ -23,7 +23,7 @@ import { CHAT_CURRENCIES } from "./tokens";
 
 @Component({
   standalone: true,
-  selector: "hls-stream-events-paid-chart",
+  selector: "vts-stream-events-paid-chart",
   imports: [
     CurrencyPipe,
     DecimalPipe,
@@ -37,9 +37,9 @@ import { CHAT_CURRENCIES } from "./tokens";
   template: `
     <div class="flex flex-col sm:flex-row">
       <div class="sm:w-4/12 w-full h-80 relative">
-        <hls-chart [options]="options()" [height]="320" />
+        <vts-chart [options]="options()" [height]="320" />
         <div class="absolute right-0 bottom-4">
-          <hls-menu
+          <vts-menu
             [showLabel]="false"
             [options]="currencyOptions"
             [value]="currency.currencySetting()"

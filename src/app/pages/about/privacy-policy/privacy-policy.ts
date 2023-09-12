@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
 @Component({
   standalone: true,
   imports: [NgFor],
-  selector: "hls-privacy-policy",
+  selector: "vts-privacy-policy",
   templateUrl: "privacy-policy.html",
 })
 export class PrivacyPolicy {

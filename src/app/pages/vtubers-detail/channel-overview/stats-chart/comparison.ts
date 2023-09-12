@@ -21,7 +21,7 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 @Component({
   standalone: true,
   imports: [DecimalPipe, TitleCasePipe, NgIf, MatIconModule],
-  selector: "hls-stats-comparison",
+  selector: "vts-stats-comparison",
   template: `
     <div class="mat-h4 mb-1 mat-secondary-text">
       {{ title | titlecase }}

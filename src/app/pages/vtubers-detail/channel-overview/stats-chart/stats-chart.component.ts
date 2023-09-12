@@ -28,14 +28,14 @@ type QueryKey = [
 @Component({
   standalone: true,
   imports: [NameComponent, NgIf, UseQryPipe, StatsComparisonComponent],
-  selector: "hls-stats-chart",
+  selector: "vts-stats-chart",
   template: `
     <div
       *ngIf="channelStatsQry | useQry as result"
       class="flex flex-row flex-wrap items-center"
     >
       <div class="w-full sm:w-4/12">
-        <hls-stats-comparison
+        <vts-stats-comparison
           [platform]="channel.platform"
           [kind]="kind"
           [rows]="result.data || []"
@@ -43,7 +43,7 @@ type QueryKey = [
       </div>
 
       <div class="w-full sm:w-8/12">
-        <hls-channel-stats-inner-chart
+        <vts-channel-stats-inner-chart
           [lineColor]="colors.line"
           [areaColor]="colors.area"
           [rows]="result.data || []"

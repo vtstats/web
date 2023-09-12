@@ -23,7 +23,7 @@ import { ThemeService } from "src/app/shared/config/theme.service";
 // [ngClass]="(loading$ | async) ? 'shimmer rounded animate-pulse' : null"
 
 @Component({
-  selector: "hls-chart",
+  selector: "vts-chart",
   standalone: true,
   template: `
     <div #container class="w-full" [style.height.px]="_height()"></div>

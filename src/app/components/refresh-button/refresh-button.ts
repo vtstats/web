@@ -7,7 +7,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 @Component({
   standalone: true,
   imports: [DatePipe, MatTooltipModule, MatIconModule, MatButtonModule],
-  selector: "hls-refresh-button",
+  selector: "vts-refresh-button",
   template: `
     <button
       mat-icon-button

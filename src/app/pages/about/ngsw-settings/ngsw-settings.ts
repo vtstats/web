@@ -7,7 +7,7 @@ import { QryService, UseQryPipe } from "src/app/shared/qry";
 @Component({
   standalone: true,
   imports: [UseQryPipe, NgIf],
-  selector: "hls-ngsw-settings",
+  selector: "vts-ngsw-settings",
   templateUrl: "ngsw-settings.html",
 })
 export class NgswSettings {

@@ -24,7 +24,7 @@ export type ChannelStatsRow = {
 
 @Component({
   standalone: true,
-  selector: "hls-channel-stats-table",
+  selector: "vts-channel-stats-table",
   templateUrl: "channel-stats-table.html",
   styleUrls: ["channel-stats-table.scss"],
   encapsulation: ViewEncapsulation.None,

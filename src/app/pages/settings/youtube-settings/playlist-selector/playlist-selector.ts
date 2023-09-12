@@ -10,7 +10,7 @@ import { GoogleService } from "src/app/shared/config/youtube.service";
 @Component({
   standalone: true,
   imports: [NgFor, MatFormFieldModule, MatSelectModule],
-  selector: "hls-playlist-selector",
+  selector: "vts-playlist-selector",
   templateUrl: "playlist-selector.html",
 })
 export class PlaylistSelector implements OnInit {

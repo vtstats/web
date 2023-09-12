@@ -1,5 +1,5 @@
 <ng-container *ngIf="channels().length == 0; else table">
-  <hls-select-vtuber-alert />
+  <vts-select-vtuber-alert />
 </ng-container>
 
 <ng-template #table>
@@ -7,18 +7,18 @@
     <div
       class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
     >
-      <hls-vtuber-filter (selectedChange)="vtuberSelected.set($event)" />
+      <vts-vtuber-filter (selectedChange)="vtuberSelected.set($event)" />
 
       <div class="flex-1"></div>
 
-      <hls-menu
+      <vts-menu
         [showLabel]="false"
         [options]="currencyOptions"
         [value]="currency.currencySetting()"
         (change)="currency.currencySetting.set($event)"
       />
 
-      <hls-refresh-button
+      <vts-refresh-button
         [isLoading]="result.isFetching"
         [refresh]="result.refetch"
         [updatedAt]="updatedAt()"
@@ -26,7 +26,7 @@
     </div>
 
     <div class="px-4 overflow-x-auto">
-      <hls-channel-stats-table
+      <vts-channel-stats-table
         *ngIf="data().length > 0"
         valueLabel="Revenue"
         [dataSource]="data()"

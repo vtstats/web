@@ -6,7 +6,7 @@
       <div class="mat-h3 font-medium">{{ group.name }}</div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        <hls-stream-item
+        <vts-stream-item
           *ngFor="let stream of group.streams; trackBy:trackBy"
           [stream]="stream"
         />
@@ -18,7 +18,7 @@
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
     *ngSwitchCase="!loading && !groupBy"
   >
-    <hls-stream-item
+    <vts-stream-item
       *ngFor="let stream of items; trackBy:trackBy"
       [stream]="stream"
     />
@@ -31,7 +31,7 @@
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        <hls-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
+        <vts-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
       </div>
     </ng-container>
   </ng-container>
@@ -40,7 +40,7 @@
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
     *ngSwitchCase="loading && !groupBy"
   >
-    <hls-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
+    <vts-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
   </div>
 </ng-container>
 

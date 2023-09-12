@@ -5,7 +5,7 @@ import { QryService, UseQryPipe } from "src/app/shared/qry";
 @Component({
   standalone: true,
   imports: [UseQryPipe],
-  selector: "hls-licenses",
+  selector: "vts-licenses",
   templateUrl: "licenses.html",
 })
 export class Licenses {

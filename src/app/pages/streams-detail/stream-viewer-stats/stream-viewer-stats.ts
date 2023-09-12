@@ -21,7 +21,7 @@ import * as api from "src/app/shared/api/entrypoint";
 @Component({
   standalone: true,
   imports: [Chart, NgIf, MatCheckboxModule, UseQryPipe],
-  selector: "hls-stream-viewer-stats",
+  selector: "vts-stream-viewer-stats",
   templateUrl: "stream-viewer-stats.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

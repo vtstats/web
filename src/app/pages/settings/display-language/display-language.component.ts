@@ -6,7 +6,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { ConfigService } from "src/app/shared";
 
 @Component({
-  selector: "hls-display-language",
+  selector: "vts-display-language",
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, NgFor],
   templateUrl: "./display-language.component.html",

@@ -19,7 +19,7 @@ import { UpdateIndicator } from "./update-indicator/update-indicator";
     SidenavMenu,
     UpdateIndicator,
   ],
-  selector: "hls-sidenav",
+  selector: "vts-sidenav",
   templateUrl: "sidenav.html",
   styleUrls: ["sidenav.scss"],
   encapsulation: ViewEncapsulation.None,

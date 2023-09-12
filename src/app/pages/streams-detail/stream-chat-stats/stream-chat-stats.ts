@@ -23,7 +23,7 @@ import { sampling } from "src/utils";
 @Component({
   standalone: true,
   imports: [Chart, MatCheckboxModule, NgIf],
-  selector: "hls-stream-live-chat-chart-inner",
+  selector: "vts-stream-live-chat-chart-inner",
   templateUrl: "stream-chat-stats.html",
 })
 export class InnerChart implements OnChanges {
@@ -159,10 +159,10 @@ export class InnerChart implements OnChanges {
 @Component({
   standalone: true,
   imports: [Chart, NgIf, MatCheckboxModule, InnerChart, UseQryPipe],
-  selector: "hls-stream-chat-stats",
+  selector: "vts-stream-chat-stats",
   template: `
     <ng-container *ngIf="statsQry | useQry as result">
-      <hls-stream-live-chat-chart-inner
+      <vts-stream-live-chat-chart-inner
         [stream]="stream"
         [rows]="result.data"
       />

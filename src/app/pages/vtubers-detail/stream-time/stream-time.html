@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <hls-menu
+    <vts-menu
       [value]="precision"
       (change)="precision = $event"
       [options]="precisionOptions"
@@ -18,21 +18,21 @@
   </div>
 
   <ng-container [ngSwitch]="precision">
-    <hls-stream-time-calendar *ngSwitchCase="'day'" [times]="result?.data" />
+    <vts-stream-time-calendar *ngSwitchCase="'day'" [times]="result?.data" />
 
-    <hls-stream-time-bar-chart
+    <vts-stream-time-bar-chart
       *ngSwitchCase="'hour'"
       [times]="result?.data"
       groupBy="hour"
     />
 
-    <hls-stream-time-bar-chart
+    <vts-stream-time-bar-chart
       *ngSwitchCase="'month'"
       [times]="result?.data"
       groupBy="month"
     />
 
-    <hls-stream-time-bar-chart
+    <vts-stream-time-bar-chart
       *ngSwitchCase="'weekday'"
       [times]="result?.data"
       groupBy="weekday"

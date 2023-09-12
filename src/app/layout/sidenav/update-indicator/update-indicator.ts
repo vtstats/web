@@ -8,7 +8,7 @@ import { concat, first, interval, switchMap, tap } from "rxjs";
 @Component({
   standalone: true,
   imports: [NgSwitch, NgSwitchCase, MatIconModule, MatSnackBarModule],
-  selector: "hls-update-indicator",
+  selector: "vts-update-indicator",
   templateUrl: "update-indicator.html",
   host: { class: "inline-block align-middle" },
 })

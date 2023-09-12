@@ -7,7 +7,7 @@ import { ThemeService } from "src/app/shared/config/theme.service";
 @Component({
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, NgFor],
-  selector: "hls-theme-settings",
+  selector: "vts-theme-settings",
   templateUrl: "theme-settings.html",
 })
 export class ThemeSettings {

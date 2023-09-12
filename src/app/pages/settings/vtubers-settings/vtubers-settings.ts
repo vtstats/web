@@ -29,7 +29,7 @@ interface Node {
     MatIconModule,
     AvatarPipe,
   ],
-  selector: "hls-vtubers-settings",
+  selector: "vts-vtubers-settings",
   templateUrl: "vtubers-settings.html",
 })
 export class VTubersSettings {

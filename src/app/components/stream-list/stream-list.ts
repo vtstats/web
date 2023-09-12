@@ -28,7 +28,7 @@ import { DomSanitizer } from "@angular/platform-browser";
     NgSwitchCase,
     GroupStreamsPipe,
   ],
-  selector: "hls-stream-list",
+  selector: "vts-stream-list",
   templateUrl: "stream-list.html",
 })
 export class StreamsList {

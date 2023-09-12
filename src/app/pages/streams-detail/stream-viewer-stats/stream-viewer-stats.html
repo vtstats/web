@@ -4,7 +4,7 @@
   </div>
 
   <ng-container *ngIf="statsQry | useQry as result">
-    <hls-chart
+    <vts-chart
       *ngIf="result.data && result.data.length > 0"
       [height]="300"
       [options]="options(result.data)"

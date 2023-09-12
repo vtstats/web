@@ -131,7 +131,7 @@ const icons: Array<[string, string]> = [
 @Component({
   standalone: true,
   imports: [Header, Sidenav, RouterModule, MatSidenavModule],
-  selector: "hls-root",
+  selector: "vts-root",
   templateUrl: "app.component.html",
 })
 export class AppComponent implements AfterViewInit {

@@ -22,7 +22,7 @@ import { StreamViewerStats } from "./stream-viewer-stats/stream-viewer-stats";
     StreamViewerStats,
     UseQryPipe,
   ],
-  selector: "hls-streams-detail",
+  selector: "vts-streams-detail",
   templateUrl: "streams-detail.html",
 })
 export default class StreamsDetail implements OnInit {

@@ -35,7 +35,7 @@ import animations from "../_animations";
     MatButtonModule,
     MatIconModule,
   ],
-  selector: "hls-date-filter",
+  selector: "vts-date-filter",
   templateUrl: "./date-filter.html",
   styleUrls: ["./date-filter.scss"],
   providers: [MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER],

@@ -39,7 +39,7 @@ type QueryKey = [
     DatePipe,
     RefreshButton,
   ],
-  selector: "hls-vtuber-streams",
+  selector: "vts-vtuber-streams",
   templateUrl: "./vtuber-streams.html",
 })
 export class VtuberStreams {

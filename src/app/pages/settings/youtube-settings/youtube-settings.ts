@@ -40,7 +40,7 @@ export class GoogleButton implements AfterViewInit {
     MatButtonModule,
     NgOptimizedImage,
   ],
-  selector: "hls-youtube-settings",
+  selector: "vts-youtube-settings",
   templateUrl: "youtube-settings.html",
 })
 export class YouTubeSettings {

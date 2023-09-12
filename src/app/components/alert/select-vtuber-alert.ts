@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 @Component({
   standalone: true,
   imports: [RouterModule, MatIconModule, MatButtonModule],
-  selector: "hls-select-vtuber-alert",
+  selector: "vts-select-vtuber-alert",
   template: `
     <mat-icon
       color="primary"

@@ -31,7 +31,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "hls",
+      "prefix": "vts",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser-esbuild",

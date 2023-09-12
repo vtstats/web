@@ -12,7 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 
 @Component({
-  selector: "hls-menu",
+  selector: "vts-menu",
   standalone: true,
   imports: [NgFor, MatMenuModule, MatIconModule, MatButtonModule],
   template: `
@@ -34,7 +34,7 @@ import { MatMenuModule } from "@angular/material/menu";
 
     <mat-menu
       #menu="matMenu"
-      class="dense-menu hls-menu-panel max-h-80"
+      class="dense-menu vts-menu-panel max-h-80"
       xPosition="before"
     >
       <button

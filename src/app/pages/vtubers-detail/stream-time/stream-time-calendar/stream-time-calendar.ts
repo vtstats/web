@@ -24,7 +24,7 @@ import { LocaleService } from "src/app/shared/config/locale.service";
 @Component({
   standalone: true,
   imports: [Chart, NgFor],
-  selector: "hls-stream-time-calendar",
+  selector: "vts-stream-time-calendar",
   templateUrl: "stream-time-calendar.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

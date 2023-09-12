@@ -24,7 +24,7 @@ import { ChannelStatsTable } from "../components/channel-stats-table/channel-sta
 
 @Component({
   standalone: true,
-  selector: "hls-channel-revenue",
+  selector: "vts-channel-revenue",
   templateUrl: "./revenue.html",
   imports: [
     NgIf,

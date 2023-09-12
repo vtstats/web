@@ -3,58 +3,58 @@
 @include mat.ripple();
 @include mat.core();
 @include mat.all-component-typographies(mat.define-typography-config());
-@include mat.button-theme($hls-light-theme);
-@include mat.icon-button-theme($hls-light-theme);
-@include mat.checkbox-theme($hls-light-theme);
-@include mat.core-theme($hls-light-theme);
-@include mat.divider-theme($hls-light-theme);
-@include mat.icon-theme($hls-light-theme);
-@include mat.list-theme($hls-light-theme);
-@include mat.menu-theme($hls-light-theme);
-@include mat.progress-spinner-theme($hls-light-theme);
-@include mat.sidenav-theme($hls-light-theme);
-@include mat.card-theme($hls-light-theme);
-@include mat.snack-bar-theme($hls-light-theme);
-@include mat.select-theme($hls-light-theme);
-@include mat.form-field-theme($hls-light-theme);
-@include mat.tabs-theme($hls-light-theme);
-@include mat.datepicker-theme($hls-light-theme);
-@include mat.table-theme($hls-light-theme);
-@include mat.tooltip-theme($hls-light-theme);
-@include mat.tree-theme($hls-light-theme);
-@include mat.chips-theme($hls-light-theme);
+@include mat.button-theme($vts-light-theme);
+@include mat.icon-button-theme($vts-light-theme);
+@include mat.checkbox-theme($vts-light-theme);
+@include mat.core-theme($vts-light-theme);
+@include mat.divider-theme($vts-light-theme);
+@include mat.icon-theme($vts-light-theme);
+@include mat.list-theme($vts-light-theme);
+@include mat.menu-theme($vts-light-theme);
+@include mat.progress-spinner-theme($vts-light-theme);
+@include mat.sidenav-theme($vts-light-theme);
+@include mat.card-theme($vts-light-theme);
+@include mat.snack-bar-theme($vts-light-theme);
+@include mat.select-theme($vts-light-theme);
+@include mat.form-field-theme($vts-light-theme);
+@include mat.tabs-theme($vts-light-theme);
+@include mat.datepicker-theme($vts-light-theme);
+@include mat.table-theme($vts-light-theme);
+@include mat.tooltip-theme($vts-light-theme);
+@include mat.tree-theme($vts-light-theme);
+@include mat.chips-theme($vts-light-theme);
 
 body {
   background-color: var(--mat-sidenav-content-background-color);
 
-  $foreground: map-get($hls-light-theme, "foreground");
+  $foreground: map-get($vts-light-theme, "foreground");
   color: mat.get-color-from-palette($foreground, "text");
 }
 
 .dark {
-  $foreground: map-get($hls-dark-theme, "foreground");
+  $foreground: map-get($vts-dark-theme, "foreground");
   color: mat.get-color-from-palette($foreground, "text");
 
-  @include mat.button-color($hls-dark-theme);
-  @include mat.icon-button-theme($hls-dark-theme);
-  @include mat.checkbox-color($hls-dark-theme);
-  @include mat.core-color($hls-dark-theme);
-  @include mat.divider-color($hls-dark-theme);
-  @include mat.icon-color($hls-dark-theme);
-  @include mat.list-color($hls-dark-theme);
-  @include mat.menu-color($hls-dark-theme);
-  @include mat.progress-spinner-color($hls-dark-theme);
-  @include mat.sidenav-color($hls-dark-theme);
-  @include mat.card-color($hls-dark-theme);
-  @include mat.snack-bar-color($hls-dark-theme);
-  @include mat.select-color($hls-dark-theme);
-  @include mat.form-field-color($hls-dark-theme);
-  @include mat.tabs-color($hls-dark-theme);
-  @include mat.datepicker-color($hls-dark-theme);
-  @include mat.table-color($hls-dark-theme);
-  @include mat.tooltip-color($hls-dark-theme);
-  @include mat.tree-color($hls-dark-theme);
-  @include mat.chips-color($hls-dark-theme);
+  @include mat.button-color($vts-dark-theme);
+  @include mat.icon-button-theme($vts-dark-theme);
+  @include mat.checkbox-color($vts-dark-theme);
+  @include mat.core-color($vts-dark-theme);
+  @include mat.divider-color($vts-dark-theme);
+  @include mat.icon-color($vts-dark-theme);
+  @include mat.list-color($vts-dark-theme);
+  @include mat.menu-color($vts-dark-theme);
+  @include mat.progress-spinner-color($vts-dark-theme);
+  @include mat.sidenav-color($vts-dark-theme);
+  @include mat.card-color($vts-dark-theme);
+  @include mat.snack-bar-color($vts-dark-theme);
+  @include mat.select-color($vts-dark-theme);
+  @include mat.form-field-color($vts-dark-theme);
+  @include mat.tabs-color($vts-dark-theme);
+  @include mat.datepicker-color($vts-dark-theme);
+  @include mat.table-color($vts-dark-theme);
+  @include mat.tooltip-color($vts-dark-theme);
+  @include mat.tree-color($vts-dark-theme);
+  @include mat.chips-color($vts-dark-theme);
 }
 
 .mat-drawer-backdrop.mat-drawer-shown {

@@ -15,7 +15,7 @@ import { Chart } from "src/app/components/chart/chart";
 import { LocaleService } from "src/app/shared/config/locale.service";
 
 @Component({
-  selector: "hls-stream-time-bar-chart",
+  selector: "vts-stream-time-bar-chart",
   standalone: true,
   imports: [Chart],
   templateUrl: "./stream-time-bar-chart.html",

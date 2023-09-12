@@ -47,7 +47,7 @@ export type StreamEventsGroup = {
     Menu,
     MatChipsModule,
   ],
-  selector: "hls-stream-events-inner",
+  selector: "vts-stream-events-inner",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *ngIf="chipOptions().length > 0; else noData">
@@ -67,15 +67,15 @@ export type StreamEventsGroup = {
       </div>
 
       <ng-container [ngSwitch]="selectedChip()">
-        <hls-stream-events-paid-chart
+        <vts-stream-events-paid-chart
           *ngSwitchCase="'superChats'"
           [paid]="group.superChats"
         />
-        <hls-stream-events-paid-chart
+        <vts-stream-events-paid-chart
           *ngSwitchCase="'superSticker'"
           [paid]="group.superSticker"
         />
-        <hls-stream-events-chart
+        <vts-stream-events-chart
           *ngSwitchCase="'time'"
           [group]="group"
           [stream]="stream"
@@ -128,13 +128,13 @@ export class StreamEventsInner implements OnInit {
 @Component({
   standalone: true,
   imports: [CommonModule, UseQryPipe, StreamEventsInner],
-  selector: "hls-stream-events",
+  selector: "vts-stream-events",
   template: `
     <div
       *ngIf="statsQry | useQry as result"
       class="mat-border-divider rounded border border-solid mb-4"
     >
-      <hls-stream-events-inner
+      <vts-stream-events-inner
         *ngIf="result.data"
         [group]="result.data"
         [stream]="stream"

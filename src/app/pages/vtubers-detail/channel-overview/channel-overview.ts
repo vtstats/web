@@ -11,7 +11,7 @@ import { StatsChartComponent } from "./stats-chart/stats-chart.component";
 @Component({
   standalone: true,
   imports: [NgIf, MatDividerModule, StatsChartComponent, Menu],
-  selector: "hls-channel-overview",
+  selector: "vts-channel-overview",
   templateUrl: "channel-overview.html",
 })
 export class ChannelOverview {

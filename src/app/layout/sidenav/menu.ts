@@ -9,7 +9,7 @@ import { DrawerService } from "src/app/shared/services/drawer";
 
 @Component({
   standalone: true,
-  selector: "hls-sidenav-menu",
+  selector: "vts-sidenav-menu",
   imports: [
     NgIf,
     NgFor,

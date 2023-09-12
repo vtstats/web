@@ -2,21 +2,21 @@
   <div class="flex flex-row items-center mb-4">
     <div class="flex-1 mat-h3 m-0">Overview</div>
 
-    <hls-menu
+    <vts-menu
       *ngIf="channels.length > 1"
       [value]="channelIdx"
       (change)="channelIdx = $event"
       [options]="channelOptions"
     />
 
-    <hls-menu
+    <vts-menu
       [value]="precision"
       (change)="precision = $event"
       [options]="precisionOptions"
     />
   </div>
 
-  <hls-stats-chart
+  <vts-stats-chart
     kind="subscriber"
     [precision]="precision"
     [channel]="channels[channelIdx]"
@@ -25,7 +25,7 @@
   <ng-container *ngIf="channels[channelIdx].platform !== 'TWITCH'">
     <mat-divider class="!my-2" />
 
-    <hls-stats-chart
+    <vts-stats-chart
       kind="view"
       [precision]="precision"
       [channel]="channels[channelIdx]"
@@ -35,7 +35,7 @@
   <ng-container *ngIf="channels[channelIdx].platform === 'YOUTUBE'">
     <mat-divider class="!my-2" />
 
-    <hls-stats-chart
+    <vts-stats-chart
       kind="revenue"
       [precision]="precision"
       [channel]="channels[channelIdx]"

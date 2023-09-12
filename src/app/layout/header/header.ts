@@ -18,7 +18,7 @@ import { DrawerService } from "src/app/shared/services/drawer";
     MatButtonModule,
     MatTooltipModule,
   ],
-  selector: "hls-header",
+  selector: "vts-header",
   templateUrl: "header.html",
   styles: [
     `

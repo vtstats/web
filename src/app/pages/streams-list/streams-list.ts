@@ -45,7 +45,7 @@ type QueryKey = [
     RefreshButton,
     KeywordInput,
   ],
-  selector: "hls-streams-list",
+  selector: "vts-streams-list",
   templateUrl: "streams-list.html",
 })
 export default class StreamsList {

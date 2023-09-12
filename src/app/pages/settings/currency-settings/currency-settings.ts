@@ -9,7 +9,7 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 @Component({
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, NgFor, NgIf],
-  selector: "hls-currency-settings",
+  selector: "vts-currency-settings",
   templateUrl: "currency-settings.html",
 })
 export class CurrencySettings {

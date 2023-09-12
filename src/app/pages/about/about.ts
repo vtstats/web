@@ -6,7 +6,7 @@ import { QryService } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  selector: "hls-about",
+  selector: "vts-about",
   templateUrl: "about.html",
   imports: [RouterModule, MatListModule],
 })
