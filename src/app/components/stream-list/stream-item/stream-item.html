@@ -72,6 +72,7 @@
 
 <a
   class="mat-subtitle-2 text-inherit mb-2 leading-4 no-underline line-clamp-2"
+  tabindex="-1"
   [attr.title]="stream.title"
   [routerLink]="routerUrl"
   (click)="onClick()"
@@ -102,6 +103,7 @@
 
 <div class="mat-small flex-row flex items-center">
   <img
+    tabindex="-1"
     loading="lazy"
     class="rounded-full align-middle flex-grow-0 flex-shrink-0 cursor-pointer mr-1"
     [routerLink]="['/vtuber', stream.vtuberId]"

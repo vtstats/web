@@ -3,6 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { ConfigService } from "src/app/shared";
 import { ThemeService } from "src/app/shared/config/theme.service";
@@ -10,7 +11,13 @@ import { DrawerService } from "src/app/shared/services/drawer";
 
 @Component({
   standalone: true,
-  imports: [MatMenuModule, MatIconModule, MatDividerModule, MatButtonModule],
+  imports: [
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatTooltipModule,
+  ],
   selector: "hls-header",
   templateUrl: "header.html",
   styles: [

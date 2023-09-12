@@ -15,13 +15,22 @@
 
   <span class="flex-1"></span>
 
+  <a
+    href="https://discord.gg/wZCj9hrh"
+    target="_blank"
+    mat-icon-button
+    matTooltip="Discord Channel"
+  >
+    <mat-icon svgIcon="discord" />
+  </a>
+
   <button
     mat-icon-button
     matTooltip="Select Language"
     i18n-matTooltip="@@selectLanguage"
     [matMenuTriggerFor]="menu"
   >
-    <mat-icon svgIcon="translate" />
+    <mat-icon svgIcon="web" />
   </button>
 
   <mat-menu #menu="matMenu" class="dense-menu" xPosition="before">

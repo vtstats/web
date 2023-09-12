@@ -6,6 +6,7 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <button mat-icon-button disabled></button>
     <mat-checkbox
+      color="primary"
       [checked]="isChecked(node)"
       (change)="toggle(node, $event.checked)"
     >
@@ -23,12 +24,14 @@
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <button mat-icon-button matTreeNodeToggle>
       <mat-icon
-        class="mat-icon-rtl-mirror"
-        [svgIcon]="treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'"
+        class="transition-all"
+        [class.rotate-90]="treeControl.isExpanded(node)"
+        svgIcon="chevron_right"
       />
     </button>
 
     <mat-checkbox
+      color="primary"
       [checked]="isChecked(node)"
       [indeterminate]="isPartiallyChecked(node)"
       (change)="toggle(node, $event.checked)"

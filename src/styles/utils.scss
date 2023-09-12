@@ -11,6 +11,10 @@
   @include mat.table-density(-2);
 }
 
+.-mat-list-density-2 {
+  @include mat.list-density(-2);
+}
+
 .-mat-button-density-1 {
   @include mat.button-density(-1);
 }

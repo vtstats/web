@@ -4,6 +4,7 @@
 @include mat.core();
 @include mat.all-component-typographies(mat.define-typography-config());
 @include mat.button-theme($hls-light-theme);
+@include mat.icon-button-theme($hls-light-theme);
 @include mat.checkbox-theme($hls-light-theme);
 @include mat.core-theme($hls-light-theme);
 @include mat.divider-theme($hls-light-theme);
@@ -35,6 +36,7 @@ body {
   color: mat.get-color-from-palette($foreground, "text");
 
   @include mat.button-color($hls-dark-theme);
+  @include mat.icon-button-theme($hls-dark-theme);
   @include mat.checkbox-color($hls-dark-theme);
   @include mat.core-color($hls-dark-theme);
   @include mat.divider-color($hls-dark-theme);

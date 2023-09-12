@@ -10,7 +10,6 @@ import {
   Output,
   ViewEncapsulation,
   inject,
-  signal,
 } from "@angular/core";
 import { MatListModule, MatSelectionListChange } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -37,7 +36,6 @@ import animations from "../_animations";
   ],
   selector: "hls-vtuber-filter",
   templateUrl: "vtuber-filter.html",
-  styleUrls: ["vtuber-filter.scss"],
   animations,
   encapsulation: ViewEncapsulation.None,
 })
