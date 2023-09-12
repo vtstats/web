@@ -12,17 +12,17 @@ export default [
   },
   {
     path: "revenue",
-    title: "Revenue",
+    title: "channel revenue",
     component: Revenue,
   },
   {
     path: "views",
-    title: "views",
+    title: "channel views",
     component: Views,
   },
   {
     path: "subscribers",
-    title: "Subscribers",
+    title: "channel subscribers",
     component: Subscriber,
   },
 ] satisfies Route[];

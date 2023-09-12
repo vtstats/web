@@ -12,6 +12,7 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "about",
+    title: "about",
     loadChildren: () => import("./pages/about/routes"),
   },
   {
@@ -20,7 +21,7 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "settings",
-    title: "Settings",
+    title: "settings",
     loadComponent: () => import("./pages/settings/settings"),
   },
   {
@@ -34,13 +35,13 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "stream/live",
-    title: $localize`:@@youtubeStream:YouTube Stream`,
+    title: "live stream",
     data: { status: "live|ended" },
     loadComponent: () => import("./pages/streams-list/streams-list"),
   },
   {
     path: "stream/scheduled",
-    title: $localize`:@@youtubeSchedule:YouTube Schedule Stream`,
+    title: `schedule stream`,
     data: { status: "scheduled" },
     loadComponent: () => import("./pages/streams-list/streams-list"),
   },
@@ -95,5 +96,5 @@ export const getRoutes = (): Routes => [
   },
 
   // not found
-  { path: "**", title: "Not Found", component: NotFound },
+  { path: "**", title: "not found", component: NotFound },
 ];

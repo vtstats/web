@@ -8,23 +8,23 @@ import { AboutPage } from "./about";
 export default [
   {
     path: "",
-    title: "About",
+    title: "about",
     component: AboutPage,
     pathMatch: "full",
   },
   {
     path: "ngsw",
-    title: "Service worker",
+    title: "service worker",
     component: NgswSettings,
   },
   {
     path: "licenses",
-    title: "Third Party Licenses",
+    title: "third party licenses",
     component: Licenses,
   },
   {
     path: "privacy",
-    title: "Privacy policy",
+    title: "privacy policy",
     component: PrivacyPolicy,
   },
 ] satisfies Route[];
