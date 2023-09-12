@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -36,32 +36,56 @@ export default class StreamsDetail implements OnInit {
     unknown,
     Stream,
     Stream,
-    ["stream", { platform: Platform; platformId: string }]
+    [
+      "stream",
+      { platform: Platform; platformId: string } | { streamId: number }
+    ]
   >;
 
   ngOnInit() {
     const streamId = this.route.snapshot.paramMap.get("streamId");
     const platform = this.route.snapshot.data.platform;
 
-    this.streamQry = this.qry.create<
-      Stream,
-      unknown,
-      Stream,
-      Stream,
-      ["stream", { platform: Platform; platformId: string }]
-    >({
-      queryKey: ["stream", { platform, platformId: streamId }],
+    console.log(platform);
 
-      queryFn: ({ queryKey: [_, { platform, platformId }] }) =>
-        api.streamsByPlatformId(platform, platformId),
-
-      onSuccess: (stream) => {
+    if (platform) {
+      this.streamQry = this.qry.create<
+        Stream,
+        unknown,
+        Stream,
+        Stream,
+        ["stream", { platform: Platform; platformId: string }]
+      >({
+        queryKey: ["stream", { platform, platformId: streamId }],
+        queryFn: ({ queryKey: [_, { platform, platformId }] }) =>
+          api.streamsByPlatformId(platform, platformId),
+        onSuccess: (stream) => {
+          if (!stream) {
+            this.router.navigateByUrl("/404");
+          } else {
+            this.title.setTitle(stream.title + " | vtstats");
+          }
+        },
+        staleTime: 5 * 60 * 1000, // 5min
+      });
+    } else {
+      api.streamsById(Number(streamId)).then((stream) => {
         if (!stream) {
           this.router.navigateByUrl("/404");
         } else {
-          this.title.setTitle(stream.title + " | vtstats");
+          this.qry.client.setQueryData(
+            [
+              "stream",
+              { platform: stream.platform, platformId: stream.platformId },
+            ],
+            stream
+          );
+          this.router.navigate(
+            [`${stream.platform.toLowerCase()}-stream`, stream.platformId],
+            { replaceUrl: true }
+          );
         }
-      },
-    });
+      });
+    }
   }
 }

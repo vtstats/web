@@ -47,8 +47,7 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "stream/:streamId",
-    redirectTo: "/youtube-stream/:streamId",
-    pathMatch: "full",
+    loadComponent: () => import("./pages/streams-detail/streams-detail"),
   },
   {
     path: "youtube-stream/:streamId",

@@ -68,6 +68,14 @@ export const streamsByPlatformId = (
     })
   ).then(_json);
 
+export const streamsById = (streamId: number): Promise<Stream> =>
+  fetch(
+    qs.stringifyUrl({
+      url: `${baseUrl}/streams`,
+      query: { id: streamId },
+    })
+  ).then(_json);
+
 export const streamViewerStats = (
   streamId: number
 ): Promise<Array<[number, number]>> =>
