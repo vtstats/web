@@ -21,10 +21,14 @@ export class ShareTarget implements OnInit {
     // match youtube video id
     const youtubeVideoId =
       /youtube.com\/watch\?v=([A-Za-z0-9_-]{11})/.exec(shareParams)?.[1] ||
-      /youtu.be\/([A-Za-z0-9_-]{11} )/.exec(shareParams)?.[1];
+      /youtube.com\/live\/([A-Za-z0-9_-]{11})/.exec(shareParams)?.[1] ||
+      /youtu.be\/([A-Za-z0-9_-]{11})/.exec(shareParams)?.[1];
 
     if (youtubeVideoId) {
-      this.router.navigate(["stream", youtubeVideoId], { replaceUrl: true });
+      this.router.navigate(["youtube-stream", youtubeVideoId], {
+        replaceUrl: true,
+      });
+      return;
     }
 
     // match channel id
@@ -44,6 +48,7 @@ export class ShareTarget implements OnInit {
         this.router.navigate(["vtuber", channel.vtuberId], {
           replaceUrl: true,
         });
+        return;
       }
     }
 
