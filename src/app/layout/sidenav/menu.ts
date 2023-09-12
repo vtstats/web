@@ -20,7 +20,10 @@ import { DrawerService } from "src/app/shared/services/drawer";
     MatDividerModule,
   ],
   template: `
-    <div *ngIf="headline" class="text-xs p-4 tracking-wider mat-secondary-text">
+    <div
+      *ngIf="headline"
+      class="text-xs p-4 tracking-wider mat-secondary-text font-medium select-none"
+    >
       {{ headline }}
     </div>
     <a

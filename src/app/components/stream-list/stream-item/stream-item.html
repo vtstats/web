@@ -1,14 +1,30 @@
 <a
   class="group aspect-ratio-16-9 mb-2 select-none"
-  [routerLink]="stream.status === 'SCHEDULED' ? null : ['/stream', stream.platformId]"
+  [routerLink]="routerUrl"
   (click)="onClick()"
 >
   <img
-    class="rounded"
+    class="rounded object-center object-cover"
     loading="lazy"
     fill
     [ngSrc]="stream.thumbnailUrl + '?ngsw-bypass'"
   />
+
+  <ng-container [ngSwitch]="stream.platform">
+    <div
+      *ngSwitchCase="'YOUTUBE'"
+      class="bg-[#d74432] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+    >
+      YouTube
+    </div>
+
+    <div
+      *ngSwitchCase="'TWITCH'"
+      class="bg-[#9146ff] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+    >
+      Twitch
+    </div>
+  </ng-container>
 
   <ng-container [ngSwitch]="stream.status">
     <div
@@ -35,6 +51,7 @@
 
   <span class="hidden group-hover:block absolute right-1 top-1">
     <a
+      *ngIf="stream.platform == 'YOUTUBE'"
       class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white"
       [attr.href]="'https://youtu.be/' + stream.platformId"
       target="_blank"
@@ -56,7 +73,7 @@
 <a
   class="mat-subtitle-2 text-inherit mb-2 leading-4 no-underline line-clamp-2"
   [attr.title]="stream.title"
-  [routerLink]="stream.status === 'SCHEDULED' ? null : ['/stream', stream.platformId]"
+  [routerLink]="routerUrl"
   (click)="onClick()"
   [innerHTML]="titleHtml"
 >
@@ -93,13 +110,13 @@
     [ngSrc]="stream.vtuberId | avatar"
   />
 
-  <span
-    class="text-ellipsis whitespace-nowrap mr-1 overflow-hidden flex-grow-0 flex-shrink cursor-pointer"
+  <a
+    class="text-ellipsis whitespace-nowrap mr-1 overflow-hidden flex-grow-0 flex-shrink text-inherit no-underline"
     role="link"
     [routerLink]="['/vtuber', stream.vtuberId]"
   >
     {{ stream.vtuberId | name }}
-  </span>
+  </a>
 
   <span class="flex-grow-0 flex-shrink-0 mr-1 select-none">•</span>
 

@@ -46,8 +46,6 @@ export default class StreamsDetail implements OnInit {
     const streamId = this.route.snapshot.paramMap.get("streamId");
     const platform = this.route.snapshot.data.platform;
 
-    console.log(platform);
-
     if (platform) {
       this.streamQry = this.qry.create<
         Stream,

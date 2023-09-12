@@ -1,9 +1,10 @@
 import { formatDate, formatNumber } from "@angular/common";
-import { Component, Input, LOCALE_ID, OnChanges, inject } from "@angular/core";
+import { Component, Input, LOCALE_ID, OnInit, inject } from "@angular/core";
 import { EChartsOption, RegisteredSeriesOption } from "echarts";
 import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
+import { Stream } from "src/app/models";
 import { StreamEventsGroup } from "./stream-events";
 
 @Component({
@@ -12,23 +13,25 @@ import { StreamEventsGroup } from "./stream-events";
   selector: "hls-stream-events-chart",
   template: ` <hls-chart [options]="option" [height]="320" /> `,
 })
-export class StreamEventsChart implements OnChanges {
+export class StreamEventsChart implements OnInit {
   @Input() group: StreamEventsGroup;
+  @Input() stream: Stream;
 
   option: EChartsOption;
   locale = inject(LOCALE_ID);
 
-  ngOnChanges() {
+  ngOnInit() {
     // @ts-ignore
     const input1: number[] = (this.group.superChats || []).map((c) => c.time);
     // @ts-ignore
     const input2: number[] = (this.group.superSticker || []).map((c) => c.time);
     const input3: number[] = this.group.newMember || [];
     const input4: number[] = this.group.memberMilestone || [];
-
-    const min = Math.min(...input1, ...input2, ...input3, ...input4);
-
-    const max = Math.max(...input1, ...input2, ...input3, ...input4);
+    const input5: number[] = this.group.twitchCheering || [];
+    const input6: number[] = (this.group.twitchHyperChat || []).map(
+      // @ts-ignore
+      (c) => c.time
+    );
 
     const series: RegisteredSeriesOption["line"][] = [
       {
@@ -55,9 +58,25 @@ export class StreamEventsChart implements OnChanges {
         data: [],
         sampling: "sum",
       },
+      {
+        name: "Cheering",
+        type: "line",
+        data: [],
+        sampling: "sum",
+      },
+      {
+        name: "Hyper Chat",
+        type: "line",
+        data: [],
+        sampling: "sum",
+      },
     ];
 
-    const step = 5 * 60 * 1000; // ((max - min) / 20) | 0;
+    const min = this.stream.startTime;
+
+    const max = this.stream.endTime || Date.now();
+
+    const step = Math.max(((max - min) / 20) | 0, 60 * 1000);
 
     let i = min;
 
@@ -72,6 +91,8 @@ export class StreamEventsChart implements OnChanges {
       if (input2.length > 0) fn1(1, input2);
       if (input3.length > 0) fn1(2, input3);
       if (input4.length > 0) fn1(3, input4);
+      if (input5.length > 0) fn1(4, input5);
+      if (input6.length > 0) fn1(5, input6);
       i += step;
     }
 
@@ -116,6 +137,8 @@ export class StreamEventsChart implements OnChanges {
       },
       yAxis: {
         type: "value",
+        max: ({ max }) => Math.max(max, 3),
+        minInterval: 1,
       },
       series: series.filter((a) => a.data.length != 0),
     };
@@ -131,6 +154,8 @@ export class StreamEventsChart implements OnChanges {
 
     let html = `<div class="text-xs text-[#737373]">${date}</div>`;
     for (const param of params.sort((a, b) => b.value[1] - a.value[1])) {
+      if (param.value[1] === 0) continue;
+
       html += `<div class="text-sm">${param.seriesName}: ${formatNumber(
         param.value[1],
         this.locale

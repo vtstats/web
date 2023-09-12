@@ -1,9 +1,14 @@
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
+import {
+  CommonModule,
+  NgFor,
+  NgIf,
+  NgSwitch,
+  NgSwitchCase,
+} from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnChanges,
   OnInit,
   inject,
   signal,
@@ -25,6 +30,8 @@ export type StreamEventsGroup = {
   superSticker?: Array<Paid>;
   newMember?: Array<number>;
   memberMilestone?: Array<number>;
+  twitchCheering?: Array<number>;
+  twitchHyperChat?: Array<Paid>;
 };
 
 @Component({
@@ -41,6 +48,7 @@ export type StreamEventsGroup = {
     MatChipsModule,
   ],
   selector: "hls-stream-events-inner",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *ngIf="chipOptions().length > 0; else noData">
       <div class="mx-4 mt-4 flex">
@@ -67,7 +75,11 @@ export type StreamEventsGroup = {
           *ngSwitchCase="'superSticker'"
           [paid]="group.superSticker"
         />
-        <hls-stream-events-chart *ngSwitchCase="'time'" [group]="group" />
+        <hls-stream-events-chart
+          *ngSwitchCase="'time'"
+          [group]="group"
+          [stream]="stream"
+        />
       </ng-container>
     </ng-container>
 
@@ -81,13 +93,14 @@ export type StreamEventsGroup = {
     </ng-template>
   `,
 })
-export class StreamEventsInner implements OnChanges {
+export class StreamEventsInner implements OnInit {
   @Input() group: StreamEventsGroup;
+  @Input() stream: Stream;
 
   chipOptions = signal<Array<{ label: string; value: string }>>([]);
   selectedChip = signal<string>("");
 
-  ngOnChanges() {
+  ngOnInit() {
     const options: Array<{ label: string; value: string }> = [];
     if (this.group.superChats) {
       options.push({ value: "superChats", label: "Super Chats" });
@@ -99,7 +112,9 @@ export class StreamEventsInner implements OnChanges {
       this.group.memberMilestone ||
       this.group.newMember ||
       this.group.superChats ||
-      this.group.superSticker
+      this.group.superSticker ||
+      this.group.twitchCheering ||
+      this.group.twitchHyperChat
     ) {
       options.push({ value: "time", label: "Time" });
     }
@@ -112,14 +127,18 @@ export class StreamEventsInner implements OnChanges {
 
 @Component({
   standalone: true,
-  imports: [NgIf, UseQryPipe, StreamEventsInner],
+  imports: [CommonModule, UseQryPipe, StreamEventsInner],
   selector: "hls-stream-events",
   template: `
     <div
       *ngIf="statsQry | useQry as result"
       class="mat-border-divider rounded border border-solid mb-4"
     >
-      <hls-stream-events-inner *ngIf="result.data" [group]="result.data" />
+      <hls-stream-events-inner
+        *ngIf="result.data"
+        [group]="result.data"
+        [stream]="stream"
+      />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -137,7 +156,7 @@ export class StreamEvents implements OnInit {
     ["stream-events", { streamId: number }]
   >;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.statsQry = this.qry.create({
       queryKey: ["stream-events", { streamId: this.stream.streamId }],
       queryFn: () => api.streamEvents(this.stream.streamId),
@@ -177,6 +196,23 @@ export class StreamEvents implements OnInit {
             case StreamEventKind.YOUTUBE_MEMBER_MILESTONE: {
               acc.newMember ||= [];
               acc.newMember.push(cur.time);
+              break;
+            }
+
+            case StreamEventKind.TWITCH_CHEERING: {
+              acc.twitchCheering ||= [];
+              acc.twitchCheering.push(cur.time);
+              break;
+            }
+
+            case StreamEventKind.TWITCH_HYPER_CHAT: {
+              acc.twitchHyperChat ||= [];
+              acc.twitchHyperChat.push({
+                //@ts-ignore
+                time: cur.time,
+                code: cur.value.currency_code,
+                value: Number.parseFloat(cur.value.amount),
+              });
               break;
             }
           }

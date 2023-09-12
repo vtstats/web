@@ -21,7 +21,7 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { switchMap } from "rxjs";
 
-import { Platform, type Stream } from "src/app/models";
+import { Platform, StreamStatus, type Stream } from "src/app/models";
 import {
   AvatarPipe,
   ConfigService,
@@ -80,11 +80,29 @@ export class StreamItem {
     return Boolean(this.config.playlist);
   }
 
+  get routerUrl(): string[] {
+    if (this.stream.status === StreamStatus.SCHEDULED) {
+      return null;
+    }
+
+    switch (this.stream.platform) {
+      case Platform.YOUTUBE: {
+        return ["/youtube-stream", this.stream.platformId];
+      }
+      case Platform.TWITCH: {
+        return ["/twitch-stream", this.stream.platformId];
+      }
+      case Platform.BILIBILI: {
+        return ["/bilibili-stream", this.stream.platformId];
+      }
+    }
+  }
+
   onClick() {
     this.qry.client.setQueryData(
       [
         "stream",
-        { platform: Platform.YOUTUBE, platformId: this.stream.platformId },
+        { platform: this.stream.platform, platformId: this.stream.platformId },
       ],
       this.stream
     );

@@ -29,6 +29,7 @@ export type ChannelStatsSummary = Channel & {
 };
 
 export type Stream = {
+  platform: Platform;
   streamId: number;
   platformId: string;
   title: string;
@@ -83,6 +84,8 @@ export const enum StreamEventKind {
   YOUTUBE_SUPER_STICKER = "YOUTUBE_SUPER_STICKER",
   YOUTUBE_NEW_MEMBER = "YOUTUBE_NEW_MEMBER",
   YOUTUBE_MEMBER_MILESTONE = "YOUTUBE_MEMBER_MILESTONE",
+  TWITCH_CHEERING = "TWITCH_CHEERING",
+  TWITCH_HYPER_CHAT = "TWITCH_HYPER_CHAT",
 }
 
 export type StreamsEvent =
@@ -103,6 +106,16 @@ export type StreamsEvent =
   | {
       time: number;
       kind: StreamEventKind.YOUTUBE_MEMBER_MILESTONE;
+    }
+  | {
+      time: number;
+      kind: StreamEventKind.TWITCH_CHEERING;
+      value: { bits: number };
+    }
+  | {
+      time: number;
+      kind: StreamEventKind.TWITCH_HYPER_CHAT;
+      value: { amount: string; currency_code: string };
     };
 
 export type StreamPaidEvent = {

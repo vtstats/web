@@ -1,5 +1,5 @@
 <div class="p-4 mb-15" *ngIf="streamQry | useQry as result">
-  <ng-container *ngIf="result.isSuccess">
+  <ng-container *ngIf="result.data">
     <hls-stream-summary [stream]="result.data" />
 
     <hls-stream-viewer-stats [stream]="result.data" />
