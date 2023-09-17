@@ -11,6 +11,7 @@ import { startOfHour, subHours } from "date-fns";
 
 import { SelectVtuberAlert } from "src/app/components/alert/select-vtuber-alert";
 import { DateFilter } from "src/app/components/filter-group/date-filter/date-filter";
+import { KeywordFilter } from "src/app/components/filter-group/keyword-filter/keyword-filter";
 import { VTuberFilter } from "src/app/components/filter-group/vtuber-filter/vtuber-filter";
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
 import { StreamsList as StreamsList_ } from "src/app/components/stream-list/stream-list";
@@ -19,8 +20,6 @@ import { streams } from "src/app/shared/api/entrypoint";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 import { QryService } from "src/app/shared/qry";
 import { infiniteQuery } from "src/app/shared/qry/qry.signal";
-
-import { KeywordInput } from "./keyword-input";
 
 type QueryKey = [
   `streams`,
@@ -43,7 +42,7 @@ type QueryKey = [
     VTuberFilter,
     SelectVtuberAlert,
     RefreshButton,
-    KeywordInput,
+    KeywordFilter,
   ],
   selector: "vts-streams-list",
   templateUrl: "streams-list.html",

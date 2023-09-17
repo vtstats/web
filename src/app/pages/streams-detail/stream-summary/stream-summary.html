@@ -95,14 +95,14 @@
     </div>
   </div>
   <div>
-    <div class="mat-small mat-secondary-text">Live chat</div>
+    <div class="mat-small mat-secondary-text" i18n="@@live-chat">Live chat</div>
     <div class="mat-headline-5 m-0" *ngIf="chatCountQry | useQry as result">
       {{ result?.data ? (result.data | number) : '---' }}
     </div>
   </div>
   <div>
     <div class="mat-small mat-secondary-text">
-      <span> Revenue </span>
+      <span i18n="@@revenue">Revenue</span>
       <mat-icon
         class="!h-[12px] !w-[12px] leading-[12px] align-middle"
         svgIcon="information_outline"

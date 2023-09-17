@@ -28,17 +28,17 @@ export class Sidenav {
   readonly channelsItems = [
     {
       icon: "account-multiple-outline",
-      title: "Subscribers",
+      title: $localize`:@@subscribers:Subscribers`,
       link: "/channel/subscribers",
     },
     {
       icon: "cash",
-      title: "Revenue",
+      title: $localize`:@@revenue:Revenue`,
       link: "/channel/revenue",
     },
     {
       icon: "eye",
-      title: "Views",
+      title: $localize`:@@views:Views`,
       link: "/channel/views",
     },
   ];
@@ -46,12 +46,12 @@ export class Sidenav {
   readonly streamsItems = [
     {
       icon: "stream",
-      title: "Live",
+      title: $localize`:@@live-stream:Live`,
       link: "/stream/live",
     },
     {
       icon: "calendar",
-      title: "Scheduled",
+      title: $localize`:@@scheduled:Scheduled`,
       link: "/stream/scheduled",
     },
   ];
@@ -64,7 +64,7 @@ export class Sidenav {
     },
     {
       icon: "information_outline",
-      title: "About",
+      title: $localize`:@@about:About`,
       link: "/about",
     },
   ];

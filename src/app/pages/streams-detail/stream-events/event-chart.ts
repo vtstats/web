@@ -35,37 +35,37 @@ export class StreamEventsChart implements OnInit {
 
     const series: RegisteredSeriesOption["line"][] = [
       {
-        name: "Super Chats",
+        name: $localize`:@@super-chats:Super Chats`,
         type: "line",
         data: [],
         sampling: "sum",
       },
       {
-        name: "Super Sticker",
+        name: $localize`:@@super-sticker:Super Sticker`,
         type: "line",
         data: [],
         sampling: "sum",
       },
       {
-        name: "New Member",
+        name: $localize`:@@new-member:New Member`,
         type: "line",
         data: [],
         sampling: "sum",
       },
       {
-        name: "Member Milestone",
+        name: $localize`:@@member-milestone:Member Milestone`,
         type: "line",
         data: [],
         sampling: "sum",
       },
       {
-        name: "Cheering",
+        name: $localize`:@@cheering:Cheering`,
         type: "line",
         data: [],
         sampling: "sum",
       },
       {
-        name: "Hyper Chat",
+        name: $localize`:@@hyper-chat:Hyper Chat`,
         type: "line",
         data: [],
         sampling: "sum",

@@ -76,7 +76,7 @@ export type StreamEventsGroup = {
           [paid]="group.superSticker"
         />
         <vts-stream-events-chart
-          *ngSwitchCase="'time'"
+          *ngSwitchCase="'timed'"
           [group]="group"
           [stream]="stream"
         />
@@ -103,10 +103,16 @@ export class StreamEventsInner implements OnInit {
   ngOnInit() {
     const options: Array<{ label: string; value: string }> = [];
     if (this.group.superChats) {
-      options.push({ value: "superChats", label: "Super Chats" });
+      options.push({
+        value: "superChats",
+        label: $localize`:@@super-chats:Super Chats`,
+      });
     }
     if (this.group.superSticker) {
-      options.push({ value: "superSticker", label: "Super Sticker" });
+      options.push({
+        value: "superSticker",
+        label: $localize`:@@super-sticker:Super Sticker`,
+      });
     }
     if (
       this.group.memberMilestone ||
@@ -116,7 +122,10 @@ export class StreamEventsInner implements OnInit {
       this.group.twitchCheering ||
       this.group.twitchHyperChat
     ) {
-      options.push({ value: "time", label: "Time" });
+      options.push({
+        value: "timed",
+        label: $localize`:@@timed:Timed`,
+      });
     }
     this.chipOptions.set(options);
     if (options.length > 0) {

@@ -57,31 +57,31 @@ export class GroupStreamsPipe implements PipeTransform {
     // TODO: support timezone settings
 
     if (isToday(time)) {
-      return $localize`:@@Today:Today`;
+      return $localize`:@@today:Today`;
     }
 
     if (isYesterday(time)) {
-      return $localize`:@@Yesterday:Yesterday`;
+      return $localize`:@@yesterday:Yesterday`;
     }
 
     if (isTomorrow(time)) {
-      return $localize`:@@Tomorrow:Tomorrow`;
+      return $localize`:@@tomorrow:Tomorrow`;
     }
 
     if (isFuture(time)) {
       if (isThisWeek(time)) {
-        return $localize`:@@This week:This week`;
+        return $localize`:@@this-week:This week`;
       }
 
       if (isThisMonth(time)) {
-        return $localize`:@@This month:This month`;
+        return $localize`:@@this-month:This month`;
       }
 
       if (isThisYear(time)) {
-        return $localize`:@@This year:This year`;
+        return $localize`:@@this-year:This year`;
       }
 
-      return $localize`:@@Future:Future`;
+      return $localize`:@@future:Future`;
     }
 
     if (isThisYear(time)) {

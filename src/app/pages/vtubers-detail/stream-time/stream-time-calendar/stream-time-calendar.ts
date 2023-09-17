@@ -72,7 +72,7 @@ export class StreamTimeCalendar implements OnChanges {
         formatter: (p: TopLevelFormatterParams) => {
           const _formatDuration = (value: number) => {
             if (value == 0) {
-              return $localize`:@@No Stream:No stream`;
+              return $localize`:@@no-stream:No stream`;
             }
 
             if (value >= 3600) {

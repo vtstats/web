@@ -77,7 +77,7 @@ export class DateFilter {
     const { start, end } = this.range();
 
     if (!start && !end) {
-      return "Date";
+      return $localize`:@@select-date:Select Date`;
     }
 
     let text = "";

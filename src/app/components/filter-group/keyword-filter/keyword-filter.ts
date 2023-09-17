@@ -10,6 +10,7 @@ import {
   selector: "vts-keyword-filter",
   template: `
     <input
+      i18n-placeholder="@@search"
       placeholder="Search"
       class="keyword-filter rounded-full tracking-wider"
       (change)="handleChange($event)"

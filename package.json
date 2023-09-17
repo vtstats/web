@@ -1,11 +1,12 @@
 {
-  "name": "@vtstats/web",
+  "name": "vtstats",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --hmr",
     "start": "ng serve --hmr",
-    "build": "ng build",
+    "extract-i18n": "ng extract-i18n --format json --output-path ./src/i18n",
+    "build": "node build.js",
     "test": "ng test",
     "lint": "ng lint"
   },

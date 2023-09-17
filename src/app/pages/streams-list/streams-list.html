@@ -14,7 +14,7 @@
         (selectedChange)="selectedDateRange.set($event)"
       />
 
-      <vts-keyword-input
+      <vts-keyword-filter
         *ngIf="route.snapshot.data.status !== 'scheduled'"
         (onChange)="searchKeyword.set($event)"
       />

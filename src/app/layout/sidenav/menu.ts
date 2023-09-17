@@ -22,7 +22,7 @@ import { DrawerService } from "src/app/shared/services/drawer";
   template: `
     <div
       *ngIf="headline"
-      class="text-xs p-4 tracking-wider mat-secondary-text font-medium select-none"
+      class="text-xs p-4 tracking-wider mat-secondary-text font-medium select-none uppercase"
     >
       {{ headline }}
     </div>

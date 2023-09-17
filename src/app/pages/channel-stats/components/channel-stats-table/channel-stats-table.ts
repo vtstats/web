@@ -70,15 +70,15 @@ export class ChannelStatsTable implements AfterViewInit {
   }[] = [
     {
       f: "delta1d",
-      t: $localize`:@@lastDay:Last Day`,
+      t: $localize`:@@last-day:Last Day`,
     },
     {
       f: "delta7d",
-      t: $localize`:@@last7Days:Last 7 Days`,
+      t: $localize`:@@last-7days:Last 7 Days`,
     },
     {
       f: "delta30d",
-      t: $localize`:@@last30Days:Last 30 Days`,
+      t: $localize`:@@last-30days:Last 30 Days`,
     },
   ];
 

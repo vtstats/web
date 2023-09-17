@@ -1,7 +1,6 @@
 import { NgIf, formatDate, formatNumber } from "@angular/common";
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   LOCALE_ID,
@@ -118,11 +117,11 @@ export class InnerChart implements OnChanges {
     html += `<tbody class="text-sm">`;
 
     if (v1 > 0) {
-      html += `<tr><td class="text-[#737373]">Member</td>\
+      html += `<tr><td class="text-[#737373]">${$localize`:@@member:Member`}</td>\
       <td class="text-right">${formatNumber(v1, this.locale)}</td></tr>`;
     }
 
-    html += `<tr><td class="text-[#737373]">Total</td>\
+    html += `<tr><td class="text-[#737373]">${$localize`:@@total:Total`}</td>\
     <td class="text-right">${formatNumber(v2, this.locale)}</td></tr>`;
 
     html += `</tbody>`;
