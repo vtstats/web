@@ -15,6 +15,7 @@ import {
 } from "@angular/router";
 import { provideServiceWorker } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
+import qs from "query-string";
 
 import { environment } from "./environments/environment";
 
@@ -36,6 +37,31 @@ if (environment.production) {
     environment: (window as any).cfPagesBranch,
   });
 }
+
+const migrate = () => {
+  const parsed = qs.parseUrl(window.location.toString(), {
+    arrayFormat: "comma",
+  });
+  if (parsed.url.endsWith("/hls-migrate")) {
+    localStorage.setItem("vts:vtuberSelected", JSON.stringify(parsed.query.v));
+
+    localStorage.setItem("vts:nameSetting", JSON.stringify(parsed.query.n));
+
+    if (typeof parsed.query.l === "string") {
+      localStorage.setItem("lang", parsed.query.l);
+    }
+
+    if (typeof parsed.query.tz === "string") {
+      localStorage.setItem("timezone", parsed.query.tz);
+    }
+
+    localStorage.setItem("vts:themeSetting", JSON.stringify(parsed.query.t));
+
+    localStorage.setItem("vts:currencySetting", JSON.stringify(parsed.query.c));
+
+    window.location.replace("/");
+  }
+};
 
 const bootstrap = () => {
   return bootstrapApplication(AppComponent, {
@@ -86,6 +112,8 @@ const bootstrap = () => {
     ],
   });
 };
+
+migrate();
 
 if (document.readyState === "complete") {
   bootstrap().catch(console.error);
