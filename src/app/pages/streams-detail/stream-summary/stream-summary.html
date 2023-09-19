@@ -49,10 +49,16 @@
     </a>
 
     <div class="mb-2">
-      <span class="mat-small">Stream Time: </span>
+      <span class="mat-small">Start time:</span>
       <span class="mat-body-1">
-        {{ stream.startTime | date: 'HH:mm:ss' }} - {{ stream.status === 'ENDED'
-        ? (stream.endTime | date: 'HH:mm:ss') : '' }}
+        {{ stream.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}
+      </span>
+    </div>
+
+    <div class="mb-2" *ngIf="stream.status === 'ENDED'">
+      <span class="mat-small">End time:</span>
+      <span class="mat-body-1">
+        {{ stream.endTime | date: 'yyyy/MM/dd HH:mm:ss' }}
       </span>
     </div>
 
