@@ -13,6 +13,9 @@ const main = async () => {
 
   const path = "dist/browser/index.html";
   const document = await fs.readFile(path, "utf-8");
+  const commit = execSync("git rev-parse --short HEAD", {
+    encoding: "utf-8",
+  }).trim();
 
   const server = require("./dist/server/main");
 
@@ -30,7 +33,10 @@ const main = async () => {
     inlineFonts: true,
   }).process(html);
 
-  html = html.replace('<body class="dark">', "<body>");
+  html = html
+    .replace("BUILD_TIME", new Date().toISOString())
+    .replace("GIT_COMMIT_SHA", commit)
+    .replace('<body class="dark">', "<body>");
 
   await fs.writeFile(path, html);
 };
