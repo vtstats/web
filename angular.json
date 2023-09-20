@@ -42,11 +42,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.json",
             "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
+            "assets": ["src/manifest.webmanifest"],
             "styles": ["src/styles/main.scss", "src/styles/tailwind.css"],
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [],

@@ -9,23 +9,23 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/assets/icons/icon-192x192.png",
+      "src": "https://vt-s3.poi.cat/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/icon-192x192-maskable.png",
+      "src": "https://vt-s3.poi.cat/icons/icon-192x192-maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/icons/icon-512x512.png",
+      "src": "https://vt-s3.poi.cat/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/icon-512x512-maskable.png",
+      "src": "https://vt-s3.poi.cat/icons/icon-512x512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -35,25 +35,41 @@
     {
       "name": "YouTube Channel",
       "url": "/youtube-channel",
-      "icons": [{ "src": "/assets/icons/icon-youtube.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "https://vt-s3.poi.cat/icons/icon-youtube.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Bilibili Channel",
       "url": "/bilibili-channel",
       "icons": [
-        { "src": "/assets/icons/icon-bilibili.png", "sizes": "192x192" }
+        {
+          "src": "https://vt-s3.poi.cat/icons/icon-bilibili.png",
+          "sizes": "192x192"
+        }
       ]
     },
     {
       "name": "YouTube Streams",
       "url": "/youtube-stream",
-      "icons": [{ "src": "/assets/icons/icon-stream.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "https://vt-s3.poi.cat/icons/icon-stream.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "YouTube Schedule",
       "url": "/youtube-schedule-stream",
       "icons": [
-        { "src": "/assets/icons/icon-calendar.png", "sizes": "192x192" }
+        {
+          "src": "https://vt-s3.poi.cat/icons/icon-calendar.png",
+          "sizes": "192x192"
+        }
       ]
     }
   ],
