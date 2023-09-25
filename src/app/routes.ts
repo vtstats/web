@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 
 import { NotFound } from "./pages/not-found/not-found";
 import { ShareTarget } from "./pages/share-target/share-target";
-import { Platform } from "./models";
+import { ChannelStatsKind, Platform } from "./models";
 
 export const getRoutes = (): Routes => [
   {
@@ -17,7 +17,26 @@ export const getRoutes = (): Routes => [
   },
   {
     path: "channel",
-    loadChildren: () => import("./pages/channel-stats/routes"),
+    redirectTo: "/channel/subscribers",
+    pathMatch: "full",
+  },
+  {
+    path: "channel/revenue",
+    title: "channel revenue",
+    loadComponent: () => import("./pages/channel-stats/channel-stats"),
+    data: { kind: ChannelStatsKind.REVENUE },
+  },
+  {
+    path: "channel/views",
+    title: "channel views",
+    loadComponent: () => import("./pages/channel-stats/channel-stats"),
+    data: { kind: ChannelStatsKind.VIEW },
+  },
+  {
+    path: "channel/subscribers",
+    title: "channel subscribers",
+    loadComponent: () => import("./pages/channel-stats/channel-stats"),
+    data: { kind: ChannelStatsKind.SUBSCRIBER },
   },
   {
     path: "settings",

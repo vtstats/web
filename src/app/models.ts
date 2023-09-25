@@ -11,22 +11,29 @@ export type Channel = {
   platform: Platform;
 };
 
-export type ChannelStatsSummary = Channel & {
-  view: number;
-  view1dAgo: number;
-  view7dAgo: number;
-  view30dAgo: number;
+export const enum ChannelStatsKind {
+  VIEW = "VIEW",
+  REVENUE = "REVENUE",
+  SUBSCRIBER = "SUBSCRIBER",
+}
 
-  subscriber: number;
-  subscriber1dAgo: number;
-  subscriber7dAgo: number;
-  subscriber30dAgo: number;
-
-  revenue: Record<string, number>;
-  revenue1dAgo: Record<string, number>;
-  revenue7dAgo: Record<string, number>;
-  revenue30dAgo: Record<string, number>;
-};
+export type ChannelStatsSummary =
+  | {
+      channelId: number;
+      kind: ChannelStatsKind.REVENUE;
+      value: Record<string, number>;
+      value1DayAgo: Record<string, number>;
+      value7DaysAgo: Record<string, number>;
+      value30DaysAgo: Record<string, number>;
+    }
+  | {
+      channelId: number;
+      kind: ChannelStatsKind.VIEW | ChannelStatsKind.SUBSCRIBER;
+      value: number;
+      value1DayAgo: number;
+      value7DaysAgo: number;
+      value30DaysAgo: number;
+    };
 
 export type Stream = {
   platform: Platform;

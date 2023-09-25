@@ -4,6 +4,7 @@ import {
   Catalog,
   StreamsEvent,
   ChannelStatsSummary,
+  ChannelStatsKind,
   Platform,
   StreamStatus,
 } from "src/app/models";
@@ -48,11 +49,12 @@ export const catalog = (): Promise<Catalog> =>
   fetch(`${baseUrl}/catalog`).then(_json);
 
 export const channelStatsSummary = (
-  channelIds: number[]
+  channelIds: number[],
+  kind: ChannelStatsKind
 ): Promise<Array<ChannelStatsSummary>> =>
   fetch(
     qs.stringifyUrl(
-      { url: `${baseUrl}/channel-stats/summary`, query: { channelIds } },
+      { url: `${baseUrl}/channel-stats/summary`, query: { channelIds, kind } },
       { arrayFormat: "comma" }
     )
   ).then(_json);

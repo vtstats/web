@@ -7,11 +7,18 @@
     <div
       class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
     >
-      <vts-vtuber-filter (selectedChange)="vtuberSelected.set($event)" />
+      <vts-platform-filter
+        *ngIf="kind !== 'REVENUE'"
+        [hideTwitch]="kind === 'VIEW'"
+        (onChange)="platformFilter.set($event)"
+      />
+
+      <vts-vtuber-filter (selectedChange)="vtuberFilter.set($event)" />
 
       <div class="flex-1"></div>
 
       <vts-menu
+        *ngIf="kind === 'REVENUE'"
         [showLabel]="false"
         [options]="currencyOptions"
         [value]="currency.currencySetting()"
@@ -27,8 +34,8 @@
 
     <div class="px-4 overflow-x-auto">
       <vts-channel-stats-table
-        *ngIf="data().length > 0"
-        valueLabel="Revenue"
+        *ngIf="!result.error"
+        [valueLabel]="valueLabel"
         [dataSource]="data()"
         [loading]="result.isFetching"
       />
