@@ -76,3 +76,12 @@ body {
 .mat-drawer-side {
   border: 0 !important;
 }
+
+// https://github.com/angular/components/issues/26203
+.dark .mdc-data-table__row:hover {
+  background-color: #ffffff0a;
+}
+
+.mdc-data-table__row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
