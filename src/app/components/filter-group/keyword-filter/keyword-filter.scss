@@ -14,6 +14,8 @@
   height: 36px;
   color: mat.get-color-from-palette($foreground, "text");
   font-weight: 500;
+  font-size: 14px;
+  box-sizing: border-box;
 
   &::placeholder {
     color: mat.get-color-from-palette($foreground, "secondary-text");
