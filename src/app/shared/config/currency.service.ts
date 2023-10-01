@@ -27,6 +27,6 @@ export class CurrencyService {
   });
 
   async initialize() {
-    this.rates.set(await api.exchangeRates());
+    this.rates.set(await import("./currency.json").then((r) => r.default));
   }
 }
