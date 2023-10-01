@@ -28,7 +28,10 @@ export default class VTubersDetail {
   constructor() {
     const id = this.route.snapshot.paramMap.get("vtuberId");
     this.vtuber = this.vtuberSrv.vtubers().find((v) => v.vtuberId === id);
-    this.channels = this.vtuberSrv.channels().filter((c) => c.vtuberId === id);
+    this.channels = this.vtuberSrv
+      .channels()
+      .filter((c) => c.vtuberId === id)
+      .sort((a, b) => b.platform.localeCompare(a.platform));
 
     if (!this.vtuber) {
       this.router.navigateByUrl("/404");

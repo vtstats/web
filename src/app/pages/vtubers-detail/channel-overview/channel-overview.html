@@ -32,7 +32,7 @@
     />
   </ng-container>
 
-  <ng-container *ngIf="channels[channelIdx].platform === 'YOUTUBE'">
+  <ng-container *ngIf="channels[channelIdx].platform !== 'BILIBILI'">
     <mat-divider class="!my-2" />
 
     <vts-stats-chart

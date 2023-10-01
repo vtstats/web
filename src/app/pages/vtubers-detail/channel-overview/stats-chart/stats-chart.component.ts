@@ -99,6 +99,8 @@ export class StatsChartComponent implements OnChanges {
     switch (this.channel.platform) {
       case Platform.YOUTUBE:
         return { area: "#ff525255", line: "#f44336" };
+      case Platform.TWITCH:
+        return { area: "#7c4dff55", line: "#673ab7" };
       default:
         return { area: "#64b5f655", line: "#03a9f4" };
     }
