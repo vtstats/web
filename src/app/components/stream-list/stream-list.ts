@@ -4,9 +4,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   ViewChild,
-  inject,
 } from "@angular/core";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
@@ -15,7 +16,6 @@ import { Stream } from "src/app/models";
 import { GroupStreamsPipe, StreamGroup } from "./group-stream.pipe";
 import { StreamItem } from "./stream-item/stream-item";
 import { StreamItemShimmer } from "./stream-item/stream-item-shimmer";
-import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   standalone: true,
@@ -31,9 +31,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   selector: "vts-stream-list",
   templateUrl: "stream-list.html",
 })
-export class StreamsList {
-  private sanitizer = inject(DomSanitizer);
-
+export class StreamsList implements OnInit, OnDestroy {
   @ViewChild("spinner", { static: true, read: ElementRef }) spinner: ElementRef;
 
   @Input() items: Stream[];

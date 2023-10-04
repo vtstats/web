@@ -86,24 +86,30 @@ export default class StreamsList {
     return ["streams", { status: data.status, channelIds, keyword }];
   });
 
-  queryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
+  scheduledStreamQueryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
     pageParam,
     queryKey: [_, opts],
   }) => {
-    if (opts.status === "scheduled") {
-      return streams({
-        startAt: subHours(startOfHour(Date.now()), 6),
-        status: StreamStatus.SCHEDULED,
-        ...opts,
-        ...pageParam,
-      });
-    } else if (!pageParam) {
-      const live = await streams({ ...opts, status: StreamStatus.LIVE });
-      const ended = await streams({ ...opts, status: StreamStatus.ENDED });
-      return [...live, ...ended];
-    } else {
-      return streams({ ...opts, ...pageParam, status: StreamStatus.ENDED });
+    return streams({
+      ...opts,
+      startAt: subHours(startOfHour(Date.now()), 6),
+      status: StreamStatus.SCHEDULED,
+      ...pageParam,
+    });
+  };
+
+  liveStreamQueryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
+    pageParam,
+    queryKey: [_, opts],
+  }) => {
+    const status = pageParam?.status || StreamStatus.LIVE;
+    const items = await streams({ ...opts, ...pageParam, status });
+
+    if (items.length === 0 && status === StreamStatus.LIVE) {
+      return streams({ ...opts, status: StreamStatus.ENDED });
     }
+
+    return items;
   };
 
   select = (data: InfiniteData<Stream[]>) => {
@@ -112,20 +118,29 @@ export default class StreamsList {
     return { pages: [{ items, updatedAt }], pageParams: [] };
   };
 
-  getNextPageParam: GetNextPageParamFunction<Stream[]> = (lastPage) => {
-    if (lastPage.length < 24) return undefined;
-
-    const last = lastPage[lastPage.length - 1];
-
-    switch (last.status) {
-      case StreamStatus.SCHEDULED: {
-        return { startAt: last.scheduleTime };
-      }
-      case StreamStatus.LIVE:
-      case StreamStatus.ENDED: {
-        return { endAt: last.startTime };
-      }
+  getScheduledStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
+    lastPage
+  ) => {
+    if (lastPage.length >= 24) {
+      return { startAt: lastPage[lastPage.length - 1].scheduleTime };
     }
+
+    return undefined;
+  };
+
+  getLiveStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
+    lastPage
+  ) => {
+    if (lastPage.length >= 24) {
+      const last = lastPage[lastPage.length - 1];
+      return { status: last.status, endAt: last.startTime };
+    }
+
+    if (lastPage.length > 0 && lastPage[0].status === StreamStatus.LIVE) {
+      return { status: StreamStatus.ENDED };
+    }
+
+    return undefined;
   };
 
   options: Signal<
@@ -142,9 +157,15 @@ export default class StreamsList {
     return {
       queryKey,
       enabled: queryKey[1].channelIds.length > 0,
-      queryFn: this.queryFn,
       select: this.select,
-      getNextPageParam: this.getNextPageParam,
+      queryFn:
+        queryKey[1].status === "scheduled"
+          ? this.scheduledStreamQueryFn
+          : this.liveStreamQueryFn,
+      getNextPageParam:
+        queryKey[1].status === "scheduled"
+          ? this.getScheduledStreamNextPageParam
+          : this.getLiveStreamNextPageParam,
     };
   });
 
