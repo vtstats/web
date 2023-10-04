@@ -96,9 +96,13 @@
     {{ (stream.viewerMax | number) || "----" }}
   </span>
 
-  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up" />
+  <ng-container
+    *ngIf="stream.status === 'ENDED' && stream.platform === 'YOUTUBE'"
+  >
+    <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up" />
 
-  <span title="Like">{{ (stream.likeMax | number) || "----" }}</span>
+    <span title="Like">{{ (stream.likeMax | number) || "----" }}</span>
+  </ng-container>
 </div>
 
 <div class="mat-small flex-row flex items-center">
