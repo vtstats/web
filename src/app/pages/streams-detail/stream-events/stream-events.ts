@@ -10,7 +10,6 @@ import {
   Component,
   Input,
   OnInit,
-  inject,
   signal,
 } from "@angular/core";
 import { MatChipsModule } from "@angular/material/chips";
@@ -20,8 +19,8 @@ import { Stream, StreamEventKind, StreamsEvent } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
 import { Paid } from "src/app/shared/api/entrypoint";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
+import { query } from "src/app/shared/qry";
 import { StreamEventsChart } from "./event-chart";
 import { PaidChart } from "./paid-chart";
 
@@ -136,39 +135,36 @@ export class StreamEventsInner implements OnInit {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, UseQryPipe, StreamEventsInner],
+  imports: [CommonModule, StreamEventsInner],
   selector: "vts-stream-events",
   template: `
     <div
-      *ngIf="statsQry | useQry as result"
+      *ngIf="statsQry().data as result"
       class="mat-border-divider rounded border border-solid mb-4"
     >
-      <vts-stream-events-inner
-        *ngIf="result.data"
-        [group]="result.data"
-        [stream]="stream"
-      />
+      <vts-stream-events-inner [group]="result" [stream]="stream()" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StreamEvents implements OnInit {
-  private qry = inject(QryService);
+export class StreamEvents {
+  stream = signal<Stream | null>(null);
+  @Input("stream") set _stream(stream: Stream) {
+    this.stream.set(stream);
+  }
 
-  @Input() stream: Stream;
-
-  statsQry: Qry<
+  statsQry = query<
     Array<StreamsEvent>,
     unknown,
     StreamEventsGroup,
     Array<StreamsEvent>,
     ["stream-events", { streamId: number }]
-  >;
-
-  ngOnInit() {
-    this.statsQry = this.qry.create({
-      queryKey: ["stream-events", { streamId: this.stream.streamId }],
-      queryFn: () => api.streamEvents(this.stream.streamId),
+  >(() => {
+    const st = this.stream();
+    return {
+      enabled: !!st,
+      queryKey: ["stream-events", { streamId: st?.streamId }],
+      queryFn: () => api.streamEvents(st?.streamId),
       select: (events) =>
         events.reduce((acc, cur) => {
           switch (cur.kind) {
@@ -227,6 +223,6 @@ export class StreamEvents implements OnInit {
           }
           return acc;
         }, {} as StreamEventsGroup),
-    });
-  }
+    };
+  });
 }

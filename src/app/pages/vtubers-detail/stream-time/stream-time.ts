@@ -1,14 +1,14 @@
 import { NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
-import { Component, Input, OnInit, inject } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
+import { ActivatedRoute } from "@angular/router";
 
 import { Menu } from "src/app/components/menu/menu";
-import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
-
 import { VTuber } from "src/app/models";
 import { streamsTimes } from "src/app/shared/api/entrypoint";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
+import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
+import { query } from "src/app/shared/qry";
 import { StreamTimeBarChart } from "./stream-time-bar-chart/stream-time-bar-chart";
 import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar";
 
@@ -21,18 +21,18 @@ import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar"
     MatDividerModule,
     StreamTimeBarChart,
     StreamTimeCalendar,
-    UseQryPipe,
+
     FormatDurationPipe,
     Menu,
   ],
   selector: "vts-stream-time",
   templateUrl: "stream-time.html",
 })
-export class StreamTime implements OnInit {
-  private qry = inject(QryService);
+export class StreamTime {
   private vtuberService = inject(VTuberService);
+  private route = inject(ActivatedRoute);
 
-  @Input() vtuber: VTuber;
+  @Input({ required: true }) vtuber: VTuber;
 
   precision: "hour" | "day" | "weekday" | "month" = "day";
 
@@ -46,25 +46,25 @@ export class StreamTime implements OnInit {
     { value: "month", label: "Month" },
   ];
 
-  streamTimesQry: Qry<
+  result = query<
     Array<[number, number]>,
     unknown,
     Array<[number, number]>,
     Array<[number, number]>,
     ["stream-times", { channelIds: number[] }]
-  >;
+  >(() => {
+    const vtuberId = this.route.snapshot.params.vtuberId;
 
-  ngOnInit() {
     const channelIds = this.vtuberService
       .channels()
-      .filter((c) => c.vtuberId === this.vtuber.vtuberId)
+      .filter((c) => c.vtuberId === vtuberId)
       .map((c) => c.channelId);
 
-    this.streamTimesQry = this.qry.create({
+    return {
       queryKey: ["stream-times", { channelIds }],
       queryFn: ({ queryKey: [_, { channelIds }] }) => streamsTimes(channelIds),
-    });
-  }
+    };
+  });
 
   getTotal(times: [number, number][]): number {
     if (!times) return 0;

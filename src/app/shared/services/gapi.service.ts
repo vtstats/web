@@ -1,4 +1,5 @@
-import { Injectable, NgZone } from "@angular/core";
+import { isPlatformServer } from "@angular/common";
+import { Injectable, NgZone, PLATFORM_ID, inject } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import qs from "query-string";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -53,7 +54,15 @@ type SignedInUser = {
 export class GoogleApiService {
   user$ = new BehaviorSubject<SignedInUser | null>(null);
 
-  constructor(private ngZone: NgZone, private snackBar: MatSnackBar) {
+  ngZone = inject(NgZone);
+  snackBar = inject(MatSnackBar);
+  platformId = inject(PLATFORM_ID);
+
+  constructor() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     init().then((auth) => {
       this.updateSignInStatus(auth.currentUser.get());
       auth.currentUser.listen((user) => this.updateSignInStatus(user));

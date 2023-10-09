@@ -12,7 +12,7 @@ import type { EChartsOption } from "echarts";
 import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
-import { LocaleService } from "src/app/shared/config/locale.service";
+import { DATE_FNS_LOCALE } from "src/app/shared/tokens";
 
 @Component({
   selector: "vts-stream-time-bar-chart",
@@ -26,7 +26,7 @@ export class StreamTimeBarChart {
   @Input() groupBy: "hour" | "weekday" | "month";
 
   private locale = inject(LOCALE_ID);
-  private locale_ = inject(LocaleService);
+  dateFns = inject(DATE_FNS_LOCALE);
 
   get width(): number {
     switch (this.groupBy) {
@@ -95,13 +95,13 @@ export class StreamTimeBarChart {
       if (value >= 3600) {
         return formatDuration(
           { hours: ((value / 360) | 0) / 10 },
-          { locale: this.locale_.dateFns }
+          { locale: this.dateFns }
         );
       }
 
       return formatDuration(
         { minutes: (value / 60) | 0 },
-        { locale: this.locale_.dateFns }
+        { locale: this.dateFns }
       );
     };
 

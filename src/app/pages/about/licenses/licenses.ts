@@ -1,17 +1,14 @@
-import { Component, inject } from "@angular/core";
+import { Component } from "@angular/core";
 
-import { QryService, UseQryPipe } from "src/app/shared/qry";
+import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  imports: [UseQryPipe],
   selector: "vts-licenses",
   templateUrl: "licenses.html",
 })
 export class Licenses {
-  private qry = inject(QryService);
-
-  licensesQry = this.qry.create({
+  licensesQry = query({
     queryKey: ["3rdpartylicenses"],
     queryFn: () => fetch("/3rdpartylicenses.txt").then((res) => res.text()),
   });

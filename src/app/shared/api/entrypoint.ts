@@ -9,8 +9,9 @@ import {
   StreamStatus,
 } from "src/app/models";
 import { getTime } from "date-fns";
+import { FetchQueryOptions } from "@tanstack/query-core";
 
-const baseUrl = "https://vt.poi.cat/api/v4";
+const baseUrl = "https://vt-api.poi.cat/api/v4";
 
 export const codeToSymbol: Record<string, string> = {
   USD: "US$",
@@ -197,7 +198,36 @@ export const youtubeLikes = (
     })
   ).then(_json);
 
-export const exchangeRates = (): Promise<Record<string, number>> =>
-  fetch(`https://api.exchangerate.host/latest`)
-    .then(_json)
-    .then((res) => res.rates);
+export const streamsTimesQuery = (
+  channelIds: number[]
+): FetchQueryOptions<
+  Array<[number, number]>,
+  any,
+  Array<[number, number]>,
+  StreamsTimesQueryKey
+> => ({
+  queryKey: ["stream-times", { channelIds }],
+  queryFn: (ctx) => streamsTimes(ctx.queryKey[1].channelIds),
+});
+
+export const exchangeRatesQuery: FetchQueryOptions<
+  Record<string, number>,
+  unknown,
+  Record<string, number>,
+  ["exchange-rates"]
+> = {
+  queryKey: ["exchange-rates"],
+  queryFn: () => fetch(`${baseUrl}/exchange-rates`).then(_json),
+  staleTime: 24 * 60 * 60 * 1000, // 10 day
+};
+
+export const catalogQuery: FetchQueryOptions<
+  Catalog,
+  unknown,
+  Catalog,
+  ["catalog"]
+> = {
+  queryKey: ["catalog"],
+  queryFn: () => catalog(),
+  staleTime: 60 * 60 * 1000, // 1 hour
+};

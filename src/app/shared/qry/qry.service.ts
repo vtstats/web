@@ -1,12 +1,13 @@
-import { Injectable, isDevMode, OnDestroy } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 import {
-  InfiniteQueryObserverOptions,
-  QueryClient,
-  QueryKey,
-  QueryObserverOptions,
-} from "@tanstack/query-core";
+  inject,
+  Injectable,
+  isDevMode,
+  OnDestroy,
+  PLATFORM_ID,
+} from "@angular/core";
 
-import { InfQry, Qry } from "./qry";
+import { QUERY_CLIENT } from "../tokens";
 
 const reactModule = "https://esm.sh/react";
 const reactDomModule = "https://esm.sh/react-dom";
@@ -16,64 +17,21 @@ const reactQueryDevToolsModule =
 
 @Injectable({ providedIn: "root" })
 export class QryService implements OnDestroy {
-  client: QueryClient;
+  client = inject(QUERY_CLIENT);
+  platformId = inject(PLATFORM_ID);
 
   private root = null;
 
   constructor() {
-    this.client = new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          onError: console.error,
-        },
-      },
-    });
     this.client.mount();
 
-    if (isDevMode()) {
+    if (isPlatformBrowser(this.platformId) && isDevMode()) {
       this.mountQueryDevTools();
     }
   }
 
   ngOnDestroy(): void {
     this.client.unmount();
-  }
-
-  createInf<
-    TQueryFnData,
-    TError,
-    TData,
-    TQueryData,
-    TQueryKey extends QueryKey = QueryKey
-  >(
-    options: InfiniteQueryObserverOptions<
-      TQueryFnData,
-      TError,
-      TData,
-      TQueryData,
-      TQueryKey
-    >
-  ): InfQry<TQueryFnData, TError, TData, TQueryData, TQueryKey> {
-    return new InfQry(this.client, options);
-  }
-
-  create<
-    TQueryFnData,
-    TError,
-    TData,
-    TQueryData,
-    TQueryKey extends QueryKey = QueryKey
-  >(
-    options: QueryObserverOptions<
-      TQueryFnData,
-      TError,
-      TData,
-      TQueryData,
-      TQueryKey
-    >
-  ): Qry<TQueryFnData, TError, TData, TQueryData, TQueryKey> {
-    return new Qry(this.client, options);
   }
 
   toggleQueryDevTools() {

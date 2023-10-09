@@ -1,12 +1,14 @@
 import { NgIf } from "@angular/common";
-import { Component, OnInit, inject } from "@angular/core";
-import { Title } from "@angular/platform-browser";
+import { Component, Signal, inject } from "@angular/core";
+import { Meta, Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Platform, Stream } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
+import { QueryObserverResult } from "@tanstack/query-core";
+import { query } from "src/app/shared/qry";
+import { QUERY_CLIENT } from "src/app/shared/tokens";
 import { StreamChatStats } from "./stream-chat-stats/stream-chat-stats";
 import { StreamEvents } from "./stream-events/stream-events";
 import { StreamSummary } from "./stream-summary/stream-summary";
@@ -20,58 +22,30 @@ import { StreamViewerStats } from "./stream-viewer-stats/stream-viewer-stats";
     StreamEvents,
     StreamSummary,
     StreamViewerStats,
-    UseQryPipe,
   ],
   selector: "vts-streams-detail",
   templateUrl: "streams-detail.html",
 })
-export default class StreamsDetail implements OnInit {
+export default class StreamsDetail {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private qry = inject(QryService);
   private title = inject(Title);
+  private meta = inject(Meta);
 
-  streamQry: Qry<
-    Stream,
-    unknown,
-    Stream,
-    Stream,
-    [
-      "stream",
-      { platform: Platform; platformId: string } | { streamId: number }
-    ]
-  >;
+  queryClient = inject(QUERY_CLIENT);
 
-  ngOnInit() {
+  streamQry: Signal<QueryObserverResult<Stream, unknown>>;
+
+  constructor() {
     const streamId = this.route.snapshot.paramMap.get("streamId");
     const platform = this.route.snapshot.data.platform;
 
-    if (platform) {
-      this.streamQry = this.qry.create<
-        Stream,
-        unknown,
-        Stream,
-        Stream,
-        ["stream", { platform: Platform; platformId: string }]
-      >({
-        queryKey: ["stream", { platform, platformId: streamId }],
-        queryFn: ({ queryKey: [_, { platform, platformId }] }) =>
-          api.streamsByPlatformId(platform, platformId),
-        onSuccess: (stream) => {
-          if (!stream) {
-            this.router.navigateByUrl("/404");
-          } else {
-            this.title.setTitle(stream.title + " | vtstats");
-          }
-        },
-        staleTime: 5 * 60 * 1000, // 5min
-      });
-    } else {
+    if (!platform) {
       api.streamsById(Number(streamId)).then((stream) => {
         if (!stream) {
           this.router.navigateByUrl("/404");
         } else {
-          this.qry.client.setQueryData(
+          this.queryClient.setQueryData(
             [
               "stream",
               { platform: stream.platform, platformId: stream.platformId },
@@ -84,6 +58,39 @@ export default class StreamsDetail implements OnInit {
           );
         }
       });
+      return;
     }
+
+    this.streamQry = query<
+      Stream,
+      unknown,
+      Stream,
+      Stream,
+      ["stream", { platform: Platform; platformId: string }]
+    >({
+      queryKey: ["stream", { platform, platformId: streamId }],
+      queryFn: ({ queryKey: [_, { platform, platformId }] }) =>
+        api.streamsByPlatformId(platform, platformId),
+      staleTime: 5 * 60 * 1000, // 5min
+      onSuccess: (stream) => {
+        if (!stream) {
+          this.router.navigateByUrl("/404");
+          return;
+        }
+
+        const title = stream.title + " | vtstats";
+        const image = `https://vt-og-image.poi.cat/${stream.platform.toLowerCase()}-stream/${
+          stream.platformId
+        }.png`;
+
+        this.title.setTitle(title);
+        this.meta.updateTag({ property: "og:title", content: title });
+        this.meta.updateTag({ property: "og:image", content: image });
+        this.meta.updateTag({ name: "twitter:title", content: title });
+        this.meta.updateTag({ name: "twitter:image", content: image });
+      },
+    });
+
+    console.log({ streamQry: this.streamQry() });
   }
 }

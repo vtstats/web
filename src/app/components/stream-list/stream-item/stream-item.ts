@@ -31,7 +31,7 @@ import {
   NamePipe,
   TickService,
 } from "src/app/shared";
-import { QryService } from "src/app/shared/qry";
+import { QUERY_CLIENT } from "src/app/shared/tokens";
 
 @Component({
   standalone: true,
@@ -59,7 +59,7 @@ import { QryService } from "src/app/shared/qry";
 export class StreamItem {
   tick = inject(TickService);
   private sanitizer = inject(DomSanitizer);
-  private qry = inject(QryService);
+  private queryClient = inject(QUERY_CLIENT);
   private config = inject(ConfigService);
   private gapi = inject(GoogleApiService);
   private snackBar = inject(MatSnackBar);
@@ -99,7 +99,7 @@ export class StreamItem {
   }
 
   onClick() {
-    this.qry.client.setQueryData(
+    this.queryClient.setQueryData(
       [
         "stream",
         { platform: this.stream.platform, platformId: this.stream.platformId },

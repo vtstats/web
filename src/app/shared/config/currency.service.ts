@@ -1,10 +1,13 @@
-import { Injectable, computed, signal } from "@angular/core";
+import { Injectable, computed, inject, signal } from "@angular/core";
 
-import * as api from "src/app/shared/api/entrypoint";
 import { localStorageSignal } from "src/utils";
+import { exchangeRatesQuery } from "../api/entrypoint";
+import { QUERY_CLIENT } from "../tokens";
 
 @Injectable({ providedIn: "root" })
 export class CurrencyService {
+  queryClient = inject(QUERY_CLIENT);
+
   currencySetting = localStorageSignal("vts:currencySetting", "JPY");
 
   rates = signal<Record<string, number>>({});
@@ -26,7 +29,10 @@ export class CurrencyService {
     return result;
   });
 
-  async initialize() {
-    this.rates.set(await import("./currency.json").then((r) => r.default));
+  constructor() {
+    const res: Record<string, number> = this.queryClient.getQueryData(
+      exchangeRatesQuery.queryKey
+    );
+    this.rates.set(res);
   }
 }

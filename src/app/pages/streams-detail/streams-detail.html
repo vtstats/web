@@ -1,4 +1,4 @@
-<div class="p-4 mb-15" *ngIf="streamQry | useQry as result">
+<div class="p-4 mb-15" *ngIf="streamQry() as result">
   <ng-container *ngIf="result.data">
     <vts-stream-summary [stream]="result.data" />
 

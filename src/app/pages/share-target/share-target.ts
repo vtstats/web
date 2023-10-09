@@ -1,14 +1,13 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/models";
+
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 @Component({ standalone: true, selector: "vts-share-target", template: "" })
 export class ShareTarget implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
   private vtuberSrv = inject(VTuberService);
 
   ngOnInit() {

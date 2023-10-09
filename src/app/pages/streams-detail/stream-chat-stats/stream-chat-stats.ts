@@ -1,12 +1,11 @@
 import { NgIf, formatDate, formatNumber } from "@angular/common";
 import {
-  ChangeDetectionStrategy,
   Component,
   Input,
   LOCALE_ID,
-  OnChanges,
-  OnInit,
+  computed,
   inject,
+  signal,
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import type { EChartsOption } from "echarts";
@@ -16,40 +15,57 @@ import type { CallbackDataParams } from "echarts/types/dist/shared";
 import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+import { query } from "src/app/shared/qry";
 import { sampling } from "src/utils";
 
 @Component({
   standalone: true,
   imports: [Chart, MatCheckboxModule, NgIf],
-  selector: "vts-stream-live-chat-chart-inner",
+  selector: "vts-stream-chat-stats",
   templateUrl: "stream-chat-stats.html",
 })
-export class InnerChart implements OnChanges {
+export class StreamChatStats {
   private locale = inject(LOCALE_ID);
 
-  @Input() stream: Stream;
-  @Input() rows: Array<[number, number, number]> = [];
+  stream = signal<Stream | null>(null);
+  @Input("stream") set _stream(stream: Stream) {
+    this.stream.set(stream);
+  }
 
-  option: EChartsOption;
+  statsQry = query<
+    Array<[number, number, number]>,
+    unknown,
+    Array<[number, number, number]>,
+    Array<[number, number, number]>,
+    ["stream-stats/chat", { streamId: number }]
+  >(() => {
+    const st = this.stream();
+    return {
+      enabled: !!st,
+      queryKey: ["stream-stats/chat", { streamId: st?.streamId }],
+      queryFn: () => api.streamChatStats(st?.streamId),
+    };
+  });
 
-  ngOnChanges() {
+  options = computed((): EChartsOption => {
+    const rows = this.statsQry().data;
+
     const total = sampling(
-      this.rows,
+      rows,
       { count: 50 },
       (row) => row[0],
       (row) => row[1],
       (a, b) => a + b
     );
     const member = sampling(
-      this.rows,
+      rows,
       { count: 50 },
       (row) => row[0],
       (row) => row[2],
       (a, b) => a + b
     );
 
-    this.option = {
+    return {
       tooltip: {
         trigger: "axis",
         borderRadius: 4,
@@ -102,7 +118,7 @@ export class InnerChart implements OnChanges {
         },
       ],
     };
-  }
+  });
 
   tooltipFormatter(p: CallbackDataParams[]) {
     const d = p[0].value[0] as number;
@@ -126,7 +142,7 @@ export class InnerChart implements OnChanges {
 
     html += `</tbody>`;
 
-    if (this.stream.status === StreamStatus.ENDED) {
+    if (this.stream().status === StreamStatus.ENDED) {
       html += `<tfoot><tr class="text-xs text-[#737373]">\
       <td colspan="2">Double click to jump to</td></tr></tfoot>`;
     }
@@ -139,53 +155,16 @@ export class InnerChart implements OnChanges {
   onChartInit(chart: ECharts) {
     chart.getZr().on("dblclick", (ev) => {
       const [x] = chart.convertFromPixel("grid", [ev.offsetX, ev.offsetY]);
+      const st = this.stream();
 
       if (
-        this.stream.status === StreamStatus.ENDED &&
-        this.stream.startTime <= x &&
-        x <= this.stream.endTime
+        st.status === StreamStatus.ENDED &&
+        st.startTime <= x &&
+        x <= st.endTime
       ) {
-        const t = ((x - this.stream.startTime) / 1000) | 0;
-        window.open(
-          `https://youtu.be/${this.stream.platformId}?t=${t}s`,
-          "_blank"
-        );
+        const t = ((x - st.startTime) / 1000) | 0;
+        window.open(`https://youtu.be/${st.platformId}?t=${t}s`, "_blank");
       }
-    });
-  }
-}
-
-@Component({
-  standalone: true,
-  imports: [Chart, NgIf, MatCheckboxModule, InnerChart, UseQryPipe],
-  selector: "vts-stream-chat-stats",
-  template: `
-    <ng-container *ngIf="statsQry | useQry as result">
-      <vts-stream-live-chat-chart-inner
-        [stream]="stream"
-        [rows]="result.data"
-      />
-    </ng-container>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class StreamChatStats implements OnInit {
-  private qry = inject(QryService);
-
-  @Input() stream: Stream;
-
-  statsQry: Qry<
-    Array<[number, number, number]>,
-    unknown,
-    Array<[number, number, number]>,
-    Array<[number, number, number]>,
-    ["stream-stats/chat", { streamId: number }]
-  >;
-
-  ngOnInit() {
-    this.statsQry = this.qry.create({
-      queryKey: ["stream-stats/chat", { streamId: this.stream.streamId }],
-      queryFn: () => api.streamChatStats(this.stream.streamId),
     });
   }
 }

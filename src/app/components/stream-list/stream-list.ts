@@ -1,4 +1,9 @@
-import { NgFor, NgSwitch, NgSwitchCase } from "@angular/common";
+import {
+  NgFor,
+  NgSwitch,
+  NgSwitchCase,
+  isPlatformServer,
+} from "@angular/common";
 import {
   Component,
   ElementRef,
@@ -7,7 +12,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
   ViewChild,
+  inject,
 } from "@angular/core";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
@@ -40,18 +47,27 @@ export class StreamsList implements OnInit, OnDestroy {
   @Input() hideSpinner: boolean;
   @Output() reachedEnd = new EventEmitter();
 
-  obs = new IntersectionObserver((entries) => {
-    if (entries.some((e) => e.isIntersecting)) {
-      this.reachedEnd.emit();
-    }
-  });
+  obs?: IntersectionObserver;
+  platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
+    // node.js doesn't have intersection observer
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
+    this.obs = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        this.reachedEnd.emit();
+      }
+    });
     this.obs.observe(this.spinner.nativeElement);
   }
 
   ngOnDestroy() {
-    this.obs.unobserve(this.spinner.nativeElement);
+    if (this.obs) {
+      this.obs.unobserve(this.spinner.nativeElement);
+    }
   }
 
   trackBy(_: number, item: Stream): number {

@@ -3,7 +3,7 @@ import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 
-import { CHAT_CURRENCIES } from "src/app/pages/streams-detail/stream-events/tokens";
+import { CHAT_CURRENCIES } from "src/app/shared/tokens";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 
 @Component({

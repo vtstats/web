@@ -4,17 +4,23 @@
   </div>
 
   <vts-chart
-    *ngIf="rows && rows.length > 0"
+    *ngIf="statsQry().data?.length > 0"
     [height]="300"
-    [options]="option"
+    [options]="options()"
     (chartInit)="onChartInit($event)"
   />
 
   <div
-    *ngIf="rows && rows.length === 0"
+    *ngIf="statsQry().data?.length === 0"
     [style.height.px]="300"
     class="items-center justify-center flex mat-secondary-text tracking-widest text-lg"
   >
     NO DATA
   </div>
+
+  <div
+    *ngIf="statsQry().isLoading"
+    [style.height.px]="300"
+    class="shimmer rounded animate-pulse"
+  ></div>
 </div>

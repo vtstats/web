@@ -1,10 +1,9 @@
 import { DatePipe, NgIf } from "@angular/common";
-import { Component, Signal, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   GetNextPageParamFunction,
   InfiniteData,
-  InfiniteQueryObserverOptions,
   QueryFunction,
 } from "@tanstack/query-core";
 import { startOfHour, subHours } from "date-fns";
@@ -18,8 +17,7 @@ import { StreamsList as StreamsList_ } from "src/app/components/stream-list/stre
 import { Stream, StreamStatus } from "src/app/models";
 import { streams } from "src/app/shared/api/entrypoint";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
-import { QryService } from "src/app/shared/qry";
-import { infiniteQuery } from "src/app/shared/qry/qry.signal";
+import { infiniteQuery } from "src/app/shared/qry";
 
 type QueryKey = [
   `streams`,
@@ -49,7 +47,6 @@ type QueryKey = [
 })
 export default class StreamsList {
   route = inject(ActivatedRoute);
-  qry = inject(QryService);
   vtubers = inject(VTuberService);
 
   searchKeyword = signal("");
@@ -62,28 +59,6 @@ export default class StreamsList {
     return selectedVtuberIds.size > 0
       ? this.vtubers.channels().filter((c) => selectedVtuberIds.has(c.vtuberId))
       : this.vtubers.selectedChannels();
-  });
-
-  queryKey = computed<QueryKey>(() => {
-    const data = this.route.snapshot.data;
-    const channelIds = this.channels().map((c) => c.channelId);
-    const range = this.selectedDateRange();
-    const keyword = this.searchKeyword();
-
-    if (range) {
-      return [
-        "streams",
-        {
-          status: data.status,
-          channelIds,
-          startAt: range[0],
-          endAt: range[1],
-          keyword,
-        },
-      ];
-    }
-
-    return ["streams", { status: data.status, channelIds, keyword }];
   });
 
   scheduledStreamQueryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
@@ -143,31 +118,39 @@ export default class StreamsList {
     return undefined;
   };
 
-  options: Signal<
-    InfiniteQueryObserverOptions<
-      Array<Stream>,
-      unknown,
-      { items: Stream[]; updatedAt: number },
-      Array<Stream>,
-      QueryKey
-    >
-  > = computed(() => {
-    const queryKey = this.queryKey();
+  result = infiniteQuery<
+    Array<Stream>,
+    unknown,
+    { items: Stream[]; updatedAt: number },
+    Array<Stream>,
+    QueryKey
+  >(() => {
+    const data = this.route.snapshot.data;
+    const channelIds = this.channels().map((c) => c.channelId);
+    const range = this.selectedDateRange();
+    const keyword = this.searchKeyword();
 
     return {
-      queryKey,
-      enabled: queryKey[1].channelIds.length > 0,
+      queryKey: [
+        "streams",
+        {
+          status: data.status,
+          channelIds,
+          startAt: range?.[0],
+          endAt: range?.[1],
+          keyword,
+        },
+      ],
+      enabled: channelIds.length > 0,
       select: this.select,
       queryFn:
-        queryKey[1].status === "scheduled"
+        data.status === "scheduled"
           ? this.scheduledStreamQueryFn
           : this.liveStreamQueryFn,
       getNextPageParam:
-        queryKey[1].status === "scheduled"
+        data.status === "scheduled"
           ? this.getScheduledStreamNextPageParam
           : this.getLiveStreamNextPageParam,
     };
   });
-
-  result = infiniteQuery(this.qry.client, this.options);
 }

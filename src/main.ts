@@ -1,30 +1,34 @@
-import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
+import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from "@angular/common";
 import {
-  APP_INITIALIZER,
+  APP_ID,
+  LOCALE_ID,
   enableProdMode,
   importProvidersFrom,
-  LOCALE_ID,
 } from "@angular/core";
+import { loadTranslations } from "@angular/localize";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
-  provideRouter,
+  bootstrapApplication,
+  provideClientHydration,
+  withNoHttpTransferCache,
+} from "@angular/platform-browser";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import {
   TitleStrategy,
+  provideRouter,
   withInMemoryScrolling,
 } from "@angular/router";
 import { provideServiceWorker } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
+import { QueryClient, hydrate } from "@tanstack/query-core";
 import qs from "query-string";
-
-import { environment } from "./environments/environment";
 
 import { AppComponent } from "./app/app.component";
 import { getRoutes } from "./app/routes";
-import { CurrencyService } from "./app/shared/config/currency.service";
-import { LocaleService } from "./app/shared/config/locale.service";
-import { VTuberService } from "./app/shared/config/vtuber.service";
+import { catalogQuery, exchangeRatesQuery } from "./app/shared/api/entrypoint";
+import { DATE_FNS_LOCALE, QUERY_CLIENT } from "./app/shared/tokens";
 import { VtsTitleStrategy } from "./app/shared/title";
+import { environment } from "./environments/environment";
 import { getLocalStorage } from "./utils";
 
 if (environment.production) {
@@ -63,41 +67,70 @@ const migrate = () => {
   }
 };
 
-const bootstrap = () => {
+const queryClientFactory = async (): Promise<QueryClient> => {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        onError: console.error,
+      },
+    },
+  });
+
+  const el = document.getElementById("__QUERY_CLIENT_DEHYDRATED_STATE__");
+
+  if (el) {
+    const dehydratedState = JSON.parse(el.textContent!);
+    hydrate(client, dehydratedState);
+  }
+
+  await client.fetchQuery(exchangeRatesQuery);
+  await client.fetchQuery(catalogQuery);
+
+  return client;
+};
+
+const i18nMap = {
+  en: () => import("./i18n/en"),
+  es: () => import("./i18n/es"),
+  ja: () => import("./i18n/ja"),
+  ms: () => import("./i18n/ms"),
+  zh: () => import("./i18n/zh"),
+};
+
+const localeIdFactory = (): string => {
+  const supportedLanguages = ["en", "es", "ja", "ms", "zh"];
+
+  const lang = getLocalStorage("lang", window.navigator.language.slice(0, 2));
+
+  // fallback to default language
+  if (!supportedLanguages.includes(lang)) {
+    return "en";
+  }
+
+  return lang;
+};
+
+const bootstrap = async () => {
+  const localeId = localeIdFactory();
+
+  const i18n = await i18nMap[localeId]();
+  registerLocaleData(i18n.locale, localeId);
+  loadTranslations(i18n.translations);
+
+  const queryClient = await queryClientFactory();
+
   return bootstrapApplication(AppComponent, {
     providers: [
-      {
-        provide: LOCALE_ID,
-        deps: [LocaleService],
-        useFactory: (srv: LocaleService) => srv.getLocaleId(),
-      },
+      { provide: APP_ID, useValue: "vts" },
+      { provide: LOCALE_ID, useValue: localeId },
       {
         provide: DATE_PIPE_DEFAULT_OPTIONS,
         useValue: { timezone: getLocalStorage("timezone", null) },
       },
-      {
-        provide: TitleStrategy,
-        useClass: VtsTitleStrategy,
-      },
-      {
-        provide: APP_INITIALIZER,
-        multi: true,
-        deps: [LOCALE_ID, LocaleService],
-        useFactory: (id: string, srv: LocaleService) => () =>
-          srv.initialize(id),
-      },
-      {
-        provide: APP_INITIALIZER,
-        multi: true,
-        deps: [CurrencyService],
-        useFactory: (srv: CurrencyService) => () => srv.initialize(),
-      },
-      {
-        provide: APP_INITIALIZER,
-        multi: true,
-        deps: [VTuberService],
-        useFactory: (srv: VTuberService) => () => srv.initialize(),
-      },
+      { provide: TitleStrategy, useClass: VtsTitleStrategy },
+      { provide: QUERY_CLIENT, useValue: queryClient },
+      { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
       provideRouter(
         getRoutes(),
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
@@ -106,8 +139,8 @@ const bootstrap = () => {
         enabled: environment.production,
         registrationStrategy: "registerImmediately",
       }),
-      importProvidersFrom(BrowserModule.withServerTransition({ appId: "vts" })),
-      importProvidersFrom(BrowserAnimationsModule),
+      provideClientHydration(withNoHttpTransferCache()),
+      provideAnimations(),
       importProvidersFrom(MatSnackBarModule),
     ],
   });

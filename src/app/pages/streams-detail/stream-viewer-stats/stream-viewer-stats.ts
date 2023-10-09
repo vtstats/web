@@ -4,8 +4,9 @@ import {
   Component,
   Input,
   LOCALE_ID,
-  OnInit,
+  computed,
   inject,
+  signal,
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import type { EChartsOption } from "echarts";
@@ -14,39 +15,43 @@ import { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
 
 import * as api from "src/app/shared/api/entrypoint";
+import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  imports: [Chart, NgIf, MatCheckboxModule, UseQryPipe],
+  imports: [Chart, NgIf, MatCheckboxModule],
   selector: "vts-stream-viewer-stats",
   templateUrl: "stream-viewer-stats.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StreamViewerStats implements OnInit {
+export class StreamViewerStats {
   private locale = inject(LOCALE_ID);
-  private qry = inject(QryService);
 
-  @Input() stream: Stream;
+  stream = signal<Stream | null>(null);
+  @Input("stream") set _stream(stream: Stream) {
+    this.stream.set(stream);
+  }
 
-  statsQry: Qry<
+  statsQry = query<
     Array<[number, number]>,
     unknown,
     Array<[number, number]>,
     Array<[number, number]>,
     ["stream-stats/viewer", { streamId: number }]
-  >;
+  >(() => {
+    const st = this.stream();
+    return {
+      enabled: !!st,
+      queryKey: ["stream-stats/viewer", { streamId: st?.streamId }],
+      queryFn: () => api.streamViewerStats(st?.streamId),
+    };
+  });
 
-  ngOnInit(): void {
-    this.statsQry = this.qry.create({
-      queryKey: ["stream-stats/viewer", { streamId: this.stream.streamId }],
-      queryFn: () => api.streamViewerStats(this.stream.streamId),
-    });
-  }
+  options = computed((): EChartsOption => {
+    const data = this.statsQry().data;
 
-  options(data: Array<[number, number]>): EChartsOption {
     return {
       tooltip: {
         trigger: "axis",
@@ -94,7 +99,7 @@ export class StreamViewerStats implements OnInit {
         data: data,
       },
     } satisfies EChartsOption;
-  }
+  });
 
   tooltipFormatter(p: TopLevelFormatterParams) {
     const d = Array.isArray(p) ? p[0] : p;
@@ -106,7 +111,7 @@ export class StreamViewerStats implements OnInit {
 
     html += `<div class="text-sm">${formatNumber(v, this.locale)}</div>`;
 
-    if (this.stream.status === StreamStatus.ENDED) {
+    if (this.stream()?.status === StreamStatus.ENDED) {
       html += `<div class="text-xs text-[#737373]">Double click to jump to</div>`;
     }
 
@@ -116,17 +121,14 @@ export class StreamViewerStats implements OnInit {
   onChartInit(chart: ECharts) {
     chart.getZr().on("dblclick", (ev) => {
       const [x] = chart.convertFromPixel("grid", [ev.offsetX, ev.offsetY]);
-
+      const st = this.stream();
       if (
-        this.stream.status === StreamStatus.ENDED &&
-        this.stream.startTime <= x &&
-        x <= this.stream.endTime
+        st.status === StreamStatus.ENDED &&
+        st.startTime <= x &&
+        x <= st.endTime
       ) {
-        const t = ((x - this.stream.startTime) / 1000) | 0;
-        window.open(
-          `https://youtu.be/${this.stream.platformId}?t=${t}s`,
-          "_blank"
-        );
+        const t = ((x - st.startTime) / 1000) | 0;
+        window.open(`https://youtu.be/${st.platformId}?t=${t}s`, "_blank");
       }
     });
   }

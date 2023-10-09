@@ -11,8 +11,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
+  computed,
   inject,
+  signal,
 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -34,7 +35,7 @@ import * as api from "src/app/shared/api/entrypoint";
 import { Paid } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
-import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
+import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
@@ -46,7 +47,7 @@ import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
     NgIf,
     MatTooltipModule,
     MatIconModule,
-    UseQryPipe,
+
     DurationPipe,
     NamePipe,
     AvatarPipe,
@@ -59,53 +60,30 @@ import { Qry, QryService, UseQryPipe } from "src/app/shared/qry";
   templateUrl: "stream-summary.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StreamSummary implements OnInit {
+export class StreamSummary {
   everySecond$ = inject(TickService).everySecond$;
-  private qry = inject(QryService);
+
   currency = inject(CurrencyService);
 
-  @Input() stream: Stream | null = null;
+  stream = signal<Stream | null>(null);
+  @Input("stream") set _stream(stream: Stream | null) {
+    this.stream.set(stream);
+  }
 
-  revenueQry: Qry<
+  revenueQry = query<
     Array<StreamsEvent>,
     unknown,
     Array<Paid>,
     Array<StreamsEvent>,
     ["stream-events", { streamId: number }]
-  >;
-
-  chatCountQry: Qry<
-    Array<[number, number, number]>,
-    unknown,
-    number,
-    Array<[number, number, number]>,
-    ["stream-stats/chat", { streamId: number }]
-  >;
-
-  ratesQry!: Qry<
-    { likes: number; dislikes: number },
-    unknown,
-    { likes: number; dislikes: number },
-    { likes: number; dislikes: number },
-    ["youtubeLikes", { platformId: string }]
-  >;
-
-  get link(): string {
-    if (this.stream.platform !== Platform.YOUTUBE) {
-      return null;
-    }
-
-    return "https://youtu.be/" + this.stream.platformId;
-  }
-
-  ngOnInit() {
-    if (!this.stream) return;
-
-    this.revenueQry = this.qry.create({
-      queryKey: ["stream-events", { streamId: this.stream.streamId }],
-      queryFn: () => api.streamEvents(this.stream.streamId),
-      select: (events) =>
-        events.reduce((acc, event) => {
+  >(() => {
+    const st = this.stream();
+    return {
+      queryKey: ["stream-events", { streamId: st?.streamId }],
+      queryFn: () => api.streamEvents(st!.streamId),
+      enabled: !!st,
+      select: (events) => {
+        return events.reduce((acc, event) => {
           switch (event.kind) {
             case StreamEventKind.YOUTUBE_SUPER_CHAT: {
               acc.push({
@@ -141,19 +119,47 @@ export class StreamSummary implements OnInit {
             }
           }
           return acc;
-        }, <Paid[]>[]),
-    });
+        }, <Paid[]>[]);
+      },
+    };
+  });
 
-    this.chatCountQry = this.qry.create({
-      queryKey: ["stream-stats/chat", { streamId: this.stream.streamId }],
-      queryFn: () => api.streamChatStats(this.stream.streamId),
+  chatCountQry = query<
+    Array<[number, number, number]>,
+    unknown,
+    number,
+    Array<[number, number, number]>,
+    ["stream-stats/chat", { streamId: number }]
+  >(() => {
+    const st = this.stream();
+    return {
+      enabled: !!st,
+      queryKey: ["stream-stats/chat", { streamId: st?.streamId }],
+      queryFn: () => api.streamChatStats(st?.streamId),
       select: (rows) => rows.reduce((acc, cur) => acc + cur[1], 0),
-    });
+    };
+  });
 
-    this.ratesQry = this.qry.create({
-      queryKey: ["youtubeLikes", { platformId: this.stream.platformId }],
-      queryFn: () => api.youtubeLikes(this.stream.platformId),
-      enabled: this.stream.platform === Platform.YOUTUBE,
-    });
-  }
+  ratesQry = query<
+    { likes: number; dislikes: number },
+    unknown,
+    { likes: number; dislikes: number },
+    { likes: number; dislikes: number },
+    ["youtubeLikes", { platformId: string }]
+  >(() => {
+    const st = this.stream();
+    return {
+      queryKey: ["youtubeLikes", { platformId: st?.platformId }],
+      queryFn: () => api.youtubeLikes(st.platformId),
+      enabled: st?.platform === Platform.YOUTUBE,
+    };
+  });
+
+  link = computed(() => {
+    const st = this.stream();
+    if (st.platform !== Platform.YOUTUBE) {
+      return null;
+    }
+    return "https://youtu.be/" + st.platformId;
+  });
 }

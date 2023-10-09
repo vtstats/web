@@ -5,7 +5,7 @@ import { formatDuration } from "date-fns";
 
 import { Menu } from "src/app/components/menu/menu";
 import { Channel } from "src/app/models";
-import { LocaleService } from "src/app/shared/config/locale.service";
+import { DATE_FNS_LOCALE } from "src/app/shared/tokens";
 import { StatsChartComponent } from "./stats-chart/stats-chart.component";
 
 @Component({
@@ -15,7 +15,7 @@ import { StatsChartComponent } from "./stats-chart/stats-chart.component";
   templateUrl: "channel-overview.html",
 })
 export class ChannelOverview {
-  private locale = inject(LocaleService);
+  dateFns = inject(DATE_FNS_LOCALE);
 
   @Input() channels: Channel[] = [];
 
@@ -25,7 +25,7 @@ export class ChannelOverview {
   get precisionOptions() {
     return [7, 30, 90].map((p) => ({
       value: p,
-      label: formatDuration({ days: p }, { locale: this.locale.dateFns }),
+      label: formatDuration({ days: p }, { locale: this.dateFns }),
     }));
   }
 

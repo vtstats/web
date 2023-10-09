@@ -29,6 +29,7 @@ import { ThemeService } from "src/app/shared/config/theme.service";
     <div #container class="w-full" [style.height.px]="_height()"></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { ngSkipHydration: "true" },
 })
 export class Chart {
   @ViewChild("container", { static: true, read: ElementRef })

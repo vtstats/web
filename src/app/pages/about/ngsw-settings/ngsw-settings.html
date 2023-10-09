@@ -4,6 +4,6 @@
   <p>Service worker {{ isEnabled ? 'is' : 'is not' }} enabled</p>
 
   <pre class="font-mono p-0 m-0" *ngIf="isEnabled">
-{{ (ngswStateQry | useQry)?.data }}</pre
+{{ ngswStateQry()?.data }}</pre
   >
 </div>

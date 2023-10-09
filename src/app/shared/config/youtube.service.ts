@@ -44,6 +44,9 @@ export class GoogleService {
   initialized$ = new ReplaySubject<boolean>();
 
   constructor(private ngZone: NgZone, private cdr: ApplicationRef) {
+    // for ssr
+    if (typeof window === "undefined") return;
+
     this.ngZone.runOutsideAngular(() => {
       if (window.google && window.google.accounts) {
         this.init();

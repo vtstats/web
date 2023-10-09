@@ -1,14 +1,22 @@
-import { Signal, effect, signal } from "@angular/core";
+import { isPlatformServer } from "@angular/common";
+import {
+  PLATFORM_ID,
+  Signal,
+  computed,
+  effect,
+  inject,
+  signal,
+} from "@angular/core";
 import {
   InfiniteQueryObserver,
   InfiniteQueryObserverOptions,
   InfiniteQueryObserverResult,
-  QueryClient,
   QueryKey,
   QueryObserver,
   QueryObserverOptions,
   QueryObserverResult,
 } from "@tanstack/query-core";
+import { QUERY_CLIENT } from "../tokens";
 
 export const query = <
   TQueryFnData,
@@ -17,12 +25,37 @@ export const query = <
   TQueryData,
   TQueryKey extends QueryKey
 >(
-  client: QueryClient,
-  options: Signal<
-    QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
-  >
+  objOrFun:
+    | QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
+    | (() => QueryObserverOptions<
+        TQueryFnData,
+        TError,
+        TData,
+        TQueryData,
+        TQueryKey
+      >)
 ): Signal<QueryObserverResult<TData, TError>> => {
-  const defaultedOptions = client.defaultQueryOptions(options());
+  const client = inject(QUERY_CLIENT);
+
+  const options = typeof objOrFun === "function" ? objOrFun() : objOrFun;
+
+  if (isPlatformServer(inject(PLATFORM_ID))) {
+    const data: any = client.getQueryData(options.queryKey);
+    if (data && options.onSuccess) {
+      options.onSuccess(data);
+    }
+    return signal(<any>{
+      data,
+      error: null,
+      isLoading: !data,
+      isSuccess: !!data,
+      isError: false,
+      isFetching: !data,
+      status: data ? "success" : "loading",
+    });
+  }
+
+  const defaultedOptions = client.defaultQueryOptions(options);
   defaultedOptions._optimisticResults = "optimistic";
 
   const observer = new QueryObserver(client, defaultedOptions);
@@ -35,7 +68,15 @@ export const query = <
     result.set(observer.trackResult(newResult));
   });
 
-  effect(() => observer.setOptions(options()), { allowSignalWrites: true });
+  if (typeof objOrFun === "function") {
+    const optionsSignal = computed(objOrFun);
+    effect(
+      () => {
+        observer.setOptions(optionsSignal());
+      },
+      { allowSignalWrites: true }
+    );
+  }
 
   effect((onCleanup) => onCleanup(unSubscribe));
 
@@ -49,17 +90,16 @@ export const infiniteQuery = <
   TQueryData,
   TQueryKey extends QueryKey = QueryKey
 >(
-  client: QueryClient,
-  options: Signal<
-    InfiniteQueryObserverOptions<
-      TQueryFnData,
-      TError,
-      TData,
-      TQueryData,
-      TQueryKey
-    >
+  options: () => InfiniteQueryObserverOptions<
+    TQueryFnData,
+    TError,
+    TData,
+    TQueryData,
+    TQueryKey
   >
 ): Signal<InfiniteQueryObserverResult<TData, TError>> => {
+  const client = inject(QUERY_CLIENT);
+
   const defaultedOptions = client.defaultQueryOptions(options());
   defaultedOptions._optimisticResults = "optimistic";
 
@@ -73,7 +113,13 @@ export const infiniteQuery = <
     result.set(observer.trackResult(newResult) as any);
   });
 
-  effect(() => observer.setOptions(options()), { allowSignalWrites: true });
+  const optionsSignal = computed(options);
+  effect(
+    () => {
+      observer.setOptions(optionsSignal());
+    },
+    { allowSignalWrites: true }
+  );
 
   effect((onCleanup) => onCleanup(unSubscribe));
 

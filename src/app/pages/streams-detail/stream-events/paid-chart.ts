@@ -17,9 +17,7 @@ import { Menu } from "src/app/components/menu/menu";
 import { Paid } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
-import { UseQryPipe } from "src/app/shared/qry";
-
-import { CHAT_CURRENCIES } from "./tokens";
+import { CHAT_CURRENCIES } from "src/app/shared/tokens";
 
 @Component({
   standalone: true,
@@ -30,7 +28,7 @@ import { CHAT_CURRENCIES } from "./tokens";
     UseCurrencyPipe,
     Menu,
     Chart,
-    UseQryPipe,
+
     MatTableModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,6 @@
 import { NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { Title } from "@angular/platform-browser";
+import { Meta, Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Channel, VTuber } from "src/app/models";
@@ -20,6 +20,7 @@ export default class VTubersDetail {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private title = inject(Title);
+  private meta = inject(Meta);
   private vtuberSrv = inject(VTuberService);
 
   vtuber: VTuber | null;
@@ -37,7 +38,10 @@ export default class VTubersDetail {
       this.router.navigateByUrl("/404");
     } else {
       const name = this.vtuberSrv.vtuberNames()[this.vtuber.vtuberId];
-      this.title.setTitle(`${name} | vtstats`);
+      const title = `${name} | vtstats`;
+      this.title.setTitle(title);
+      this.meta.updateTag({ property: "og:title", content: title });
+      this.meta.updateTag({ name: "twitter:title", content: title });
     }
   }
 }

@@ -1,11 +1,14 @@
-import { Injectable, computed, signal } from "@angular/core";
-import { localStorageSignal } from "src/utils";
+import { Injectable, computed, inject, signal } from "@angular/core";
 
-import { Channel, Group, Platform, VTuber } from "src/app/models";
+import { Catalog, Channel, Group, VTuber } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
+import { localStorageSignal } from "src/utils";
+import { QUERY_CLIENT } from "../tokens";
 
 @Injectable({ providedIn: "root" })
 export class VTuberService {
+  queryClient = inject(QUERY_CLIENT);
+
   nameSetting = localStorageSignal("vts:nameSetting", "nativeName");
   selected = localStorageSignal<string[]>("vts:vtuberSelected", []);
 
@@ -43,8 +46,9 @@ export class VTuberService {
     }, {} as Record<string, string>);
   });
 
-  async initialize() {
-    const { vtubers, channels, groups } = await api.catalog();
+  constructor() {
+    const { vtubers, channels, groups } =
+      this.queryClient.getQueryData<Catalog>(api.catalogQuery.queryKey);
 
     this.vtubers.set(vtubers);
     this.groups.set(groups);
