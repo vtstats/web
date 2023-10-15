@@ -90,19 +90,9 @@ if (environment.production) {
     );
   }
 
-  const document = await env.ASSETS.fetch(new Request(new URL("/", url))).then(
-    (res) => res.text()
-  );
-
-  if (url.pathname === "/pwa") {
-    return new self.Response(document, {
-      headers: {
-        "cache-control": "max-age=180 s-max-age=180", // 3 minutes
-        "content-type": "text/html; charset=utf-8",
-        "x-frames-option": "sameorigin",
-      },
-    });
-  }
+  const document = await env.ASSETS.fetch(
+    new Request(new URL("/index.html", url))
+  ).then((res) => res.text());
 
   const queryClient = new QueryClient();
 
