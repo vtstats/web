@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/manifest.webmanifest", "/**/*.css", "/**/*.js"]
+        "files": ["/pwa", "/manifest.webmanifest", "/**/*.css", "/**/*.js"]
       }
     }
   ],
