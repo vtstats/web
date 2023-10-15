@@ -10,7 +10,7 @@ import {
 } from "@angular/material/tree";
 
 import { Group } from "src/app/models";
-import { AvatarPipe, ConfigService } from "src/app/shared";
+import { AvatarPipe } from "src/app/shared";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 
 interface Node {
@@ -72,11 +72,11 @@ export class VTubersSettings {
 
   selectedCount = computed(() => this.vtuberSrv.selectedIds().length);
 
-  total = computed(() => this.vtuberSrv.vtubers().length);
+  total = computed(() => this.vtuberSrv.vtubers.length);
 
   dataSourceEffect = effect(() => {
-    const groups = this.vtuberSrv.groups();
-    const vtubers = this.vtuberSrv.vtubers();
+    const groups = this.vtuberSrv.groups;
+    const vtubers = this.vtuberSrv.vtubers;
     const nameSetting = this.vtuberSrv.nameSetting();
 
     const inflate = (group: Group): Node => ({
@@ -88,36 +88,35 @@ export class VTubersSettings {
 
       children: group.children
         .sort((a, b) => a.localeCompare(b))
-        .map((id): Node => {
+        .reduce((arr, id) => {
           if (id.startsWith("vtuber:")) {
             const vtuberId = id.slice("vtuber:".length);
             const vtuber = vtubers.find((v) => v.vtuberId === vtuberId);
 
-            if (!vtuber) {
+            if (vtuber) {
+              arr.push({
+                id: vtuberId,
+                label: vtuber[nameSetting] || vtuber.nativeName,
+                expandable: false,
+                children: [],
+              });
+            } else {
               console.error(`Can't find ${id}`);
-              return null;
             }
+          } else {
+            const group = groups.find(
+              (g) => g.groupId === id.slice("group:".length)
+            );
 
-            return {
-              id: vtuberId,
-              label: vtuber[nameSetting] || vtuber.nativeName,
-              expandable: false,
-              children: [],
-            };
+            if (group) {
+              arr.push(inflate(group));
+            } else {
+              console.error(`Can't find ${id} `);
+            }
           }
 
-          const group = groups.find(
-            (g) => g.groupId === id.slice("group:".length)
-          );
-
-          if (!group) {
-            console.error(`Can't find ${id} `);
-            return null;
-          }
-
-          return inflate(group);
-        })
-        .filter(Boolean),
+          return arr;
+        }, <Node[]>[]),
     });
 
     this.dataSource.data = groups
@@ -125,8 +124,6 @@ export class VTubersSettings {
       .sort((a, b) => a.groupId.localeCompare(b.groupId))
       .map(inflate);
   });
-
-  constructor(public config: ConfigService) {}
 
   toggle(node: Node, checked: boolean) {
     if (checked) {
@@ -136,7 +133,7 @@ export class VTubersSettings {
     }
   }
 
-  check(node: Node) {
+  check(node: Node): void {
     if (node.expandable) {
       return node.children.forEach((node) => this.check(node));
     }
@@ -148,7 +145,7 @@ export class VTubersSettings {
     });
   }
 
-  uncheck(node: Node) {
+  uncheck(node: Node): void {
     if (node.expandable) {
       return node.children.forEach((node) => this.uncheck(node));
     }

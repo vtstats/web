@@ -64,9 +64,9 @@ export class StreamItem {
   private gapi = inject(GoogleApiService);
   private snackBar = inject(MatSnackBar);
 
-  @Input() stream: Stream;
+  @Input({ required: true }) stream!: Stream;
 
-  get titleHtml(): SafeHtml {
+  get titleHtml(): SafeHtml | string | null {
     if (this.stream.highlightedTitle) {
       return this.sanitizer.bypassSecurityTrustHtml(
         this.stream.highlightedTitle
@@ -80,7 +80,7 @@ export class StreamItem {
     return Boolean(this.config.playlist);
   }
 
-  get routerUrl(): string[] {
+  get routerUrl(): string[] | null {
     if (this.stream.status === StreamStatus.SCHEDULED) {
       return null;
     }
@@ -109,6 +109,8 @@ export class StreamItem {
   }
 
   addToPlaylist(event: MouseEvent) {
+    if (!this.config.playlist) return;
+
     event.stopPropagation();
     event.preventDefault();
     this.gapi

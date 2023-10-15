@@ -1,12 +1,9 @@
-<div
-  class="mat-border-divider rounded border border-solid p-4 mb-4"
-  *ngIf="result() as result"
->
+<div class="mat-border-divider rounded border border-solid p-4 mb-4">
   <div class="flex flex-row items-center mb-4">
     <div class="flex-1">
       <div class="mat-h3 m-0" i18n="@@stream-times">Stream Times</div>
       <div class="mat-text-caption mat-secondary-text">
-        {{ getTotal(result?.data) | formatDuration }} in 45 weeks
+        {{ getTotal(result().data) | formatDuration }} in 45 weeks
       </div>
     </div>
 
@@ -18,23 +15,26 @@
   </div>
 
   <ng-container [ngSwitch]="precision">
-    <vts-stream-time-calendar *ngSwitchCase="'day'" [times]="result?.data" />
+    <vts-stream-time-calendar *ngSwitchCase="'day'" [times]="result().data" />
 
     <vts-stream-time-bar-chart
       *ngSwitchCase="'hour'"
-      [times]="result?.data"
+      [loading]="result().isLoading"
+      [times]="result().data || []"
       groupBy="hour"
     />
 
     <vts-stream-time-bar-chart
       *ngSwitchCase="'month'"
-      [times]="result?.data"
+      [loading]="result().isLoading"
+      [times]="result().data || []"
       groupBy="month"
     />
 
     <vts-stream-time-bar-chart
       *ngSwitchCase="'weekday'"
-      [times]="result?.data"
+      [loading]="result().isLoading"
+      [times]="result().data || []"
       groupBy="weekday"
     />
   </ng-container>

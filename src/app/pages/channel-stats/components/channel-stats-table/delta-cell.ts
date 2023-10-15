@@ -23,5 +23,5 @@ import { Component, Input } from "@angular/core";
   `,
 })
 export class DeltaCell {
-  @Input() delta: number;
+  @Input({ required: true }) delta!: number;
 }

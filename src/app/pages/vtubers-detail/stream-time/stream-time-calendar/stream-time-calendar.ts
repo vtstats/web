@@ -33,8 +33,9 @@ export class StreamTimeCalendar implements OnChanges {
   dateFns = inject(DATE_FNS_LOCALE);
 
   @Input() times: [number, number][] | undefined = [];
+  @Input() loading: boolean = false;
 
-  option: EChartsOption;
+  option?: EChartsOption;
 
   ngOnChanges() {
     if (!this.times) return;
@@ -88,10 +89,10 @@ export class StreamTimeCalendar implements OnChanges {
             );
           };
 
-          const d = Array.isArray(p) ? p[0] : p;
-          const h = d.value[0] as number;
+          const d = (Array.isArray(p) ? p[0] : p) as { value: number[] };
+          const h = d.value[0];
           const t = formatDate(h, "longDate", this.locale);
-          const v = d.value[1] as number;
+          const v = d.value[1];
           const s = _formatDuration(v);
           return `<div class="text-xs text-[#ffffffb3]">${t}<br/></div><div class="text-sm">${s}</div>`;
         },

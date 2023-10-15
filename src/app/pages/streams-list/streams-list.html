@@ -24,7 +24,7 @@
       <vts-refresh-button
         [isLoading]="result.isFetching"
         [refresh]="result.refetch"
-        [updatedAt]="result.data?.pages[0].updatedAt"
+        [updatedAt]="result.data?.pages?.[0]?.updatedAt"
       />
     </div>
 
@@ -32,7 +32,7 @@
       *ngIf="!result.isError"
       [groupBy]="true"
       [loading]="result.isLoading"
-      [items]="result.data?.pages[0].items"
+      [items]="result.data?.pages?.[0]?.items"
       [hideSpinner]="!result.hasNextPage"
       (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
     />

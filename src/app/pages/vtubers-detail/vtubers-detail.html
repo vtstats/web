@@ -1,9 +1,15 @@
-<div class="p-4" *ngIf="vtuber">
-  <vts-vtuber-summary [vtuber]="vtuber" [channels]="channels" />
+<div class="p-4">
+  <vts-vtuber-summary
+    [vtuber]="resolved.vtuber"
+    [channels]="resolved.channels"
+  />
 
-  <vts-channel-overview [channels]="channels" />
+  <vts-channel-overview [channels]="resolved.channels" />
 
-  <vts-stream-time [vtuber]="vtuber" />
+  <vts-stream-time [vtuber]="resolved.vtuber" />
 
-  <vts-vtuber-streams [vtuber]="vtuber" [channels]="channels" />
+  <vts-vtuber-streams
+    [vtuber]="resolved.vtuber"
+    [channels]="resolved.channels"
+  />
 </div>

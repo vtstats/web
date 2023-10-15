@@ -18,7 +18,7 @@ import { PlaylistSelector } from "./playlist-selector/playlist-selector";
   template: `<div #button></div>`,
 })
 export class GoogleButton implements AfterViewInit {
-  @ViewChild("button", { static: true, read: ElementRef }) spinner: ElementRef;
+  @ViewChild("button", { static: true, read: ElementRef }) spinner!: ElementRef;
 
   ngAfterViewInit(): void {
     google.accounts.id.renderButton(this.spinner.nativeElement, {

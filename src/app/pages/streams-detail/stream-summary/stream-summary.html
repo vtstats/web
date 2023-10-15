@@ -65,8 +65,8 @@
     <div>
       <span class="mat-small">Duration: </span>
       <span class="mat-body-1">
-        {{ stream()?.status === 'ENDED' ? (stream()?.startTime | duration:
-        stream()?.endTime) : (stream()?.startTime | duration: (everySecond$ |
+        {{ stream()?.status === 'ENDED' ? (stream()?.startTime! | duration:
+        stream()?.endTime!) : (stream()?.startTime! | duration: (everySecond$ |
         async))}}
       </span>
     </div>

@@ -13,8 +13,8 @@ import { AvatarPipe, NamePipe } from "src/app/shared";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VtuberSummary {
-  @Input() vtuber: VTuber;
-  @Input() channels: Array<Channel>;
+  @Input({ required: true }) vtuber!: VTuber;
+  @Input({ required: true }) channels!: Array<Channel>;
 
   get links(): { href: string; icon: string }[] {
     const links = [];

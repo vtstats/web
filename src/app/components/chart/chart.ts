@@ -1,3 +1,4 @@
+import { NgClass } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,13 +21,17 @@ import { init } from "./echarts";
 import { ResizeService } from "src/app/shared";
 import { ThemeService } from "src/app/shared/config/theme.service";
 
-// [ngClass]="(loading$ | async) ? 'shimmer rounded animate-pulse' : null"
-
 @Component({
   selector: "vts-chart",
   standalone: true,
+  imports: [NgClass],
   template: `
-    <div #container class="w-full" [style.height.px]="_height()"></div>
+    <div
+      #container
+      class="w-full"
+      [style.height.px]="height()"
+      [ngClass]="loading ? 'shimmer rounded animate-pulse' : null"
+    ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { ngSkipHydration: "true" },
@@ -37,18 +42,20 @@ export class Chart {
 
   private ngZone = inject(NgZone);
 
-  chart: ECharts | null = null;
+  chart: ECharts | null | undefined;
 
-  _options = signal<EChartsOption | null>(null);
+  @Input() loading: boolean = false;
 
-  @Input() set options(opts: EChartsOption) {
-    this._options.set(opts);
+  options = signal<EChartsOption | null | undefined>(null);
+
+  @Input("options") set options_(opts: EChartsOption | null | undefined) {
+    this.options.set(opts);
   }
 
-  _height = signal(400);
+  height = signal(400);
 
-  @Input() set height(h: number) {
-    this._height.set(h);
+  @Input("height") set height_(h: number) {
+    this.height.set(h);
   }
 
   @Output() chartInit = new EventEmitter<ECharts>();
@@ -63,13 +70,13 @@ export class Chart {
 
     this.chart = this.ngZone.runOutsideAngular(() => {
       return init(this.container.nativeElement, theme, {
-        height: untracked(() => this._height()),
+        height: untracked(() => this.height()),
       });
     });
 
     this.chartInit.emit(this.chart);
 
-    const option = untracked(() => this._options());
+    const option = untracked(() => this.options());
     if (option) this.chart.setOption(option);
 
     onCleanup(() => {
@@ -78,7 +85,7 @@ export class Chart {
   });
 
   optionEffect = effect(() => {
-    const option = this._options();
+    const option = this.options();
     if (this.chart && option) {
       this.chart.setOption(option);
     }
@@ -87,7 +94,7 @@ export class Chart {
   resizeEffect = effect(() => {
     this.resizeService.windowWidth();
     if (this.chart) {
-      this.chart.resize({ height: this._height() });
+      this.chart.resize({ height: this.height() });
     }
   });
 

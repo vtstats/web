@@ -42,7 +42,7 @@ import { DrawerService } from "src/app/shared/services/drawer";
 })
 export class SidenavMenu {
   @Input() headline?: string;
-  @Input() items: { icon: string; title: string; link: string }[];
+  @Input() items: { icon: string; title: string; link: string }[] = [];
 
   drawerService = inject(DrawerService);
 

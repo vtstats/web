@@ -39,12 +39,13 @@ import { StreamItemShimmer } from "./stream-item/stream-item-shimmer";
   templateUrl: "stream-list.html",
 })
 export class StreamsList implements OnInit, OnDestroy {
-  @ViewChild("spinner", { static: true, read: ElementRef }) spinner: ElementRef;
+  @ViewChild("spinner", { static: true, read: ElementRef })
+  spinner!: ElementRef;
 
-  @Input() items: Stream[];
-  @Input() groupBy: boolean;
-  @Input() loading: boolean;
-  @Input() hideSpinner: boolean;
+  @Input() items: Stream[] | undefined = [];
+  @Input() groupBy: boolean = false;
+  @Input() loading: boolean = false;
+  @Input() hideSpinner: boolean = false;
   @Output() reachedEnd = new EventEmitter();
 
   obs?: IntersectionObserver;

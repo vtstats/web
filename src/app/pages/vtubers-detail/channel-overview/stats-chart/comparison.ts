@@ -17,6 +17,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { Platform } from "src/app/models";
 import { codeToSymbol } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
+import { ChannelStatsKind } from "./stats-chart.component";
 
 @Component({
   standalone: true,
@@ -29,7 +30,7 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 
     <div class="flex flex-row items-center sm:block">
       <div class="mb-1 mat-h1 mr-1">
-        {{  format(rows[rows.length - 1]?.[1]) }}
+        {{ text }}
       </div>
 
       <div
@@ -53,13 +54,23 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 })
 export class StatsComparisonComponent {
   @Input() rows: [number, number][] = [];
-  @Input() kind: "subscriber" | "view" | "revenue";
-  @Input() platform: Platform;
+  @Input() kind: ChannelStatsKind | null | undefined;
+  @Input() platform?: Platform;
 
   private locale = inject(LOCALE_ID);
   private currency = inject(CurrencyService);
 
-  format(value?: number) {
+  get text(): string {
+    if (
+      !this.rows ||
+      this.rows.length === 0 ||
+      !this.rows[this.rows.length - 1][1]
+    ) {
+      return "----";
+    }
+
+    const value = this.rows[this.rows.length - 1][1];
+
     if (this.kind === "revenue") {
       const code = this.currency.currencySetting();
       return formatCurrency(
@@ -76,6 +87,7 @@ export class StatsComparisonComponent {
 
   get title(): string {
     switch (this.kind) {
+      default:
       case "subscriber": {
         return $localize`:@@subscribers:Subscribers`;
       }

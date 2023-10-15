@@ -26,7 +26,7 @@ export type GoogleUser = {
 export class GoogleService {
   user$ = new StorageSubject<GoogleUser | null>("vts:googleUser", null);
 
-  client: google.accounts.oauth2.TokenClient;
+  client?: google.accounts.oauth2.TokenClient;
 
   private tokenSub = new BehaviorSubject<[string, Date] | null>(null);
 
@@ -34,7 +34,7 @@ export class GoogleService {
     const value = this.tokenSub.getValue();
 
     if (!value || isPast(value[1])) {
-      this.client.requestAccessToken();
+      this.client?.requestAccessToken();
       this.tokenSub.next(null);
     }
 
@@ -63,7 +63,7 @@ export class GoogleService {
 
   init() {
     window.google.accounts.id.initialize({
-      client_id: environment.yt_client_id,
+      client_id: environment.youtubeClientId,
       callback: (res) => {
         try {
           const base64Url = res.credential.split(".")[1];
@@ -93,7 +93,7 @@ export class GoogleService {
     });
 
     this.client = window.google.accounts.oauth2.initTokenClient({
-      client_id: environment.yt_client_id,
+      client_id: environment.youtubeClientId,
       prompt: "",
       scope: "https://www.googleapis.com/auth/youtube",
       callback: (res) => {

@@ -40,10 +40,7 @@ export const query = <
   const options = typeof objOrFun === "function" ? objOrFun() : objOrFun;
 
   if (isPlatformServer(inject(PLATFORM_ID))) {
-    const data: any = client.getQueryData(options.queryKey);
-    if (data && options.onSuccess) {
-      options.onSuccess(data);
-    }
+    const data: any = client.getQueryData(options.queryKey!);
     return signal(<any>{
       data,
       error: null,

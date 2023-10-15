@@ -5,6 +5,7 @@
     "ng": "ng",
     "dev": "ng serve --hmr",
     "start": "ng serve --hmr",
+    "dev:ssr": "wrangler pages dev dist/cloudflare --compatibility-date=2021-09-20",
     "extract-i18n": "ng extract-i18n --format json --output-path ./src/i18n",
     "build": "node build.js",
     "test": "ng test",
@@ -40,15 +41,18 @@
     "@angular/cli": "^16.2.3",
     "@angular/compiler-cli": "^16.2.6",
     "@angular/language-service": "^16.2.6",
+    "@cloudflare/workers-types": "^4.20231002.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@types/d3-array": "^3.0.2",
     "@types/gapi.auth2": "^0.0.55",
     "@types/google.accounts": "^0.0.6",
     "autoprefixer": "^10.4.13",
+    "fast-glob": "^3.3.1",
     "postcss": "^8.4.21",
     "prettier": "^2.2.1",
     "tailwindcss": "^3.2.4",
-    "ts-node": "^9.1.1",
-    "tslint": "~6.1.0",
-    "typescript": "~5.0.4"
+    "typescript": "~5.0.4",
+    "wrangler": "^3.11.0"
   }
 }

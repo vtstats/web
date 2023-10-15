@@ -1,34 +1,31 @@
 import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from "@angular/common";
-import {
-  APP_ID,
-  LOCALE_ID,
-  enableProdMode,
-  importProvidersFrom,
-} from "@angular/core";
+import { LOCALE_ID, enableProdMode } from "@angular/core";
 import { loadTranslations } from "@angular/localize";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
-import {
-  bootstrapApplication,
-  provideClientHydration,
-  withNoHttpTransferCache,
-} from "@angular/platform-browser";
+import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import {
-  TitleStrategy,
   provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling,
+  withRouterConfig,
 } from "@angular/router";
-import { provideServiceWorker } from "@angular/service-worker";
 import * as Sentry from "@sentry/browser";
 import { QueryClient, hydrate } from "@tanstack/query-core";
 import qs from "query-string";
 
 import { AppComponent } from "./app/app.component";
-import { getRoutes } from "./app/routes";
+import routes from "./app/routes";
 import { catalogQuery, exchangeRatesQuery } from "./app/shared/api/entrypoint";
-import { DATE_FNS_LOCALE, QUERY_CLIENT } from "./app/shared/tokens";
-import { VtsTitleStrategy } from "./app/shared/title";
+import {
+  CATALOG_CHANNELS,
+  CATALOG_GROUPS,
+  CATALOG_VTUBERS,
+  DATE_FNS_LOCALE,
+  EXCHANGE_RATES,
+  QUERY_CLIENT,
+} from "./app/shared/tokens";
 import { environment } from "./environments/environment";
+import { providers } from "./providers";
 import { getLocalStorage } from "./utils";
 
 if (environment.production) {
@@ -67,7 +64,7 @@ const migrate = () => {
   }
 };
 
-const queryClientFactory = async (): Promise<QueryClient> => {
+const createQueryClient = (): QueryClient => {
   const client = new QueryClient({
     defaultOptions: {
       queries: {
@@ -84,9 +81,6 @@ const queryClientFactory = async (): Promise<QueryClient> => {
     hydrate(client, dehydratedState);
   }
 
-  await client.fetchQuery(exchangeRatesQuery);
-  await client.fetchQuery(catalogQuery);
-
   return client;
 };
 
@@ -98,17 +92,15 @@ const i18nMap = {
   zh: () => import("./i18n/zh"),
 };
 
-const localeIdFactory = (): string => {
-  const supportedLanguages = ["en", "es", "ja", "ms", "zh"];
-
+const localeIdFactory = (): keyof typeof i18nMap => {
   const lang = getLocalStorage("lang", window.navigator.language.slice(0, 2));
 
   // fallback to default language
-  if (!supportedLanguages.includes(lang)) {
-    return "en";
+  if (lang in i18nMap) {
+    return lang as any;
   }
 
-  return lang;
+  return "en";
 };
 
 const bootstrap = async () => {
@@ -118,30 +110,34 @@ const bootstrap = async () => {
   registerLocaleData(i18n.locale, localeId);
   loadTranslations(i18n.translations);
 
-  const queryClient = await queryClientFactory();
+  const queryClient = createQueryClient();
+
+  const exchangeRates = await queryClient.fetchQuery(exchangeRatesQuery);
+  const catalog = await queryClient.fetchQuery(catalogQuery);
+
+  queryClient.mount();
 
   return bootstrapApplication(AppComponent, {
     providers: [
-      { provide: APP_ID, useValue: "vts" },
+      ...providers,
       { provide: LOCALE_ID, useValue: localeId },
       {
         provide: DATE_PIPE_DEFAULT_OPTIONS,
         useValue: { timezone: getLocalStorage("timezone", null) },
       },
-      { provide: TitleStrategy, useClass: VtsTitleStrategy },
       { provide: QUERY_CLIENT, useValue: queryClient },
+      { provide: EXCHANGE_RATES, useValue: exchangeRates },
+      { provide: CATALOG_CHANNELS, useValue: catalog.channels },
+      { provide: CATALOG_GROUPS, useValue: catalog.groups },
+      { provide: CATALOG_VTUBERS, useValue: catalog.vtubers },
       { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
       provideRouter(
-        getRoutes(),
-        withInMemoryScrolling({ scrollPositionRestoration: "enabled" })
+        routes,
+        withInMemoryScrolling({ scrollPositionRestoration: "enabled" }),
+        withComponentInputBinding(),
+        withRouterConfig({ urlUpdateStrategy: "eager" })
       ),
-      provideServiceWorker("ngsw-worker.js", {
-        enabled: environment.production,
-        registrationStrategy: "registerImmediately",
-      }),
-      provideClientHydration(withNoHttpTransferCache()),
       provideAnimations(),
-      importProvidersFrom(MatSnackBarModule),
     ],
   });
 };

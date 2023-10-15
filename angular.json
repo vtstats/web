@@ -54,6 +54,7 @@
             "namedChunks": false
           },
           "configurations": {
+            "development": {},
             "production": {
               "fileReplacements": [
                 {
@@ -89,7 +90,7 @@
               "ngswConfigPath": "ngsw-config.json"
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -120,36 +121,37 @@
             "extractLicenses": false
           },
           "configurations": {
-            "production": {
-              "outputHashing": "media",
+            "development": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/app/components/chart/chart.ts",
+                  "with": "src/app/components/chart/chart.server.ts"
                 },
                 {
                   "replace": "src/app/layout/sidenav/sidenav.ts",
                   "with": "src/app/layout/sidenav/sidenav.server.ts"
                 }
-              ],
-              "optimization": true,
-              "extractLicenses": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "app-shell": {
-          "builder": "@angular-devkit/build-angular:app-shell",
-          "options": {
-            "route": "/share-target"
-          },
-          "configurations": {
+              ]
+            },
             "production": {
-              "browserTarget": "vts:build:production",
-              "serverTarget": "vts:server:production"
+              "fileReplacements": [
+                {
+                  "replace": "src/app/components/chart/chart.ts",
+                  "with": "src/app/components/chart/chart.server.ts"
+                },
+                {
+                  "replace": "src/app/layout/sidenav/sidenav.ts",
+                  "with": "src/app/layout/sidenav/sidenav.server.ts"
+                },
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         }
       }
     }

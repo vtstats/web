@@ -1,11 +1,10 @@
-import { Injectable, computed, signal } from "@angular/core";
-import { MatDrawerMode } from "@angular/material/sidenav";
+import { Injectable, signal } from "@angular/core";
 
 @Injectable({ providedIn: "root" })
 export class ResizeService {
   constructor() {
     if (typeof window !== "undefined") {
-      let timer = null;
+      let timer: any = null;
 
       window.addEventListener("resize", () => {
         if (!timer) this.update();

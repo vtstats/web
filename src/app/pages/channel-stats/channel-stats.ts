@@ -24,7 +24,10 @@ import { CurrencyService } from "src/app/shared/config/currency.service";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
 import { query } from "src/app/shared/qry";
 import { CHAT_CURRENCIES } from "src/app/shared/tokens";
-import { ChannelStatsTable } from "./components/channel-stats-table/channel-stats-table";
+import {
+  ChannelStatsRow,
+  ChannelStatsTable,
+} from "./components/channel-stats-table/channel-stats-table";
 
 @Component({
   standalone: true,
@@ -94,6 +97,9 @@ export default class ChannelStats {
   data = computed(() => {
     const exchange = this.currency.exchange();
     const channels = this.vtubers.selectedChannels();
+    const data = this.result().data;
+
+    if (!data) return [];
 
     const sum = (map: Record<string, number>): number => {
       if (!map) return 0;
@@ -106,30 +112,32 @@ export default class ChannelStats {
       }, 0);
     };
 
-    const results = [];
-    for (const stats of this.result().data) {
+    return data.reduce((acc, stats) => {
       const channel = channels.find((c) => c.channelId == stats.channelId);
-      if (!channel) continue;
-      if (stats.kind === ChannelStatsKind.REVENUE) {
-        const value = sum(stats.value);
-        results.push({
-          vtuberId: channel.vtuberId,
-          value,
-          delta1d: value - sum(stats.value1DayAgo),
-          delta7d: value - sum(stats.value7DaysAgo),
-          delta30d: value - sum(stats.value30DaysAgo),
-        });
-      } else {
-        results.push({
-          vtuberId: channel.vtuberId,
-          value: stats.value,
-          delta1d: stats.value - stats.value1DayAgo,
-          delta7d: stats.value - stats.value7DaysAgo,
-          delta30d: stats.value - stats.value30DaysAgo,
-        });
+
+      if (channel) {
+        if (stats.kind === ChannelStatsKind.REVENUE) {
+          const value = sum(stats.value);
+          acc.push({
+            vtuberId: channel.vtuberId,
+            value,
+            delta1d: value - sum(stats.value1DayAgo),
+            delta7d: value - sum(stats.value7DaysAgo),
+            delta30d: value - sum(stats.value30DaysAgo),
+          });
+        } else {
+          acc.push({
+            vtuberId: channel.vtuberId,
+            value: stats.value,
+            delta1d: stats.value - stats.value1DayAgo,
+            delta7d: stats.value - stats.value7DaysAgo,
+            delta30d: stats.value - stats.value30DaysAgo,
+          });
+        }
       }
-    }
-    return results;
+
+      return acc;
+    }, <ChannelStatsRow[]>[]);
   });
 
   updatedAt = computed(() => {

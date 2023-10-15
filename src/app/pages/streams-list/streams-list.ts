@@ -57,7 +57,7 @@ export default class StreamsList {
     const selectedVtuberIds = this.selectedVtuberIds();
 
     return selectedVtuberIds.size > 0
-      ? this.vtubers.channels().filter((c) => selectedVtuberIds.has(c.vtuberId))
+      ? this.vtubers.channels.filter((c) => selectedVtuberIds.has(c.vtuberId))
       : this.vtubers.selectedChannels();
   });
 

@@ -14,10 +14,10 @@ import { StreamEventsGroup } from "./stream-events";
   template: ` <vts-chart [options]="option" [height]="320" /> `,
 })
 export class StreamEventsChart implements OnInit {
-  @Input() group: StreamEventsGroup;
-  @Input() stream: Stream;
+  @Input({ required: true }) group!: StreamEventsGroup;
+  @Input({ required: true }) stream!: Stream;
 
-  option: EChartsOption;
+  option: EChartsOption | null = null;
   locale = inject(LOCALE_ID);
 
   ngOnInit() {
@@ -74,6 +74,8 @@ export class StreamEventsChart implements OnInit {
 
     const min = this.stream.startTime;
 
+    if (!min) return;
+
     const max = this.stream.endTime || Date.now();
 
     const step = Math.max(((max - min) / 20) | 0, 60 * 1000);
@@ -83,9 +85,10 @@ export class StreamEventsChart implements OnInit {
     while (i + step <= max) {
       const fn1 = (index: number, input: number[]) => {
         const delta = input.filter((v) => v >= i && v < i + step).length;
-        const len = series[index].data.length;
-        const last = len === 0 ? 0 : series[index].data[len - 1][1];
-        series[index].data.push([i, last + delta]);
+        const len = series[index].data!.length;
+        const last =
+          len === 0 ? 0 : (series[index].data![len - 1] as number[])[1];
+        series[index].data!.push([i, last + delta]);
       };
       if (input1.length > 0) fn1(0, input1);
       if (input2.length > 0) fn1(1, input2);
@@ -132,7 +135,7 @@ export class StreamEventsChart implements OnInit {
       xAxis: {
         type: "time",
         axisLabel: {
-          formatter: (value) => formatDate(value, "HH:mm", this.locale),
+          formatter: (value: number) => formatDate(value, "HH:mm", this.locale),
         },
       },
       yAxis: {
@@ -140,14 +143,18 @@ export class StreamEventsChart implements OnInit {
         max: ({ max }) => Math.max(max, 3),
         minInterval: 1,
       },
-      series: series.filter((a) => a.data.length != 0),
+      series: series.filter((a) => a.data!.length != 0),
     };
   }
 
   tooltipFormatter(p: TopLevelFormatterParams) {
-    const params = Array.isArray(p) ? p : [p];
+    const params = (Array.isArray(p) ? p : [p]) as Array<{
+      seriesName: string;
+      value: number[];
+    }>;
+
     const date = formatDate(
-      params[0].value[0] as number,
+      params[0].value[0],
       "yyyy/MM/dd HH:mm",
       this.locale
     );

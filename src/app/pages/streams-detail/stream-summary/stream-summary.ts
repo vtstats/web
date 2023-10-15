@@ -79,9 +79,9 @@ export class StreamSummary {
   >(() => {
     const st = this.stream();
     return {
-      queryKey: ["stream-events", { streamId: st?.streamId }],
+      enabled: Boolean(st),
+      queryKey: ["stream-events", { streamId: st?.streamId! }],
       queryFn: () => api.streamEvents(st!.streamId),
-      enabled: !!st,
       select: (events) => {
         return events.reduce((acc, event) => {
           switch (event.kind) {
@@ -133,9 +133,9 @@ export class StreamSummary {
   >(() => {
     const st = this.stream();
     return {
-      enabled: !!st,
-      queryKey: ["stream-stats/chat", { streamId: st?.streamId }],
-      queryFn: () => api.streamChatStats(st?.streamId),
+      enabled: Boolean(st),
+      queryKey: ["stream-stats/chat", { streamId: st?.streamId! }],
+      queryFn: () => api.streamChatStats(st?.streamId!),
       select: (rows) => rows.reduce((acc, cur) => acc + cur[1], 0),
     };
   });
@@ -149,17 +149,17 @@ export class StreamSummary {
   >(() => {
     const st = this.stream();
     return {
-      queryKey: ["youtubeLikes", { platformId: st?.platformId }],
-      queryFn: () => api.youtubeLikes(st.platformId),
-      enabled: st?.platform === Platform.YOUTUBE,
+      enabled: !!st && st.platform === Platform.YOUTUBE,
+      queryKey: ["youtubeLikes", { platformId: st?.platformId! }],
+      queryFn: () => api.youtubeLikes(st?.platformId!),
     };
   });
 
   link = computed(() => {
     const st = this.stream();
-    if (st.platform !== Platform.YOUTUBE) {
-      return null;
+    if (st && st.platform !== Platform.YOUTUBE) {
+      return "https://youtu.be/" + st.platformId;
     }
-    return "https://youtu.be/" + st.platformId;
+    return null;
   });
 }

@@ -56,7 +56,7 @@ export class Menu<Value> {
   @Input() showLabel: boolean = true;
   @Input() options: { value: Value; label: string }[] = [];
 
-  open: boolean;
+  open: boolean = false;
 
   @Output("change") onChange = new EventEmitter<Value>();
 

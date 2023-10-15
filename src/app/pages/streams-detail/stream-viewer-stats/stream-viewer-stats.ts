@@ -41,11 +41,11 @@ export class StreamViewerStats {
     Array<[number, number]>,
     ["stream-stats/viewer", { streamId: number }]
   >(() => {
-    const st = this.stream();
+    const stream = this.stream();
     return {
-      enabled: !!st,
-      queryKey: ["stream-stats/viewer", { streamId: st?.streamId }],
-      queryFn: () => api.streamViewerStats(st?.streamId),
+      enabled: Boolean(stream),
+      queryKey: ["stream-stats/viewer", { streamId: stream?.streamId! }],
+      queryFn: () => api.streamViewerStats(stream?.streamId!),
     };
   });
 
@@ -66,13 +66,13 @@ export class StreamViewerStats {
       xAxis: {
         type: "time",
         axisLabel: {
-          formatter: (value) => formatDate(value, "HH:mm", this.locale),
+          formatter: (value: number) => formatDate(value, "HH:mm", this.locale),
         },
       },
       yAxis: {
         type: "value",
         axisLabel: {
-          formatter: (value) => formatNumber(value, this.locale),
+          formatter: (value: number) => formatNumber(value, this.locale),
         },
       },
       series: {
@@ -102,9 +102,10 @@ export class StreamViewerStats {
   });
 
   tooltipFormatter(p: TopLevelFormatterParams) {
-    const d = Array.isArray(p) ? p[0] : p;
-    const h = d.value[0] as number;
-    const v = d.value[1] as number;
+    const d = (Array.isArray(p) ? p[0] : p) as { value: number[] };
+
+    const h = d.value[0];
+    const v = d.value[1];
 
     let html = `<div class="text-xs text-[#737373]">\
     ${formatDate(h, "yyyy/MM/dd HH:mm", this.locale)}</div>`;
@@ -123,9 +124,11 @@ export class StreamViewerStats {
       const [x] = chart.convertFromPixel("grid", [ev.offsetX, ev.offsetY]);
       const st = this.stream();
       if (
-        st.status === StreamStatus.ENDED &&
+        st &&
+        st.startTime &&
         st.startTime <= x &&
-        x <= st.endTime
+        st.endTime &&
+        st.endTime >= x
       ) {
         const t = ((x - st.startTime) / 1000) | 0;
         window.open(`https://youtu.be/${st.platformId}?t=${t}s`, "_blank");

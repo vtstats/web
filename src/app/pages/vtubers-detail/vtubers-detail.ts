@@ -1,10 +1,8 @@
 import { NgIf } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
 
 import { Channel, VTuber } from "src/app/models";
-import { VTuberService } from "src/app/shared/config/vtuber.service";
 import { ChannelOverview } from "./channel-overview/channel-overview";
 import { StreamTime } from "./stream-time/stream-time";
 import { VtuberStreams } from "./vtuber-streams/vtuber-streams";
@@ -16,32 +14,24 @@ import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
   selector: "vts-vtubers-detail",
   templateUrl: "vtubers-detail.html",
 })
-export default class VTubersDetail {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+export default class VTubersDetail implements OnInit {
   private title = inject(Title);
   private meta = inject(Meta);
-  private vtuberSrv = inject(VTuberService);
 
-  vtuber: VTuber | null;
-  channels: Channel[] = [];
+  @Input({ required: true }) resolved!: {
+    name: string;
+    vtuber: VTuber;
+    channels: Channel[];
+  };
 
-  constructor() {
-    const id = this.route.snapshot.paramMap.get("vtuberId");
-    this.vtuber = this.vtuberSrv.vtubers().find((v) => v.vtuberId === id);
-    this.channels = this.vtuberSrv
-      .channels()
-      .filter((c) => c.vtuberId === id)
-      .sort((a, b) => b.platform.localeCompare(a.platform));
+  ngOnInit() {
+    const title = `${this.resolved.name} | vtstats`;
+    const image = `https://vt-og.poi.cat/vtuber/${this.resolved.vtuber.vtuberId}.png`;
 
-    if (!this.vtuber) {
-      this.router.navigateByUrl("/404");
-    } else {
-      const name = this.vtuberSrv.vtuberNames()[this.vtuber.vtuberId];
-      const title = `${name} | vtstats`;
-      this.title.setTitle(title);
-      this.meta.updateTag({ property: "og:title", content: title });
-      this.meta.updateTag({ name: "twitter:title", content: title });
-    }
+    this.title.setTitle(title);
+    this.meta.updateTag({ property: "og:title", content: title });
+    this.meta.updateTag({ name: "twitter:title", content: title });
+    this.meta.updateTag({ name: "twitter:title", content: title });
+    this.meta.updateTag({ name: "twitter:image", content: image });
   }
 }

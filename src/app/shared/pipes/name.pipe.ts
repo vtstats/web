@@ -5,7 +5,8 @@ import { VTuberService } from "../config/vtuber.service";
 export class NamePipe implements PipeTransform {
   private vtuberSrv = inject(VTuberService);
 
-  transform(id: string): string {
-    return this.vtuberSrv.vtuberNames()[id];
+  transform(id?: string): string {
+    if (!id) return "";
+    return this.vtuberSrv.vtuberNames()[id] || id;
   }
 }

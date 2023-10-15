@@ -4,7 +4,7 @@
   </div>
 
   <vts-chart
-    *ngIf="statsQry().data?.length > 0"
+    *ngIf="statsQry().data?.length"
     [height]="300"
     [options]="options()"
     (chartInit)="onChartInit($event)"

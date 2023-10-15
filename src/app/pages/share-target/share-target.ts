@@ -2,13 +2,13 @@ import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/models";
 
-import { VTuberService } from "src/app/shared/config/vtuber.service";
+import { CATALOG_CHANNELS } from "src/app/shared/tokens";
 
 @Component({ standalone: true, selector: "vts-share-target", template: "" })
 export class ShareTarget implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private vtuberSrv = inject(VTuberService);
+  private channels = inject(CATALOG_CHANNELS);
 
   ngOnInit() {
     const map = this.route.snapshot.queryParamMap;
@@ -36,12 +36,10 @@ export class ShareTarget implements OnInit {
     )?.[1];
 
     if (youtubeChannelId) {
-      const channel = this.vtuberSrv
-        .channels()
-        .find(
-          (c) =>
-            c.platform === Platform.YOUTUBE && c.platformId === youtubeChannelId
-        );
+      const channel = this.channels.find(
+        (c) =>
+          c.platform === Platform.YOUTUBE && c.platformId === youtubeChannelId
+      );
 
       if (channel) {
         this.router.navigate(["vtuber", channel.vtuberId], {

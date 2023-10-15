@@ -91,8 +91,8 @@ export class PaidChart {
   currencies = inject(CHAT_CURRENCIES);
   locale = inject(LOCALE_ID);
 
-  @Input({ alias: "paid" }) set _paid(p: Paid[]) {
-    this.paid.set(p);
+  @Input("paid") set _paid(p: Paid[] | null | undefined) {
+    if (p) this.paid.set(p);
   }
 
   paid = signal<Paid[]>([]);

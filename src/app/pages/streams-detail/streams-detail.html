@@ -1,11 +1,9 @@
-<div class="p-4 mb-15" *ngIf="streamQry() as result">
-  <ng-container *ngIf="result.data">
-    <vts-stream-summary [stream]="result.data" />
+<div class="p-4 mb-15">
+  <vts-stream-summary [stream]="stream" />
 
-    <vts-stream-viewer-stats [stream]="result.data" />
+  <vts-stream-viewer-stats [stream]="stream" />
 
-    <vts-stream-chat-stats [stream]="result.data" />
+  <vts-stream-chat-stats [stream]="stream" />
 
-    <vts-stream-events [stream]="result.data" />
-  </ng-container>
+  <vts-stream-events [stream]="stream" />
 </div>

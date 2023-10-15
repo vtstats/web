@@ -20,7 +20,9 @@ export type StreamGroup = { name: string | Date; streams: Stream[] };
 export class GroupStreamsPipe implements PipeTransform {
   private locale = inject(LOCALE_ID);
 
-  transform(items: Stream[]): StreamGroup[] {
+  transform(items: Stream[] | null | undefined): StreamGroup[] {
+    if (!items) return [];
+
     const groups = [];
 
     let last: string | undefined;
@@ -52,7 +54,7 @@ export class GroupStreamsPipe implements PipeTransform {
         ? stream.scheduleTime
         : stream.startTime;
 
-    if (!time) return null;
+    if (!time) return "";
 
     // TODO: support timezone settings
 

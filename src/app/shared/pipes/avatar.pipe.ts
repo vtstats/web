@@ -1,14 +1,12 @@
 import { inject, Pipe, PipeTransform } from "@angular/core";
-import { VTuberService } from "../config/vtuber.service";
+import { CATALOG_VTUBERS } from "../tokens";
 
 @Pipe({ standalone: true, name: "avatar" })
 export class AvatarPipe implements PipeTransform {
-  private vtuberSrv = inject(VTuberService);
+  private vtubers = inject(CATALOG_VTUBERS);
 
-  transform(id: string): string {
-    return (
-      this.vtuberSrv.vtubers().find((v) => v.vtuberId === id)?.thumbnailUrl ||
-      ""
-    );
+  transform(id?: string): string {
+    if (!id) return "";
+    return this.vtubers.find((v) => v.vtuberId === id)?.thumbnailUrl || "";
   }
 }

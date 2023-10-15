@@ -3,7 +3,12 @@ import { differenceInSeconds } from "date-fns";
 
 @Pipe({ standalone: true, name: "duration" })
 export class DurationPipe implements PipeTransform {
-  transform(start: number | Date, end: Date | number): string {
+  transform(
+    start: number | Date | null,
+    end: Date | number | null
+  ): string | null {
+    if (!start || !end) return null;
+
     const seconds = differenceInSeconds(end, start);
 
     const hh = Math.floor(seconds / 3600);

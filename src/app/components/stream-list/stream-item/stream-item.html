@@ -45,7 +45,7 @@
       *ngSwitchCase="'ENDED'"
       class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
     >
-      {{ stream.startTime | duration: stream.endTime }}
+      {{ stream.startTime! | duration: stream.endTime! }}
     </div>
   </ng-container>
 
@@ -132,7 +132,7 @@
       class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
       [attr.title]="stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss'"
     >
-      {{ stream.scheduleTime | distance: (tick.everyMinute$ | async) }}
+      {{ stream.scheduleTime! | distance: (tick.everyMinute$ | async) }}
     </span>
 
     <span
@@ -140,7 +140,7 @@
       class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
       [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
     >
-      {{ stream.startTime | distance: (tick.everyMinute$ | async) }}
+      {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
     </span>
 
     <span
@@ -148,7 +148,7 @@
       class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
       [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
     >
-      {{ stream.startTime | distance: (tick.everyMinute$ | async) }}
+      {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
     </span>
   </ng-container>
 </div>

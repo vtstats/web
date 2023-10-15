@@ -1,10 +1,4 @@
-import {
-  CommonModule,
-  NgFor,
-  NgIf,
-  NgSwitch,
-  NgSwitchCase,
-} from "@angular/common";
+import { NgFor, NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -93,8 +87,8 @@ export type StreamEventsGroup = {
   `,
 })
 export class StreamEventsInner implements OnInit {
-  @Input() group: StreamEventsGroup;
-  @Input() stream: Stream;
+  @Input({ required: true }) group!: StreamEventsGroup;
+  @Input({ required: true }) stream!: Stream;
 
   chipOptions = signal<Array<{ label: string; value: string }>>([]);
   selectedChip = signal<string>("");
@@ -135,14 +129,14 @@ export class StreamEventsInner implements OnInit {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, StreamEventsInner],
+  imports: [StreamEventsInner, NgIf],
   selector: "vts-stream-events",
   template: `
     <div
       *ngIf="statsQry().data as result"
       class="mat-border-divider rounded border border-solid mb-4"
     >
-      <vts-stream-events-inner [group]="result" [stream]="stream()" />
+      <vts-stream-events-inner [group]="result" [stream]="stream()!" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -162,9 +156,9 @@ export class StreamEvents {
   >(() => {
     const st = this.stream();
     return {
-      enabled: !!st,
-      queryKey: ["stream-events", { streamId: st?.streamId }],
-      queryFn: () => api.streamEvents(st?.streamId),
+      enabled: Boolean(st),
+      queryKey: ["stream-events", { streamId: st?.streamId! }],
+      queryFn: () => api.streamEvents(st?.streamId!),
       select: (events) =>
         events.reduce((acc, cur) => {
           switch (cur.kind) {

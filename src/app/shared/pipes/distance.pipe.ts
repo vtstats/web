@@ -7,7 +7,10 @@ import { DATE_FNS_LOCALE } from "../tokens";
 export class DistancePipe implements PipeTransform {
   dateFns = inject(DATE_FNS_LOCALE);
 
-  transform(start: number | Date, end: number | Date): string | null {
+  transform(
+    start: number | Date | null,
+    end: number | Date | null
+  ): string | null {
     if (!start || !end) return null;
 
     return formatDistanceStrict(start, end, {

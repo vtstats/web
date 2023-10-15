@@ -18,13 +18,14 @@
     "useDefineForClassFields": false,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictTemplates": true,
     "strictInputAccessModifiers": true
-  },
-  "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.d.ts", "src/i18n"]
+  }
 }

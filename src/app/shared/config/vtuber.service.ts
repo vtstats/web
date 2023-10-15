@@ -1,32 +1,37 @@
-import { Injectable, computed, inject, signal } from "@angular/core";
+import { Injectable, computed, inject } from "@angular/core";
 
-import { Catalog, Channel, Group, VTuber } from "src/app/models";
-import * as api from "src/app/shared/api/entrypoint";
 import { localStorageSignal } from "src/utils";
-import { QUERY_CLIENT } from "../tokens";
+import {
+  CATALOG_CHANNELS,
+  CATALOG_GROUPS,
+  CATALOG_VTUBERS,
+  QUERY_CLIENT,
+} from "../tokens";
 
 @Injectable({ providedIn: "root" })
 export class VTuberService {
   queryClient = inject(QUERY_CLIENT);
 
-  nameSetting = localStorageSignal("vts:nameSetting", "nativeName");
+  nameSetting = localStorageSignal<
+    "nativeName" | "englishName" | "japaneseName"
+  >("vts:nameSetting", "nativeName");
   selected = localStorageSignal<string[]>("vts:vtuberSelected", []);
 
   selectedIds = computed(() => {
     const selected = this.selected();
-    return this.vtubers()
+    return this.vtubers
       .map((v) => v.vtuberId)
       .filter((id) => selected.includes(id));
   });
 
-  vtubers = signal<VTuber[]>([]);
-  channels = signal<Channel[]>([]);
-  groups = signal<Group[]>([]);
+  vtubers = inject(CATALOG_VTUBERS);
+  channels = inject(CATALOG_CHANNELS);
+  groups = inject(CATALOG_GROUPS);
 
   vtuberNames = computed(() => {
     const nameSetting = this.nameSetting();
 
-    return this.vtubers().reduce((acc, i) => {
+    return this.vtubers.reduce((acc, i) => {
       acc[i.vtuberId] = i[nameSetting] || i.nativeName;
       return acc;
     }, {} as Record<string, string>);
@@ -34,24 +39,15 @@ export class VTuberService {
 
   selectedChannels = computed(() => {
     const selected = this.selected();
-    return this.channels().filter((c) => selected.includes(c.vtuberId));
+    return this.channels.filter((c) => selected.includes(c.vtuberId));
   });
 
   groupNames = computed(() => {
     const nameSetting = this.nameSetting();
 
-    return this.groups().reduce((acc, i) => {
+    return this.groups.reduce((acc, i) => {
       acc[i.groupId] = i[nameSetting] || i.nativeName;
       return acc;
     }, {} as Record<string, string>);
   });
-
-  constructor() {
-    const { vtubers, channels, groups } =
-      this.queryClient.getQueryData<Catalog>(api.catalogQuery.queryKey);
-
-    this.vtubers.set(vtubers);
-    this.groups.set(groups);
-    this.channels.set(channels);
-  }
 }

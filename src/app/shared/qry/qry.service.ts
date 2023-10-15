@@ -1,37 +1,19 @@
 import { isPlatformBrowser } from "@angular/common";
-import {
-  inject,
-  Injectable,
-  isDevMode,
-  OnDestroy,
-  PLATFORM_ID,
-} from "@angular/core";
+import { inject, Injectable, isDevMode, PLATFORM_ID } from "@angular/core";
 
 import { QUERY_CLIENT } from "../tokens";
 
-const reactModule = "https://esm.sh/react";
-const reactDomModule = "https://esm.sh/react-dom";
-const reactQueryModule = "https://esm.sh/@tanstack/react-query";
-const reactQueryDevToolsModule =
-  "https://esm.sh/@tanstack/react-query-devtools/production";
-
 @Injectable({ providedIn: "root" })
-export class QryService implements OnDestroy {
+export class QryService {
   client = inject(QUERY_CLIENT);
   platformId = inject(PLATFORM_ID);
 
-  private root = null;
+  private root: any = null;
 
   constructor() {
-    this.client.mount();
-
     if (isPlatformBrowser(this.platformId) && isDevMode()) {
       this.mountQueryDevTools();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.client.unmount();
   }
 
   toggleQueryDevTools() {
@@ -48,12 +30,15 @@ export class QryService implements OnDestroy {
   }
 
   private async mountQueryDevTools() {
+    const esm = "https://esm.sh";
     const [React, ReactDOM, { QueryClientProvider }, { ReactQueryDevtools }] =
       await Promise.all([
-        import(/* @vite-ignore */ reactModule),
-        import(/* @vite-ignore */ reactDomModule),
-        import(/* @vite-ignore */ reactQueryModule),
-        import(/* @vite-ignore */ reactQueryDevToolsModule),
+        import(/* @vite-ignore */ `${esm}/react`),
+        import(/* @vite-ignore */ `${esm}/react-dom`),
+        import(/* @vite-ignore */ `${esm}/@tanstack/react-query`),
+        import(
+          /* @vite-ignore */ `${esm}/@tanstack/react-query-devtools/production`
+        ),
       ]);
 
     this.root = ReactDOM.createRoot(document.getElementById("react-root"));

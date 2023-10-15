@@ -19,7 +19,7 @@ export class PlaylistSelector implements OnInit {
 
   loading: boolean = false;
   items: YouTubePlayListItem[] = [];
-  selected: string;
+  selected: string | undefined;
 
   ngOnInit() {
     this.loading = true;
@@ -28,7 +28,7 @@ export class PlaylistSelector implements OnInit {
         this.items = res.items;
         if (this.config.playlist) {
           this.selected = res.items.find(
-            (item) => item.id === this.config.playlist
+            (item: any) => item.id === this.config.playlist
           )?.id;
         }
         if (!this.selected && res.items.length > 0) {

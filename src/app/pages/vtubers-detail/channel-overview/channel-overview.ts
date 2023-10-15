@@ -19,12 +19,12 @@ export class ChannelOverview {
 
   @Input() channels: Channel[] = [];
 
-  precision: number = 7;
+  precision: 7 | 30 | 90 = 7;
   channelIdx: number = 0;
 
   get precisionOptions() {
     return [7, 30, 90].map((p) => ({
-      value: p,
+      value: p as 7 | 30 | 90,
       label: formatDuration({ days: p }, { locale: this.dateFns }),
     }));
   }

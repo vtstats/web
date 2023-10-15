@@ -23,7 +23,8 @@ import { DATE_FNS_LOCALE } from "src/app/shared/tokens";
 })
 export class StreamTimeBarChart {
   @Input() times: [number, number][] | undefined = [];
-  @Input() groupBy: "hour" | "weekday" | "month";
+  @Input() groupBy: "hour" | "weekday" | "month" = "hour";
+  @Input() loading: boolean = false;
 
   private locale = inject(LOCALE_ID);
   dateFns = inject(DATE_FNS_LOCALE);
@@ -109,13 +110,13 @@ export class StreamTimeBarChart {
       case "hour": {
         return (p: TopLevelFormatterParams) => {
           const d = Array.isArray(p) ? p[0] : p;
-          const h = d.value[0] as number;
+          const h = (d.value as number[])[0];
           const t =
             h.toString().padStart(2, "0") +
             ":00-" +
             (h + 1).toString().padStart(2, "0") +
             ":00";
-          const v = d.value[1] as number;
+          const v = (d.value as number[])[1];
           const s = _formatDuration(v);
           return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
         };
@@ -123,9 +124,9 @@ export class StreamTimeBarChart {
       case "month": {
         return (p: TopLevelFormatterParams) => {
           const d = Array.isArray(p) ? p[0] : p;
-          const h = d.value[0] as number;
+          const h = (d.value as number[])[0];
           const t = formatDate(h, "MMMM", this.locale);
-          const v = d.value[1] as number;
+          const v = (d.value as number[])[1];
           const s = _formatDuration(v);
           return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
         };
@@ -133,9 +134,9 @@ export class StreamTimeBarChart {
       case "weekday": {
         return (p: TopLevelFormatterParams) => {
           const d = Array.isArray(p) ? p[0] : p;
-          const h = d.value[0] as number;
+          const h = (d.value as number[])[0];
           const t = formatDate(h, "EEEE", this.locale);
-          const v = d.value[1] as number;
+          const v = (d.value as number[])[1];
           const s = _formatDuration(v);
           return `<div class="text-xs text-[#737373]">${t}<br/></div><div class="text-sm">${s}</div>`;
         };
@@ -158,6 +159,8 @@ export class StreamTimeBarChart {
   }
 
   private _groupByData() {
+    if (!this.times) return [];
+
     switch (this.groupBy) {
       case "hour": {
         return this.times.reduce(

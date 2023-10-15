@@ -10,7 +10,7 @@ import {
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import type { EChartsOption } from "echarts";
 import type { ECharts } from "echarts/core";
-import type { CallbackDataParams } from "echarts/types/dist/shared";
+import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";
@@ -41,9 +41,9 @@ export class StreamChatStats {
   >(() => {
     const st = this.stream();
     return {
-      enabled: !!st,
-      queryKey: ["stream-stats/chat", { streamId: st?.streamId }],
-      queryFn: () => api.streamChatStats(st?.streamId),
+      enabled: Boolean(st),
+      queryKey: ["stream-stats/chat", { streamId: st?.streamId! }],
+      queryFn: () => api.streamChatStats(st!.streamId),
     };
   });
 
@@ -85,13 +85,13 @@ export class StreamChatStats {
       xAxis: {
         type: "time",
         axisLabel: {
-          formatter: (value) => formatDate(value, "HH:mm", this.locale),
+          formatter: (value: number) => formatDate(value, "HH:mm", this.locale),
         },
       },
       yAxis: {
         type: "value",
         axisLabel: {
-          formatter: (value) => formatNumber(value, this.locale),
+          formatter: (value: number) => formatNumber(value, this.locale),
         },
       },
       series: [
@@ -117,13 +117,15 @@ export class StreamChatStats {
           data: total,
         },
       ],
-    };
+    } satisfies EChartsOption;
   });
 
-  tooltipFormatter(p: CallbackDataParams[]) {
-    const d = p[0].value[0] as number;
-    const v1 = p[0].value[1] as number;
-    const v2 = p[1].value[1] as number;
+  tooltipFormatter(p: TopLevelFormatterParams) {
+    if (!Array.isArray(p)) return "";
+
+    const d = (p[0].value as number[])[0];
+    const v1 = (p[0].value as number[])[1];
+    const v2 = (p[1].value as number[])[1];
 
     let html = `<table class="w-32"><thead>`;
 
@@ -142,7 +144,7 @@ export class StreamChatStats {
 
     html += `</tbody>`;
 
-    if (this.stream().status === StreamStatus.ENDED) {
+    if (this.stream()?.status === StreamStatus.ENDED) {
       html += `<tfoot><tr class="text-xs text-[#737373]">\
       <td colspan="2">Double click to jump to</td></tr></tfoot>`;
     }
@@ -158,9 +160,11 @@ export class StreamChatStats {
       const st = this.stream();
 
       if (
-        st.status === StreamStatus.ENDED &&
+        st &&
+        st.startTime &&
         st.startTime <= x &&
-        x <= st.endTime
+        st.endTime &&
+        st.endTime >= x
       ) {
         const t = ((x - st.startTime) / 1000) | 0;
         window.open(`https://youtu.be/${st.platformId}?t=${t}s`, "_blank");

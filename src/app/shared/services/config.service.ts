@@ -11,7 +11,9 @@ import {
 @Injectable({ providedIn: "root" })
 export class ConfigService implements OnDestroy {
   playlist: string | null;
-  timezone$ = new BehaviorSubject(getLocalStorage("timezone", null));
+  timezone$ = new BehaviorSubject<string | null>(
+    getLocalStorage("timezone", null)
+  );
 
   snackBar$: Subscription | null = null;
 

@@ -16,7 +16,7 @@ import { DeltaCell } from "./delta-cell";
 
 export type ChannelStatsRow = {
   vtuberId: string;
-  value?: number;
+  value: number;
   delta1d: number;
   delta7d: number;
   delta30d: number;
@@ -53,7 +53,7 @@ export class ChannelStatsTable implements AfterViewInit {
   }
 
   @Input() loading: boolean = false;
-  @Input() valueLabel: string;
+  @Input({ required: true }) valueLabel!: string;
 
   readonly displayedColumns: string[] = [
     "profile",
@@ -65,7 +65,7 @@ export class ChannelStatsTable implements AfterViewInit {
   ];
 
   readonly dataColumns: {
-    f: keyof ChannelStatsRow;
+    f: "value" | "delta1d" | "delta7d" | "delta30d";
     t: string;
   }[] = [
     {
@@ -94,7 +94,7 @@ export class ChannelStatsTable implements AfterViewInit {
     return column.f;
   }
 
-  getTotal(field: keyof ChannelStatsRow): number {
-    return this.data.data.reduce((acc, item) => acc + item[field as any], 0);
+  getTotal(field: "value" | "delta1d" | "delta7d" | "delta30d"): number {
+    return this.data.data.reduce((acc, item) => acc + item[field], 0);
   }
 }

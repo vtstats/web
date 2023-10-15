@@ -138,7 +138,7 @@ export class AppComponent implements AfterViewInit {
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
 
-  @ViewChild(MatSidenav) matDrawer: MatSidenav;
+  @ViewChild(MatSidenav) matDrawer!: MatSidenav;
 
   drawerService = inject(DrawerService);
   resizeService = inject(ResizeService);

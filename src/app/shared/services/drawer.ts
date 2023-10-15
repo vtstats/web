@@ -5,7 +5,7 @@ import { ResizeService } from "./resize.service";
 
 @Injectable({ providedIn: "root" })
 export class DrawerService {
-  drawer: MatSidenav;
+  drawer: MatSidenav | null = null;
   resizeService = inject(ResizeService);
 
   setDrawer(drawer: MatSidenav) {
@@ -21,6 +21,6 @@ export class DrawerService {
   sidenavFixedTopGap = computed(() => (this.sidenavOpen() ? 65 : 0));
 
   toggle() {
-    this.drawer.toggle();
+    this.drawer?.toggle();
   }
 }

@@ -18,7 +18,7 @@ const init = (): Promise<gapi.auth2.GoogleAuth> =>
         callback: () =>
           window.gapi.auth2
             .init({
-              client_id: environment.yt_client_id,
+              client_id: environment.youtubeClientId,
               scope: "profile email https://www.googleapis.com/auth/youtube",
             })
             .then(resolve, reject),
@@ -34,7 +34,7 @@ const init = (): Promise<gapi.auth2.GoogleAuth> =>
         callback: () =>
           window.gapi.auth2
             .init({
-              client_id: environment.yt_client_id,
+              client_id: environment.youtubeClientId,
               scope: "profile email https://www.googleapis.com/auth/youtube",
             })
             .then(resolve, reject),

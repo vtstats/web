@@ -1,38 +1,27 @@
-import { Injectable, computed, inject, signal } from "@angular/core";
+import { Injectable, computed, inject } from "@angular/core";
 
 import { localStorageSignal } from "src/utils";
-import { exchangeRatesQuery } from "../api/entrypoint";
-import { QUERY_CLIENT } from "../tokens";
+import { EXCHANGE_RATES } from "../tokens";
 
 @Injectable({ providedIn: "root" })
 export class CurrencyService {
-  queryClient = inject(QUERY_CLIENT);
+  exchangeRates = inject(EXCHANGE_RATES);
 
   currencySetting = localStorageSignal("vts:currencySetting", "JPY");
 
-  rates = signal<Record<string, number>>({});
-
   exchange = computed<Record<string, number>>(() => {
-    const rates = this.rates();
     const base = this.currencySetting();
 
-    const result = {};
+    const result: Record<string, number> = {};
 
-    Object.keys(rates).forEach((key) => {
+    Object.keys(this.exchangeRates).forEach((key) => {
       if (key === "EUR") {
         result[key] = 1;
       } else {
-        result[key] = rates[base] / rates[key];
+        result[key] = this.exchangeRates[base] / this.exchangeRates[key];
       }
     });
 
     return result;
   });
-
-  constructor() {
-    const res: Record<string, number> = this.queryClient.getQueryData(
-      exchangeRatesQuery.queryKey
-    );
-    this.rates.set(res);
-  }
 }

@@ -34,7 +34,7 @@ type QueryKey = [
   templateUrl: "./vtuber-streams.html",
 })
 export class VtuberStreams {
-  @Input() vtuber: VTuber;
+  @Input({ required: true }) vtuber!: VTuber;
 
   channels = signal<Array<Channel>>([]);
   @Input("channels") set channels_(channels: Array<Channel>) {
