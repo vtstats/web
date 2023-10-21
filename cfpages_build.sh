@@ -4,16 +4,25 @@ export PATH="$PATH:$(yarn global bin)"
 
 rm -rf dist/
 
-node ./tools/env.mjs
+node ./tools/inject.mjs
 yarn ng run vts:server:production
 yarn ng run vts:build:production --stats-json=false
 node ./tools/copy-worker-files.mjs
 node ./tools/copy-client-files.mjs
 node ./tools/bundle.mjs
-# cloudflare pages will remove .html suffix,
-# rename it to index.html.html so it can be served as /index.html
-# https://community.cloudflare.com/t/is-there-an-option-prevent-removing-the-html-suffix/494412/3
-mv ./dist/cloudflare/index.html ./dist/cloudflare/index.html.html
+
+# create headers and redirets files
+echo '/api/* https://vt-api.poi.cat/api/:splat' > ./dist/cloudflare/_redirects
+echo '/*
+  x-frames-option: sameorigin' > ./dist/cloudflare/_headers
+echo '{
+  "version": 1,
+  "include": ["/vtuber/*", "/youtube-stream/*", "/twitch-stream/*"],
+  "exclude": []
+}' > ./dist/cloudflare/_routes.json
+
+# reset index.html that previously modifed by inject.mjs
+git checkout ./src/index.html
 
 # # create a deploy in sentry
 # if [ "$CF_PAGES_BRANCH" = "master" ] || [ "$CF_PAGES_BRANCH" = "dev" ]; then

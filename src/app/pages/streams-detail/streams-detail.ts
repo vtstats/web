@@ -1,6 +1,7 @@
 import { NgIf } from "@angular/common";
 import { Component, Input, OnInit, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
+import { startOfHour } from "date-fns";
 
 import { Stream } from "src/app/models";
 
@@ -29,9 +30,10 @@ export default class StreamsDetail implements OnInit {
 
   ngOnInit() {
     const title = this.stream.title + " | vtstats";
+    // force social media like discord to re-fetch og image
     const image = `https://vt-og.poi.cat/${this.stream.platform.toLowerCase()}-stream/${
       this.stream.platformId
-    }.png`;
+    }.png?t=${startOfHour(new Date()).getTime()}`;
 
     this.title.setTitle(title);
     this.meta.updateTag({ property: "og:title", content: title });

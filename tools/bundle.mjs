@@ -51,7 +51,7 @@ async function bundleMain() {
   // Export the fetch handler (grabbing it from the global).
   // Also Cloudflare expects `fetch()` to return an original Promise (not a ZoneAwarePromise).
   main +=
-    "\nexport default { fetch: (request, env) => globalThis.OGPromise.resolve(globalThis.__workerFetchHandler(request, env)) };";
+    "\nexport default { fetch: (request, env, ctx) => globalThis.OGPromise.resolve(globalThis.__workerFetchHandler(request, env, ctx)) };";
 
   await fs.writeFile(path.resolve(workerPath, "index.js"), main);
 }

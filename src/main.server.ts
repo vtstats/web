@@ -24,6 +24,7 @@ import {
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import type {
   Element,
+  ExecutionContext,
   HTMLRewriterElementContentHandlers,
   ServiceWorkerGlobalScope,
 } from "@cloudflare/workers-types";
@@ -59,7 +60,8 @@ if (environment.production) {
 // See tools/bundle.mjs
 (<any>globalThis).__workerFetchHandler = async function fetch(
   req: Request,
-  env: Env
+  env: Env,
+  ctx: ExecutionContext
 ) {
   const cache = self.caches.default;
   let res = await cache.match(req.url);
@@ -68,31 +70,9 @@ if (environment.production) {
 
   const url = new URL(req.url);
 
-  if (
-    url.pathname.endsWith("css") ||
-    url.pathname.endsWith("js") ||
-    url.pathname.endsWith("map") ||
-    url.pathname.endsWith("webmanifest") ||
-    url.pathname.endsWith("html") ||
-    url.pathname.endsWith("json") ||
-    url.pathname.endsWith("txt") ||
-    url.pathname.endsWith("png") ||
-    url.pathname.endsWith("jpg") ||
-    url.pathname.endsWith("ico")
-  ) {
-    return env.ASSETS.fetch(req);
-  }
-
-  if (url.pathname.startsWith("/api")) {
-    return Response.redirect(
-      `https://vt-api.poi.cat${url.pathname}${url.search}`,
-      301
-    );
-  }
-
-  const document = await env.ASSETS.fetch(
-    new Request(new URL("/index.html", url))
-  ).then((res) => res.text());
+  const document = await env.ASSETS.fetch(new Request(new URL("/", url))).then(
+    (res) => res.text()
+  );
 
   const queryClient = new QueryClient();
 
@@ -129,8 +109,7 @@ if (environment.production) {
     .on("body", new DehydrateQueryClientHandler(queryClient))
     .transform(res);
 
-  // cloudflare pages functions don't have ctx
-  await cache.put(req.url, res.clone());
+  ctx.waitUntil(cache.put(req.url, res.clone()));
 
   return res;
 };

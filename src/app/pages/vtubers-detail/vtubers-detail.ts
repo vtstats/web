@@ -1,6 +1,7 @@
 import { NgIf } from "@angular/common";
 import { Component, Input, OnInit, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
+import { startOfHour } from "date-fns";
 
 import { Channel, VTuber } from "src/app/models";
 import { ChannelOverview } from "./channel-overview/channel-overview";
@@ -26,11 +27,14 @@ export default class VTubersDetail implements OnInit {
 
   ngOnInit() {
     const title = `${this.resolved.name} | vtstats`;
-    const image = `https://vt-og.poi.cat/vtuber/${this.resolved.vtuber.vtuberId}.png`;
+    // force social media like discord to re-fetch og image
+    const image = `https://vt-og.poi.cat/vtuber/${
+      this.resolved.vtuber.vtuberId
+    }.png?t=${startOfHour(new Date()).getTime()}`;
 
     this.title.setTitle(title);
     this.meta.updateTag({ property: "og:title", content: title });
-    this.meta.updateTag({ name: "twitter:title", content: title });
+    this.meta.updateTag({ property: "og:image", content: image });
     this.meta.updateTag({ name: "twitter:title", content: title });
     this.meta.updateTag({ name: "twitter:image", content: image });
   }

@@ -1,11 +1,5 @@
 import { AsyncPipe, NgIf, NgOptimizedImage } from "@angular/common";
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild,
-  inject,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 
@@ -18,10 +12,10 @@ import { PlaylistSelector } from "./playlist-selector/playlist-selector";
   template: `<div #button></div>`,
 })
 export class GoogleButton implements AfterViewInit {
-  @ViewChild("button", { static: true, read: ElementRef }) spinner!: ElementRef;
+  button = inject(ElementRef);
 
   ngAfterViewInit(): void {
-    google.accounts.id.renderButton(this.spinner.nativeElement, {
+    google.accounts.id.renderButton(this.button.nativeElement, {
       type: "standard",
       theme: "outline",
       size: "large",
