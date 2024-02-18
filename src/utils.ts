@@ -44,7 +44,7 @@ export const sampling = <T>(
   config: { count: number } | { step: number },
   dateFn: (i: T) => number,
   valueFn: (i: T) => number,
-  sampleFn: (a: number, b: number) => number
+  sampleFn: (a: number, b: number) => number,
 ): [number, number][] => {
   if (!rows || rows.length == 0) return [];
 

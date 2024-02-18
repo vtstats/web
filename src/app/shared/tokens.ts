@@ -8,13 +8,13 @@ export const QUERY_CLIENT = new InjectionToken<QueryClient>("QUERY_CLIENT");
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("DATE_FNS_LOCALE");
 
 export const EXCHANGE_RATES = new InjectionToken<Record<string, number>>(
-  "EXCHANGE_RATES"
+  "EXCHANGE_RATES",
 );
 
 export const CATALOG_VTUBERS = new InjectionToken<VTuber[]>("CATALOG_VTUBERS");
 
 export const CATALOG_CHANNELS = new InjectionToken<Channel[]>(
-  "CATALOG_CHANNELS"
+  "CATALOG_CHANNELS",
 );
 
 export const CATALOG_GROUPS = new InjectionToken<Group[]>("CATALOG_GROUPS");
@@ -192,5 +192,5 @@ export const CHAT_CURRENCIES = new InjectionToken<string[][]>(
       ["ZMW", $localize`:@@currency-zmw:Zambian Kwacha`],
       ["ZWL", $localize`:@@currency-zwl:Zimbabwean Dollar`],
     ],
-  }
+  },
 );

@@ -5,11 +5,15 @@
     [value]="config.currencySetting()"
     (selectionChange)="config.currencySetting.set($event.value)"
   >
-    <mat-option *ngFor="let currency of currencies" [value]="currency[0]">
-      {{ currency[0] }}<ng-container *ngIf="currency[2]"
-        >({{ currency[2] }})</ng-container
-      >
-      - {{ currency[1] }}
-    </mat-option>
+    @for (currency of currencies; track currency) {
+      <mat-option [value]="currency[0]">
+        {{ currency[0] }}
+        @if (currency[2]) {
+          ({{ currency[2] }})
+        }
+        -
+        {{ currency[1] }}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

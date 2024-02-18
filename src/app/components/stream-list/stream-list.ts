@@ -1,9 +1,4 @@
-import {
-  NgFor,
-  NgSwitch,
-  NgSwitchCase,
-  isPlatformServer,
-} from "@angular/common";
+import { isPlatformServer } from "@angular/common";
 import {
   Component,
   ElementRef,
@@ -20,7 +15,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { Stream } from "src/app/models";
 
-import { GroupStreamsPipe, StreamGroup } from "./group-stream.pipe";
+import { GroupStreamsPipe } from "./group-stream.pipe";
 import { StreamItem } from "./stream-item/stream-item";
 import { StreamItemShimmer } from "./stream-item/stream-item-shimmer";
 
@@ -30,9 +25,6 @@ import { StreamItemShimmer } from "./stream-item/stream-item-shimmer";
     MatProgressSpinnerModule,
     StreamItem,
     StreamItemShimmer,
-    NgFor,
-    NgSwitch,
-    NgSwitchCase,
     GroupStreamsPipe,
   ],
   selector: "vts-stream-list",
@@ -69,13 +61,5 @@ export class StreamsList implements OnInit, OnDestroy {
     if (this.obs) {
       this.obs.unobserve(this.spinner.nativeElement);
     }
-  }
-
-  trackBy(_: number, item: Stream): number {
-    return item.streamId;
-  }
-
-  trackByGroup(_: number, group: StreamGroup) {
-    return group.name;
   }
 }

@@ -3,7 +3,7 @@ import {
   Overlay,
   OverlayModule,
 } from "@angular/cdk/overlay";
-import { NgFor, NgIf, NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -24,8 +24,6 @@ import animations from "../_animations";
   standalone: true,
   imports: [
     MatTooltipModule,
-    NgIf,
-    NgFor,
     MatListModule,
     OverlayModule,
     NamePipe,

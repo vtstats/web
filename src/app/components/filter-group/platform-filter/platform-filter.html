@@ -7,7 +7,7 @@
   (menuClosed)="_isOpen = false"
   (menuOpened)="_isOpen = true"
 >
-  {{text()}}
+  {{ text() }}
 
   <mat-icon
     color="primary"
@@ -22,17 +22,13 @@
   class="dense-menu vts-menu-panel max-h-80"
   xPosition="before"
 >
-  <button *ngIf="!hideYouTube" mat-menu-item (click)="handleChange('YOUTUBE')">
-    YouTube
-  </button>
-  <button *ngIf="!hideTwitch" mat-menu-item (click)="handleChange('TWITCH')">
-    Twitch
-  </button>
-  <button
-    *ngIf="!hideBilibili"
-    mat-menu-item
-    (click)="handleChange('BILIBILI')"
-  >
-    Bilibili
-  </button>
+  @if (!hideYouTube) {
+    <button mat-menu-item (click)="handleChange('YOUTUBE')">YouTube</button>
+  }
+  @if (!hideTwitch) {
+    <button mat-menu-item (click)="handleChange('TWITCH')">Twitch</button>
+  }
+  @if (!hideBilibili) {
+    <button mat-menu-item (click)="handleChange('BILIBILI')">Bilibili</button>
+  }
 </mat-menu>

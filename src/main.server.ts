@@ -61,7 +61,7 @@ if (environment.production) {
 (<any>globalThis).__workerFetchHandler = async function fetch(
   req: Request,
   env: Env,
-  ctx: ExecutionContext
+  ctx: ExecutionContext,
 ) {
   const cache = self.caches.default;
   let res = await cache.match(req.url);
@@ -71,7 +71,7 @@ if (environment.production) {
   const url = new URL(req.url);
 
   const document = await env.ASSETS.fetch(new Request(new URL("/", url))).then(
-    (res) => res.text()
+    (res) => res.text(),
   );
 
   const queryClient = new QueryClient();
@@ -94,7 +94,7 @@ if (environment.production) {
           provideRouter(routes, withComponentInputBinding()),
         ],
       }),
-    { document, url: url.pathname }
+    { document, url: url.pathname },
   );
 
   res = new self.Response(html, {
@@ -143,7 +143,7 @@ class DehydrateQueryClientHandler
         '<script id="__QUERY_CLIENT_DEHYDRATED_STATE__" type="application/json">' +
           this.escapeState() +
           "</script>",
-        { html: true }
+        { html: true },
       );
     });
   }

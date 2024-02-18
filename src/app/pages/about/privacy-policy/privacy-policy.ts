@@ -1,9 +1,8 @@
-import { NgFor } from "@angular/common";
 import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
-  imports: [NgFor],
+  imports: [],
   selector: "vts-privacy-policy",
   templateUrl: "privacy-policy.html",
 })

@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +13,7 @@ import { MatMenuModule } from "@angular/material/menu";
 @Component({
   selector: "vts-menu",
   standalone: true,
-  imports: [NgFor, MatMenuModule, MatIconModule, MatButtonModule],
+  imports: [MatMenuModule, MatIconModule, MatButtonModule],
   template: `
     <button
       mat-button
@@ -37,13 +36,11 @@ import { MatMenuModule } from "@angular/material/menu";
       class="dense-menu vts-menu-panel max-h-80"
       xPosition="before"
     >
-      <button
-        mat-menu-item
-        *ngFor="let option of options; trackBy: trackBy"
-        (click)="onChange.emit(option.value)"
-      >
-        {{ option.label }}
-      </button>
+      @for (option of options; track option.value) {
+        <button mat-menu-item (click)="onChange.emit(option.value)">
+          {{ option.label }}
+        </button>
+      }
     </mat-menu>
   `,
   styleUrls: ["./menu.scss"],
@@ -64,9 +61,5 @@ export class Menu<Value> {
     const option = this.options.find((o) => o.value === this.value);
     if (!option) return undefined;
     return this.showLabel ? option.label : String(option.value);
-  }
-
-  trackBy(_: number, item: { value: Value; label: string }) {
-    return item.value;
   }
 }

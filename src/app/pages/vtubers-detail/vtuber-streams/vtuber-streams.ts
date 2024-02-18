@@ -1,5 +1,5 @@
-import { DatePipe, NgIf } from "@angular/common";
-import { Component, Input, signal } from "@angular/core";
+import { DatePipe } from "@angular/common";
+import { Component, Input, input, signal } from "@angular/core";
 
 import { DateFilter } from "src/app/components/filter-group/date-filter/date-filter";
 import { KeywordFilter } from "src/app/components/filter-group/keyword-filter/keyword-filter";
@@ -17,29 +17,19 @@ type QueryKey = [
     endAt?: Date;
     channelIds: number[];
     keyword: string;
-  }
+  },
 ];
 
 @Component({
   standalone: true,
-  imports: [
-    StreamsList,
-    KeywordFilter,
-    DateFilter,
-    NgIf,
-    DatePipe,
-    RefreshButton,
-  ],
+  imports: [StreamsList, KeywordFilter, DateFilter, DatePipe, RefreshButton],
   selector: "vts-vtuber-streams",
   templateUrl: "./vtuber-streams.html",
 })
 export class VtuberStreams {
   @Input({ required: true }) vtuber!: VTuber;
 
-  channels = signal<Array<Channel>>([]);
-  @Input("channels") set channels_(channels: Array<Channel>) {
-    this.channels.set(channels);
-  }
+  channels = input<Array<Channel>>([]);
 
   selectedDateRange = signal<[Date, Date] | null>(null);
   keyword = signal("");

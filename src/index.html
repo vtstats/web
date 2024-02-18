@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -76,7 +76,7 @@
       try {
         const setting = window.localStorage.getItem("vts:themeSetting");
         const prefersDarkMode = window.matchMedia(
-          "(prefers-color-scheme: dark)"
+          "(prefers-color-scheme: dark)",
         ).matches;
         const isDarkMode =
           setting === "dark" ||

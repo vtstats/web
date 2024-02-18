@@ -41,12 +41,14 @@
       mat-header-cell
       *matHeaderCellDef
     >
-      {{valueLabel}}
+      {{ valueLabel }}
     </th>
     <td class="!text-right font-mono" mat-cell *matCellDef="let row">
-      <ng-container *ngIf="!loading; else shimmer">
+      @if (!loading) {
         {{ row.value | number }}
-      </ng-container>
+      } @else {
+        <span class="animate-pulse shimmer text w-20"></span>
+      }
     </td>
     <td
       class="!text-center"
@@ -54,39 +56,40 @@
       *matFooterCellDef
       class="!text-right font-mono"
     >
-      <ng-container *ngIf="!loading; else shimmer">
-        {{ getTotal('value') | number }}
-      </ng-container>
+      @if (!loading) {
+        {{ getTotal("value") | number }}
+      } @else {
+        <span class="animate-pulse shimmer text w-20"></span>
+      }
     </td>
   </ng-container>
 
-  <ng-container
-    *ngFor="let column of dataColumns; trackBy:columnTrackBy"
-    [matColumnDef]="column.f"
-  >
-    <th
-      class="whitespace-nowrap"
-      mat-header-cell
-      *matHeaderCellDef
-      mat-sort-header
-    >
-      {{column.t}}
-    </th>
-
-    <td mat-cell *matCellDef="let row" class="!text-right font-mono">
-      <vts-channel-stats-table-delta-cell
-        *ngIf="!loading; else shimmer"
-        [delta]="row[column.f]"
-      />
-    </td>
-
-    <td mat-footer-cell *matFooterCellDef class="!text-right font-mono">
-      <vts-channel-stats-table-delta-cell
-        *ngIf="!loading; else shimmer"
-        [delta]="getTotal(column.f)"
-      />
-    </td>
-  </ng-container>
+  @for (column of dataColumns; track column.f) {
+    <ng-container [matColumnDef]="column.f">
+      <th
+        class="whitespace-nowrap"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        {{ column.t }}
+      </th>
+      <td mat-cell *matCellDef="let row" class="!text-right font-mono">
+        @if (!loading) {
+          <vts-channel-stats-table-delta-cell [delta]="row[column.f]" />
+        } @else {
+          <span class="animate-pulse shimmer text w-20"></span>
+        }
+      </td>
+      <td mat-footer-cell *matFooterCellDef class="!text-right font-mono">
+        @if (!loading) {
+          <vts-channel-stats-table-delta-cell [delta]="getTotal(column.f)" />
+        } @else {
+          <span class="animate-pulse shimmer text w-20"></span>
+        }
+      </td>
+    </ng-container>
+  }
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

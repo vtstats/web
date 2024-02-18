@@ -2,10 +2,7 @@ import {
   AsyncPipe,
   DatePipe,
   DecimalPipe,
-  NgIf,
   NgOptimizedImage,
-  NgSwitch,
-  NgSwitchCase,
 } from "@angular/common";
 import {
   ChangeDetectionStrategy,
@@ -37,9 +34,6 @@ import { QUERY_CLIENT } from "src/app/shared/tokens";
   standalone: true,
   imports: [
     RouterModule,
-    NgSwitch,
-    NgIf,
-    NgSwitchCase,
     DatePipe,
     DecimalPipe,
     AsyncPipe,
@@ -69,7 +63,7 @@ export class StreamItem {
   get titleHtml(): SafeHtml | string | null {
     if (this.stream.highlightedTitle) {
       return this.sanitizer.bypassSecurityTrustHtml(
-        this.stream.highlightedTitle
+        this.stream.highlightedTitle,
       );
     } else {
       return this.sanitizer.sanitize(SecurityContext.HTML, this.stream.title);
@@ -104,7 +98,7 @@ export class StreamItem {
         "stream",
         { platform: this.stream.platform, platformId: this.stream.platformId },
       ],
-      this.stream
+      this.stream,
     );
   }
 
@@ -121,14 +115,14 @@ export class StreamItem {
             .open("Video added to playlist.", "VIEW", {
               duration: 5000, // 5s
             })
-            .onAction()
-        )
+            .onAction(),
+        ),
       )
       .subscribe({
         next: () => {
           window.open(
             `https://www.youtube.com/playlist?list=${this.config.playlist}`,
-            "_blank"
+            "_blank",
           );
         },
         error: (err) => {
@@ -138,7 +132,7 @@ export class StreamItem {
             undefined,
             {
               duration: 3000, // 3s
-            }
+            },
           );
         },
       });

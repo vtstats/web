@@ -1,12 +1,11 @@
-import { NgIf, formatDate, formatNumber } from "@angular/common";
+import { formatDate, formatNumber } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   LOCALE_ID,
   computed,
   inject,
-  signal,
+  input,
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import type { EChartsOption } from "echarts";
@@ -21,7 +20,7 @@ import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  imports: [Chart, NgIf, MatCheckboxModule],
+  imports: [Chart, MatCheckboxModule],
   selector: "vts-stream-viewer-stats",
   templateUrl: "stream-viewer-stats.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,10 +28,7 @@ import { query } from "src/app/shared/qry";
 export class StreamViewerStats {
   private locale = inject(LOCALE_ID);
 
-  stream = signal<Stream | null>(null);
-  @Input("stream") set _stream(stream: Stream) {
-    this.stream.set(stream);
-  }
+  stream = input<Stream | null>(null);
 
   statsQry = query<
     Array<[number, number]>,

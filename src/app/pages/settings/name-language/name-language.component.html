@@ -4,8 +4,10 @@
     [value]="nameSetting()"
     (selectionChange)="nameSetting.set($event.value)"
   >
-    <mat-option *ngFor="let lang of languages" [value]="lang.value">
-      {{ lang.label }}
-    </mat-option>
+    @for (lang of languages; track lang) {
+      <mat-option [value]="lang.value">
+        {{ lang.label }}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

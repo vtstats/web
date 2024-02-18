@@ -4,8 +4,10 @@
     [value]="themeSetting()"
     (selectionChange)="themeSetting.set($event.value)"
   >
-    <mat-option *ngFor="let option of options" [value]="option.value">
-      {{ option.label }}
-    </mat-option>
+    @for (option of options; track option) {
+      <mat-option [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

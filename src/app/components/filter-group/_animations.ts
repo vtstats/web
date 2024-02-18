@@ -13,7 +13,7 @@ export default [
       style({
         opacity: 0,
         transform: "scale(1, 0.8)",
-      })
+      }),
     ),
     transition(
       "void => showing",
@@ -22,8 +22,8 @@ export default [
         style({
           opacity: 1,
           transform: "scale(1, 1)",
-        })
-      )
+        }),
+      ),
     ),
     transition("* => void", animate("100ms linear", style({ opacity: 0 }))),
   ]),

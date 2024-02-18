@@ -10,63 +10,65 @@
     [ngSrc]="stream.thumbnailUrl + '?ngsw-bypass'"
   />
 
-  <ng-container [ngSwitch]="stream.platform">
-    <div
-      *ngSwitchCase="'YOUTUBE'"
-      class="bg-[#d74432] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-    >
-      YouTube
-    </div>
-
-    <div
-      *ngSwitchCase="'TWITCH'"
-      class="bg-[#9146ff] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-    >
-      Twitch
-    </div>
-  </ng-container>
-
-  <ng-container [ngSwitch]="stream.status">
-    <div
-      *ngSwitchCase="'SCHEDULED'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-    >
-      {{ stream.scheduleTime | date: "HH:mm" }}
-    </div>
-
-    <div
-      *ngSwitchCase="'LIVE'"
-      class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-    >
-      Live
-    </div>
-
-    <div
-      *ngSwitchCase="'ENDED'"
-      class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-    >
-      {{ stream.startTime! | duration: stream.endTime! }}
-    </div>
-  </ng-container>
+  @switch (stream.platform) {
+    @case ("YOUTUBE") {
+      <div
+        class="bg-[#d74432] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+      >
+        YouTube
+      </div>
+    }
+    @case ("TWITCH") {
+      <div
+        class="bg-[#9146ff] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+      >
+        Twitch
+      </div>
+    }
+  }
+  @switch (stream.status) {
+    @case ("SCHEDULED") {
+      <div
+        class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+      >
+        {{ stream.scheduleTime | date: "HH:mm" }}
+      </div>
+    }
+    @case ("LIVE") {
+      <div
+        class="bg-[#cc0000e6] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+      >
+        Live
+      </div>
+    }
+    @case ("ENDED") {
+      <div
+        class="bg-[#000000cc] absolute bottom-1 right-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+      >
+        {{ stream.startTime! | duration: stream.endTime! }}
+      </div>
+    }
+  }
 
   <span class="hidden group-hover:block absolute right-1 top-1">
-    <a
-      *ngIf="stream.platform == 'YOUTUBE'"
-      class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white"
-      [attr.href]="'https://youtu.be/' + stream.platformId"
-      target="_blank"
-      (click)="$event.stopPropagation()"
-    >
-      <mat-icon class="p-0.5 m-0" svgIcon="open_in_new" />
-    </a>
-
-    <a
-      *ngIf="showPlaylistIcon"
-      class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white mt-1"
-      (click)="addToPlaylist($event)"
-    >
-      <mat-icon class="p-0.5 m-0" svgIcon="playlist_add" />
-    </a>
+    @if (stream.platform == "YOUTUBE") {
+      <a
+        class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white"
+        [attr.href]="'https://youtu.be/' + stream.platformId"
+        target="_blank"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon class="p-0.5 m-0" svgIcon="open_in_new" />
+      </a>
+    }
+    @if (showPlaylistIcon) {
+      <a
+        class="bg-[#000000cc] rounded text-[0] block cursor-pointer text-white mt-1"
+        (click)="addToPlaylist($event)"
+      >
+        <mat-icon class="p-0.5 m-0" svgIcon="playlist_add" />
+      </a>
+    }
   </span>
 </a>
 
@@ -80,30 +82,22 @@
 >
 </a>
 
-<div
-  *ngIf="stream.status === 'LIVE' || stream.status === 'ENDED'"
-  class="mat-secondary-text mat-small mb-1 flex flex-row items-center"
->
-  <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="eye" />
-
-  <span class="mr-1" i18n-title="@@average-viewers" title="Average Viewers">
-    {{ (stream.viewerAvg | number) || "----" }}
-  </span>
-
-  <span class="mr-1 select-none">/</span>
-
-  <span class="mr-2" i18n-title="@@maximum-viewers" title="Maximum Viewers">
-    {{ (stream.viewerMax | number) || "----" }}
-  </span>
-
-  <ng-container
-    *ngIf="stream.status === 'ENDED' && stream.platform === 'YOUTUBE'"
-  >
-    <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up" />
-
-    <span title="Like">{{ (stream.likeMax | number) || "----" }}</span>
-  </ng-container>
-</div>
+@if (stream.status === "LIVE" || stream.status === "ENDED") {
+  <div class="mat-secondary-text mat-small mb-1 flex flex-row items-center">
+    <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="eye" />
+    <span class="mr-1" i18n-title="@@average-viewers" title="Average Viewers">
+      {{ (stream.viewerAvg | number) || "----" }}
+    </span>
+    <span class="mr-1 select-none">/</span>
+    <span class="mr-2" i18n-title="@@maximum-viewers" title="Maximum Viewers">
+      {{ (stream.viewerMax | number) || "----" }}
+    </span>
+    @if (stream.status === "ENDED" && stream.platform === "YOUTUBE") {
+      <mat-icon class="!h-4 !w-4 align-middle mr-1" svgIcon="thumb_up" />
+      <span title="Like">{{ (stream.likeMax | number) || "----" }}</span>
+    }
+  </div>
+}
 
 <div class="mat-small flex-row flex items-center">
   <img
@@ -126,29 +120,30 @@
 
   <span class="flex-grow-0 flex-shrink-0 mr-1 select-none">•</span>
 
-  <ng-container [ngSwitch]="stream.status">
-    <span
-      *ngSwitchCase="'SCHEDULED'"
-      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
-      [attr.title]="stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss'"
-    >
-      {{ stream.scheduleTime! | distance: (tick.everyMinute$ | async) }}
-    </span>
-
-    <span
-      *ngSwitchCase="'LIVE'"
-      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
-      [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
-    >
-      {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
-    </span>
-
-    <span
-      *ngSwitchCase="'ENDED'"
-      class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
-      [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
-    >
-      {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
-    </span>
-  </ng-container>
+  @switch (stream.status) {
+    @case ("SCHEDULED") {
+      <span
+        class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+        [attr.title]="stream.scheduleTime | date: 'yyyy/MM/dd HH:mm:ss'"
+      >
+        {{ stream.scheduleTime! | distance: (tick.everyMinute$ | async) }}
+      </span>
+    }
+    @case ("LIVE") {
+      <span
+        class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+        [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
+      >
+        {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
+      </span>
+    }
+    @case ("ENDED") {
+      <span
+        class="whitespace-no-wrap flex-grow-0 flex-shrink-0"
+        [attr.title]="stream.startTime | date: 'yyyy/MM/dd HH:mm:ss'"
+      >
+        {{ stream.startTime! | distance: (tick.everyMinute$ | async) }}
+      </span>
+    }
+  }
 </div>

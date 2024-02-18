@@ -47,8 +47,8 @@ export class QryService {
       React.createElement(
         QueryClientProvider,
         { client: this.client },
-        React.createElement(ReactQueryDevtools, { initialIsOpen: false })
-      )
+        React.createElement(ReactQueryDevtools, { initialIsOpen: false }),
+      ),
     );
   }
 }

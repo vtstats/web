@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from "@angular/common";
 import { Component, Input, ViewEncapsulation, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
@@ -11,8 +10,6 @@ import { DrawerService } from "src/app/shared/services/drawer";
   standalone: true,
   selector: "vts-sidenav-menu",
   imports: [
-    NgIf,
-    NgFor,
     MatListModule,
     MatIconModule,
     MatButtonModule,
@@ -20,22 +17,24 @@ import { DrawerService } from "src/app/shared/services/drawer";
     MatDividerModule,
   ],
   template: `
-    <div
-      *ngIf="headline"
-      class="text-xs p-4 tracking-wider mat-secondary-text font-medium select-none uppercase"
-    >
-      {{ headline }}
-    </div>
-    <a
-      *ngFor="let item of items"
-      mat-list-item
-      [routerLink]="item.link"
-      routerLinkActive="router-active mat-color-primary"
-      (click)="onClick()"
-    >
-      <mat-icon color="black" matListItemIcon [svgIcon]="item.icon" />
-      <p matListItemTitle>{{ item.title }}</p>
-    </a>
+    @if (headline) {
+      <div
+        class="text-xs p-4 tracking-wider mat-secondary-text font-medium select-none uppercase"
+      >
+        {{ headline }}
+      </div>
+    }
+    @for (item of items; track item) {
+      <a
+        mat-list-item
+        [routerLink]="item.link"
+        routerLinkActive="router-active mat-color-primary"
+        (click)="onClick()"
+      >
+        <mat-icon color="black" matListItemIcon [svgIcon]="item.icon" />
+        <p matListItemTitle>{{ item.title }}</p>
+      </a>
+    }
   `,
   styleUrls: ["./menu.scss"],
   encapsulation: ViewEncapsulation.None,

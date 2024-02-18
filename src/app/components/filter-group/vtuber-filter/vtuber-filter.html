@@ -8,8 +8,9 @@
   #trigger="cdkOverlayOrigin"
 >
   VTuber
-
-  <ng-container *ngIf="selected.size > 0"> +{{selected.size}}</ng-container>
+  @if (selected.size > 0) {
+    +{{ selected.size }}
+  }
 
   <mat-icon
     [color]="selected.size > 0 ? 'primary' : null"
@@ -48,20 +49,18 @@
       class="-mat-list-density-2 !p-0"
       (selectionChange)="onListChange($event)"
     >
-      <mat-list-option
-        *ngFor="let vtb of _vtubers"
-        [value]="vtb"
-        [selected]="selected.has(vtb)"
-      >
-        <img
-          class="!h-8 !w-8"
-          height="32"
-          width="32"
-          matListItemAvatar
-          [src]="vtb | avatar"
-        />
-        {{vtb | name}}
-      </mat-list-option>
+      @for (vtb of _vtubers; track vtb) {
+        <mat-list-option [value]="vtb" [selected]="selected.has(vtb)">
+          <img
+            class="!h-8 !w-8"
+            height="32"
+            width="32"
+            matListItemAvatar
+            [src]="vtb | avatar"
+          />
+          {{ vtb | name }}
+        </mat-list-option>
+      }
     </mat-selection-list>
   </div>
 </ng-template>

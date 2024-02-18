@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -6,7 +5,7 @@ import { ThemeService } from "src/app/shared/config/theme.service";
 
 @Component({
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, NgFor],
+  imports: [MatFormFieldModule, MatSelectModule],
   selector: "vts-theme-settings",
   templateUrl: "theme-settings.html",
 })

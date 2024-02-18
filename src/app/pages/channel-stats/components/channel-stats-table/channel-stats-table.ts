@@ -1,4 +1,4 @@
-import { DecimalPipe, NgFor, NgIf, NgOptimizedImage } from "@angular/common";
+import { DecimalPipe, NgOptimizedImage } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -34,8 +34,6 @@ export type ChannelStatsRow = {
     MatTableModule,
     MatSortModule,
     RouterModule,
-    NgIf,
-    NgFor,
     DecimalPipe,
     NamePipe,
     AvatarPipe,
@@ -88,10 +86,6 @@ export class ChannelStatsTable implements AfterViewInit {
 
   rowTrackBy(_: number, channel: ChannelStatsRow): string {
     return channel.vtuberId;
-  }
-
-  columnTrackBy(_: number, column: { f: keyof ChannelStatsRow }): string {
-    return column.f;
   }
 
   getTotal(field: "value" | "delta1d" | "delta7d" | "delta30d"): number {

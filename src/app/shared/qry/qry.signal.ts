@@ -23,7 +23,7 @@ export const query = <
   TError,
   TData,
   TQueryData,
-  TQueryKey extends QueryKey
+  TQueryKey extends QueryKey,
 >(
   objOrFun:
     | QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
@@ -33,7 +33,7 @@ export const query = <
         TData,
         TQueryData,
         TQueryKey
-      >)
+      >),
 ): Signal<QueryObserverResult<TData, TError>> => {
   const client = inject(QUERY_CLIENT);
 
@@ -71,7 +71,7 @@ export const query = <
       () => {
         observer.setOptions(optionsSignal());
       },
-      { allowSignalWrites: true }
+      { allowSignalWrites: true },
     );
   }
 
@@ -85,7 +85,7 @@ export const infiniteQuery = <
   TError,
   TData,
   TQueryData,
-  TQueryKey extends QueryKey = QueryKey
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: () => InfiniteQueryObserverOptions<
     TQueryFnData,
@@ -93,7 +93,7 @@ export const infiniteQuery = <
     TData,
     TQueryData,
     TQueryKey
-  >
+  >,
 ): Signal<InfiniteQueryObserverResult<TData, TError>> => {
   const client = inject(QUERY_CLIENT);
 
@@ -115,7 +115,7 @@ export const infiniteQuery = <
     () => {
       observer.setOptions(optionsSignal());
     },
-    { allowSignalWrites: true }
+    { allowSignalWrites: true },
   );
 
   effect((onCleanup) => onCleanup(unSubscribe));

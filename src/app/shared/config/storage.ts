@@ -1,7 +1,10 @@
 import { BehaviorSubject } from "rxjs";
 
 export class StorageSubject<T> extends BehaviorSubject<T> {
-  constructor(private key: string, private defaultValue: T) {
+  constructor(
+    private key: string,
+    private defaultValue: T,
+  ) {
     let value: T;
 
     try {

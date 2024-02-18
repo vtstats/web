@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, LOCALE_ID, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -8,7 +7,7 @@ import { ConfigService } from "src/app/shared";
 @Component({
   selector: "vts-display-language",
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, NgFor],
+  imports: [MatFormFieldModule, MatSelectModule],
   templateUrl: "./display-language.component.html",
 })
 export class DisplayLanguageComponent {

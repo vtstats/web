@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, Input, OnInit, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
 import { startOfHour } from "date-fns";
@@ -12,13 +11,7 @@ import { StreamViewerStats } from "./stream-viewer-stats/stream-viewer-stats";
 
 @Component({
   standalone: true,
-  imports: [
-    NgIf,
-    StreamChatStats,
-    StreamEvents,
-    StreamSummary,
-    StreamViewerStats,
-  ],
+  imports: [StreamChatStats, StreamEvents, StreamSummary, StreamViewerStats],
   selector: "vts-streams-detail",
   templateUrl: "streams-detail.html",
 })

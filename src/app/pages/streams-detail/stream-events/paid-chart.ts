@@ -2,12 +2,11 @@ import { CurrencyPipe, DecimalPipe } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   LOCALE_ID,
   Signal,
   computed,
   inject,
-  signal,
+  input,
 } from "@angular/core";
 import { MatTableModule } from "@angular/material/table";
 import { type EChartsOption } from "echarts";
@@ -47,7 +46,7 @@ import { CHAT_CURRENCIES } from "src/app/shared/tokens";
         <div
           class="absolute left-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 text-2xl"
         >
-          {{ totalValue() | currency : currency.currencySetting() }}
+          {{ totalValue() | currency: currency.currencySetting() }}
         </div>
       </div>
 
@@ -72,7 +71,7 @@ import { CHAT_CURRENCIES } from "src/app/shared/tokens";
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="!text-right">Value</th>
             <td mat-cell *matCellDef="let row" class="!text-right">
-              {{ row.value | currency : currency.currencySetting() }}
+              {{ row.value | currency: currency.currencySetting() }}
             </td>
           </ng-container>
           <tr
@@ -91,18 +90,14 @@ export class PaidChart {
   currencies = inject(CHAT_CURRENCIES);
   locale = inject(LOCALE_ID);
 
-  @Input("paid") set _paid(p: Paid[] | null | undefined) {
-    if (p) this.paid.set(p);
-  }
-
-  paid = signal<Paid[]>([]);
+  paid = input<Paid[] | undefined>([]);
 
   dataSource: Signal<
     { name: string; code: string; value: number; count: number }[]
   > = computed(() => {
     const exchange = this.currency.exchange();
     const dataSource = [];
-    for (const p of this.paid()) {
+    for (const p of this.paid() || []) {
       const index = dataSource.findIndex((i) => i.code === p.code);
       const value = exchange[p.code] * p.value;
       if (index === -1) {
@@ -117,7 +112,7 @@ export class PaidChart {
   });
 
   totalValue = computed(() =>
-    this.dataSource().reduce((acc, p) => acc + p.value, 0)
+    this.dataSource().reduce((acc, p) => acc + p.value, 0),
   );
 
   options = computed<EChartsOption>(() => ({

@@ -9,7 +9,7 @@ export class DistancePipe implements PipeTransform {
 
   transform(
     start: number | Date | null,
-    end: number | Date | null
+    end: number | Date | null,
   ): string | null {
     if (!start || !end) return null;
 

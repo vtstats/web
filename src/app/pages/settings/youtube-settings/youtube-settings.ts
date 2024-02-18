@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf, NgOptimizedImage } from "@angular/common";
+import { AsyncPipe, NgOptimizedImage } from "@angular/common";
 import { AfterViewInit, Component, ElementRef, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -30,7 +30,6 @@ export class GoogleButton implements AfterViewInit {
     PlaylistSelector,
     MatIconModule,
     AsyncPipe,
-    NgIf,
     MatButtonModule,
     NgOptimizedImage,
   ],

@@ -34,7 +34,7 @@ export const streamCanActive: CanActivateFn = async (route) => {
 
     queryClient.setQueryData(
       ["stream", { platform: stream.platform, platformId: stream.platformId }],
-      stream
+      stream,
     );
 
     return createUrlTreeFromSnapshot(route, [

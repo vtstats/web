@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -8,7 +7,7 @@ import { VTuberService } from "src/app/shared/config/vtuber.service";
 @Component({
   selector: "vts-name-language",
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, NgFor],
+  imports: [MatFormFieldModule, MatSelectModule],
   templateUrl: "./name-language.component.html",
 })
 export class NameLanguageComponent {

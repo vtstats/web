@@ -1,4 +1,3 @@
-import { NgSwitch, NgSwitchCase } from "@angular/common";
 import { ApplicationRef, Component, OnInit, inject } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
@@ -7,7 +6,7 @@ import { concat, first, interval, switchMap, tap } from "rxjs";
 
 @Component({
   standalone: true,
-  imports: [NgSwitch, NgSwitchCase, MatIconModule, MatSnackBarModule],
+  imports: [MatIconModule, MatSnackBarModule],
   selector: "vts-update-indicator",
   templateUrl: "update-indicator.html",
   host: { class: "inline-block align-middle" },
@@ -26,7 +25,7 @@ export class UpdateIndicator implements OnInit {
     }
 
     const appIsStable$ = this.appRef.isStable.pipe(
-      first((isStable) => isStable === true)
+      first((isStable) => isStable === true),
     );
 
     const everySixHours$ = interval(6 * 60 * 60 * 1000);
@@ -38,7 +37,7 @@ export class UpdateIndicator implements OnInit {
     concat(appIsStable$, everySixHours$)
       .pipe(
         tap(() => (this.status = "checking")),
-        switchMap(() => this.swUpdates.checkForUpdate())
+        switchMap(() => this.swUpdates.checkForUpdate()),
       )
       .subscribe({
         next: (ready) => {

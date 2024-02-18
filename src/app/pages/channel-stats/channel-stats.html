@@ -1,46 +1,41 @@
-<ng-container *ngIf="channels().length == 0; else table">
+@if (channels().length == 0) {
   <vts-select-vtuber-alert />
-</ng-container>
-
-<ng-template #table>
-  <ng-container *ngIf="result() as result">
+} @else {
+  @if (result(); as result) {
     <div
       class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
     >
-      <vts-platform-filter
-        *ngIf="kind !== 'REVENUE'"
-        [hideTwitch]="kind === 'VIEW'"
-        (onChange)="platformFilter.set($event)"
-      />
-
+      @if (kind !== "REVENUE") {
+        <vts-platform-filter
+          [hideTwitch]="kind === 'VIEW'"
+          (onChange)="platformFilter.set($event)"
+        />
+      }
       <vts-vtuber-filter (selectedChange)="vtuberFilter.set($event)" />
-
       <div class="flex-1"></div>
-
-      <vts-menu
-        *ngIf="kind === 'REVENUE'"
-        [showLabel]="false"
-        [options]="currencyOptions"
-        [value]="currency.currencySetting()"
-        (change)="currency.currencySetting.set($event)"
-      />
-
+      @if (kind === "REVENUE") {
+        <vts-menu
+          [showLabel]="false"
+          [options]="currencyOptions"
+          [value]="currency.currencySetting()"
+          (change)="currency.currencySetting.set($event)"
+        />
+      }
       <vts-refresh-button
         [isLoading]="result.isFetching"
         [refresh]="result.refetch"
         [updatedAt]="updatedAt()"
       />
     </div>
-
     <div class="px-4 overflow-x-auto">
-      <vts-channel-stats-table
-        *ngIf="!result.error"
-        [valueLabel]="valueLabel"
-        [dataSource]="data()"
-        [loading]="result.isFetching"
-      />
+      @if (!result.error) {
+        <vts-channel-stats-table
+          [valueLabel]="valueLabel"
+          [dataSource]="data()"
+          [loading]="result.isFetching"
+        />
+      }
     </div>
-
     <!-- TODO: display error -->
-  </ng-container>
-</ng-template>
+  }
+}

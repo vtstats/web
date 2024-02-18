@@ -1,9 +1,9 @@
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
   Input,
   OnInit,
+  input,
   signal,
 } from "@angular/core";
 import { MatChipsModule } from "@angular/material/chips";
@@ -30,10 +30,6 @@ export type StreamEventsGroup = {
 @Component({
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
-    NgSwitch,
-    NgSwitchCase,
     PaidChart,
     UseCurrencyPipe,
     StreamEventsChart,
@@ -43,47 +39,39 @@ export type StreamEventsGroup = {
   selector: "vts-stream-events-inner",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *ngIf="chipOptions().length > 0; else noData">
+    @if (chipOptions().length > 0) {
       <div class="mx-4 mt-4 flex">
         <mat-chip-listbox
           [value]="selectedChip()"
           (change)="selectedChip.set($event.value)"
           hideSingleSelectionIndicator
         >
-          <mat-chip-option
-            *ngFor="let option of chipOptions()"
-            [value]="option.value"
-          >
-            {{ option.label }}
-          </mat-chip-option>
+          @for (option of chipOptions(); track option) {
+            <mat-chip-option [value]="option.value">
+              {{ option.label }}
+            </mat-chip-option>
+          }
         </mat-chip-listbox>
       </div>
-
-      <ng-container [ngSwitch]="selectedChip()">
-        <vts-stream-events-paid-chart
-          *ngSwitchCase="'superChats'"
-          [paid]="group.superChats"
-        />
-        <vts-stream-events-paid-chart
-          *ngSwitchCase="'superSticker'"
-          [paid]="group.superSticker"
-        />
-        <vts-stream-events-chart
-          *ngSwitchCase="'timed'"
-          [group]="group"
-          [stream]="stream"
-        />
-      </ng-container>
-    </ng-container>
-
-    <ng-template #noData>
+      @switch (selectedChip()) {
+        @case ("superChats") {
+          <vts-stream-events-paid-chart [paid]="group.superChats" />
+        }
+        @case ("superSticker") {
+          <vts-stream-events-paid-chart [paid]="group.superSticker" />
+        }
+        @case ("timed") {
+          <vts-stream-events-chart [group]="group" [stream]="stream" />
+        }
+      }
+    } @else {
       <div
         [style.height.px]="300"
         class="items-center justify-center flex mat-secondary-text tracking-widest text-lg"
       >
         NO DATA
       </div>
-    </ng-template>
+    }
   `,
 })
 export class StreamEventsInner implements OnInit {
@@ -129,23 +117,19 @@ export class StreamEventsInner implements OnInit {
 
 @Component({
   standalone: true,
-  imports: [StreamEventsInner, NgIf],
+  imports: [StreamEventsInner],
   selector: "vts-stream-events",
   template: `
-    <div
-      *ngIf="statsQry().data as result"
-      class="mat-border-divider rounded border border-solid mb-4"
-    >
-      <vts-stream-events-inner [group]="result" [stream]="stream()!" />
-    </div>
+    @if (statsQry().data; as result) {
+      <div class="mat-border-divider rounded border border-solid mb-4">
+        <vts-stream-events-inner [group]="result" [stream]="stream()!" />
+      </div>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StreamEvents {
-  stream = signal<Stream | null>(null);
-  @Input("stream") set _stream(stream: Stream) {
-    this.stream.set(stream);
-  }
+  stream = input<Stream | null>(null);
 
   statsQry = query<
     Array<StreamsEvent>,

@@ -1,4 +1,4 @@
-import { NgFor, formatDate } from "@angular/common";
+import { formatDate } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -23,7 +23,7 @@ import { DATE_FNS_LOCALE } from "src/app/shared/tokens";
 
 @Component({
   standalone: true,
-  imports: [Chart, NgFor],
+  imports: [Chart],
   selector: "vts-stream-time-calendar",
   templateUrl: "stream-time-calendar.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -79,13 +79,13 @@ export class StreamTimeCalendar implements OnChanges {
             if (value >= 3600) {
               return formatDuration(
                 { hours: ((value / 360) | 0) / 10 },
-                { locale: this.dateFns }
+                { locale: this.dateFns },
               );
             }
 
             return formatDuration(
               { minutes: (value / 60) | 0 },
-              { locale: this.dateFns }
+              { locale: this.dateFns },
             );
           };
 
@@ -124,7 +124,7 @@ export class StreamTimeCalendar implements OnChanges {
             formatDate(
               new Date(2017, Number(param.M) - 1, 1),
               "MMM",
-              this.locale
+              this.locale,
             ),
         },
         splitLine: { show: false },

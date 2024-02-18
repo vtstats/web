@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, Input, OnInit, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
 import { startOfHour } from "date-fns";
@@ -11,7 +10,7 @@ import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
 
 @Component({
   standalone: true,
-  imports: [NgIf, StreamTime, VtuberSummary, ChannelOverview, VtuberStreams],
+  imports: [StreamTime, VtuberSummary, ChannelOverview, VtuberStreams],
   selector: "vts-vtubers-detail",
   templateUrl: "vtubers-detail.html",
 })

@@ -14,28 +14,30 @@
     />
   </div>
 
-  <ng-container [ngSwitch]="precision">
-    <vts-stream-time-calendar *ngSwitchCase="'day'" [times]="result().data" />
-
-    <vts-stream-time-bar-chart
-      *ngSwitchCase="'hour'"
-      [loading]="result().isLoading"
-      [times]="result().data || []"
-      groupBy="hour"
-    />
-
-    <vts-stream-time-bar-chart
-      *ngSwitchCase="'month'"
-      [loading]="result().isLoading"
-      [times]="result().data || []"
-      groupBy="month"
-    />
-
-    <vts-stream-time-bar-chart
-      *ngSwitchCase="'weekday'"
-      [loading]="result().isLoading"
-      [times]="result().data || []"
-      groupBy="weekday"
-    />
-  </ng-container>
+  @switch (precision) {
+    @case ("day") {
+      <vts-stream-time-calendar [times]="result().data" />
+    }
+    @case ("hour") {
+      <vts-stream-time-bar-chart
+        [loading]="result().isLoading"
+        [times]="result().data || []"
+        groupBy="hour"
+      />
+    }
+    @case ("month") {
+      <vts-stream-time-bar-chart
+        [loading]="result().isLoading"
+        [times]="result().data || []"
+        groupBy="month"
+      />
+    }
+    @case ("weekday") {
+      <vts-stream-time-bar-chart
+        [loading]="result().isLoading"
+        [times]="result().data || []"
+        groupBy="weekday"
+      />
+    }
+  }
 </div>

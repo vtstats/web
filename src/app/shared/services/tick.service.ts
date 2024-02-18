@@ -18,13 +18,13 @@ export class TickService {
       this.everySecond$ = interval(1000).pipe(
         map(() => new Date()),
         startWith(new Date()),
-        shareReplay(1)
+        shareReplay(1),
       );
 
       this.everyMinute$ = interval(60 * 1000).pipe(
         map(() => new Date()),
         startWith(new Date()),
-        shareReplay(1)
+        shareReplay(1),
       );
     }
   }

@@ -32,13 +32,13 @@ export class ShareTarget implements OnInit {
 
     // match channel id
     const youtubeChannelId = /youtube.com\/channel\/([A-Za-z0-9_-]{24})/.exec(
-      shareParams
+      shareParams,
     )?.[1];
 
     if (youtubeChannelId) {
       const channel = this.channels.find(
         (c) =>
-          c.platform === Platform.YOUTUBE && c.platformId === youtubeChannelId
+          c.platform === Platform.YOUTUBE && c.platformId === youtubeChannelId,
       );
 
       if (channel) {

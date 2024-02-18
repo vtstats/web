@@ -1,4 +1,4 @@
-import { NgFor, NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
@@ -7,7 +7,7 @@ import { AvatarPipe, NamePipe } from "src/app/shared";
 
 @Component({
   standalone: true,
-  imports: [MatIconModule, NgFor, AvatarPipe, NamePipe, NgOptimizedImage],
+  imports: [MatIconModule, AvatarPipe, NamePipe, NgOptimizedImage],
   selector: "vts-vtuber-summary",
   templateUrl: "vtuber-summary.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
