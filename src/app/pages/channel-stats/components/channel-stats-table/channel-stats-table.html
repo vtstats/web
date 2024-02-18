@@ -11,13 +11,16 @@
   <ng-container matColumnDef="profile">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row">
-      <img
-        class="max-w-none cursor-pointer align-middle rounded-full"
-        height="32"
-        width="32"
-        [ngSrc]="row.vtuberId | avatar"
-        [routerLink]="['/vtuber', row.vtuberId]"
-      />
+      @if (findVTuber(row.vtuberId); as vtb) {
+        <img
+          class="max-w-none cursor-pointer align-middle rounded-full"
+          [class.grayscale]="!!vtb.retiredAt"
+          height="32"
+          width="32"
+          [ngSrc]="vtb.thumbnailUrl"
+          [routerLink]="['/vtuber', row.vtuberId]"
+        />
+      }
     </td>
     <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>

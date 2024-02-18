@@ -6,12 +6,14 @@ import {
   Input,
   ViewChild,
   ViewEncapsulation,
+  inject,
 } from "@angular/core";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
 
-import { AvatarPipe, NamePipe } from "src/app/shared";
+import { NamePipe } from "src/app/shared";
+import { CATALOG_VTUBERS } from "src/app/shared/tokens";
 import { DeltaCell } from "./delta-cell";
 
 export type ChannelStatsRow = {
@@ -36,13 +38,18 @@ export type ChannelStatsRow = {
     RouterModule,
     DecimalPipe,
     NamePipe,
-    AvatarPipe,
     NgOptimizedImage,
     DeltaCell,
   ],
 })
 export class ChannelStatsTable implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
+
+  vtubers = inject(CATALOG_VTUBERS);
+
+  findVTuber(id: string) {
+    return this.vtubers.find((v) => v.vtuberId === id);
+  }
 
   data = new MatTableDataSource<ChannelStatsRow>([]);
 
