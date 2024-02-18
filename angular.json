@@ -95,18 +95,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "vts:build"
+            "buildTarget": "vts:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "vts:build:production"
+              "buildTarget": "vts:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "vts:build"
+            "buildTarget": "vts:build"
           }
         },
         "server": {

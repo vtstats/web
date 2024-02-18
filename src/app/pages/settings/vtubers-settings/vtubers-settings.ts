@@ -138,10 +138,12 @@ export class VTubersSettings {
       return node.children.forEach((node) => this.check(node));
     }
 
-    this.vtuberSrv.selected.mutate((arr) => {
-      if (!arr.includes(node.id)) {
-        arr.push(node.id);
+    this.vtuberSrv.selected.update((arr) => {
+      const a = [...arr];
+      if (!a.includes(node.id)) {
+        a.push(node.id);
       }
+      return a;
     });
   }
 
@@ -150,11 +152,13 @@ export class VTubersSettings {
       return node.children.forEach((node) => this.uncheck(node));
     }
 
-    this.vtuberSrv.selected.mutate((arr) => {
-      const index = arr.indexOf(node.id);
+    this.vtuberSrv.selected.update((arr) => {
+      const a = [...arr];
+      const index = a.indexOf(node.id);
       if (index !== -1) {
-        arr.splice(index, 1);
+        a.splice(index, 1);
       }
+      return a;
     });
   }
 }
