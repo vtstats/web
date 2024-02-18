@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { SwUpdate } from "@angular/service-worker";
 
@@ -6,7 +5,7 @@ import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   selector: "vts-ngsw-settings",
   templateUrl: "ngsw-settings.html",
 })

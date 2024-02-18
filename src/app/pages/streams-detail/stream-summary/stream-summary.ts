@@ -2,18 +2,14 @@ import {
   AsyncPipe,
   DatePipe,
   DecimalPipe,
-  NgIf,
   NgOptimizedImage,
-  NgSwitch,
-  NgSwitchCase,
 } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   computed,
   inject,
-  signal,
+  input,
 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -44,17 +40,13 @@ import { query } from "src/app/shared/qry";
     DatePipe,
     AsyncPipe,
     DecimalPipe,
-    NgIf,
     MatTooltipModule,
     MatIconModule,
-
     DurationPipe,
     NamePipe,
     AvatarPipe,
     UseCurrencyPipe,
     NgOptimizedImage,
-    NgSwitch,
-    NgSwitchCase,
   ],
   selector: "vts-stream-summary",
   templateUrl: "stream-summary.html",
@@ -65,10 +57,7 @@ export class StreamSummary {
 
   currency = inject(CurrencyService);
 
-  stream = signal<Stream | null>(null);
-  @Input("stream") set _stream(stream: Stream | null) {
-    this.stream.set(stream);
-  }
+  stream = input<Stream | null>(null);
 
   revenueQry = query<
     Array<StreamsEvent>,
@@ -83,43 +72,46 @@ export class StreamSummary {
       queryKey: ["stream-events", { streamId: st?.streamId! }],
       queryFn: () => api.streamEvents(st!.streamId),
       select: (events) => {
-        return events.reduce((acc, event) => {
-          switch (event.kind) {
-            case StreamEventKind.YOUTUBE_SUPER_CHAT: {
-              acc.push({
-                code: event.value.currencyCode,
-                color: event.value.color,
-                value: Number.parseFloat(event.value.amount),
-              });
-              break;
+        return events.reduce(
+          (acc, event) => {
+            switch (event.kind) {
+              case StreamEventKind.YOUTUBE_SUPER_CHAT: {
+                acc.push({
+                  code: event.value.currencyCode,
+                  color: event.value.color,
+                  value: Number.parseFloat(event.value.amount),
+                });
+                break;
+              }
+              case StreamEventKind.YOUTUBE_SUPER_STICKER: {
+                acc.push({
+                  code: event.value.currencyCode,
+                  color: event.value.color,
+                  value: Number.parseFloat(event.value.amount),
+                });
+                break;
+              }
+              case StreamEventKind.TWITCH_CHEERING: {
+                acc.push({
+                  code: "USD",
+                  color: "",
+                  value: event.value.bits / 100,
+                });
+                break;
+              }
+              case StreamEventKind.TWITCH_HYPER_CHAT: {
+                acc.push({
+                  code: event.value.currency_code,
+                  color: "",
+                  value: Number.parseFloat(event.value.amount),
+                });
+                break;
+              }
             }
-            case StreamEventKind.YOUTUBE_SUPER_STICKER: {
-              acc.push({
-                code: event.value.currencyCode,
-                color: event.value.color,
-                value: Number.parseFloat(event.value.amount),
-              });
-              break;
-            }
-            case StreamEventKind.TWITCH_CHEERING: {
-              acc.push({
-                code: "USD",
-                color: "",
-                value: event.value.bits / 100,
-              });
-              break;
-            }
-            case StreamEventKind.TWITCH_HYPER_CHAT: {
-              acc.push({
-                code: event.value.currency_code,
-                color: "",
-                value: Number.parseFloat(event.value.amount),
-              });
-              break;
-            }
-          }
-          return acc;
-        }, <Paid[]>[]);
+            return acc;
+          },
+          <Paid[]>[],
+        );
       },
     };
   });

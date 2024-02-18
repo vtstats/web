@@ -116,7 +116,7 @@ export class GoogleApiService {
             maxResults: "50",
           },
         },
-        { arrayFormat: "comma" }
+        { arrayFormat: "comma" },
       ),
       {
         selector: (res) => res.json(),
@@ -126,13 +126,13 @@ export class GoogleApiService {
             gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true)
               .access_token,
         },
-      }
+      },
     );
   }
 
   addToPlaylist(
     playlistId: string,
-    videoId: string
+    videoId: string,
   ): Observable<YouTubeAddPlaylistItemResponse> {
     return fromFetch(
       qs.stringifyUrl({
@@ -156,7 +156,7 @@ export class GoogleApiService {
             resourceId: { kind: "youtube#video", videoId },
           },
         }),
-      }
+      },
     );
   }
 }

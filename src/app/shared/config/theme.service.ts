@@ -14,7 +14,7 @@ export class ThemeService {
   private document = inject(DOCUMENT);
 
   themeSetting = signal<ThemeSetting>(
-    getLocalStorage(storageKey, "followSystem")
+    getLocalStorage(storageKey, "followSystem"),
   );
 
   themeSettingEffect = effect(() => {
@@ -22,7 +22,7 @@ export class ThemeService {
   });
 
   prefersDarkMode = toSignal(
-    fromMediaMatch("(prefers-color-scheme: dark)", true)
+    fromMediaMatch("(prefers-color-scheme: dark)", true),
   );
 
   theme = computed(() => {

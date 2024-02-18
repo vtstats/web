@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, OnInit, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -9,7 +8,7 @@ import { GoogleService } from "src/app/shared/config/youtube.service";
 
 @Component({
   standalone: true,
-  imports: [NgFor, MatFormFieldModule, MatSelectModule],
+  imports: [MatFormFieldModule, MatSelectModule],
   selector: "vts-playlist-selector",
   templateUrl: "playlist-selector.html",
 })
@@ -28,7 +27,7 @@ export class PlaylistSelector implements OnInit {
         this.items = res.items;
         if (this.config.playlist) {
           this.selected = res.items.find(
-            (item: any) => item.id === this.config.playlist
+            (item: any) => item.id === this.config.playlist,
           )?.id;
         }
         if (!this.selected && res.items.length > 0) {

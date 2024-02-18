@@ -15,7 +15,7 @@ export class DrawerService {
   sidenavOpen = computed(() => this.resizeService.windowWidth() > 1200);
 
   sidenavMode = computed<MatDrawerMode>(() =>
-    this.sidenavOpen() ? "side" : "over"
+    this.sidenavOpen() ? "side" : "over",
   );
 
   sidenavFixedTopGap = computed(() => (this.sidenavOpen() ? 65 : 0));

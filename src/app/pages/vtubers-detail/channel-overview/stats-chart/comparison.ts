@@ -1,6 +1,5 @@
 import {
   DecimalPipe,
-  NgIf,
   TitleCasePipe,
   formatCurrency,
   formatNumber,
@@ -21,7 +20,7 @@ import { ChannelStatsKind } from "./stats-chart.component";
 
 @Component({
   standalone: true,
-  imports: [DecimalPipe, TitleCasePipe, NgIf, MatIconModule],
+  imports: [DecimalPipe, TitleCasePipe, MatIconModule],
   selector: "vts-stats-comparison",
   template: `
     <div class="mat-h4 mb-1 mat-secondary-text">
@@ -33,21 +32,18 @@ import { ChannelStatsKind } from "./stats-chart.component";
         {{ text }}
       </div>
 
-      <div
-        *ngIf="delta > 0"
-        class="mat-h4 mb-1 inline-flex flex-row items-center up-color"
-      >
-        <mat-icon class="mr-1" svgIcon="arrow-up" />
-        {{ delta | number }}
-      </div>
-
-      <div
-        *ngIf="delta < 0"
-        class="mat-h4 mb-1 inline-flex flex-row items-center down-color"
-      >
-        <mat-icon class="mr-1" svgIcon="arrow-down" />
-        {{ delta | number }}
-      </div>
+      @if (delta > 0) {
+        <div class="mat-h4 mb-1 inline-flex flex-row items-center up-color">
+          <mat-icon class="mr-1" svgIcon="arrow-up" />
+          {{ delta | number }}
+        </div>
+      }
+      @if (delta < 0) {
+        <div class="mat-h4 mb-1 inline-flex flex-row items-center down-color">
+          <mat-icon class="mr-1" svgIcon="arrow-down" />
+          {{ delta | number }}
+        </div>
+      }
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,7 +74,7 @@ export class StatsComparisonComponent {
         this.locale,
         codeToSymbol[code] || code,
         code,
-        "1.0-0"
+        "1.0-0",
       );
     }
 

@@ -2,11 +2,10 @@ import { formatDate, formatNumber } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   LOCALE_ID,
   computed,
   inject,
-  signal,
+  input,
 } from "@angular/core";
 import { startOfHour, subDays } from "date-fns";
 import type { EChartsOption } from "echarts";
@@ -27,7 +26,7 @@ import { StatsComparisonComponent } from "./comparison";
 
 type QueryKey = [
   `channel-stats/${"revenue" | "view" | "subscriber"}`,
-  { channelId: number; startAt?: Date; endAt?: Date }
+  { channelId: number; startAt?: Date; endAt?: Date },
 ];
 
 export type ChannelStatsKind = "subscriber" | "view" | "revenue";
@@ -60,20 +59,9 @@ export type ChannelStatsKind = "subscriber" | "view" | "revenue";
 export class StatsChartComponent {
   private locale = inject(LOCALE_ID);
 
-  precision = signal<7 | 30 | 90 | null>(null);
-  @Input("precision") set _precision(precision: 7 | 30 | 90) {
-    this.precision.set(precision);
-  }
-
-  channel = signal<Channel | null>(null);
-  @Input({ alias: "channel", required: true }) set _channel(channel: Channel) {
-    this.channel.set(channel);
-  }
-
-  kind = signal<ChannelStatsKind | null>(null);
-  @Input("kind") set _kind(kind: ChannelStatsKind) {
-    this.kind.set(kind);
-  }
+  precision = input<7 | 30 | 90 | null>(null);
+  channel = input<Channel | null>(null);
+  kind = input<ChannelStatsKind | null>(null);
 
   currency = inject(CurrencyService);
 
@@ -114,8 +102,8 @@ export class StatsChartComponent {
         kind === "subscriber"
           ? channelSubscriberStats(channelId, startAt, endAt)
           : kind === "revenue"
-          ? channelRevenueStats(channelId, startAt, endAt)
-          : channelViewStats(channelId, startAt, endAt),
+            ? channelRevenueStats(channelId, startAt, endAt)
+            : channelViewStats(channelId, startAt, endAt),
 
       select: (res) => this._select(res),
 
@@ -145,7 +133,7 @@ export class StatsChartComponent {
       { step },
       (row) => row[0],
       (row) => row[1],
-      Math.max
+      Math.max,
     );
 
     return {
@@ -209,7 +197,7 @@ export class StatsChartComponent {
   }
 
   _select(
-    arr: Array<[number, number]> | Array<[number, Record<string, number>]>
+    arr: Array<[number, number]> | Array<[number, Record<string, number>]>,
   ): Array<[number, number]> {
     if (arr.length == 0) return [];
 
@@ -227,7 +215,7 @@ export class StatsChartComponent {
           }
           return acc;
         },
-        0
+        0,
       );
 
       return [t, value | 0] as [number, number];

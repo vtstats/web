@@ -3,24 +3,22 @@
     <div class="mat-h3 m-0" i18n="@@live-chat">Live Chat</div>
   </div>
 
-  <vts-chart
-    *ngIf="statsQry().data?.length"
-    [height]="300"
-    [options]="options()"
-    (chartInit)="onChartInit($event)"
-  />
-
-  <div
-    *ngIf="statsQry().data?.length === 0"
-    [style.height.px]="300"
-    class="items-center justify-center flex mat-secondary-text tracking-widest text-lg"
-  >
-    NO DATA
-  </div>
-
-  <div
-    *ngIf="statsQry().isLoading"
-    [style.height.px]="300"
-    class="shimmer rounded animate-pulse"
-  ></div>
+  @if (statsQry().data?.length) {
+    <vts-chart
+      [height]="300"
+      [options]="options()"
+      (chartInit)="onChartInit($event)"
+    />
+  }
+  @if (statsQry().data?.length === 0) {
+    <div
+      [style.height.px]="300"
+      class="items-center justify-center flex mat-secondary-text tracking-widest text-lg"
+    >
+      NO DATA
+    </div>
+  }
+  @if (statsQry().isLoading) {
+    <div [style.height.px]="300" class="shimmer rounded animate-pulse"></div>
+  }
 </div>

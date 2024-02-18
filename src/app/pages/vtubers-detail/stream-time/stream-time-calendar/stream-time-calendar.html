@@ -1,11 +1,10 @@
 <div class="flex">
   <div class="w-4 font-mono mat-small mat-secondary-text">
-    <div
-      class="mb-1 h-4 w-full"
-      *ngFor="let day of ['S', 'M', 'T', 'W', 'T', 'F', 'S']"
-    >
-      {{ day }}
-    </div>
+    @for (day of ["S", "M", "T", "W", "T", "F", "S"]; track day) {
+      <div class="mb-1 h-4 w-full">
+        {{ day }}
+      </div>
+    }
   </div>
 
   <div dir="rtl" class="flex-1 overflow-x-auto">
@@ -18,16 +17,27 @@
 <div class="mat-text-caption mat-secondary-text text-right mt-2">
   Less
   <svg [attr.width]="84" [attr.height]="12">
-    <rect
-      *ngFor="let color of ['#00bfa510', '#00bfa544', '#00bfa588', '#00bfa5CC', '#00bfa5FF']; index as i"
-      rx="2"
-      ry="2"
-      [attr.x]="4 + i * 16"
-      [attr.y]="0"
-      [attr.width]="12"
-      [attr.height]="12"
-      [attr.fill]="color"
-    />
+    @for (
+      color of [
+        "#00bfa510",
+        "#00bfa544",
+        "#00bfa588",
+        "#00bfa5CC",
+        "#00bfa5FF"
+      ];
+      track color;
+      let i = $index
+    ) {
+      <rect
+        rx="2"
+        ry="2"
+        [attr.x]="4 + i * 16"
+        [attr.y]="0"
+        [attr.width]="12"
+        [attr.height]="12"
+        [attr.fill]="color"
+      />
+    }
   </svg>
   More
 </div>

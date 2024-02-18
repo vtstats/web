@@ -147,7 +147,7 @@ export class AppComponent implements AfterViewInit {
     for (const [name, svg] of icons) {
       this.iconRegistry.addSvgIconLiteral(
         name,
-        this.sanitizer.bypassSecurityTrustHtml(svg)
+        this.sanitizer.bypassSecurityTrustHtml(svg),
       );
     }
   }

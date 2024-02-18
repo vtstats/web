@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgFor } from "@angular/common";
+import { AsyncPipe, DatePipe } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -7,7 +7,7 @@ import { ConfigService, TickService } from "src/app/shared";
 
 @Component({
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, DatePipe],
+  imports: [MatFormFieldModule, MatSelectModule, AsyncPipe, DatePipe],
   selector: "vts-timezone-settings",
   templateUrl: "timezone-settings.html",
 })

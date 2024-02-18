@@ -1,48 +1,41 @@
-<ng-container [ngSwitch]="true">
-  <ng-container *ngSwitchCase="!loading && !!groupBy">
-    <ng-container
-      *ngFor="let group of items | groupStreams; trackBy:trackByGroup"
-    >
+@switch (true) {
+  @case (!loading && !!groupBy) {
+    @for (group of items | groupStreams; track group.name) {
       <div class="mat-h3 font-medium">{{ group.name }}</div>
-
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        <vts-stream-item
-          *ngFor="let stream of group.streams; trackBy:trackBy"
-          [stream]="stream"
-        />
+        @for (stream of group.streams; track stream.streamId) {
+          <vts-stream-item [stream]="stream" />
+        }
       </div>
-    </ng-container>
-  </ng-container>
-
-  <div
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-    *ngSwitchCase="!loading && !groupBy"
-  >
-    <vts-stream-item
-      *ngFor="let stream of items; trackBy:trackBy"
-      [stream]="stream"
-    />
-  </div>
-
-  <ng-container *ngSwitchCase="loading && !!groupBy">
-    <ng-container *ngFor="let _ of  [1, 2]">
+    }
+  }
+  @case (!loading && !groupBy) {
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      @for (stream of items; track stream.streamId) {
+        <vts-stream-item [stream]="stream" />
+      }
+    </div>
+  }
+  @case (loading && !!groupBy) {
+    @for (_ of [1, 2]; track _) {
       <div class="mat-h3">
         <span class="shimmer text w-10"></span>
       </div>
-
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        <vts-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
+        @for (_ of [1, 2, 3, 4, 5]; track _) {
+          <vts-stream-item-shimmer />
+        }
       </div>
-    </ng-container>
-  </ng-container>
-
-  <div
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-    *ngSwitchCase="loading && !groupBy"
-  >
-    <vts-stream-item-shimmer *ngFor="let _ of [1, 2, 3, 4, 5]" />
-  </div>
-</ng-container>
+    }
+  }
+  @case (loading && !groupBy) {
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      @for (_ of [1, 2, 3, 4, 5]; track _) {
+        <vts-stream-item-shimmer />
+      }
+    </div>
+  }
+}
 
 <div [hidden]="loading || hideSpinner" class="m-4">
   <mat-spinner class="mx-auto" #spinner [diameter]="30" />

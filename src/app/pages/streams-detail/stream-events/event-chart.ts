@@ -30,7 +30,7 @@ export class StreamEventsChart implements OnInit {
     const input5: number[] = this.group.twitchCheering || [];
     const input6: number[] = (this.group.twitchHyperChat || []).map(
       // @ts-ignore
-      (c) => c.time
+      (c) => c.time,
     );
 
     const series: RegisteredSeriesOption["line"][] = [
@@ -156,7 +156,7 @@ export class StreamEventsChart implements OnInit {
     const date = formatDate(
       params[0].value[0],
       "yyyy/MM/dd HH:mm",
-      this.locale
+      this.locale,
     );
 
     let html = `<div class="text-xs text-[#737373]">${date}</div>`;
@@ -165,7 +165,7 @@ export class StreamEventsChart implements OnInit {
 
       html += `<div class="text-sm">${param.seriesName}: ${formatNumber(
         param.value[1],
-        this.locale
+        this.locale,
       )}</div>`;
     }
     return html;

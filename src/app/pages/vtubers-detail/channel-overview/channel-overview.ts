@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, Input, inject } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
 import { formatDuration } from "date-fns";
@@ -10,7 +9,7 @@ import { StatsChartComponent } from "./stats-chart/stats-chart.component";
 
 @Component({
   standalone: true,
-  imports: [NgIf, MatDividerModule, StatsChartComponent, Menu],
+  imports: [MatDividerModule, StatsChartComponent, Menu],
   selector: "vts-channel-overview",
   templateUrl: "channel-overview.html",
 })

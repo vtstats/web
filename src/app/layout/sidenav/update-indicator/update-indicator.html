@@ -1,29 +1,30 @@
-<ng-container [ngSwitch]="status">
-  <mat-icon
-    class="mat-secondary-text !w-4 !h-4 animate-spin"
-    title="Checking for updates"
-    *ngSwitchCase="'checking'"
-    svgIcon="sync"
-  />
-
-  <mat-icon
-    class="mat-secondary-text !w-4 !h-4"
-    title="Failed to check for updates"
-    *ngSwitchCase="'failed'"
-    svgIcon="sync_problem"
-  />
-
-  <mat-icon
-    class="mat-secondary-text !w-4 !h-4"
-    title="Up to date"
-    *ngSwitchCase="'updated'"
-    svgIcon="check_circle"
-  />
-
-  <mat-icon
-    class="mat-secondary-text !w-4 !h-4"
-    title="New update available"
-    *ngSwitchCase="'outdated'"
-    svgIcon="arrow_circle_down"
-  />
-</ng-container>
+@switch (status) {
+  @case ("checking") {
+    <mat-icon
+      class="mat-secondary-text !w-4 !h-4 animate-spin"
+      title="Checking for updates"
+      svgIcon="sync"
+    />
+  }
+  @case ("failed") {
+    <mat-icon
+      class="mat-secondary-text !w-4 !h-4"
+      title="Failed to check for updates"
+      svgIcon="sync_problem"
+    />
+  }
+  @case ("updated") {
+    <mat-icon
+      class="mat-secondary-text !w-4 !h-4"
+      title="Up to date"
+      svgIcon="check_circle"
+    />
+  }
+  @case ("outdated") {
+    <mat-icon
+      class="mat-secondary-text !w-4 !h-4"
+      title="New update available"
+      svgIcon="arrow_circle_down"
+    />
+  }
+}

@@ -3,7 +3,7 @@ import {
   Overlay,
   OverlayModule,
 } from "@angular/cdk/overlay";
-import { NgIf } from "@angular/common";
+
 import {
   Component,
   EventEmitter,
@@ -23,7 +23,7 @@ import { Platform } from "src/app/models";
   standalone: true,
   selector: "vts-platform-filter",
   templateUrl: "platform-filter.html",
-  imports: [NgIf, OverlayModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [OverlayModule, MatButtonModule, MatMenuModule, MatIconModule],
 })
 export class PlatformFilter {
   closeScrollStrategy = inject(Overlay).scrollStrategies.close();

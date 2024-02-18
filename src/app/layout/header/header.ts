@@ -40,7 +40,7 @@ export class Header {
 
   nextTheme() {
     this.theme.themeSetting.set(
-      this.theme.theme() === "dark" ? "light" : "dark"
+      this.theme.theme() === "dark" ? "light" : "dark",
     );
   }
 

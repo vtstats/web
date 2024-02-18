@@ -5,7 +5,7 @@ import { differenceInSeconds } from "date-fns";
 export class DurationPipe implements PipeTransform {
   transform(
     start: number | Date | null,
-    end: Date | number | null
+    end: Date | number | null,
   ): string | null {
     if (!start || !end) return null;
 

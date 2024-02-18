@@ -1,16 +1,13 @@
-import { NgClass } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   selector: "vts-chart",
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   template: `
     <div
-      #container
-      class="w-full"
+      class="w-full shimmer rounded animate-pulse"
       [style.height.px]="height"
-      [ngClass]="loading ? 'shimmer rounded animate-pulse' : null"
     ></div>
   `,
   host: { ngSkipHydration: "true" },

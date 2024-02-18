@@ -31,10 +31,13 @@ export class VTuberService {
   vtuberNames = computed(() => {
     const nameSetting = this.nameSetting();
 
-    return this.vtubers.reduce((acc, i) => {
-      acc[i.vtuberId] = i[nameSetting] || i.nativeName;
-      return acc;
-    }, {} as Record<string, string>);
+    return this.vtubers.reduce(
+      (acc, i) => {
+        acc[i.vtuberId] = i[nameSetting] || i.nativeName;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
   });
 
   selectedChannels = computed(() => {
@@ -45,9 +48,12 @@ export class VTuberService {
   groupNames = computed(() => {
     const nameSetting = this.nameSetting();
 
-    return this.groups.reduce((acc, i) => {
-      acc[i.groupId] = i[nameSetting] || i.nativeName;
-      return acc;
-    }, {} as Record<string, string>);
+    return this.groups.reduce(
+      (acc, i) => {
+        acc[i.groupId] = i[nameSetting] || i.nativeName;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
   });
 }

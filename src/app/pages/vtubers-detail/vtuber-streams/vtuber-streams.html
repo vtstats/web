@@ -1,28 +1,25 @@
 <div class="mat-h3 font-medium" i18n="@@recent-streams">Recent Streams</div>
 
-<ng-container *ngIf="result() as result">
+@if (result(); as result) {
   <div
     class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
   >
     <vts-date-filter (selectedChange)="selectedDateRange.set($event)" />
-
     <vts-keyword-filter (onChange)="keyword.set($event)" />
-
     <div class="flex-1"></div>
-
     <vts-refresh-button
       [isLoading]="result.isFetching"
       [refresh]="result.refetch"
       [updatedAt]="result.data?.pages?.[0]?.updatedAt"
     />
   </div>
-
-  <vts-stream-list
-    *ngIf="!result.isError"
-    [loading]="result.isLoading"
-    [items]="result.data?.pages?.[0]?.items"
-    [hideSpinner]="!result.hasNextPage"
-    (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
-  >
-  </vts-stream-list>
-</ng-container>
+  @if (!result.isError) {
+    <vts-stream-list
+      [loading]="result.isLoading"
+      [items]="result.data?.pages?.[0]?.items"
+      [hideSpinner]="!result.hasNextPage"
+      (reachedEnd)="result.isFetchingNextPage ? null : result.fetchNextPage()"
+    >
+    </vts-stream-list>
+  }
+}

@@ -96,13 +96,13 @@ export class StreamTimeBarChart {
       if (value >= 3600) {
         return formatDuration(
           { hours: ((value / 360) | 0) / 10 },
-          { locale: this.dateFns }
+          { locale: this.dateFns },
         );
       }
 
       return formatDuration(
         { minutes: (value / 60) | 0 },
-        { locale: this.dateFns }
+        { locale: this.dateFns },
       );
     };
 
@@ -169,7 +169,7 @@ export class StreamTimeBarChart {
             acc[idx][1] += time[1];
             return acc;
           },
-          range(0, 24).map((i) => [i, 0] as [number, number])
+          range(0, 24).map((i) => [i, 0] as [number, number]),
         );
       }
       case "month": {
@@ -180,9 +180,9 @@ export class StreamTimeBarChart {
             ([time, _]) => {
               const dt = fromUnixTime(time);
               return new Date(dt.getFullYear(), dt.getMonth()).getTime();
-            }
+            },
           ),
-          ([m, _]) => m
+          ([m, _]) => m,
         );
       }
       case "weekday": {
@@ -193,8 +193,8 @@ export class StreamTimeBarChart {
             return acc;
           },
           range(0, 7).map(
-            (i) => [new Date(2017, 0, 1 + i).getTime(), 0] as [number, number]
-          )
+            (i) => [new Date(2017, 0, 1 + i).getTime(), 0] as [number, number],
+          ),
         );
       }
     }

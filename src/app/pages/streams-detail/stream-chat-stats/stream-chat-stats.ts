@@ -1,12 +1,5 @@
-import { NgIf, formatDate, formatNumber } from "@angular/common";
-import {
-  Component,
-  Input,
-  LOCALE_ID,
-  computed,
-  inject,
-  signal,
-} from "@angular/core";
+import { formatDate, formatNumber } from "@angular/common";
+import { Component, LOCALE_ID, computed, inject, input } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import type { EChartsOption } from "echarts";
 import type { ECharts } from "echarts/core";
@@ -20,17 +13,14 @@ import { sampling } from "src/utils";
 
 @Component({
   standalone: true,
-  imports: [Chart, MatCheckboxModule, NgIf],
+  imports: [Chart, MatCheckboxModule],
   selector: "vts-stream-chat-stats",
   templateUrl: "stream-chat-stats.html",
 })
 export class StreamChatStats {
   private locale = inject(LOCALE_ID);
 
-  stream = signal<Stream | null>(null);
-  @Input("stream") set _stream(stream: Stream) {
-    this.stream.set(stream);
-  }
+  stream = input<Stream | null>(null);
 
   statsQry = query<
     Array<[number, number, number]>,
@@ -55,14 +45,14 @@ export class StreamChatStats {
       { count: 50 },
       (row) => row[0],
       (row) => row[1],
-      (a, b) => a + b
+      (a, b) => a + b,
     );
     const member = sampling(
       rows,
       { count: 50 },
       (row) => row[0],
       (row) => row[2],
-      (a, b) => a + b
+      (a, b) => a + b,
     );
 
     return {

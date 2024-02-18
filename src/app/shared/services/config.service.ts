@@ -12,7 +12,7 @@ import {
 export class ConfigService implements OnDestroy {
   playlist: string | null;
   timezone$ = new BehaviorSubject<string | null>(
-    getLocalStorage("timezone", null)
+    getLocalStorage("timezone", null),
   );
 
   snackBar$: Subscription | null = null;

@@ -14,7 +14,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
       [disabled]="isLoading"
       (click)="refresh()"
       i18n-matTooltip="@@updated-at"
-      matTooltip="Updated at {{ updatedAt | date : 'MM/dd HH:mm' }}"
+      matTooltip="Updated at {{ updatedAt | date: 'MM/dd HH:mm' }}"
       aria-label="Refresh"
     >
       <mat-icon [class.animate-spin]="isLoading" svgIcon="refresh" />

@@ -28,16 +28,18 @@
     </p>
 
     <ul>
-      <li *ngFor="let service of services">
-        <a
-          class="text-inherit"
-          [attr.href]="service.url"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ service.name }}
-        </a>
-      </li>
+      @for (service of services; track service) {
+        <li>
+          <a
+            class="text-inherit"
+            [attr.href]="service.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ service.name }}
+          </a>
+        </li>
+      }
     </ul>
   </div>
 

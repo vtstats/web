@@ -1,25 +1,26 @@
-import {
-  DecimalPipe,
-  NgSwitch,
-  NgSwitchCase,
-  NgSwitchDefault,
-} from "@angular/common";
+import { DecimalPipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 
 @Component({
   standalone: true,
-  imports: [NgSwitch, NgSwitchCase, NgSwitchDefault, DecimalPipe],
+  imports: [DecimalPipe],
   selector: "vts-channel-stats-table-delta-cell",
   template: `
-    <ng-container [ngSwitch]="true">
-      <span class="up-color" *ngSwitchCase="delta > 0">
-        {{ delta | number }}
-      </span>
-      <span class="down-color" *ngSwitchCase="delta < 0">
-        {{ delta | number }}
-      </span>
-      <span class="mat-secondary-text" *ngSwitchDefault> --- </span>
-    </ng-container>
+    @switch (true) {
+      @case (delta > 0) {
+        <span class="up-color">
+          {{ delta | number }}
+        </span>
+      }
+      @case (delta < 0) {
+        <span class="down-color">
+          {{ delta | number }}
+        </span>
+      }
+      @default {
+        <span class="mat-secondary-text"> --- </span>
+      }
+    }
   `,
 })
 export class DeltaCell {

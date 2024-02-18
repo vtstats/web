@@ -43,7 +43,10 @@ export class GoogleService {
 
   initialized$ = new ReplaySubject<boolean>();
 
-  constructor(private ngZone: NgZone, private cdr: ApplicationRef) {
+  constructor(
+    private ngZone: NgZone,
+    private cdr: ApplicationRef,
+  ) {
     // for ssr
     if (typeof window === "undefined") return;
 
@@ -74,9 +77,9 @@ export class GoogleService {
               .split("")
               .map(
                 (chart) =>
-                  "%" + ("00" + chart.charCodeAt(0).toString(16)).slice(-2)
+                  "%" + ("00" + chart.charCodeAt(0).toString(16)).slice(-2),
               )
-              .join("")
+              .join(""),
           );
           const parsed: GoogleUser = JSON.parse(jsonPayload);
           this.user$.next({
@@ -141,21 +144,21 @@ export class GoogleService {
                 maxResults: "50",
               },
             },
-            { arrayFormat: "comma" }
+            { arrayFormat: "comma" },
           ),
           {
             selector: (res) => res.json(),
             headers: { Authorization: "Bearer " + token },
-          }
-        )
+          },
+        ),
       ),
-      tap(console.log)
+      tap(console.log),
     );
   }
 
   addToPlaylist(
     playlistId: string,
-    videoId: string
+    videoId: string,
   ): Observable<YouTubeAddPlaylistItemResponse> {
     return this.token$.pipe(
       mergeMap(([token]) =>
@@ -178,9 +181,9 @@ export class GoogleService {
                 resourceId: { kind: "youtube#video", videoId },
               },
             }),
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 }

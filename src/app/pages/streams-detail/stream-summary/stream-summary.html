@@ -8,21 +8,22 @@
         [src]="stream()?.thumbnailUrl + '?ngsw-bypass'"
       />
 
-      <ng-container [ngSwitch]="stream()?.platform">
-        <div
-          *ngSwitchCase="'YOUTUBE'"
-          class="bg-[#d74432] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-        >
-          YouTube
-        </div>
-
-        <div
-          *ngSwitchCase="'TWITCH'"
-          class="bg-[#9146ff] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
-        >
-          Twitch
-        </div>
-      </ng-container>
+      @switch (stream()?.platform) {
+        @case ("YOUTUBE") {
+          <div
+            class="bg-[#d74432] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+          >
+            YouTube
+          </div>
+        }
+        @case ("TWITCH") {
+          <div
+            class="bg-[#9146ff] absolute top-1 left-1 text-white m-0 max-h-[1.2rem] rounded font-medium text-xs/3 py-[3px] px-1"
+          >
+            Twitch
+          </div>
+        }
+      }
     </a>
   </div>
 
@@ -51,23 +52,27 @@
     <div class="mb-2">
       <span class="mat-small">Start time:</span>
       <span class="mat-body-1">
-        {{ stream()?.startTime | date: 'yyyy/MM/dd HH:mm:ss' }}
+        {{ stream()?.startTime | date: "yyyy/MM/dd HH:mm:ss" }}
       </span>
     </div>
 
-    <div class="mb-2" *ngIf="stream()?.status === 'ENDED'">
-      <span class="mat-small">End time:</span>
-      <span class="mat-body-1">
-        {{ stream()?.endTime | date: 'yyyy/MM/dd HH:mm:ss' }}
-      </span>
-    </div>
+    @if (stream()?.status === "ENDED") {
+      <div class="mb-2">
+        <span class="mat-small">End time:</span>
+        <span class="mat-body-1">
+          {{ stream()?.endTime | date: "yyyy/MM/dd HH:mm:ss" }}
+        </span>
+      </div>
+    }
 
     <div>
       <span class="mat-small">Duration: </span>
       <span class="mat-body-1">
-        {{ stream()?.status === 'ENDED' ? (stream()?.startTime! | duration:
-        stream()?.endTime!) : (stream()?.startTime! | duration: (everySecond$ |
-        async))}}
+        {{
+          stream()?.status === "ENDED"
+            ? (stream()?.startTime! | duration: stream()?.endTime!)
+            : (stream()?.startTime! | duration: (everySecond$ | async))
+        }}
       </span>
     </div>
   </div>
@@ -79,32 +84,38 @@
   <div>
     <div class="mat-small mat-secondary-text">Avg./max viewers</div>
     <div class="mat-headline-5 m-0">
-      {{ stream()?.viewerAvg ? (stream()?.viewerAvg | number) : '---' }}
+      {{ stream()?.viewerAvg ? (stream()?.viewerAvg | number) : "---" }}
       <span class="mat-body">/</span>
-      {{ stream()?.viewerMax ? (stream()?.viewerMax | number) : '---' }}
+      {{ stream()?.viewerMax ? (stream()?.viewerMax | number) : "---" }}
     </div>
   </div>
-  <div *ngIf="stream()?.platform === 'YOUTUBE'">
-    <div class="mat-small mat-secondary-text">
-      <span class="align-middle"> Likes / dislikes </span>
-      <mat-icon
-        class="!h-[12px] !w-[12px] leading-[12px] align-middle"
-        svgIcon="information_outline"
-        matTooltip="Provided by Return YouTube Dislike"
-        matTooltipPosition="above"
-      />
+  @if (stream()?.platform === "YOUTUBE") {
+    <div>
+      <div class="mat-small mat-secondary-text">
+        <span class="align-middle"> Likes / dislikes </span>
+        <mat-icon
+          class="!h-[12px] !w-[12px] leading-[12px] align-middle"
+          svgIcon="information_outline"
+          matTooltip="Provided by Return YouTube Dislike"
+          matTooltipPosition="above"
+        />
+      </div>
+      @if (ratesQry().data; as data) {
+        <div class="mat-headline-5 m-0">
+          {{ data.likes | number }}
+          <span class="mat-body">/</span>
+          {{ data.dislikes | number }}
+        </div>
+      }
     </div>
-    <div class="mat-headline-5 m-0" *ngIf="ratesQry()?.data as data">
-      {{ data.likes | number }}
-      <span class="mat-body">/</span>
-      {{ data.dislikes | number }}
-    </div>
-  </div>
+  }
   <div>
     <div class="mat-small mat-secondary-text" i18n="@@live-chat">Live chat</div>
-    <div class="mat-headline-5 m-0" *ngIf="chatCountQry() as result">
-      {{ result.data ? (result.data | number) : '---' }}
-    </div>
+    @if (chatCountQry(); as result) {
+      <div class="mat-headline-5 m-0">
+        {{ result.data ? (result.data | number) : "---" }}
+      </div>
+    }
   </div>
   <div>
     <div class="mat-small mat-secondary-text">
@@ -113,15 +124,18 @@
         class="!h-[12px] !w-[12px] leading-[12px] align-middle"
         svgIcon="information_outline"
         [matTooltip]="
-          'Only includes ' + (stream()?.platform == 'YOUTUBE'
+          'Only includes ' +
+          (stream()?.platform == 'YOUTUBE'
             ? 'YouTube Super Chat & Super Sticker'
             : 'Twitch Cheering & Hyper Chat')
         "
         matTooltipPosition="above"
       />
     </div>
-    <div class="mat-headline-5 m-0" *ngIf="revenueQry() as result">
-      {{ result.data ? (result.data | useCurrency) : '---' }}
-    </div>
+    @if (revenueQry(); as result) {
+      <div class="mat-headline-5 m-0">
+        {{ result.data ? (result.data | useCurrency) : "---" }}
+      </div>
+    }
   </div>
 </div>

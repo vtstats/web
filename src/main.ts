@@ -135,7 +135,7 @@ const bootstrap = async () => {
         routes,
         withInMemoryScrolling({ scrollPositionRestoration: "enabled" }),
         withComponentInputBinding(),
-        withRouterConfig({ urlUpdateStrategy: "eager" })
+        withRouterConfig({ urlUpdateStrategy: "eager" }),
       ),
       provideAnimations(),
     ],

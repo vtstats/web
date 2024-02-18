@@ -1,4 +1,3 @@
-import { NgSwitch, NgSwitchCase } from "@angular/common";
 import { Component, Input, inject } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
 import { ActivatedRoute } from "@angular/router";
@@ -15,12 +14,9 @@ import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar"
 @Component({
   standalone: true,
   imports: [
-    NgSwitch,
-    NgSwitchCase,
     MatDividerModule,
     StreamTimeBarChart,
     StreamTimeCalendar,
-
     FormatDurationPipe,
     Menu,
   ],

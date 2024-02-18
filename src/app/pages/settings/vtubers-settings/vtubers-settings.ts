@@ -37,14 +37,14 @@ export class VTubersSettings {
 
   treeControl = new FlatTreeControl<Node & { level: number }>(
     /* getLevel */ (node) => node.level,
-    /* isExpandable */ (node) => node.expandable
+    /* isExpandable */ (node) => node.expandable,
   );
 
   treeFlattener = new MatTreeFlattener<Node, Node & { level: number }>(
     /* transformFunction */ (node, level) => ({ ...node, level }),
     /* getLevel */ (node) => node.level,
     /* isExpandable */ (node) => node.expandable,
-    /* getChildren */ (node) => node.children
+    /* getChildren */ (node) => node.children,
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -88,35 +88,38 @@ export class VTubersSettings {
 
       children: group.children
         .sort((a, b) => a.localeCompare(b))
-        .reduce((arr, id) => {
-          if (id.startsWith("vtuber:")) {
-            const vtuberId = id.slice("vtuber:".length);
-            const vtuber = vtubers.find((v) => v.vtuberId === vtuberId);
+        .reduce(
+          (arr, id) => {
+            if (id.startsWith("vtuber:")) {
+              const vtuberId = id.slice("vtuber:".length);
+              const vtuber = vtubers.find((v) => v.vtuberId === vtuberId);
 
-            if (vtuber) {
-              arr.push({
-                id: vtuberId,
-                label: vtuber[nameSetting] || vtuber.nativeName,
-                expandable: false,
-                children: [],
-              });
+              if (vtuber) {
+                arr.push({
+                  id: vtuberId,
+                  label: vtuber[nameSetting] || vtuber.nativeName,
+                  expandable: false,
+                  children: [],
+                });
+              } else {
+                console.error(`Can't find ${id}`);
+              }
             } else {
-              console.error(`Can't find ${id}`);
-            }
-          } else {
-            const group = groups.find(
-              (g) => g.groupId === id.slice("group:".length)
-            );
+              const group = groups.find(
+                (g) => g.groupId === id.slice("group:".length),
+              );
 
-            if (group) {
-              arr.push(inflate(group));
-            } else {
-              console.error(`Can't find ${id} `);
+              if (group) {
+                arr.push(inflate(group));
+              } else {
+                console.error(`Can't find ${id} `);
+              }
             }
-          }
 
-          return arr;
-        }, <Node[]>[]),
+            return arr;
+          },
+          <Node[]>[],
+        ),
     });
 
     this.dataSource.data = groups

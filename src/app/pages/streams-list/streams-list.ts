@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
@@ -27,13 +27,12 @@ type QueryKey = [
     endAt?: Date;
     channelIds: number[];
     keyword?: string;
-  }
+  },
 ];
 
 @Component({
   standalone: true,
   imports: [
-    NgIf,
     DatePipe,
     StreamsList_,
     DateFilter,
@@ -94,7 +93,7 @@ export default class StreamsList {
   };
 
   getScheduledStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
-    lastPage
+    lastPage,
   ) => {
     if (lastPage.length >= 24) {
       return { startAt: lastPage[lastPage.length - 1].scheduleTime };
@@ -104,7 +103,7 @@ export default class StreamsList {
   };
 
   getLiveStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
-    lastPage
+    lastPage,
   ) => {
     if (lastPage.length >= 24) {
       const last = lastPage[lastPage.length - 1];
