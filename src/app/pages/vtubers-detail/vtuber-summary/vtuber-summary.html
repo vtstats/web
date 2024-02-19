@@ -2,6 +2,7 @@
   <div class="mr-6">
     <img
       class="rounded-full"
+      [class.grayscale]="!!vtuber.retiredAt"
       height="80"
       width="80"
       [ngSrc]="vtuber.vtuberId | avatar"

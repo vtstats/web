@@ -4,6 +4,31 @@
     [channels]="resolved.channels"
   />
 
+  @if (resolved.vtuber.retiredAt) {
+    <div
+      class="relative rounded-lg mat-border-divider rounded border border-solid p-4 mb-4"
+      role="alert"
+    >
+      <div class="h-4 w-4 absolute">
+        <mat-icon svgIcon="information_outline" inline=""></mat-icon>
+      </div>
+
+      <h5
+        class="mb-1 mt-0 font-medium leading-none tracking-tight text-base pl-7"
+      >
+        Heads up!
+      </h5>
+
+      <div class="text-sm pl-7">
+        This VTuber retired on
+        <span class="font-medium">{{
+          resolved.vtuber.retiredAt | date: "mediumDate"
+        }}</span
+        >. vtstats will no longer track their statistics.
+      </div>
+    </div>
+  }
+
   <vts-channel-overview [channels]="resolved.channels" />
 
   <vts-stream-time [vtuber]="resolved.vtuber" />
