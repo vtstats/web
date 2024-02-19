@@ -1,4 +1,6 @@
+import { DatePipe } from "@angular/common";
 import { Component, Input, OnInit, inject } from "@angular/core";
+import { MatIcon } from "@angular/material/icon";
 import { Meta, Title } from "@angular/platform-browser";
 import { startOfHour } from "date-fns";
 
@@ -10,7 +12,14 @@ import { VtuberSummary } from "./vtuber-summary/vtuber-summary";
 
 @Component({
   standalone: true,
-  imports: [StreamTime, VtuberSummary, ChannelOverview, VtuberStreams],
+  imports: [
+    StreamTime,
+    MatIcon,
+    DatePipe,
+    VtuberSummary,
+    ChannelOverview,
+    VtuberStreams,
+  ],
   selector: "vts-vtubers-detail",
   templateUrl: "vtubers-detail.html",
 })
