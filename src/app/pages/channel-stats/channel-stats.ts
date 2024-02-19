@@ -142,7 +142,9 @@ export default class ChannelStats {
   });
 
   updatedAt = computed(() => {
-    return new Date();
+    const data = this.result().data;
+    if (!data) return null;
+    return Math.max(...data.map((i) => i.updatedAt));
   });
 
   get valueLabel(): string {

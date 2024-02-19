@@ -23,6 +23,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 })
 export class RefreshButton {
   @Input() isLoading: boolean = false;
-  @Input() updatedAt: Date | number | undefined;
+  @Input() updatedAt: Date | number | undefined | null;
   @Input({ required: true }) refresh!: VoidFunction;
 }

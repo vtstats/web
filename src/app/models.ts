@@ -20,6 +20,7 @@ export const enum ChannelStatsKind {
 export type ChannelStatsSummary =
   | {
       channelId: number;
+      updatedAt: number;
       kind: ChannelStatsKind.REVENUE;
       value: Record<string, number>;
       value1DayAgo: Record<string, number>;
@@ -28,6 +29,7 @@ export type ChannelStatsSummary =
     }
   | {
       channelId: number;
+      updatedAt: number;
       kind: ChannelStatsKind.VIEW | ChannelStatsKind.SUBSCRIBER;
       value: number;
       value1DayAgo: number;
