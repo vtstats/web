@@ -7,6 +7,7 @@
     <vts-chart
       [height]="300"
       [options]="options()"
+      [loading]="statsQry().isLoading"
       (chartInit)="onChartInit($event)"
     />
   }
@@ -17,8 +18,5 @@
     >
       NO DATA
     </div>
-  }
-  @if (statsQry().isLoading) {
-    <div [style.height.px]="300" class="shimmer rounded animate-pulse"></div>
   }
 </div>
