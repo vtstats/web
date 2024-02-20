@@ -8,7 +8,7 @@
     "dev:ssr": "wrangler pages dev dist/cloudflare --compatibility-date=2021-09-20",
     "deploy": "wrangler pages deploy dist/cloudflare",
     "extract-i18n": "ng extract-i18n --format json --output-path ./src/i18n",
-    "build": "node build.js",
+    "build": "bash build.sh",
     "test": "ng test",
     "lint": "ng lint"
   },
