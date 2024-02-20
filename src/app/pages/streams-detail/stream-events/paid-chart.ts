@@ -27,7 +27,6 @@ import { CHAT_CURRENCIES } from "src/app/shared/tokens";
     UseCurrencyPipe,
     Menu,
     Chart,
-
     MatTableModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
