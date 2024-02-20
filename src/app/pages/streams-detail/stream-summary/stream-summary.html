@@ -1,6 +1,6 @@
 <div class="mb-0 sm:mb-4 flex flex-wrap items-end">
   <div class="w-full sm:w-7/12">
-    <a class="cover aspect-ratio-16-9" [attr.href]="link" target="_blank">
+    <a class="cover aspect-ratio-16-9" [attr.href]="link()" target="_blank">
       <img
         class="img rounded absolute w-full h-full object-center object-cover"
         loading="lazy"
@@ -30,7 +30,7 @@
   <div class="box-border py-4 pl-0 sm:pl-4 w-full sm:w-5/12">
     <a
       class="text-inherit no-underline block mb-4 break-words mat-h3"
-      [attr.href]="link"
+      [attr.href]="link()"
       target="_blank"
     >
       {{ stream()?.title }}
