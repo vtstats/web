@@ -13,6 +13,7 @@ import {
 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 
 import {
@@ -58,6 +59,8 @@ export class StreamSummary {
   currency = inject(CurrencyService);
 
   stream = input<Stream | null>(null);
+
+  sanitizer = inject(DomSanitizer);
 
   revenueQry = query<
     Array<StreamsEvent>,
@@ -149,8 +152,10 @@ export class StreamSummary {
 
   link = computed(() => {
     const st = this.stream();
-    if (st && st.platform !== Platform.YOUTUBE) {
-      return "https://youtu.be/" + st.platformId;
+    if (st && st.platform === Platform.YOUTUBE) {
+      return this.sanitizer.bypassSecurityTrustUrl(
+        "https://youtu.be/" + st.platformId,
+      );
     }
     return null;
   });
