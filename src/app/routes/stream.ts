@@ -38,7 +38,7 @@ export const streamCanActive: CanActivateFn = async (route) => {
     );
 
     return createUrlTreeFromSnapshot(route, [
-      `${stream.platform.toLowerCase()}-stream`,
+      `/${stream.platform.toLowerCase()}-stream`,
       stream.platformId,
     ]);
   }
