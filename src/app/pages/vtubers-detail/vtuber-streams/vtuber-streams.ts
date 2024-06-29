@@ -48,7 +48,7 @@ export class VtuberStreams {
       select: ({ pages }) => {
         const items = pages.flat();
         const updatedAt = Math.max(...items.map((s) => s.updatedAt));
-        return { pages: [{ items, updatedAt }], pageParams: [] };
+        return { items, updatedAt };
       },
 
       getNextPageParam: (lastPage) => {

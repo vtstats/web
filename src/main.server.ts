@@ -22,3 +22,5 @@ export const bootstrap = () =>
       provideRouter(routes, withComponentInputBinding()),
     ],
   });
+
+export default bootstrap;

@@ -69,5 +69,5 @@ export class Sidenav {
     },
   ];
 
-  commitSha = (<any>window).gitCommitSha;
+  commitSha = typeof window === "undefined" ? "" : (<any>window).gitCommitSha;
 }
