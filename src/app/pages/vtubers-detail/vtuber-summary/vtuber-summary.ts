@@ -2,7 +2,6 @@ import { NgOptimizedImage } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   computed,
   input,
 } from "@angular/core";

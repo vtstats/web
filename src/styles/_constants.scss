@@ -1,14 +1,14 @@
 @use "@angular/material" as mat;
 @use "sass:map";
 
-$vts-typography-config: mat.define-typography-config();
+$vts-typography-config: mat.m2-define-typography-config();
 
 $vts-light-theme: map.deep-merge(
-  mat.define-light-theme(
+  mat.m2-define-light-theme(
     (
       color: (
-        primary: mat.define-palette(mat.$teal-palette),
-        accent: mat.define-palette(mat.$blue-gray-palette),
+        primary: mat.m2-define-palette(mat.$m2-teal-palette),
+        accent: mat.m2-define-palette(mat.$m2-blue-gray-palette),
       ),
     )
   ),
@@ -22,11 +22,11 @@ $vts-light-theme: map.deep-merge(
 );
 
 $vts-dark-theme: map.deep-merge(
-  mat.define-dark-theme(
+  mat.m2-define-dark-theme(
     (
       color: (
-        primary: mat.define-palette(mat.$teal-palette, 300),
-        accent: mat.define-palette(mat.$blue-gray-palette, 300),
+        primary: mat.m2-define-palette(mat.$m2-teal-palette, 300),
+        accent: mat.m2-define-palette(mat.$m2-blue-gray-palette, 300),
       ),
     )
   ),

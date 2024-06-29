@@ -13,13 +13,13 @@ vts-sidenav-menu .mat-mdc-list-item {
 
     .mat-icon,
     .mat-mdc-list-item-title {
-      color: mat.get-color-from-palette($primary) !important;
+      color: mat.m2-get-color-from-palette($primary) !important;
     }
   }
 
   .mat-icon,
   .mat-mdc-list-item-title {
-    color: mat.get-color-from-palette($foreground, "text") !important;
+    color: mat.m2-get-color-from-palette($foreground, "text") !important;
   }
 }
 
@@ -38,6 +38,6 @@ vts-sidenav-menu .mat-mdc-list-item {
 
   .mat-icon,
   .mat-mdc-list-item-title {
-    color: mat.get-color-from-palette($foreground, "text") !important;
+    color: mat.m2-get-color-from-palette($foreground, "text") !important;
   }
 }

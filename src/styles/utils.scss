@@ -21,43 +21,43 @@
 
 .mat-secondary-text {
   $foreground: map-get($vts-light-theme, "foreground");
-  color: mat.get-color-from-palette($foreground, "secondary-text");
+  color: mat.m2-get-color-from-palette($foreground, "secondary-text");
 
   .dark & {
     $foreground: map-get($vts-dark-theme, "foreground");
-    color: mat.get-color-from-palette($foreground, "secondary-text");
+    color: mat.m2-get-color-from-palette($foreground, "secondary-text");
   }
 }
 
 .mat-text-caption {
-  $config: mat.get-typography-config($vts-typography-config);
-  font-size: mat.font-size($config, "caption");
-  font-weight: mat.font-weight($config, "caption");
+  $config: mat.m2-get-typography-config($vts-typography-config);
+  font-size: mat.m2-font-size($config, "caption");
+  font-weight: mat.m2-font-weight($config, "caption");
 }
 
 .up-color {
-  color: map-get(mat.define-palette(mat.$green-palette), 800);
+  color: map-get(mat.m2-define-palette(mat.$m2-green-palette), 800);
   .dark & {
-    color: map-get(mat.define-palette(mat.$green-palette), 300);
+    color: map-get(mat.m2-define-palette(mat.$m2-green-palette), 300);
   }
 }
 
 .down-color {
-  color: map-get(mat.define-palette(mat.$red-palette), 800);
+  color: map-get(mat.m2-define-palette(mat.$m2-red-palette), 800);
   .dark & {
-    color: map-get(mat.define-palette(mat.$red-palette), 300);
+    color: map-get(mat.m2-define-palette(mat.$m2-red-palette), 300);
   }
 }
 
 .mat-bg-unselected-chip {
   $background: map-get($vts-light-theme, "background");
-  background-color: mat.get-color-from-palette(
+  background-color: mat.m2-get-color-from-palette(
     $background,
     "unselected-chip"
   ) !important;
   .dark & {
     $background: map-get($vts-dark-theme, "background");
-    background-color: mat.get-color-from-palette(
+    background-color: mat.m2-get-color-from-palette(
       $background,
       "unselected-chip"
     ) !important;
@@ -66,47 +66,47 @@
 
 .mat-color-primary {
   $primary: map-get($vts-light-theme, "primary");
-  color: mat.get-color-from-palette($primary) !important;
+  color: mat.m2-get-color-from-palette($primary) !important;
 }
 .dark .mat-color-primary {
   $primary: map-get($vts-dark-theme, "primary");
-  color: mat.get-color-from-palette($primary) !important;
+  color: mat.m2-get-color-from-palette($primary) !important;
 }
 
 .mat-border-primary {
   $primary: map-get($vts-light-theme, "primary");
-  border-color: mat.get-color-from-palette($primary) !important;
+  border-color: mat.m2-get-color-from-palette($primary) !important;
 }
 .dark .mat-border-primary {
   $primary: map-get($vts-dark-theme, "primary");
-  border-color: mat.get-color-from-palette($primary) !important;
+  border-color: mat.m2-get-color-from-palette($primary) !important;
 }
 
 .mat-border-divider {
   $foreground: map-get($vts-light-theme, "foreground");
-  border-color: mat.get-color-from-palette($foreground, "divider");
+  border-color: mat.m2-get-color-from-palette($foreground, "divider");
 }
 .dark .mat-border-divider {
   $foreground: map-get($vts-dark-theme, "foreground");
-  border-color: mat.get-color-from-palette($foreground, "divider");
+  border-color: mat.m2-get-color-from-palette($foreground, "divider");
 }
 
 .mat-border-card {
   $background: map-get($vts-light-theme, "background");
-  border-color: mat.get-color-from-palette($background, "card");
+  border-color: mat.m2-get-color-from-palette($background, "card");
 }
 .dark .mat-border-card {
   $background: map-get($vts-dark-theme, "background");
-  border-color: mat.get-color-from-palette($background, "card");
+  border-color: mat.m2-get-color-from-palette($background, "card");
 }
 
 .mat-bg-card {
   $background: map-get($vts-light-theme, "background");
-  background-color: mat.get-color-from-palette($background, "card");
+  background-color: mat.m2-get-color-from-palette($background, "card");
 }
 .dark .mat-bg-card {
   $background: map-get($vts-dark-theme, "background");
-  background-color: mat.get-color-from-palette($background, "card");
+  background-color: mat.m2-get-color-from-palette($background, "card");
 }
 
 .dense-menu .mat-mdc-menu-item {

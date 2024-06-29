@@ -20,7 +20,7 @@ const index = readFileSync(indexFile, "utf-8")
   .replace(
     `</body>`,
     `<script defer src='https://static.cloudflareinsights.com/beacon.min.js' ` +
-      `data-cf-beacon='{"token": "a55155db07a5447e8f640e515c67b6e3"}'></script></body>`
+      `data-cf-beacon='{"token": "a55155db07a5447e8f640e515c67b6e3"}'></script></body>`,
   );
 
 writeFileSync(indexFile, index);

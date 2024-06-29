@@ -2,7 +2,7 @@
 
 @include mat.ripple();
 @include mat.core();
-@include mat.all-component-typographies(mat.define-typography-config());
+@include mat.all-component-typographies(mat.m2-define-typography-config());
 @include mat.button-theme($vts-light-theme);
 @include mat.icon-button-theme($vts-light-theme);
 @include mat.checkbox-theme($vts-light-theme);
@@ -28,12 +28,12 @@ body {
   background-color: var(--mat-sidenav-content-background-color);
 
   $foreground: map-get($vts-light-theme, "foreground");
-  color: mat.get-color-from-palette($foreground, "text");
+  color: mat.m2-get-color-from-palette($foreground, "text");
 }
 
 .dark {
   $foreground: map-get($vts-dark-theme, "foreground");
-  color: mat.get-color-from-palette($foreground, "text");
+  color: mat.m2-get-color-from-palette($foreground, "text");
 
   @include mat.button-color($vts-dark-theme);
   @include mat.icon-button-theme($vts-dark-theme);

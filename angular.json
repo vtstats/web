@@ -34,24 +34,26 @@
       "prefix": "vts",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/browser",
+            "outputPath": "dist",
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "polyfills": ["zone.js", "@angular/localize/init"],
             "tsConfig": "tsconfig.json",
             "aot": true,
             "assets": ["src/manifest.webmanifest"],
             "styles": ["src/styles/main.scss", "src/styles/tailwind.css"],
             "i18nMissingTranslation": "error",
-            "allowedCommonJsDependencies": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": false
+            "namedChunks": false,
+            "prerender": false,
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "development": {},
@@ -73,7 +75,7 @@
               "outputHashing": "all",
               "statsJson": false,
               "extractLicenses": true,
-              "buildOptimizer": true,
+              "serviceWorker": "./ngsw-config.json",
               "budgets": [
                 {
                   "type": "initial",
@@ -85,9 +87,7 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             }
           },
           "defaultConfiguration": "development"

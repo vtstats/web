@@ -5,11 +5,10 @@ export PATH="$PATH:$(yarn global bin)"
 rm -rf dist/
 
 node ./tools/inject.mjs
-yarn ng run vts:server:production
-yarn ng run vts:build:production --stats-json=false
-node ./tools/copy-worker-files.mjs
-node ./tools/copy-client-files.mjs
-node ./tools/bundle.mjs
+yarn ng build -c production --stats-json=false
+# https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates/angular
+node ./tools/copy-files.mjs
+node ./tools/alter-polyfills.mjs
 
 # create headers and redirets files
 echo '/api/* https://vt-api.poi.cat/api/:splat' > ./dist/cloudflare/_redirects

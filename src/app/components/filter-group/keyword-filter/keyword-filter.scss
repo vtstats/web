@@ -12,18 +12,18 @@
   background-color: transparent;
   border-style: solid;
   height: 36px;
-  color: mat.get-color-from-palette($foreground, "text");
+  color: mat.m2-get-color-from-palette($foreground, "text");
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;
 
   &::placeholder {
-    color: mat.get-color-from-palette($foreground, "secondary-text");
+    color: mat.m2-get-color-from-palette($foreground, "secondary-text");
   }
 
   &:focus {
     outline: none;
-    border-color: mat.get-color-from-palette($primary);
+    border-color: mat.m2-get-color-from-palette($primary);
   }
 }
 
@@ -33,14 +33,14 @@
     $primary: map-get($vts-dark-theme, "primary");
 
     --mdc-outlined-button-outline-color: rgba(255, 255, 255, 0.12);
-    color: mat.get-color-from-palette($foreground, "text");
+    color: mat.m2-get-color-from-palette($foreground, "text");
 
     &::placeholder {
-      color: mat.get-color-from-palette($foreground, "secondary-text");
+      color: mat.m2-get-color-from-palette($foreground, "secondary-text");
     }
 
     &:focus {
-      border-color: mat.get-color-from-palette($primary);
+      border-color: mat.m2-get-color-from-palette($primary);
     }
   }
 }
