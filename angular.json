@@ -56,7 +56,11 @@
             }
           },
           "configurations": {
-            "development": {},
+            "development": {
+              "define": {
+                "process.env.NODE_ENV": "'development'"
+              }
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -87,7 +91,10 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "define": {
+                "process.env.NODE_ENV": "'production'"
+              }
             }
           },
           "defaultConfiguration": "development"
