@@ -9,7 +9,6 @@ import {
   withInMemoryScrolling,
   withRouterConfig,
 } from "@angular/router";
-import * as Sentry from "@sentry/browser";
 import { QueryClient, hydrate } from "@tanstack/query-core";
 import qs from "query-string";
 
@@ -31,13 +30,6 @@ import { getLocalStorage } from "./utils";
 
 if (environment.production) {
   enableProdMode();
-
-  Sentry.init({
-    dsn: "https://64c25f8bfc9e45ffa532ed5ab1dc989f@o488466.ingest.sentry.io/6113288",
-    // use global variable here, so we can get the same content hash
-    release: (<any>window).gitCommitSha,
-    environment: (<any>window).gitBranch,
-  });
 }
 
 const migrate = () => {

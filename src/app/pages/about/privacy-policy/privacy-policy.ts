@@ -16,9 +16,5 @@ export class PrivacyPolicy {
       name: "Google & YouTube",
       url: "https://policies.google.com/privacy",
     },
-    {
-      name: "Sentry",
-      url: "https://sentry.io/privacy",
-    },
   ];
 }
