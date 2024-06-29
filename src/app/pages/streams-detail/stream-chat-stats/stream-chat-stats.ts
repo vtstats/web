@@ -1,6 +1,7 @@
 import { formatDate, formatNumber } from "@angular/common";
 import { Component, LOCALE_ID, computed, inject, input } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 import type { EChartsOption } from "echarts";
 import type { ECharts } from "echarts/core";
 import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
@@ -8,7 +9,6 @@ import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
-import { query } from "src/app/shared/qry";
 import { sampling } from "src/utils";
 
 @Component({
@@ -22,13 +22,7 @@ export class StreamChatStats {
 
   stream = input<Stream | null>(null);
 
-  statsQry = query<
-    Array<[number, number, number]>,
-    unknown,
-    Array<[number, number, number]>,
-    Array<[number, number, number]>,
-    ["stream-stats/chat", { streamId: number }]
-  >(() => {
+  statsQry = injectQuery(() => {
     const st = this.stream();
     return {
       enabled: Boolean(st),
@@ -38,7 +32,7 @@ export class StreamChatStats {
   });
 
   options = computed((): EChartsOption => {
-    const rows = this.statsQry().data;
+    const rows = this.statsQry.data();
 
     const total = sampling(
       rows,

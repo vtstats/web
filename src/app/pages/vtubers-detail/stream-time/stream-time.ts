@@ -1,12 +1,12 @@
 import { Component, Input, inject } from "@angular/core";
 import { MatDividerModule } from "@angular/material/divider";
 import { ActivatedRoute } from "@angular/router";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 
 import { Menu } from "src/app/components/menu/menu";
 import { VTuber } from "src/app/models";
 import { streamsTimes } from "src/app/shared/api/entrypoint";
 import { FormatDurationPipe } from "src/app/shared/pipes/format-duration.pipe";
-import { query } from "src/app/shared/qry";
 import { CATALOG_CHANNELS } from "src/app/shared/tokens";
 import { StreamTimeBarChart } from "./stream-time-bar-chart/stream-time-bar-chart";
 import { StreamTimeCalendar } from "./stream-time-calendar/stream-time-calendar";
@@ -41,13 +41,7 @@ export class StreamTime {
     { value: "month", label: "Month" },
   ];
 
-  result = query<
-    Array<[number, number]>,
-    unknown,
-    Array<[number, number]>,
-    Array<[number, number]>,
-    ["stream-times", { channelIds: number[] }]
-  >(() => {
+  query = injectQuery(() => {
     const vtuberId = this.route.snapshot.params.vtuberId;
 
     const channelIds = this.channels
@@ -55,7 +49,7 @@ export class StreamTime {
       .map((c) => c.channelId);
 
     return {
-      queryKey: ["stream-times", { channelIds }],
+      queryKey: ["stream-times", { channelIds }] as const,
       queryFn: ({ queryKey: [_, { channelIds }] }) => streamsTimes(channelIds),
     };
   });

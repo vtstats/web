@@ -107,22 +107,18 @@
           matTooltipPosition="above"
         />
       </div>
-      @if (ratesQry().data; as data) {
-        <div class="mat-headline-5 m-0">
-          {{ data.likes | number }}
-          <span class="mat-body">/</span>
-          {{ data.dislikes | number }}
-        </div>
-      }
+      <div class="mat-headline-5 m-0">
+        {{ ratesQry.data()?.likes | number }}
+        <span class="mat-body">/</span>
+        {{ ratesQry.data()?.dislikes | number }}
+      </div>
     </div>
   }
   <div>
     <div class="mat-small mat-secondary-text" i18n="@@live-chat">Live chat</div>
-    @if (chatCountQry(); as result) {
-      <div class="mat-headline-5 m-0">
-        {{ result.data ? (result.data | number) : "---" }}
-      </div>
-    }
+    <div class="mat-headline-5 m-0">
+      {{ chatCountQry.data() ? (chatCountQry.data() | number) : "---" }}
+    </div>
   </div>
   <div>
     <div class="mat-small mat-secondary-text">
@@ -134,10 +130,8 @@
         matTooltipPosition="above"
       />
     </div>
-    @if (revenueQry(); as result) {
-      <div class="mat-headline-5 m-0">
-        {{ result.data ? (result.data | useCurrency) : "---" }}
-      </div>
-    }
+    <div class="mat-headline-5 m-0">
+      {{ revenueQry.data() ? (revenueQry.data()! | useCurrency) : "---" }}
+    </div>
   </div>
 </div>

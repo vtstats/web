@@ -1,36 +1,34 @@
 @if (channels().length == 0) {
   <vts-select-vtuber-alert />
 } @else {
-  @if (result(); as result) {
-    <div class="p-4">
-      <div
-        class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
-      >
-        <vts-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
-        @if (route.snapshot.data.status !== "scheduled") {
-          <vts-date-filter (selectedChange)="selectedDateRange.set($event)" />
-        }
-        @if (route.snapshot.data.status !== "scheduled") {
-          <vts-keyword-filter (onChange)="searchKeyword.set($event)" />
-        }
-        <div class="flex-1"></div>
-        <vts-refresh-button
-          [isLoading]="result.isFetching"
-          (onRefresh)="result.refetch()"
-          [updatedAt]="result.data?.pages?.[0]?.updatedAt"
-        />
-      </div>
-      @if (!result.isError) {
-        <vts-stream-list
-          [groupBy]="true"
-          [loading]="result.isLoading"
-          [items]="result.data?.pages?.[0]?.items"
-          [hideSpinner]="!result.hasNextPage"
-          (reachedEnd)="
-            result.isFetchingNextPage ? null : result.fetchNextPage()
-          "
-        />
+  <div class="p-4">
+    <div
+      class="flex flex-row items-center mb-4 gap-2 overflow-y-hidden overflow-x-auto"
+    >
+      <vts-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
+      @if (route.snapshot.data.status !== "scheduled") {
+        <vts-date-filter (selectedChange)="selectedDateRange.set($event)" />
       }
+      @if (route.snapshot.data.status !== "scheduled") {
+        <vts-keyword-filter (onChange)="searchKeyword.set($event)" />
+      }
+      <div class="flex-1"></div>
+      <vts-refresh-button
+        [isLoading]="result.isFetching()"
+        (onRefresh)="result.refetch()"
+        [updatedAt]="result.data()?.pages?.[0]?.updatedAt"
+      />
     </div>
-  }
+    @if (!result.isError) {
+      <vts-stream-list
+        [groupBy]="true"
+        [loading]="result.isLoading()"
+        [items]="result.data()?.pages?.[0]?.items"
+        [hideSpinner]="!result.hasNextPage()"
+        (reachedEnd)="
+          result.isFetchingNextPage() ? null : result.fetchNextPage()
+        "
+      />
+    }
+  </div>
 }

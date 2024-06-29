@@ -1,24 +1,13 @@
 import { DatePipe } from "@angular/common";
 import { Component, input, signal } from "@angular/core";
+import { injectInfiniteQuery } from "@tanstack/angular-query-experimental";
 
 import { DateFilter } from "src/app/components/filter-group/date-filter/date-filter";
 import { KeywordFilter } from "src/app/components/filter-group/keyword-filter/keyword-filter";
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
 import { StreamsList } from "src/app/components/stream-list/stream-list";
-import { Channel, Stream } from "src/app/models";
+import { Channel, StreamStatus } from "src/app/models";
 import { streams } from "src/app/shared/api/entrypoint";
-import { infiniteQuery } from "src/app/shared/qry";
-
-type QueryKey = [
-  "streams",
-  {
-    status: "ended";
-    startAt?: Date;
-    endAt?: Date;
-    channelIds: number[];
-    keyword: string;
-  },
-];
 
 @Component({
   standalone: true,
@@ -32,13 +21,7 @@ export class VtuberStreams {
   selectedDateRange = signal<[Date, Date] | null>(null);
   keyword = signal("");
 
-  result = infiniteQuery<
-    Array<Stream>,
-    unknown,
-    { items: Stream[]; updatedAt: number },
-    Array<Stream>,
-    QueryKey
-  >(() => {
+  result = injectInfiniteQuery(() => {
     const range = this.selectedDateRange();
     const channelIds = this.channels().map((c) => c.channelId);
     const keyword = this.keyword();
@@ -47,15 +30,17 @@ export class VtuberStreams {
       queryKey: [
         "streams",
         {
-          status: "ended",
+          status: StreamStatus.ENDED,
           channelIds,
           startAt: range?.[0],
           endAt: range?.[1],
           keyword,
         },
-      ],
+      ] as const,
 
       enabled: channelIds.length > 0,
+
+      initialPageParam: {},
 
       queryFn: ({ pageParam, queryKey: [_, opts] }) =>
         streams({ ...opts, ...pageParam }),

@@ -6,7 +6,6 @@ import {
 
 import {
   Component,
-  Input,
   booleanAttribute,
   computed,
   inject,

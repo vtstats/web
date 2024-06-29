@@ -44,7 +44,7 @@ const _json = (res: Response) => res.json();
 
 const _sort = (arr: any[]) => arr.sort((a, b) => a[0] - b[0]);
 
-const _getTime = (dt?: Date) => (dt ? getTime(dt) : undefined);
+const _getTime = (dt?: Date | number) => (dt ? getTime(dt) : undefined);
 
 export const catalog = (): Promise<Catalog> =>
   fetch(`${baseUrl}/catalog`).then(_json);
@@ -150,11 +150,11 @@ export const channelRevenueStats = (
     .then(_json)
     .then(_sort);
 
-type StreamsOptions = {
+export type StreamsOptions = {
   channelIds: number[];
   status: StreamStatus;
-  startAt?: Date;
-  endAt?: Date;
+  startAt?: Date | number;
+  endAt?: Date | number;
   keyword?: string;
 };
 

@@ -16,6 +16,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
+import { injectQueryClient } from "@tanstack/angular-query-experimental";
 import { switchMap } from "rxjs";
 
 import { Platform, StreamStatus, type Stream } from "src/app/models";
@@ -28,7 +29,6 @@ import {
   NamePipe,
   TickService,
 } from "src/app/shared";
-import { QUERY_CLIENT } from "src/app/shared/tokens";
 
 @Component({
   standalone: true,
@@ -53,7 +53,7 @@ import { QUERY_CLIENT } from "src/app/shared/tokens";
 export class StreamItem {
   tick = inject(TickService);
   private sanitizer = inject(DomSanitizer);
-  private queryClient = inject(QUERY_CLIENT);
+  private queryClient = injectQueryClient();
   private config = inject(ConfigService);
   private gapi = inject(GoogleApiService);
   private snackBar = inject(MatSnackBar);

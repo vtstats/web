@@ -7,21 +7,16 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
+import { injectQuery } from "@tanstack/angular-query-experimental";
 import { SelectVtuberAlert } from "src/app/components/alert/select-vtuber-alert";
 import { PlatformFilter } from "src/app/components/filter-group/platform-filter/platform-filter";
 import { VTuberFilter } from "src/app/components/filter-group/vtuber-filter/vtuber-filter";
 import { Menu } from "src/app/components/menu/menu";
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
-import {
-  Channel,
-  ChannelStatsKind,
-  ChannelStatsSummary,
-  Platform,
-} from "src/app/models";
+import { Channel, ChannelStatsKind, Platform } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
-import { query } from "src/app/shared/qry";
 import { CHAT_CURRENCIES } from "src/app/shared/tokens";
 import {
   ChannelStatsRow,
@@ -69,13 +64,7 @@ export default class ChannelStats {
     return channels;
   });
 
-  result = query<
-    Array<ChannelStatsSummary>,
-    any,
-    Array<ChannelStatsSummary>,
-    Array<ChannelStatsSummary>,
-    ["channel-stats/summary", { channelIds: number[]; kind: string }]
-  >(() => {
+  result = injectQuery(() => {
     const channels = this.channels();
     const kind = this.route.snapshot.data.kind;
 
@@ -85,7 +74,7 @@ export default class ChannelStats {
       queryKey: [
         "channel-stats/summary",
         { channelIds: channels.map((c) => c.channelId), kind },
-      ],
+      ] as const,
       queryFn: (ctx) =>
         api.channelStatsSummary(ctx.queryKey[1].channelIds, kind),
       staleTime: 5 * 60 * 1000, // 5min
@@ -95,7 +84,7 @@ export default class ChannelStats {
   data = computed(() => {
     const exchange = this.currency.exchange();
     const channels = this.vtubers.selectedChannels();
-    const data = this.result().data;
+    const data = this.result.data();
 
     if (!data) return [];
 
@@ -142,7 +131,7 @@ export default class ChannelStats {
   });
 
   updatedAt = computed(() => {
-    const data = this.result().data;
+    const data = this.result.data();
     if (!data) return null;
     return Math.max(...data.map((i) => i.updatedAt));
   });

@@ -9,12 +9,12 @@ import {
 import { MatChipsModule } from "@angular/material/chips";
 
 import { Menu } from "src/app/components/menu/menu";
-import { Stream, StreamEventKind, StreamsEvent } from "src/app/models";
+import { Stream, StreamEventKind } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
 import { Paid } from "src/app/shared/api/entrypoint";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
 
-import { query } from "src/app/shared/qry";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 import { StreamEventsChart } from "./event-chart";
 import { PaidChart } from "./paid-chart";
 
@@ -121,7 +121,7 @@ export class StreamEventsInner implements OnInit {
   imports: [StreamEventsInner],
   selector: "vts-stream-events",
   template: `
-    @if (statsQry().data; as result) {
+    @if (statsQry.data(); as result) {
       <div class="mat-border-divider rounded border border-solid mb-4">
         <vts-stream-events-inner [group]="result" [stream]="stream()!" />
       </div>
@@ -132,13 +132,7 @@ export class StreamEventsInner implements OnInit {
 export class StreamEvents {
   stream = input<Stream | null>(null);
 
-  statsQry = query<
-    Array<StreamsEvent>,
-    unknown,
-    StreamEventsGroup,
-    Array<StreamsEvent>,
-    ["stream-events", { streamId: number }]
-  >(() => {
+  statsQry = injectQuery(() => {
     const st = this.stream();
     return {
       enabled: Boolean(st),

@@ -1,16 +1,15 @@
-import { inject } from "@angular/core";
 import {
   CanActivateFn,
   ResolveFn,
   createUrlTreeFromSnapshot,
 } from "@angular/router";
+import { injectQueryClient } from "@tanstack/angular-query-experimental";
 import { Platform, Stream } from "src/app/models";
 
 import * as api from "src/app/shared/api/entrypoint";
-import { QUERY_CLIENT } from "src/app/shared/tokens";
 
 export const streamCanActive: CanActivateFn = async (route) => {
-  const queryClient = inject(QUERY_CLIENT);
+  const queryClient = injectQueryClient();
 
   const id = route.paramMap.get("id");
   const platform = route.data.platform;
@@ -63,7 +62,7 @@ export const streamCanActive: CanActivateFn = async (route) => {
 };
 
 export const streamResolve: ResolveFn<Stream | null> = async (route) => {
-  const queryClient = inject(QUERY_CLIENT);
+  const queryClient = injectQueryClient();
 
   const id = route.paramMap.get("id")!;
   const platform: Platform = route.data.platform;

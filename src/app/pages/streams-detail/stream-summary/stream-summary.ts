@@ -15,13 +15,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 
-import {
-  Platform,
-  StreamEventKind,
-  type Stream,
-  type StreamsEvent,
-} from "src/app/models";
+import { Platform, StreamEventKind, type Stream } from "src/app/models";
 import {
   AvatarPipe,
   DurationPipe,
@@ -32,7 +28,6 @@ import * as api from "src/app/shared/api/entrypoint";
 import { Paid } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 import { UseCurrencyPipe } from "src/app/shared/config/use-currency.pipe";
-import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
@@ -74,13 +69,7 @@ export class StreamSummary {
 
   sanitizer = inject(DomSanitizer);
 
-  revenueQry = query<
-    Array<StreamsEvent>,
-    unknown,
-    Array<Paid>,
-    Array<StreamsEvent>,
-    ["stream-events", { streamId: number }]
-  >(() => {
+  revenueQry = injectQuery(() => {
     const st = this.stream();
     return {
       enabled: Boolean(st),
@@ -131,13 +120,7 @@ export class StreamSummary {
     };
   });
 
-  chatCountQry = query<
-    Array<[number, number, number]>,
-    unknown,
-    number,
-    Array<[number, number, number]>,
-    ["stream-stats/chat", { streamId: number }]
-  >(() => {
+  chatCountQry = injectQuery(() => {
     const st = this.stream();
     return {
       enabled: Boolean(st),
@@ -147,13 +130,7 @@ export class StreamSummary {
     };
   });
 
-  ratesQry = query<
-    { likes: number; dislikes: number },
-    unknown,
-    { likes: number; dislikes: number },
-    { likes: number; dislikes: number },
-    ["youtubeLikes", { platformId: string }]
-  >(() => {
+  ratesQry = injectQuery(() => {
     const st = this.stream();
     return {
       enabled: !!st && st.platform === Platform.YOUTUBE,

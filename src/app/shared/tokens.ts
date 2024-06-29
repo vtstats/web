@@ -1,9 +1,6 @@
 import { InjectionToken } from "@angular/core";
-import { QueryClient } from "@tanstack/query-core";
 import { Locale } from "date-fns";
 import { Channel, Group, VTuber } from "../models";
-
-export const QUERY_CLIENT = new InjectionToken<QueryClient>("QUERY_CLIENT");
 
 export const DATE_FNS_LOCALE = new InjectionToken<Locale>("DATE_FNS_LOCALE");
 

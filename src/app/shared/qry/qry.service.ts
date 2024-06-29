@@ -1,11 +1,11 @@
 import { isPlatformBrowser } from "@angular/common";
 import { inject, Injectable, isDevMode, PLATFORM_ID } from "@angular/core";
 
-import { QUERY_CLIENT } from "../tokens";
+import { injectQueryClient } from "@tanstack/angular-query-experimental";
 
 @Injectable({ providedIn: "root" })
 export class QryService {
-  client = inject(QUERY_CLIENT);
+  client = injectQueryClient();
   platformId = inject(PLATFORM_ID);
 
   private root: any = null;

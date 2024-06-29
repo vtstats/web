@@ -8,6 +8,7 @@ import {
   input,
 } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 import type { EChartsOption } from "echarts";
 import type { ECharts } from "echarts/core";
 import { TopLevelFormatterParams } from "echarts/types/dist/shared";
@@ -16,7 +17,6 @@ import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";
 
 import * as api from "src/app/shared/api/entrypoint";
-import { query } from "src/app/shared/qry";
 
 @Component({
   standalone: true,
@@ -30,13 +30,7 @@ export class StreamViewerStats {
 
   stream = input<Stream | null>(null);
 
-  statsQry = query<
-    Array<[number, number]>,
-    unknown,
-    Array<[number, number]>,
-    Array<[number, number]>,
-    ["stream-stats/viewer", { streamId: number }]
-  >(() => {
+  statsQry = injectQuery(() => {
     const stream = this.stream();
     return {
       enabled: Boolean(stream),
@@ -46,7 +40,7 @@ export class StreamViewerStats {
   });
 
   options = computed((): EChartsOption => {
-    const data = this.statsQry().data;
+    const data = this.statsQry.data();
 
     return {
       tooltip: {

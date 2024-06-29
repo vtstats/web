@@ -19,9 +19,9 @@ import {
   channelViewStats,
 } from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
-import { query } from "src/app/shared/qry";
 import { sampling } from "src/utils";
 
+import { injectQuery } from "@tanstack/angular-query-experimental";
 import { StatsComparisonComponent } from "./comparison";
 
 type QueryKey = [
@@ -41,14 +41,14 @@ export type ChannelStatsKind = "subscriber" | "view" | "revenue";
         <vts-stats-comparison
           [platform]="channel()?.platform"
           [kind]="kind()"
-          [rows]="channelStatsQry().data || []"
+          [rows]="channelStatsQry.data() || []"
         />
       </div>
 
       <div class="w-full sm:w-8/12">
         <vts-chart
           [height]="100"
-          [loading]="channelStatsQry().isLoading"
+          [loading]="channelStatsQry.isLoading()"
           [options]="options()"
         />
       </div>
@@ -65,13 +65,7 @@ export class StatsChartComponent {
 
   currency = inject(CurrencyService);
 
-  channelStatsQry = query<
-    Array<[number, number]> | Array<[number, Record<string, number>]>,
-    unknown,
-    Array<[number, number]>,
-    Array<[number, number]> | Array<[number, Record<string, number>]>,
-    QueryKey
-  >(() => {
+  channelStatsQry = injectQuery(() => {
     const channel = this.channel();
     const precision = this.precision();
     const now = startOfHour(Date.now());
@@ -80,12 +74,12 @@ export class StatsChartComponent {
     if (!precision || !channel || !kind) {
       return {
         enabled: false,
-        queryKey: [`channel-stats/revenue`, { channelId: 0 }],
+        queryKey: <QueryKey>[`channel-stats/revenue`, { channelId: 0 }],
       };
     }
 
     return {
-      queryKey: [
+      queryKey: <QueryKey>[
         `channel-stats/${kind}`,
         {
           channelId: channel.channelId,
@@ -96,6 +90,8 @@ export class StatsChartComponent {
 
       queryFn: ({
         queryKey: [_, { channelId, startAt, endAt }],
+      }: {
+        queryKey: QueryKey;
       }): Promise<
         Array<[number, number]> | Array<[number, Record<string, number>]>
       > =>
@@ -112,7 +108,7 @@ export class StatsChartComponent {
   });
 
   options = computed((): EChartsOption | null => {
-    const rows = this.channelStatsQry().data;
+    const rows = this.channelStatsQry.data();
 
     if (!rows) return null;
 

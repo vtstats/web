@@ -1,7 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { SwUpdate } from "@angular/service-worker";
-
-import { query } from "src/app/shared/qry";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 
 @Component({
   standalone: true,
@@ -12,8 +11,8 @@ import { query } from "src/app/shared/qry";
 export class NgswSettings {
   isEnabled = inject(SwUpdate).isEnabled;
 
-  ngswStateQry = query({
+  ngswStateQry = injectQuery(() => ({
     queryKey: ["ngsw/state"],
     queryFn: () => fetch("/ngsw/state").then((res) => res.text()),
-  });
+  }));
 }

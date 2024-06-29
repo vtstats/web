@@ -13,6 +13,8 @@ import * as Sentry from "@sentry/browser";
 import { QueryClient, hydrate } from "@tanstack/query-core";
 import qs from "query-string";
 
+import { provideHttpClient, withFetch } from "@angular/common/http";
+import { provideAngularQuery } from "@tanstack/angular-query-experimental";
 import { AppComponent } from "./app/app.component";
 import routes from "./app/routes";
 import { catalogQuery, exchangeRatesQuery } from "./app/shared/api/entrypoint";
@@ -22,7 +24,6 @@ import {
   CATALOG_VTUBERS,
   DATE_FNS_LOCALE,
   EXCHANGE_RATES,
-  QUERY_CLIENT,
 } from "./app/shared/tokens";
 import { environment } from "./environments/environment";
 import { providers } from "./providers";
@@ -69,7 +70,7 @@ const createQueryClient = (): QueryClient => {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        onError: console.error,
+        // onError: console.error,
       },
     },
   });
@@ -125,7 +126,6 @@ const bootstrap = async () => {
         provide: DATE_PIPE_DEFAULT_OPTIONS,
         useValue: { timezone: getLocalStorage("timezone", null) },
       },
-      { provide: QUERY_CLIENT, useValue: queryClient },
       { provide: EXCHANGE_RATES, useValue: exchangeRates },
       { provide: CATALOG_CHANNELS, useValue: catalog.channels },
       { provide: CATALOG_GROUPS, useValue: catalog.groups },
@@ -138,6 +138,8 @@ const bootstrap = async () => {
         withRouterConfig({ urlUpdateStrategy: "eager" }),
       ),
       provideAnimations(),
+      provideAngularQuery(queryClient),
+      provideHttpClient(withFetch()),
     ],
   });
 };

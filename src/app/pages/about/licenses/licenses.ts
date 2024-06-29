@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-
-import { query } from "src/app/shared/qry";
+import { injectQuery } from "@tanstack/angular-query-experimental";
 
 @Component({
   standalone: true,
@@ -8,8 +7,8 @@ import { query } from "src/app/shared/qry";
   templateUrl: "licenses.html",
 })
 export class Licenses {
-  licensesQry = query({
+  licensesQry = injectQuery(() => ({
     queryKey: ["3rdpartylicenses"],
     queryFn: () => fetch("/3rdpartylicenses.txt").then((res) => res.text()),
-  });
+  }));
 }

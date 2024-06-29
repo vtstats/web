@@ -1,41 +1,39 @@
 @if (channels().length == 0) {
   <vts-select-vtuber-alert />
 } @else {
-  @if (result(); as result) {
-    <div
-      class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
-    >
-      @if (kind !== "REVENUE") {
-        <vts-platform-filter
-          [hideTwitch]="kind === 'VIEW'"
-          (onChange)="platformFilter.set($event)"
-        />
-      }
-      <vts-vtuber-filter (selectedChange)="vtuberFilter.set($event)" />
-      <div class="flex-1"></div>
-      @if (kind === "REVENUE") {
-        <vts-menu
-          [showLabel]="false"
-          [options]="currencyOptions"
-          [value]="currency.currencySetting()"
-          (change)="currency.currencySetting.set($event)"
-        />
-      }
-      <vts-refresh-button
-        [isLoading]="result.isFetching"
-        (onRefresh)="result.refetch()"
-        [updatedAt]="updatedAt()"
+  <div
+    class="flex flex-row items-center p-4 gap-2 overflow-y-hidden overflow-x-auto"
+  >
+    @if (kind !== "REVENUE") {
+      <vts-platform-filter
+        [hideTwitch]="kind === 'VIEW'"
+        (onChange)="platformFilter.set($event)"
       />
-    </div>
-    <div class="px-4 overflow-x-auto">
-      @if (!result.error) {
-        <vts-channel-stats-table
-          [valueLabel]="valueLabel"
-          [dataSource]="data()"
-          [loading]="result.isFetching"
-        />
-      }
-    </div>
-    <!-- TODO: display error -->
-  }
+    }
+    <vts-vtuber-filter (selectedChange)="vtuberFilter.set($event)" />
+    <div class="flex-1"></div>
+    @if (kind === "REVENUE") {
+      <vts-menu
+        [showLabel]="false"
+        [options]="currencyOptions"
+        [value]="currency.currencySetting()"
+        (change)="currency.currencySetting.set($event)"
+      />
+    }
+    <vts-refresh-button
+      [isLoading]="result.isFetching()"
+      (onRefresh)="result.refetch()"
+      [updatedAt]="updatedAt()"
+    />
+  </div>
+  <div class="px-4 overflow-x-auto">
+    @if (!result.isError()) {
+      <vts-channel-stats-table
+        [valueLabel]="valueLabel"
+        [dataSource]="data()"
+        [loading]="result.isFetching()"
+      />
+    }
+  </div>
+  <!-- TODO: display error -->
 }

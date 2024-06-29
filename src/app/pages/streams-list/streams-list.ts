@@ -1,6 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { injectInfiniteQuery } from "@tanstack/angular-query-experimental";
 import {
   GetNextPageParamFunction,
   InfiniteData,
@@ -15,9 +16,8 @@ import { VTuberFilter } from "src/app/components/filter-group/vtuber-filter/vtub
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
 import { StreamsList as StreamsList_ } from "src/app/components/stream-list/stream-list";
 import { Stream, StreamStatus } from "src/app/models";
-import { streams } from "src/app/shared/api/entrypoint";
+import { StreamsOptions, streams } from "src/app/shared/api/entrypoint";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
-import { infiniteQuery } from "src/app/shared/qry";
 
 type QueryKey = [
   `streams`,
@@ -60,10 +60,11 @@ export default class StreamsList {
       : this.vtubers.selectedChannels();
   });
 
-  scheduledStreamQueryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
-    pageParam,
-    queryKey: [_, opts],
-  }) => {
+  scheduledStreamQueryFn: QueryFunction<
+    Array<Stream>,
+    QueryKey,
+    Partial<StreamsOptions>
+  > = async ({ pageParam, queryKey: [_, opts] }) => {
     return streams({
       ...opts,
       startAt: subHours(startOfHour(Date.now()), 6),
@@ -72,10 +73,11 @@ export default class StreamsList {
     });
   };
 
-  liveStreamQueryFn: QueryFunction<Array<Stream>, QueryKey> = async ({
-    pageParam,
-    queryKey: [_, opts],
-  }) => {
+  liveStreamQueryFn: QueryFunction<
+    Array<Stream>,
+    QueryKey,
+    Partial<StreamsOptions>
+  > = async ({ pageParam, queryKey: [_, opts] }) => {
     const status = pageParam?.status || StreamStatus.LIVE;
     const items = await streams({ ...opts, ...pageParam, status });
 
@@ -92,9 +94,10 @@ export default class StreamsList {
     return { pages: [{ items, updatedAt }], pageParams: [] };
   };
 
-  getScheduledStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
-    lastPage,
-  ) => {
+  getScheduledStreamNextPageParam: GetNextPageParamFunction<
+    Partial<StreamsOptions>,
+    Stream[]
+  > = (lastPage) => {
     if (lastPage.length >= 24) {
       return { startAt: lastPage[lastPage.length - 1].scheduleTime };
     }
@@ -102,9 +105,10 @@ export default class StreamsList {
     return undefined;
   };
 
-  getLiveStreamNextPageParam: GetNextPageParamFunction<Stream[]> = (
-    lastPage,
-  ) => {
+  getLiveStreamNextPageParam: GetNextPageParamFunction<
+    Partial<StreamsOptions>,
+    Stream[]
+  > = (lastPage) => {
     if (lastPage.length >= 24) {
       const last = lastPage[lastPage.length - 1];
       return { status: last.status, endAt: last.startTime };
@@ -117,20 +121,14 @@ export default class StreamsList {
     return undefined;
   };
 
-  result = infiniteQuery<
-    Array<Stream>,
-    unknown,
-    { items: Stream[]; updatedAt: number },
-    Array<Stream>,
-    QueryKey
-  >(() => {
+  result = injectInfiniteQuery(() => {
     const data = this.route.snapshot.data;
     const channelIds = this.channels().map((c) => c.channelId);
     const range = this.selectedDateRange();
     const keyword = this.searchKeyword();
 
     return {
-      queryKey: [
+      queryKey: <QueryKey>[
         "streams",
         {
           status: data.status,
@@ -142,6 +140,7 @@ export default class StreamsList {
       ],
       enabled: channelIds.length > 0,
       select: this.select,
+      initialPageParam: {},
       queryFn:
         data.status === "scheduled"
           ? this.scheduledStreamQueryFn

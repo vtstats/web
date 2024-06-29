@@ -3,7 +3,7 @@
     <div class="flex-1">
       <div class="mat-h3 m-0" i18n="@@stream-times">Stream Times</div>
       <div class="mat-text-caption mat-secondary-text">
-        {{ getTotal(result().data) | formatDuration }} in 45 weeks
+        {{ getTotal(query.data()) | formatDuration }} in 45 weeks
       </div>
     </div>
 
@@ -16,26 +16,26 @@
 
   @switch (precision) {
     @case ("day") {
-      <vts-stream-time-calendar [times]="result().data" />
+      <vts-stream-time-calendar [times]="query.data()" />
     }
     @case ("hour") {
       <vts-stream-time-bar-chart
-        [loading]="result().isLoading"
-        [times]="result().data || []"
+        [loading]="query.isLoading()"
+        [times]="query.data() || []"
         groupBy="hour"
       />
     }
     @case ("month") {
       <vts-stream-time-bar-chart
-        [loading]="result().isLoading"
-        [times]="result().data || []"
+        [loading]="query.isLoading()"
+        [times]="query.data() || []"
         groupBy="month"
       />
     }
     @case ("weekday") {
       <vts-stream-time-bar-chart
-        [loading]="result().isLoading"
-        [times]="result().data || []"
+        [loading]="query.isLoading()"
+        [times]="query.data() || []"
         groupBy="weekday"
       />
     }
