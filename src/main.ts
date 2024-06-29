@@ -9,11 +9,10 @@ import {
   withInMemoryScrolling,
   withRouterConfig,
 } from "@angular/router";
+import { provideAngularQuery } from "@tanstack/angular-query-experimental";
 import { QueryClient, hydrate } from "@tanstack/query-core";
 import qs from "query-string";
 
-import { provideHttpClient, withFetch } from "@angular/common/http";
-import { provideAngularQuery } from "@tanstack/angular-query-experimental";
 import { AppComponent } from "./app/app.component";
 import routes from "./app/routes";
 import { catalogQuery, exchangeRatesQuery } from "./app/shared/api/entrypoint";
@@ -108,8 +107,6 @@ const bootstrap = async () => {
   const exchangeRates = await queryClient.fetchQuery(exchangeRatesQuery);
   const catalog = await queryClient.fetchQuery(catalogQuery);
 
-  queryClient.mount();
-
   return bootstrapApplication(AppComponent, {
     providers: [
       ...providers,
@@ -131,7 +128,6 @@ const bootstrap = async () => {
       ),
       provideAnimations(),
       provideAngularQuery(queryClient),
-      provideHttpClient(withFetch()),
     ],
   });
 };

@@ -169,7 +169,8 @@ export class GoogleService {
           }),
           {
             method: "POST",
-            selector: (res) => res.json(),
+            selector: (res) =>
+              res.json() as Promise<YouTubeAddPlaylistItemResponse>,
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + token,

@@ -108,50 +108,6 @@
           "options": {
             "buildTarget": "vts:build"
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "tsconfig.server.json",
-            "optimization": false,
-            "sourceMap": true,
-            "i18nMissingTranslation": "error",
-            "extractLicenses": false
-          },
-          "configurations": {
-            "development": {
-              "fileReplacements": [
-                {
-                  "replace": "src/app/components/chart/chart.ts",
-                  "with": "src/app/components/chart/chart.server.ts"
-                },
-                {
-                  "replace": "src/app/layout/sidenav/sidenav.ts",
-                  "with": "src/app/layout/sidenav/sidenav.server.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/app/components/chart/chart.ts",
-                  "with": "src/app/components/chart/chart.server.ts"
-                },
-                {
-                  "replace": "src/app/layout/sidenav/sidenav.ts",
-                  "with": "src/app/layout/sidenav/sidenav.server.ts"
-                },
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true
-            }
-          },
-          "defaultConfiguration": "development"
         }
       }
     }

@@ -12,7 +12,10 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "target": "ES2022",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/@cloudflare/workers-types"
+    ],
     "lib": ["ESNext", "dom"],
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
@@ -23,6 +26,8 @@
     "strict": true,
     "strictNullChecks": true
   },
+  "files": ["src/main.ts", "src/main.server.ts", "server.ts"],
+  "include": ["src/**/*.d.ts"],
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictTemplates": true,

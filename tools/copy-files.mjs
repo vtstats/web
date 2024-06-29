@@ -7,3 +7,8 @@ fs.cpSync(client, cloudflare, { recursive: true });
 fs.cpSync(ssr, worker, { recursive: true });
 
 fs.renameSync(join(worker, "server.mjs"), join(worker, "index.js"));
+
+fs.renameSync(
+  join(cloudflare, "index.csr.html"),
+  join(cloudflare, "index.html"),
+);

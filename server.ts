@@ -89,9 +89,7 @@ class DehydrateQueryClientHandler
 
     const ESCAPE_REGEX = /[&><\u2028\u2029]/g;
 
-    const state = dehydrate(this.client, {
-      shouldDehydrateMutation: () => false,
-    });
+    const state = dehydrate(this.client);
 
     const str = JSON.stringify(state);
 

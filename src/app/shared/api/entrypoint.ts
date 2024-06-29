@@ -40,14 +40,11 @@ export type Paid = {
   color: string;
 };
 
-const _json = (res: Response) => res.json();
+const _json = (res: Response): any => res.json();
 
 const _sort = (arr: any[]) => arr.sort((a, b) => a[0] - b[0]);
 
 const _getTime = (dt?: Date | number) => (dt ? getTime(dt) : undefined);
-
-export const catalog = (): Promise<Catalog> =>
-  fetch(`${baseUrl}/catalog`).then(_json);
 
 export const channelStatsSummary = (
   channelIds: number[],
@@ -217,8 +214,14 @@ export const exchangeRatesQuery: FetchQueryOptions<
   ["exchange-rates"]
 > = {
   queryKey: ["exchange-rates"],
-  queryFn: () => fetch(`${baseUrl}/exchange-rates`).then(_json),
-  staleTime: 24 * 60 * 60 * 1000, // 10 day
+  queryFn: () =>
+    fetch(`${baseUrl}/exchange-rates`, {
+      cf: {
+        cacheTtl: 60 * 60 * 24, // 1 day
+        cacheEverything: true,
+      },
+    }).then(_json),
+  staleTime: 24 * 60 * 60 * 1000, // 1 day
 };
 
 export const catalogQuery: FetchQueryOptions<
@@ -228,6 +231,12 @@ export const catalogQuery: FetchQueryOptions<
   ["catalog"]
 > = {
   queryKey: ["catalog"],
-  queryFn: () => catalog(),
+  queryFn: () =>
+    fetch(`${baseUrl}/catalog`, {
+      cf: {
+        cacheTtl: 60 * 60, // 1 hour
+        cacheEverything: true,
+      },
+    }).then(_json),
   staleTime: 60 * 60 * 1000, // 1 hour
 };
