@@ -9,7 +9,7 @@ import {
   input,
 } from "@angular/core";
 import { MatTableModule } from "@angular/material/table";
-import { type EChartsOption } from "echarts";
+import type { EChartsOption } from "echarts";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Menu } from "src/app/components/menu/menu";

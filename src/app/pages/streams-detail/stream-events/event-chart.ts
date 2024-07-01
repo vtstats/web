@@ -1,7 +1,7 @@
 import { formatDate, formatNumber } from "@angular/common";
 import { Component, Input, LOCALE_ID, OnInit, inject } from "@angular/core";
-import { EChartsOption, RegisteredSeriesOption } from "echarts";
-import { TopLevelFormatterParams } from "echarts/types/dist/shared";
+import type { EChartsOption, RegisteredSeriesOption } from "echarts";
+import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream } from "src/app/models";

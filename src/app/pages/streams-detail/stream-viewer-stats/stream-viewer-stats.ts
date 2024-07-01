@@ -11,7 +11,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { injectQuery } from "@tanstack/angular-query-experimental";
 import type { EChartsOption } from "echarts";
 import type { ECharts } from "echarts/core";
-import { TopLevelFormatterParams } from "echarts/types/dist/shared";
+import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { Stream, StreamStatus } from "src/app/models";

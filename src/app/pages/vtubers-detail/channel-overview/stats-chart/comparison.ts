@@ -24,7 +24,17 @@ import { ChannelStatsKind } from "./stats-chart.component";
   selector: "vts-stats-comparison",
   template: `
     <div class="mat-h4 mb-1 mat-secondary-text">
-      {{ title | titlecase }}
+      @switch (kind) {
+        @case ("subscriber") {
+          <ng-container i18n="@@subscribers">Subscribers</ng-container>
+        }
+        @case ("view") {
+          <ng-container i18n="@@views">Views</ng-container>
+        }
+        @case ("revenue") {
+          <ng-container i18n="@@revenue">Revenue</ng-container>
+        }
+      }
     </div>
 
     <div class="flex flex-row items-center sm:block">
@@ -79,21 +89,6 @@ export class StatsComparisonComponent {
     }
 
     return formatNumber(value, this.locale);
-  }
-
-  get title(): string {
-    switch (this.kind) {
-      default:
-      case "subscriber": {
-        return $localize`:@@subscribers:Subscribers`;
-      }
-      case "view": {
-        return $localize`:@@views:Views`;
-      }
-      case "revenue": {
-        return $localize`:@@revenue:Revenue`;
-      }
-    }
   }
 
   get delta(): number {

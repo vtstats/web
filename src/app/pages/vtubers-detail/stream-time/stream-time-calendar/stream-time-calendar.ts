@@ -15,8 +15,8 @@ import {
   isSameDay,
   subDays,
 } from "date-fns";
-import { EChartsOption } from "echarts";
-import { TopLevelFormatterParams } from "echarts/types/dist/shared";
+import type { EChartsOption } from "echarts";
+import type { TopLevelFormatterParams } from "echarts/types/dist/shared";
 
 import { Chart } from "src/app/components/chart/chart";
 import { DATE_FNS_LOCALE } from "src/app/shared/tokens";
