@@ -73,7 +73,7 @@ export default class ChannelStats {
 
     return {
       placeholderData: channels.map((c) => ({ vtuberId: c.vtuberId }) as any),
-      enabled: this.csr() || channels.length > 0,
+      enabled: this.csr() && channels.length > 0,
       queryKey: [
         "channel-stats/summary",
         { channelIds: channels.map((c) => c.channelId), kind },
