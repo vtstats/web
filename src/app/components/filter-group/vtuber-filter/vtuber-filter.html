@@ -20,7 +20,7 @@
   />
 </button>
 
-<mat-menu #filterMenu="matMenu" class="mt-2 max-h-80">
+<mat-menu #filterMenu="matMenu" class="mt-2 max-h-80 !min-w-80">
   <ng-template matMenuContent>
     <div
       class="-my-2"
@@ -29,7 +29,7 @@
       <div
         class="sticky top-0 flex p-3 mat-border-divider mat-bg-card border-b border-solid border-t-0 border-x-0 gap-1 items-center z-50"
       >
-        <mat-icon class="!h-5 !w-5 mat-secondary-text" svgIcon="search" />
+        <mat-icon class="!min-w-5 !h-5 !w-5 mat-secondary-text" svgIcon="search" />
 
         <input
           class="flex-1 p-0 block bg-transparent outline-0 border-0 mat-secondary-text text-base"
