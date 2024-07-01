@@ -1,42 +1,20 @@
-@switch (true) {
-  @case (!loading && !!groupBy) {
-    @for (group of items | groupStreams; track group.name) {
-      <div class="mat-h3 font-medium">{{ group.name }}</div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        @for (stream of group.streams; track stream.streamId) {
-          <vts-stream-item [stream]="stream" />
-        }
-      </div>
-    }
-  }
-  @case (!loading && !groupBy) {
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      @for (stream of items; track stream.streamId) {
+@if (groupBy()) {
+  @for (group of items() | groupStreams; track group.name) {
+    <div class="mat-h3 font-medium">{{ group.name }}</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
+      @for (stream of group.streams; track stream.streamId) {
         <vts-stream-item [stream]="stream" />
       }
     </div>
   }
-  @case (loading && !!groupBy) {
-    @for (_ of [1, 2]; track _) {
-      <div class="mat-h3">
-        <span class="shimmer text w-10"></span>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-        @for (_ of [1, 2, 3, 4, 5]; track _) {
-          <vts-stream-item-shimmer />
-        }
-      </div>
+} @else {
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    @for (stream of items(); track stream.streamId) {
+      <vts-stream-item [stream]="stream" />
     }
-  }
-  @case (loading && !groupBy) {
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      @for (_ of [1, 2, 3, 4, 5]; track _) {
-        <vts-stream-item-shimmer />
-      }
-    </div>
-  }
+  </div>
 }
 
-<div [hidden]="loading || hideSpinner" class="m-4">
+<div [hidden]="hideSpinner()" class="m-4">
   <mat-spinner class="mx-auto" #spinner [diameter]="30" />
 </div>

@@ -68,19 +68,19 @@
   </head>
   <body class="dark">
     <vts-root></vts-root>
-    <div id="react-root"></div>
     <noscript>
       Please enable JavaScript to continue using this application.
     </noscript>
     <script>
       try {
-        const setting = window.localStorage.getItem("vts:themeSetting");
+        const setting =
+          window.localStorage.getItem("vts:themeSetting") || '"followSystem"';
         const prefersDarkMode = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
         const isDarkMode =
-          setting === "dark" ||
-          (setting === "follow-system" && prefersDarkMode);
+          setting === '"dark"' ||
+          (setting === '"followSystem"' && prefersDarkMode);
 
         document.body.setAttribute("class", isDarkMode ? "dark" : "light");
         document.head

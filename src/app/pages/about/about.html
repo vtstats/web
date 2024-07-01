@@ -84,9 +84,15 @@
       <a mat-list-item href="https://angular.io/">
         Angular Version: v{{ angularVer }}
       </a>
-      <a mat-list-item (click)="qry.toggleQueryDevTools()">
-        Toggle Query DevTools
-      </a>
+      @if (query.enableDevtools()) {
+        <a mat-list-item (click)="query.enableDevtools.set(false)">
+          Enable Query DevTools
+        </a>
+      } @else {
+        <a mat-list-item (click)="query.enableDevtools.set(true)">
+          Show Query DevTools
+        </a>
+      }
       <a mat-list-item routerLink="/about/ngsw">Service Worker</a>
       <a mat-list-item routerLink="/about/privacy">Privacy Policy</a>
       <a mat-list-item routerLink="/about/licenses">Third Party Licenses</a>

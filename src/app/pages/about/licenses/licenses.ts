@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, afterNextRender } from "@angular/core";
 import { injectQuery } from "@tanstack/angular-query-experimental";
 
 @Component({
@@ -10,5 +10,12 @@ export class Licenses {
   licensesQry = injectQuery(() => ({
     queryKey: ["3rdpartylicenses"],
     queryFn: () => fetch("/3rdpartylicenses.txt").then((res) => res.text()),
+    enabled: false,
   }));
+
+  constructor() {
+    afterNextRender(() => {
+      this.licensesQry.refetch();
+    });
+  }
 }

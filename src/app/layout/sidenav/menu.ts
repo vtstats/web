@@ -4,7 +4,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { RouterModule } from "@angular/router";
-import { DrawerService } from "src/app/shared/services/drawer";
+import { ResizeService } from "src/app/shared";
 
 @Component({
   standalone: true,
@@ -43,14 +43,14 @@ export class SidenavMenu {
   @Input() headline?: string;
   @Input() items: { icon: string; title: string; link: string }[] = [];
 
-  drawerService = inject(DrawerService);
+  resizeService = inject(ResizeService);
 
   onClick() {
     if (
-      this.drawerService.drawer &&
-      this.drawerService.drawer.mode === "over"
+      this.resizeService.drawer &&
+      this.resizeService.drawer.mode === "over"
     ) {
-      this.drawerService.drawer.close();
+      this.resizeService.drawer.close();
     }
   }
 }

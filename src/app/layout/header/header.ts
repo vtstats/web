@@ -5,9 +5,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 
-import { ConfigService } from "src/app/shared";
+import { ConfigService, ResizeService } from "src/app/shared";
 import { ThemeService } from "src/app/shared/config/theme.service";
-import { DrawerService } from "src/app/shared/services/drawer";
 
 @Component({
   standalone: true,
@@ -36,7 +35,7 @@ export class Header {
   private config = inject(ConfigService);
   private localeId = inject(LOCALE_ID);
 
-  drawerService = inject(DrawerService);
+  resizeService = inject(ResizeService);
 
   nextTheme() {
     this.theme.themeSetting.set(

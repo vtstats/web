@@ -6,9 +6,7 @@ import {
 import { formatDate } from "@angular/common";
 import {
   Component,
-  EventEmitter,
   LOCALE_ID,
-  Output,
   ViewEncapsulation,
   computed,
   inject,
@@ -23,7 +21,7 @@ import {
   MatDatepickerModule,
 } from "@angular/material/datepicker";
 import { MatIconModule } from "@angular/material/icon";
-import { endOfDay, isAfter, startOfDay } from "date-fns";
+import { endOfDay, isAfter, startOfDay, subDays } from "date-fns";
 
 import animations from "../_animations";
 
@@ -66,7 +64,7 @@ export class DateFilter {
 
   selectedChange = output<[Date, Date] | null>();
 
-  minDate = new Date(2016, 10, 29);
+  minDate = subDays(new Date(), 365);
   maxDate = new Date();
 
   open = signal(false);

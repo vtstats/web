@@ -1,4 +1,4 @@
-@if (channels().length == 0) {
+@if (channelIds().length == 0 && csr()) {
   <vts-select-vtuber-alert />
 } @else {
   <div class="p-4">
@@ -8,8 +8,6 @@
       <vts-vtuber-filter (selectedChange)="selectedVtuberIds.set($event)" />
       @if (route.snapshot.data.status !== "scheduled") {
         <vts-date-filter (selectedChange)="selectedDateRange.set($event)" />
-      }
-      @if (route.snapshot.data.status !== "scheduled") {
         <vts-keyword-filter (onChange)="searchKeyword.set($event)" />
       }
       <div class="flex-1"></div>
@@ -19,10 +17,11 @@
         [updatedAt]="result.data()?.updatedAt"
       />
     </div>
-    @if (!result.isError()) {
+    @if (!csr() || result.isLoading()) {
+      <vts-stream-loading-list groupBy />
+    } @else if (!result.isError()) {
       <vts-stream-list
-        [groupBy]="true"
-        [loading]="result.isLoading()"
+        groupBy
         [items]="result.data()?.items"
         [hideSpinner]="!result.hasNextPage()"
         (reachedEnd)="

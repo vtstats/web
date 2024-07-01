@@ -36,7 +36,7 @@ body {
   color: mat.m2-get-color-from-palette($foreground, "text");
 
   @include mat.button-color($vts-dark-theme);
-  @include mat.icon-button-theme($vts-dark-theme);
+  @include mat.icon-button-color($vts-dark-theme);
   @include mat.checkbox-color($vts-dark-theme);
   @include mat.core-color($vts-dark-theme);
   @include mat.divider-color($vts-dark-theme);

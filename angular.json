@@ -43,14 +43,19 @@
             "polyfills": ["zone.js", "@angular/localize/init"],
             "tsConfig": "tsconfig.json",
             "aot": true,
-            "assets": ["src/manifest.webmanifest"],
+            "assets": [
+              "src/manifest.webmanifest",
+              "src/_headers",
+              "src/_redirects",
+              "src/_routes.json"
+            ],
             "styles": ["src/styles/main.scss", "src/styles/tailwind.css"],
             "i18nMissingTranslation": "error",
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
             "namedChunks": false,
-            "prerender": false,
+            "prerender": true,
             "ssr": {
               "entry": "server.ts"
             }
@@ -58,7 +63,8 @@
           "configurations": {
             "development": {
               "define": {
-                "process.env.NODE_ENV": "'development'"
+                "process.env.NODE_ENV": "'development'",
+                "process.env.COMMIT_SHA": "'1234567'"
               }
             },
             "production": {

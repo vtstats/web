@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 export const root = path.resolve(dirname, "..");
+export const dist = path.resolve(root, "dist");
 export const client = path.resolve(root, "dist/browser");
 export const ssr = path.resolve(root, "dist/server");
 export const cloudflare = path.resolve(root, "dist/cloudflare");

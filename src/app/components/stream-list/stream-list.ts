@@ -7,7 +7,9 @@ import {
   OnInit,
   PLATFORM_ID,
   ViewChild,
+  booleanAttribute,
   inject,
+  input,
   output,
 } from "@angular/core";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -33,10 +35,9 @@ export class StreamsList implements OnInit, OnDestroy {
   @ViewChild("spinner", { static: true, read: ElementRef })
   spinner!: ElementRef;
 
-  @Input() items: Stream[] | undefined = [];
-  @Input() groupBy: boolean = false;
-  @Input() loading: boolean = false;
-  @Input() hideSpinner: boolean = false;
+  items = input<Stream[] | undefined>([]);
+  hideSpinner = input(false);
+  groupBy = input(false, { transform: booleanAttribute });
   reachedEnd = output();
 
   obs?: IntersectionObserver;

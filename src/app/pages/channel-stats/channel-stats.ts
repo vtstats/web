@@ -1,6 +1,8 @@
 import {
+  AfterRenderPhase,
   ChangeDetectionStrategy,
   Component,
+  afterNextRender,
   computed,
   inject,
   signal,
@@ -17,11 +19,13 @@ import { Channel, ChannelStatsKind, Platform } from "src/app/models";
 import * as api from "src/app/shared/api/entrypoint";
 import { CurrencyService } from "src/app/shared/config/currency.service";
 import { VTuberService } from "src/app/shared/config/vtuber.service";
-import { CHAT_CURRENCIES } from "src/app/shared/tokens";
+
 import {
   ChannelStatsRow,
   ChannelStatsTable,
 } from "./components/channel-stats-table/channel-stats-table";
+import { CurrencyFilter } from "./components/currency-filter/currency-filter";
+import { LoadingTable } from "./components/loading-table/loading-table";
 
 @Component({
   standalone: true,
@@ -34,20 +38,19 @@ import {
     SelectVtuberAlert,
     RefreshButton,
     Menu,
+    CurrencyFilter,
+    LoadingTable,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ChannelStats {
   private vtubers = inject(VTuberService);
-  route = inject(ActivatedRoute);
-  kind = this.route.snapshot.data.kind;
+  kind = inject(ActivatedRoute).snapshot.data.kind;
 
   currency = inject(CurrencyService);
-  currencies = inject(CHAT_CURRENCIES);
 
   vtuberFilter = signal(new Set<string>());
   platformFilter = signal(Platform.YOUTUBE as string);
-  currencyFilter = inject(CurrencyService).currencySetting;
 
   channels = computed<Channel[]>(() => {
     const vtuberFilter = this.vtuberFilter();
@@ -66,11 +69,11 @@ export default class ChannelStats {
 
   result = injectQuery(() => {
     const channels = this.channels();
-    const kind = this.route.snapshot.data.kind;
+    const kind = this.kind;
 
     return {
       placeholderData: channels.map((c) => ({ vtuberId: c.vtuberId }) as any),
-      enabled: channels.length > 0,
+      enabled: this.csr() || channels.length > 0,
       queryKey: [
         "channel-stats/summary",
         { channelIds: channels.map((c) => c.channelId), kind },
@@ -136,27 +139,11 @@ export default class ChannelStats {
     return Math.max(...data.map((i) => i.updatedAt));
   });
 
-  get valueLabel(): string {
-    switch (this.route.snapshot.data.kind) {
-      case "SUBSCRIBER": {
-        return $localize`:@@subscribers:Subscribers`;
-      }
-      case "VIEW": {
-        return $localize`:@@views:Views`;
-      }
-      case "REVENUE": {
-        return $localize`:@@revenue:Revenue`;
-      }
-      default: {
-        return "";
-      }
-    }
-  }
+  csr = signal(false);
 
-  get currencyOptions() {
-    return this.currencies.map((c) => ({
-      value: c[0],
-      label: c[0] + ", " + c[1],
-    }));
+  constructor() {
+    afterNextRender(() => this.csr.set(true), {
+      phase: AfterRenderPhase.Write,
+    });
   }
 }

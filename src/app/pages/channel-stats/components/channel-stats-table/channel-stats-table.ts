@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { RouterModule } from "@angular/router";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 
 import { NamePipe } from "src/app/shared";
 import { CATALOG_VTUBERS } from "src/app/shared/tokens";
@@ -45,6 +45,8 @@ export type ChannelStatsRow = {
 export class ChannelStatsTable implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
+  kind = inject(ActivatedRoute).snapshot.data.kind;
+
   vtubers = inject(CATALOG_VTUBERS);
 
   findVTuber(id: string) {
@@ -57,9 +59,6 @@ export class ChannelStatsTable implements AfterViewInit {
     if (dataSource) this.data.data = dataSource;
   }
 
-  @Input() loading: boolean = false;
-  @Input({ required: true }) valueLabel!: string;
-
   readonly displayedColumns: string[] = [
     "profile",
     "name",
@@ -70,7 +69,7 @@ export class ChannelStatsTable implements AfterViewInit {
   ];
 
   readonly dataColumns: {
-    f: "value" | "delta1d" | "delta7d" | "delta30d";
+    f: "delta1d" | "delta7d" | "delta30d";
     t: string;
   }[] = [
     {

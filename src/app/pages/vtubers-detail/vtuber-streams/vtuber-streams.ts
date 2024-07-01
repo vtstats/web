@@ -6,12 +6,20 @@ import { DateFilter } from "src/app/components/filter-group/date-filter/date-fil
 import { KeywordFilter } from "src/app/components/filter-group/keyword-filter/keyword-filter";
 import { RefreshButton } from "src/app/components/refresh-button/refresh-button";
 import { StreamsList } from "src/app/components/stream-list/stream-list";
+import { StreamLoadingList } from "src/app/components/stream-list/stream-loading-list";
 import { Channel, StreamStatus } from "src/app/models";
 import { streams } from "src/app/shared/api/entrypoint";
 
 @Component({
   standalone: true,
-  imports: [StreamsList, KeywordFilter, DateFilter, DatePipe, RefreshButton],
+  imports: [
+    StreamsList,
+    KeywordFilter,
+    DateFilter,
+    DatePipe,
+    RefreshButton,
+    StreamLoadingList,
+  ],
   selector: "vts-vtuber-streams",
   templateUrl: "./vtuber-streams.html",
 })

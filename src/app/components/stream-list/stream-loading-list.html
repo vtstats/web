@@ -1,0 +1,18 @@
+@if (groupBy()) {
+  @for (_ of [1, 2]; track _) {
+    <div class="mat-h3">
+      <span class="shimmer text w-10"></span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
+      @for (_ of [1, 2, 3, 4, 5]; track _) {
+        <vts-stream-item-shimmer />
+      }
+    </div>
+  }
+} @else {
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    @for (_ of [1, 2, 3, 4, 5]; track _) {
+      <vts-stream-item-shimmer />
+    }
+  </div>
+}

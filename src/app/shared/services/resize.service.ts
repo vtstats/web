@@ -1,27 +1,43 @@
-import { Injectable, signal } from "@angular/core";
+import {
+  AfterRenderPhase,
+  Injectable,
+  afterNextRender,
+  signal,
+} from "@angular/core";
+import { MatSidenav } from "@angular/material/sidenav";
 
 @Injectable({ providedIn: "root" })
 export class ResizeService {
-  constructor() {
-    if (typeof window !== "undefined") {
-      let timer: any = null;
+  drawer: MatSidenav | null = null;
 
-      window.addEventListener("resize", () => {
-        if (!timer) this.update();
-
-        clearTimeout(timer);
-
-        timer = setTimeout(() => {
-          this.update();
-          timer = null;
-        }, 500);
-      });
-
-      this.update();
-    }
+  setDrawer(drawer: MatSidenav) {
+    this.drawer = drawer;
   }
 
-  update = () => this.windowWidth.set(window.innerWidth);
+  constructor() {
+    afterNextRender(
+      () => {
+        let timer: any = null;
 
-  windowWidth = signal(2434);
+        window.addEventListener("resize", () => {
+          if (!timer) {
+            this.windowWidth.set(window.innerWidth);
+            return;
+          }
+
+          clearTimeout(timer);
+
+          timer = setTimeout(() => {
+            this.windowWidth.set(window.innerWidth);
+            timer = null;
+          }, 500);
+        });
+
+        this.windowWidth.set(window.innerWidth);
+      },
+      { phase: AfterRenderPhase.Write },
+    );
+  }
+
+  windowWidth = signal(24.34);
 }

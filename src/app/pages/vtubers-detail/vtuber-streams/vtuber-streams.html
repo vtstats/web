@@ -12,9 +12,10 @@
     [updatedAt]="result.data()?.updatedAt"
   />
 </div>
-@if (!result.isError()) {
+@if (result.isLoading()) {
+  <vts-stream-loading-list />
+} @else if (!result.isError()) {
   <vts-stream-list
-    [loading]="result.isLoading()"
     [items]="result.data()?.items"
     [hideSpinner]="!result.hasNextPage()"
     (reachedEnd)="result.isFetchingNextPage() ? null : result.fetchNextPage()"

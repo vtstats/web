@@ -28,6 +28,7 @@
     "@angular/platform-server": "^18.0.5",
     "@angular/router": "^18.0.5",
     "@angular/service-worker": "^18.0.5",
+    "@tanstack/angular-query-devtools-experimental": "5.48.0",
     "@tanstack/angular-query-experimental": "5.48.0",
     "@tanstack/query-core": "5.48.0",
     "d3-array": "^3.1.1",

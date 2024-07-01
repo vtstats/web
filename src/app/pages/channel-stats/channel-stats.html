@@ -1,4 +1,4 @@
-@if (channels().length == 0) {
+@if (channels().length == 0 && csr()) {
   <vts-select-vtuber-alert />
 } @else {
   <div
@@ -13,12 +13,7 @@
     <vts-vtuber-filter (selectedChange)="vtuberFilter.set($event)" />
     <div class="flex-1"></div>
     @if (kind === "REVENUE") {
-      <vts-menu
-        [showLabel]="false"
-        [options]="currencyOptions"
-        [value]="currency.currencySetting()"
-        (change)="currency.currencySetting.set($event)"
-      />
+      <vts-currency-filter />
     }
     <vts-refresh-button
       [isLoading]="result.isFetching()"
@@ -27,12 +22,10 @@
     />
   </div>
   <div class="px-4 overflow-x-auto">
-    @if (!result.isError()) {
-      <vts-channel-stats-table
-        [valueLabel]="valueLabel"
-        [dataSource]="data()"
-        [loading]="result.isFetching()"
-      />
+    @if (!csr() || result.isFetching()) {
+      <vts-loading-table />
+    } @else if (!result.isError()) {
+      <vts-channel-stats-table [dataSource]="data()" />
     }
   </div>
   <!-- TODO: display error -->

@@ -1,11 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav
-    #drawer
-    [opened]="drawerService.sidenavOpen()"
-    [mode]="drawerService.sidenavMode()"
-    [fixedInViewport]="true"
-    [fixedTopGap]="drawerService.sidenavFixedTopGap()"
-  >
+  <mat-sidenav #drawer fixedInViewport>
     <vts-sidenav />
   </mat-sidenav>
 
@@ -18,3 +12,9 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+@if (queryService.enableDevtools()) {
+  @defer {
+    <angular-query-devtools initialIsOpen />
+  }
+}

@@ -7,16 +7,7 @@ import type {
 } from "@cloudflare/workers-types";
 import { QueryClient, dehydrate } from "@tanstack/query-core";
 
-import * as api from "./src/app/shared/api/entrypoint";
-import {
-  CATALOG_CHANNELS,
-  CATALOG_GROUPS,
-  CATALOG_VTUBERS,
-  DATE_FNS_LOCALE,
-  EXCHANGE_RATES,
-} from "./src/app/shared/tokens";
-import * as i18n from "./src/i18n/en";
-import { bootstrap } from "./src/main.server";
+import { bootstrap } from "src/main.server";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -36,24 +27,15 @@ async function workerFetchHandler(
 
   const url = new URL(req.url);
 
-  const document = await env.ASSETS.fetch(new Request(new URL("/", url))).then(
-    (res) => res.text(),
-  );
+  const document = await env.ASSETS.fetch(
+    new Request(new URL("/index.csr.html", url)),
+  ).then((res) => res.text());
 
   const queryClient = new QueryClient();
 
-  const catalog = await queryClient.fetchQuery(api.catalogQuery);
-
-  const html = await renderApplication(bootstrap, {
+  const html = await renderApplication(() => bootstrap(queryClient), {
     document,
     url: url.pathname,
-    platformProviders: [
-      { provide: DATE_FNS_LOCALE, useValue: i18n.dateFnsLocale },
-      { provide: CATALOG_CHANNELS, useValue: catalog.channels },
-      { provide: CATALOG_GROUPS, useValue: catalog.groups },
-      { provide: CATALOG_VTUBERS, useValue: catalog.vtubers },
-      { provide: EXCHANGE_RATES, useValue: {} },
-    ],
   });
 
   res = new self.Response(html, {

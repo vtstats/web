@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, afterNextRender, inject } from "@angular/core";
 import { SwUpdate } from "@angular/service-worker";
 import { injectQuery } from "@tanstack/angular-query-experimental";
 
@@ -14,5 +14,12 @@ export class NgswSettings {
   ngswStateQry = injectQuery(() => ({
     queryKey: ["ngsw/state"],
     queryFn: () => fetch("/ngsw/state").then((res) => res.text()),
+    enabled: false,
   }));
+
+  constructor() {
+    afterNextRender(() => {
+      this.ngswStateQry.refetch();
+    });
+  }
 }

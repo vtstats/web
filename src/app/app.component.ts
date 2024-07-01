@@ -1,13 +1,20 @@
-import { AfterViewInit, Component, ViewChild, inject } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ViewChild,
+  effect,
+  inject,
+} from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
 import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
+import { AngularQueryDevtools } from "@tanstack/angular-query-devtools-experimental";
 
 import { Header } from "./layout/header/header";
 import { Sidenav } from "./layout/sidenav/sidenav";
 import { ResizeService } from "./shared";
-import { DrawerService } from "./shared/services/drawer";
+import { QueryService } from "./shared/config/query.service";
 
 const icons: Array<[string, string]> = [
   [
@@ -134,17 +141,23 @@ const icons: Array<[string, string]> = [
 
 @Component({
   standalone: true,
-  imports: [Header, Sidenav, RouterModule, MatSidenavModule],
+  imports: [
+    Header,
+    Sidenav,
+    RouterModule,
+    MatSidenavModule,
+    AngularQueryDevtools,
+  ],
   selector: "vts-root",
   templateUrl: "app.component.html",
 })
 export class AppComponent implements AfterViewInit {
   private iconRegistry = inject(MatIconRegistry);
   private sanitizer = inject(DomSanitizer);
+  queryService = inject(QueryService);
 
-  @ViewChild(MatSidenav) matDrawer!: MatSidenav;
+  @ViewChild(MatSidenav) drawer!: MatSidenav;
 
-  drawerService = inject(DrawerService);
   resizeService = inject(ResizeService);
 
   constructor() {
@@ -157,6 +170,23 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.drawerService.setDrawer(this.matDrawer);
+    this.resizeService.setDrawer(this.drawer);
   }
+
+  drawerEffect = effect(() => {
+    const width = this.resizeService.windowWidth();
+    if (width > 1200) {
+      this.drawer.mode = "side";
+      this.drawer.fixedTopGap = 65;
+      if (!this.drawer.opened) {
+        this.drawer.open();
+      }
+    } else {
+      this.drawer.mode = "over";
+      this.drawer.fixedTopGap = 0;
+      if (this.drawer.opened) {
+        this.drawer.close();
+      }
+    }
+  });
 }
