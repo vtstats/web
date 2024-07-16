@@ -6,6 +6,9 @@ export { default as dateFnsLocale } from "date-fns/locale/es";
 import { VSTATS_DISCORD_URL } from "src/constants/misc";
 import type { translations as t } from "./messages.json";
 
+// NOTE: SOME TRANSLATIONS ARE TRANSLATED USING DEEPL, WHICH WILL BE SIDENOTED RIGHT NEXT TO.
+// SO EXPECT THE QUALITY WOULDN'T BE DECENT. IF YOU ARE CONFIDENT WITH YOUR LANGUAGE, FEEL FREE
+// TO CHANGE THOSE FIELDS
 export const translations: typeof t = {
   "updated-at": "Última vez actualizado {$INTERPOLATION}",
   "channel-no-results": "No results, try selecting at least one VTuber",

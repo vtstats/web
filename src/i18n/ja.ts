@@ -6,20 +6,24 @@ export { default as dateFnsLocale } from "date-fns/locale/ja";
 import { VSTATS_DISCORD_URL } from "src/constants/misc";
 import type { translations as t } from "./messages.json";
 
+// NOTE: SOME TRANSLATIONS ARE TRANSLATED USING DEEPL, WHICH WILL BE SIDENOTED RIGHT NEXT TO.
+// SO EXPECT THE QUALITY WOULDN'T BE DECENT. IF YOU ARE CONFIDENT WITH YOUR LANGUAGE, FEEL FREE
+// TO CHANGE THOSE FIELDS
 export const translations: typeof t = {
   "updated-at": "更新時間: {$ INTERPOLATION}",
-  "channel-no-results": "No results, try selecting at least one VTuber",
-  "select-vtuber": "Select VTuber",
+  "channel-no-results":
+    "結果が表示されない場合は、少なくとも1つのVTuberを選択してください。", // TRANSLATED USING DEEPL
+  "select-vtuber": "VTuberを選択", // TRANSLATED USING DEEPL
   name: "名前",
   total: "合計",
   subscribers: "登録者数",
   views: "再生回数",
-  compare: "Compare",
+  compare: "比較する", // TRANSLATED USING DEEPL
   "last-day": "過去 1 日",
   "last-7days": "過去 7 日",
   "last-30days": "過去 30 日",
-  "page-not-found": "Page Not Found",
-  "page-not-found-desc": "But watame did nothing wrong.",
+  "page-not-found": "ページが見つかりません", // TRANSLATED USING DEEPL
+  "page-not-found-desc": "でも、わためは何も悪くない。", // TRANSLATED USING DEEPL
   channel: "チャネル",
   stream: "配信",
   "live-stream": "ライブ",
@@ -29,7 +33,7 @@ export const translations: typeof t = {
   general: "general",
   "average-viewers": "平均的な視聴者",
   "maximum-viewers": "最大視聴者数",
-  "discord-channel": "Discord Channel",
+  "discord-channel": "Discordチャンネル", // TRANSLATED USING DEEPL
   // streamHasEnded: "配信終了",
   // streaming: "配信中",
   // streamStartTime: "開始時間",
@@ -38,15 +42,15 @@ export const translations: typeof t = {
   "select-language": "言語を選択",
   "recent-streams": "最近の配信",
   "stream-viewers": "配信視聴者",
-  "page-under-construction": "Page Under Construction",
+  "page-under-construction": "建設中のページ", // TRANSLATED USING DEEPL
   "page-under-construction-desc":
-    "This section is currently under development and will be released soon.",
+    "このセクションは現在開発中で、間もなく公開される予定だ。", // TRANSLATED USING DEEPL
   "select-date": "日付を選択し",
   "no-stream": "配信なし",
   // streamTimeOn: "{$ INTERPOLATION_1}: 配信時間 {$ INTERPOLATION}",
   "stream-times": "配信時間",
   "live-chat": "チャット",
-  "no-data": " NO DATA ",
+  "no-data": " データなし ", // TRANSLATED USING DEEPL
   today: "今日",
   yesterday: "昨日",
   tomorrow: "明日",
@@ -55,61 +59,60 @@ export const translations: typeof t = {
   "this-year": "今年",
   future: "未来",
   revenue: "收入",
-  about: "About",
-  "about-1":
-    "vtstats is a platform for VTubers Statistics and Data Visualization.",
+  about: "について", // TRANSLATED USING DEEPL
+  "about-1": "vtstatsはVTuber統計とデータ可視化のためのプラットフォームです。", // TRANSLATED USING DEEPL
   "about-2":
-    "This is an open source project, you can find the source code at {$START_LINK}GitHub{$CLOSE_LINK}.",
+    "これはオープンソースのプロジェクトであり、ソースコードは {$START_LINK}GitHub{$CLOSE_LINK} にあります。", // TRANSLATED USING DEEPL
   "about-3":
-    "If you find this website useful, consider supporting it with a donation by",
-  "about-4": `Join our discord server at {$START_LINK}${VSTATS_DISCORD_URL}{$CLOSE_LINK}. `,
+    "このウェブサイトがお役に立つとお感じになった方は、以下の方法で寄付による支援をご検討ください。", // TRANSLATED USING DEEPL
+  "about-4": `{$START_LINK}${VSTATS_DISCORD_URL}{$CLOSE_LINK}のDiscordサーバーに参加してください。`, // TRANSLATED USING DEEPL
   "about-5":
-    "Credits to {$START_LINK}Return YouTube Dislike{$CLOSE_LINK} for providing youtube like/dislike data.",
-  "filter-by-vtuber": "Filter by VTuber",
-  clear: "Clear",
-  misc: "Miscellaneous",
+    "{$START_LINK}YouTube嫌いを返す{$CLOSE_LINK}は、Youtubeの 好き／嫌い のデータを提供してくれました。", // TRANSLATED USING DEEPL
+  "filter-by-vtuber": "VTuberで絞り込む", // TRANSLATED USING DEEPL
+  clear: "クリア", // TRANSLATED USING DEEPL
+  misc: "その他", // TRANSLATED USING DEEPL
   "super-chats": "Super Chat",
   "super-sticker": "Super Stickers",
-  "new-member": "New Member",
-  "member-milestone": "Member Milestone",
-  cheering: "Cheering",
-  timed: "Timed",
-  "start-time": "Start time",
-  "end-time": "End time",
-  duration: "Duration",
-  "avg-max-viewers": "Avg./max viewers",
-  "likes-and-dislikes": " Likes / dislikes ",
-  "like-dislike-tooltip": "Provided by Return YouTube Dislike",
-  "revenue-tooltip-1": "Only includes",
-  "revenue-tooltip-youtube": "YouTube Super Chat & Super Sticker",
-  "revenue-tooltip-twitch": "Twitch Cheering & Hyper Chat",
+  "new-member": "新規会員", // TRANSLATED USING DEEPL
+  "member-milestone": "メンバーのマイルストーン", // TRANSLATED USING DEEPL
+  cheering: "Cheering", // TRANSLATED USING DEEPL
+  timed: "時間指定", // TRANSLATED USING DEEPL
+  "start-time": "開始時間", // TRANSLATED USING DEEPL
+  "end-time": "終了時間", // TRANSLATED USING DEEPL
+  duration: "期間", // TRANSLATED USING DEEPL
+  "avg-max-viewers": "平均視聴者数/最高視聴者数", // TRANSLATED USING DEEPL
+  "likes-and-dislikes": " 好き／嫌い ", // TRANSLATED USING DEEPL
+  "like-dislike-tooltip": "提供：Return YouTube Dislike", // TRANSLATED USING DEEPL
+  "revenue-tooltip-1": "のみが含まれる", // TRANSLATED USING DEEPL
+  "revenue-tooltip-youtube": "YouTube Super Chat と Super Sticker", // TRANSLATED USING DEEPL
+  "revenue-tooltip-twitch": "Twitch Cheering と Hyper Chat", // TRANSLATED USING DEEPL
   member: "メンバー",
-  "hyper-chat": "Hyper Chat",
-  count: "Count",
-  value: "Value",
+  "hyper-chat": "Hyper Chat", // TRANSLATED USING DEEPL
+  count: "カウント", // TRANSLATED USING DEEPL
+  value: "価値", // TRANSLATED USING DEEPL
   search: "検索",
-  currency: "Currency",
-  "display-language": "Display Language",
-  "name-language": "Name Language",
-  "native-name-label": "Native (e.g. 白上フブキ, Mori Calliope)",
-  "english-name-label": "English (e.g. Shirakami Fubuki, Mori Calliope)",
-  "japanese-name-label": "Japanese (e.g. 白上フブキ, 森カリオペ)",
-  appearance: "Appearance",
-  language: "Language",
-  region: "Region",
+  currency: "通貨", // TRANSLATED USING DEEPL
+  "display-language": "表示言語", // TRANSLATED USING DEEPL
+  "name-language": "言語", // TRANSLATED USING DEEPL
+  "native-name-label": "ネイティブ (e.g. 白上フブキ, Mori Calliope)", // TRANSLATED USING DEEPL
+  "english-name-label": "英語 (e.g. Shirakami Fubuki, Mori Calliope)",
+  "japanese-name-label": "日本語 (e.g. 白上フブキ, 森カリオペ)",
+  appearance: "外観", // TRANSLATED USING DEEPL
+  language: "言語", // TRANSLATED USING DEEPL
+  region: "地域", // TRANSLATED USING DEEPL
   vtuber: "VTuber",
-  "yt-account": "YouTube Account",
-  theme: "Theme",
-  "theme-sys-default-label": "System default",
-  "theme-light": "Light",
-  "theme-dark": "Dark",
-  "on-air": "On Air",
-  timezone: "Timezone",
-  none: "None",
-  filters: "Filters",
-  "show-retired": "Show graduated/terminated VTubers",
+  "yt-account": "YouTubeアカウント", // TRANSLATED USING DEEPL
+  theme: "テーマ", // TRANSLATED USING DEEPL
+  "theme-sys-default-label": "システムのデフォルト", // TRANSLATED USING DEEPL
+  "theme-light": "ライト", // TRANSLATED USING DEEPL
+  "theme-dark": "ダーク", // TRANSLATED USING DEEPL
+  "on-air": "オンエア", // TRANSLATED USING DEEPL
+  timezone: "タイムゾーン", // TRANSLATED USING DEEPL
+  none: "なし", // TRANSLATED USING DEEPL
+  filters: "フィルター", // TRANSLATED USING DEEPL
+  "show-retired": "卒業/終端のVTuberを表示", // TRANSLATED USING DEEPL
   "selected-vtuber-per-total":
-    "Selected {$INTERPOLATION} out of {$INTERPOLATION_1}\n",
+    "{$INTERPOLATION_1}のうち{$INTERPOLATION}を選択。\n", // TRANSLATED USING DEEPL
   // streamLikes: "高く評価",
   "currency-gbp": "UKポンド",
   "currency-jpy": "円",

@@ -17,9 +17,13 @@ export class DisplayLanguageComponent {
   readonly languages = [
     { value: "en", label: "English" },
     { value: "es", label: "Español" },
+    { value: "fil", label: "Filipino" },
+    { value: "id", label: "Bahasa Indonesia" },
     { value: "ja", label: "日本語" },
+    { value: "ko", label: "한국어" },
     { value: "ms", label: "Melayu" },
-    { value: "zh", label: "中文" },
+    { value: "ru", label: "Русский" },
     { value: "vi", label: "Tiếng Việt" },
+    { value: "zh", label: "中文" },
   ];
 }
